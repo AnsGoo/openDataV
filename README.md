@@ -13,15 +13,15 @@ OpenDavaV 是仿照阿里 DataV 开发的一款拖拽式大屏应用，采用 `V
 
 - 编辑页面
 
-![编辑页面](https://gitee.com/Ranger313/pbed/raw/master/PyPicGo/liunx659382b8af348c9f8ff62d14bd494aa7chenghaiwen20220216191201-Snipaste_2022-02-16_19-07-09.png)
+![编辑页面](./templates/Snipaste_2022-02-16_19-07-09.png)
 
 - 大屏效果1
 
-![页面效果1](https://gitee.com/Ranger313/pbed/raw/master/PyPicGo/liunx16e1a311411c29d056c382af9ec29584chenghaiwen20220216193318-Snipaste_2022-02-16_19-24-59.png)
+![页面效果1](./templates/Snipaste_2022-02-16_19-24-59.png)
 
 - 大屏效果2
 
-![页面效果1](https://raw.githubusercontent.com/AnsGoo/pbed/main/PyPicGo/liunx3e209db87900d3e04a8ec000bc5ddb92chenghaiwen20220216194739-coal.png)
+![页面效果1](./templates/coal.png)
 
 ## 预览地址：
 
