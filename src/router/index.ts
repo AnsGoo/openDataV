@@ -12,7 +12,7 @@ import { LOGIN_URL, NoAuth, RouteMode } from '@/enum'
 import { AppRouteRecordRaw } from '@/router/interface'
 import NProgress from '@/utils/progress'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { useSystemSettingWithOut } from '@/store/modules/setting'
+// import { useSystemSettingWithOut } from '@/store/modules/setting'
 
 const userStore = useUserStoreWithOut()
 class RouteView {
@@ -65,13 +65,13 @@ class RouteView {
       return
     }
 
-    const systemSetting = useSystemSettingWithOut()
+    // const systemSetting = useSystemSettingWithOut()
     const curRouter = this.router as Router
     curRouter.beforeEach((to, _, next) => {
       NProgress.start()
 
       // 查询系统设置
-      systemSetting.getSystemSetting()
+      // systemSetting.getSystemSetting()
       // 如果网站不需要登录认证，所有路由直接切换
       if (to.meta.ignoreAuth) {
         next()
