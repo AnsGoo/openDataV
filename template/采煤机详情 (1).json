@@ -1,0 +1,2457 @@
+{
+  "canvasData": [
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox13",
+      "label": "13号边框",
+      "propValue": { "color1": "#1a98fc", "color2": "#2cf7fe", "backgroundColor": "transparent" },
+      "icon": "line",
+      "style": {
+        "width": 1124,
+        "height": 347.15555555555557,
+        "top": 106.9972191704644,
+        "left": 768,
+        "rotate": 0
+      },
+      "id": "f70c8c0f93f34e1a8df0bb0e79e0f3b5"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox9",
+      "label": "09号边框",
+      "propValue": { "colorLeft": "#11eefd", "colorRight": "#0078d2", "backgroundColor": "" },
+      "icon": "line",
+      "style": { "width": 760, "height": 150, "top": 105, "left": 7, "rotate": 0 },
+      "id": "818d6803c03e4cb387c88c361215538c"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration1",
+      "label": "1号装饰",
+      "propValue": { "color1": "#fff", "color2": "#0de7c2", "pointSideLength": 2.5 },
+      "icon": "line",
+      "style": { "width": 201, "height": 58, "top": 112, "left": 25, "rotate": 0 },
+      "id": "e5074f8ada0e493aa83c2acfac9dc109"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "ConditionText2",
+      "label": "条件文本2",
+      "propValue": {
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "tagName": "CMJ_TXZT",
+        "symbol1": "=",
+        "value1": "1",
+        "displayType1": "symbol",
+        "displayType2": "symbol",
+        "displayContext1": "icon-hong",
+        "displayContext2": "icon-hong",
+        "color1": "rgba(255, 69, 0, 1)",
+        "color2": "rgba(144, 238, 144, 1)",
+        "fontSize1": "25",
+        "fontSize2": "25",
+        "symbol": "=",
+        "value": "1",
+        "tooltip": "通讯状态",
+        "tooltip1": "通讯状态",
+        "tooltip2": "通讯状态"
+      },
+      "icon": "wenben",
+      "style": { "width": 52, "height": 38, "top": 122, "left": 29, "rotate": 0 },
+      "id": "1fe343b9792b45258f4837d21addf7cf"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "ConditionText2",
+      "label": "条件文本2",
+      "propValue": {
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "tagName": "CMJ_YXMS",
+        "symbol1": "=",
+        "value1": "1",
+        "displayType1": "text",
+        "displayType2": "text",
+        "displayContext1": "手动",
+        "displayContext2": "自动",
+        "color1": "#1E90FF",
+        "color2": "#1E90FF",
+        "fontSize1": "40",
+        "fontSize2": "40",
+        "symbol": "=",
+        "value": "0"
+      },
+      "icon": "wenben",
+      "style": { "width": 326, "height": 59, "top": 194, "left": 50, "rotate": 0 },
+      "id": "78d5877387ae40dd948c60d48b03ac5f"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration7",
+      "label": "7号装饰",
+      "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "控制模式" },
+      "icon": "line",
+      "style": {
+        "width": 543,
+        "height": 58,
+        "color": "rgba(0, 206, 209, 1)",
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "top": 155,
+        "left": 299,
+        "rotate": 0
+      },
+      "id": "1e512af4fbf44c16a44c615b75ee4cc0"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration7",
+      "label": "7号装饰",
+      "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "运行模式" },
+      "icon": "line",
+      "style": {
+        "width": 543,
+        "height": 58,
+        "color": "rgba(0, 206, 209, 1)",
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "top": 151,
+        "left": -58.5,
+        "rotate": 0
+      },
+      "id": "1a2eb9b93a4b46e6ad2837564ec53c14"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "ConditionText2",
+      "label": "条件文本2",
+      "propValue": {
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "tagName": "CMJ_KZMS",
+        "symbol1": "=",
+        "value1": "1",
+        "displayType1": "text",
+        "displayType2": "text",
+        "displayContext1": "远程",
+        "displayContext2": "本地",
+        "color1": "#1E90FF",
+        "color2": "#1E90FF",
+        "fontSize1": "40",
+        "fontSize2": "40",
+        "symbol": "=",
+        "value": "1"
+      },
+      "icon": "wenben",
+      "style": { "width": 326, "height": 59, "top": 194, "left": 394, "rotate": 0 },
+      "id": "deaee3b7df1a49d298a87b837f7ffe89"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "定制组件",
+      "component": "SubAlterText",
+      "label": "告警数据文本",
+      "propValue": {
+        "timeout": 0,
+        "tagExpression": "^CMJ_",
+        "dateColor": "#1E90FF",
+        "dateFontSize": 20,
+        "dateFontWeight": 800,
+        "dateFontFamily": "LCD",
+        "typeBackgroundColor": "#1E90FF",
+        "typeColor": "#fff",
+        "typeFontSize": 20,
+        "typeFontWeight": 800,
+        "typeFontFamily": "",
+        "descColor": "#fff",
+        "descFontSize": 20,
+        "descFontWeight": 800,
+        "descFontFamily": "",
+        "valueColor0": "#1E90FF",
+        "valueColor1": "#ffd700",
+        "valueColor2": "#ff4500",
+        "valueFontSize": 20,
+        "valueFontWeight": 800,
+        "valueFontFamily": "LCD"
+      },
+      "icon": "wenben",
+      "style": { "width": 474, "height": 50, "top": 116, "left": 275, "rotate": 0 },
+      "id": "eb1f64d494c44e439955398dcb88cc94"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "仪表盘",
+      "component": "Gauge1",
+      "label": "仪表盘1",
+      "propValue": {
+        "name": "电流",
+        "value": 220,
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "datatag": "CMJ_ZJGDJDL",
+        "unit": "A",
+        "maxValue": "100"
+      },
+      "icon": "wenben",
+      "style": { "width": 189, "height": 231, "top": 468, "left": 762, "rotate": 0 },
+      "id": "16277ba391254d1696a35c227254b729"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "仪表盘",
+      "component": "Gauge2",
+      "label": "仪表盘2",
+      "propValue": {
+        "title": "温度",
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "datatag": "CMJ_YJGDJWD",
+        "unit": "°C",
+        "minValue": 0,
+        "maxValue": "100",
+        "startAngle": 0,
+        "endAngle": 0,
+        "splitNumber": "5",
+        "axisWidth": 5,
+        "axisColor": "0.5,#7CFFB2;1,#FF6E76",
+        "pointerWidth": 5,
+        "pointerColor": "#FF6E76",
+        "pointerLength": "60%",
+        "pointerOffset": "0,-20%",
+        "pointStyle": "triangle",
+        "tickShow": true,
+        "tickFontColor": "auto",
+        "tickFontSize": "15",
+        "tickDistance": "-60",
+        "titleFontSize": "14",
+        "titleOffset": "0,-20%",
+        "titleColor": "auto",
+        "detailFontSize": "12",
+        "detailFontColor": "auto",
+        "detailOffset": "0,0",
+        "splitLength": 20,
+        "splitColor": "auto",
+        "splitWidth": 5,
+        "tickLength": 10,
+        "tickColor": "auto",
+        "tickWidth": 5
+      },
+      "icon": "wenben",
+      "style": {
+        "rotate": 0,
+        "opacity": 1,
+        "width": 169.60000000000002,
+        "height": 242,
+        "top": 468,
+        "left": 977.1833526611329
+      },
+      "id": "ea9ff1c49ed442a2a2995727f2d2a0db"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox1",
+      "label": "01号边框",
+      "propValue": { "colorLeft": "#4fd2dd", "colorRight": "#235fa7", "backgroundColor": "" },
+      "icon": "border1.png",
+      "style": {
+        "width": 447,
+        "height": 259.4990366088632,
+        "top": 454.0004816955684,
+        "left": 311,
+        "rotate": 0
+      },
+      "id": "7e3c3a93d34d46b6a768e63dadbfa052"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration7",
+      "label": "7号装饰",
+      "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "右截割" },
+      "icon": "line",
+      "style": {
+        "width": 98,
+        "height": 34,
+        "color": "rgba(0, 206, 209, 1)",
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "top": 463,
+        "left": 912,
+        "rotate": 0
+      },
+      "id": "96edc5284c2c4f4e840d11826383bed5"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "基础",
+      "component": "CommonImage",
+      "label": "图片",
+      "propValue": { "imgUrl": "images/top.png" },
+      "icon": "wenben",
+      "style": { "width": 1872, "height": 88, "top": 9, "left": 25, "rotate": 0 },
+      "id": "d363e79e699f41149b222d04b6671df0"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "StaticText",
+      "label": "静态文本",
+      "propValue": { "text": "永煤矿业投资有限公司马泰壕煤矿" },
+      "icon": "wenben",
+      "style": {
+        "width": 636,
+        "height": 39,
+        "color": "#1E90FF",
+        "fontSize": 36,
+        "fontWeight": 900,
+        "fontFamily": "",
+        "top": 33,
+        "left": 59,
+        "rotate": 0
+      },
+      "id": "edd3c099062e4520aa8273fbd1bcf0f2"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "StaticText",
+      "label": "静态文本",
+      "propValue": { "text": "3114智能工作面" },
+      "icon": "wenben",
+      "style": {
+        "width": 430,
+        "height": 50,
+        "color": "rgba(30, 144, 255, 1)",
+        "fontSize": 43,
+        "fontWeight": 900,
+        "fontFamily": "",
+        "top": 33,
+        "left": 740,
+        "rotate": 0
+      },
+      "id": "134c11564f404158ae1f11ab14faf3d9"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "DateText",
+      "label": "时间文本",
+      "propValue": { "format": "YYYY-MM-DD HH:mm:ss" },
+      "icon": "wenben",
+      "style": {
+        "rotate": 0,
+        "opacity": 1,
+        "width": 259,
+        "height": 50,
+        "color": "#1E90FF",
+        "fontSize": 20,
+        "fontWeight": 800,
+        "fontFamily": "",
+        "top": 15,
+        "left": 855
+      },
+      "id": "5514778e37e94eb8886c457d095bcb14"
+    },
+    {
+      "component": "Group",
+      "style": { "rotate": 0, "left": 299, "top": 718, "width": 1283, "height": 324 },
+      "subComponents": [
+        {
+          "groupStyle": {
+            "width": "100%",
+            "height": "100%",
+            "top": "0%",
+            "left": "0%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "边框",
+          "component": "BorderBox9",
+          "label": "09号边框",
+          "propValue": { "colorLeft": "#11eefd", "colorRight": "#0078d2", "backgroundColor": "" },
+          "icon": "line",
+          "style": { "width": 1283, "height": 324, "top": 718, "left": 299, "rotate": 0 },
+          "id": "1231b2c70b0e4154adb6fb9f1b9f0940"
+        },
+        {
+          "groupStyle": {
+            "width": "4.325259515570934%",
+            "height": "14.204545454545455%",
+            "color": "#1E90FF",
+            "fontSize": "40px",
+            "fontWeight": 600,
+            "fontFamily": "LCD",
+            "top": "58.234665824641816%",
+            "left": "10.293201816010082%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": { "tagName": "CMJ_ZGTCG", "history": "" },
+          "icon": "wenben",
+          "style": {
+            "width": 55.49307958477509,
+            "height": 46.02272727272727,
+            "color": "#1E90FF",
+            "fontSize": 40,
+            "fontWeight": 600,
+            "fontFamily": "LCD",
+            "top": 906.6803172718395,
+            "left": 431.06177929940935,
+            "rotate": 0
+          },
+          "id": "866cec0d34a04af9853cbd2ec9c0578d"
+        },
+        {
+          "groupStyle": {
+            "width": "5.622837370242214%",
+            "height": "14.204545454545455%",
+            "color": "#1E90FF",
+            "fontSize": "37px",
+            "fontWeight": 800,
+            "fontFamily": "",
+            "top": "58.234665824641816%",
+            "left": "83.39019454113541%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "m" },
+          "icon": "wenben",
+          "style": {
+            "width": 72.14100346020761,
+            "height": 46.02272727272727,
+            "color": "#1E90FF",
+            "fontSize": 37,
+            "fontWeight": 800,
+            "fontFamily": "",
+            "top": 906.6803172718395,
+            "left": 1368.8961959627673,
+            "rotate": 0
+          },
+          "id": "0074a61c3e81403ca1ad361861c7bc64"
+        },
+        {
+          "groupStyle": {
+            "width": "4.325259515570934%",
+            "height": "14.204545454545455%",
+            "color": "#1E90FF",
+            "fontSize": "40px",
+            "fontWeight": 600,
+            "fontFamily": "LCD",
+            "top": "58.234665824641816%",
+            "left": "79.58392667961101%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "CMJ_YGTCG",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 55.49307958477509,
+            "height": 46.02272727272727,
+            "color": "#1E90FF",
+            "fontSize": 40,
+            "fontWeight": 600,
+            "fontFamily": "LCD",
+            "top": 906.6803172718395,
+            "left": 1320.0617792994094,
+            "rotate": 0
+          },
+          "id": "513f3e97bdad4ed388dc8471738be8a0"
+        },
+        {
+          "groupStyle": {
+            "width": "5.622837370242214%",
+            "height": "14.204545454545455%",
+            "color": "#1E90FF",
+            "fontSize": "37px",
+            "fontWeight": 800,
+            "fontFamily": "",
+            "top": "58.234665824641816%",
+            "left": "14.099469677534474%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "m" },
+          "icon": "wenben",
+          "style": {
+            "width": 72.14100346020761,
+            "height": 46.02272727272727,
+            "color": "#1E90FF",
+            "fontSize": 37,
+            "fontWeight": 800,
+            "fontFamily": "",
+            "top": 906.6803172718395,
+            "left": 479.8961959627673,
+            "rotate": 0
+          },
+          "id": "6b726b6c94754b7d8a50dad7751bf159"
+        },
+        {
+          "groupStyle": {
+            "width": "10.294117647058822%",
+            "height": "26.704545454545453%",
+            "top": "11.362227794163426%",
+            "left": "19.981548506436063%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "ConditionText1",
+          "label": "条件文本",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "tagName": "VR_CMJFX",
+            "symbol1": "=",
+            "value1": "1",
+            "displayType": "symbol",
+            "displayContext1": "icon-bofang-kuaitui",
+            "displayContext2": "",
+            "color": "#1E90FF",
+            "fontSize": "80",
+            "symbol": "=",
+            "value": "2"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 132.0735294117647,
+            "height": 86.52272727272727,
+            "top": 754.8136180530895,
+            "left": 555.3632673375747,
+            "rotate": 0
+          },
+          "id": "aeb5061c295f40f9b86e3135dfd4413a"
+        },
+        {
+          "groupStyle": {
+            "width": "11.505190311418687%",
+            "height": "28.693181818181817%",
+            "top": "11.360708123238144%",
+            "left": "64.53189075416071%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "ConditionText1",
+          "label": "条件文本",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "tagName": "VR_CMJFX",
+            "symbol1": "=",
+            "value1": "1",
+            "displayType": "symbol",
+            "displayContext1": "icon-bofang-kuaijin",
+            "displayContext2": "",
+            "color": "#1E90FF",
+            "fontSize": "80",
+            "symbol": "=",
+            "value": "1"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 147.61159169550174,
+            "height": 92.9659090909091,
+            "top": 754.8086943192916,
+            "left": 1126.944158375882,
+            "rotate": 0
+          },
+          "id": "54ec228e7d4147f882cf563c4bd05155"
+        },
+        {
+          "groupStyle": {
+            "width": "5.795847750865051%",
+            "height": "9.090909090909092%",
+            "color": "#1E90FF",
+            "fontSize": "22px",
+            "fontWeight": 400,
+            "fontFamily": "",
+            "top": "32.38099159215034%",
+            "left": "33.64988070950177%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "设定" },
+          "icon": "wenben",
+          "style": {
+            "width": 74.36072664359861,
+            "height": 29.454545454545457,
+            "color": "#1E90FF",
+            "fontSize": 22,
+            "fontWeight": 400,
+            "fontFamily": "",
+            "top": 822.9144127585671,
+            "left": 730.7279695029077,
+            "rotate": 0
+          },
+          "id": "cd4fac71f4b8497a8e54cb0563b6f04e"
+        },
+        {
+          "groupStyle": {
+            "width": "5.449826989619378%",
+            "height": "9.090909090909092%",
+            "color": "#1E90FF",
+            "fontSize": "22px",
+            "fontWeight": 400,
+            "fontFamily": "",
+            "top": "19.032226160051575%",
+            "left": "33.65011890187107%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "实际" },
+          "icon": "wenben",
+          "style": {
+            "width": 69.92128027681662,
+            "height": 29.454545454545457,
+            "color": "#1E90FF",
+            "fontSize": 22,
+            "fontWeight": 400,
+            "fontFamily": "",
+            "top": 779.6644127585671,
+            "left": 730.7310255110058,
+            "rotate": 0
+          },
+          "id": "72b1537130b347608ba779940ac73e3c"
+        },
+        {
+          "groupStyle": {
+            "width": "36.50519031141869%",
+            "height": "50.56818181818182%",
+            "top": "48.00808560834858%",
+            "left": "31.05436919823709%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "基础",
+          "component": "Coal",
+          "label": "采煤机",
+          "propValue": {
+            "statusTag": "VR_CMJZT",
+            "leftDdrumHeightTag": "CMJ_ZGTCG",
+            "rightDdrumHeightTag": "CMJ_YGTCG",
+            "maxHeight": 3.5,
+            "minHeight": -0.5,
+            "historyUrl": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "maxHeightg": "6.5"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 468.3615916955018,
+            "height": 163.8409090909091,
+            "top": 873.5461973710494,
+            "left": 697.4275568133819,
+            "rotate": 0
+          },
+          "id": "4525ddf55bc742029473f7ab207753d7"
+        },
+        {
+          "groupStyle": {
+            "width": "3.0276816608996535%",
+            "height": "10.227272727272728%",
+            "color": "#1E90FF",
+            "fontSize": "30px",
+            "fontWeight": 800,
+            "fontFamily": "LCD",
+            "top": "79.82462488039573%",
+            "left": "50.345084635872084%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "VR_CMJWZJH",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 38.845155709342556,
+            "height": 33.13636363636364,
+            "color": "#1E90FF",
+            "fontSize": 30,
+            "fontWeight": 800,
+            "fontFamily": "LCD",
+            "top": 976.6317846124822,
+            "left": 944.9274358782388,
+            "rotate": 0
+          },
+          "id": "7411c8f113954f0b90177e2de002dd45"
+        },
+        {
+          "groupStyle": {
+            "width": "30.363321799307958%",
+            "height": "43.465909090909086%",
+            "top": "5.111176076561507%",
+            "left": "33.64985362090939%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "边框",
+          "component": "BorderBox8",
+          "label": "08号边框",
+          "propValue": {
+            "colorLeft": "rgba(126, 208, 234, 1)",
+            "colorRight": "rgba(96, 195, 231, 1)",
+            "backgroundColor": "",
+            "reverse": false,
+            "tagName": "CMJ_CMJQYSD",
+            "datatag": "CMJ_CMJQYSD"
+          },
+          "icon": "line",
+          "style": {
+            "width": 389.5614186851211,
+            "height": 140.82954545454544,
+            "top": 734.5602104880593,
+            "left": 730.7276219562675,
+            "rotate": 0
+          },
+          "id": "f05e4a19f42c42d899d839ac406b4d86"
+        },
+        {
+          "groupStyle": {
+            "width": "6.5743944636678195%",
+            "height": "9.375%",
+            "color": "#1E90FF",
+            "fontSize": "22px",
+            "fontWeight": 400,
+            "fontFamily": "",
+            "top": "81.53162355776186%",
+            "left": "43.16512658064934%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "位置" },
+          "icon": "wenben",
+          "style": {
+            "width": 84.34948096885812,
+            "height": 30.375,
+            "color": "#1E90FF",
+            "fontSize": 22,
+            "fontWeight": 400,
+            "fontFamily": "",
+            "top": 982.1624603271484,
+            "left": 852.8085740297311,
+            "rotate": 0
+          },
+          "id": "1687d536b4ae431da3fd6b47ffa553f9"
+        },
+        {
+          "groupStyle": {
+            "width": "4.2387543252595155%",
+            "height": "14.204545454545455%",
+            "color": "#1E90FF",
+            "fontSize": "36px",
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": "3.975391494973611%",
+            "left": "46.88425899610009%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "VR_CMJSD",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 54.38321799307958,
+            "height": 46.02272727272727,
+            "color": "#1E90FF",
+            "fontSize": 36,
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": 730.8802684437145,
+            "left": 900.5250429199641,
+            "rotate": 0
+          },
+          "id": "d8556972029242b1bfae0cca3d353e19"
+        },
+        {
+          "groupStyle": {
+            "width": "6.055363321799307%",
+            "height": "9.090909090909092%",
+            "color": "#1E90FF",
+            "fontSize": "22px",
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": "6.5322261600515725%",
+            "left": "41.262395625877865%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "速度：" },
+          "icon": "wenben",
+          "style": {
+            "width": 77.69031141868511,
+            "height": 29.454545454545457,
+            "color": "#1E90FF",
+            "fontSize": 22,
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": 739.1644127585671,
+            "left": 828.396535880013,
+            "rotate": 0
+          },
+          "id": "c7b740ab950646febdd316a130bfaf85"
+        },
+        {
+          "groupStyle": {
+            "width": "5.017301038062285%",
+            "height": "9.090909090909092%",
+            "color": "#1E90FF",
+            "fontSize": "22px",
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": "6.5322261600515725%",
+            "left": "52.33416207040462%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "m/s" },
+          "icon": "wenben",
+          "style": {
+            "width": 64.3719723183391,
+            "height": 29.454545454545457,
+            "color": "#1E90FF",
+            "fontSize": 22,
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": 739.1644127585671,
+            "left": 970.4472993632913,
+            "rotate": 0
+          },
+          "id": "ddcdb5430cb14bfc8f1f62169fb9c3fd"
+        },
+        {
+          "groupStyle": {
+            "width": "18.685121107266436%",
+            "height": "9.943181818181817%",
+            "top": "19.03047251246461%",
+            "left": "40.87243257313267%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "进度图",
+          "component": "HorizontalProgress",
+          "label": "横向进度条1",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "VR_CMJSD",
+            "maxValue": "20",
+            "color1": "rgba(30, 144, 255, 1)",
+            "color2": "rgba(30, 144, 255, 1)",
+            "borderWidth": 3,
+            "borderGap": 3,
+            "lineDash": "5,1",
+            "textColor": "#fff",
+            "borderRadius": 5,
+            "localGradient": false,
+            "formatter": "",
+            "fontSize": 15,
+            "rotate": 0
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 239.73010380622839,
+            "height": 32.215909090909086,
+            "top": 779.6587309403853,
+            "left": 823.3933099132921,
+            "rotate": 0
+          },
+          "id": "61fbe95e9ce2418eaa1f43e28fc782d3"
+        },
+        {
+          "groupStyle": {
+            "width": "18.94463667820069%",
+            "height": "10.511363636363635%",
+            "top": "32.3806394497821%",
+            "left": "40.74267776092918%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "进度图",
+          "component": "HorizontalProgress",
+          "label": "横向进度条1",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CMJ_ZLSL",
+            "maxValue": "20",
+            "color1": "rgba(30, 144, 255, 1)",
+            "color2": "rgba(30, 144, 255, 1)",
+            "borderWidth": 3,
+            "borderGap": 3,
+            "lineDash": "5,1",
+            "textColor": "#fff",
+            "borderRadius": 5,
+            "localGradient": false,
+            "formatter": "",
+            "fontSize": 15,
+            "rotate": 0
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 243.05968858131487,
+            "height": 34.05681818181818,
+            "top": 822.913271817294,
+            "left": 821.7285556727214,
+            "rotate": 0
+          },
+          "id": "5413aba2a97f44e5baf59a50e5fba1ff"
+        }
+      ],
+      "id": "a6993544969b4422bf40e29260c97c7a"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration7",
+      "label": "7号装饰",
+      "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "油泵" },
+      "icon": "line",
+      "style": {
+        "width": 142.84210526315792,
+        "height": 33.391304347826086,
+        "color": "rgba(0, 206, 209, 1)",
+        "fontSize": 20,
+        "fontWeight": "600",
+        "top": 458.5460165272588,
+        "left": 72.66229850367495,
+        "rotate": 0
+      },
+      "id": "45ff900daa4f4fb9916a3065d598875f"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "StaticText",
+      "label": "静态文本",
+      "propValue": { "text": "左油泵温度" },
+      "icon": "wenben",
+      "style": {
+        "width": 71,
+        "height": 21,
+        "color": "#1E90FF",
+        "fontSize": 14,
+        "fontWeight": 1,
+        "fontFamily": "",
+        "top": 667.9666748046875,
+        "left": 52.9666748046875,
+        "rotate": 0
+      },
+      "id": "b77c65c6d820455182407aca17c0bb64"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "仪表盘",
+      "component": "Gauge1",
+      "label": "仪表盘1",
+      "propValue": {
+        "name": "电流",
+        "value": 220,
+        "history": "https://data.com",
+        "datatag": "CMJ_ZJGDJDL",
+        "unit": "A",
+        "maxValue": "100"
+      },
+      "icon": "wenben",
+      "style": {
+        "width": 168.94488188976376,
+        "height": 231.4450867052023,
+        "top": 467.01078642034804,
+        "left": 329.9609010350986,
+        "rotate": 0
+      },
+      "id": "0f895e8bf23a49f09d7a8df84e17dd7b"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration7",
+      "label": "7号装饰",
+      "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "左截割" },
+      "icon": "line",
+      "style": {
+        "width": 95,
+        "height": 34,
+        "color": "rgba(0, 206, 209, 1)",
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "top": 462,
+        "left": 487,
+        "rotate": 0
+      },
+      "id": "f7c2bd4b227b4a81826739b9ef801de7"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "仪表盘",
+      "component": "Gauge2",
+      "label": "仪表盘2",
+      "propValue": {
+        "title": "温度",
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "datatag": "CMJ_ZJGDJWD",
+        "unit": "°C",
+        "minValue": 0,
+        "maxValue": "100",
+        "startAngle": 0,
+        "endAngle": 0,
+        "splitNumber": "5",
+        "axisWidth": 5,
+        "axisColor": "0.5,#7CFFB2;1,#FF6E76",
+        "pointerWidth": 5,
+        "pointerColor": "#FF6E76",
+        "pointerLength": "60%",
+        "pointerOffset": "0,-20%",
+        "pointStyle": "triangle",
+        "tickShow": true,
+        "tickFontColor": "auto",
+        "tickFontSize": "15",
+        "tickDistance": "-60",
+        "titleFontSize": "14",
+        "titleOffset": "0,-20%",
+        "titleColor": "auto",
+        "detailFontSize": "12",
+        "detailFontColor": "auto",
+        "detailOffset": "0,0",
+        "splitLength": 20,
+        "splitColor": "auto",
+        "splitWidth": 5,
+        "tickLength": 10,
+        "tickColor": "auto",
+        "tickWidth": 5
+      },
+      "icon": "wenben",
+      "style": { "rotate": 0, "opacity": 1, "width": 181, "height": 242, "top": 472, "left": 553 },
+      "id": "e9be075905254dffb3bead8bbd82f32d"
+    },
+    {
+      "component": "Group",
+      "style": { "rotate": 0, "left": 1592, "top": 713, "width": 283, "height": 333 },
+      "subComponents": [
+        {
+          "groupStyle": {
+            "width": "100%",
+            "height": "100%",
+            "top": "0%",
+            "left": "0%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "边框",
+          "component": "BorderBox1",
+          "label": "01号边框",
+          "propValue": { "colorLeft": "#4fd2dd", "colorRight": "#235fa7", "backgroundColor": "" },
+          "icon": "border1.png",
+          "style": { "width": 283, "height": 333, "top": 713, "left": 1592, "rotate": 0 },
+          "id": "344138585ed8434eb6355b17d8503373"
+        },
+        {
+          "groupStyle": {
+            "width": "40.7563025210084%",
+            "height": "9.217877094972067%",
+            "color": "rgba(0, 206, 209, 1)",
+            "fontSize": "20pxpx",
+            "fontWeight": "600",
+            "top": "2.509117008069527%",
+            "left": "29.619088138789046%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "装饰",
+          "component": "Decoration7",
+          "label": "7号装饰",
+          "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "右牵引" },
+          "icon": "line",
+          "style": {
+            "width": 115.34033613445378,
+            "height": 30.695530726256983,
+            "color": "rgba(0, 206, 209, 1)",
+            "fontSize": "20px",
+            "fontWeight": "600",
+            "top": 721.3553596368715,
+            "left": 1675.822019432773,
+            "rotate": 0
+          },
+          "id": "22438fd1bf264175b445f1c658e9c8d0"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "75.63025210084034%",
+            "height": "9.776536312849162%",
+            "top": "56.69910046219404%",
+            "left": "11.759741440745893%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "进度图",
+          "component": "HorizontalProgress",
+          "label": "横向进度条1",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CMJ_YBPSCDY",
+            "maxValue": "4000",
+            "color1": "#3DE7C9",
+            "color2": "#00BAFF",
+            "borderWidth": 3,
+            "borderGap": 3,
+            "lineDash": "5,1",
+            "textColor": "#fff",
+            "borderRadius": 5,
+            "localGradient": false,
+            "formatter": "",
+            "fontSize": 15,
+            "rotate": 0
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 214.03361344537814,
+            "height": 32.555865921787706,
+            "top": 901.8080045391062,
+            "left": 1625.2800682773109
+          },
+          "id": "eeaae04fe94946b1ba4d45efc4191028"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "75.63025210084034%",
+            "height": "9.776536312849162%",
+            "top": "79.88322208381567%",
+            "left": "11.759741440745893%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "进度图",
+          "component": "HorizontalProgress",
+          "label": "横向进度条1",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CMJ_YBPSCDL",
+            "maxValue": "200",
+            "color1": "#3DE7C9",
+            "color2": "#00BAFF",
+            "borderWidth": 3,
+            "borderGap": 3,
+            "lineDash": "5,1",
+            "textColor": "#fff",
+            "borderRadius": 5,
+            "localGradient": false,
+            "formatter": "",
+            "fontSize": 15,
+            "rotate": 0
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 214.03361344537814,
+            "height": 32.555865921787706,
+            "top": 979.0111295391062,
+            "left": 1625.2800682773109
+          },
+          "id": "8bb0d7d3f2b14eea8f7667831825028f"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "67.49116607773851%",
+            "height": "47.147147147147145%",
+            "top": "6.306306306306306%",
+            "left": "12.04726148409894%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "仪表盘",
+          "component": "Gauge2",
+          "label": "仪表盘2",
+          "propValue": {
+            "title": "温度",
+            "history": "http://10.10.8.174:60000/Scan/ReadPointValues",
+            "datatag": "CMJ_YQYXYW",
+            "unit": "°C",
+            "minValue": 0,
+            "maxValue": "100",
+            "startAngle": 0,
+            "endAngle": 0,
+            "splitNumber": 6,
+            "axisWidth": "3",
+            "axisColor": "0.5,#7CFFB2;1,#FF6E76",
+            "pointerWidth": 5,
+            "pointerColor": "#FF6E76",
+            "pointerLength": "60%",
+            "pointerOffset": "0,-20%",
+            "pointStyle": "triangle",
+            "tickShow": false,
+            "tickFontColor": "auto",
+            "tickFontSize": 10,
+            "tickDistance": -50,
+            "titleFontSize": 10,
+            "titleOffset": "0,-20%",
+            "titleColor": "auto",
+            "detailFontSize": 10,
+            "detailFontColor": "auto",
+            "detailOffset": "0,0",
+            "splitLength": 20,
+            "splitColor": "auto",
+            "splitWidth": "3",
+            "tickLength": 10,
+            "tickColor": "auto",
+            "tickWidth": "3"
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 191,
+            "height": 157,
+            "top": 734,
+            "left": 1626.09375
+          },
+          "id": "e833e29383a64bf5b2fe87f210758bef"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "33.193277310924366%",
+            "height": "6.424581005586592%",
+            "color": "#1E90FF",
+            "fontSize": "15px",
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": "50.27635439210159%",
+            "left": "31.087217351604966%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "电压" },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 93.93697478991595,
+            "height": 21.393854748603353,
+            "color": "#1E90FF",
+            "fontSize": 15,
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": 880.4202601256983,
+            "left": 1679.976825105042
+          },
+          "id": "8b461460c4384f71917e8ccb1c69d0ac"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "33.193277310924366%",
+            "height": "6.424581005586592%",
+            "color": "#1E90FF",
+            "fontSize": "15px",
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": "73.46047601372321%",
+            "left": "31.087217351604966%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "电流" },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 93.93697478991595,
+            "height": 21.393854748603353,
+            "color": "#1E90FF",
+            "fontSize": 15,
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": 957.6233851256983,
+            "left": 1679.976825105042
+          },
+          "id": "894f9351b9f747afab5d4c222dcb6fa4"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "18.487394957983195%",
+            "height": "7.262569832402235%",
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": "20px",
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": "80.722600218934%",
+            "left": "36.549147043976596%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "CMJ_YBPSCDL",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 52.31932773109244,
+            "height": 24.184357541899445,
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": 20,
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": 981.8062587290502,
+            "left": 1695.4340861344538
+          },
+          "id": "09b361a7c5f04346914c02550883dfc7"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "18.487394957983195%",
+            "height": "7.262569832402235%",
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": "20px",
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": "57.39771283154661%",
+            "left": "36.549147043976596%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "CMJ_YBPSCDY",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 52.31932773109244,
+            "height": 24.184357541899445,
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": 20,
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": 904.1343837290502,
+            "left": 1695.4340861344538
+          },
+          "id": "cb86a5fff1ae4da7bd3dff41a08babc1"
+        }
+      ],
+      "id": "5657adcde5324855a138672ae9cb5bc9"
+    },
+    {
+      "component": "Group",
+      "style": { "rotate": 0, "left": 10, "top": 710.0000152587891, "width": 283, "height": 337 },
+      "subComponents": [
+        {
+          "groupStyle": {
+            "width": "100%",
+            "height": "100%",
+            "top": "0%",
+            "left": "0%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "边框",
+          "component": "BorderBox1",
+          "label": "01号边框",
+          "propValue": { "colorLeft": "#4fd2dd", "colorRight": "#235fa7", "backgroundColor": "" },
+          "icon": "border1.png",
+          "style": {
+            "width": 283,
+            "height": 337,
+            "top": 710.0000152587891,
+            "left": 10,
+            "rotate": 0
+          },
+          "id": "534acb58ebf34681968930720aa363b9"
+        },
+        {
+          "groupStyle": {
+            "width": "40.7563025210084%",
+            "height": "9.217877094972067%",
+            "color": "rgba(0, 206, 209, 1)",
+            "fontSize": "20pxpx",
+            "fontWeight": "600",
+            "top": "2.510248714168973%",
+            "left": "29.61595280810363%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "装饰",
+          "component": "Decoration7",
+          "label": "7号装饰",
+          "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "左牵引" },
+          "icon": "line",
+          "style": {
+            "width": 115.34033613445378,
+            "height": 31.064245810055866,
+            "color": "rgba(0, 206, 209, 1)",
+            "fontSize": "20px",
+            "fontWeight": "600",
+            "top": 718.4595534255385,
+            "left": 93.81314644693327,
+            "rotate": 0
+          },
+          "id": "3288de921c8143ffb970651ad38f4fcb"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "75.63025210084034%",
+            "height": "9.776536312849162%",
+            "top": "56.699267577214385%",
+            "left": "11.760841367589993%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "进度图",
+          "component": "HorizontalProgress",
+          "label": "横向进度条1",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CMJ_ZBPSCDY",
+            "maxValue": "4000",
+            "color1": "#3DE7C9",
+            "color2": "#00BAFF",
+            "borderWidth": 3,
+            "borderGap": 3,
+            "lineDash": "5,1",
+            "textColor": "#fff",
+            "borderRadius": 5,
+            "localGradient": false,
+            "formatter": "",
+            "fontSize": 15,
+            "rotate": 0
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 214.03361344537814,
+            "height": 32.94692737430167,
+            "top": 901.0765469940015,
+            "left": 43.28318107027968
+          },
+          "id": "082e33ad770446e68a31e7d2fb820af3"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "75.63025210084034%",
+            "height": "9.776536312849162%",
+            "top": "79.88423235431472%",
+            "left": "11.760841367589993%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "进度图",
+          "component": "HorizontalProgress",
+          "label": "横向进度条1",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CMJ_ZBPSCDL",
+            "maxValue": "200",
+            "color1": "#3DE7C9",
+            "color2": "#00BAFF",
+            "borderWidth": 3,
+            "borderGap": 3,
+            "lineDash": "5,1",
+            "textColor": "#fff",
+            "borderRadius": 5,
+            "localGradient": false,
+            "formatter": "",
+            "fontSize": 15,
+            "rotate": 0
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 214.03361344537814,
+            "height": 32.94692737430167,
+            "top": 979.2098782928297,
+            "left": 43.28318107027968
+          },
+          "id": "d7f5981a46de456f821fe917b568c677"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "67.64705882352942%",
+            "height": "47.206703910614515%",
+            "top": "6.423853061963711%",
+            "left": "13.861984573265932%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "仪表盘",
+          "component": "Gauge2",
+          "label": "仪表盘2",
+          "propValue": {
+            "title": "温度",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CML_ZQYXYW",
+            "unit": "°C",
+            "minValue": 0,
+            "maxValue": "100",
+            "startAngle": 0,
+            "endAngle": 0,
+            "splitNumber": 6,
+            "axisWidth": "3",
+            "axisColor": "0.5,#7CFFB2;1,#FF6E76",
+            "pointerWidth": 5,
+            "pointerColor": "#FF6E76",
+            "pointerLength": "60%",
+            "pointerOffset": "0,-20%",
+            "pointStyle": "triangle",
+            "tickShow": false,
+            "tickFontColor": "auto",
+            "tickFontSize": 10,
+            "tickDistance": -50,
+            "titleFontSize": 10,
+            "titleOffset": "0,-20%",
+            "titleColor": "auto",
+            "detailFontSize": 10,
+            "detailFontColor": "auto",
+            "detailOffset": "0,0",
+            "splitLength": 20,
+            "splitColor": "auto",
+            "splitWidth": "3",
+            "tickLength": 10,
+            "tickColor": "auto",
+            "tickWidth": "3"
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 191.44117647058826,
+            "height": 159.08659217877093,
+            "top": 731.6484000776068,
+            "left": 49.22941634234259
+          },
+          "id": "e50d479fe7b74886b30fb19369a212fb"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "33.193277310924366%",
+            "height": "6.424581005586592%",
+            "color": "#1E90FF",
+            "fontSize": "15px",
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": "50.27682857697765%",
+            "left": "31.08887532956846%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "电压" },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 93.93697478991595,
+            "height": 21.650837988826815,
+            "color": "#1E90FF",
+            "fontSize": 15,
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": 879.4329275632037,
+            "left": 97.98151718267874
+          },
+          "id": "f5a650f3e2834619aaba6c14e2d828b9"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "33.193277310924366%",
+            "height": "6.424581005586592%",
+            "color": "#1E90FF",
+            "fontSize": "15px",
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": "73.46179335407798%",
+            "left": "31.08887532956846%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "StaticText",
+          "label": "静态文本",
+          "propValue": { "text": "电流" },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 93.93697478991595,
+            "height": 21.650837988826815,
+            "color": "#1E90FF",
+            "fontSize": 15,
+            "fontWeight": 600,
+            "fontFamily": "",
+            "top": 957.5662588620319,
+            "left": 97.98151718267874
+          },
+          "id": "c6188125ff4a44d383d1430bbf8e7c10"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "18.487394957983195%",
+            "height": "7.262569832402235%",
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": "20px",
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": "80.7208359558663%",
+            "left": "36.54841645531301%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "CMJ_ZBPSCDL",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 52.31932773109244,
+            "height": 24.474860335195533,
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": 20,
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": 982.0292324300585,
+            "left": 113.43201856853581
+          },
+          "id": "e2e355efc4d3413fbf1a1ac8a58a2982"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "18.487394957983195%",
+            "height": "7.262569832402235%",
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": "20px",
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": "57.39739879998144%",
+            "left": "36.54841645531301%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "CMJ_ZBPSCDY",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 52.31932773109244,
+            "height": 24.474860335195533,
+            "color": "rgba(244, 224, 11, 1)",
+            "fontSize": 20,
+            "fontWeight": 900,
+            "fontFamily": "LCD",
+            "top": 903.4292492147265,
+            "left": 113.43201856853581
+          },
+          "id": "de98bad1c22c4dc5a0a39e35a601fa2c"
+        }
+      ],
+      "id": "95affcfaaf3542a29cf596782087049f"
+    },
+    {
+      "component": "Group",
+      "style": {
+        "rotate": 0,
+        "left": 4.880702771638596,
+        "top": 455.98213540271774,
+        "width": 288.1052631578947,
+        "height": 258.01786459728226
+      },
+      "subComponents": [
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "49.981731823164054%",
+            "height": "65.88691068555981%",
+            "top": "25.18605610685501%",
+            "left": "45.16380429921204%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "仪表盘",
+          "component": "Gauge1",
+          "label": "仪表盘1",
+          "propValue": {
+            "name": "电流",
+            "value": 220,
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CMJ_BDJDL",
+            "unit": "A",
+            "maxValue": "40"
+          },
+          "icon": "wenben",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 144,
+            "height": 170,
+            "top": 520.9666595458984,
+            "left": 135
+          },
+          "id": "39c8f7b8420e474bb6b0ddd2055d5548"
+        },
+        {
+          "groupStyle": {
+            "width": "51.37011326269639%",
+            "height": "94.56709533692114%",
+            "top": "5.4329046630788635%",
+            "left": "3.8478894524649108%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "温度计",
+          "component": "Thermometer1",
+          "label": "温度计1",
+          "propValue": {
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+            "datatag": "CMJ_TGBXYWEN",
+            "maxValue": "100",
+            "splitNumber": "20"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 148,
+            "height": 244,
+            "top": 470,
+            "left": 15.9666748046875,
+            "rotate": 0
+          },
+          "id": "c54cad405eb3466293c3e917058c6604"
+        },
+        {
+          "groupStyle": {
+            "width": "15.966386554621852%",
+            "height": "8.914111445693386%",
+            "color": "#1E90FF",
+            "fontSize": "20px",
+            "fontWeight": 1,
+            "fontFamily": "LCD",
+            "top": "16.271944661161623%",
+            "left": "21.54975280650218%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "文本",
+          "component": "SubText",
+          "label": "数据订阅文本",
+          "propValue": {
+            "tagName": "CMJ_ZQYXYW",
+            "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+          },
+          "icon": "wenben",
+          "style": {
+            "width": 46,
+            "height": 23,
+            "color": "#1E90FF",
+            "fontSize": 20,
+            "fontWeight": 1,
+            "fontFamily": "LCD",
+            "top": 497.96665954589844,
+            "left": 66.9666748046875,
+            "rotate": 0
+          },
+          "id": "d5490bea225841ae9712904a923644df"
+        },
+        {
+          "groupStyle": {
+            "width": "100%",
+            "height": "97.55877328030638%",
+            "top": "0%",
+            "left": "0%",
+            "transform": "rotate(0deg)"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "边框",
+          "component": "BorderBox1",
+          "label": "01号边框",
+          "propValue": { "colorLeft": "#4fd2dd", "colorRight": "#235fa7", "backgroundColor": "" },
+          "icon": "border1.png",
+          "style": {
+            "width": 288.1052631578947,
+            "height": 251.7190635451505,
+            "top": 455.98213540271774,
+            "left": 4.880702771638596,
+            "rotate": 0
+          },
+          "id": "ba1b3a83ae8443649759adb770ee5c69"
+        }
+      ],
+      "id": "e564ddfa16d64d0f81ff353742d397e9"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "仪表盘",
+      "component": "Gauge2",
+      "label": "仪表盘2",
+      "propValue": {
+        "title": "",
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "datatag": "CMJ_HGJ",
+        "unit": "°",
+        "minValue": "-20",
+        "maxValue": "20",
+        "startAngle": 0,
+        "endAngle": 0,
+        "splitNumber": "5",
+        "axisWidth": 5,
+        "axisColor": "0.5,#7CFFB2;1,#FF6E76",
+        "pointerWidth": 5,
+        "pointerColor": "rgba(144, 238, 144, 1)",
+        "pointerLength": "60%",
+        "pointerOffset": "0,-20%",
+        "pointStyle": "triangle",
+        "tickShow": true,
+        "tickFontColor": "rgba(30, 144, 255, 1)",
+        "tickFontSize": 10,
+        "tickDistance": -50,
+        "titleFontSize": 10,
+        "titleOffset": "0,-20%",
+        "titleColor": "auto",
+        "detailFontSize": "14",
+        "detailFontColor": "auto",
+        "detailOffset": "0,0",
+        "splitLength": 20,
+        "splitColor": "rgba(30, 144, 255, 1)",
+        "splitWidth": 5,
+        "tickLength": 10,
+        "tickColor": "rgba(30, 144, 255, 1)",
+        "tickWidth": "4"
+      },
+      "icon": "wenben",
+      "style": {
+        "width": 187,
+        "height": 214,
+        "top": 258.00001525878906,
+        "left": 29.5,
+        "rotate": 0
+      },
+      "id": "bc3c1df2b4d44d178583165ef3186cdc"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "StaticText",
+      "label": "静态文本",
+      "propValue": { "text": "横滚角" },
+      "icon": "wenben",
+      "style": {
+        "width": 119,
+        "height": 34,
+        "color": "#1E90FF",
+        "fontSize": 22,
+        "fontWeight": 700,
+        "fontFamily": "",
+        "top": 296.00001525878906,
+        "left": 227.49166870117188,
+        "rotate": 0
+      },
+      "id": "05389e98b843459e827ca3848a6981a3"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "SubText",
+      "label": "数据订阅文本",
+      "propValue": { "tagName": "CMJ_CMJHGJ", "history": "" },
+      "icon": "wenben",
+      "style": {
+        "width": 63.00000000000001,
+        "height": 56.99999999999999,
+        "color": "#1E90FF",
+        "fontSize": 42,
+        "fontWeight": 700,
+        "fontFamily": "LCD",
+        "top": 353.9916763305664,
+        "left": 246.48333740234375,
+        "rotate": 0
+      },
+      "id": "3541c1df840d4bf1a495ec8e5aca17cd"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox1",
+      "label": "01号边框",
+      "propValue": { "colorLeft": "#4fd2dd", "colorRight": "#235fa7", "backgroundColor": "" },
+      "icon": "border1.png",
+      "style": { "width": 424, "height": 259, "top": 455, "left": 749, "rotate": 0 },
+      "id": "a088e02aad6d46eabd0111ef0bfda868"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "仪表盘",
+      "component": "Gauge2",
+      "label": "仪表盘2",
+      "propValue": {
+        "title": "",
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "datatag": "CMJ_FYJ",
+        "unit": "°",
+        "minValue": "-20",
+        "maxValue": "20",
+        "startAngle": 0,
+        "endAngle": 0,
+        "splitNumber": "5",
+        "axisWidth": 5,
+        "axisColor": "0.5,#7CFFB2;1,#FF6E76",
+        "pointerWidth": 5,
+        "pointerColor": "rgba(144, 238, 144, 1)",
+        "pointerLength": "60%",
+        "pointerOffset": "0,-20%",
+        "pointStyle": "triangle",
+        "tickShow": true,
+        "tickFontColor": "rgba(30, 144, 255, 1)",
+        "tickFontSize": 10,
+        "tickDistance": -50,
+        "titleFontSize": 10,
+        "titleOffset": "0,-20%",
+        "titleColor": "auto",
+        "detailFontSize": "14",
+        "detailFontColor": "auto",
+        "detailOffset": "0,0",
+        "splitLength": 20,
+        "splitColor": "rgba(30, 144, 255, 1)",
+        "splitWidth": 5,
+        "tickLength": 10,
+        "tickColor": "rgba(30, 144, 255, 1)",
+        "tickWidth": "4"
+      },
+      "icon": "wenben",
+      "style": { "width": 187, "height": 214, "top": 258.00001525878906, "left": 412, "rotate": 0 },
+      "id": "3ad926091f3d438097a0662dc17026c0"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "StaticText",
+      "label": "静态文本",
+      "propValue": { "text": "俯仰角" },
+      "icon": "wenben",
+      "style": {
+        "width": 119,
+        "height": 34,
+        "color": "#1E90FF",
+        "fontSize": 22,
+        "fontWeight": 700,
+        "fontFamily": "",
+        "top": 296.00001525878906,
+        "left": 609.9916687011719,
+        "rotate": 0
+      },
+      "id": "d616c93b12ac45d89c6ad43b1a8e5f13"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "文本",
+      "component": "SubText",
+      "label": "数据订阅文本",
+      "propValue": {
+        "tagName": "CMJ_FYJ",
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+      },
+      "icon": "wenben",
+      "style": {
+        "width": 63.00000000000001,
+        "height": 56.99999999999999,
+        "color": "#1E90FF",
+        "fontSize": 42,
+        "fontWeight": 700,
+        "fontFamily": "LCD",
+        "top": 353.9916763305664,
+        "left": 628.9833374023438,
+        "rotate": 0
+      },
+      "id": "1ed9a9e2661e45699602feb878fcfc69"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox6",
+      "label": "06号边框",
+      "propValue": {
+        "colorLeft": "rgba(30, 144, 255, 1)",
+        "colorRight": "#0078d2",
+        "backgroundColor": ""
+      },
+      "icon": "line",
+      "style": { "width": 379, "height": 196, "top": 258.00001525878906, "left": 391, "rotate": 0 },
+      "id": "aecc77d3a348404bae9cb2e8f3bdd5cf"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "折线图",
+      "component": "IntervalLineChart",
+      "label": "间隔线图",
+      "propValue": {
+        "title": "采煤机循环作业图",
+        "subTitle": "",
+        "history": "http://192.168.66.33:60000/InfluxDB/Query",
+        "data": "{\"flux\": \"\\nfrom(bucket: \\\"HistoryStore\\\")\\n  |> range(start: -8h, stop: now())\\n  |> filter(fn: (r) => r[\\\"_measurement\\\"] == \\\"Tag\\\")\\n  |> filter(fn: (r) => r[\\\"TagName\\\"] == \\\"VR_CMJWZJH\\\")\\n  |> filter(fn: (r) => r._field ==\\\"_value\\\")\\n  |> aggregateWindow(every: 1m, fn: mean, createEmpty: false)\\n  |> keep(columns: [\\\"_value\\\", \\\"_time\\\",\\\"TagName\\\"])\\n  |> yield()\\n\"}",
+        "interval": 3000,
+        "highflag": "",
+        "lowflag": ""
+      },
+      "icon": "wenben",
+      "style": {
+        "width": 1172,
+        "height": 350.4,
+        "top": 121.60000305175782,
+        "left": 752,
+        "rotate": 0
+      },
+      "id": "6ff9608625c74e47b924dcbfd2ee5492"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox6",
+      "label": "06号边框",
+      "propValue": {
+        "colorLeft": "rgba(30, 144, 255, 1)",
+        "colorRight": "#0078d2",
+        "backgroundColor": ""
+      },
+      "icon": "line",
+      "style": { "width": 379, "height": 196, "top": 258.00001525878906, "left": 8.5, "rotate": 0 },
+      "id": "a7d417e67a724dcf864cd83ae9008f87"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox1",
+      "label": "01号边框",
+      "propValue": { "colorLeft": "#4fd2dd", "colorRight": "#235fa7", "backgroundColor": "" },
+      "icon": "border1.png",
+      "style": { "width": 345, "height": 239, "top": 460, "left": 1187.7127757352941, "rotate": 0 },
+      "id": "d7a5419abc074330a98bace25a7e1313"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration7",
+      "label": "7号装饰",
+      "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "瓦斯浓度" },
+      "icon": "line",
+      "style": {
+        "width": 130,
+        "height": 28,
+        "color": "rgba(0, 206, 209, 1)",
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "top": 460,
+        "left": 1304,
+        "rotate": 0
+      },
+      "id": "532ae89cebef43819c841292f06176f6"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "边框",
+      "component": "BorderBox1",
+      "label": "01号边框",
+      "propValue": { "colorLeft": "#4fd2dd", "colorRight": "#235fa7", "backgroundColor": "" },
+      "icon": "border1.png",
+      "style": {
+        "width": 345,
+        "height": 239,
+        "top": 462.15277472601997,
+        "left": 1547,
+        "rotate": 0
+      },
+      "id": "20da09ebc03e4e47a981122c31245bd2"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "装饰",
+      "component": "Decoration7",
+      "label": "7号装饰",
+      "propValue": { "color1": "#1dc1f5", "color2": "#1dc1f5", "text": "冷却水压力" },
+      "icon": "line",
+      "style": {
+        "width": 130,
+        "height": 28,
+        "color": "rgba(0, 206, 209, 1)",
+        "fontSize": "20px",
+        "fontWeight": "600",
+        "top": 454.15277472601997,
+        "left": 1650.5,
+        "rotate": 0
+      },
+      "id": "cfca04f2d73647cab6f38d44a7cc83f2"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "进度图",
+      "component": "WaterChart",
+      "label": "水波图",
+      "propValue": {
+        "title": "",
+        "shape": "roundRect",
+        "outline": false,
+        "waveAnimation": true,
+        "borderColor": "#156ACF",
+        "borderWidth": 1,
+        "shadowColor": "rgba(0, 0, 0, 0.4)",
+        "shadowBlur": 20,
+        "fontSize": 40,
+        "textColor": "#fff",
+        "offsetLeft": 50,
+        "offsetRight": 50,
+        "direction": "left",
+        "dataTag": "CMJ_WSND",
+        "maxValue": 100,
+        "isInterval": false,
+        "interval": 3000,
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues"
+      },
+      "icon": "wenben",
+      "style": {
+        "rotate": 0,
+        "opacity": 1,
+        "width": 230,
+        "height": 204,
+        "top": 482.15277472601997,
+        "left": 1241
+      },
+      "id": "9c09d01a0dec4f83a666b1bae539733d"
+    },
+    {
+      "groupStyle": {},
+      "isLock": false,
+      "show": true,
+      "group": "进度图",
+      "component": "HorizontalProgress",
+      "label": "横向进度条1",
+      "propValue": {
+        "history": "http://192.168.66.33:64000/Scan/ReadPointValues",
+        "datatag": "CMJ_LQSYL",
+        "maxValue": "100",
+        "color1": "#3DE7C9",
+        "color2": "#00BAFF",
+        "borderWidth": 3,
+        "borderGap": 3,
+        "lineDash": "5,1",
+        "textColor": "#fff",
+        "borderRadius": 5,
+        "localGradient": false,
+        "formatter": "{value}Mpa",
+        "fontSize": 15,
+        "rotate": 0
+      },
+      "icon": "wenben",
+      "style": {
+        "rotate": 0,
+        "opacity": 1,
+        "width": 300,
+        "height": 100,
+        "top": 543,
+        "left": 1569.5
+      },
+      "id": "e4e57c2570a54195aaf467ba4ecf968c"
+    },
+    {
+      "component": "Group",
+      "style": { "rotate": 0, "left": 1345, "top": 24, "width": 402, "height": 73 },
+      "subComponents": [
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "100%",
+            "height": "100%",
+            "top": "0%",
+            "left": "0%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "边框",
+          "component": "BorderBox8",
+          "label": "08号边框",
+          "propValue": {
+            "colorLeft": "rgba(126, 208, 234, 1)",
+            "colorRight": "rgba(96, 195, 231, 1)",
+            "backgroundColor": "",
+            "reverse": false
+          },
+          "icon": "line",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 402,
+            "height": 73,
+            "top": 297,
+            "left": 515
+          },
+          "id": "80d1f7c4af414d2287a5e1a6426cb2a0"
+        },
+        {
+          "groupStyle": {
+            "transform": "rotate(0deg)",
+            "opacity": 1,
+            "width": "96.51741293532339%",
+            "height": "86.3013698630137%",
+            "fontSize": "12px",
+            "color": "#fff",
+            "top": "6.8493150684931505%",
+            "left": "1.7412935323383085%"
+          },
+          "isLock": false,
+          "show": true,
+          "group": "导航",
+          "component": "Navigation3",
+          "label": "导航3",
+          "propValue": {
+            "slidesPerView": "6",
+            "spaceBetween": 5,
+            "textAlgin": "center",
+            "swiperList": [
+              {
+                "link": "/equipment/b5a4f3c0-763f-4599-a716-b341f46a2c12",
+                "img": "test/icon4.png",
+                "label": "首页"
+              },
+              {
+                "link": "/equipment/c62e6058-2fca-47e3-abaf-9b973f55e683",
+                "img": "test/gongdian.png",
+                "label": "供电"
+              },
+              {
+                "link": "/equipment/e6826723-a389-47d4-ae63-ddee79038ece",
+                "img": "test/lvdai.png",
+                "label": "三机"
+              },
+              {
+                "link": "/equipment/edf4ee87-efe2-4796-af41-d4ff13022a2d",
+                "img": "test/shuibengfang.png",
+                "label": "供液"
+              },
+              {
+                "link": "/equipment/1078a911-b2ec-41d3-b110-e181c1422a5f",
+                "img": "test/posuiji.png",
+                "label": "采煤机"
+              },
+              {
+                "link": "/equipment/de7397af-05ca-4e54-8ad8-943c594cd559",
+                "img": "test/shebeiyuebaoshebeiribao.png",
+                "label": "控制"
+              }
+            ]
+          },
+          "icon": "line",
+          "style": {
+            "rotate": 0,
+            "opacity": 1,
+            "width": 388,
+            "height": 63,
+            "fontSize": 12,
+            "color": "#fff",
+            "top": 302,
+            "left": 522
+          },
+          "id": "04766e116b964790a3f2baece84c8436"
+        }
+      ],
+      "id": "20d6f6032ab54431bf8293d3284e65c8"
+    }
+  ],
+  "canvasStyle": {
+    "width": 1920,
+    "height": 1080,
+    "scale": 100,
+    "alertWs": "",
+    "dataWs": "",
+    "image": "https://cdn.jsdelivr.net/gh/AnsGoo/openDataV@gh-pages/images/bg.jpg"
+  }
+}
