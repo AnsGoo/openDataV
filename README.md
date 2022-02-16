@@ -13,3 +13,7 @@ yarn
 # 启动项目
 yarn dev
 ```
+
+# 体验账号
+
+admin/admin
