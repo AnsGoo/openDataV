@@ -76,7 +76,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/:pathMatch(.*)*',
     name: 'Error',
-    component: () => import('@/views/exception/404.vue'),
+    component: () => import('@/views/designer/Index.vue'),
     meta: {
       title: '错误页面',
       ignoreAuth: true
