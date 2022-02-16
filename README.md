@@ -1,3 +1,5 @@
+采用 Vue3 + vite + typescripts 开发
+
 # 启动项目
 
 ```shell
