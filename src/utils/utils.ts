@@ -221,7 +221,11 @@ export const noticeAlert = debounce((payload) => {
 export const getScreenStyle = (canvasStyle: CanvasStyleData) => {
   let backgroundImage = ''
   if (isImage(canvasStyle.image)) {
-    backgroundImage = `url('/${canvasStyle.image}')`
+    if (canvasStyle.image.startsWith('http')) {
+      backgroundImage = `url('${canvasStyle.image}')`
+    } else {
+      backgroundImage = `url('/${canvasStyle.image}')`
+    }
   }
   return {
     width: changeStyleWithScale(canvasStyle.width, canvasStyle.scale) + 'px',
