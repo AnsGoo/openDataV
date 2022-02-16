@@ -139,7 +139,7 @@ const loadUsers = async (): Promise<void> => {
   }
 }
 const initUI = async (): Promise<void> => {
-  const resp: LayoutData[] = await getUIComponentsList(import.meta.env.VITE_UI_TYPE as string)
+  const resp: LayoutData[] = await getUIComponentsList()
   if (resp) {
     layoutList.value = resp
   }
