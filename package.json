@@ -1,5 +1,5 @@
 {
-  "name": "marco-dashboard",
+  "name": "OpenDataV",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",

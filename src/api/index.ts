@@ -10,12 +10,9 @@ export const getUIComponents = async (index: string): Promise<LayoutData> => {
 }
 
 // 获取页面数据列表
-export const getUIComponentsList = async (type: string): Promise<LayoutData[]> => {
+export const getUIComponentsList = async (): Promise<LayoutData[]> => {
   return http.get<Array<LayoutData>>({
-    url: '/pages',
-    params: {
-      type: type
-    }
+    url: '/pages'
   })
 }
 

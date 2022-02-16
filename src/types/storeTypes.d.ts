@@ -1,5 +1,4 @@
 import type { ComponentInfo } from '@/types/component'
-import type { Setting } from '@/types/apiTypes'
 
 export interface Component {
   style: Recordable<string>
@@ -70,8 +69,4 @@ export interface UserInfo {
   username: string
   token: string | undefined
   permissions: string[]
-}
-
-export interface SystemSetting {
-  setting: Array<Setting>
 }

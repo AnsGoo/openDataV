@@ -227,6 +227,7 @@ export const getScreenStyle = (canvasStyle: CanvasStyleData) => {
       backgroundImage = `url('/${canvasStyle.image}')`
     }
   }
+
   return {
     width: changeStyleWithScale(canvasStyle.width, canvasStyle.scale) + 'px',
     height: changeStyleWithScale(canvasStyle.height, canvasStyle.scale) + 'px',

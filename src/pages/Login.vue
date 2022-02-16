@@ -3,11 +3,11 @@
     <div class="left">
       <div class="name">
         <span><img class="logo" src="/favicon.ico" /></span>
-        <span> 华创马科智慧矿山数据平台</span>
+        <span> OPenDataV</span>
       </div>
       <img class="home" src="/home.png" />
       <div class="desc">
-        <span>最具智能化矿山数据平台</span>
+        <span>最具智能化数据可视化平台</span>
       </div>
     </div>
     <div class="right">

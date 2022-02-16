@@ -24,11 +24,3 @@ export interface BasicFetchResult<T = any> {
   Message?: string
   [key: string]: any
 }
-
-export interface Setting {
-  id?: string | number
-  name: string
-  tag: string
-  config: Recordable
-  desc?: string
-}
