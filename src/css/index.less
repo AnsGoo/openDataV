@@ -1,0 +1,31 @@
+button.realbutton {
+  border: 0px;
+  border-color: transparent;
+  background-color: transparent;
+  box-shadow:2px 2px 4px 0px gray;
+
+  &:focus,
+  &:hover {
+    color: black;
+    background-color: transparent;
+    box-shadow: 2px 2px 4px 3px gray;
+  }
+
+  &:active {
+    color: black;
+    border: 0px;
+    border-color: transparent;
+    background-color: transparent;
+    box-shadow:inset 2px 2px 4px gray;
+  }
+}
+
+.noEvent {
+  pointer-events: none;
+}
+
+.dialog-style-custom {
+  .el-dialog__body {
+    padding-bottom: 0px !important;
+  }
+}

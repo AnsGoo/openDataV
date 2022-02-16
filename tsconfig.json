@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "useDefineForClassFields": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "isolatedModules": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": ["esnext", "dom"],
+    "allowJs": true,
+    "types": ["vite/client","element-plus/global"],
+    "checkJs": true,
+    "outDir": "./dist",
+    "noImplicitAny": false, // 允许隐式的any类型（某些第三方库有隐式的any类型）
+    "strictNullChecks": true, // 不允许把null、undefined赋值给其他类型的变量
+    "strictPropertyInitialization": true, // 类的实例属性必须初始化
+    "noImplicitThis": true, // 不允许this有隐式的any类型
+    "noUnusedLocals": false, // 检查只声明、未使用的局部变量(只提示不报错)
+    "noUnusedParameters": true, // 检查未使用的函数参数(只提示不报错)
+    "removeComments": true, // 移除代码中的注释
+    "typeRoots":["node_modules/@types", "node_modules/element-plus", "src/types"], // 将这些文件夹下的包自动导入 TypeScript 声明
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "exclude": ["node_modules", "dist", "**/*.js"]
+}
