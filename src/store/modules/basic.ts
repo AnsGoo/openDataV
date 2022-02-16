@@ -19,7 +19,7 @@ const useBasicStore = defineStore({
       scale: 100,
       alertWs: '',
       dataWs: '',
-      image: 'images/bg.jpg'
+      image: 'https://cdn.jsdelivr.net/gh/AnsGoo/openDataV@gh-pages/images/bg.jpg'
     },
     componentData: [],
     curComponent: undefined,
