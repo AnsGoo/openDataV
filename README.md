@@ -21,7 +21,7 @@ OpenDavaV 是仿照阿里 DataV 开发的一款拖拽式大屏应用，采用 `V
 
 - 大屏效果2
 
-![页面效果1](https://gitee.com/Ranger313/pbed/raw/master/PyPicGo/liunx3e209db87900d3e04a8ec000bc5ddb92chenghaiwen20220216194032-coal.png)
+![页面效果1](https://raw.githubusercontent.com/AnsGoo/pbed/main/PyPicGo/liunx3e209db87900d3e04a8ec000bc5ddb92chenghaiwen20220216194739-coal.png)
 
 ## 预览地址：
 
@@ -29,7 +29,7 @@ OpenDavaV 是仿照阿里 DataV 开发的一款拖拽式大屏应用，采用 `V
 
 可下载 `templates` 文件夹下的`JSON`文件，点击编辑器导入预览已生成的项目
 
-本项目有几个简单的后端用户用户页面存储,采用`Koa`+`Typescripts`开发，地址：[https://github.com/AnsGoo/DataVStore](https://github.com/AnsGoo/DataVStore)
+本项目有个简单的后端项目，用于用户页面存储,采用`Koa`+`Typescripts`开发，地址：[https://github.com/AnsGoo/DataVStore](https://github.com/AnsGoo/DataVStore)
 
 ## 启动项目
 
@@ -37,7 +37,6 @@ OpenDavaV 是仿照阿里 DataV 开发的一款拖拽式大屏应用，采用 `V
 git clone git@github.com:AnsGoo/openDataV.git
 # 安装依赖
 yarn
-    @@ -14,6 +23,4 @@ yarn
 yarn dev
 ```
 
