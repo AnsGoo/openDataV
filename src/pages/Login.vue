@@ -118,15 +118,17 @@ const loginAction = async () => {
     width: 50%;
     height: 100%;
     background: radial-gradient(circle at 130% 40%, #80808024 30%, #2944b2 30%);
+    align-items: center;
     .name {
       color: #ffff;
       font-size: 40px;
       font-weight: bold;
-      margin-left: 10%;
       min-height: 80px;
       display: flex;
       flex-direction: row;
       align-items: center;
+      align-self: self-start;
+      margin-left: 10vh;
       .logo {
         width: 40px;
       }
@@ -138,6 +140,8 @@ const loginAction = async () => {
     .desc {
       color: #ffff;
       font-size: 20px;
+      align-self: self-start;
+      margin-left: 10vh;
     }
   }
   .right {

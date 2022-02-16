@@ -2,14 +2,18 @@
   <div class="bg">
     <div class="container">
       <div class="card" v-for="item in layoutList" :key="item.id">
-        <el-card :key="item.id" :body-style="{ padding: '0px', position: 'relative' }">
+        <el-card
+          :key="item.id"
+          :body-style="{ padding: '0px', position: 'relative' }"
+          :title="item.name"
+        >
           <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" />
           <div class="delete">
             <span class="icon iconfont icon-shouye shouye" v-show="item.isHome"></span>
             <span class="icon iconfont icon-shanchu shanchu" @click="handleDelete(item)"></span>
           </div>
           <div class="options">
-            <span>{{ item.name }}</span>
+            <span class="desc">{{ item.name }}</span>
             <div class="bottom">
               <span
                 class="icon iconfont icon-bianji"
@@ -306,6 +310,14 @@ const setPagePermissionAction = async () => {
 
   .options {
     padding: 5px 14px 14px 14px;
+    c {
+      white-space: nowrap; /*强制span不换行*/
+      display: inline-block; /*将span当做块级元素对待*/
+      width: 100%; /*限制宽度*/
+      overflow: hidden; /*超出宽度部分隐藏*/
+      text-overflow: ellipsis; /*超出部分以点号代替*/
+      line-height: 0.9; /*数字与之前的文字对齐*/
+    }
   }
 }
 </style>
