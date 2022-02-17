@@ -40,7 +40,7 @@ import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { ref, onMounted, onUnmounted, reactive, watch } from 'vue'
-import { getUIComponents } from '@/api/index'
+import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { eventBus } from '@/bus/useEventBus'

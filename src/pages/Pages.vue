@@ -108,7 +108,7 @@ import {
   deleteUIComponents,
   setHomePage,
   setPagePermission
-} from '@/api/index'
+} from '@/api/pages'
 import type { LayoutData } from '@/types/apiTypes'
 import { onMounted, reactive, ref } from 'vue'
 import defaultImg from '@/assets/default.jpg'
@@ -166,7 +166,7 @@ const handleEdit = (item: LayoutData) => {
 
 const handleView = (item: LayoutData) => {
   router.push({
-    name: 'Common',
+    name: 'PageView',
     params: {
       index: item.id
     }
@@ -174,8 +174,8 @@ const handleView = (item: LayoutData) => {
 }
 
 const handleCopy = (item: LayoutData) => {
-  copyText(`/equipment/${item.id}`)
-  successMessage(`路由复制成功: /equipment/${item.id}`)
+  copyText(`/page/${item.id}/view`)
+  successMessage(`路由复制成功: /page/${item.id}/view`)
 }
 
 const handleSetHome = (item: LayoutData) => {

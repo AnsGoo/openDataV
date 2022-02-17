@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, reactive } from 'vue'
-import { getUIComponents, getHomeData } from '@/api'
+import { getUIComponents, getHomeData } from '@/api/pages'
 import type { ComponentInfo } from '@/types/component'
 import { useRoute, useRouter } from 'vue-router'
 import { getScreenStyle } from '@/utils/utils'
