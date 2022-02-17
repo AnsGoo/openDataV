@@ -4,7 +4,7 @@ import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/compone
 const component: ComponentInfo = {
   component: 'ClickBtn',
   label: '点击事件按钮',
-  group: ComponentGroup.STARTSTOP,
+  group: ComponentGroup.CUSTOM,
   propValue: {
     url: '/Scan/WritePoint',
     tagName: 'CMJ_ZDHQDXNTZ',

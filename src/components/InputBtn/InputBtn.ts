@@ -4,7 +4,7 @@ import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/compone
 const component: ComponentInfo = {
   component: 'InputBtn',
   label: '带按钮的输入框',
-  group: ComponentGroup.STARTSTOP,
+  group: ComponentGroup.CUSTOM,
   propValue: {
     url: '/Scan/WritePoint',
     getDataUrl: '',

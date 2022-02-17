@@ -4,7 +4,7 @@ import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/compone
 const component: ComponentInfo = {
   component: 'DisplayHiddenButton',
   label: '显示隐藏组件按钮',
-  group: ComponentGroup.STARTSTOP,
+  group: ComponentGroup.CUSTOM,
   propValue: {
     componentId: '',
     displayStyle: 'visibility',

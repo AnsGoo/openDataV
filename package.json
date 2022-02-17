@@ -4,7 +4,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && tsc --noEmit && vite build",
-    "serve": "vite preview",
+    "serve": "yarn build && vite preview",
     "lint": "eslint --ext .js,.ts,.vue src/",
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
     "prepare": "husky install"
