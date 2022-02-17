@@ -53,8 +53,6 @@ export enum AlarmLevel {
 }
 
 export enum ComponentGroup {
-  //机器图片
-  MACHINEIMG = '机器图片',
   // 基础组件
   BASIC = '基础',
   // 边框
@@ -67,8 +65,6 @@ export enum ComponentGroup {
   BAR = '柱状图',
   // 百分比图
   PERCENTAGE = '百分比图',
-  //一键启停
-  STARTSTOP = '启停按钮',
   // 仪表盘
   GAUGE = '仪表盘',
   // 定制组件
@@ -84,8 +80,6 @@ export enum ComponentGroup {
 }
 
 export enum ControlType {
-  //带有图片的下拉框
-  IMGSELECT = 'imgSelect',
   // 文本框
   TEXT = 'text',
   // 文本域，多行文本属性

@@ -5,7 +5,7 @@ import { useTitle } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { watch, unref, ref, computed } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import UserAffix from './components/common/UserAffix.vue'
+import UserAffix from '@/annex/UserAffix.vue'
 import { useUserStoreWithOut } from '@/store/modules/user'
 const userStore = useUserStoreWithOut()
 

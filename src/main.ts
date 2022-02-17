@@ -6,7 +6,7 @@ import '@/css/font.less'
 import '@/assets/directionFonts/iconfont.css'
 import 'element-plus/dist/index.css'
 import { setupStore } from '@/store'
-import { setupCustomComponent } from '@/views/index'
+import { setupCustomComponent } from '@/designer/load'
 import { setupRouter } from '@/router'
 
 const app = createApp(App)

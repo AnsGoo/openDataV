@@ -4,34 +4,34 @@ const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/views/common/Index.vue'),
+    component: () => import('@/pages/PageView.vue'),
     meta: {
       title: '首页',
       ignoreAuth: true
     }
   },
   {
-    path: '/equipment/:index',
-    name: 'Common',
-    component: () => import('@/views/common/Index.vue'),
+    path: '/page/:index/view',
+    name: 'PageView',
+    component: () => import('@/pages/PageView.vue'),
     meta: {
       title: '页面',
       ignoreAuth: true
     }
   },
   {
-    path: '/create',
+    path: '/page/create',
     name: 'Create',
-    component: () => import('@/views/designer/Index.vue'),
+    component: () => import('@/pages/DesignerPage.vue'),
     meta: {
       title: '创建页面',
       permission: 'CreatePage'
     }
   },
   {
-    path: '/editor/:index',
+    path: '/page/:index/edite',
     name: 'Editor',
-    component: () => import('@/views/designer/Index.vue'),
+    component: () => import('@/pages/DesignerPage.vue'),
     meta: {
       title: '编辑页面',
       permission: 'EditePage'
@@ -40,7 +40,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/preview',
     name: 'Preview',
-    component: () => import('@/components/Editor/Preview.vue'),
+    component: () => import('@/pages/Preview.vue'),
     meta: {
       title: '预览界面',
       permission: 'PerviewPage'
@@ -49,7 +49,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/pages',
     name: 'Pages',
-    component: () => import('@/views/common/Pages.vue'),
+    component: () => import('@/pages/Pages.vue'),
     meta: {
       title: '布局界面',
       permission: 'Pages'
@@ -76,7 +76,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/:pathMatch(.*)*',
     name: 'Error',
-    component: () => import('@/views/designer/Index.vue'),
+    component: () => import('@/pages/exception/404.vue'),
     meta: {
       title: '错误页面',
       ignoreAuth: true

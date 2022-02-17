@@ -12,4 +12,4 @@ export type AppRouteRecordRaw = RouteRecordRaw & {
   fullPath?: string
 }
 
-export const NO_LAYOUT = () => import('@/views/Layout.vue')
+export const NO_LAYOUT = () => import('@/layout/Layout.vue')
