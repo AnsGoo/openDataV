@@ -12811,7 +12811,6 @@
     "width": 1920,
     "height": 1080,
     "scale": 100,
-    "alertWs": "",
     "dataWs": "",
     "image": "https://cdn.jsdelivr.net/gh/AnsGoo/openDataV@gh-pages/images/bg.jpg"
   }

@@ -46,10 +46,6 @@ const screenStyle = reactive<Recordable<string>>({ width, height })
 const bgStyle = reactive<Recordable<string>>({ backgroundImage, backgroundSize })
 
 onMounted(() => {
-  if (canvasStyleData.alertWs) {
-    websockets.push(initWebsocket('alert', canvasStyleData.alertWs))
-  }
-
   if (canvasStyleData.dataWs) {
     websockets.push(initWebsocket('actual', canvasStyleData.dataWs))
   }

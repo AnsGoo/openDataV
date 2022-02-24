@@ -14,14 +14,11 @@ import type { ComponentInfo } from '@/types/component'
 import { useRoute, useRouter } from 'vue-router'
 import { getScreenStyle } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import { useWsDataStoreWithOut } from '@/store/modules/wsdata'
 import { cloneDeep } from 'lodash-es'
 import { eventBus } from '@/bus/useEventBus'
 import { LayoutData } from '@/types/apiTypes'
 
 const websockets: WebSocket[] = []
-
-const wsDataStore = useWsDataStoreWithOut()
 
 const componentData = ref<Array<ComponentInfo>>([])
 const canvasStyle = ref<CanvasStyleData>({} as CanvasStyleData)
@@ -78,9 +75,6 @@ const setPageData = (data: LayoutData): void => {
   if (data.canvasData) {
     componentData.value = cloneDeep(data.canvasData)
   }
-  if (canvasStyle.value.alertWs) {
-    websockets.push(initWebsocket('alert', canvasStyle.value.alertWs))
-  }
   if (canvasStyle.value.dataWs) {
     websockets.push(initWebsocket('actual', canvasStyle.value.dataWs))
   }
@@ -115,7 +109,6 @@ const initWebsocket = (key: string, url: string): WebSocket => {
   ws.onmessage = (ev) => {
     const data = JSON.parse(ev.data)
     eventBus.emit(key, data)
-    wsDataStore.addData(key, data)
   }
 
   return ws

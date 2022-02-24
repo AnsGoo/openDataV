@@ -264,7 +264,7 @@ const setPagePermissionAction = async () => {
   .bg {
     @apply bg-gray-100 w-screen h-screen border border-transparent;
 
-    background: url('images/bg.jpg') no-repeat center center;
+    background: url('/images/bg.jpg') no-repeat center center;
     background-size: cover;
   }
 

@@ -23,7 +23,7 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useLayerStoreWithOut } from '@/store/modules/layer'
 
-import { copyText } from '@/utils/utils'
+import { copyText, pasteText } from '@/utils/utils'
 import type { ComponentInfo } from '@/types/component'
 
 const props = defineProps<{
@@ -47,17 +47,30 @@ const handleMouseUp = () => {
 
 const cut = () => {
   copyStore.cut()
+  copyText(JSON.stringify(basicStore.curComponent))
   emits('update:display', false)
 }
 
 const copy = () => {
   copyStore.copy()
+  copyText(JSON.stringify(basicStore.curComponent))
   emits('update:display', false)
 }
 
 const paste = () => {
   snapShotStore.recordSnapshot()
-  copyStore.paste(true, props.menuLeft - 258, props.menuTop - 82)
+  const textData = pasteText()
+  console.log(textData)
+  if (textData) {
+    const component: ComponentInfo = JSON.parse(textData)
+    if ('component' in component) {
+      component.style.top = props.menuTop - 82
+      component.style.left = props.menuLeft - 258
+    }
+  } else {
+    copyStore.paste(true, props.menuLeft - 258, props.menuTop - 82)
+  }
+
   emits('update:display', false)
 }
 

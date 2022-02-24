@@ -62,6 +62,7 @@ import { useStorage, onClickOutside } from '@vueuse/core'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
+import { ComponentInfo } from '@/types/component'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -91,12 +92,14 @@ onMounted(() => {
   console.log('进入编辑模式')
   basicStore.setEditMode(EditMode.EDIT)
   document.addEventListener('keydown', keyDown)
+  document.addEventListener('paste', pasteText)
 })
 
 onUnmounted(() => {
   console.log('进入预览模式')
   basicStore.setEditMode(EditMode.PREVIEW)
   document.removeEventListener('keydown', keyDown)
+  document.removeEventListener('paste', pasteText)
 })
 
 const componentData = computed(() => basicStore.componentData)
@@ -105,6 +108,23 @@ const curComponent = computed(() => basicStore.curComponent)
 const defaultStyle = computed(() => {
   return getScreenStyle(canvasStyleData.value)
 })
+
+const pasteText = async (event: ClipboardEvent) => {
+  if (event.clipboardData) {
+    const textData = event.clipboardData.getData('text')
+    try {
+      console.log(textData)
+      const component: ComponentInfo = JSON.parse(textData)
+      if ('component' in component) {
+        event.preventDefault()
+        component.id = undefined
+        basicStore.addComponent({ component })
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+}
 
 const storageCanvasData = useStorage(
   'canvasData',

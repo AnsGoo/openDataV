@@ -1,7 +1,4 @@
-import { debounce } from 'lodash-es'
-import { ElNotification } from 'element-plus'
 import type { CanvasStyleData, Postion } from '@/types/storeTypes'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { ComponentInfo, DOMRectStyle } from '@/types/component'
 import { errorMessage } from '@/utils/message'
 import type { Vector } from '@/types/common'
@@ -208,15 +205,6 @@ export function isImage(file) {
   return /(png|jpg|jpeg|gif|webp)$/.test(file)
 }
 
-// 声明防抖函数
-export const noticeAlert = debounce((payload) => {
-  ElNotification({
-    title: 'Error',
-    message: payload.Content.AlarmDescription,
-    type: 'error'
-  })
-}, parseInt(import.meta.env.VITE_ALERT_DELAY))
-
 // 获取大屏样式
 export const getScreenStyle = (canvasStyle: CanvasStyleData) => {
   let backgroundImage = ''
@@ -284,31 +272,19 @@ export const exportRaw = (name: string, data: string) => {
 }
 
 // 导入本地数据
-export const importRaw = () => {
+export const importRaw = (fileHandler, accept = '.*') => {
   const input = document.createElement('input')
   input.type = 'file'
-  input.accept = '.json'
+  input.accept = accept
   input.onchange = (e) => {
     if (e.currentTarget && e.currentTarget['files']) {
       const length = e.currentTarget['files'].length || 0
       if (length === 0) {
         errorMessage('请选择文件')
       } else {
-        const basicStore = useBasicStoreWithOut()
         const reader = new FileReader()
         reader.readAsText(e.currentTarget['files'][0])
-        reader.onload = (loadEvent) => {
-          if (loadEvent.target && loadEvent.target.result) {
-            const layoutComponents: { canvasData: ComponentInfo[]; canvasStyle: CanvasStyleData } =
-              JSON.parse(loadEvent.target.result as string)
-            if (layoutComponents) {
-              layoutComponents.canvasData?.forEach((item) => {
-                basicStore.copyComponent(item)
-              })
-              basicStore.setCanvasStyle(layoutComponents.canvasStyle)
-            }
-          }
-        }
+        reader.onload = fileHandler
       }
     }
   }
@@ -318,55 +294,30 @@ export const importRaw = () => {
 }
 
 // 复制文本到剪贴板
-export const copyText = (text: string) => {
-  const transfer = document.createElement('input')
-  document.body.appendChild(transfer)
-  transfer.value = text
-  transfer.select()
-  if (document.execCommand('copy')) {
-    document.execCommand('copy')
+export const copyText = (text: string): void => {
+  const copy = (event: ClipboardEvent) => {
+    event.clipboardData?.setData('text', text)
+    event.preventDefault()
   }
-
-  transfer.blur()
-  document.body.removeChild(transfer)
-}
-
-// 数字补零
-export const numberFormat = (num: number, length: number, span: string, preix = true): string => {
-  /*
-   * num: 数字
-   * length: 补零后的长度
-   * span: 补零的字符
-   * preix: 是否在前面补零
-   */
-  // return (Array(length).join(span) + num).slice(-length)
-  let numLen = num.toString().length
-  let result = num.toString()
-  while (numLen < length) {
-    if (!preix) {
-      result = `${result}${span}`
-    } else {
-      result = `${span}${result}`
-    }
-
-    ++numLen
-  }
-  return result
+  document.addEventListener('copy', copy)
+  document.execCommand('copy')
+  document.removeEventListener('copy', copy)
 }
 
 /**
- * 判断当前值，是否在返回内
- * @params value: 当前值
- * @params upperLimit: 上限
- * @parms lowLimit: 下线
- * return 符合值
+ * 从剪切板获取文本
+ * @returns  文本
  */
-export const compareValue = (value: number, upperLimit: number, lowLimit: number): number => {
-  if (value < lowLimit) {
-    return lowLimit
-  } else if (value > upperLimit) {
-    return upperLimit
-  } else {
-    return value
+export const pasteText = (): string => {
+  let textData
+  const paste = (event: ClipboardEvent) => {
+    console.log(event)
+    textData = event.clipboardData?.getData('text')
+    console.log(textData)
+    event.preventDefault()
   }
+  document.addEventListener('paste', paste)
+  document.execCommand('paste')
+  document.removeEventListener('paste', paste)
+  return textData
 }

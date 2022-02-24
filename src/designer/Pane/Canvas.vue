@@ -28,7 +28,6 @@ const styleKeys = [
   { key: 'width', label: '宽度', type: 'number' },
   { key: 'height', label: '高度', type: 'number' },
   { key: 'scale', label: '比例', type: 'number' },
-  { key: 'alertWs', label: '实时报警', type: 'text' },
   { key: 'dataWs', label: '实时数据', type: 'text' },
   { key: 'image', label: '背景图', type: 'text' }
 ]

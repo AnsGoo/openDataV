@@ -66,6 +66,8 @@ import IconFont from './IconFont.vue'
 import ImageView from './ImageView.vue'
 import { ElForm, ElInput, ElFormItem, ElButton, ElDialog, ElUpload } from 'element-plus'
 import type { UploadFile } from 'element-plus/lib/components/upload/src/upload.type'
+import { ComponentInfo } from '@/types/component'
+import { CanvasStyleData } from '@/types/storeTypes'
 
 // 状态管理
 const basicStore = useBasicStoreWithOut()
@@ -228,9 +230,21 @@ const exportCanvas = () => {
 }
 
 const importCanvas = () => {
-  importRaw()
+  importRaw(fileHandler, '.json')
 }
 
+const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
+  if (loadEvent.target && loadEvent.target.result) {
+    const layoutComponents: { canvasData: ComponentInfo[]; canvasStyle: CanvasStyleData } =
+      JSON.parse(loadEvent.target.result as string)
+    if (layoutComponents) {
+      layoutComponents.canvasData?.forEach((item) => {
+        basicStore.copyComponent(item)
+      })
+      basicStore.setCanvasStyle(layoutComponents.canvasStyle)
+    }
+  }
+}
 const stopHandle: WatchStopHandle = watch(
   () => route.params.index,
   (toParams, _) => {
