@@ -311,7 +311,6 @@ export const copyText = (text: string): void => {
 export const pasteText = (): string => {
   let textData
   const paste = (event: ClipboardEvent) => {
-    console.log(event)
     textData = event.clipboardData?.getData('text')
     console.log(textData)
     event.preventDefault()

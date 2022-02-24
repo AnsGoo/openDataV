@@ -60,7 +60,6 @@ const copy = () => {
 const paste = () => {
   snapShotStore.recordSnapshot()
   const textData = pasteText()
-  console.log(textData)
   if (textData) {
     const component: ComponentInfo = JSON.parse(textData)
     if ('component' in component) {
