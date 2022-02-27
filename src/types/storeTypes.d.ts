@@ -31,13 +31,8 @@ export interface MenuStatus {
   menuShow?: boolean
 }
 
-export interface ItemData {
-  data: any
-  index: number | undefined
-}
-
 export interface CopyItem {
-  copyData: ItemData | undefined
+  copyData: any | undefined
   isCut: boolean
 }
 

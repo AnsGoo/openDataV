@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import type { EditData, CanvasStyleData, Postion, ComponentPos } from '@/types/storeTypes'
+import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
 import type { ComponentInfo } from '@/types/component'
 import { EditMode } from '@/enum'
@@ -17,7 +17,6 @@ const useBasicStore = defineStore({
       width: 1920,
       height: 1080,
       scale: 100,
-      alertWs: '',
       dataWs: '',
       image: 'https://cdn.jsdelivr.net/gh/AnsGoo/openDataV@gh-pages/images/bg.jpg'
     },
@@ -162,20 +161,14 @@ const useBasicStore = defineStore({
       this.resetComponentData(componentData, ids)
       this.componentData = componentData
     },
-
-    addComponent({ component, index }: ComponentPos): void {
-      if (index !== undefined) {
-        this.componentData.splice(index, 0, component)
-      } else {
-        component.id = uuid()
-
-        // 如果没有 rotate 属性，就添加一个属性
-        if (component.style.rotate === undefined) {
-          component.style.rotate = 0
-        }
-
-        this.componentData.push(component)
+    addComponent(component: ComponentInfo): void {
+      component.id = uuid()
+      // 如果没有 rotate 属性，就添加一个属性
+      if (component.style.rotate === undefined) {
+        component.style.rotate = 0
       }
+
+      this.componentData.push(component)
     },
 
     /**

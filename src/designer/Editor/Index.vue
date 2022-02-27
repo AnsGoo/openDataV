@@ -118,7 +118,7 @@ const pasteText = async (event: ClipboardEvent) => {
       if ('component' in component) {
         event.preventDefault()
         component.id = undefined
-        basicStore.addComponent({ component })
+        basicStore.addComponent(component)
       }
     } catch (e) {
       console.log(e)

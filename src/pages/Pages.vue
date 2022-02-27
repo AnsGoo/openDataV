@@ -241,7 +241,7 @@ const setPagePermissionAction = async () => {
       @apply p-2;
 
       width: 10vw;
-      height: 230px;
+      // height: 230px;
       transition: all 0.3s ease;
       transform-origin: center;
 

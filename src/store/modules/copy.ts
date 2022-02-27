@@ -14,14 +14,11 @@ const useCopyStore = defineStore({
   actions: {
     copy() {
       const basicStore = useBasicStoreWithOut()
-      if (!basicStore.curComponent) {
+      const curComponent = basicStore.curComponent || basicStore.layerComponent
+      if (!curComponent) {
         return
       }
-
-      this.copyData = {
-        data: cloneDeep(basicStore.curComponent),
-        index: basicStore.curComponentIndex
-      }
+      this.copyData = cloneDeep(curComponent)
     },
 
     paste(isMouse: boolean, x?: number, y?: number): void {
@@ -31,46 +28,17 @@ const useCopyStore = defineStore({
       }
 
       const basicStore = useBasicStoreWithOut()
-      const data = this.copyData.data
 
       if (isMouse) {
-        data.style.top = y
-        data.style.left = x
+        this.copyData.style.top = y
+        this.copyData.style.left = x
       } else {
-        data.style.top += 10
-        data.style.left += 10
+        this.copyData.style.top += 10
+        this.copyData.style.left += 10
       }
 
-      basicStore.copyComponent(cloneDeep(data))
-      if (this.isCut) {
-        this.copyData = undefined
-      }
-    },
-
-    cut() {
-      const basicStore = useBasicStoreWithOut()
-      if (!basicStore.curComponent) {
-        Message('请选择组件')
-        return
-      }
-
-      if (this.copyData) {
-        const data = cloneDeep(this.copyData.data)
-        const index = this.copyData.index
-        basicStore.addComponent({ component: data, index })
-        if (
-          index !== undefined &&
-          basicStore.curComponentIndex &&
-          (basicStore.curComponentIndex as number) >= index
-        ) {
-          // 如果当前组件索引大于等于插入索引，需要加一，因为当前组件往后移了一位
-          basicStore.curComponentIndex++
-        }
-      }
-
-      this.copy()
-      basicStore.deleteComponent(undefined)
-      this.isCut = true
+      basicStore.copyComponent(cloneDeep(this.copyData))
+      this.copyData = undefined
     }
   }
 })

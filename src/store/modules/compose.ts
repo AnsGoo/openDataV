@@ -77,7 +77,7 @@ const useComposeStore = defineStore({
         subComponents: components
       }
       createGroupStyle(groupComponent)
-      basicStore.addComponent({ component: groupComponent })
+      basicStore.addComponent(groupComponent)
       this.batchDeleteComponent(this.components)
 
       const index = basicStore.componentData.length - 1
@@ -96,7 +96,7 @@ const useComposeStore = defineStore({
       const basicStore = useBasicStoreWithOut()
       deleteData.forEach((component) => {
         for (let i = 0, len = basicStore.componentData.length; i < len; i++) {
-          if (component.id == basicStore.componentData[i].id) {
+          if (component.id === basicStore.componentData[i].id) {
             basicStore.componentData.splice(i, 1)
             break
           }
@@ -120,7 +120,7 @@ const useComposeStore = defineStore({
         basicStore.deleteComponent(basicStore.curComponent!.id)
         components.forEach((component) => {
           decomposeComponent(component, editorRect, parentStyle)
-          basicStore.addComponent({ component })
+          basicStore.addComponent(component)
         })
       }
     }

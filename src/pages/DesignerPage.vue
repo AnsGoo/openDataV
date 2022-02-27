@@ -93,7 +93,7 @@ const handleDrop = (e) => {
     component.style.top = e.offsetY
     component.style.left = e.offsetX
     snapShotStore.recordSnapshot()
-    basicStore.addComponent({ component })
+    basicStore.addComponent(component)
   }
 }
 

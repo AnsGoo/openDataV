@@ -6,6 +6,7 @@
       <li @click="bottomComponent(index)">置底</li>
       <li @click="upComponent(index)">上一层</li>
       <li @click="downComponent(index)">下一层</li>
+      <li @click="copyComponent(index)">复制</li>
     </ul>
   </div>
 </template>
@@ -13,9 +14,10 @@
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
-import { swap } from '@/utils/utils'
+import { swap, copyText } from '@/utils/utils'
 import type { ComponentInfo } from '@/types/component'
 import { Message } from '@/utils/message'
+import { useCopyStoreWithOut } from '@/store/modules/copy'
 
 defineProps<{
   menuTop: number
@@ -28,6 +30,7 @@ const emits = defineEmits<{
   (e: 'update:display', value: boolean): void
 }>()
 
+const copyStore = useCopyStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -38,6 +41,19 @@ const deleteComponent = (index: string) => {
   if (fatherComponentData) {
     snapShotStore.recordSnapshot()
     fatherComponentData.splice(myindex, 1)
+  }
+  emits('update:display', false)
+}
+
+const copyComponent = (index: string) => {
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  const myindex: number = indexs.pop() as number
+  const fatherComponentData: Array<ComponentInfo> | undefined = getFatherComponentData(indexs)
+  if (fatherComponentData) {
+    const componentInfo: ComponentInfo = fatherComponentData[myindex]
+    componentInfo.id = undefined
+    copyText(JSON.stringify(componentInfo))
+    copyStore.copy()
   }
   emits('update:display', false)
 }
