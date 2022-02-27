@@ -49,11 +49,6 @@ export interface Postion {
   rotate?: number
 }
 
-export interface ComponentPos {
-  component: any
-  index?: number
-}
-
 export interface AreaData {
   style: Postion
   components: Array<ComponentInfo>
