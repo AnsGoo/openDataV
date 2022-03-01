@@ -6,7 +6,7 @@
           class="component"
           :class="{ active: isLayerActive(item.id as string) }"
           :is="item.component"
-          :style="item.groupStyle"
+          :style="getComponentStyle(item)"
           :propValue="item.propValue"
           :id="'component' + item.id"
           :element="item"
@@ -20,7 +20,7 @@
 <script setup lang="ts">
 import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-
+import { getGroupStyle, getStyle } from '@/utils/utils'
 const basicStore = useBasicStoreWithOut()
 withDefaults(
   defineProps<{
@@ -36,6 +36,13 @@ const isLayerActive = (id: string) => {
     return basicStore.layerComponent.id === id
   }
   return false
+}
+
+const getComponentStyle = (item: ComponentInfo) => {
+  return {
+    ...getStyle(item.style, ['top', 'left', 'width', 'height', 'rotate']),
+    ...getGroupStyle(item.groupStyle || {})
+  }
 }
 </script>
 

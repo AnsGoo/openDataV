@@ -4,7 +4,6 @@
       <template v-if="curComponent">
         <li @click="copy">复制</li>
         <li @click="paste">粘贴</li>
-        <li @click="cut">剪切</li>
         <li @click="deleteComponent">删除</li>
         <li @click="topComponent">置顶</li>
         <li @click="bottomComponent">置底</li>
@@ -43,12 +42,6 @@ const layerStore = useLayerStoreWithOut()
 // 点击菜单时不取消当前组件的选中状态
 const handleMouseUp = () => {
   basicStore.setClickComponentStatus(true)
-}
-
-const cut = () => {
-  copyStore.cut()
-  copyText(JSON.stringify(basicStore.curComponent))
-  emits('update:display', false)
 }
 
 const copy = () => {

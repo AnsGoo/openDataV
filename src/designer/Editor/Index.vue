@@ -15,7 +15,7 @@
       v-for="(item, index) in componentData"
       :id="'shape' + item.id"
       :defaultStyle="item.style"
-      :style="getShapeStyle(item.style)"
+      :style="getGroupStyle(item.style)"
       :key="item.id"
       :active="item.id === (curComponent || {}).id"
       :element="item"
@@ -63,6 +63,7 @@ import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
 import { ComponentInfo } from '@/types/component'
+import { getGroupStyle } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -281,20 +282,6 @@ const getSelectArea = () => {
   return result
 }
 
-const getShapeStyle = (style) => {
-  const result = {} as any
-  const styleAttr = ['width', 'height', 'top', 'left', 'rotate'] as Array<string>
-  styleAttr.forEach((attr) => {
-    if (attr != 'rotate') {
-      result[attr] = style[attr] + 'px'
-    } else {
-      result.transform = 'rotate(' + style[attr] + 'deg)'
-    }
-  })
-
-  return result
-}
-
 const getComponentStyle = (style) => {
   return getStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
@@ -327,23 +314,19 @@ const keyDown = (e: KeyboardEvent): void => {
 }
 
 watch(
-  () => basicStore.componentData,
-  (newData, _) => {
-    if (newData) {
-      storageCanvasData.value = JSON.stringify(newData)
+  () => [basicStore.componentData, basicStore.canvasStyleData],
+  ([newComponentData, newCanvasStyleData], _) => {
+    if (newCanvasStyleData) {
+      storageCanvasStyle.value = JSON.stringify(newCanvasStyleData)
     }
-  },
-  { deep: true }
-)
 
-watch(
-  () => basicStore.canvasStyleData,
-  (newData, _) => {
-    if (newData) {
-      storageCanvasStyle.value = JSON.stringify(newData)
+    if (newComponentData) {
+      storageCanvasData.value = JSON.stringify(newComponentData)
     }
   },
-  { deep: true }
+  {
+    deep: true
+  }
 )
 </script>
 

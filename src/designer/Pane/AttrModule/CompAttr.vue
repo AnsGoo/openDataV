@@ -8,18 +8,33 @@
         <el-input :model-value="curComponent.id" :readonly="true" />
       </el-form-item>
       <el-form-item label="名称">
-        <!--eslint-disable-next-line vue/no-mutating-props !--->
-        <el-input v-model="curComponent.label" />
+        <el-input v-model="label" @change="labelChange($event)" />
       </el-form-item>
     </el-collapse-item>
   </el-collapse>
 </template>
 
 <script lang="ts" setup>
+import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { ComponentInfo } from '@/types/component'
 import { ElCollapse, ElInput, ElFormItem, ElCollapseItem } from 'element-plus'
+import { ref, watch } from 'vue'
 
-defineProps<{
+const props = defineProps<{
   curComponent: ComponentInfo
 }>()
+
+const label = ref<string>('')
+const basicStore = useBasicStoreWithOut()
+const labelChange = (value) => {
+  basicStore.setCurComponentProps('label', value)
+}
+
+watch(
+  () => props.curComponent,
+  () => {
+    label.value = props.curComponent.label || ''
+  },
+  { immediate: true }
+)
 </script>

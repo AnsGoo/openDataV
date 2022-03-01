@@ -1,7 +1,7 @@
 import { ComponentGroup } from '@/enum'
 
 interface ComponentCommon {
-  groupStyle?: Record<string, string> // 当一个组件成为 Group 的子组件时使用
+  groupStyle?: Record<string, string | number> // 当一个组件成为 Group 的子组件时使用
   isLock?: boolean // 是否锁定组件
   show?: boolean // 是否显示在控件列表
   group?: ComponentGroup // 组件所属的组

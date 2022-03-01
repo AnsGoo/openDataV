@@ -10,7 +10,7 @@
     />
     <el-tabs v-model="activeName" :stretch="true" :lazy="true">
       <el-tab-pane label="样式" name="style">
-        <StyleList v-if="curComponent" />
+        <StyleList v-if="curComponent" :curComponent="curComponent" />
         <el-descriptions v-else class="placeholder">
           <el-descriptions-item>
             <el-empty description="请选择组件" />
@@ -18,7 +18,7 @@
         </el-descriptions>
       </el-tab-pane>
       <el-tab-pane label="属性" name="attr">
-        <AttrList v-if="curComponent" />
+        <AttrList v-if="curComponent" :curComponent="curComponent" />
         <el-descriptions v-else class="placeholder">
           <el-descriptions-item>
             <el-empty description="请选择组件" />

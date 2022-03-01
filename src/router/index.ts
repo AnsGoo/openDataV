@@ -72,7 +72,6 @@ class RouteView {
         next()
       }
       if (import.meta.env.VITE_APP_NO_AUTH === NoAuth.NO_AUTH) {
-        console.log(import.meta.env.VITE_APP_NO_AUTH)
         next()
       } else {
         if (this.checkLogin(to)) {

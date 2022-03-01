@@ -2,7 +2,7 @@
 <template>
   <div class="attr-list" style="height: calc(100vh - 100px)">
     <el-scrollbar>
-      <el-form v-if="curComponent" size="mini" @submit.prevent>
+      <el-form size="mini" @submit.prevent>
         <el-collapse
           v-model="activeName"
           accordion
@@ -54,7 +54,7 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { checkDiff, cleanObjectProp, isImage } from '@/utils/utils'
+import { checkDiff, cleanObjectProp } from '@/utils/utils'
 import { componentList } from '@/designer/load'
 import { debounce } from 'lodash-es'
 import { computed, ref, reactive, watch } from 'vue'
@@ -71,33 +71,37 @@ import {
   ElCollapseItem,
   ElInputNumber
 } from 'element-plus'
+import type { ComponentInfo } from '@/types/component'
+import { groupCommonStyle } from '../interface'
 
+const props = defineProps<{
+  curComponent: ComponentInfo
+}>()
 const activeName = ref<string>()
 const basicStore = useBasicStoreWithOut()
 
 const formData = reactive<Recordable<any>>({})
 const styleKeys = computed(() => {
-  if (basicStore.curComponent && basicStore.curComponent.component in componentList) {
-    return componentList[basicStore.curComponent.component].style
+  if (props.curComponent && props.curComponent.component in componentList) {
+    const style = componentList[props.curComponent.component].style
+    if (props.curComponent.groupStyle && props.curComponent.groupStyle.top !== undefined) {
+      style[0] = groupCommonStyle
+    }
+    return componentList[props.curComponent.component].style
   }
   return []
 })
 
-const curComponent = computed(() => basicStore.curComponent)
-
 // 样式页面改变，修改当前组件的样式：curComponent.style
 const changed = (val: string, key: string) => {
-  if (basicStore.curComponent) {
-    if (key === 'backgroundImage' && isImage(val)) {
-      val = `url('/${val}')`
-    }
-    basicStore.curComponent.style[key] = val
+  if (props.curComponent) {
+    basicStore.setCurComponentStyle(key, val)
   }
 }
 
 const changeStyle = (eventValue: any) => {
   const attrVal = eventValue as Recordable<any>
-  if (basicStore.curComponent && basicStore.curComponent.id === attrVal.id) {
+  if (props.curComponent && props.curComponent.id === attrVal.id) {
     updateFormData(attrVal.style)
   }
 }
@@ -113,14 +117,20 @@ const updateFormData = debounce((newVal: Recordable<any>) => {
   }
 }, 200)
 
-// 如果当前选中组件发生变化，则更新 formData
+const resetFormData = () => {
+  cleanObjectProp(formData)
+  if (props.curComponent) {
+    updateFormData({
+      ...props.curComponent.style,
+      ...(props.curComponent.groupStyle || {})
+    })
+  }
+}
+
 watch(
-  () => basicStore.curComponent,
+  () => props.curComponent.id,
   () => {
-    cleanObjectProp(formData)
-    if (basicStore.curComponent) {
-      updateFormData(basicStore.curComponent.style)
-    }
+    resetFormData()
   },
   { immediate: true }
 )

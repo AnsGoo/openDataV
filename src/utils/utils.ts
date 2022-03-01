@@ -11,36 +11,28 @@ export function changeStyleWithScale(value: number, scale: number): number {
   return (value * scale) / 100
 }
 
-export function getStyle(style: any, filter: Array<string> = []) {
-  const needUnit = [
-    'fontSize',
-    'width',
-    'height',
-    'top',
-    'left',
-    'borderWidth',
-    'letterSpacing',
-    'borderRadius'
-  ]
-
-  const result: Recordable<string> = {}
+export function getStyle(style: Recordable<any>, filter: Array<string> = []) {
+  let result: Recordable<string> = {}
   Object.keys(style).forEach((key) => {
     if (!filter.includes(key)) {
-      if (key != 'rotate') {
-        result[key] = style[key]
-
-        if (needUnit.includes(key)) {
-          result[key] += 'px'
-        }
-      } else {
-        result.transform = key + '(' + style[key] + 'deg)'
-      }
+      const css = stylePropToCss(key, style[key])
+      result = { ...result, ...css }
     }
   })
-
   return result
 }
 
+export const getGroupStyle = (style: Recordable<any>) => {
+  let result: Recordable<string> = {}
+  const filters = ['top', 'height', 'width', 'left', 'rotate']
+  Object.keys(style).forEach((key) => {
+    if (filters.includes(key)) {
+      const css = stylePropToCss(key, style[key])
+      result = { ...result, ...css }
+    }
+  })
+  return result
+}
 // 获取一个组件旋转 rotate 后的样式
 export function getComponentRotatedStyle(style: DOMRectStyle): DOMRectStyle {
   // 这里很重要，切记不能删除，将属性复制一份，否则会影响原始的属性值
@@ -146,8 +138,10 @@ export function decomposeComponent(
     }
 
     component.style.rotate = mod360((component.style.rotate as number) + parentStyle.rotate)
-    component.style.width = (parseFloat(component.groupStyle!.width) / 100) * parentStyle.width
-    component.style.height = (parseFloat(component.groupStyle!.height) / 100) * parentStyle.height
+    component.style.width =
+      (parseFloat(component.groupStyle!.width as string) / 100) * parentStyle.width
+    component.style.height =
+      (parseFloat(component.groupStyle!.height as string) / 100) * parentStyle.height
     // 计算出元素新的 top left 坐标
     component.style.left = center.x - component.style.width / 2
     component.style.top = center.y - component.style.height / 2
@@ -161,11 +155,12 @@ export function createGroupStyle(groupComponent: ComponentInfo) {
     // component.groupStyle 的 top left 是相对于 group 组件的位置
     // 如果已存在 component.groupStyle，说明已经计算过一次了。不需要再次计算
     const style = { ...component.style } as DOMRectStyle
-    component.groupStyle = getStyle(style)
+    component.groupStyle = {}
     component.groupStyle.left = toPercent((style.left - parentStyle.left) / parentStyle.width)
     component.groupStyle.top = toPercent((style.top - parentStyle.top) / parentStyle.height)
     component.groupStyle.width = toPercent(style.width / parentStyle.width)
     component.groupStyle.height = toPercent(style.height / parentStyle.height)
+    component.groupStyle.rotate = style.rotate
   })
 }
 
@@ -197,7 +192,7 @@ export function computeGroupPositionStyle(defaultStyle: Postion, components: Com
 }
 
 export function toPercent(val: number) {
-  return val * 100 + '%'
+  return parseFloat((val * 100).toFixed(4))
 }
 
 // 判断是否图片，以 png/jpg/jpeg/gif/webp 结尾
@@ -312,11 +307,46 @@ export const pasteText = (): string => {
   let textData
   const paste = (event: ClipboardEvent) => {
     textData = event.clipboardData?.getData('text')
-    console.log(textData)
     event.preventDefault()
   }
   document.addEventListener('paste', paste)
   document.execCommand('paste')
   document.removeEventListener('paste', paste)
   return textData
+}
+
+export const isFloat = (n: number): boolean => {
+  return n % 1 !== 0
+}
+
+export const stylePropToCss = (key: string, value: any): Recordable<any> => {
+  switch (key) {
+    case 'width':
+    case 'height':
+    case 'top':
+    case 'left':
+    case 'bottom':
+    case 'right':
+      if (isFloat(value)) {
+        return { [key]: `${value}%` }
+      } else {
+        return { [key]: `${value}px` }
+      }
+    case 'fontSize':
+    case 'borderWidth':
+    case 'letterSpacing':
+    case 'borderRadius':
+      return { [key]: `${value}px` }
+    case 'rotate':
+    case 'scaleX':
+    case 'scaleY':
+      return { transform: `${key}(${value}deg)` }
+
+    case 'scale':
+      return { transform: `${key}(${(value[0], value[1])}deg)` }
+    case 'backgroundImage':
+      return { backgroundImage: `url(${value})` }
+    default:
+      return { [key]: value }
+  }
 }

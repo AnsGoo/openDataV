@@ -7,6 +7,10 @@ import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
 import { uuid } from '@/utils/utils'
 
+import * as PouchDB from 'pouchdb/dist/pouchdb'
+
+const db = new PouchDB('canvas')
+
 const useBasicStore = defineStore({
   id: 'basic',
   state: (): EditData => ({
@@ -169,6 +173,12 @@ const useBasicStore = defineStore({
       }
 
       this.componentData.push(component)
+      db.put({
+        _id: component.id,
+        component: component
+      })
+      //  const  indexDb = new StoreDB('Canvas')
+      //  indexDb.save(this.componentData)
     },
 
     /**
@@ -201,15 +211,39 @@ const useBasicStore = defineStore({
       }
     },
 
-    setCurComponentProp(key: string, value: any): void {
+    setCurComponentPropValue(key: string, value: any): void {
       const curComponent = this.curComponent || this.layerComponent
       if (!curComponent || !curComponent.propValue) {
         return
       }
-
       curComponent.propValue[key] = value
-
       eventBus.emit(curComponent.component + curComponent.id, { key: key, value: value })
+    },
+
+    setCurComponentStyle(key: string, value: any): void {
+      const groupStyleKeys = ['top', 'left', 'weight', 'height', 'rotate']
+      const curComponent = this.curComponent || this.layerComponent
+      if (!curComponent) {
+        return
+      }
+
+      if (
+        curComponent.groupStyle &&
+        curComponent.groupStyle.top !== undefined &&
+        groupStyleKeys.includes(key)
+      ) {
+        curComponent.groupStyle[key] = value
+        return
+      }
+      curComponent.style[key] = value
+    },
+
+    setCurComponentProps(key: string, value: any): void {
+      const curComponent = this.curComponent || this.layerComponent
+      if (!curComponent || !curComponent.propValue) {
+        return
+      }
+      curComponent[key] = value
     },
 
     getComponentIndexById(id: string): number {

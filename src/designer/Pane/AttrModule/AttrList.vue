@@ -1,8 +1,8 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list" style="height: calc(100vh - 120px)">
-    <el-scrollbar>
-      <el-form v-if="curComponent" size="mini" @submit.prevent>
+    <el-scrollbar v-if="curComponent">
+      <el-form size="mini" @submit.prevent>
         <!-- 组件通用属性 -->
         <CompAttr :curComponent="curComponent" />
 
@@ -27,7 +27,7 @@
           <DynamicAttr
             v-else
             :children="children"
-            :data="formData[uid]"
+            :data="formData[uid] || []"
             @change="changed"
             :name="name"
             :uid="uid"
@@ -40,48 +40,49 @@
   </div>
 </template>
 
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { componentList } from '@/designer/load'
 import { computed, ref, reactive, watch } from 'vue'
-import { cleanObjectProp } from '@/utils/utils'
 import CompAttr from './CompAttr.vue'
 import FormAttr from './FormAttr.vue'
 import DynamicAttr from './DynamicAttr.vue'
 import { ElScrollbar, ElCollapse, ElForm } from 'element-plus'
+import type { ComponentInfo } from '@/types/component'
+import { cleanObjectProp } from '@/utils/utils'
 
+const props = defineProps<{
+  curComponent: ComponentInfo
+}>()
 const activeName = ref<string>()
 const basicStore = useBasicStoreWithOut()
 
 const formData = reactive<Recordable<any>>({})
-const curComponent = computed(() => basicStore.curComponent || basicStore.layerComponent)
 
 const attrKeys = computed(() => {
-  if (curComponent.value && curComponent.value.component in componentList) {
-    return componentList[curComponent.value.component].attrs
+  if (props.curComponent && props.curComponent.component in componentList) {
+    return componentList[props.curComponent.component].attrs
   }
   return []
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
 const changed = (val: string, key: string) => {
-  basicStore.setCurComponentProp(key, val)
+  basicStore.setCurComponentPropValue(key, val)
 }
 
 const resetFormData = () => {
   cleanObjectProp(formData)
-  const component = basicStore.curComponent || basicStore.layerComponent
-  if (component && component.propValue) {
-    const propValue = component.propValue
+  if (props.curComponent) {
+    const propValue = props.curComponent
     Object.keys(propValue).forEach((key) => {
       formData[key] = propValue[key]
     })
   }
 }
 
-// 如果当前选中组件发生变化，则更新 formData
 watch(
-  () => [basicStore.curComponent, basicStore.layerComponent],
+  () => props.curComponent.id,
   () => {
     resetFormData()
   },

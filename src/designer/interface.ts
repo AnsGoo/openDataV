@@ -26,10 +26,47 @@ export const commonStyle: Array<GroupType> = [
         key: 'height',
         label: '高',
         type: 'number'
+      },
+      {
+        key: 'rotate',
+        label: '旋转角度',
+        type: 'number'
       }
     ]
   }
 ]
+
+export const groupCommonStyle: GroupType = {
+  name: '基础',
+  uid: 'base',
+  children: [
+    {
+      key: 'left',
+      label: '相对坐标x',
+      type: 'number'
+    },
+    {
+      key: 'top',
+      label: '相对坐标y',
+      type: 'number'
+    },
+    {
+      key: 'width',
+      label: '相对宽度',
+      type: 'number'
+    },
+    {
+      key: 'height',
+      label: '相对高度',
+      type: 'number'
+    },
+    {
+      key: 'rotate',
+      label: '旋转角度',
+      type: 'number'
+    }
+  ]
+}
 
 export const commonAttr: Array<GroupType> = []
 

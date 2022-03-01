@@ -2,7 +2,7 @@ import { ComponentGroup } from '@/enum'
 import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
 
 const component: ComponentInfo = {
-  component: 'ConditionText4',
+  component: 'ConditionText',
   group: ComponentGroup.TEXT,
   label: '条件文本4',
   propValue: {

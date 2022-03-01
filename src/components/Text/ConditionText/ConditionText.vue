@@ -49,24 +49,23 @@ const dataHandler = (event: any) => {
 
 const switchDisplay = (curValue: string) => {
   // 如果当前值等于条件值，则取当前条件作为判断
-  let curItem = conditionList.value.find((item: any) => String(item.value) === String(curValue))
-  if (!curItem) {
-    displayContext.value = ''
-    color.value = '#ffffff'
-    fontSize.value = '10px'
-    displayType.value = 'text'
-    iconFit.value = 'contain'
-    return
+  for (let item of conditionList.value) {
+    const result: boolean = compare(curValue, item.symbol, item.value)
+    if (result) {
+      displayContext.value = item.displayContext
+      color.value = item.color
+      fontSize.value = `${item.fontSize}px`
+      displayType.value = item.displayType
+      iconFit.value = item.iconFit
+      return
+    }
   }
 
-  const result: boolean = compare(curValue, curItem.symbol, curItem.value)
-  if (result) {
-    displayContext.value = curItem.displayContext
-    color.value = curItem.color
-    fontSize.value = `${curItem.fontSize}px`
-    displayType.value = curItem.displayType
-    iconFit.value = curItem.iconFit
-  }
+  displayContext.value = ''
+  color.value = '#ffffff'
+  fontSize.value = '10px'
+  displayType.value = 'text'
+  iconFit.value = 'contain'
 }
 
 const compare = (curValue: string, symbol: string, value: string): boolean => {
