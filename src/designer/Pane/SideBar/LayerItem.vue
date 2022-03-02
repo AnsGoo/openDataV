@@ -3,6 +3,10 @@
     <el-sub-menu
       v-if="item.component === 'Group'"
       :index="caculIndex(i)"
+      draggable="true"
+      @dragstart="handleDragStart($event, caculIndex(i))"
+      @drop="handleDrop($event, caculIndex(i))"
+      @dragover="handleDragOver($event, caculIndex(i), true)"
       @contextmenu.prevent="showContextmenu($event as PointerEvent, caculIndex(i))"
     >
       <template #title>
@@ -17,7 +21,11 @@
     </el-sub-menu>
     <el-menu-item
       v-else
+      draggable="true"
       :index="caculIndex(i)"
+      @drop="handleDrop($event, caculIndex(i))"
+      @dragover="handleDragOver($event, caculIndex(i))"
+      @dragstart="handleDragStart($event, caculIndex(i))"
       @contextmenu.prevent="showContextmenu($event as PointerEvent, caculIndex(i))"
     >
       <template #title>
@@ -36,21 +44,26 @@
 </template>
 
 <script lang="ts" setup>
-import type { ComponentInfo } from '@/types/component'
+import type { ComponentInfo, DOMRectStyle } from '@/types/component'
 import { ref } from 'vue'
 import iconMap from '../icon'
 import LayerContextMenu from './LayerContextMenu.vue'
 import { ElMenuItem, ElSubMenu } from 'element-plus'
 
 import { onClickOutside } from '@vueuse/core'
+import { eventBus } from '@/bus/useEventBus'
+import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { mod360 } from '@/utils/utils'
+
 const props = defineProps<{
   components: ComponentInfo[]
   index?: string
+  activeKey?: string
 }>()
 
 const emits = defineEmits<{ (e: 'select', index: string): void }>()
 const contextMenu = ref<ElRef>(null)
-
+const basicStore = useBasicStoreWithOut()
 onClickOutside(contextMenu, () => close())
 let displayContexyMenu = ref<boolean>(false)
 let menuTop = ref<number>(0)
@@ -78,5 +91,124 @@ const showContextmenu = (event: PointerEvent, index: string) => {
   emits('select', index)
   displayContexyMenu.value = true
   curIndex.value = index
+}
+
+const handleDragStart = (event: DragEvent, index: string) => {
+  // event.preventDefault()
+  event.dataTransfer?.setData('compomentIndex', index)
+  event.stopPropagation()
+}
+
+const handleDragOver = (event: DragEvent, index: string, isEmit = false) => {
+  event.preventDefault()
+  event.stopPropagation()
+  if (isEmit && index !== props.activeKey) {
+    eventBus.emit('ActiveMenu', index)
+  }
+}
+
+const handleDrop = (event: DragEvent, index: string) => {
+  event.preventDefault()
+  event.stopPropagation()
+  const compomentIndex: string = event.dataTransfer?.getData('compomentIndex') as string
+  const toIndex: string = calcDragIndex(compomentIndex, index)
+  const result: boolean = isSameLayer(compomentIndex, index)
+  const compoment: ComponentInfo | undefined = cutComponent(compomentIndex, result)
+  if (compoment && toIndex) {
+    pasteComponent(toIndex, compoment, result)
+  }
+}
+const cutComponent = (index: string, isMyLayer: boolean): ComponentInfo | undefined => {
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  const myindex: number = indexs.pop() as number
+  const fatherComponent: ComponentInfo | undefined = getFatherComponentData(indexs)
+  if (fatherComponent && fatherComponent.subComponents) {
+    const components: ComponentInfo[] = fatherComponent.subComponents.splice(myindex, 1)
+    const component: ComponentInfo = components[0]
+    if (isMyLayer || fatherComponent.component === 'Root') {
+      return component
+    } else if (fatherComponent.component === 'Group') {
+      const parentStyle = fatherComponent.style as DOMRectStyle
+      const groupStyle = component.groupStyle as Recordable<string | number>
+      const { top, left, height, width, rotate } = {
+        top: Math.round(parentStyle.top + (parentStyle.height * (groupStyle.top as number)) / 100),
+        left: Math.round(
+          parentStyle.left + (parentStyle.width * (groupStyle.left as number)) / 100
+        ),
+        height: Math.round((parentStyle.height * (groupStyle.height as number)) / 100),
+        width: Math.round((parentStyle.width * (groupStyle.width as number)) / 100),
+        rotate: mod360((parentStyle.rotate || 0) + ((groupStyle.rotate || 0) as number))
+      }
+      component.style = { ...component.style, top, left, height, width, rotate }
+      component.groupStyle = {}
+      return component
+    }
+  }
+}
+const calcDragIndex = (fromIndex: string, toIndex: string): string => {
+  const fromIndexs: number[] = fromIndex.split('-').map((el: string) => parseInt(el))
+  const toIndexs: number[] = toIndex.split('-').map((el: string) => parseInt(el))
+  const fromLength: number = fromIndexs.length
+  for (let i = 0; i < fromLength; i++) {
+    if (fromIndexs[i] === toIndexs[i]) {
+      continue
+    } else if (fromIndexs[i] > toIndexs[i]) {
+      return toIndex
+    } else if (fromIndexs[i] < toIndexs[i]) {
+      if (i + 1 == fromLength) {
+        toIndexs[i] = toIndexs[i] - 1
+        return toIndexs.join('-')
+      } else {
+        return toIndex
+      }
+    }
+  }
+  return toIndex
+}
+
+const isSameLayer = (fromIndex: string, toIndex: string): boolean => {
+  const fromIndexs: number[] = fromIndex.split('-').map((el: string) => parseInt(el))
+  const toIndexs: number[] = toIndex.split('-').map((el: string) => parseInt(el))
+  fromIndexs.pop()
+  toIndexs.pop()
+  const fromParentIndex: string = fromIndexs.join('-')
+  const toParentIndex: string = toIndexs.join('-')
+  return fromParentIndex === toParentIndex
+}
+
+const pasteComponent = (index: string, component: ComponentInfo, isMyLayer: boolean): void => {
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  const myindex: number = indexs.pop() as number
+  const fatherComponent: ComponentInfo | undefined = getFatherComponentData(indexs)
+  if (fatherComponent && fatherComponent.subComponents) {
+    if (fatherComponent.component === 'Root' || isMyLayer) {
+      fatherComponent.subComponents.splice(myindex, 0, component)
+    } else if (fatherComponent.component === 'Group') {
+      const parentStyle = fatherComponent.style
+      const style = { ...component.style } as DOMRectStyle
+      component.groupStyle = {
+        top: 1.1,
+        left: 1.1,
+        rotate: component.style.rotate,
+        height: parseFloat(((style.height * 100) / (parentStyle.height as number)).toFixed(4)),
+        width: parseFloat(((style.width * 100) / (parentStyle.width as number)).toFixed(4))
+      }
+      console.log(component)
+      fatherComponent.subComponents.splice(myindex, 0, component)
+      emits('select', index)
+    }
+  }
+}
+
+const getFatherComponentData = (indexs: number[]): ComponentInfo => {
+  let rootComponent: ComponentInfo = {
+    subComponents: basicStore.componentData,
+    component: 'Root',
+    style: {}
+  }
+  indexs.forEach((el: number) => {
+    rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent
+  })
+  return rootComponent
 }
 </script>

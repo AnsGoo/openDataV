@@ -6,8 +6,9 @@
         :collapse-transition="false"
         @select="handleSelect"
         @open="handleSelect"
+        ref="menu"
       >
-        <LayerItem :components="componentData" @select="handleSelect" />
+        <LayerItem :components="componentData" @select="handleSelect" activeKey="activeKey" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -15,16 +16,29 @@
 
 <script lang="ts" setup>
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import LayerItem from './LayerItem.vue'
 import type { ComponentInfo } from '@/types/component'
 import { ElScrollbar, ElMenu } from 'element-plus'
+import { useEventBus } from '@/bus/useEventBus'
 
 const basicStore = useBasicStoreWithOut()
 
 const componentData = computed(() => basicStore.componentData)
 
+const menu = ref<ElRef<any>>(null)
+const activeKey = ref<string>('')
+const open = (event: any) => {
+  const index = event as string
+  activeKey.value = index
+  if (menu.value && menu.value.open) {
+    menu.value.open(index)
+  }
+}
+useEventBus('ActiveMenu', open)
+
 const handleSelect = (key: string) => {
+  activeKey.value = key
   const indexs = key.split('-').map((i) => Number(i))
   let rootComponent: ComponentInfo = {
     subComponents: componentData.value,
