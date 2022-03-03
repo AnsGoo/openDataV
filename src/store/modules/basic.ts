@@ -221,17 +221,13 @@ const useBasicStore = defineStore({
     },
 
     setCurComponentStyle(key: string, value: any): void {
-      const groupStyleKeys = ['top', 'left', 'weight', 'height', 'rotate']
+      const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
       const curComponent = this.curComponent || this.layerComponent
       if (!curComponent) {
         return
       }
 
-      if (
-        curComponent.groupStyle &&
-        curComponent.groupStyle.top !== undefined &&
-        groupStyleKeys.includes(key)
-      ) {
+      if (curComponent.groupStyle && groupStyleKeys.includes(key)) {
         curComponent.groupStyle[key] = value
         return
       }

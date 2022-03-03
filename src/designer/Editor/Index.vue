@@ -15,7 +15,7 @@
       v-for="(item, index) in componentData"
       :id="'shape' + item.id"
       :defaultStyle="item.style"
-      :style="getGroupStyle(item.style)"
+      :style="getShapeStyle(item.style)"
       :key="item.id"
       :active="item.id === (curComponent || {}).id"
       :element="item"
@@ -25,7 +25,7 @@
       <component
         class="component"
         :is="item.component"
-        :style="getComponentStyle(item.style)"
+        :style="getComponentStyle(item)"
         :propValue="item.propValue"
         :element="item"
         :id="'component' + item.id"
@@ -55,7 +55,7 @@ import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape.vue'
-import { getComponentRotatedStyle, getScreenStyle, getStyle } from '@/utils/utils'
+import { filterStyle, getComponentRotatedStyle, getScreenStyle } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { useStorage, onClickOutside } from '@vueuse/core'
@@ -63,7 +63,7 @@ import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
 import { ComponentInfo } from '@/types/component'
-import { getGroupStyle } from '@/utils/utils'
+import { getComponentStyle } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -72,6 +72,9 @@ let menuLeft = ref<number>(0)
 let displayContexyMenu = ref<boolean>(false)
 const contextMenu = ref<ElRef>(null)
 
+const getShapeStyle = (style) => {
+  return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
+}
 const hideArea = () => {
   isShowArea.value = false
   width.value = 0
@@ -114,7 +117,6 @@ const pasteText = async (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
-      console.log(textData)
       const component: ComponentInfo = JSON.parse(textData)
       if ('component' in component) {
         event.preventDefault()
@@ -280,10 +282,6 @@ const getSelectArea = () => {
 
   // 返回在选中区域内的所有组件
   return result
-}
-
-const getComponentStyle = (style) => {
-  return getStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
 
 const keyDown = (e: KeyboardEvent): void => {

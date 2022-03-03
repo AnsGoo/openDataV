@@ -64,7 +64,7 @@ useEventBus('unmove', () => {
 
 const showLine = (isDownward, isRightward) => {
   const components = basicStore.componentData
-  const curComponentStyle = getComponentRotatedStyle(basicStore.curComponent!.style as DOMRectStyle)
+  const curComponentStyle: DOMRectStyle = getComponentRotatedStyle(basicStore.curComponent!.style)
   const curComponentHalfwidth = ((curComponentStyle.width as number) || 0) / 2
   const curComponentHalfHeight = ((curComponentStyle.height as number) || 0) / 2
 

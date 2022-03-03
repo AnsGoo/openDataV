@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
 import type { AreaData, Postion } from '@/types/storeTypes'
-import type { ComponentInfo, DOMRectStyle } from '@/types/component'
+import type { ComponentInfo, ComponentStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { decomposeComponent, createGroupStyle, computeGroupPositionStyle } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
@@ -113,13 +113,13 @@ const useComposeStore = defineStore({
         return
       }
 
-      const parentStyle: DOMRectStyle = { ...basicStore.curComponent?.style } as DOMRectStyle
+      const parentStyle: ComponentStyle = basicStore.curComponent!.style
       const components: Array<ComponentInfo> = basicStore.curComponent?.subComponents || []
-      const editorRect: DOMRect = basicStore.editor.getBoundingClientRect()
+      // const editorRect: DOMRect = basicStore.editor.getBoundingClientRect()
       if (components.length > 0) {
         basicStore.deleteComponent(basicStore.curComponent!.id)
         components.forEach((component) => {
-          decomposeComponent(component, editorRect, parentStyle)
+          decomposeComponent(component, parentStyle)
           basicStore.addComponent(component)
         })
       }

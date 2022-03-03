@@ -1,23 +1,32 @@
 import { ComponentGroup } from '@/enum'
 
+interface GroupStyle {
+  gwidth: number
+  gheight: number
+  gleft: number
+  gtop: number
+  grotate: number
+}
+
 interface ComponentCommon {
-  groupStyle?: Record<string, string | number> // 当一个组件成为 Group 的子组件时使用
+  groupStyle?: GroupStyle // 当一个组件成为 Group 的子组件时使用
   isLock?: boolean // 是否锁定组件
   show?: boolean // 是否显示在控件列表
   group?: ComponentGroup // 组件所属的组
 }
 
-interface ComponentStyle {
-  [propName: string]: string | number
-}
-
-interface DOMRectStyle extends ComponentStyle {
+interface DOMRectStyle {
   width: number
   height: number
   left: number
   top: number
   rotate: number
   bottom: number
+  right: number
+}
+
+interface ComponentStyle extends DOMRectStyle {
+  [propName: string]: string | number
 }
 
 interface ComponentInfo<T = Recordable<string | number | any>> extends ComponentCommon {
@@ -67,5 +76,6 @@ export type {
   AttrType,
   ArrayType,
   ComponentCommon,
-  DOMRectStyle
+  DOMRectStyle,
+  GroupStyle
 }

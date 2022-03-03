@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { ComponentInfo, DOMRectStyle } from '@/types/component'
+import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
 import { ref } from 'vue'
 import iconMap from '../icon'
 import LayerContextMenu from './LayerContextMenu.vue'
@@ -53,7 +53,7 @@ import { ElMenuItem, ElSubMenu } from 'element-plus'
 import { onClickOutside } from '@vueuse/core'
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { mod360 } from '@/utils/utils'
+import { decomposeComponent } from '@/utils/utils'
 
 const props = defineProps<{
   components: ComponentInfo[]
@@ -128,19 +128,8 @@ const cutComponent = (index: string, isMyLayer: boolean): ComponentInfo | undefi
     if (isMyLayer || fatherComponent.component === 'Root') {
       return component
     } else if (fatherComponent.component === 'Group') {
-      const parentStyle = fatherComponent.style as DOMRectStyle
-      const groupStyle = component.groupStyle as Recordable<string | number>
-      const { top, left, height, width, rotate } = {
-        top: Math.round(parentStyle.top + (parentStyle.height * (groupStyle.top as number)) / 100),
-        left: Math.round(
-          parentStyle.left + (parentStyle.width * (groupStyle.left as number)) / 100
-        ),
-        height: Math.round((parentStyle.height * (groupStyle.height as number)) / 100),
-        width: Math.round((parentStyle.width * (groupStyle.width as number)) / 100),
-        rotate: mod360((parentStyle.rotate || 0) + ((groupStyle.rotate || 0) as number))
-      }
-      component.style = { ...component.style, top, left, height, width, rotate }
-      component.groupStyle = {}
+      const parentStyle: ComponentStyle = fatherComponent.style
+      decomposeComponent(component, parentStyle)
       return component
     }
   }
@@ -187,13 +176,12 @@ const pasteComponent = (index: string, component: ComponentInfo, isMyLayer: bool
       const parentStyle = fatherComponent.style
       const style = { ...component.style } as DOMRectStyle
       component.groupStyle = {
-        top: 1.1,
-        left: 1.1,
-        rotate: component.style.rotate,
-        height: parseFloat(((style.height * 100) / (parentStyle.height as number)).toFixed(4)),
-        width: parseFloat(((style.width * 100) / (parentStyle.width as number)).toFixed(4))
+        gtop: 1.1,
+        gleft: 1.1,
+        grotate: component.style.rotate as number,
+        gheight: parseFloat(((style.height * 100) / (parentStyle.height as number)).toFixed(4)),
+        gwidth: parseFloat(((style.width * 100) / (parentStyle.width as number)).toFixed(4))
       }
-      console.log(component)
       fatherComponent.subComponents.splice(myindex, 0, component)
       emits('select', index)
     }

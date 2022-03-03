@@ -2,21 +2,21 @@
   <div>
     <component
       class="component"
-      :is="config.component"
-      :style="getStyle(config.style)"
-      :propValue="config.propValue"
-      :element="config"
-      :id="'component' + config.id"
-      :subComponents="config.subComponents"
+      :is="component.component"
+      :style="getComponentStyle(component)"
+      :propValue="component.propValue"
+      :element="component"
+      :id="'component' + component.id"
+      :subComponents="component.subComponents"
     />
   </div>
 </template>
 
 <script setup lang="ts">
-import { getStyle } from '@/utils/utils'
+import { getComponentStyle } from '@/utils/utils'
 import type { ComponentInfo } from '@/types/component'
 
-defineProps<{ config: ComponentInfo }>()
+defineProps<{ component: ComponentInfo }>()
 </script>
 
 <style scoped>

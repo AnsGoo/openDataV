@@ -1,5 +1,5 @@
 import type { CanvasStyleData, Postion } from '@/types/storeTypes'
-import type { ComponentInfo, DOMRectStyle } from '@/types/component'
+import type { ComponentInfo, ComponentStyle, DOMRectStyle, GroupStyle } from '@/types/component'
 import { errorMessage } from '@/utils/message'
 import type { Vector } from '@/types/common'
 
@@ -11,10 +11,16 @@ export function changeStyleWithScale(value: number, scale: number): number {
   return (value * scale) / 100
 }
 
-export function getStyle(style: Recordable<any>, filter: Array<string> = []) {
+/**
+ * 剔除指定样式，并转化为css
+ * @param style  原始样式
+ * @param excludes 剔除条件
+ * @returns css
+ */
+export function excludeStyle(style: Recordable<any>, excludes: Array<string> = []) {
   let result: Recordable<string> = {}
   Object.keys(style).forEach((key) => {
-    if (!filter.includes(key)) {
+    if (!excludes.includes(key)) {
       const css = stylePropToCss(key, style[key])
       result = { ...result, ...css }
     }
@@ -22,9 +28,14 @@ export function getStyle(style: Recordable<any>, filter: Array<string> = []) {
   return result
 }
 
-export const getGroupStyle = (style: Recordable<any>) => {
+/**
+ * 保留指定样式，并转化为css
+ * @param style 原始样式
+ * @param filters 过滤条件
+ * @returns css
+ */
+export function filterStyle(style: Recordable<any>, filters: Array<string> = []) {
   let result: Recordable<string> = {}
-  const filters = ['top', 'height', 'width', 'left', 'rotate']
   Object.keys(style).forEach((key) => {
     if (filters.includes(key)) {
       const css = stylePropToCss(key, style[key])
@@ -33,6 +44,30 @@ export const getGroupStyle = (style: Recordable<any>) => {
   })
   return result
 }
+
+/**
+ * 生成群组样式
+ * @param style 原始样式
+ * @returns css
+ */
+
+export const getGroupStyle = (style: Recordable<any>) => {
+  const filters = ['gtop', 'gheight', 'gwidth', 'gleft', 'grotate']
+  return filterStyle(style, filters)
+}
+
+/**
+ * 转化组件样式为css
+ * @param component 主要转化样式的组件
+ * @returns css
+ */
+export const getComponentStyle = (component: ComponentInfo) => {
+  return {
+    ...excludeStyle(component.style, ['top', 'left', 'width', 'height', 'rotate']),
+    ...getGroupStyle(component.groupStyle || {})
+  }
+}
+
 // 获取一个组件旋转 rotate 后的样式
 export function getComponentRotatedStyle(style: DOMRectStyle): DOMRectStyle {
   // 这里很重要，切记不能删除，将属性复制一份，否则会影响原始的属性值
@@ -73,11 +108,7 @@ function angleToRadian(angle: number) {
   return (angle * Math.PI) / 180
 }
 
-export function calculateRotatedPointCoordinate(
-  point: Vector,
-  center: Vector,
-  rotate: number
-): Vector {
+export function rotatedPointCoordinate(point: Vector, center: Vector, rotate: number): Vector {
   /**
    * 旋转公式：
    *  点a(x, y)
@@ -121,46 +152,53 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-// 将组合中的各个子组件拆分出来，并计算它们新的 style
-export function decomposeComponent(
-  component: ComponentInfo,
-  editorRect: DOMRect,
-  parentStyle: DOMRectStyle
-) {
-  const componentElement: HTMLElement | null = document.querySelector(`#component${component.id}`)
-
+export function decomposeComponent(component: ComponentInfo, parentStyle: ComponentStyle) {
   // 获取元素的中心点坐标
-  if (componentElement) {
-    const componentRect = componentElement.getBoundingClientRect()
-    const center = {
-      x: componentRect.left - editorRect.left + componentRect.width / 2,
-      y: componentRect.top - editorRect.top + componentRect.height / 2
+  const groupStyle: GroupStyle = component.groupStyle!
+  const center: Vector = {
+    y: parentStyle.top + parentStyle.height / 2,
+    x: parentStyle.left + parentStyle.width / 2
+  }
+
+  if (component) {
+    const { top, left, height, width, rotate } = {
+      top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
+      left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
+      height: (parentStyle.height * groupStyle.gheight) / 100,
+      width: (parentStyle.width * groupStyle.gwidth) / 100,
+      rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
+    }
+    const point: Vector = {
+      y: top + height / 2,
+      x: left + width / 2
     }
 
-    component.style.rotate = mod360((component.style.rotate as number) + parentStyle.rotate)
-    component.style.width =
-      (parseFloat(component.groupStyle!.width as string) / 100) * parentStyle.width
-    component.style.height =
-      (parseFloat(component.groupStyle!.height as string) / 100) * parentStyle.height
-    // 计算出元素新的 top left 坐标
-    component.style.left = center.x - component.style.width / 2
-    component.style.top = center.y - component.style.height / 2
-    component.groupStyle = {}
+    const afterPoint: Vector = rotatedPointCoordinate(point, center, parentStyle.rotate)
+    component.style = {
+      ...component.style,
+      top: Math.round(afterPoint.y - height / 2),
+      left: Math.round(afterPoint.x - width / 2),
+      height: Math.round(height),
+      width: Math.round(width),
+      rotate
+    }
+    component.groupStyle = undefined
   }
 }
 
 export function createGroupStyle(groupComponent: ComponentInfo) {
-  const parentStyle = groupComponent.style as DOMRectStyle
+  const parentStyle: ComponentStyle = groupComponent.style
   groupComponent.subComponents!.forEach((component) => {
-    // component.groupStyle 的 top left 是相对于 group 组件的位置
+    // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
     // 如果已存在 component.groupStyle，说明已经计算过一次了。不需要再次计算
     const style = { ...component.style } as DOMRectStyle
-    component.groupStyle = {}
-    component.groupStyle.left = toPercent((style.left - parentStyle.left) / parentStyle.width)
-    component.groupStyle.top = toPercent((style.top - parentStyle.top) / parentStyle.height)
-    component.groupStyle.width = toPercent(style.width / parentStyle.width)
-    component.groupStyle.height = toPercent(style.height / parentStyle.height)
-    component.groupStyle.rotate = style.rotate
+    component.groupStyle = {
+      gleft: toPercent((style.left - parentStyle.left) / parentStyle.width),
+      gtop: toPercent((style.top - parentStyle.top) / parentStyle.height),
+      gwidth: toPercent(style.width / parentStyle.width),
+      gheight: toPercent(style.height / parentStyle.height),
+      grotate: style.rotate
+    }
   })
 }
 
@@ -321,17 +359,18 @@ export const isFloat = (n: number): boolean => {
 
 export const stylePropToCss = (key: string, value: any): Recordable<any> => {
   switch (key) {
+    case 'gwidth':
+    case 'gheight':
+    case 'gtop':
+    case 'gleft':
+      return { [key.slice(1)]: `${value}%` }
     case 'width':
     case 'height':
     case 'top':
     case 'left':
     case 'bottom':
     case 'right':
-      if (isFloat(value)) {
-        return { [key]: `${value}%` }
-      } else {
-        return { [key]: `${value}px` }
-      }
+      return { [key]: `${value}px` }
     case 'fontSize':
     case 'borderWidth':
     case 'letterSpacing':

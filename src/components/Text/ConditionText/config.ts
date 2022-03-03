@@ -4,7 +4,7 @@ import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/compone
 const component: ComponentInfo = {
   component: 'ConditionText',
   group: ComponentGroup.TEXT,
-  label: '条件文本4',
+  label: '条件文本',
   propValue: {
     history: '',
     tagName: 'CMJ_ZCFMQ',
