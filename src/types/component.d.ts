@@ -21,8 +21,6 @@ interface DOMRectStyle {
   left: number
   top: number
   rotate: number
-  bottom: number
-  right: number
 }
 
 interface ComponentStyle extends DOMRectStyle {

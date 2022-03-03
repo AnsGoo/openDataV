@@ -55,7 +55,7 @@ import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape.vue'
-import { filterStyle, getComponentRotatedStyle, getScreenStyle } from '@/utils/utils'
+import { calcContextMenuLoccation, filterStyle, getComponentRotatedStyle, getScreenStyle } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { useStorage, onClickOutside } from '@vueuse/core'
@@ -152,8 +152,12 @@ const isShowArea = ref<boolean>(false)
 const editor = ref<ElRef>(null)
 
 const handleContextMenu = (event: MouseEvent) => {
-  menuTop.value = event.clientY
-  menuLeft.value = event.clientX + 20
+  const point: Vector = calcContextMenuLoccation({
+    x: event.clientX,
+    y: event.clientY
+  }, 80, 256)
+  menuTop.value = point.y
+  menuLeft.value = point.x
   displayContexyMenu.value = true
 }
 

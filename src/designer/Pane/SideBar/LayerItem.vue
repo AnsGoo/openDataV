@@ -53,7 +53,8 @@ import { ElMenuItem, ElSubMenu } from 'element-plus'
 import { onClickOutside } from '@vueuse/core'
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { decomposeComponent } from '@/utils/utils'
+import { calcContextMenuLoccation, decomposeComponent } from '@/utils/utils'
+import { Vector } from '@/types/common'
 
 const props = defineProps<{
   components: ComponentInfo[]
@@ -84,8 +85,12 @@ const close = (): void => {
 }
 
 const showContextmenu = (event: PointerEvent, index: string) => {
-  menuTop.value = event.clientY
-  menuLeft.value = event.clientX + 20
+  const point: Vector = calcContextMenuLoccation({
+    x: event.clientX,
+    y: event.clientY
+  }, 80, 192)
+  menuTop.value = point.y
+  menuLeft.value = point.x
   displayContexyMenu.value = false
   event.stopPropagation()
   emits('select', index)
@@ -192,7 +197,13 @@ const getFatherComponentData = (indexs: number[]): ComponentInfo => {
   let rootComponent: ComponentInfo = {
     subComponents: basicStore.componentData,
     component: 'Root',
-    style: {}
+    style: {
+      width: 0,
+      height: 0,
+      left: 0,
+      top: 0,
+      rotate: 0
+    }
   }
   indexs.forEach((el: number) => {
     rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent

@@ -124,7 +124,13 @@ const getFatherComponentData = (indexs: number[]) => {
   let rootComponent: ComponentInfo = {
     subComponents: basicStore.componentData,
     component: '',
-    style: {}
+    style: {
+      width: 0,
+      height: 0,
+      left: 0,
+      top: 0,
+      rotate: 0
+    }
   }
   indexs.forEach((el: number) => {
     rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent
