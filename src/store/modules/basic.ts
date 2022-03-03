@@ -7,10 +7,6 @@ import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
 import { uuid } from '@/utils/utils'
 
-import * as PouchDB from 'pouchdb/dist/pouchdb'
-
-const db = new PouchDB('canvas')
-
 const useBasicStore = defineStore({
   id: 'basic',
   state: (): EditData => ({
