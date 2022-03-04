@@ -55,14 +55,19 @@ import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape.vue'
-import { calcContextMenuLoccation, filterStyle, getComponentRotatedStyle, getScreenStyle } from '@/utils/utils'
+import {
+  calcContextMenuLoccation,
+  filterStyle,
+  calcComponentAxis,
+  getScreenStyle
+} from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { useStorage, onClickOutside } from '@vueuse/core'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
-import { ComponentInfo } from '@/types/component'
+import { ComponentInfo, DOMRectStyle, Rect } from '@/types/component'
 import { getComponentStyle } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
@@ -120,7 +125,6 @@ const pasteText = async (event: ClipboardEvent) => {
       const component: ComponentInfo = JSON.parse(textData)
       if ('component' in component) {
         event.preventDefault()
-        component.id = undefined
         basicStore.addComponent(component)
       }
     } catch (e) {
@@ -152,10 +156,15 @@ const isShowArea = ref<boolean>(false)
 const editor = ref<ElRef>(null)
 
 const handleContextMenu = (event: MouseEvent) => {
-  const point: Vector = calcContextMenuLoccation({
-    x: event.clientX,
-    y: event.clientY
-  }, 80, 256)
+  const menuHeight = curComponent.value ? 256 : 32
+  const point: Vector = calcContextMenuLoccation(
+    {
+      x: event.clientX,
+      y: event.clientY
+    },
+    80,
+    menuHeight
+  )
   menuTop.value = point.y
   menuLeft.value = point.x
   displayContexyMenu.value = true
@@ -200,92 +209,77 @@ const handleMouseDown = (e: MouseEvent) => {
       hideArea()
       return
     }
-
-    createGroup()
+    const selectedRect: Rect = {
+      left: start.x,
+      top: start.y,
+      right: width.value + start.x,
+      bottom: start.y + height.value
+    }
+    const result = getSelectArea(selectedRect)
+    console.log(result?.rect)
+    if (result) {
+      const rect = result.rect
+      composeStore.setAreaData(
+        {
+          top: rect.top,
+          left: rect.left,
+          width: rect.right - rect.left,
+          height: rect.bottom - rect.top
+        },
+        result.components
+      )
+      start.x = rect.left
+      start.y = rect.top
+      width.value = rect.right - rect.left
+      height.value = rect.bottom - rect.top
+    }
   }
 
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
 }
 
-const createGroup = () => {
-  // 获取选中区域的组件数据
-  const areaData = getSelectArea()
-  if (areaData.length <= 1) {
-    hideArea()
-    return
-  }
+const getSelectArea = (
+  rect: Rect
+): { components: Array<ComponentInfo>; rect: Rect } | undefined => {
+  const selectedComponents: Array<ComponentInfo> = []
+  const leftSet: Set<number> = new Set()
+  const topSet: Set<number> = new Set()
+  const rightSet: Set<number> = new Set()
+  const bottomSet: Set<number> = new Set()
 
-  // 根据选中区域和区域中每个组件的位移信息来创建 Group 组件
-  // 要遍历选择区域的每个组件，获取它们的 left top right bottom 信息来进行比较
-  let top = Infinity,
-    left = Infinity
-  let right = -Infinity,
-    bottom = -Infinity
-  areaData.forEach((component) => {
-    let style: any = {}
-    if (component.component == 'Group') {
-      component.subComponents.forEach((item) => {
-        const rectInfo = document.querySelector(`#component${item.id}`)!.getBoundingClientRect()
-        style.left = rectInfo.left - editorX.value
-        style.top = rectInfo.top - editorY.value
-        style.right = rectInfo.right - editorX.value
-        style.bottom = rectInfo.bottom - editorY.value
-
-        if (style.left < left) left = style.left
-        if (style.top < top) top = style.top
-        if (style.right > right) right = style.right
-        if (style.bottom > bottom) bottom = style.bottom
-      })
-    } else {
-      style = getComponentRotatedStyle(component.style)
-    }
-
-    if (style.left < left) left = style.left
-    if (style.top < top) top = style.top
-    if (style.right > right) right = style.right
-    if (style.bottom > bottom) bottom = style.bottom
-  })
-
-  start.x = Math.round(left)
-  start.y = Math.round(top)
-  width.value = Math.round(right - left)
-  height.value = Math.round(bottom - top)
-
-  // 设置选中区域位移大小信息和区域内的组件数据
-  composeStore.setAreaData(
-    {
-      left: left,
-      top: top,
-      width: width.value,
-      height: height.value
-    },
-    areaData
-  )
-}
-
-const getSelectArea = () => {
-  const result: Array<any> = []
-  // 区域起点坐标
-  const { x, y } = start
   // 计算所有的组件数据，判断是否在选中区域内
   basicStore.componentData.forEach((component) => {
-    if (component.isLock) return
-
     // 获取位置大小信息：left, top, width, height
-    const style = getComponentRotatedStyle(component.style)
+    const style: DOMRectStyle = component.style
+    const componentRect: Rect = calcComponentAxis(style)
     if (
-      x <= style.left &&
-      y <= style.top &&
-      style.left + style.width <= x + width.value &&
-      style.top + style.height <= y + height.value
+      componentRect.left >= rect.left &&
+      componentRect.right <= rect.right &&
+      componentRect.top >= rect.top &&
+      componentRect.bottom <= rect.bottom
     ) {
-      result.push(component)
+      selectedComponents.push(component)
+      leftSet.add(componentRect.left)
+      topSet.add(componentRect.top)
+      rightSet.add(componentRect.right)
+      bottomSet.add(componentRect.bottom)
     }
   })
-
-  // 返回在选中区域内的所有组件
-  return result
+  if (selectedComponents.length > 0) {
+    console.log(leftSet)
+    console.log(topSet)
+    console.log(rightSet)
+    console.log(bottomSet)
+    const left = Math.min(...leftSet)
+    const right = Math.max(...rightSet)
+    const top = Math.min(...topSet)
+    const bottom = Math.max(...bottomSet)
+    return {
+      components: selectedComponents,
+      rect: { left, right, top, bottom }
+    }
+  }
 }
 
 const keyDown = (e: KeyboardEvent): void => {
@@ -293,19 +287,19 @@ const keyDown = (e: KeyboardEvent): void => {
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault()
-        basicStore.curComponent!.style.left = (curComponent.value.style!.left as number) - 1
+        basicStore.curComponent!.style.left = (curComponent.value.style.left as number) - 1
         break
       case 'ArrowUp':
         e.preventDefault()
-        basicStore.curComponent!.style.top = (curComponent.value.style!.top as number) - 1
+        basicStore.curComponent!.style.top = (curComponent.value.style.top as number) - 1
         break
       case 'ArrowRight':
         e.preventDefault()
-        basicStore.curComponent!.style.left = (curComponent.value.style!.left as number) + 1
+        basicStore.curComponent!.style.left = (curComponent.value.style.left as number) + 1
         break
       case 'ArrowDown':
         e.preventDefault()
-        basicStore.curComponent!.style.top = (curComponent.value.style!.top as number) + 1
+        basicStore.curComponent!.style.top = (curComponent.value.style.top as number) + 1
         break
       default:
         e.stopPropagation()

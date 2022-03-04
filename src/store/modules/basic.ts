@@ -133,25 +133,23 @@ const useBasicStore = defineStore({
       })
     },
 
-    resetComponentData(componentData: Array<ComponentInfo>, ids: Set<string>) {
+    resetComponentData(componentData: Array<ComponentInfo>, ids: Set<string>, isUpdate = false) {
       componentData.forEach((item: ComponentInfo) => {
         // 重置组件 ID
-        if (!item.id) {
+        if (isUpdate) {
           item.id = uuid()
         } else {
-          if (ids.has(item.id as string)) {
+          if (ids.has(item.id!)) {
             item.id = uuid()
           }
         }
-
         // 添加 rotate
         if (item.style.rotate === undefined) {
           item.style.rotate = 0
         }
-
-        ids.add(item.id as string)
+        ids.add(item.id!)
         if (item.subComponents) {
-          this.resetComponentData(item.subComponents, ids)
+          this.resetComponentData(item.subComponents, ids, isUpdate)
         }
       })
     },
@@ -167,23 +165,11 @@ const useBasicStore = defineStore({
       if (component.style.rotate === undefined) {
         component.style.rotate = 0
       }
+      if (component.subComponents) {
+        const ids: Set<string> = new Set()
+        this.resetComponentData(component.subComponents, ids, true)
+      }
 
-      this.componentData.push(component)
-      db.put({
-        _id: component.id,
-        component: component
-      })
-      //  const  indexDb = new StoreDB('Canvas')
-      //  indexDb.save(this.componentData)
-    },
-
-    /**
-     * 复制组件
-     * @parms component: 被复制的组件
-     */
-    copyComponent(component: ComponentInfo): void {
-      const ids: Set<string> = new Set()
-      this.resetComponentData([...this.componentData, component], ids)
       this.componentData.push(component)
     },
 

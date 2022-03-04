@@ -3,7 +3,7 @@ import { store } from '@/store'
 import type { AreaData, Postion } from '@/types/storeTypes'
 import type { ComponentInfo, ComponentStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { decomposeComponent, createGroupStyle, computeGroupPositionStyle } from '@/utils/utils'
+import { decomposeComponent, createGroupStyle, calcComponentsRect } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
 
 const useComposeStore = defineStore({
@@ -64,17 +64,22 @@ const useComposeStore = defineStore({
         return
       }
 
-      this.style = computeGroupPositionStyle(this.style, this.components)
+      if (this.style.width === 0) {
+        this.style = calcComponentsRect(this.components)
+      }
       this.components.forEach((component) => {
         components.push(component)
       })
       const groupComponent: ComponentInfo = {
         component: 'Group',
+        id: '',
+        icon: '',
         style: {
           rotate: 0,
           ...this.style
         },
-        subComponents: components
+        subComponents: components,
+        label: ''
       }
       createGroupStyle(groupComponent)
       basicStore.addComponent(groupComponent)

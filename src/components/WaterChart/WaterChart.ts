@@ -1,7 +1,7 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
-const component: ComponentInfo = {
+const component: ComponentConfig = {
   component: 'WaterChart',
   group: ComponentGroup.Progress,
   label: '水波图',

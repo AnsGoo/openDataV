@@ -1,7 +1,7 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
-const component: ComponentInfo = {
+const component: ComponentConfig = {
   component: 'BorderBox1',
   group: ComponentGroup.BORDER,
   label: '01号边框',

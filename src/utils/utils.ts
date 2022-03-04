@@ -1,5 +1,11 @@
-import type { CanvasStyleData, Postion } from '@/types/storeTypes'
-import type { ComponentInfo, ComponentStyle, DOMRectStyle, GroupStyle } from '@/types/component'
+import type { CanvasStyleData } from '@/types/storeTypes'
+import type {
+  ComponentInfo,
+  ComponentStyle,
+  DOMRectStyle,
+  GroupStyle,
+  Rect
+} from '@/types/component'
 import { errorMessage } from '@/utils/message'
 import type { Vector } from '@/types/common'
 
@@ -68,8 +74,12 @@ export const getComponentStyle = (component: ComponentInfo) => {
   }
 }
 
-// 获取一个组件旋转 rotate 后的样式
-export function getComponentRotatedStyle(style: DOMRectStyle): DOMRectStyle {
+/**
+ * 计算组件笛卡尔坐标系坐标
+ * @param style 组件在画布中的位置
+ * @returns 组件坐标
+ */
+export function calcComponentAxis(style: DOMRectStyle): Rect {
   // 这里很重要，切记不能删除，将属性复制一份，否则会影响原始的属性值
   style = { ...style }
 
@@ -80,24 +90,26 @@ export function getComponentRotatedStyle(style: DOMRectStyle): DOMRectStyle {
     top,
     rotate
   }: { width: number; height: number; left: number; top: number; rotate: number } = style
-  if (rotate != 0) {
-    const newWidth = width * cos(style.rotate) + height * sin(style.rotate)
-    const diffX = (width - newWidth) / 2 // 旋转后范围变小是正值，变大是负值
-    style.left = (style.left as number) + diffX
-    style.right = (style.left as number) + newWidth
 
-    const newHeight = height * cos(rotate) + width * sin(style.rotate)
-    const diffY = (newHeight - height) / 2 // 始终是正
-    style.top = (style.top as number) - diffY
-    style.bottom = style.top + newHeight
-
-    style.width = newWidth
-    style.height = newHeight
+  const leftUpPoint: Vector = { x: left, y: top }
+  const rightUpPoint: Vector = { x: left + width, y: top }
+  const rightDownPoint: Vector = { x: left + width, y: top + height }
+  const leftDownPoint: Vector = { x: left, y: top + height }
+  const center: Vector = { x: left + width / 2, y: top + height / 2 }
+  const realRotate = mod360(rotate)
+  if (realRotate != 0) {
+    const alu: Vector = rotatePoint(leftUpPoint, center, realRotate)
+    const aru: Vector = rotatePoint(rightUpPoint, center, realRotate)
+    const ard: Vector = rotatePoint(rightDownPoint, center, realRotate)
+    const ald: Vector = rotatePoint(leftDownPoint, center, realRotate)
+    const left = Math.min(alu.x, aru.x, ard.x, ald.x)
+    const right = Math.max(alu.x, aru.x, ard.x, ald.x)
+    const top = Math.min(alu.y, aru.y, ard.y, ald.y)
+    const bottom = Math.max(alu.y, aru.y, ard.y, ald.y)
+    return { left, right, top, bottom }
   } else {
-    style.bottom = top + height
-    style.right = left + width
+    return { top, left, right: left + width, bottom: top + height }
   }
-  return style
 }
 
 /**
@@ -108,7 +120,14 @@ function angleToRadian(angle: number) {
   return (angle * Math.PI) / 180
 }
 
-export function rotatedPointCoordinate(point: Vector, center: Vector, rotate: number): Vector {
+/**
+ * 点旋转函数
+ * @param point 被旋转的点
+ * @param center 旋转中心
+ * @param rotate 旋转弧度
+ * @returns
+ */
+export function rotatePoint(point: Vector, center: Vector, rotate: number): Vector {
   /**
    * 旋转公式：
    *  点a(x, y)
@@ -173,7 +192,7 @@ export function decomposeComponent(component: ComponentInfo, parentStyle: Compon
       x: left + width / 2
     }
 
-    const afterPoint: Vector = rotatedPointCoordinate(point, center, parentStyle.rotate)
+    const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
     component.style = {
       ...component.style,
       top: Math.round(afterPoint.y - height / 2),
@@ -205,28 +224,26 @@ export function createGroupStyle(groupComponent: ComponentInfo) {
 /**
  * 计算组合组件的位置信息
  */
-export function computeGroupPositionStyle(defaultStyle: Postion, components: ComponentInfo[]) {
-  if (defaultStyle.width === 0) {
-    const xAxis: number[] = []
-    const yAxis: number[] = []
-    components.forEach((ele) => {
-      const left: number = ele.style.left! as number
-      const width: number = ele.style.width! as number
-      const top: number = ele.style.top! as number
-      const height: number = ele.style.height! as number
-      xAxis.push(left)
-      xAxis.push(left + width)
-      yAxis.push(top)
-      yAxis.push(top + height)
-    })
-    const newLeft: number = Math.min(...xAxis)
-    const newTop: number = Math.min(...yAxis)
-    const newWidth: number = Math.max(...xAxis) - newLeft
-    const newHeight: number = Math.max(...yAxis) - newTop
-    return { left: newLeft, top: newTop, width: newWidth, height: newHeight }
-  }
+export function calcComponentsRect(components: ComponentInfo[]) {
+  const leftSet: Set<number> = new Set()
+  const topSet: Set<number> = new Set()
+  const rightSet: Set<number> = new Set()
+  const bottomSet: Set<number> = new Set()
+  components.forEach((component) => {
+    // 获取位置大小信息：left, top, width, height
+    const style: DOMRectStyle = component.style
+    const componentRect: Rect = calcComponentAxis(style)
+    leftSet.add(componentRect.left)
+    topSet.add(componentRect.top)
+    rightSet.add(componentRect.right)
+    bottomSet.add(componentRect.bottom)
+  })
 
-  return defaultStyle
+  const left = Math.min(...leftSet)
+  const right = Math.max(...rightSet)
+  const top = Math.min(...topSet)
+  const bottom = Math.max(...bottomSet)
+  return { left, top, width: right - left, height: bottom - top }
 }
 
 export function toPercent(val: number) {
@@ -380,6 +397,9 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
     case 'scaleX':
     case 'scaleY':
       return { transform: `${key}(${value}deg)` }
+
+    case 'grotate':
+      return { transform: `${key.slice(1)}(${value}deg)` }
 
     case 'scale':
       return { transform: `${key}(${(value[0], value[1])}deg)` }

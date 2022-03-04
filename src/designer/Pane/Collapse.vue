@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-
+import { eventBus } from '@/bus/useEventBus'
 const props = defineProps<{
   parentSelector: string // 父级选择器
   expendWidth: number // 展开后的宽度
@@ -27,10 +27,12 @@ const handleHidenLeft = () => {
       el.style.width = `${props.shrinkWidth}px`
       sideicon.value = props.shrinkIcon
       direction.value = 'shrink'
+      eventBus.emit('collapse', 'shrink')
     } else {
       el.style.width = `${props.expendWidth}px`
       sideicon.value = props.expendIcon
       direction.value = 'expend'
+      eventBus.emit('collapse', 'expend')
     }
   }
 }

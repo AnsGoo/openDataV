@@ -43,6 +43,11 @@
     "@babel/helper-validator-identifier" "^7.14.9"
     to-fast-properties "^2.0.0"
 
+"@element-plus/icons-vue@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/@element-plus/icons-vue/-/icons-vue-1.0.0.tgz#6cfdb6a41b2e5371de562c330f6908401e032dcb"
+  integrity sha512-v8W6uiOfwq9GRWBLc0fvp0WwExU09BLdYfldRBxWUCJHeJ9WHeFrtt6BdixGVl9SCZ2V5soB8gi4tr365a9p/Q==
+
 "@element-plus/icons@^0.0.11":
   version "0.0.11"
   resolved "https://registry.npmjs.org/@element-plus/icons/-/icons-0.0.11.tgz"

@@ -1,7 +1,7 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
-const component: ComponentInfo = {
+const component: ComponentConfig = {
   component: 'SubText',
   group: ComponentGroup.TEXT,
   label: '数据订阅文本',

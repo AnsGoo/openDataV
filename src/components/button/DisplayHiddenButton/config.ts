@@ -1,7 +1,7 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
-const component: ComponentInfo = {
+const component: ComponentConfig = {
   component: 'DisplayHiddenButton',
   label: '显示隐藏组件按钮',
   group: ComponentGroup.CUSTOM,
@@ -16,7 +16,8 @@ const component: ComponentInfo = {
   style: {
     width: 80,
     height: 80
-  }
+  },
+  icon: ''
 }
 const style: Array<GroupType> = []
 

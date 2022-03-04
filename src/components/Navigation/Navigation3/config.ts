@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
 export interface SwiperItem {
   label: string
@@ -14,7 +14,7 @@ export interface PropValueType {
   swiperList: Array<SwiperItem>
 }
 
-const component: ComponentInfo<PropValueType> = {
+const component: ComponentConfig<PropValueType> = {
   component: 'Navigation3',
   group: ComponentGroup.Navigation,
   label: '导航3',

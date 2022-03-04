@@ -30,7 +30,7 @@
     >
       <template #title>
         <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
-        <span>{{ item.label }}</span>
+        <span v-show="isShowText">{{ item.label }}</span>
       </template>
     </el-menu-item>
   </template>
@@ -55,6 +55,7 @@ import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { calcContextMenuLoccation, decomposeComponent } from '@/utils/utils'
 import { Vector } from '@/types/common'
+import { useEventBus } from '@/bus/useEventBus'
 
 const props = defineProps<{
   components: ComponentInfo[]
@@ -64,12 +65,23 @@ const props = defineProps<{
 
 const emits = defineEmits<{ (e: 'select', index: string): void }>()
 const contextMenu = ref<ElRef>(null)
+const isShowText = ref<boolean>(true)
 const basicStore = useBasicStoreWithOut()
 onClickOutside(contextMenu, () => close())
 let displayContexyMenu = ref<boolean>(false)
 let menuTop = ref<number>(0)
 let menuLeft = ref<number>(0)
 let curIndex = ref<string>('')
+
+const open = (key: any) => {
+  const result = key as string
+  if (result === 'expend') {
+    isShowText.value = true
+  } else {
+    isShowText.value = false
+  }
+}
+useEventBus('collapse', open)
 
 const caculIndex = (index: number) => {
   let fatherIndex: string | undefined = props.index
@@ -85,10 +97,14 @@ const close = (): void => {
 }
 
 const showContextmenu = (event: PointerEvent, index: string) => {
-  const point: Vector = calcContextMenuLoccation({
-    x: event.clientX,
-    y: event.clientY
-  }, 80, 192)
+  const point: Vector = calcContextMenuLoccation(
+    {
+      x: event.clientX,
+      y: event.clientY
+    },
+    80,
+    192
+  )
   menuTop.value = point.y
   menuLeft.value = point.x
   displayContexyMenu.value = false
@@ -184,8 +200,8 @@ const pasteComponent = (index: string, component: ComponentInfo, isMyLayer: bool
         gtop: 1.1,
         gleft: 1.1,
         grotate: component.style.rotate as number,
-        gheight: parseFloat(((style.height * 100) / (parentStyle.height as number)).toFixed(4)),
-        gwidth: parseFloat(((style.width * 100) / (parentStyle.width as number)).toFixed(4))
+        gheight: parseFloat(((style.height * 100) / (parentStyle!.height as number)).toFixed(4)),
+        gwidth: parseFloat(((style.width * 100) / (parentStyle!.width as number)).toFixed(4))
       }
       fatherComponent.subComponents.splice(myindex, 0, component)
       emits('select', index)
@@ -203,7 +219,10 @@ const getFatherComponentData = (indexs: number[]): ComponentInfo => {
       left: 0,
       top: 0,
       rotate: 0
-    }
+    },
+    id: '',
+    label: '',
+    icon: ''
   }
   indexs.forEach((el: number) => {
     rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent
@@ -211,3 +230,10 @@ const getFatherComponentData = (indexs: number[]): ComponentInfo => {
   return rootComponent
 }
 </script>
+
+<style lang="less" scoped>
+.iconfont {
+  @apply mr-1 text-xl;
+  color: rgba(30, 144, 255, 1);
+}
+</style>

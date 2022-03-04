@@ -1,12 +1,14 @@
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import { ComponentGroup } from '@/enum'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
-const component: ComponentInfo = {
+const component: ComponentConfig = {
   component: 'Group',
   label: '分组',
   propValue: {},
   icon: 'wenben',
   show: false,
-  style: {}
+  style: {},
+  group: ComponentGroup.BASIC
 }
 
 const style: Array<GroupType> = []

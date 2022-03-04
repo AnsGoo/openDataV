@@ -15,6 +15,12 @@ interface ComponentCommon {
   group?: ComponentGroup // 组件所属的组
 }
 
+interface Rect {
+  left: number
+  top: number
+  right: number
+  bottom: number
+}
 interface DOMRectStyle {
   width: number
   height: number
@@ -28,13 +34,23 @@ interface ComponentStyle extends DOMRectStyle {
 }
 
 interface ComponentInfo<T = Recordable<string | number | any>> extends ComponentCommon {
-  id?: number | string
+  id: string
   component: string
-  label?: string
+  label: string
   propValue?: T
-  icon?: string
+  icon: string
   style: ComponentStyle
   subComponents?: Array<ComponentInfo>
+}
+
+interface ComponentConfig<T = Recordable<string | number | any>> {
+  component: string
+  label: string
+  propValue: T
+  icon: string
+  group: ComponentGroup
+  style: Recordable<any>
+  show?: boolean | undefined
 }
 
 interface ArrayType {
@@ -61,7 +77,7 @@ interface GroupType {
 }
 
 interface ComponentOptions {
-  component: ComponentInfo
+  component: ComponentConfig
   style: Array<GroupType>
   attrs: Array<GroupType>
 }
@@ -75,5 +91,7 @@ export type {
   ArrayType,
   ComponentCommon,
   DOMRectStyle,
-  GroupStyle
+  GroupStyle,
+  Rect,
+  ComponentConfig
 }

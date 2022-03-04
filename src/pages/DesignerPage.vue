@@ -44,6 +44,7 @@ import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { useStorage } from '@vueuse/core'
 import { eventBus } from '@/bus/useEventBus'
+import { ComponentInfo } from '@/types/component'
 
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
@@ -93,7 +94,7 @@ const handleDrop = (e) => {
     component.style.top = e.offsetY
     component.style.left = e.offsetX
     snapShotStore.recordSnapshot()
-    basicStore.addComponent(component)
+    basicStore.addComponent(component as ComponentInfo)
   }
 }
 

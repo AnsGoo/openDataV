@@ -6,7 +6,7 @@
           <el-sub-menu v-for="(key, index) in componentKeys" :index="index.toString()" :key="index">
             <template #title>
               <span :class="`icon iconfont ${iconMap[key]}`"></span>
-              <span>{{ key }}</span>
+              <span v-show="isShowText">{{ key }}</span>
             </template>
             <el-menu-item
               v-for="(item, i) in componentGroup[key!]"
@@ -30,15 +30,28 @@
 import { ComponentGroup } from '@/enum'
 import { componentList } from '@/designer/load'
 import type { ComponentInfo } from '@/types/component'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import iconMap from '../icon'
 import { ElMenu, ElMenuItem, ElSubMenu, ElScrollbar } from 'element-plus'
+import { useEventBus } from '@/bus/useEventBus'
 
 const componentKeys = computed(() => {
   return Object.keys(ComponentGroup).map((item) => {
     return ComponentGroup[item]
   })
 })
+
+const isShowText = ref<boolean>(true)
+
+const open = (key: any) => {
+  const result = key as string
+  if (result === 'expend') {
+    isShowText.value = true
+  } else {
+    isShowText.value = false
+  }
+}
+useEventBus('collapse', open)
 
 const componentGroup = computed(() => {
   const groups: { group: string; component: ComponentInfo } = {} as any
@@ -141,6 +154,7 @@ const handleDragStart = (e) => {
   }
   .iconfont {
     @apply mr-1 text-xl;
+    color: rgba(30, 144, 255, 1);
   }
 }
 </style>

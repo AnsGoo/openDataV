@@ -5,6 +5,7 @@ import '@/css/index.less'
 import '@/css/font.less'
 import '@/assets/directionFonts/iconfont.css'
 import 'element-plus/dist/index.css'
+import * as Icons from '@element-plus/icons-vue'
 import { setupStore } from '@/store'
 import { setupCustomComponent } from '@/designer/load'
 import { setupRouter } from '@/router'
@@ -20,4 +21,7 @@ setupRouter(app)
 // 注册自定义全局组件
 setupCustomComponent(app)
 // app.use(ElementPlus)
+Object.keys(Icons).forEach((key) => {
+  app.component(key, Icons[key as keyof typeof Icons])
+})
 app.mount('#app', true)

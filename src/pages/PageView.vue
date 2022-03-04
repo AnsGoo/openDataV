@@ -1,7 +1,7 @@
 <template>
   <div class="bg" :style="bgStyle">
     <div class="screen" :style="screenStyle">
-      <ComponentWrapper v-for="(item, index) in componentData" :key="index" :config="item" />
+      <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
     </div>
   </div>
 </template>

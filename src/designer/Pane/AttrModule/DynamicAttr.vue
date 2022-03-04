@@ -19,11 +19,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch, toRaw } from 'vue'
+import { ref, computed } from 'vue'
 import type { AttrType } from '@/types/component'
 import FormItem from './FormItem.vue'
 import { ElButton, ElCollapseItem } from 'element-plus'
-import cloneDeep from 'lodash-es/cloneDeep';
 
 const props = defineProps<{
   data: Recordable<any>[]
@@ -34,7 +33,9 @@ const props = defineProps<{
   ukey: string
 }>()
 
-const emits = defineEmits<{ (e: 'change', value: any, key: string): void }>()
+const emits = defineEmits<{
+  (e: 'change', value: any, key: string): void
+}>()
 
 const arrayData = ref<Recordable<any>[]>(props.data)
 
@@ -47,10 +48,7 @@ const isShowAdd = computed<boolean>(() => {
 })
 
 const deleteItem = (index: number) => {
-  // const temp = cloneDeep(toRaw(arrayData.value))
-  // temp.splice(index, 1)
-  // arrayData.value.splice(0, arrayData.value.length, ...temp)
-  // emits('change', temp, props.uid)
+  arrayData.value.splice(index, 1)
 }
 
 const handleAddClick = () => {
@@ -63,19 +61,8 @@ const handleAddClick = () => {
       child[item.key] = ''
     }
   })
-
   arrayData.value.push(child)
 }
-
-watch(
-  () => props.data,
-  () => {
-    arrayData.value = props.data
-  },
-  {
-    deep: true
-  }
-)
 </script>
 
 <style lang="less" scoped>
@@ -87,7 +74,7 @@ watch(
 .dynamic {
   display: flex;
   width: 100%;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-content: center;
   flex-wrap: nowrap;
   flex-direction: row;

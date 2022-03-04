@@ -1,24 +1,72 @@
 <template>
-  <div class="toolbar">
-    <div class="title">{{ basicStore.name }}</div>
-    <div class="toolbar-item">
-      <el-button class="realbutton" @click="undo">撤消</el-button>
-      <el-button class="realbutton" @click="preview">预览</el-button>
-      <el-button class="realbutton" @click="save">保存</el-button>
-      <el-button class="realbutton" @click="recoveryDraft">恢复草稿</el-button>
-      <el-button class="realbutton" @click="clearCanvas">清空画布</el-button>
-      <el-button class="realbutton" @click="exportCanvas">导出</el-button>
-      <el-button class="realbutton" @click="importCanvas">导入</el-button>
-      <el-button class="realbutton" @click="fullScreen">全屏编辑</el-button>
-      <el-button class="realbutton" @click="compose" :disabled="composeStore.canCompose"
-        >组合</el-button
-      >
-      <el-button class="realbutton" @click="decompose" :disabled="composeStore.canDecompose"
-        >拆分</el-button
-      >
-      <el-button class="realbutton" @click="setShowEm">显示坐标</el-button>
-      <el-button class="realbutton" @click="showIcon">图标</el-button>
-      <el-button class="realbutton" @click="() => (showImageView = true)">图片</el-button>
+  <div class="tool-bar">
+    <!-- <div>{{ basicStore.name }}</div> -->
+    <div class="tool-bar-item">
+      <el-button size="small" @click="save" title="保存">
+        <el-icon style="vertical-align: middle">
+          <Finished />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="preview" title="预览">
+        <el-icon style="vertical-align: middle">
+          <View />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="undo" title="撤销">
+        <el-icon style="vertical-align: middle" @click="undo">
+          <TopLeft />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="recoveryDraft" title="恢复">
+        <el-icon style="vertical-align: middle">
+          <TopRight />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="clearCanvas" title="清空">
+        <el-icon style="vertical-align: middle">
+          <Brush />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="exportCanvas" title="导出">
+        <el-icon style="vertical-align: middle">
+          <Download />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="importCanvas" title="导入">
+        <el-icon style="vertical-align: middle">
+          <Upload />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="fullScreen" title="全屏">
+        <el-icon style="vertical-align: middle">
+          <FullScreen />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="compose" :disabled="composeStore.canCompose" title="组合">
+        <el-icon style="vertical-align: middle">
+          <FolderAdd />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="decompose" :disabled="composeStore.canDecompose" title="拆分">
+        <el-icon style="vertical-align: middle">
+          <FolderRemove />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="setShowEm" title="坐标">
+        <el-icon style="vertical-align: middle">
+          <Aim />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="showIcon" title="图标">
+        <el-icon style="vertical-align: middle">
+          <TakeawayBox />
+        </el-icon>
+      </el-button>
+      <el-button size="small" @click="() => (showImageView = true)" title="图片">
+        <el-icon style="vertical-align: middle">
+          <Picture />
+        </el-icon>
+      </el-button>
     </div>
   </div>
 
@@ -27,17 +75,17 @@
       <el-form-item label="页面名称" prop="name">
         <el-input v-model="form.name" placeholder="请输入页面名称" />
       </el-form-item>
-      <el-form-item label="上传缩略图">
+      <!-- <el-form-item label="上传缩略图">
         <el-upload
           :on-change="handleChangeFile"
-          action=""
+          action="#"
           list-type="picture"
           :limit="1"
           :auto-upload="false"
         >
           <el-button size="small" type="primary">文件选择</el-button>
         </el-upload>
-      </el-form-item>
+      </el-form-item>-->
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -64,8 +112,8 @@ import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
 import ImageView from './ImageView.vue'
-import { ElForm, ElInput, ElFormItem, ElButton, ElDialog, ElUpload } from 'element-plus'
-import type { UploadFile } from 'element-plus/lib/components/upload/src/upload.type'
+import { ElForm, ElInput, ElFormItem, ElButton, ElDialog, ElIcon } from 'element-plus'
+// import type { UploadFile } from 'element-plus/lib/components/upload/src/upload.type'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
 
@@ -132,13 +180,13 @@ const save = () => {
   saveDialogVisible.value = true
 }
 
-const handleChangeFile = (file: UploadFile, _) => {
-  const reader: FileReader = new FileReader()
-  reader.readAsDataURL(file['raw'])
-  reader.onload = () => {
-    form.thumbnail = reader.result as string
-  }
-}
+// const handleChangeFile = (file: UploadFile, _) => {
+//   const reader: FileReader = new FileReader()
+//   reader.readAsDataURL(file['raw'])
+//   reader.onload = () => {
+//     form.thumbnail = reader.result as string
+//   }
+// }
 
 const clearCanvas = () => {
   snapShotStore.recordSnapshot()
@@ -238,9 +286,7 @@ const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
     const layoutComponents: { canvasData: ComponentInfo[]; canvasStyle: CanvasStyleData } =
       JSON.parse(loadEvent.target.result as string)
     if (layoutComponents) {
-      layoutComponents.canvasData?.forEach((item) => {
-        basicStore.copyComponent(item)
-      })
+      basicStore.setComponentData(layoutComponents.canvasData)
       basicStore.setCanvasStyle(layoutComponents.canvasStyle)
     }
   }
@@ -259,63 +305,9 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
-@layer components {
-  .toolbar {
-    @apply bg-gray-50 border-2 border-solid border-gray-300 relative text-center;
-  }
-
-  .toolbar .title {
-    @apply h-full text-gray-600 absolute top-0;
-
-    line-height: 48px;
-    font-size: 20px;
-    font-weight: 600;
-    margin-left: 5%;
-  }
-
-  .toolbar .toolbar-item {
-    @apply flex items-center justify-center w-full;
-
-    transition: all 0.3s;
-    margin: 4px auto;
-  }
-
-  .toolbar .sidebar {
-    width: 100%;
-    height: 10px;
-    position: relative;
-  }
-
-  .sidebar i {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    top: -5px;
-    font-size: 12px;
-  }
-  .canvas-config {
-    @apply inline-block ml-2.5 text-sm text-gray-400;
-  }
-
-  .canvas-config input {
-    @apply w-12 ml-2.5 outline-none px-0 py-1.5 border border-solid border-gray-300 text-gray-500 text-center;
-  }
-
-  span {
-    @apply ml-2.5;
-  }
-
-  .insert {
-    @apply inline-block leading-none whitespace-nowrap cursor-pointer bg-gray-50 border border-solid;
-    @apply border-gray-200 text-gray-500 text-center box-border outline-none m-0 delay-100;
-    @apply font-medium px-2.5 py-4 text-xs rounded-sm ml-2.5 hover:bg-gray-200 hover:text-blue-400;
-
-    -webkit-appearance: none;
-  }
-}
-</style>
-<style lang="less" scoped>
-.canvas-config input {
-  box-shadow: inset 2px 2px 4px 0px grey;
+button {
+  margin-left: 0px !important;
+  color: rgba(30, 144, 255, 1);
+  border: none;
 }
 </style>

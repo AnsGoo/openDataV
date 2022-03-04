@@ -2,11 +2,11 @@ import { cloneDeep } from 'lodash-es'
 import { ComponentGroup } from '@/enum'
 import type { DataOption } from '@/types/common'
 import type { EChartPropTypes, EChartLineSeriesOption } from '@/utils/echarts/propTypes'
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 import { basicEchartConfig, basicEchartAttr } from '@/utils/echarts/commonProp'
 import { eChartLineSeries, eChartLineSeriesAttr } from '@/utils/echarts/lineSeries'
 
-const component: ComponentInfo<EChartPropTypes<EChartLineSeriesOption> & DataOption> = {
+const component: ComponentConfig<EChartPropTypes<EChartLineSeriesOption> & DataOption> = {
   component: 'line-chart',
   group: ComponentGroup.LINE,
   label: '折线图',

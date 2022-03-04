@@ -51,7 +51,6 @@ const copyComponent = (index: string) => {
   const fatherComponentData: Array<ComponentInfo> | undefined = getFatherComponentData(indexs)
   if (fatherComponentData) {
     const componentInfo: ComponentInfo = fatherComponentData[myindex]
-    componentInfo.id = undefined
     copyText(JSON.stringify(componentInfo))
     copyStore.copy()
   }
@@ -130,7 +129,10 @@ const getFatherComponentData = (indexs: number[]) => {
       left: 0,
       top: 0,
       rotate: 0
-    }
+    },
+    id: '',
+    label: '',
+    icon: ''
   }
   indexs.forEach((el: number) => {
     rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent

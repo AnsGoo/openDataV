@@ -43,7 +43,16 @@ const handleSelect = (key: string) => {
   let rootComponent: ComponentInfo = {
     subComponents: componentData.value,
     component: '',
-    style: {}
+    style: {
+      width: 0,
+      left: 0,
+      top: 0,
+      height: 0,
+      rotate: 0
+    },
+    id: '',
+    label: '',
+    icon: ''
   }
   indexs.forEach((el: number) => {
     rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent

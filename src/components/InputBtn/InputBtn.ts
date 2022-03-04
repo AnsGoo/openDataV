@@ -1,10 +1,11 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentInfo, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
-const component: ComponentInfo = {
+const component: ComponentConfig = {
   component: 'InputBtn',
   label: '带按钮的输入框',
   group: ComponentGroup.CUSTOM,
+  icon: '',
   propValue: {
     url: '/Scan/WritePoint',
     getDataUrl: '',
