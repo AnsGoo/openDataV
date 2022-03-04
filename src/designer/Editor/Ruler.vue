@@ -7,8 +7,7 @@
           :key="index"
           :style="{ left: index * 50 + 2 + 'px' }"
           class="n"
-          >{{ item.id }}</span
-        >
+        >{{ item.id }}</span>
       </div>
       <div ref="verticalRuler" class="vue-ruler-v" @mousedown.stop="verticalDragRuler">
         <span
@@ -16,8 +15,7 @@
           :key="index"
           :style="{ top: index * 50 + 2 + 'px' }"
           class="n"
-          >{{ item.id }}</span
-        >
+        >{{ item.id }}</span>
       </div>
       <div :style="{ top: verticalDottedTop + 'px' }" class="vue-ruler-ref-dot-h"></div>
       <div :style="{ left: horizontalDottedLeft + 'px' }" class="vue-ruler-ref-dot-v"></div>
@@ -185,7 +183,10 @@ const windowResize = () => {
 const getLineStyle = ({ type, top, left }: any) => {
   const style = {
     borderWidth: props.borderStyle.width + 'px',
-    borderStyle: props.borderStyle.type,
+    borderLeftStyle: props.borderStyle.type,
+    borderTopStyle: props.borderStyle.type,
+    borderRightStyle: 'none',
+    borderBottomStyle: 'none',
     borderColor: props.borderStyle.color
   }
 
