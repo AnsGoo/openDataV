@@ -81,7 +81,10 @@ const showLine = (isDownward, isRightward) => {
     const componentHalfwidth = (right - left) / 2
     const componentHalfHeight = (bottom - top) / 2
 
-    const conditions = {
+    const conditions: Record<
+      'top' | 'left',
+      Record<'isNearly' | 'lineNode' | 'line' | 'dragShift' | 'lineShift', any>[]
+    > = {
       top: [
         {
           isNearly: isNearly(mytop, top),
@@ -168,16 +171,14 @@ const showLine = (isDownward, isRightward) => {
         if (!condition.isNearly) return
 
         // 修改当前组件位移
-        basicStore.setShapeSingleStyle({
-          key,
-          value:
-            rotate != 0
-              ? translatecurComponentShift(key, condition, {
-                width: myright - myleft,
-                height: mybottom - mytop
-              })
-              : condition.dragShift
-        })
+        const value =
+          rotate != 0
+            ? translatecurComponentShift(key, condition, {
+              width: myright - myleft,
+              height: mybottom - mytop
+            })
+            : condition.dragShift
+        basicStore.setComponentSingleStyle({ key, value })
 
         condition.lineNode.style[key] = `${condition.lineShift}px`
         needToShow.push(condition.line)

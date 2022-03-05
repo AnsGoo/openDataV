@@ -1,11 +1,11 @@
 <template>
   <div class="sidebar">
-    <i :class="`icon iconfont ${sideicon}`" @click="handleHidenLeft" :style="iconStyle()"></i>
+    <i :class="`icon iconfont ${sideicon}`" @click="handleHidenLeft" :style="{ [position]: 0 }"></i>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import { eventBus } from '@/bus/useEventBus'
 const props = defineProps<{
   parentSelector: string // 父级选择器
@@ -18,7 +18,6 @@ const props = defineProps<{
 
 const direction = ref<string>('expend')
 const sideicon = ref<string>(props.expendIcon)
-const position = ref<string>(props.position)
 
 const handleHidenLeft = () => {
   const el = document.querySelector(props.parentSelector) as HTMLElement
@@ -27,24 +26,20 @@ const handleHidenLeft = () => {
       el.style.width = `${props.shrinkWidth}px`
       sideicon.value = props.shrinkIcon
       direction.value = 'shrink'
-      eventBus.emit('collapse', 'shrink')
+      if (props.position === 'right') {
+        nextTick(() => {
+          eventBus.emit('collapse', 'shrink')
+        })
+      }
     } else {
       el.style.width = `${props.expendWidth}px`
       sideicon.value = props.expendIcon
       direction.value = 'expend'
-      eventBus.emit('collapse', 'expend')
-    }
-  }
-}
-
-const iconStyle = () => {
-  if (props.position === 'left') {
-    return {
-      left: 0
-    }
-  } else {
-    return {
-      right: 0
+      if (props.position === 'right') {
+        nextTick(() => {
+          eventBus.emit('collapse', 'expend')
+        })
+      }
     }
   }
 }

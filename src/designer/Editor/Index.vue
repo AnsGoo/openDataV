@@ -89,7 +89,8 @@ const hideArea = () => {
       left: 0,
       top: 0,
       width: 0,
-      height: 0
+      height: 0,
+      rotate: 0
     },
     []
   )
@@ -216,7 +217,6 @@ const handleMouseDown = (e: MouseEvent) => {
       bottom: start.y + height.value
     }
     const result = getSelectArea(selectedRect)
-    console.log(result?.rect)
     if (result) {
       const rect = result.rect
       composeStore.setAreaData(
@@ -224,7 +224,8 @@ const handleMouseDown = (e: MouseEvent) => {
           top: rect.top,
           left: rect.left,
           width: rect.right - rect.left,
-          height: rect.bottom - rect.top
+          height: rect.bottom - rect.top,
+          rotate: 0
         },
         result.components
       )

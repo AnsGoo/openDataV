@@ -1,4 +1,4 @@
-import type { ComponentInfo } from '@/types/component'
+import type { ComponentInfo, DOMRectStyle } from '@/types/component'
 
 export interface Component {
   style: Recordable<string>
@@ -41,16 +41,8 @@ export interface SnapData {
   snapshotMax: number
 }
 
-export interface Postion {
-  top: number
-  left: number
-  width: number
-  height: number
-  rotate?: number
-}
-
 export interface AreaData {
-  style: Postion
+  style: DOMRectStyle
   components: Array<ComponentInfo>
 }
 
@@ -58,4 +50,12 @@ export interface UserInfo {
   username: string
   token: string | undefined
   permissions: string[]
+}
+
+export interface Postion {
+  width?: number
+  height?: number
+  left?: number
+  top?: number
+  rotate?: number
 }

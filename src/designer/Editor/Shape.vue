@@ -184,7 +184,7 @@ const handleMouseDownOnShape = (e) => {
     pos.left = curX - startX + startLeft
 
     // 修改当前组件样式
-    basicStore.setShapeStyle(pos)
+    basicStore.syncComponentLoction(pos)
     // 等更新完当前组件的样式并绘制到屏幕后再判断是否需要吸附
     // 如果不使用 $nextTick，吸附后将无法移动
     nextTick(() => {
@@ -277,7 +277,7 @@ const handleMouseDownOnPoint = (point, e) => {
       symmetricPoint
     })
 
-    basicStore.setShapeStyle(style)
+    basicStore.syncComponentLoction(style)
   }
 
   const up = () => {
@@ -337,7 +337,7 @@ const handleRotate = (e) => {
     pos.rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
 
     // 修改当前组件样式
-    basicStore.setShapeStyle(pos)
+    basicStore.syncComponentLoction(pos)
   }
 
   const up = () => {
@@ -356,7 +356,7 @@ const getCursor = () => {
     return {}
   }
 
-  const rotate: number = mod360( basicStore.curComponent!.style.rotate) // 取余 360
+  const rotate: number = mod360(basicStore.curComponent!.style.rotate) // 取余 360
   const result = {}
   let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
 

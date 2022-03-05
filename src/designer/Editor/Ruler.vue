@@ -7,7 +7,8 @@
           :key="index"
           :style="{ left: index * 50 + 2 + 'px' }"
           class="n"
-        >{{ item.id }}</span>
+          >{{ item.id }}</span
+        >
       </div>
       <div ref="verticalRuler" class="vue-ruler-v" @mousedown.stop="verticalDragRuler">
         <span
@@ -15,7 +16,8 @@
           :key="index"
           :style="{ top: index * 50 + 2 + 'px' }"
           class="n"
-        >{{ item.id }}</span>
+          >{{ item.id }}</span
+        >
       </div>
       <div :style="{ top: verticalDottedTop + 'px' }" class="vue-ruler-ref-dot-h"></div>
       <div :style="{ left: horizontalDottedLeft + 'px' }" class="vue-ruler-ref-dot-v"></div>
@@ -38,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted, CSSProperties } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 interface RulerToolPostion {
@@ -180,7 +182,7 @@ const windowResize = () => {
   init()
 }
 
-const getLineStyle = ({ type, top, left }: any) => {
+const getLineStyle = ({ type, top, left }: any): CSSProperties => {
   const style = {
     borderWidth: props.borderStyle.width + 'px',
     borderLeftStyle: props.borderStyle.type,
@@ -188,9 +190,9 @@ const getLineStyle = ({ type, top, left }: any) => {
     borderRightStyle: 'none',
     borderBottomStyle: 'none',
     borderColor: props.borderStyle.color
-  }
+  } as CSSProperties
 
-  return type === 'h' ? { top: top + 'px', ...style } : { left: left + 'px', ...style }
+  return type === 'h' ? { top: `${top}px`, ...style } : { left: left + 'px', ...style }
 }
 
 const handleDragLine = ({ type, id }) => {

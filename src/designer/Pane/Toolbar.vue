@@ -2,71 +2,94 @@
   <div class="tool-bar">
     <!-- <div>{{ basicStore.name }}</div> -->
     <div class="tool-bar-item">
-      <el-button size="small" @click="save" title="保存">
-        <el-icon style="vertical-align: middle">
-          <Finished />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="preview" title="预览">
-        <el-icon style="vertical-align: middle">
-          <View />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="undo" title="撤销">
-        <el-icon style="vertical-align: middle" @click="undo">
-          <TopLeft />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="recoveryDraft" title="恢复">
-        <el-icon style="vertical-align: middle">
-          <TopRight />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="clearCanvas" title="清空">
-        <el-icon style="vertical-align: middle">
-          <Brush />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="exportCanvas" title="导出">
-        <el-icon style="vertical-align: middle">
-          <Download />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="importCanvas" title="导入">
-        <el-icon style="vertical-align: middle">
-          <Upload />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="fullScreen" title="全屏">
-        <el-icon style="vertical-align: middle">
-          <FullScreen />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="compose" :disabled="composeStore.canCompose" title="组合">
-        <el-icon style="vertical-align: middle">
-          <FolderAdd />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="decompose" :disabled="composeStore.canDecompose" title="拆分">
-        <el-icon style="vertical-align: middle">
-          <FolderRemove />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="setShowEm" title="坐标">
-        <el-icon style="vertical-align: middle">
-          <Aim />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="showIcon" title="图标">
-        <el-icon style="vertical-align: middle">
-          <TakeawayBox />
-        </el-icon>
-      </el-button>
-      <el-button size="small" @click="() => (showImageView = true)" title="图片">
-        <el-icon style="vertical-align: middle">
-          <Picture />
-        </el-icon>
-      </el-button>
+      <div>
+        <el-button size="small" @click="save" title="保存">
+          <el-icon style="vertical-align: middle">
+            <Finished />
+          </el-icon>
+          <span>保存</span>
+        </el-button>
+        <el-button size="small" @click="preview" title="预览">
+          <el-icon style="vertical-align: middle">
+            <View />
+          </el-icon>
+          <span>预览</span>
+        </el-button>
+        <el-button size="small" @click="undo" title="撤销">
+          <el-icon style="vertical-align: middle" @click="undo">
+            <TopLeft />
+          </el-icon>
+          <span>撤销</span>
+        </el-button>
+        <el-button size="small" @click="recoveryDraft" title="恢复">
+          <el-icon style="vertical-align: middle">
+            <TopRight />
+          </el-icon>
+          <span>恢复</span>
+        </el-button>
+        <el-button size="small" @click="clearCanvas" title="清空">
+          <el-icon style="vertical-align: middle">
+            <Brush />
+          </el-icon>
+          <span>清空</span>
+        </el-button>
+        <el-button size="small" @click="exportCanvas" title="导出">
+          <el-icon style="vertical-align: middle">
+            <Download />
+          </el-icon>
+          <span>导出</span>
+        </el-button>
+        <el-button size="small" @click="importCanvas" title="导入">
+          <el-icon style="vertical-align: middle">
+            <Upload />
+          </el-icon>
+          <span>导入</span>
+        </el-button>
+        <el-button size="small" @click="fullScreen" title="全屏">
+          <el-icon style="vertical-align: middle">
+            <FullScreen />
+          </el-icon>
+          <span>全屏</span>
+        </el-button>
+        <el-button size="small" @click="compose" :disabled="composeStore.canCompose" title="组合">
+          <el-icon style="vertical-align: middle">
+            <FolderAdd />
+          </el-icon>
+          <span>组合</span>
+        </el-button>
+        <el-button
+          size="small"
+          @click="decompose"
+          :disabled="composeStore.canDecompose"
+          title="拆分"
+        >
+          <el-icon style="vertical-align: middle">
+            <FolderRemove />
+          </el-icon>
+          <span>拆分</span>
+        </el-button>
+        <el-button size="small" @click="setShowEm" title="坐标">
+          <el-icon style="vertical-align: middle">
+            <Aim />
+          </el-icon>
+          <span>坐标</span>
+        </el-button>
+      </div>
+
+      <div>
+        <el-button class="resource" size="small" @click="showIcon" title="图标">
+          <el-icon style="vertical-align: middle">
+            <TakeawayBox />
+          </el-icon>
+          <span>图标</span>
+        </el-button>
+        <el-button class="resource" size="small" @click="() => (showImageView = true)" title="图片">
+          <el-icon style="vertical-align: middle">
+            <Picture />
+          </el-icon>
+          <span>图片</span>
+        </el-button>
+      </div>
     </div>
   </div>
 
@@ -304,10 +327,21 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="less">
+.tool-bar-item {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  /* .resource {
+    align-items: right;
+  } */
+}
 button {
   margin-left: 0px !important;
   color: rgba(30, 144, 255, 1);
   border: none;
+  padding: 5px 5px;
 }
 </style>

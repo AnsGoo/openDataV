@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { store } from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
-import type { ComponentInfo } from '@/types/component'
+import type { ComponentInfo, DOMRectStyle } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
 import { uuid } from '@/utils/utils'
@@ -85,44 +85,27 @@ const useBasicStore = defineStore({
       this.layerComponent = undefined
     },
 
-    setShapeStyle(pos: Postion): void {
-      if (!this.curComponent || !this.curComponent.style) {
+    syncComponentLoction(postion: Postion): void {
+      if (!this.curComponent) {
         return
       }
-
-      if (pos.top) {
-        this.curComponent.style.top = Math.round(pos.top)
-        pos.top = Math.round(pos.top)
-      }
-
-      if (pos.left) {
-        this.curComponent.style.left = Math.round(pos.left)
-        pos.left = Math.round(pos.left)
-      }
-
-      if (pos.width) {
-        this.curComponent.style.width = Math.round(pos.width)
-        pos.width = Math.round(pos.width)
-      }
-
-      if (pos.height) {
-        this.curComponent.style.height = Math.round(pos.height)
-        pos.height = Math.round(pos.height)
-      }
-
-      if (pos.rotate) {
-        this.curComponent.style.rotate = pos.rotate
-        pos.rotate = Math.round(pos.rotate)
-      }
-
+      const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
+      const ablePostion = {}
+      const style = this.curComponent!.style
+      styleKyes.forEach((el) => {
+        if (postion[el] != undefined) {
+          ablePostion[el] = postion[el]
+        }
+      })
+      this.curComponent!.style  = {...style, ...ablePostion}
       eventBus.emit('changeStyle', {
         id: this.curComponent!.id,
-        style: { ...pos }
+        style: { ...postion }
       })
     },
 
-    setShapeSingleStyle({ key, value }): void {
-      if (!this.curComponent || !this.curComponent.style) {
+    setComponentSingleStyle({ key, value }): void {
+      if (!this.curComponent) {
         return
       }
 

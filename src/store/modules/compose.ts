@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
-import type { AreaData, Postion } from '@/types/storeTypes'
-import type { ComponentInfo, ComponentStyle } from '@/types/component'
+import type { AreaData } from '@/types/storeTypes'
+import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { decomposeComponent, createGroupStyle, calcComponentsRect } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
@@ -13,7 +13,8 @@ const useComposeStore = defineStore({
       top: 0,
       left: 0,
       width: 0,
-      height: 0
+      height: 0,
+      rotate: 0
     },
     components: []
   }),
@@ -38,7 +39,7 @@ const useComposeStore = defineStore({
     isActived(component: ComponentInfo): boolean {
       return this.components.findIndex((el: ComponentInfo) => el.id === component.id) !== -1
     },
-    setAreaData(style: Postion, components: Array<ComponentInfo>) {
+    setAreaData(style: DOMRectStyle, components: Array<ComponentInfo>) {
       this.style = style || {}
       this.components = components || []
     },
@@ -65,7 +66,7 @@ const useComposeStore = defineStore({
       }
 
       if (this.style.width === 0) {
-        this.style = calcComponentsRect(this.components)
+        this.style = { ...this.style, ...calcComponentsRect(this.components) }
       }
       this.components.forEach((component) => {
         components.push(component)
@@ -74,10 +75,8 @@ const useComposeStore = defineStore({
         component: 'Group',
         id: '',
         icon: '',
-        style: {
-          rotate: 0,
-          ...this.style
-        },
+        style: this.style,
+
         subComponents: components,
         label: ''
       }
