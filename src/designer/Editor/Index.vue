@@ -3,7 +3,7 @@
     class="editor edit"
     ref="editor"
     id="editor"
-    :style="defaultStyle"
+    :style="bgStyle"
     @contextmenu.prevent="handleContextMenu"
     @mousedown="handleMouseDown"
   >
@@ -25,7 +25,7 @@
       <component
         class="component"
         :is="item.component"
-        :style="getComponentStyle(item)"
+        :style="getComponentShapeStyle(item)"
         :propValue="item.propValue"
         :element="item"
         :id="'component' + item.id"
@@ -40,6 +40,7 @@
       :menuLeft="menuLeft"
       v-model:display="displayContexyMenu"
       ref="contextMenu"
+      :curComponentIndex="selectedIndex"
     />
     <!-- 标线 -->
     <MarkLine />
@@ -55,20 +56,15 @@ import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape.vue'
-import {
-  calcContextMenuLoccation,
-  filterStyle,
-  calcComponentAxis,
-  getScreenStyle
-} from '@/utils/utils'
+import { calcContextMenuLoccation, filterStyle, calcComponentAxis } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { useStorage, onClickOutside } from '@vueuse/core'
+import { onClickOutside, useStorage } from '@vueuse/core'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
 import { ComponentInfo, DOMRectStyle, Rect } from '@/types/component'
-import { getComponentStyle } from '@/utils/utils'
+import { getComponentShapeStyle } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -77,9 +73,25 @@ let menuLeft = ref<number>(0)
 let displayContexyMenu = ref<boolean>(false)
 const contextMenu = ref<ElRef>(null)
 
+const storageComponentData = useStorage(
+  'canvasData',
+  JSON.stringify(basicStore.componentData),
+  window.localStorage
+)
+const storageCanvasStyleData = useStorage('canvasStyle', JSON.stringify(basicStore.canvasStyleData))
+
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
+
+const selectedIndex = computed<string | undefined>(() => {
+  if (curComponent.value) {
+    return basicStore.getComponentIndexById(curComponent.value.id!).toString()
+  } else {
+    return undefined
+  }
+})
+
 const hideArea = () => {
   isShowArea.value = false
   width.value = 0
@@ -115,8 +127,13 @@ onUnmounted(() => {
 const componentData = computed(() => basicStore.componentData)
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
 const curComponent = computed(() => basicStore.curComponent)
-const defaultStyle = computed(() => {
-  return getScreenStyle(canvasStyleData.value)
+const bgStyle = computed<Recordable<string>>(() => {
+  const style = {
+    ...canvasStyleData.value,
+    backgroundImage: canvasStyleData.value.image,
+    backgroundSize: 'cover'
+  }
+  return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
 })
 
 const pasteText = async (event: ClipboardEvent) => {
@@ -126,24 +143,13 @@ const pasteText = async (event: ClipboardEvent) => {
       const component: ComponentInfo = JSON.parse(textData)
       if ('component' in component) {
         event.preventDefault()
-        basicStore.addComponent(component)
+        basicStore.appendComponent(component)
       }
     } catch (e) {
       console.log(e)
     }
   }
 }
-
-const storageCanvasData = useStorage(
-  'canvasData',
-  JSON.stringify(componentData.value),
-  window?.localStorage
-)
-const storageCanvasStyle = useStorage(
-  'canvasStyle',
-  JSON.stringify(canvasStyleData.value),
-  window?.localStorage
-)
 
 const editorX = ref<number>(0)
 const editorY = ref<number>(0)
@@ -268,10 +274,6 @@ const getSelectArea = (
     }
   })
   if (selectedComponents.length > 0) {
-    console.log(leftSet)
-    console.log(topSet)
-    console.log(rightSet)
-    console.log(bottomSet)
     const left = Math.min(...leftSet)
     const right = Math.max(...rightSet)
     const top = Math.min(...topSet)
@@ -312,13 +314,12 @@ const keyDown = (e: KeyboardEvent): void => {
 
 watch(
   () => [basicStore.componentData, basicStore.canvasStyleData],
-  ([newComponentData, newCanvasStyleData], _) => {
+  async ([newComponentData, newCanvasStyleData], _) => {
     if (newCanvasStyleData) {
-      storageCanvasStyle.value = JSON.stringify(newCanvasStyleData)
+      storageCanvasStyleData.value = JSON.stringify(newCanvasStyleData)
     }
-
     if (newComponentData) {
-      storageCanvasData.value = JSON.stringify(newComponentData)
+      storageComponentData.value = JSON.stringify(newComponentData)
     }
   },
   {
@@ -327,7 +328,7 @@ watch(
 )
 </script>
 
-<style scoped>
+<style scoped lang="less">
 @layer components {
   .editor {
     @apply relative bg-white m-auto;
@@ -339,6 +340,7 @@ watch(
 
   .edit .component {
     @apply outline-none w-full h-full;
+    position: static !important;
   }
 
   .chosen {

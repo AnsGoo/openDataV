@@ -3,32 +3,44 @@ import { store } from '@/store'
 import { cloneDeep } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { SnapData } from '@/types/storeTypes'
-import type { ComponentInfo } from '@/types/component'
+import { snapshotDb, StoreComponentData } from '@/utils/db'
+
+const basicStore = useBasicStoreWithOut()
 
 const useSnapShotStore = defineStore({
   id: 'snapshot',
   state: (): SnapData => ({
-    snapshotData: [],
+    latestSnapshot: undefined,
     snapshotMax: 5
   }),
   actions: {
-    undo() {
-      const basicStore = useBasicStoreWithOut()
-      const latestData: Array<ComponentInfo> = this.snapshotData.pop()
-      if (latestData) {
-        basicStore.setComponentData(latestData)
+    async undo() {
+      const snapshot: StoreComponentData | undefined = await snapshotDb.snapshot
+        .orderBy('id')
+        .last()
+      if (snapshot) {
+        basicStore.setComponentData(cloneDeep(snapshot.canvasData))
+        basicStore.setCanvasStyle(cloneDeep(snapshot.canvasStyle))
+        this.latestSnapshot = cloneDeep(snapshot)
       }
     },
-    recordSnapshot() {
-      const basicStore = useBasicStoreWithOut()
-      const len = this.snapshotData.length
-      if (len >= this.snapshotMax) {
-        this.snapshotData.shift()
+    async recordSnapshot() {
+      this.latestSnapshot = {
+        canvasData: cloneDeep(basicStore.componentData),
+        canvasStyle: cloneDeep(basicStore.canvasStyleData)
       }
-      this.snapshotData.push(cloneDeep(basicStore.componentData))
+      await snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot))
+      const count: number = await snapshotDb.snapshot.count()
+      if (count > this.snapshotMax) {
+        const snapshot: StoreComponentData = (await snapshotDb.snapshot
+          .orderBy('id')
+          .first()) as StoreComponentData
+        await snapshotDb.snapshot.delete(snapshot!.id!)
+      }
     },
-    clearSnapshot() {
-      this.snapshotData = []
+    async clearSnapshot() {
+      await snapshotDb.snapshot.clear()
+      this.latestSnapshot = undefined
     }
   }
 })

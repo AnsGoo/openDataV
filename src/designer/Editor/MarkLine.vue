@@ -64,133 +64,135 @@ useEventBus('unmove', () => {
 
 const showLine = (isDownward, isRightward) => {
   const components = basicStore.componentData as Array<ComponentInfo>
-  const {
-    top: mytop,
-    left: myleft,
-    right: myright,
-    bottom: mybottom
-  }: Rect = calcComponentAxis(basicStore.curComponent!.style)
-  const curComponentHalfwidth = (myright - myleft) / 2
-  const curComponentHalfHeight = (mybottom - mytop) / 2
+  if (basicStore.curComponent) {
+    const {
+      top: mytop,
+      left: myleft,
+      right: myright,
+      bottom: mybottom
+    }: Rect = calcComponentAxis(basicStore.curComponent!.style)
+    const curComponentHalfwidth = (myright - myleft) / 2
+    const curComponentHalfHeight = (mybottom - mytop) / 2
 
-  hideLine()
-  components.forEach((component) => {
-    if (component == basicStore.curComponent) return
-    const componentStyle = calcComponentAxis(component.style)
-    const { top, left, bottom, right } = componentStyle
-    const componentHalfwidth = (right - left) / 2
-    const componentHalfHeight = (bottom - top) / 2
+    hideLine()
+    components.forEach((component) => {
+      if (component == basicStore.curComponent) return
+      const componentStyle = calcComponentAxis(component.style)
+      const { top, left, bottom, right } = componentStyle
+      const componentHalfwidth = (right - left) / 2
+      const componentHalfHeight = (bottom - top) / 2
 
-    const conditions: Record<
-      'top' | 'left',
-      Record<'isNearly' | 'lineNode' | 'line' | 'dragShift' | 'lineShift', any>[]
-    > = {
-      top: [
-        {
-          isNearly: isNearly(mytop, top),
-          lineNode: linesRef.value[0], // xt
-          line: 'xt',
-          dragShift: top,
-          lineShift: top
-        },
-        {
-          isNearly: isNearly(mybottom, top),
-          lineNode: linesRef.value[0], // xt
-          line: 'xt',
-          dragShift: top - (mybottom - mytop || 0),
-          lineShift: top
-        },
-        {
-          // 组件与拖拽节点的中间是否对齐
-          isNearly: isNearly((mytop || 0) + curComponentHalfHeight, top + componentHalfHeight),
-          lineNode: linesRef.value[1], // xc
-          line: 'xc',
-          dragShift: top + componentHalfHeight - curComponentHalfHeight,
-          lineShift: top + componentHalfHeight
-        },
-        {
-          isNearly: isNearly(mytop, bottom),
-          lineNode: linesRef.value[2], // xb
-          line: 'xb',
-          dragShift: bottom,
-          lineShift: bottom
-        },
-        {
-          isNearly: isNearly(mybottom, bottom),
-          lineNode: linesRef.value[2], // xb
-          line: 'xb',
-          dragShift: (bottom as number) - (mybottom - mytop || 0),
-          lineShift: bottom
-        }
-      ],
-      left: [
-        {
-          isNearly: isNearly(myleft, left),
-          lineNode: linesRef.value[3], // yl
-          line: 'yl',
-          dragShift: left,
-          lineShift: left
-        },
-        {
-          isNearly: isNearly(myright, left),
-          lineNode: linesRef.value[3], // yl
-          line: 'yl',
-          dragShift: left - (myright - myleft || 0),
-          lineShift: left
-        },
-        {
-          // 组件与拖拽节点的中间是否对齐
-          isNearly: isNearly((myleft || 0) + curComponentHalfwidth, left + componentHalfwidth),
-          lineNode: linesRef.value[4], // yc
-          line: 'yc',
-          dragShift: left + componentHalfwidth - curComponentHalfwidth,
-          lineShift: left + componentHalfwidth
-        },
-        {
-          isNearly: isNearly(myleft, right),
-          lineNode: linesRef.value[5], // yr
-          line: 'yr',
-          dragShift: right,
-          lineShift: right
-        },
-        {
-          isNearly: isNearly(myright, right),
-          lineNode: linesRef.value[5], // yr
-          line: 'yr',
-          dragShift: (right as number) - (myright - myleft || 0),
-          lineShift: right
-        }
-      ]
-    }
+      const conditions: Record<
+        'top' | 'left',
+        Record<'isNearly' | 'lineNode' | 'line' | 'dragShift' | 'lineShift', any>[]
+      > = {
+        top: [
+          {
+            isNearly: isNearly(mytop, top),
+            lineNode: linesRef.value[0], // xt
+            line: 'xt',
+            dragShift: top,
+            lineShift: top
+          },
+          {
+            isNearly: isNearly(mybottom, top),
+            lineNode: linesRef.value[0], // xt
+            line: 'xt',
+            dragShift: top - (mybottom - mytop || 0),
+            lineShift: top
+          },
+          {
+            // 组件与拖拽节点的中间是否对齐
+            isNearly: isNearly((mytop || 0) + curComponentHalfHeight, top + componentHalfHeight),
+            lineNode: linesRef.value[1], // xc
+            line: 'xc',
+            dragShift: top + componentHalfHeight - curComponentHalfHeight,
+            lineShift: top + componentHalfHeight
+          },
+          {
+            isNearly: isNearly(mytop, bottom),
+            lineNode: linesRef.value[2], // xb
+            line: 'xb',
+            dragShift: bottom,
+            lineShift: bottom
+          },
+          {
+            isNearly: isNearly(mybottom, bottom),
+            lineNode: linesRef.value[2], // xb
+            line: 'xb',
+            dragShift: (bottom as number) - (mybottom - mytop || 0),
+            lineShift: bottom
+          }
+        ],
+        left: [
+          {
+            isNearly: isNearly(myleft, left),
+            lineNode: linesRef.value[3], // yl
+            line: 'yl',
+            dragShift: left,
+            lineShift: left
+          },
+          {
+            isNearly: isNearly(myright, left),
+            lineNode: linesRef.value[3], // yl
+            line: 'yl',
+            dragShift: left - (myright - myleft || 0),
+            lineShift: left
+          },
+          {
+            // 组件与拖拽节点的中间是否对齐
+            isNearly: isNearly((myleft || 0) + curComponentHalfwidth, left + componentHalfwidth),
+            lineNode: linesRef.value[4], // yc
+            line: 'yc',
+            dragShift: left + componentHalfwidth - curComponentHalfwidth,
+            lineShift: left + componentHalfwidth
+          },
+          {
+            isNearly: isNearly(myleft, right),
+            lineNode: linesRef.value[5], // yr
+            line: 'yr',
+            dragShift: right,
+            lineShift: right
+          },
+          {
+            isNearly: isNearly(myright, right),
+            lineNode: linesRef.value[5], // yr
+            line: 'yr',
+            dragShift: (right as number) - (myright - myleft || 0),
+            lineShift: right
+          }
+        ]
+      }
 
-    const needToShow: Array<any> = []
-    const { rotate } = basicStore.curComponent!.style
-    Object.keys(conditions).forEach((key) => {
-      // 遍历符合的条件并处理
-      conditions[key].forEach((condition) => {
-        if (!condition.isNearly) return
+      const needToShow: Array<any> = []
+      const { rotate } = basicStore.curComponent!.style
+      Object.keys(conditions).forEach((key) => {
+        // 遍历符合的条件并处理
+        conditions[key].forEach((condition) => {
+          if (!condition.isNearly) return
 
-        // 修改当前组件位移
-        const value =
-          rotate != 0
-            ? translatecurComponentShift(key, condition, {
-              width: myright - myleft,
-              height: mybottom - mytop
-            })
-            : condition.dragShift
-        basicStore.setComponentSingleStyle({ key, value })
+          // 修改当前组件位移
+          const value =
+            rotate != 0
+              ? translatecurComponentShift(key, condition, {
+                  width: myright - myleft,
+                  height: mybottom - mytop
+                })
+              : condition.dragShift
+          basicStore.setComponentSingleStyle({ key, value })
 
-        condition.lineNode.style[key] = `${condition.lineShift}px`
-        needToShow.push(condition.line)
+          condition.lineNode.style[key] = `${condition.lineShift}px`
+          needToShow.push(condition.line)
+        })
       })
-    })
 
-    // 同一方向上同时显示三条线可能不太美观，因此才有了这个解决方案
-    // 同一方向上的线只显示一条，例如多条横条只显示一条横线
-    if (needToShow.length) {
-      chooseTheTureLine(needToShow, isDownward, isRightward)
-    }
-  })
+      // 同一方向上同时显示三条线可能不太美观，因此才有了这个解决方案
+      // 同一方向上的线只显示一条，例如多条横条只显示一条横线
+      if (needToShow.length) {
+        chooseTheTureLine(needToShow, isDownward, isRightward)
+      }
+    })
+  }
 }
 
 const isNearly = (dragValue, targetValue) => {

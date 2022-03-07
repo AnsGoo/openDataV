@@ -37,7 +37,7 @@ const useCopyStore = defineStore({
         this.copyData.style.left += 10
       }
 
-      basicStore.addComponent(cloneDeep(this.copyData))
+      basicStore.appendComponent(cloneDeep(this.copyData))
       this.copyData = undefined
     }
   }

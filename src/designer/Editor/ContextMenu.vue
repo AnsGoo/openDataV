@@ -20,7 +20,6 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
-import { useLayerStoreWithOut } from '@/store/modules/layer'
 
 import { copyText, pasteText } from '@/utils/utils'
 import type { ComponentInfo } from '@/types/component'
@@ -30,6 +29,7 @@ const props = defineProps<{
   menuTop: number
   menuLeft: number
   curComponent: ComponentInfo | undefined
+  curComponentIndex?: string
 }>()
 
 const emits = defineEmits<{ (event: 'update:display', display: boolean): void }>()
@@ -37,7 +37,6 @@ const emits = defineEmits<{ (event: 'update:display', display: boolean): void }>
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
-const layerStore = useLayerStoreWithOut()
 
 // 点击菜单时不取消当前组件的选中状态
 const handleMouseUp = () => {
@@ -66,27 +65,35 @@ const paste = () => {
   emits('update:display', false)
 }
 
-const deleteComponent = () => {
-  snapShotStore.recordSnapshot()
-  basicStore.deleteComponent()
+const deleteComponent = async () => {
+  await snapShotStore.recordSnapshot()
+  if (props.curComponentIndex) {
+    basicStore.removeComponent(props.curComponentIndex)
+  }
   emits('update:display', false)
 }
 
-const upComponent = () => {
-  snapShotStore.recordSnapshot()
-  layerStore.upComponent()
+const upComponent = async () => {
+  await snapShotStore.recordSnapshot()
+  if (props.curComponentIndex) {
+    basicStore.upComponent(props.curComponentIndex)
+  }
   emits('update:display', false)
 }
 
-const downComponent = () => {
-  snapShotStore.recordSnapshot()
-  layerStore.downComponent()
+const downComponent = async () => {
+  await snapShotStore.recordSnapshot()
+  if (props.curComponentIndex) {
+    basicStore.downComponent(props.curComponentIndex)
+  }
   emits('update:display', false)
 }
 
-const topComponent = () => {
-  snapShotStore.recordSnapshot()
-  layerStore.topComponent()
+const topComponent = async () => {
+  await snapShotStore.recordSnapshot()
+  if (props.curComponentIndex) {
+    basicStore.topComponent(props.curComponentIndex)
+  }
   emits('update:display', false)
 }
 
@@ -101,9 +108,11 @@ const copyComponentId = () => {
   emits('update:display', false)
 }
 
-const bottomComponent = () => {
-  layerStore.bottomComponent()
-  snapShotStore.recordSnapshot()
+const bottomComponent = async () => {
+  if (props.curComponentIndex) {
+    basicStore.bottomComponent(props.curComponentIndex)
+  }
+  await snapShotStore.recordSnapshot()
   emits('update:display', false)
 }
 </script>

@@ -1,4 +1,3 @@
-import type { CanvasStyleData } from '@/types/storeTypes'
 import type {
   ComponentInfo,
   ComponentStyle,
@@ -8,6 +7,7 @@ import type {
 } from '@/types/component'
 import { errorMessage } from '@/utils/message'
 import type { Vector } from '@/types/common'
+import { cloneDeep } from 'lodash-es'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))
@@ -68,9 +68,33 @@ export const getGroupStyle = (style: Recordable<any>) => {
  * @returns css
  */
 export const getComponentStyle = (component: ComponentInfo) => {
-  return {
-    ...excludeStyle(component.style, ['top', 'left', 'width', 'height', 'rotate']),
-    ...getGroupStyle(component.groupStyle || {})
+  const style = cloneDeep(component.style)
+  const groupStyle = cloneDeep(component.groupStyle)
+  if (groupStyle) {
+    return {
+      ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
+      ...getGroupStyle(groupStyle)
+    }
+  } else {
+    return excludeStyle(component.style)
+  }
+}
+
+/**
+ * 转化组件样式为css
+ * @param component 主要转化样式的组件
+ * @returns css
+ */
+export const getComponentShapeStyle = (component: ComponentInfo) => {
+  const style = cloneDeep(component.style)
+  const groupStyle = cloneDeep(component.groupStyle)
+  if (groupStyle) {
+    return {
+      ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
+      ...getGroupStyle(groupStyle)
+    }
+  } else {
+    return excludeStyle(style, ['rotate'])
   }
 }
 
@@ -255,25 +279,6 @@ export function isImage(file) {
   return /(png|jpg|jpeg|gif|webp)$/.test(file)
 }
 
-// 获取大屏样式
-export const getScreenStyle = (canvasStyle: CanvasStyleData) => {
-  let backgroundImage = ''
-  if (isImage(canvasStyle.image)) {
-    if (canvasStyle.image.startsWith('http')) {
-      backgroundImage = `url('${canvasStyle.image}')`
-    } else {
-      backgroundImage = `url('/${canvasStyle.image}')`
-    }
-  }
-
-  return {
-    width: changeStyleWithScale(canvasStyle.width, canvasStyle.scale) + 'px',
-    height: changeStyleWithScale(canvasStyle.height, canvasStyle.scale) + 'px',
-    backgroundImage: backgroundImage,
-    backgroundSize: 'cover'
-  }
-}
-
 // 检测两个对象不同的属性值
 export const checkDiff = (obj1: Recordable<any>, obj2: Recordable<any>) => {
   const result: Recordable<any> = {}
@@ -434,4 +439,17 @@ export const calcContextMenuLoccation = (point: Vector, width: number, height: n
   }
 
   return result
+}
+
+/**
+ * 页面等比缩放
+ * @param el 页面根
+ * @param width 设计宽度
+ * @param height 设计高度
+ */
+export const pageScale = (rootEl: HTMLDivElement, width: number, height: number) => {
+  const scaleX = document.documentElement.clientWidth / width
+  const scaleY = document.documentElement.clientHeight / height
+  const scale = Math.min(scaleX, scaleY)
+  rootEl.style.transform = `scale(${scale}) translate(-50%)`
 }

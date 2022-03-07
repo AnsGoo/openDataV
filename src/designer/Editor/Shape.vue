@@ -162,7 +162,7 @@ const handleMouseDownOnShape = (e) => {
   basicStore.setClickComponentStatus(true)
   e.preventDefault()
   e.stopPropagation()
-  basicStore.setCurComponent(props.element, props.index as number)
+  basicStore.setCurComponent(props.element)
   if (props.element.isLock) return
 
   cursors.value = getCursor()
@@ -175,9 +175,9 @@ const handleMouseDownOnShape = (e) => {
   const startLeft = Number(pos.left)
 
   // 如果元素没有移动，则不保存快照
-  let hasMove = false
+  // let hasMove = false
   const move = (moveEvent) => {
-    hasMove = true
+    // hasMove = true
     const curX = moveEvent.clientX
     const curY = moveEvent.clientY
     pos.top = curY - startY + startTop
@@ -197,7 +197,7 @@ const handleMouseDownOnShape = (e) => {
   }
 
   const up = () => {
-    hasMove && snapShotStore.recordSnapshot()
+    // hasMove && (await snapShotStore.recordSnapshot())
     // 触发元素停止移动事件，用于隐藏标线
     eventBus.emit('unmove')
     document.removeEventListener('mousemove', move)
@@ -230,12 +230,8 @@ const handleMouseDownOnPoint = (point, e) => {
     y: style.top + style.height / 2
   }
 
-  if (!basicStore.editor) {
-    return
-  }
-
   // 获取画布位移信息
-  const editorRectInfo = basicStore.editor.getBoundingClientRect()
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
 
   // 获取 point 与实际拖动基准点的差值 @justJokee
   // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
@@ -280,10 +276,10 @@ const handleMouseDownOnPoint = (point, e) => {
     basicStore.syncComponentLoction(style)
   }
 
-  const up = () => {
+  const up = async () => {
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
-    needSave && snapShotStore.recordSnapshot()
+    needSave && (await snapShotStore.recordSnapshot())
   }
 
   document.addEventListener('mousemove', move)
@@ -326,9 +322,9 @@ const handleRotate = (e) => {
   const rotateDegreeBefore = Math.atan2(startY - centerY, startX - centerX) / (Math.PI / 180)
 
   // 如果元素没有移动，则不保存快照
-  let hasMove = false
+  // let hasMove = false
   const move = (moveEvent) => {
-    hasMove = true
+    // hasMove = true
     const curX = moveEvent.clientX
     const curY = moveEvent.clientY
     // 旋转后的角度
@@ -341,7 +337,7 @@ const handleRotate = (e) => {
   }
 
   const up = () => {
-    hasMove && snapShotStore.recordSnapshot()
+    // hasMove && (await snapShotStore.recordSnapshot())
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
     cursors.value = getCursor() // 根据旋转角度获取光标位置

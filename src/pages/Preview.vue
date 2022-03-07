@@ -1,6 +1,6 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <div class="screen" :style="screenStyle">
+    <div class="screen" :style="filterStyle(canvasStyleData, ['width', 'height'])">
       <ComponentWrapper v-for="(item, index) in componentData" :key="index" :component="item" />
     </div>
   </div>
@@ -8,49 +8,54 @@
 
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
-import { getScreenStyle } from '@/utils/utils'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useStorage } from '@vueuse/core'
-import { onUnmounted, onMounted, reactive } from 'vue'
+import { filterStyle, pageScale } from '@/utils/utils'
+import { onUnmounted, onMounted, ref, computed } from 'vue'
 import { channels, eventBus } from '@/bus/useEventBus'
 import type { ChannelItem } from '@/bus/useEventBus'
 import type { CanvasStyleData } from '@/types/storeTypes'
+import { ComponentInfo } from '@/types/component'
+import { useStorage } from '@vueuse/core'
 
 const websockets: WebSocket[] = []
 
-const basicStore = useBasicStoreWithOut()
+const componentData = ref<ComponentInfo[]>([])
+const canvasStyleData = ref<CanvasStyleData>({
+  width: 0,
+  height: 0,
+  scale: 0,
+  dataWs: '',
+  image: '/images/bg.jpg'
+})
 
-const storageComponentData = useStorage(
-  'canvasData',
-  JSON.stringify(basicStore.componentData),
-  window.localStorage
-)
+const storageComponentData = useStorage('canvasData', JSON.stringify([]), window.localStorage)
 const storageCanvasStyleData = useStorage(
   'canvasStyle',
-  JSON.stringify(basicStore.canvasStyleData),
-  window.localStorage
+  JSON.stringify({
+    width: 0,
+    height: 0,
+    scale: 0,
+    dataWs: '',
+    image: '/images/bg.jpg'
+  })
 )
 
-let canvasStyleData: CanvasStyleData = basicStore.canvasStyleData
-const componentData = JSON.parse(storageComponentData.value)
-try {
-  canvasStyleData = JSON.parse(storageCanvasStyleData.value)
-} catch (error: any) {
-  console.log(error?.message || error)
-}
-
-const { width, height } = getScreenStyle(canvasStyleData)
-const { backgroundImage, backgroundSize } = getScreenStyle(canvasStyleData)
-
-const screenStyle = reactive<Recordable<string>>({ width, height })
-const bgStyle = reactive<Recordable<string>>({ backgroundImage, backgroundSize })
+const bgStyle = computed<Recordable<string>>(() => {
+  const style = {
+    ...canvasStyleData.value,
+    backgroundImage: canvasStyleData.value.image,
+    backgroundSize: 'cover'
+  }
+  return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
+})
 
 onMounted(() => {
-  if (canvasStyleData.dataWs) {
-    websockets.push(initWebsocket('actual', canvasStyleData.dataWs))
+  componentData.value = JSON.parse(storageComponentData.value)
+  canvasStyleData.value = JSON.parse(storageCanvasStyleData.value)
+  if (canvasStyleData.value.dataWs) {
+    websockets.push(initWebsocket('actual', canvasStyleData.value.dataWs))
   }
-
   setScale()
+  window.addEventListener('resize', setScale)
 })
 
 const initWebsocket = (key: string, url: string): WebSocket => {
@@ -84,6 +89,7 @@ const initWebsocket = (key: string, url: string): WebSocket => {
 }
 
 onUnmounted(() => {
+  window.removeEventListener('resize', setScale)
   websockets.forEach((ws) => {
     console.log('关闭websocket')
     ws.close()
@@ -91,20 +97,12 @@ onUnmounted(() => {
 })
 
 const setScale = () => {
-  const designWidth = canvasStyleData.width
-  const designHeight = canvasStyleData.height
-
-  const scaleX = document.documentElement.clientWidth / designWidth
-  const scaleY = document.documentElement.clientHeight / designHeight
-  const scale = Math.min(scaleX, scaleY)
   const screenEl: HTMLDivElement | null = document.querySelector('.screen')
   if (screenEl) {
-    screenEl.style.transform = `scale(${scale}) translate(-50%)`
+    const designWidth = canvasStyleData.value.width
+    const designHeight = canvasStyleData.value.height
+    pageScale(screenEl, designWidth, designHeight)
   }
-}
-
-window.onresize = () => {
-  setScale()
 }
 </script>
 

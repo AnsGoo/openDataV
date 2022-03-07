@@ -1,6 +1,6 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <div class="screen" :style="screenStyle">
+    <div class="screen" :style="filterStyle(canvasStyle, ['width', 'height'])">
       <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
     </div>
   </div>
@@ -8,36 +8,35 @@
 
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
-import { ref, onUnmounted, onMounted, reactive } from 'vue'
+import { ref, onUnmounted, onMounted, computed } from 'vue'
 import { getUIComponents, getHomeData } from '@/api/pages'
 import type { ComponentInfo } from '@/types/component'
 import { useRoute, useRouter } from 'vue-router'
-import { getScreenStyle } from '@/utils/utils'
+import { filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import { cloneDeep } from 'lodash-es'
 import { eventBus } from '@/bus/useEventBus'
 import { LayoutData } from '@/types/apiTypes'
 
 const websockets: WebSocket[] = []
 
 const componentData = ref<Array<ComponentInfo>>([])
-const canvasStyle = ref<CanvasStyleData>({} as CanvasStyleData)
+const canvasStyle = ref<CanvasStyleData>({
+  width: 0,
+  height: 0,
+  scale: 0,
+  dataWs: '',
+  image: '/images/bg.jpg'
+})
+const bgStyle = computed<Recordable<string>>(() => {
+  const style = {
+    ...canvasStyle.value,
+    backgroundImage: canvasStyle.value.image,
+    backgroundSize: 'cover'
+  }
+  return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
+})
 const route = useRoute()
 const router = useRouter()
-
-const setScale = () => {
-  const designWidth = parseInt(canvasStyle.value.width as unknown as string)
-  const designHeight = parseInt(canvasStyle.value.height as unknown as string)
-
-  const scaleX = document.documentElement.clientWidth / designWidth
-  const scaleY = document.documentElement.clientHeight / designHeight
-  const scale = Math.min(scaleX, scaleY)
-
-  const screenEl: HTMLDivElement | null = document.querySelector('.screen')
-  if (screenEl) {
-    screenEl.style.transform = `scale(${scale}) translate(-50%)`
-  }
-}
 
 const initComponents = async (index: string): Promise<void> => {
   console.log('加载通用组件')
@@ -64,16 +63,10 @@ const initHome = async (): Promise<void> => {
 
 const setPageData = (data: LayoutData): void => {
   if (data.canvasStyle) {
-    canvasStyle.value = cloneDeep(data.canvasStyle)
-    const { width, height } = getScreenStyle(canvasStyle.value)
-    const { backgroundImage, backgroundSize } = getScreenStyle(canvasStyle.value)
-    bgStyle.backgroundImage = backgroundImage
-    bgStyle.backgroundSize = backgroundSize
-    screenStyle.width = width
-    screenStyle.height = height
+    canvasStyle.value = data.canvasStyle
   }
   if (data.canvasData) {
-    componentData.value = cloneDeep(data.canvasData)
+    componentData.value = data.canvasData
   }
   if (canvasStyle.value.dataWs) {
     websockets.push(initWebsocket('actual', canvasStyle.value.dataWs))
@@ -88,12 +81,8 @@ onMounted(async () => {
   } else {
     await initComponents(route.params.index as string)
   }
-})
 
-const screenStyle = reactive<Recordable<string>>({ width: '0px', height: '0px' })
-const bgStyle = reactive<Recordable<string>>({
-  backgroundImage: 'url("/images/bg.jpg")',
-  backgroundSize: 'cover'
+  window.addEventListener('resize', setScale)
 })
 
 const initWebsocket = (key: string, url: string): WebSocket => {
@@ -119,10 +108,16 @@ onUnmounted(() => {
     console.log('关闭websocket')
     ws.close()
   })
+  window.removeEventListener('resize', setScale)
 })
 
-window.onresize = () => {
-  setScale()
+const setScale = () => {
+  const screenEl: HTMLDivElement | null = document.querySelector('.screen')
+  if (screenEl) {
+    const designWidth = canvasStyle.value.width
+    const designHeight = canvasStyle.value.height
+    pageScale(screenEl, designWidth, designHeight)
+  }
 }
 </script>
 

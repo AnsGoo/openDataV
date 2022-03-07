@@ -42,15 +42,11 @@ import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { ref, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
-import { useStorage } from '@vueuse/core'
 import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
-
+import { useStorage } from '@vueuse/core'
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
-
-const storageCanvasData = useStorage('canvasData', '', window?.localStorage)
-const storageCanvasStyle = useStorage('canvasStyle', '', window?.localStorage)
 
 const websk = ref<WebSocket | null>(null)
 
@@ -64,6 +60,17 @@ const rulerBorderStyle = reactive<{
   color: 'red'
 })
 
+const storageComponentData = useStorage('canvasData', JSON.stringify([]), window.localStorage)
+const storageCanvasStyleData = useStorage(
+  'canvasStyle',
+  JSON.stringify({
+    width: 0,
+    height: 0,
+    scale: 0,
+    dataWs: '',
+    image: '/images/bg.jpg'
+  })
+)
 const route = useRoute()
 
 onMounted(async () => {
@@ -81,11 +88,11 @@ const restore = async (index: string) => {
   if (!resp) {
     return
   }
-  snapShotStore.recordSnapshot()
+  await snapShotStore.recordSnapshot()
   basicStore.setLayoutData(resp)
 }
 
-const handleDrop = (e) => {
+const handleDrop = async (e) => {
   e.preventDefault()
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
@@ -93,8 +100,8 @@ const handleDrop = (e) => {
     const component = cloneDeep(componentList[componentName].component)
     component.style.top = e.offsetY
     component.style.left = e.offsetX
-    snapShotStore.recordSnapshot()
-    basicStore.addComponent(component as ComponentInfo)
+    await snapShotStore.recordSnapshot()
+    basicStore.appendComponent(component as ComponentInfo)
   }
 }
 
@@ -109,20 +116,15 @@ const handleMouseDown = () => {
 
 const deselectCurComponent = () => {
   if (!basicStore.isClickComponent) {
-    basicStore.setCurComponent(null, undefined)
+    basicStore.setCurComponent(undefined)
   }
 }
 
 // 恢复草稿
 const recoveryDraft = () => {
   // 用保存的数据恢复画布
-  if (storageCanvasData.value) {
-    basicStore.setComponentData(JSON.parse(storageCanvasData.value))
-  }
-
-  if (storageCanvasStyle.value) {
-    basicStore.setCanvasStyle(JSON.parse(storageCanvasStyle.value))
-  }
+  basicStore.setComponentData(JSON.parse(storageComponentData.value))
+  basicStore.setCanvasStyle(JSON.parse(storageCanvasStyleData.value))
 }
 
 watch(
@@ -154,9 +156,9 @@ const initWebsocket = (key: string, url: string): WebSocket => {
   return ws
 }
 
-onUnmounted((): void => {
+onUnmounted(async (): Promise<void> => {
   websk.value?.close()
-  snapShotStore.clearSnapshot()
+  await snapShotStore.clearSnapshot()
   basicStore.clearCanvas()
 })
 </script>
@@ -170,8 +172,23 @@ onUnmounted((): void => {
   main {
     @apply relative flex;
 
-    max-height: calc(100vh - 60px);
+    max-height: calc(100vh - 30px);
     flex: 1;
+    overflow: overlay;
+    ::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
+      height: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background-color: #70c0ff;
+      -webkit-border-radius: 2em;
+      -moz-border-radius: 2em;
+      border-radius: 2em;
+    }
+    ::-webkit-scrollbar-track {
+      background-color: #ccc;
+    }
   }
 
   .left {

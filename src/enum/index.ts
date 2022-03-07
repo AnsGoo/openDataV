@@ -34,24 +34,6 @@ export enum EditMode {
   PREVIEW = 'preview'
 }
 
-// 报警类型
-export enum AlarmType {
-  // 超限报警
-  ALARM_OVER = 1,
-  // 状态报警
-  ALARM_STATE = 2
-}
-
-// 报警级别
-export enum AlarmLevel {
-  // 一般
-  NotUrgent = 0,
-  // 紧急
-  Urgent = 1,
-  // 严重
-  VeryUrgent = 2
-}
-
 export enum ComponentGroup {
   // 基础组件
   BASIC = '基础',

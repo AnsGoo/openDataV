@@ -2,10 +2,11 @@ import { defineStore } from 'pinia'
 import { store } from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
-import type { ComponentInfo, DOMRectStyle } from '@/types/component'
+import type { ComponentInfo } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
-import { uuid } from '@/utils/utils'
+import { swap, uuid } from '@/utils/utils'
+import { Message } from '@/utils/message'
 
 const useBasicStore = defineStore({
   id: 'basic',
@@ -18,22 +19,18 @@ const useBasicStore = defineStore({
       height: 1080,
       scale: 100,
       dataWs: '',
-      image: 'https://cdn.jsdelivr.net/gh/AnsGoo/openDataV@gh-pages/images/bg.jpg'
+      image: '/images/bg.jpg'
     },
     componentData: [],
     curComponent: undefined,
-    curComponentIndex: undefined,
     isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
-    layerComponent: undefined
+    layerComponent: undefined,
+    ids: new Set()
   }),
   getters: {
     isEditMode(): boolean {
       return this.editMode === EditMode.EDIT
-    },
-
-    editor(): HTMLElement | null {
-      return document.querySelector('#editor')
     }
   },
   actions: {
@@ -79,12 +76,21 @@ const useBasicStore = defineStore({
       this.canvasStyleData = style
     },
 
-    setCurComponent(component: any, index: number | undefined): void {
+    /**
+     * 设置当前组件
+     * @param component 当前组件
+     * @param index
+     */
+    setCurComponent(component: any): void {
       this.curComponent = component
-      this.curComponentIndex = index
       this.layerComponent = undefined
     },
 
+    /**
+     * 同步当前组件的位置
+     * @param postion 位置
+     * @returns
+     */
     syncComponentLoction(postion: Postion): void {
       if (!this.curComponent) {
         return
@@ -97,13 +103,18 @@ const useBasicStore = defineStore({
           ablePostion[el] = postion[el]
         }
       })
-      this.curComponent!.style  = {...style, ...ablePostion}
+      this.curComponent!.style = { ...style, ...ablePostion }
       eventBus.emit('changeStyle', {
         id: this.curComponent!.id,
         style: { ...postion }
       })
     },
 
+    /**
+     * 设置单个组件的样式属性
+     * @param param0 样式
+     * @returns
+     */
     setComponentSingleStyle({ key, value }): void {
       if (!this.curComponent) {
         return
@@ -115,67 +126,59 @@ const useBasicStore = defineStore({
         style: { [key]: value }
       })
     },
-
-    resetComponentData(componentData: Array<ComponentInfo>, ids: Set<string>, isUpdate = false) {
+    /**
+     * 重置组件数据ID
+     * @param componentData 需要被重置的组件数据
+     * @param ids
+     * @param isUpdate
+     */
+    resetComponentData(componentData: Array<ComponentInfo>) {
       componentData.forEach((item: ComponentInfo) => {
         // 重置组件 ID
-        if (isUpdate) {
+
+        if (this.ids.has(item.id!)) {
           item.id = uuid()
-        } else {
-          if (ids.has(item.id!)) {
-            item.id = uuid()
-          }
         }
         // 添加 rotate
         if (item.style.rotate === undefined) {
           item.style.rotate = 0
         }
-        ids.add(item.id!)
+        this.ids.add(item.id!)
         if (item.subComponents) {
-          this.resetComponentData(item.subComponents, ids, isUpdate)
+          this.resetComponentData(item.subComponents)
         }
       })
     },
-
+    /**
+     * 设置画图的组件数据
+     * @param componentData
+     */
     setComponentData(componentData: Array<ComponentInfo> = []): void {
-      const ids: Set<string> = new Set()
-      this.resetComponentData(componentData, ids)
+      this.resetComponentData(componentData)
       this.componentData = componentData
     },
-    addComponent(component: ComponentInfo): void {
+    /**
+     * 想画布中添加组件
+     * @param component 组件
+     */
+    appendComponent(component: ComponentInfo): void {
       component.id = uuid()
       // 如果没有 rotate 属性，就添加一个属性
       if (component.style.rotate === undefined) {
         component.style.rotate = 0
       }
       if (component.subComponents) {
-        const ids: Set<string> = new Set()
-        this.resetComponentData(component.subComponents, ids, true)
+        this.resetComponentData(component.subComponents)
       }
 
       this.componentData.push(component)
     },
-
-    deleteComponent(index: number | string | undefined = undefined): void {
-      // 根据组件 ID 获取组件的索引
-      if (typeof index === 'string') {
-        index = this.getComponentIndexById(index)
-      }
-
-      if (index === undefined) {
-        index = this.curComponentIndex
-      }
-
-      if (index === this.curComponentIndex) {
-        this.curComponentIndex = undefined
-        this.curComponent = undefined
-      }
-
-      if ((index as number) >= 0) {
-        this.componentData.splice(index as number, 1)
-      }
-    },
-
+    /**
+     * 设置当前组件的PropValue
+     * @param key 属性
+     * @param value 值
+     * @returns
+     */
     setCurComponentPropValue(key: string, value: any): void {
       const curComponent = this.curComponent || this.layerComponent
       if (!curComponent || !curComponent.propValue) {
@@ -184,7 +187,12 @@ const useBasicStore = defineStore({
       curComponent.propValue[key] = value
       eventBus.emit(curComponent.component + curComponent.id, { key: key, value: value })
     },
-
+    /**
+     * 设置当前组件的样式
+     * @param key 属性
+     * @param value 值
+     * @returns
+     */
     setCurComponentStyle(key: string, value: any): void {
       const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
       const curComponent = this.curComponent || this.layerComponent
@@ -198,10 +206,15 @@ const useBasicStore = defineStore({
       }
       curComponent.style[key] = value
     },
-
+    /**
+     * 设置组件的属性值
+     * @param key 属性
+     * @param value 值
+     * @returns
+     */
     setCurComponentProps(key: string, value: any): void {
       const curComponent = this.curComponent || this.layerComponent
-      if (!curComponent || !curComponent.propValue) {
+      if (!curComponent) {
         return
       }
       curComponent[key] = value
@@ -214,7 +227,6 @@ const useBasicStore = defineStore({
           return i
         }
       }
-
       return -1
     },
 
@@ -223,7 +235,6 @@ const useBasicStore = defineStore({
      * @param component
      */
     setActiveComponent(component: ComponentInfo): void {
-      this.curComponentIndex = undefined
       this.curComponent = undefined
       this.layerComponent = component
     },
@@ -233,10 +244,129 @@ const useBasicStore = defineStore({
     clearCanvas(): void {
       this.componentData = []
       this.curComponent = undefined
-      this.curComponentIndex = undefined
       this.isClickComponent = false
       this.isShowEm = false
       this.layerComponent = undefined
+    },
+    /**
+     * 根据组件索引获取该组件的父级组件
+     * @param indexs
+     * @returns
+     */
+    getParentComponentData(indexs: number[]) {
+      let rootComponent: ComponentInfo = {
+        subComponents: this.componentData,
+        component: '',
+        style: {
+          width: 0,
+          height: 0,
+          left: 0,
+          top: 0,
+          rotate: 0
+        },
+        id: '',
+        label: '',
+        icon: ''
+      }
+      indexs.forEach((el: number) => {
+        rootComponent = rootComponent.subComponents
+          ? rootComponent.subComponents[el]
+          : rootComponent
+      })
+      const fatherComponentData: Array<ComponentInfo> | undefined = rootComponent.subComponents
+      return fatherComponentData
+    },
+    /**
+     * 组件图层下移
+     * @param index 组件索引
+     */
+    downComponent(index: string) {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const myindex: number = indexs.pop() as number
+      const fatherComponentData: Array<ComponentInfo> | undefined =
+        this.getParentComponentData(indexs)
+      if (fatherComponentData) {
+        if (myindex > 0) {
+          // await snapShotStore.recordSnapshot()
+          swap(fatherComponentData, myindex, myindex - 1)
+        } else {
+          Message('图层已经到底了')
+        }
+      }
+    },
+    /**
+     * 组件图层上移
+     * @param index 组件索引
+     */
+    upComponent(index: string) {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const myindex: number = indexs.pop() as number
+      const fatherComponentData: Array<ComponentInfo> | undefined =
+        this.getParentComponentData(indexs)
+      if (fatherComponentData) {
+        const len: number = fatherComponentData.length
+        if (myindex < len - 1) {
+          // await snapShotStore.recordSnapshot()
+          swap(fatherComponentData, myindex, myindex + 1)
+        } else {
+          Message('图层已经到顶了')
+        }
+      }
+    },
+
+    /**
+     * 组件图层置顶
+     * @param index 组件索引
+     */
+    topComponent(index: string) {
+      const indexs: Array<number> = index.split('-').map((i) => Number(i))
+      const myindex: number = indexs.pop() as number
+      const fatherComponentData: Array<ComponentInfo> | undefined =
+        this.getParentComponentData(indexs)
+      if (fatherComponentData) {
+        const len: number = fatherComponentData.length
+        if (myindex < len - 1) {
+          // await snapShotStore.recordSnapshot()
+          const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
+          fatherComponentData.push(myComponments[0])
+        } else {
+          Message('图层已经到顶了')
+        }
+      }
+    },
+    /**
+     * 组件图层置底
+     * @param index 组件索引
+     */
+    bottomComponent(index: string) {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const myindex: number = indexs.pop() as number
+      const fatherComponentData: Array<ComponentInfo> | undefined =
+        this.getParentComponentData(indexs)
+      if (fatherComponentData && myindex > 0) {
+        // await snapShotStore.recordSnapshot()
+        const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
+        fatherComponentData.unshift(myComponments[0])
+      } else {
+        Message('图层已经到底了')
+      }
+    },
+    /**
+     * 根据索引移除组件
+     * @param index 索引
+     * @returns 移除结果
+     */
+    removeComponent(index: string): boolean {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const myindex: number = indexs.pop() as number
+      const fatherComponentData: Array<ComponentInfo> | undefined =
+        this.getParentComponentData(indexs)
+      if (fatherComponentData) {
+        // await snapShotStore.recordSnapshot()
+        fatherComponentData.splice(myindex, 1)
+        return true
+      }
+      return false
     }
   }
 })

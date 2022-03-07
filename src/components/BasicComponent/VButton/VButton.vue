@@ -1,8 +1,7 @@
 <template>
-  <!-- 如果在编辑器模式下，button 按钮不响应点击时间，在父元素中进行拦截 -->>
-  <button class="v-button" @click="handleClick">
-    {{ propValue.title }}
-  </button>
+  <!-- 如果在编辑器模式下，button 按钮不响应点击时间，在父元素中进行拦截 -->
+  >
+  <button class="v-button" @click="handleClick">{{ propValue.title }}</button>
 </template>
 
 <script setup lang="ts">
@@ -32,7 +31,7 @@ const handleClick = () => {
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 @layer components {
   .v-button {
     @apply inline-block leading-none whitespace-nowrap cursor-pointer bg-white border-0 border-transparent text-gray-300 text-center;

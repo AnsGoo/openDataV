@@ -190,8 +190,8 @@ onMounted(() => {
   }, 500)
 })
 
-const undo = () => {
-  snapShotStore.undo()
+const undo = async () => {
+  await snapShotStore.undo()
 }
 
 const preview = () => {
@@ -211,18 +211,18 @@ const save = () => {
 //   }
 // }
 
-const clearCanvas = () => {
-  snapShotStore.recordSnapshot()
+const clearCanvas = async () => {
+  await snapShotStore.recordSnapshot()
   basicStore.clearCanvas()
 }
 
-const compose = () => {
-  snapShotStore.recordSnapshot()
+const compose = async () => {
+  await snapShotStore.recordSnapshot()
   composeStore.compose()
 }
 
-const decompose = () => {
-  snapShotStore.recordSnapshot()
+const decompose = async () => {
+  await snapShotStore.recordSnapshot()
   composeStore.decompose()
 }
 

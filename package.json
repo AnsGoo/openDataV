@@ -14,6 +14,7 @@
     "@vueuse/core": "^6.6.2",
     "@vueuse/router": "^6.7.3",
     "axios": "^0.23.0",
+    "dexie": "^3.2.1",
     "echarts": "^5.2.1",
     "echarts-gl": "^2.0.8",
     "echarts-liquidfill": "3",

@@ -20,7 +20,7 @@ defineProps<{
 }>()
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 @layer components {
   .area {
     @apply border border-solid border-blue-400 absolute;

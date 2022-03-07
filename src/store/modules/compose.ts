@@ -3,8 +3,10 @@ import { store } from '@/store'
 import type { AreaData } from '@/types/storeTypes'
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { decomposeComponent, createGroupStyle, calcComponentsRect } from '@/utils/utils'
+import { decomposeComponent, createGroupStyle, calcComponentsRect, uuid } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
+import { cloneDeep } from 'lodash-es'
+const basicStore = useBasicStoreWithOut()
 
 const useComposeStore = defineStore({
   id: 'compose',
@@ -23,7 +25,6 @@ const useComposeStore = defineStore({
       return this.components.length === 0
     },
     canDecompose(): boolean {
-      const basicStore = useBasicStoreWithOut()
       // 当前组件没有锁定，并且是分组组件，就可以拆分
       if (
         basicStore.curComponent &&
@@ -39,6 +40,7 @@ const useComposeStore = defineStore({
     isActived(component: ComponentInfo): boolean {
       return this.components.findIndex((el: ComponentInfo) => el.id === component.id) !== -1
     },
+
     setAreaData(style: DOMRectStyle, components: Array<ComponentInfo>) {
       this.style = style || {}
       this.components = components || []
@@ -58,34 +60,23 @@ const useComposeStore = defineStore({
      * @returns
      */
     compose() {
-      const components: Array<ComponentInfo> = []
-      const basicStore = useBasicStoreWithOut()
-
-      if (!basicStore.editor) {
-        return
-      }
-
       if (this.style.width === 0) {
         this.style = { ...this.style, ...calcComponentsRect(this.components) }
       }
-      this.components.forEach((component) => {
-        components.push(component)
-      })
       const groupComponent: ComponentInfo = {
         component: 'Group',
-        id: '',
+        id: uuid(),
         icon: '',
         style: this.style,
-
-        subComponents: components,
+        subComponents: cloneDeep(this.components),
         label: ''
       }
       createGroupStyle(groupComponent)
-      basicStore.addComponent(groupComponent)
+      basicStore.appendComponent(groupComponent)
       this.batchDeleteComponent(this.components)
 
       const index = basicStore.componentData.length - 1
-      basicStore.setCurComponent(basicStore.componentData[index], index)
+      basicStore.setCurComponent(basicStore.componentData[index])
 
       // 隐藏区域
       eventBus.emit('hideArea')
@@ -97,7 +88,6 @@ const useComposeStore = defineStore({
      * @param deleteData
      */
     batchDeleteComponent(deleteData: ComponentInfo[]) {
-      const basicStore = useBasicStoreWithOut()
       deleteData.forEach((component) => {
         for (let i = 0, len = basicStore.componentData.length; i < len; i++) {
           if (component.id === basicStore.componentData[i].id) {
@@ -112,19 +102,14 @@ const useComposeStore = defineStore({
      * @returns
      */
     decompose() {
-      const basicStore = useBasicStoreWithOut()
-      if (!basicStore.editor) {
-        return
-      }
-
       const parentStyle: ComponentStyle = basicStore.curComponent!.style
       const components: Array<ComponentInfo> = basicStore.curComponent?.subComponents || []
-      // const editorRect: DOMRect = basicStore.editor.getBoundingClientRect()
       if (components.length > 0) {
-        basicStore.deleteComponent(basicStore.curComponent!.id)
+        const index: number = basicStore.getComponentIndexById(basicStore.curComponent!.id)
+        basicStore.removeComponent(index.toString())
         components.forEach((component) => {
           decomposeComponent(component, parentStyle)
-          basicStore.addComponent(component)
+          basicStore.appendComponent(component)
         })
       }
     }

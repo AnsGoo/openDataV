@@ -19,7 +19,7 @@ import type { ComponentInfo } from '@/types/component'
 defineProps<{ component: ComponentInfo }>()
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 @layer components {
   div.component,
   img.component,

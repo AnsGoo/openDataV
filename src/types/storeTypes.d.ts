@@ -1,4 +1,5 @@
 import type { ComponentInfo, DOMRectStyle } from '@/types/component'
+import { StoreComponentData } from '@/utils/db'
 
 export interface Component {
   style: Recordable<string>
@@ -17,12 +18,12 @@ export interface EditData {
   thumbnail: string
   editMode: string
   canvasStyleData: CanvasStyleData
-  componentData: Array<any>
+  componentData: Array<ComponentInfo>
   curComponent: ComponentInfo | undefined
-  curComponentIndex: number | undefined
   isClickComponent: boolean
   isShowEm: boolean
   layerComponent: ComponentInfo | undefined
+  ids: Set<string>
 }
 
 export interface MenuStatus {
@@ -37,8 +38,8 @@ export interface CopyItem {
 }
 
 export interface SnapData {
-  snapshotData: Array<any>
   snapshotMax: number
+  latestSnapshot?: StoreComponentData
 }
 
 export interface AreaData {
