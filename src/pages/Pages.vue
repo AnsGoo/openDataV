@@ -256,7 +256,7 @@ const setPagePermissionAction = async () => {
       .box-card {
         @apply w-full h-full;
 
-        height: calc(100% - 8px);
+        height: calc(100%);
       }
     }
   }

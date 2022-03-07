@@ -50,7 +50,7 @@ const handlerShow = () => {
 </script>
 <style scoped lang="less">
 .login-affix {
-  position: absolute;
+  position: fixed;
   left: calc(100% - 100px);
   top: calc(100% - 120px);
   z-index: 9999;
