@@ -39,25 +39,9 @@ useEventBus('ActiveMenu', open)
 
 const handleSelect = (key: string) => {
   activeKey.value = key
-  const indexs = key.split('-').map((i) => Number(i))
-  let rootComponent: ComponentInfo = {
-    subComponents: componentData.value,
-    component: '',
-    style: {
-      width: 0,
-      left: 0,
-      top: 0,
-      height: 0,
-      rotate: 0
-    },
-    id: '',
-    label: '',
-    icon: ''
-  }
-  indexs.forEach((el: number) => {
-    rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent
-  })
-  basicStore.setActiveComponent(rootComponent)
+  const indexs: number[] = key.split('-').map((i) => Number(i))
+  const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
+  basicStore.setActiveComponent(activedComponent)
 }
 </script>
 

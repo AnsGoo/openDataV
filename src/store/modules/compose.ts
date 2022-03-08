@@ -72,6 +72,7 @@ const useComposeStore = defineStore({
       const groupComponent: ComponentInfo = {
         component: 'Group',
         id: uuid(),
+        display: true,
         icon: '',
         style: this.style,
         subComponents: cloneDeep(this.components),

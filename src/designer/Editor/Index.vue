@@ -11,27 +11,28 @@
     <Grid />
 
     <!--页面组件列表展示-->
-    <Shape
-      v-for="(item, index) in componentData"
-      :id="'shape' + item.id"
-      :defaultStyle="item.style"
-      :style="getShapeStyle(item.style)"
-      :key="item.id"
-      :active="item.id === (curComponent || {}).id"
-      :element="item"
-      :index="index"
-      :class="{ lock: item.isLock }"
-    >
-      <component
-        class="component"
-        :is="item.component"
-        :style="getComponentShapeStyle(item)"
-        :propValue="item.propValue"
+    <template v-for="(item, index) in componentData" :key="item.id">
+      <Shape
+        :id="'shape' + item.id"
+        :defaultStyle="item.style"
+        :style="getShapeStyle(item.style)"
+        :active="item.id === (curComponent || {}).id"
         :element="item"
-        :id="'component' + item.id"
-        :subComponents="item.subComponents"
-      />
-    </Shape>
+        :index="index"
+        :class="{ lock: item.isLock }"
+        v-if="basicStore.isEditMode && item.display"
+      >
+        <component
+          class="component"
+          :is="item.component"
+          :style="getComponentShapeStyle(item)"
+          :propValue="item.propValue"
+          :element="item"
+          :id="'component' + item.id"
+          :subComponents="item.subComponents"
+        />
+      </Shape>
+    </template>
 
     <!-- 右击菜单 -->
     <ContextMenu

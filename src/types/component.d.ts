@@ -13,6 +13,7 @@ interface ComponentCommon {
   isLock?: boolean // 是否锁定组件
   show?: boolean // 是否显示在控件列表
   group?: ComponentGroup // 组件所属的组
+  display: boolean
 }
 
 interface Rect {

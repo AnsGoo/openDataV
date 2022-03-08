@@ -7,6 +7,9 @@
       <li @click="upComponent(index)">上一层</li>
       <li @click="downComponent(index)">下一层</li>
       <li @click="copyComponent(index)">复制</li>
+      <li @click="changeComponentDisplay(index)" v-if="basicStore.layerComponent">
+        {{ isDisplay ? '隐藏' : '显示' }}
+      </li>
     </ul>
   </div>
 </template>
@@ -16,6 +19,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { copyText } from '@/utils/utils'
 import type { ComponentInfo } from '@/types/component'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
+import { computed } from 'vue'
 
 defineProps<{
   menuTop: number
@@ -35,6 +39,8 @@ const deleteComponent = async (index: string) => {
   basicStore.removeComponent(index)
   emits('update:display', false)
 }
+
+const isDisplay = computed<boolean>(() => basicStore.layerComponent?.display || false)
 
 const copyComponent = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
@@ -67,6 +73,14 @@ const bottomComponent = async (index: string) => {
 const topComponent = async (index: string) => {
   basicStore.topComponent(index)
   emits('update:display', false)
+}
+
+const changeComponentDisplay = (index: string) => {
+  if (!isDisplay.value) {
+    basicStore.showComponent(index)
+  } else {
+    basicStore.hiddenComponent(index)
+  }
 }
 </script>
 

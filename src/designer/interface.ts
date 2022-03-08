@@ -73,5 +73,6 @@ export const commonAttr: Array<GroupType> = []
 export const commonComponent: ComponentCommon = {
   isLock: false, // 是否锁定组件
   show: true,
-  group: ComponentGroup.OTHER
+  group: ComponentGroup.OTHER,
+  display: true
 }

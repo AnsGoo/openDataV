@@ -12,6 +12,10 @@
       <template #title>
         <span class="icon iconfont icon-zu"></span>
         <span>{{ item.label || '分组' }}</span>
+        <el-icon style="vertical-align: middle">
+          <View v-if="item.display" />
+          <moon-night v-else />
+        </el-icon>
       </template>
       <LayerItem
         v-if="item.subComponents && item.subComponents.length > 0"
@@ -31,6 +35,10 @@
       <template #title>
         <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
         <span v-show="isShowText">{{ item.label }}</span>
+        <el-icon style="vertical-align: middle">
+          <View v-if="item.display" />
+          <moon-night v-else />
+        </el-icon>
       </template>
     </el-menu-item>
   </template>
@@ -48,7 +56,7 @@ import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/compon
 import { ref } from 'vue'
 import iconMap from '../icon'
 import LayerContextMenu from './LayerContextMenu.vue'
-import { ElMenuItem, ElSubMenu } from 'element-plus'
+import { ElMenuItem, ElSubMenu, ElIcon } from 'element-plus'
 
 import { onClickOutside } from '@vueuse/core'
 import { eventBus } from '@/bus/useEventBus'
@@ -213,6 +221,7 @@ const getFatherComponentData = (indexs: number[]): ComponentInfo => {
   let rootComponent: ComponentInfo = {
     subComponents: basicStore.componentData,
     component: 'Root',
+    display: false,
     style: {
       width: 0,
       height: 0,

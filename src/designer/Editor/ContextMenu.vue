@@ -126,11 +126,11 @@ const bottomComponent = async () => {
   }
 
   ul {
-    @apply rounded-sm shadow-lg box-border mx-1.5 my-0 px-1.5 py-0;
+    @apply rounded-sm box-border my-0 px-1.5 py-0;
   }
 
   li {
-    @apply text-center text-sm px-0 pb-5 relative whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-500 h-8 leading-8 box-border cursor-pointer hover:bg-gray-50;
+    @apply text-center text-sm px-0 pb-5 relative whitespace-nowrap overflow-hidden overflow-ellipsis text-gray-500 h-8 leading-8 box-border cursor-pointer hover:bg-gray-100;
   }
 }
 </style>

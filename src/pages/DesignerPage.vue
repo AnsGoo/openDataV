@@ -181,7 +181,7 @@ onUnmounted(async (): Promise<void> => {
       height: 8px;
     }
     ::-webkit-scrollbar-thumb {
-      background-color: #70c0ff;
+      background-color: #8b8b8b;
       -webkit-border-radius: 2em;
       -moz-border-radius: 2em;
       border-radius: 2em;

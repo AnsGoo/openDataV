@@ -253,10 +253,11 @@ const useBasicStore = defineStore({
      * @param indexs
      * @returns
      */
-    getParentComponentData(indexs: number[]) {
+    getParentComponentData(indexs: number[]): ComponentInfo[] | undefined {
       let rootComponent: ComponentInfo = {
         subComponents: this.componentData,
         component: '',
+        display: false,
         style: {
           width: 0,
           height: 0,
@@ -273,8 +274,7 @@ const useBasicStore = defineStore({
           ? rootComponent.subComponents[el]
           : rootComponent
       })
-      const fatherComponentData: Array<ComponentInfo> | undefined = rootComponent.subComponents
-      return fatherComponentData
+      return rootComponent.subComponents
     },
     /**
      * 组件图层下移
@@ -367,6 +367,39 @@ const useBasicStore = defineStore({
         return true
       }
       return false
+    },
+    showComponent(index: string): void {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const component: ComponentInfo = this.getComponentByIndex(indexs)
+      component.display = true
+    },
+    hiddenComponent(index: string): void {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const component: ComponentInfo = this.getComponentByIndex(indexs)
+      component.display = false
+    },
+    getComponentByIndex(indexs: number[]): ComponentInfo {
+      let rootComponent: ComponentInfo = {
+        subComponents: this.componentData,
+        display: false,
+        component: '',
+        style: {
+          width: 0,
+          left: 0,
+          top: 0,
+          height: 0,
+          rotate: 0
+        },
+        id: '',
+        label: '',
+        icon: ''
+      }
+      indexs.forEach((el: number) => {
+        rootComponent = rootComponent.subComponents
+          ? rootComponent.subComponents[el]
+          : rootComponent
+      })
+      return rootComponent
     }
   }
 })
