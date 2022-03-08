@@ -3,7 +3,13 @@ import { store } from '@/store'
 import type { AreaData } from '@/types/storeTypes'
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { decomposeComponent, createGroupStyle, calcComponentsRect, uuid } from '@/utils/utils'
+import {
+  decomposeComponent,
+  createGroupStyle,
+  calcComponentsRect,
+  uuid,
+  getComponentRealRect
+} from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
 import { cloneDeep } from 'lodash-es'
 const basicStore = useBasicStoreWithOut()
@@ -112,6 +118,66 @@ const useComposeStore = defineStore({
           basicStore.appendComponent(component)
         })
       }
+    },
+    /**
+     * 右对齐
+     */
+    flushRight() {
+      const { right, items } = getComponentRealRect(this.components)
+      items.forEach((el) => {
+        const distance = right - el.right
+        el.component.style.left = el.component.style.left + distance
+      })
+    },
+    /**
+     * 左对齐
+     */
+    flushLeft() {
+      const { left, items } = getComponentRealRect(this.components)
+      items.forEach((el) => {
+        const distance = left - el.left
+        el.component.style.left = el.component.style.left - distance
+      })
+    },
+    /**
+     * 顶端对齐
+     */
+    flushTop() {
+      const { top, items } = getComponentRealRect(this.components)
+      items.forEach((el) => {
+        const distance = el.top - top
+        el.component.style.top = el.component.style.top - distance
+      })
+    },
+    /**
+     * 底部对齐
+     */
+    flushBottom() {
+      const { bottom, items } = getComponentRealRect(this.components)
+      items.forEach((el) => {
+        const distance = bottom - el.bottom
+        el.component.style.top = el.component.style.top + distance
+      })
+    },
+    /**
+     * 行对齐
+     */
+    flushRow() {
+      const { top, bottom, items } = getComponentRealRect(this.components)
+      items.forEach((el) => {
+        const distanceY = (bottom + top) / 2 - el.center.y
+        el.component.style.top = el.component.style.top + distanceY
+      })
+    },
+    /**
+     * 列对齐
+     */
+    flushColumn() {
+      const { left, right, items } = getComponentRealRect(this.components)
+      items.forEach((el) => {
+        const distanceX = (left + right) / 2 - el.center.x
+        el.component.style.left = el.component.style.left + distanceX
+      })
     }
   }
 })

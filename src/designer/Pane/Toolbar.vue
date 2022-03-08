@@ -74,6 +74,42 @@
           </el-icon>
           <span>坐标</span>
         </el-button>
+        <el-button size="small" @click="handleFlushLeft" title="左对齐">
+          <el-icon style="vertical-align: middle">
+            <arrow-left-bold />
+          </el-icon>
+          <span>左对齐</span>
+        </el-button>
+        <el-button size="small" @click="handleFlushTop" title="顶对齐">
+          <el-icon style="vertical-align: middle">
+            <arrow-up-bold />
+          </el-icon>
+          <span>顶对齐</span>
+        </el-button>
+        <el-button size="small" @click="handleFlushBottom" title="底对齐">
+          <el-icon style="vertical-align: middle">
+            <arrow-down-bold />
+          </el-icon>
+          <span>底对齐</span>
+        </el-button>
+        <el-button size="small" @click="handleFlushRight" title="右对齐">
+          <el-icon style="vertical-align: middle">
+            <arrow-right-bold />
+          </el-icon>
+          <span>右对齐</span>
+        </el-button>
+        <el-button size="small" @click="handleFlushRow" title="行对齐">
+          <el-icon style="vertical-align: middle">
+            <minus />
+          </el-icon>
+          <span>行对齐</span>
+        </el-button>
+        <el-button size="small" @click="handleFlushColumn" title="列对齐">
+          <el-icon style="vertical-align: middle">
+            <list />
+          </el-icon>
+          <span>列对齐</span>
+        </el-button>
       </div>
 
       <div>
@@ -210,6 +246,29 @@ const save = () => {
 //     form.thumbnail = reader.result as string
 //   }
 // }
+
+const handleFlushLeft = () => {
+  composeStore.flushLeft()
+}
+
+const handleFlushRight = () => {
+  composeStore.flushRight()
+}
+
+const handleFlushTop = () => {
+  composeStore.flushTop()
+}
+const handleFlushBottom = () => {
+  composeStore.flushBottom()
+}
+
+const handleFlushRow = () => {
+  composeStore.flushRow()
+}
+
+const handleFlushColumn = () => {
+  composeStore.flushColumn()
+}
 
 const clearCanvas = async () => {
   await snapShotStore.recordSnapshot()

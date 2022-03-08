@@ -453,3 +453,63 @@ export const pageScale = (rootEl: HTMLDivElement, width: number, height: number)
   const scale = Math.min(scaleX, scaleY)
   rootEl.style.transform = `scale(${scale}) translate(-50%)`
 }
+
+/**
+ * 获取一组组件真实区域坐标
+ * @param components
+ * @returns
+ */
+export const getComponentRealRect = (components: ComponentInfo[]) => {
+  const maxRect: {
+    right: number
+    left: number
+    top: number
+    bottom: number
+    center: Vector
+    component: ComponentInfo
+  }[] = []
+
+  const xAxisSet: Array<number> = []
+  const yAxisSet: Array<number> = []
+  components.forEach((ele) => {
+    const left: number = ele.style.left! as number
+    const width: number = ele.style.width! as number
+    const top: number = ele.style.top! as number
+    const height: number = ele.style.height! as number
+    const rotate: number = ele.style.rotate! as number
+    const leftTop: Vector = { x: left, y: top }
+    const rightTop: Vector = { x: left + width, y: top }
+    const rightbottom: Vector = { x: left + width, y: top + height }
+    const leftbottom: Vector = { x: left, y: top + height }
+    const center: Vector = { x: left + width / 2, y: top + height / 2 }
+    const loactions = [leftTop, rightbottom, leftbottom, rightTop]
+    const xAxis: number[] = []
+    const yAxis: number[] = []
+    loactions.forEach((el: Vector) => {
+      const point = rotatePoint(el, center, rotate)
+      xAxis.push(point.x)
+      yAxis.push(point.y)
+      xAxisSet.push(point.x)
+      yAxisSet.push(point.y)
+    })
+    const newLeft: number = Math.min(...xAxis)
+    const newTop: number = Math.min(...yAxis)
+    const newRight: number = Math.max(...xAxis)
+    const newBottom: number = Math.max(...yAxis)
+    maxRect.push({
+      left: newLeft,
+      top: newTop,
+      right: newRight,
+      bottom: newBottom,
+      center: center,
+      component: ele
+    })
+  })
+  return {
+    items: maxRect,
+    left: Math.min(...xAxisSet),
+    top: Math.min(...yAxisSet),
+    right: Math.max(...xAxisSet),
+    bottom: Math.max(...yAxisSet)
+  }
+}
