@@ -27,12 +27,6 @@
           </el-icon>
           <span>恢复</span>
         </el-button>
-        <el-button size="small" @click="clearCanvas" title="清空">
-          <el-icon style="vertical-align: middle">
-            <Brush />
-          </el-icon>
-          <span>清空</span>
-        </el-button>
         <el-button size="small" @click="exportCanvas" title="导出">
           <el-icon style="vertical-align: middle">
             <Download />
@@ -51,64 +45,11 @@
           </el-icon>
           <span>全屏</span>
         </el-button>
-        <el-button size="small" @click="compose" :disabled="composeStore.canCompose" title="组合">
-          <el-icon style="vertical-align: middle">
-            <FolderAdd />
-          </el-icon>
-          <span>组合</span>
-        </el-button>
-        <el-button
-          size="small"
-          @click="decompose"
-          :disabled="composeStore.canDecompose"
-          title="拆分"
-        >
-          <el-icon style="vertical-align: middle">
-            <FolderRemove />
-          </el-icon>
-          <span>拆分</span>
-        </el-button>
         <el-button size="small" @click="setShowEm" title="坐标">
           <el-icon style="vertical-align: middle">
             <Aim />
           </el-icon>
           <span>坐标</span>
-        </el-button>
-        <el-button size="small" @click="handleFlushLeft" title="左对齐">
-          <el-icon style="vertical-align: middle">
-            <arrow-left-bold />
-          </el-icon>
-          <span>左对齐</span>
-        </el-button>
-        <el-button size="small" @click="handleFlushTop" title="顶对齐">
-          <el-icon style="vertical-align: middle">
-            <arrow-up-bold />
-          </el-icon>
-          <span>顶对齐</span>
-        </el-button>
-        <el-button size="small" @click="handleFlushBottom" title="底对齐">
-          <el-icon style="vertical-align: middle">
-            <arrow-down-bold />
-          </el-icon>
-          <span>底对齐</span>
-        </el-button>
-        <el-button size="small" @click="handleFlushRight" title="右对齐">
-          <el-icon style="vertical-align: middle">
-            <arrow-right-bold />
-          </el-icon>
-          <span>右对齐</span>
-        </el-button>
-        <el-button size="small" @click="handleFlushRow" title="行对齐">
-          <el-icon style="vertical-align: middle">
-            <minus />
-          </el-icon>
-          <span>行对齐</span>
-        </el-button>
-        <el-button size="small" @click="handleFlushColumn" title="列对齐">
-          <el-icon style="vertical-align: middle">
-            <list />
-          </el-icon>
-          <span>列对齐</span>
         </el-button>
       </div>
 
@@ -163,7 +104,6 @@ import { computed, reactive, ref, onMounted, watch, onUnmounted } from 'vue'
 import type { WatchStopHandle } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
-import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { successMessage, errorMessage } from '@/utils/message'
 import { useRoute, useRouter } from 'vue-router'
 import type { LayoutData } from '@/types/apiTypes'
@@ -179,7 +119,6 @@ import { CanvasStyleData } from '@/types/storeTypes'
 // 状态管理
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
-const composeStore = useComposeStoreWithOut()
 // const userStore = useUserStoreWithOut()
 
 const router = useRouter()
@@ -246,44 +185,6 @@ const save = () => {
 //     form.thumbnail = reader.result as string
 //   }
 // }
-
-const handleFlushLeft = () => {
-  composeStore.flushLeft()
-}
-
-const handleFlushRight = () => {
-  composeStore.flushRight()
-}
-
-const handleFlushTop = () => {
-  composeStore.flushTop()
-}
-const handleFlushBottom = () => {
-  composeStore.flushBottom()
-}
-
-const handleFlushRow = () => {
-  composeStore.flushRow()
-}
-
-const handleFlushColumn = () => {
-  composeStore.flushColumn()
-}
-
-const clearCanvas = async () => {
-  await snapShotStore.recordSnapshot()
-  basicStore.clearCanvas()
-}
-
-const compose = async () => {
-  await snapShotStore.recordSnapshot()
-  composeStore.compose()
-}
-
-const decompose = async () => {
-  await snapShotStore.recordSnapshot()
-  composeStore.decompose()
-}
 
 const recoveryDraft = () => {
   emits('recovery')

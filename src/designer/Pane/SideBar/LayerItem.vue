@@ -7,7 +7,7 @@
       @dragstart="handleDragStart($event, caculIndex(i))"
       @drop="handleDrop($event, caculIndex(i))"
       @dragover="handleDragOver($event, caculIndex(i), true)"
-      @contextmenu.prevent="showContextmenu($event as PointerEvent, caculIndex(i))"
+      v-contextmenu="() => contextmenus($el, caculIndex(i))"
     >
       <template #title>
         <span class="icon iconfont icon-zu"></span>
@@ -30,7 +30,7 @@
       @drop="handleDrop($event, caculIndex(i))"
       @dragover="handleDragOver($event, caculIndex(i))"
       @dragstart="handleDragStart($event, caculIndex(i))"
-      @contextmenu.prevent="showContextmenu($event as PointerEvent, caculIndex(i))"
+      v-contextmenu="() => contextmenus($el, caculIndex(i))"
     >
       <template #title>
         <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
@@ -42,28 +42,20 @@
       </template>
     </el-menu-item>
   </template>
-  <LayerContextMenu
-    v-model:display="displayContexyMenu"
-    :menuTop="menuTop"
-    :menuLeft="menuLeft"
-    :index="curIndex"
-    ref="contextMenu"
-  />
 </template>
 
 <script lang="ts" setup>
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import iconMap from '../icon'
-import LayerContextMenu from './LayerContextMenu.vue'
 import { ElMenuItem, ElSubMenu, ElIcon } from 'element-plus'
 
-import { onClickOutside } from '@vueuse/core'
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { calcContextMenuLoccation, decomposeComponent } from '@/utils/utils'
-import { Vector } from '@/types/common'
+import { decomposeComponent, copyText } from '@/utils/utils'
 import { useEventBus } from '@/bus/useEventBus'
+import { useCopyStoreWithOut } from '@/store/modules/copy'
+import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 
 const props = defineProps<{
   components: ComponentInfo[]
@@ -72,14 +64,11 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{ (e: 'select', index: string): void }>()
-const contextMenu = ref<ElRef>(null)
 const isShowText = ref<boolean>(true)
 const basicStore = useBasicStoreWithOut()
-onClickOutside(contextMenu, () => close())
-let displayContexyMenu = ref<boolean>(false)
-let menuTop = ref<number>(0)
-let menuLeft = ref<number>(0)
-let curIndex = ref<string>('')
+const copyStore = useCopyStoreWithOut()
+
+const isDisplay = computed<boolean>(() => basicStore.layerComponent?.display || false)
 
 const open = (key: any) => {
   const result = key as string
@@ -100,26 +89,95 @@ const caculIndex = (index: number) => {
   }
 }
 
-const close = (): void => {
-  displayContexyMenu.value = false
+const copy = (index: string) => {
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  const myindex: number = indexs.pop() as number
+  const fatherComponentData: Array<ComponentInfo> | undefined =
+    basicStore.getParentComponentData(indexs)
+  if (fatherComponentData) {
+    const componentInfo: ComponentInfo = fatherComponentData[myindex]
+    copyText(JSON.stringify(componentInfo))
+    copyStore.copy()
+  }
 }
 
-const showContextmenu = (event: PointerEvent, index: string) => {
-  const point: Vector = calcContextMenuLoccation(
-    {
-      x: event.clientX,
-      y: event.clientY
-    },
-    80,
-    192
-  )
-  menuTop.value = point.y
-  menuLeft.value = point.x
-  displayContexyMenu.value = false
-  event.stopPropagation()
+const deleteComponent = async (index: string) => {
   emits('select', index)
-  displayContexyMenu.value = true
-  curIndex.value = index
+  basicStore.removeComponent(index)
+}
+
+const upComponent = async (index: string) => {
+  emits('select', index)
+  basicStore.upComponent(index)
+}
+
+const downComponent = async (index: string) => {
+  emits('select', index)
+  basicStore.downComponent(index)
+}
+
+const topComponent = async (index: string) => {
+  emits('select', index)
+  basicStore.topComponent(index)
+}
+
+const bottomComponent = async (index: string) => {
+  emits('select', index)
+  basicStore.bottomComponent(index)
+}
+
+const changeComponentDisplay = (index: string) => {
+  emits('select', index)
+  if (!isDisplay.value) {
+    basicStore.showComponent(index)
+  } else {
+    basicStore.hiddenComponent(index)
+  }
+}
+
+const contextmenus = (_, index: string): ContextmenuItem[] => {
+  return [
+    {
+      text: '复制',
+      subText: 'Ctrl + V',
+      handler: () => copy(index)
+    },
+    {
+      text: '删除',
+      subText: 'Ctrl + V',
+      handler: () => deleteComponent(index)
+    },
+    { divider: true },
+    {
+      text: '置于顶层',
+      handler: () => topComponent(index),
+      children: [
+        { text: '置于顶层', handler: () => topComponent(index) },
+        { text: '上移一层', handler: () => upComponent(index) }
+      ]
+    },
+    {
+      text: '置于底层',
+      handler: () => bottomComponent(index),
+      children: [
+        { text: '置于底层', handler: () => bottomComponent(index) },
+        { text: '下移一层', handler: () => downComponent(index) }
+      ]
+    },
+    { divider: true },
+    {
+      text: '显示',
+      disable: !isDisplay.value,
+      subText: 'Ctrl + V',
+      handler: () => changeComponentDisplay(index)
+    },
+    {
+      text: '隐藏',
+      disable: isDisplay.value,
+      subText: 'Ctrl + V',
+      handler: () => changeComponentDisplay(index)
+    }
+  ]
 }
 
 const handleDragStart = (event: DragEvent, index: string) => {

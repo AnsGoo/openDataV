@@ -18,7 +18,9 @@ const useCopyStore = defineStore({
       if (!curComponent) {
         return
       }
+
       this.copyData = cloneDeep(curComponent)
+      console.log(cloneDeep(curComponent))
     },
 
     paste(isMouse: boolean, x?: number, y?: number): void {
@@ -33,12 +35,11 @@ const useCopyStore = defineStore({
         this.copyData.style.top = y
         this.copyData.style.left = x
       } else {
-        this.copyData.style.top += 10
-        this.copyData.style.left += 10
+        this.copyData.style.top = this.copyData.style.top + 10
+        this.copyData.style.left = this.copyData.style.left + 10
       }
-
+      console.log(this.copyData)
       basicStore.appendComponent(cloneDeep(this.copyData))
-      this.copyData = undefined
     }
   }
 })

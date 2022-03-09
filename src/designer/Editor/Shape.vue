@@ -6,6 +6,7 @@
     @click.ctrl.exact="appendComponent"
     @click.exact="selectCurComponent"
     @mousedown="handleMouseDownOnShape"
+    v-contextmenu="contextmenus"
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
     <span class="iconfont icon-xuanzhuan" v-show="isActive" @mousedown="handleRotate"></span>
@@ -29,25 +30,124 @@ import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { reactive, nextTick, toRefs, ref, watch, computed, onMounted, onErrorCaptured } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
-import { mod360 } from '@/utils/utils'
+import { mod360, copyText } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
 import type { Vector } from '@/types/common'
+import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { useCopyStoreWithOut } from '@/store/modules/copy'
 
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
 const composeStore = useComposeStoreWithOut()
+const copyStore = useCopyStoreWithOut()
 
 const props = withDefaults(
   defineProps<{
     active?: boolean
     element: any
     defaultStyle: any
-    index: number | string
+    index: string
   }>(),
   {
     active: false
   }
 )
+
+const copy = () => {
+  copyStore.copy()
+  copyText(JSON.stringify(basicStore.curComponent))
+}
+
+// const paste = () => {
+//   snapShotStore.recordSnapshot()
+//   const textData = pasteText()
+//   if (textData) {
+//     const component: ComponentInfo = JSON.parse(textData)
+//     if ('component' in component) {
+//       component.style.top = props.menuTop - 82
+//       component.style.left = props.menuLeft - 258
+//     }
+//   } else {
+//     copyStore.paste(true, props.menuLeft - 258, props.menuTop - 82)
+//   }
+// }
+
+const deleteComponent = async () => {
+  if (props.index) {
+    basicStore.removeComponent(props.index)
+  }
+}
+
+const upComponent = async () => {
+  if (props.index) {
+    basicStore.upComponent(props.index)
+  }
+}
+
+const downComponent = async () => {
+  if (props.index) {
+    basicStore.downComponent(props.index)
+  }
+}
+
+const topComponent = async () => {
+  if (props.index) {
+    basicStore.topComponent(props.index)
+  }
+}
+
+/**
+ * 复制组件ID
+ */
+const copyComponentId = () => {
+  if (props.index) {
+    let id = basicStore.curComponent!.id
+    copyText(id as string)
+  }
+}
+
+const bottomComponent = async () => {
+  if (props.index) {
+    basicStore.bottomComponent(props.index)
+  }
+}
+
+const contextmenus = (): ContextmenuItem[] => {
+  return [
+    {
+      text: '复制',
+      subText: 'Ctrl + V',
+      handler: copy
+    },
+    {
+      text: '复制ID',
+      subText: 'Ctrl + A',
+      handler: copyComponentId
+    },
+    {
+      text: '删除',
+      subText: 'Ctrl + V',
+      handler: deleteComponent
+    },
+    { divider: true },
+    {
+      text: '置于顶层',
+      handler: topComponent,
+      children: [
+        { text: '置于顶层', handler: topComponent },
+        { text: '上移一层', handler: upComponent }
+      ]
+    },
+    {
+      text: '置于底层',
+      handler: bottomComponent,
+      children: [
+        { text: '置于底层', handler: bottomComponent },
+        { text: '下移一层', handler: downComponent }
+      ]
+    }
+  ]
+}
 
 const left = ref<number>(0)
 const top = ref<number>(0)

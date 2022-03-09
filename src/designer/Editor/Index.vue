@@ -4,8 +4,8 @@
     ref="editor"
     id="editor"
     :style="bgStyle"
-    @contextmenu.prevent="handleContextMenu"
     @mousedown="handleMouseDown"
+    v-contextmenu="contextmenus"
   >
     <!-- 网格线 -->
     <Grid />
@@ -18,7 +18,7 @@
         :style="getShapeStyle(item.style)"
         :active="item.id === (curComponent || {}).id"
         :element="item"
-        :index="index"
+        :index="index.toString()"
         :class="{ lock: item.isLock }"
         v-if="basicStore.isEditMode && item.display"
       >
@@ -33,16 +33,6 @@
         />
       </Shape>
     </template>
-
-    <!-- 右击菜单 -->
-    <ContextMenu
-      :curComponent="curComponent"
-      :menuTop="menuTop"
-      :menuLeft="menuLeft"
-      v-model:display="displayContexyMenu"
-      ref="contextMenu"
-      :curComponentIndex="selectedIndex"
-    />
     <!-- 标线 -->
     <MarkLine />
     <!-- 选中区域 -->
@@ -52,12 +42,11 @@
 
 <script setup lang="ts">
 import { reactive, ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import ContextMenu from '@/designer/Editor/ContextMenu.vue'
 import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape.vue'
-import { calcContextMenuLoccation, filterStyle, calcComponentAxis } from '@/utils/utils'
+import { filterStyle, calcComponentAxis } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { onClickOutside, useStorage } from '@vueuse/core'
@@ -66,11 +55,15 @@ import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
 import { ComponentInfo, DOMRectStyle, Rect } from '@/types/component'
 import { getComponentShapeStyle } from '@/utils/utils'
+import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
+import { useCopyStoreWithOut } from '@/store/modules/copy'
 
+const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
-let menuTop = ref<number>(0)
-let menuLeft = ref<number>(0)
+const copyStore = useCopyStoreWithOut()
+
 let displayContexyMenu = ref<boolean>(false)
 const contextMenu = ref<ElRef>(null)
 
@@ -84,14 +77,6 @@ const storageCanvasStyleData = useStorage('canvasStyle', JSON.stringify(basicSto
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
-
-const selectedIndex = computed<string | undefined>(() => {
-  if (curComponent.value) {
-    return basicStore.getComponentIndexById(curComponent.value.id!).toString()
-  } else {
-    return undefined
-  }
-})
 
 const hideArea = () => {
   isShowArea.value = false
@@ -107,6 +92,30 @@ const hideArea = () => {
     },
     []
   )
+}
+
+const clearCanvas = async () => {
+  await snapShotStore.recordSnapshot()
+  basicStore.clearCanvas()
+}
+
+const paste = () => {
+  copyStore.paste(false)
+}
+
+const contextmenus = (): ContextmenuItem[] => {
+  return [
+    {
+      text: '粘贴',
+      subText: 'Ctrl + V',
+      handler: paste
+    },
+    {
+      text: '清空画布',
+      subText: 'Ctrl + A',
+      handler: clearCanvas
+    }
+  ]
 }
 
 useEventBus('hideArea', hideArea)
@@ -163,88 +172,77 @@ const height = ref<number>(0)
 const isShowArea = ref<boolean>(false)
 const editor = ref<ElRef>(null)
 
-const handleContextMenu = (event: MouseEvent) => {
-  const menuHeight = curComponent.value ? 256 : 32
-  const point: Vector = calcContextMenuLoccation(
-    {
-      x: event.clientX,
-      y: event.clientY
-    },
-    80,
-    menuHeight
-  )
-  menuTop.value = point.y
-  menuLeft.value = point.x
-  displayContexyMenu.value = true
-}
-
 onClickOutside(contextMenu, () => (displayContexyMenu.value = false))
 
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
-  e.preventDefault()
+  if (e.button === 0) {
+    e.preventDefault()
+    e.stopPropagation()
+    hideArea()
 
-  hideArea()
+    // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
+    const rectInfo = editor.value?.getBoundingClientRect()
+    editorX.value = rectInfo!.x
+    editorY.value = rectInfo!.y
 
-  // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
-  const rectInfo = editor.value?.getBoundingClientRect()
-  editorX.value = rectInfo!.x
-  editorY.value = rectInfo!.y
+    const startX = e.clientX
+    const startY = e.clientY
+    start.x = startX - editorX.value
+    start.y = startY - editorY.value
+    // 展示选中区域
+    isShowArea.value = true
 
-  const startX = e.clientX
-  const startY = e.clientY
-  start.x = startX - editorX.value
-  start.y = startY - editorY.value
-  // 展示选中区域
-  isShowArea.value = true
-  const move = (moveEvent) => {
-    width.value = Math.abs(moveEvent.clientX - startX)
-    height.value = Math.abs(moveEvent.clientY - startY)
-    if (moveEvent.clientX < startX) {
-      start.x = moveEvent.clientX - editorX.value
+    const move = (moveEvent) => {
+      moveEvent.preventDefault()
+      moveEvent.stopPropagation()
+      width.value = Math.abs(moveEvent.clientX - startX)
+      height.value = Math.abs(moveEvent.clientY - startY)
+      if (moveEvent.clientX < startX) {
+        start.x = moveEvent.clientX - editorX.value
+      }
+
+      if (moveEvent.clientY < startY) {
+        start.y = moveEvent.clientY - editorY.value
+      }
     }
 
-    if (moveEvent.clientY < startY) {
-      start.y = moveEvent.clientY - editorY.value
+    const up = (UpMoveEvent) => {
+      document.removeEventListener('mousemove', move)
+      document.removeEventListener('mouseup', up)
+
+      if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
+        hideArea()
+        return
+      }
+      const selectedRect: Rect = {
+        left: start.x,
+        top: start.y,
+        right: width.value + start.x,
+        bottom: start.y + height.value
+      }
+      const result = getSelectArea(selectedRect)
+      if (result) {
+        const rect = result.rect
+        composeStore.setAreaData(
+          {
+            top: rect.top,
+            left: rect.left,
+            width: rect.right - rect.left,
+            height: rect.bottom - rect.top,
+            rotate: 0
+          },
+          result.components
+        )
+        start.x = rect.left
+        start.y = rect.top
+        width.value = rect.right - rect.left
+        height.value = rect.bottom - rect.top
+      }
     }
+    document.addEventListener('mousemove', move)
+    document.addEventListener('mouseup', up)
   }
-
-  const up = (UpMoveEvent) => {
-    document.removeEventListener('mousemove', move)
-    document.removeEventListener('mouseup', up)
-
-    if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
-      hideArea()
-      return
-    }
-    const selectedRect: Rect = {
-      left: start.x,
-      top: start.y,
-      right: width.value + start.x,
-      bottom: start.y + height.value
-    }
-    const result = getSelectArea(selectedRect)
-    if (result) {
-      const rect = result.rect
-      composeStore.setAreaData(
-        {
-          top: rect.top,
-          left: rect.left,
-          width: rect.right - rect.left,
-          height: rect.bottom - rect.top,
-          rotate: 0
-        },
-        result.components
-      )
-      start.x = rect.left
-      start.y = rect.top
-      width.value = rect.right - rect.left
-      height.value = rect.bottom - rect.top
-    }
-  }
-
-  document.addEventListener('mousemove', move)
-  document.addEventListener('mouseup', up)
 }
 
 const getSelectArea = (

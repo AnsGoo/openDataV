@@ -9,8 +9,10 @@ import * as Icons from '@element-plus/icons-vue'
 import { setupStore } from '@/store'
 import { setupCustomComponent } from '@/designer/load'
 import { setupRouter } from '@/router'
+import Directive from '@/plugins/directive'
 
 const app = createApp(App)
+app.use(Directive)
 
 // 注册状态管理器
 setupStore(app)

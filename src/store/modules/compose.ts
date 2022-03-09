@@ -10,7 +10,6 @@ import {
   uuid,
   getComponentRealRect
 } from '@/utils/utils'
-import { eventBus } from '@/bus/useEventBus'
 import { cloneDeep } from 'lodash-es'
 const basicStore = useBasicStoreWithOut()
 
@@ -84,10 +83,6 @@ const useComposeStore = defineStore({
 
       const index = basicStore.componentData.length - 1
       basicStore.setCurComponent(basicStore.componentData[index])
-
-      // 隐藏区域
-      eventBus.emit('hideArea')
-
       this.components = []
     },
     /**
@@ -136,7 +131,7 @@ const useComposeStore = defineStore({
     flushLeft() {
       const { left, items } = getComponentRealRect(this.components)
       items.forEach((el) => {
-        const distance = left - el.left
+        const distance = el.left - left
         el.component.style.left = el.component.style.left - distance
       })
     },
