@@ -46,7 +46,7 @@
 
 <script lang="ts" setup>
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 import iconMap from '../icon'
 import { ElMenuItem, ElSubMenu, ElIcon } from 'element-plus'
 
@@ -67,8 +67,6 @@ const emits = defineEmits<{ (e: 'select', index: string): void }>()
 const isShowText = ref<boolean>(true)
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()
-
-const isDisplay = computed<boolean>(() => basicStore.layerComponent?.display || false)
 
 const open = (key: any) => {
   const result = key as string
@@ -91,12 +89,9 @@ const caculIndex = (index: number) => {
 
 const copy = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  const myindex: number = indexs.pop() as number
-  const fatherComponentData: Array<ComponentInfo> | undefined =
-    basicStore.getParentComponentData(indexs)
-  if (fatherComponentData) {
-    const componentInfo: ComponentInfo = fatherComponentData[myindex]
-    copyText(JSON.stringify(componentInfo))
+  const component: ComponentInfo = basicStore.getComponentByIndex(indexs)
+  if (component) {
+    copyText(JSON.stringify(component))
     copyStore.copy()
   }
 }
@@ -126,16 +121,20 @@ const bottomComponent = async (index: string) => {
   basicStore.bottomComponent(index)
 }
 
-const changeComponentDisplay = (index: string) => {
+const hiddenComponent = (index: string) => {
+  console.log(index)
   emits('select', index)
-  if (!isDisplay.value) {
-    basicStore.showComponent(index)
-  } else {
-    basicStore.hiddenComponent(index)
-  }
+  basicStore.hiddenComponent(index)
+}
+
+const displayComponent = (index: string) => {
+  console.log(index)
+  emits('select', index)
+  basicStore.showComponent(index)
 }
 
 const contextmenus = (_, index: string): ContextmenuItem[] => {
+  const indexs = index.split('-').map((el) => parseInt(el))
   return [
     {
       text: '复制',
@@ -167,15 +166,15 @@ const contextmenus = (_, index: string): ContextmenuItem[] => {
     { divider: true },
     {
       text: '显示',
-      disable: !isDisplay.value,
+      disable: basicStore.getComponentByIndex(indexs).display,
       subText: '',
-      handler: () => changeComponentDisplay(index)
+      handler: () => displayComponent(index)
     },
     {
       text: '隐藏',
-      disable: isDisplay.value,
+      disable: !basicStore.getComponentByIndex(indexs).display,
       subText: '',
-      handler: () => changeComponentDisplay(index)
+      handler: () => hiddenComponent(index)
     }
   ]
 }

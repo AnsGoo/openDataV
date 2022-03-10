@@ -15,8 +15,8 @@ const component: ComponentConfig = {
     width: 200,
     height: 60,
     color: 'rgba(0, 206, 209, 1)',
-    fontSize: '20px',
-    fontWeight: '600'
+    fontSize: 20,
+    fontWeight: 600
   }
 }
 
