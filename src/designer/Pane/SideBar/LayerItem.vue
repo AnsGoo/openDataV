@@ -13,8 +13,8 @@
         <span class="icon iconfont icon-zu"></span>
         <span>{{ item.label || '分组' }}</span>
         <el-icon style="vertical-align: middle">
-          <View v-if="item.display" />
-          <moon-night v-else />
+          <icon-preview-open theme="outline" size="24" fill="#1e90ff" v-if="item.display" />
+          <icon-preview-close-one theme="outline" size="24" fill="#1e90ff" v-else />
         </el-icon>
       </template>
       <LayerItem
@@ -36,8 +36,8 @@
         <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
         <span v-show="isShowText">{{ item.label }}</span>
         <el-icon style="vertical-align: middle">
-          <View v-if="item.display" />
-          <moon-night v-else />
+          <icon-preview-open theme="outline" size="24" fill="#1e90ff" v-if="item.display" />
+          <icon-preview-close-one theme="outline" size="24" fill="#1e90ff" v-else />
         </el-icon>
       </template>
     </el-menu-item>
@@ -139,12 +139,12 @@ const contextmenus = (_, index: string): ContextmenuItem[] => {
   return [
     {
       text: '复制',
-      subText: 'Ctrl + V',
+      subText: 'Ctrl + C',
       handler: () => copy(index)
     },
     {
       text: '删除',
-      subText: 'Ctrl + V',
+      subText: '',
       handler: () => deleteComponent(index)
     },
     { divider: true },
@@ -168,13 +168,13 @@ const contextmenus = (_, index: string): ContextmenuItem[] => {
     {
       text: '显示',
       disable: !isDisplay.value,
-      subText: 'Ctrl + V',
+      subText: '',
       handler: () => changeComponentDisplay(index)
     },
     {
       text: '隐藏',
       disable: isDisplay.value,
-      subText: 'Ctrl + V',
+      subText: '',
       handler: () => changeComponentDisplay(index)
     }
   ]

@@ -72,43 +72,43 @@ const contextmenus = (): ContextmenuItem[] => {
   return [
     {
       text: '组合',
-      subText: 'Ctrl + V',
+      subText: '',
       handler: compose
     },
     {
       text: '拆分',
-      subText: 'Ctrl + A',
+      subText: '',
       handler: decompose
     },
     { divider: true },
     {
       text: '左对齐',
-      subText: 'Ctrl + A',
+      subText: '',
       handler: handleFlushLeft
     },
     {
       text: '右对齐',
-      subText: 'Ctrl + V',
+      subText: '',
       handler: handleFlushRight
     },
     {
       text: '顶对齐',
-      subText: 'Ctrl + V',
+      subText: '',
       handler: handleFlushTop
     },
     {
       text: '底对齐',
-      subText: 'Ctrl + V',
+      subText: '',
       handler: handleFlushBottom
     },
     {
-      text: '行对齐',
-      subText: 'Ctrl + V',
+      text: '水平居中',
+      subText: '',
       handler: handleFlushRow
     },
     {
-      text: '列对齐',
-      subText: 'Ctrl + V',
+      text: '垂直居中',
+      subText: '',
       handler: handleFlushColumn
     }
   ]

@@ -5,49 +5,49 @@
       <div>
         <el-button size="small" @click="save" title="保存">
           <el-icon style="vertical-align: middle">
-            <Finished />
+            <icon-save-one theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>保存</span>
         </el-button>
         <el-button size="small" @click="preview" title="预览">
           <el-icon style="vertical-align: middle">
-            <View />
+            <icon-computer theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>预览</span>
         </el-button>
         <el-button size="small" @click="undo" title="撤销">
           <el-icon style="vertical-align: middle" @click="undo">
-            <TopLeft />
+            <icon-back theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>撤销</span>
         </el-button>
         <el-button size="small" @click="recoveryDraft" title="恢复">
           <el-icon style="vertical-align: middle">
-            <TopRight />
+            <icon-loading theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>恢复</span>
         </el-button>
         <el-button size="small" @click="exportCanvas" title="导出">
           <el-icon style="vertical-align: middle">
-            <Download />
+            <icon-download-one theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>导出</span>
         </el-button>
         <el-button size="small" @click="importCanvas" title="导入">
           <el-icon style="vertical-align: middle">
-            <Upload />
+            <icon-upload-one theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>导入</span>
         </el-button>
         <el-button size="small" @click="fullScreen" title="全屏">
           <el-icon style="vertical-align: middle">
-            <FullScreen />
+            <icon-full-screen theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>全屏</span>
         </el-button>
         <el-button size="small" @click="setShowEm" title="坐标">
           <el-icon style="vertical-align: middle">
-            <Aim />
+            <icon-cones theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>坐标</span>
         </el-button>
@@ -56,13 +56,13 @@
       <div>
         <el-button class="resource" size="small" @click="showIcon" title="图标">
           <el-icon style="vertical-align: middle">
-            <TakeawayBox />
+            <icon-game-ps theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>图标</span>
         </el-button>
         <el-button class="resource" size="small" @click="() => (showImageView = true)" title="图片">
           <el-icon style="vertical-align: middle">
-            <Picture />
+            <icon-picture theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>图片</span>
         </el-button>
@@ -300,7 +300,7 @@ onUnmounted(() => {
 }
 button {
   margin-left: 0px !important;
-  color: rgba(30, 144, 255, 1);
+  color: #1e90ff;
   border: none;
   padding: 5px 5px;
 }

@@ -112,7 +112,7 @@ const contextmenus = (): ContextmenuItem[] => {
     },
     {
       text: '清空画布',
-      subText: 'Ctrl + A',
+      subText: '',
       handler: clearCanvas
     }
   ]

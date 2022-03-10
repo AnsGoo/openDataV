@@ -116,17 +116,17 @@ const contextmenus = (): ContextmenuItem[] => {
   return [
     {
       text: '复制',
-      subText: 'Ctrl + V',
+      subText: 'Ctrl + C',
       handler: copy
     },
     {
       text: '复制ID',
-      subText: 'Ctrl + A',
+      subText: '',
       handler: copyComponentId
     },
     {
       text: '删除',
-      subText: 'Ctrl + V',
+      subText: '',
       handler: deleteComponent
     },
     { divider: true },

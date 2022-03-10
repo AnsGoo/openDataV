@@ -9,7 +9,9 @@
       <div class="dynamic">
         <div class="title">{{ max > 1 ? `${name}${index}` : name }}</div>
         <div class="delete">
-          <span class="icon iconfont icon-shanchu" @click="deleteItem(index)"></span>
+          <el-icon style="vertical-align: middle">
+            <icon-delete-one theme="outline" size="24" fill="#1e90ff" @click="deleteItem(index)" />
+          </el-icon>
         </div>
       </div>
     </template>
@@ -22,7 +24,7 @@
 import { ref, computed } from 'vue'
 import type { AttrType } from '@/types/component'
 import FormItem from './FormItem.vue'
-import { ElButton, ElCollapseItem } from 'element-plus'
+import { ElButton, ElCollapseItem, ElIcon } from 'element-plus'
 
 const props = defineProps<{
   data: Recordable<any>[]

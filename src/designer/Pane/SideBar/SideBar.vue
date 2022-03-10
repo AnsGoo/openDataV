@@ -9,10 +9,22 @@
       position="right"
     />
     <el-tabs v-model="activeName" :stretch="true" :lazy="true">
-      <el-tab-pane label="组件" name="component">
+      <el-tab-pane name="component">
+        <template #label>
+          <el-icon style="vertical-align: middle">
+            <icon-components theme="outline" size="24" />
+          </el-icon>
+          <span>组件</span>
+        </template>
         <ComponentList />
       </el-tab-pane>
-      <el-tab-pane label="图层" name="layer">
+      <el-tab-pane name="layer">
+        <template #label>
+          <el-icon style="vertical-align: middle">
+            <icon-layers theme="outline" size="24" />
+          </el-icon>
+          <span>图层</span>
+        </template>
         <Layer />
       </el-tab-pane>
     </el-tabs>
@@ -24,7 +36,7 @@ import ComponentList from './ComponentList.vue'
 import Collapse from '../Collapse.vue'
 import Layer from './Layer.vue'
 import { ref } from 'vue'
-import { ElTabs, ElTabPane } from 'element-plus'
+import { ElTabs, ElTabPane, ElIcon } from 'element-plus'
 
 const activeName = ref<string>('component')
 </script>
