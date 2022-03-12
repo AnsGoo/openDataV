@@ -305,19 +305,19 @@ const keyDown = (e: KeyboardEvent): void => {
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault()
-        basicStore.curComponent!.style.left = (curComponent.value.style.left as number) - 1
+        basicStore.syncComponentLoction({ left: curComponent.value.style.left - 1 })
         break
       case 'ArrowUp':
         e.preventDefault()
-        basicStore.curComponent!.style.top = (curComponent.value.style.top as number) - 1
+        basicStore.syncComponentLoction({ top: curComponent.value.style.top - 1 })
         break
       case 'ArrowRight':
         e.preventDefault()
-        basicStore.curComponent!.style.left = (curComponent.value.style.left as number) + 1
+        basicStore.syncComponentLoction({ left: curComponent.value.style.left + 1 })
         break
       case 'ArrowDown':
         e.preventDefault()
-        basicStore.curComponent!.style.top = (curComponent.value.style.top as number) + 1
+        basicStore.syncComponentLoction({ top: curComponent.value.style.top + 1 })
         break
       default:
         e.stopPropagation()
