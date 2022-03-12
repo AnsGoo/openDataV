@@ -27,7 +27,7 @@ const useComposeStore = defineStore({
   }),
   getters: {
     canCompose(): boolean {
-      return this.components.length === 0
+      return this.components.length > 1
     },
     canDecompose(): boolean {
       // 当前组件没有锁定，并且是分组组件，就可以拆分
@@ -58,6 +58,10 @@ const useComposeStore = defineStore({
     appendComponent(component: ComponentInfo): void {
       if (this.components.findIndex((ele) => ele.id === component.id) === -1) {
         this.components.push(component)
+        if(this.components.length > 1){
+          this.style = { ...this.style, ...calcComponentsRect(this.components) }
+        }
+        console.log(this.style)
       }
     },
     /**

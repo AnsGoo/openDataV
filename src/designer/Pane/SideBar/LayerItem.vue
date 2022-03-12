@@ -207,7 +207,7 @@ const handleDrop = (event: DragEvent, index: string) => {
 const cutComponent = (index: string, isMyLayer: boolean): ComponentInfo | undefined => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const myindex: number = indexs.pop() as number
-  const fatherComponent: ComponentInfo | undefined = getFatherComponentData(indexs)
+  const fatherComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
   if (fatherComponent && fatherComponent.subComponents) {
     const components: ComponentInfo[] = fatherComponent.subComponents.splice(myindex, 1)
     const component: ComponentInfo = components[0]
@@ -254,7 +254,7 @@ const isSameLayer = (fromIndex: string, toIndex: string): boolean => {
 const pasteComponent = (index: string, component: ComponentInfo, isMyLayer: boolean): void => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const myindex: number = indexs.pop() as number
-  const fatherComponent: ComponentInfo | undefined = getFatherComponentData(indexs)
+  const fatherComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
   if (fatherComponent && fatherComponent.subComponents) {
     if (fatherComponent.component === 'Root' || isMyLayer) {
       fatherComponent.subComponents.splice(myindex, 0, component)
@@ -272,28 +272,6 @@ const pasteComponent = (index: string, component: ComponentInfo, isMyLayer: bool
       emits('select', index)
     }
   }
-}
-
-const getFatherComponentData = (indexs: number[]): ComponentInfo => {
-  let rootComponent: ComponentInfo = {
-    subComponents: basicStore.componentData,
-    component: 'Root',
-    display: false,
-    style: {
-      width: 0,
-      height: 0,
-      left: 0,
-      top: 0,
-      rotate: 0
-    },
-    id: '',
-    label: '',
-    icon: ''
-  }
-  indexs.forEach((el: number) => {
-    rootComponent = rootComponent.subComponents ? rootComponent.subComponents[el] : rootComponent
-  })
-  return rootComponent
 }
 </script>
 

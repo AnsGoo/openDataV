@@ -36,7 +36,8 @@
     <!-- 标线 -->
     <MarkLine />
     <!-- 选中区域 -->
-    <Area :start="start" :width="width" :height="height" v-show="isShowArea" />
+    <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
+    <Area :start="appendStart" :width="appendWidth" :height="appendHeight" v-else-if="isShowAreas" />
   </div>
 </template>
 
@@ -78,6 +79,21 @@ const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
 
+const isShowAreas = computed<boolean>(() => {
+  return composeStore.style.width > 0 && !isShowArea.value
+})
+
+const appendStart = computed<Vector>(() => {
+  return { x: composeStore.style.left, y: composeStore.style.top }
+})
+
+const appendWidth = computed<number>(() => {
+  return composeStore.style.width
+})
+
+const appendHeight = computed<number>(() => {
+  return composeStore.style.height
+})
 const hideArea = () => {
   isShowArea.value = false
   width.value = 0

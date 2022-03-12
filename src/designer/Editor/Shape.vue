@@ -146,8 +146,20 @@ const bottomComponent = async () => {
   }
 }
 
+const decompose = async () => {
+  composeStore.decompose()
+}
+
 const contextmenus = (): ContextmenuItem[] => {
+  basicStore.setCurComponent(props.element)
   return [
+    {
+      text: '拆分',
+      subText: '',
+      disable: composeStore.canDecompose,
+      handler: decompose
+    },
+    { divider: true },
     {
       text: '复制',
       subText: 'Ctrl + C',
@@ -307,13 +319,13 @@ const handleDragendShape = (e: MouseEvent) => {
     document.addEventListener('mousemove', move)
     document.addEventListener('mouseup', up)
   }
-
 }
 
 const selectCurComponent = (e) => {
   // 阻止向父组件冒泡
   e.stopPropagation()
   e.preventDefault()
+  basicStore.setCurComponent(props.element)
 }
 
 /**
@@ -370,6 +382,7 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
  * 旋转组件
  */
 const handleRotate = (e: MouseEvent) => {
+  basicStore.setCurComponent(props.element)
   if (e.button === 0) {
     if (!shape.value) {
       return

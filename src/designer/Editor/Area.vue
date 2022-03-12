@@ -33,12 +33,6 @@ const compose = async () => {
   eventBus.emit('hideArea')
 }
 
-const decompose = async () => {
-  await snapShotStore.recordSnapshot()
-  composeStore.decompose()
-  eventBus.emit('hideArea')
-}
-
 const handleFlushLeft = () => {
   composeStore.flushLeft()
   eventBus.emit('hideArea')
@@ -73,12 +67,8 @@ const contextmenus = (): ContextmenuItem[] => {
     {
       text: '组合',
       subText: '',
+      disable: !composeStore.canCompose,
       handler: compose
-    },
-    {
-      text: '拆分',
-      subText: '',
-      handler: decompose
     },
     { divider: true },
     {
@@ -101,6 +91,7 @@ const contextmenus = (): ContextmenuItem[] => {
       subText: '',
       handler: handleFlushBottom
     },
+    { divider: true },
     {
       text: '水平居中',
       subText: '',
