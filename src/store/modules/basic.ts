@@ -400,7 +400,8 @@ const useBasicStore = defineStore({
           : rootComponent
       })
       return rootComponent
-    }
+    },
+    saveLayoutData() {}
   }
 })
 

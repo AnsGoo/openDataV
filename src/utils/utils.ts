@@ -375,10 +375,6 @@ export const pasteText = (): string => {
   return textData
 }
 
-export const isFloat = (n: number): boolean => {
-  return n % 1 !== 0
-}
-
 export const stylePropToCss = (key: string, value: any): Recordable<any> => {
   switch (key) {
     case 'gwidth':
@@ -413,32 +409,6 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
     default:
       return { [key]: value }
   }
-}
-
-/**
- * @prarms point 鼠标右击点
- * @prarms width 菜单栏宽度
- * @prarms height 菜单栏高度
- * @return 菜单栏坐标
- */
-export const calcContextMenuLoccation = (point: Vector, width: number, height: number): Vector => {
-  const result: Vector = {
-    x: 0,
-    y: 0
-  }
-  if (point.x + width > window.innerWidth) {
-    result.x = window.innerWidth - width - 10
-  } else {
-    result.x = point.x
-  }
-
-  if (point.y + height > window.innerHeight) {
-    result.y = window.innerHeight - height - 10
-  } else {
-    result.y = point.y
-  }
-
-  return result
 }
 
 /**
