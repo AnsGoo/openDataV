@@ -41,7 +41,6 @@ const bgStyle = computed<Recordable<string>>(() => {
 
 onMounted(async () => {
   const snapshot = await snapShotStore.undo()
-  console.log(snapshot)
   if (snapshot) {
     basicStore.setLayoutData({
       canvasData: snapshot.canvasData,

@@ -159,7 +159,6 @@ const undo = async () => {
   } else {
     snapshot = await snapShotStore.undo(snapShotId - 1)
   }
-  console.log(snapshot)
   if (snapshot) {
     snapShotId = snapshot.id!
     basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
@@ -192,7 +191,6 @@ const recoveryDraft = async () => {
   } else {
     snapshot = await snapShotStore.undo(snapShotId + 1)
   }
-  console.log(snapshot)
   if (snapshot) {
     snapShotId = snapshot.id!
     basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })

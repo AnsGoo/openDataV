@@ -29,17 +29,9 @@ interface WSDataType {
   TagValue: string
 }
 
-interface WSAlertDataType extends WSDataType {
-  AlarmDescription: string
-  AlarmValue: string
-  AlarmType: number
-  Level: number
-  AlarmTime: string
-}
 
 interface WSData {
-  alertData: Array<WSAlertDataType>
   actualData: Array<WSDataType>
 }
 
-export { WSData, WSDataType, WSAlertDataType, TagType, AlarmType, AlarmInfo }
+export { WSData, WSDataType, TagType, AlarmType, AlarmInfo }

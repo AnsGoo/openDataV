@@ -15,11 +15,6 @@ const props = defineProps<{ propValue: Recordable<string>; element: ComponentInf
 
 const basicStore = useBasicStoreWithOut()
 
-const wsCallback = (data) => {
-  console.log('ws_callback', data)
-}
-useEventBus('alert', wsCallback)
-
 const handleClick = () => {
   if (basicStore.isEditMode) {
     return

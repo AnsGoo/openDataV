@@ -61,7 +61,6 @@ const useComposeStore = defineStore({
         if (this.components.length > 1) {
           this.style = { ...this.style, ...calcComponentsRect(this.components) }
         }
-        console.log(this.style)
       }
     },
     /**

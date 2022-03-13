@@ -122,13 +122,11 @@ const bottomComponent = async (index: string) => {
 }
 
 const hiddenComponent = (index: string) => {
-  console.log(index)
   emits('select', index)
   basicStore.hiddenComponent(index)
 }
 
 const displayComponent = (index: string) => {
-  console.log(index)
   emits('select', index)
   basicStore.showComponent(index)
 }

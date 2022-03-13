@@ -31,9 +31,7 @@ const useSnapShotStore = defineStore({
         canvasStyle: cloneDeep(canvasStyle)
       }
       snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot)).then(async (resp) => {
-        console.log(resp)
         const count: number = await snapshotDb.snapshot.count()
-        console.log(count)
         if (count > this.snapshotMax) {
           const snapshot: StoreComponentData = (await snapshotDb.snapshot
             .orderBy('id')
@@ -49,8 +47,6 @@ const useSnapShotStore = defineStore({
     },
     saveSnapshot(canvasData: Array<ComponentInfo>, canvasStyle: CanvasStyleData) {
       if (this.timeHandler) {
-        console.log(this.timeHandler)
-        console.log('----------------')
         clearTimeout(this.timeHandler)
         this.timeHandler = undefined
       } else {
