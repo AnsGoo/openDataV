@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <Toolbar @recovery="recoveryDraft" />
+    <Toolbar />
 
     <main>
       <!-- 左侧组件列表 -->
@@ -38,16 +38,12 @@ import TabPane from '@/designer/Pane/TabPane.vue'
 import SideBar from '@/designer/Pane/SideBar/SideBar.vue'
 import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { ref, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
-import { useStorage } from '@vueuse/core'
 const basicStore = useBasicStoreWithOut()
-const snapShotStore = useSnapShotStoreWithOut()
-
 const websk = ref<WebSocket | null>(null)
 
 const rulerBorderStyle = reactive<{
@@ -59,18 +55,6 @@ const rulerBorderStyle = reactive<{
   width: 1,
   color: 'red'
 })
-
-const storageComponentData = useStorage('canvasData', JSON.stringify([]), window.localStorage)
-const storageCanvasStyleData = useStorage(
-  'canvasStyle',
-  JSON.stringify({
-    width: 0,
-    height: 0,
-    scale: 0,
-    dataWs: '',
-    image: '/images/bg.jpg'
-  })
-)
 const route = useRoute()
 
 onMounted(async () => {
@@ -118,13 +102,6 @@ const deselectCurComponent = () => {
   }
 }
 
-// 恢复草稿
-const recoveryDraft = () => {
-  // 用保存的数据恢复画布
-  basicStore.setComponentData(JSON.parse(storageComponentData.value))
-  basicStore.setCanvasStyle(JSON.parse(storageCanvasStyleData.value))
-}
-
 watch(
   () => basicStore.canvasStyleData.dataWs,
   (newValue) => {
@@ -154,9 +131,8 @@ const initWebsocket = (key: string, url: string): WebSocket => {
   return ws
 }
 
-onUnmounted(async (): Promise<void> => {
+onUnmounted(() => {
   websk.value?.close()
-  await snapShotStore.clearSnapshot()
   basicStore.clearCanvas()
 })
 </script>

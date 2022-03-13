@@ -40,6 +40,7 @@ export interface CopyItem {
 export interface SnapData {
   snapshotMax: number
   latestSnapshot?: StoreComponentData
+  timeHandler?: TimeoutHandle
 }
 
 export interface AreaData {

@@ -14,11 +14,14 @@ import { channels, eventBus } from '@/bus/useEventBus'
 import type { ChannelItem } from '@/bus/useEventBus'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { ComponentInfo } from '@/types/component'
-import { useStorage } from '@vueuse/core'
+import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
+import { useBasicStoreWithOut } from '@/store/modules/basic'
+const snapShotStore = useSnapShotStoreWithOut()
+const basicStore = useBasicStoreWithOut()
 
 const websockets: WebSocket[] = []
 
-const componentData = ref<ComponentInfo[]>([])
+const componentData = computed<ComponentInfo[]>(() => basicStore.componentData)
 const canvasStyleData = ref<CanvasStyleData>({
   width: 0,
   height: 0,
@@ -26,18 +29,6 @@ const canvasStyleData = ref<CanvasStyleData>({
   dataWs: '',
   image: '/images/bg.jpg'
 })
-
-const storageComponentData = useStorage('canvasData', JSON.stringify([]), window.localStorage)
-const storageCanvasStyleData = useStorage(
-  'canvasStyle',
-  JSON.stringify({
-    width: 0,
-    height: 0,
-    scale: 0,
-    dataWs: '',
-    image: '/images/bg.jpg'
-  })
-)
 
 const bgStyle = computed<Recordable<string>>(() => {
   const style = {
@@ -48,9 +39,16 @@ const bgStyle = computed<Recordable<string>>(() => {
   return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
 })
 
-onMounted(() => {
-  componentData.value = JSON.parse(storageComponentData.value)
-  canvasStyleData.value = JSON.parse(storageCanvasStyleData.value)
+onMounted(async () => {
+  const snapshot = await snapShotStore.undo()
+  console.log(snapshot)
+  if (snapshot) {
+    basicStore.setLayoutData({
+      canvasData: snapshot.canvasData,
+      canvasStyle: snapshot.canvasStyle
+    })
+  }
+  canvasStyleData.value = basicStore.canvasStyleData
   if (canvasStyleData.value.dataWs) {
     websockets.push(initWebsocket('actual', canvasStyleData.value.dataWs))
   }

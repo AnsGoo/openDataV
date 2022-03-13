@@ -23,7 +23,7 @@
         </el-button>
         <el-button size="small" @click="recoveryDraft" title="恢复">
           <el-icon style="vertical-align: middle">
-            <icon-loading theme="outline" size="22" fill="#1e90ff" />
+            <icon-next theme="outline" size="22" fill="#1e90ff" />
           </el-icon>
           <span>恢复</span>
         </el-button>
@@ -75,17 +75,6 @@
       <el-form-item label="页面名称" prop="name">
         <el-input v-model="form.name" placeholder="请输入页面名称" />
       </el-form-item>
-      <!-- <el-form-item label="上传缩略图">
-        <el-upload
-          :on-change="handleChangeFile"
-          action="#"
-          list-type="picture"
-          :limit="1"
-          :auto-upload="false"
-        >
-          <el-button size="small" type="primary">文件选择</el-button>
-        </el-upload>
-      </el-form-item>-->
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -104,7 +93,7 @@ import { computed, reactive, ref, onMounted, watch, onUnmounted } from 'vue'
 import type { WatchStopHandle } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
-import { successMessage, errorMessage } from '@/utils/message'
+import { successMessage, errorMessage, warnMessage } from '@/utils/message'
 import { useRoute, useRouter } from 'vue-router'
 import type { LayoutData } from '@/types/apiTypes'
 import { saveUIComponents, updateUIComponents } from '@/api/pages'
@@ -115,6 +104,7 @@ import { ElForm, ElInput, ElFormItem, ElButton, ElDialog, ElIcon } from 'element
 // import type { UploadFile } from 'element-plus/lib/components/upload/src/upload.type'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
+import { StoreComponentData } from '@/utils/db'
 
 // 状态管理
 const basicStore = useBasicStoreWithOut()
@@ -154,10 +144,7 @@ const rules = reactive<{
   name: [{ required: true, message: '请输入页面名称', trigger: 'blur' }]
 })
 
-const emits = defineEmits<{
-  (e: 'recovery'): void
-}>()
-
+let snapShotId = 0
 onMounted(() => {
   setTimeout(() => {
     form.name = basicStore.name
@@ -166,7 +153,19 @@ onMounted(() => {
 })
 
 const undo = async () => {
-  await snapShotStore.undo()
+  let snapshot: StoreComponentData | undefined
+  if (snapShotId <= 0) {
+    snapshot = await snapShotStore.undo()
+  } else {
+    snapshot = await snapShotStore.undo(snapShotId - 1)
+  }
+  console.log(snapshot)
+  if (snapshot) {
+    snapShotId = snapshot.id!
+    basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
+  } else {
+    warnMessage('没有快照了')
+  }
 }
 
 const preview = () => {
@@ -186,8 +185,20 @@ const save = () => {
 //   }
 // }
 
-const recoveryDraft = () => {
-  emits('recovery')
+const recoveryDraft = async () => {
+  let snapshot: StoreComponentData | undefined
+  if (snapShotId <= 0) {
+    snapshot = await snapShotStore.undo()
+  } else {
+    snapshot = await snapShotStore.undo(snapShotId + 1)
+  }
+  console.log(snapshot)
+  if (snapshot) {
+    snapShotId = snapshot.id!
+    basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
+  } else {
+    warnMessage('没有快照了')
+  }
 }
 
 const setShowEm = () => {

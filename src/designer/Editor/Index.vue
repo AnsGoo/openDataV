@@ -65,6 +65,7 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
+
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
@@ -137,6 +138,7 @@ onUnmounted(() => {
   basicStore.setEditMode(EditMode.PREVIEW)
   document.removeEventListener('keydown', keyDown)
   document.removeEventListener('paste', pasteText)
+  basicStore.clearCanvas()
 })
 
 const componentData = computed(() => basicStore.componentData)

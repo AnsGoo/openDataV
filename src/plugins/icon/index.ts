@@ -6,6 +6,7 @@ import {
   PreviewCloseOne,
   PreviewOpen,
   Back,
+  Next,
   Clear,
   DownloadOne,
   UploadOne,
@@ -65,5 +66,6 @@ export default {
     app.component(Translate.name, Translate)
     app.component(Moon.name, Moon)
     app.component(Sun.name, Sun)
+    app.component(Next.name, Next)
   }
 }

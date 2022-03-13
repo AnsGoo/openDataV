@@ -8,8 +8,8 @@ export interface ComponentData {
 
 export interface LayoutData {
   id?: string
-  name: string
-  thumbnail: string
+  name?: string
+  thumbnail?: string
   author?: string
   createTime?: string
   isHome?: boolean

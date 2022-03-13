@@ -8,6 +8,9 @@ import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
 import { swap, uuid } from '@/utils/utils'
 import { Message } from '@/utils/message'
+import { useSnapShotStoreWithOut } from './snapshot'
+
+const snapShotStore = useSnapShotStoreWithOut()
 
 const baseCanvasStyleData: CanvasStyleData = {
   width: 1920,
@@ -184,7 +187,6 @@ const useBasicStore = defineStore({
     setComponentData(componentData: Array<ComponentInfo> = []): void {
       this.resetComponentData(componentData)
       this.componentData = componentData
-      this.saveComponentData()
     },
     /**
      * 想画布中添加组件
@@ -443,6 +445,9 @@ const useBasicStore = defineStore({
     },
     saveComponentData() {
       storageComponentData.value = JSON.stringify(this.componentData)
+      new Promise((resolve) => {
+        resolve(snapShotStore.saveSnapshot(this.componentData, this.canvasStyleData))
+      })
     }
   }
 })
