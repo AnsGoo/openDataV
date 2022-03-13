@@ -74,7 +74,7 @@ const changed = (key: string, val: any) => {
 const resetFormData = () => {
   cleanObjectProp(formData)
   if (props.curComponent) {
-    const propValue = props.curComponent
+    const propValue = props.curComponent.propValue!
     Object.keys(propValue).forEach((key) => {
       formData[key] = propValue[key]
     })

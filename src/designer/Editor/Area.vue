@@ -14,7 +14,6 @@
 <script setup lang="ts">
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { eventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
 
@@ -24,11 +23,9 @@ defineProps<{
   height: number
 }>()
 
-const snapShotStore = useSnapShotStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 
-const compose = async () => {
-  await snapShotStore.recordSnapshot()
+const compose = () => {
   composeStore.compose()
   eventBus.emit('hideArea')
 }
@@ -93,12 +90,12 @@ const contextmenus = (): ContextmenuItem[] => {
     },
     { divider: true },
     {
-      text: '水平居中',
+      text: '水平对齐',
       subText: '',
       handler: handleFlushRow
     },
     {
-      text: '垂直居中',
+      text: '垂直对齐',
       subText: '',
       handler: handleFlushColumn
     }

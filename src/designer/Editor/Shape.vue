@@ -73,7 +73,6 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { reactive, toRefs, ref, computed, onMounted, onErrorCaptured } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
@@ -85,7 +84,6 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { ComponentInfo, ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 const basicStore = useBasicStoreWithOut()
-const snapShotStore = useSnapShotStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
 
@@ -106,25 +104,25 @@ const copy = () => {
   copyText(JSON.stringify(basicStore.curComponent))
 }
 
-const deleteComponent = async () => {
+const deleteComponent = () => {
   if (props.index) {
     basicStore.removeComponent(props.index)
   }
 }
 
-const upComponent = async () => {
+const upComponent = () => {
   if (props.index) {
     basicStore.upComponent(props.index)
   }
 }
 
-const downComponent = async () => {
+const downComponent = () => {
   if (props.index) {
     basicStore.downComponent(props.index)
   }
 }
 
-const topComponent = async () => {
+const topComponent = () => {
   if (props.index) {
     basicStore.topComponent(props.index)
   }
@@ -140,13 +138,13 @@ const copyComponentId = () => {
   }
 }
 
-const bottomComponent = async () => {
+const bottomComponent = () => {
   if (props.index) {
     basicStore.bottomComponent(props.index)
   }
 }
 
-const decompose = async () => {
+const decompose = () => {
   composeStore.decompose()
 }
 
@@ -287,9 +285,7 @@ const handleDragendShape = (e: MouseEvent) => {
     const startLeft = left
 
     // 如果元素没有移动，则不保存快照
-    // let hasMove = false
     const move = (moveEvent) => {
-      // hasMove = true
       const curX = moveEvent.clientX
       const curY = moveEvent.clientY
       top = curY - startY + startTop
@@ -351,13 +347,10 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
     // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
 
     // 是否需要保存快照
-    let needSave = false
     // const needLockProportion: boolean = isNeedLockProportion()
     const move = (moveEvent) => {
       // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
       // 因此第一次点击时不触发 move 事件
-
-      needSave = true
       const curPositon: Vector = {
         x: moveEvent.clientX - editorRectInfo.left,
         y: moveEvent.clientY - editorRectInfo.top
@@ -367,10 +360,9 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
       basicStore.syncComponentLoction({ top, left, width, height })
     }
 
-    const up = async () => {
+    const up = () => {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
-      needSave && (await snapShotStore.recordSnapshot())
     }
 
     document.addEventListener('mousemove', move)

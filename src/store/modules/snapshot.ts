@@ -1,11 +1,9 @@
 import { defineStore } from 'pinia'
 import { store } from '@/store'
 import { cloneDeep } from 'lodash-es'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { SnapData } from '@/types/storeTypes'
 import { snapshotDb, StoreComponentData } from '@/utils/db'
-
-const basicStore = useBasicStoreWithOut()
+import { ComponentInfo } from '@/types/component'
 
 const useSnapShotStore = defineStore({
   id: 'snapshot',
@@ -19,15 +17,14 @@ const useSnapShotStore = defineStore({
         .orderBy('id')
         .last()
       if (snapshot) {
-        basicStore.setComponentData(cloneDeep(snapshot.canvasData))
-        basicStore.setCanvasStyle(cloneDeep(snapshot.canvasStyle))
         this.latestSnapshot = cloneDeep(snapshot)
+        return snapshot
       }
     },
-    async recordSnapshot() {
+    async recordSnapshot(canvasData:Array<ComponentInfo>,canvasStyle:CanvasStyleData) {
       this.latestSnapshot = {
-        canvasData: cloneDeep(basicStore.componentData),
-        canvasStyle: cloneDeep(basicStore.canvasStyleData)
+        canvasData: cloneDeep(componentData),
+        canvasStyle: cloneDeep(canvasStyleData)
       }
       await snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot))
       const count: number = await snapshotDb.snapshot.count()

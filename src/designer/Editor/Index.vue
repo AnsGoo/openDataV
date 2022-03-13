@@ -37,12 +37,17 @@
     <MarkLine />
     <!-- 选中区域 -->
     <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
-    <Area :start="appendStart" :width="appendWidth" :height="appendHeight" v-else-if="isShowAreas" />
+    <Area
+      :start="appendStart"
+      :width="appendWidth"
+      :height="appendHeight"
+      v-else-if="isShowAreas"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
@@ -50,31 +55,16 @@ import Shape from '@/designer/Editor/Shape.vue'
 import { filterStyle, calcComponentAxis } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { onClickOutside, useStorage } from '@vueuse/core'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
 import { ComponentInfo, DOMRectStyle, Rect } from '@/types/component'
 import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-
-const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
-
-let displayContexyMenu = ref<boolean>(false)
-const contextMenu = ref<ElRef>(null)
-
-const storageComponentData = useStorage(
-  'canvasData',
-  JSON.stringify(basicStore.componentData),
-  window.localStorage
-)
-const storageCanvasStyleData = useStorage('canvasStyle', JSON.stringify(basicStore.canvasStyleData))
-
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
@@ -110,8 +100,7 @@ const hideArea = () => {
   )
 }
 
-const clearCanvas = async () => {
-  await snapShotStore.recordSnapshot()
+const clearCanvas = () => {
   basicStore.clearCanvas()
 }
 
@@ -162,7 +151,7 @@ const bgStyle = computed<Recordable<string>>(() => {
   return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
 })
 
-const pasteText = async (event: ClipboardEvent) => {
+const pasteText = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
@@ -188,11 +177,10 @@ const height = ref<number>(0)
 const isShowArea = ref<boolean>(false)
 const editor = ref<ElRef>(null)
 
-onClickOutside(contextMenu, () => (displayContexyMenu.value = false))
-
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
   if (e.button === 0) {
+    basicStore.setCurComponent(undefined)
     e.preventDefault()
     e.stopPropagation()
     hideArea()
@@ -209,7 +197,7 @@ const handleMouseDown = (e: MouseEvent) => {
     // 展示选中区域
     isShowArea.value = true
 
-    const move = (moveEvent) => {
+    const move = (moveEvent: MouseEvent) => {
       moveEvent.preventDefault()
       moveEvent.stopPropagation()
       width.value = Math.abs(moveEvent.clientX - startX)
@@ -223,7 +211,7 @@ const handleMouseDown = (e: MouseEvent) => {
       }
     }
 
-    const up = (UpMoveEvent) => {
+    const up = (UpMoveEvent: MouseEvent) => {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
 
@@ -300,6 +288,9 @@ const getSelectArea = (
   }
 }
 
+/**
+ * 方向键控制组件移动
+ */
 const keyDown = (e: KeyboardEvent): void => {
   if (curComponent.value && e.ctrlKey) {
     switch (e.key) {
@@ -326,21 +317,6 @@ const keyDown = (e: KeyboardEvent): void => {
     e.stopPropagation()
   }
 }
-
-watch(
-  () => [basicStore.componentData, basicStore.canvasStyleData],
-  async ([newComponentData, newCanvasStyleData], _) => {
-    if (newCanvasStyleData) {
-      storageCanvasStyleData.value = JSON.stringify(newCanvasStyleData)
-    }
-    if (newComponentData) {
-      storageComponentData.value = JSON.stringify(newComponentData)
-    }
-  },
-  {
-    deep: true
-  }
-)
 </script>
 
 <style scoped lang="less">

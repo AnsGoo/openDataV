@@ -2,11 +2,38 @@ import { defineStore } from 'pinia'
 import { store } from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
+import { useStorage } from '@vueuse/core'
 import type { ComponentInfo } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
 import { swap, uuid } from '@/utils/utils'
 import { Message } from '@/utils/message'
+
+const baseCanvasStyleData: CanvasStyleData = {
+  width: 1920,
+  height: 1080,
+  scale: 100,
+  dataWs: '',
+  image: '/images/bg.jpg'
+}
+const storageComponentData = useStorage('canvasData', JSON.stringify([]), window.localStorage)
+
+const storageCanvasData = useStorage(
+  'canvasStyle',
+  JSON.stringify(baseCanvasStyleData),
+  window.localStorage
+)
+
+const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
+  get(target: CanvasStyleData, key) {
+    return target[key]
+  },
+  set(target: CanvasStyleData, key, value) {
+    Reflect.set(target, key, value)
+    storageCanvasData.value = JSON.stringify(target)
+    return true
+  }
+}
 
 const useBasicStore = defineStore({
   id: 'basic',
@@ -14,13 +41,7 @@ const useBasicStore = defineStore({
     name: '',
     thumbnail: '',
     editMode: EditMode.PREVIEW,
-    canvasStyleData: {
-      width: 1920,
-      height: 1080,
-      scale: 100,
-      dataWs: '',
-      image: '/images/bg.jpg'
-    },
+    canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
     componentData: [],
     curComponent: undefined,
     isClickComponent: false,
@@ -31,6 +52,9 @@ const useBasicStore = defineStore({
   getters: {
     isEditMode(): boolean {
       return this.editMode === EditMode.EDIT
+    },
+    canvasData(): CanvasStyleData {
+      return new Proxy(this.canvasStyleData, storeCanvasHandler)
     }
   },
   actions: {
@@ -104,6 +128,8 @@ const useBasicStore = defineStore({
         }
       })
       this.curComponent!.style = { ...style, ...ablePostion }
+      this.saveComponentData()
+
       eventBus.emit('changeStyle', {
         id: this.curComponent!.id,
         style: { ...postion }
@@ -121,6 +147,8 @@ const useBasicStore = defineStore({
       }
 
       this.curComponent.style[key] = value
+      this.saveComponentData()
+
       eventBus.emit('changeStyle', {
         id: this.curComponent.id,
         style: { [key]: value }
@@ -156,6 +184,7 @@ const useBasicStore = defineStore({
     setComponentData(componentData: Array<ComponentInfo> = []): void {
       this.resetComponentData(componentData)
       this.componentData = componentData
+      this.saveComponentData()
     },
     /**
      * 想画布中添加组件
@@ -170,8 +199,8 @@ const useBasicStore = defineStore({
       if (component.subComponents) {
         this.resetComponentData(component.subComponents)
       }
-
       this.componentData.push(component)
+      this.saveComponentData()
     },
     /**
      * 设置当前组件的PropValue
@@ -185,6 +214,7 @@ const useBasicStore = defineStore({
         return
       }
       curComponent.propValue[key] = value
+      this.saveComponentData()
       eventBus.emit(curComponent.component + curComponent.id, { key: key, value: value })
     },
     /**
@@ -202,9 +232,11 @@ const useBasicStore = defineStore({
 
       if (curComponent.groupStyle && groupStyleKeys.includes(key)) {
         curComponent.groupStyle[key] = value
+        this.saveComponentData()
         return
       }
       curComponent.style[key] = value
+      this.saveComponentData()
     },
     /**
      * 设置组件的属性值
@@ -218,6 +250,7 @@ const useBasicStore = defineStore({
         return
       }
       curComponent[key] = value
+      this.saveComponentData()
     },
 
     getComponentIndexById(id: string): number {
@@ -247,6 +280,7 @@ const useBasicStore = defineStore({
       this.isClickComponent = false
       this.isShowEm = false
       this.layerComponent = undefined
+      this.canvasStyleData = baseCanvasStyleData
     },
     /**
      * 根据组件索引获取该组件的父级组件
@@ -289,6 +323,7 @@ const useBasicStore = defineStore({
         if (myindex > 0) {
           // await snapShotStore.recordSnapshot()
           swap(fatherComponentData, myindex, myindex - 1)
+          this.saveComponentData()
         } else {
           Message('图层已经到底了')
         }
@@ -308,6 +343,7 @@ const useBasicStore = defineStore({
         if (myindex < len - 1) {
           // await snapShotStore.recordSnapshot()
           swap(fatherComponentData, myindex, myindex + 1)
+          this.saveComponentData()
         } else {
           Message('图层已经到顶了')
         }
@@ -329,6 +365,7 @@ const useBasicStore = defineStore({
           // await snapShotStore.recordSnapshot()
           const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
           fatherComponentData.push(myComponments[0])
+          this.saveComponentData()
         } else {
           Message('图层已经到顶了')
         }
@@ -347,6 +384,7 @@ const useBasicStore = defineStore({
         // await snapShotStore.recordSnapshot()
         const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
         fatherComponentData.unshift(myComponments[0])
+        this.saveComponentData()
       } else {
         Message('图层已经到底了')
       }
@@ -364,6 +402,8 @@ const useBasicStore = defineStore({
       if (fatherComponentData) {
         // await snapShotStore.recordSnapshot()
         fatherComponentData.splice(myindex, 1)
+        this.saveComponentData()
+
         return true
       }
       return false
@@ -401,7 +441,9 @@ const useBasicStore = defineStore({
       })
       return rootComponent
     },
-    saveLayoutData() {}
+    saveComponentData() {
+      storageComponentData.value = JSON.stringify(this.componentData)
+    }
   }
 })
 

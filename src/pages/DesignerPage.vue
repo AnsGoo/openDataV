@@ -88,7 +88,6 @@ const restore = async (index: string) => {
   if (!resp) {
     return
   }
-  await snapShotStore.recordSnapshot()
   basicStore.setLayoutData(resp)
 }
 
@@ -100,7 +99,6 @@ const handleDrop = async (e) => {
     const component = cloneDeep(componentList[componentName].component)
     component.style.top = e.offsetY
     component.style.left = e.offsetX
-    await snapShotStore.recordSnapshot()
     basicStore.appendComponent(component as ComponentInfo)
   }
 }

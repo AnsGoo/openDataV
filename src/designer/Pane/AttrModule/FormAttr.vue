@@ -18,10 +18,10 @@ const props = defineProps<{
   ukey: string
 }>()
 
-const emits = defineEmits<{ (e: 'change', value: any, key: string): void }>()
+const emits = defineEmits<{ (e: 'change', key: string, value: any): void }>()
 const formData = reactive<Recordable>(props.data)
 
-const changed = (val: string | string[] | Event, key: string) => {
-  emits('change', val, key)
+const changed = (val: any, key: string) => {
+  emits('change', key, val)
 }
 </script>

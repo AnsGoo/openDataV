@@ -58,7 +58,7 @@ const useComposeStore = defineStore({
     appendComponent(component: ComponentInfo): void {
       if (this.components.findIndex((ele) => ele.id === component.id) === -1) {
         this.components.push(component)
-        if(this.components.length > 1){
+        if (this.components.length > 1) {
           this.style = { ...this.style, ...calcComponentsRect(this.components) }
         }
         console.log(this.style)
@@ -82,8 +82,8 @@ const useComposeStore = defineStore({
         label: ''
       }
       createGroupStyle(groupComponent)
-      basicStore.appendComponent(groupComponent)
       this.batchDeleteComponent(this.components)
+      basicStore.appendComponent(groupComponent)
 
       const index = basicStore.componentData.length - 1
       basicStore.setCurComponent(basicStore.componentData[index])
@@ -128,6 +128,7 @@ const useComposeStore = defineStore({
         const distance = right - el.right
         el.component.style.left = el.component.style.left + distance
       })
+      basicStore.saveComponentData()
     },
     /**
      * 左对齐
@@ -138,6 +139,7 @@ const useComposeStore = defineStore({
         const distance = el.left - left
         el.component.style.left = el.component.style.left - distance
       })
+      basicStore.saveComponentData()
     },
     /**
      * 顶端对齐
@@ -148,6 +150,7 @@ const useComposeStore = defineStore({
         const distance = el.top - top
         el.component.style.top = el.component.style.top - distance
       })
+      basicStore.saveComponentData()
     },
     /**
      * 底部对齐
@@ -158,6 +161,7 @@ const useComposeStore = defineStore({
         const distance = bottom - el.bottom
         el.component.style.top = el.component.style.top + distance
       })
+      basicStore.saveComponentData()
     },
     /**
      * 行对齐
@@ -168,6 +172,7 @@ const useComposeStore = defineStore({
         const distanceY = (bottom + top) / 2 - el.center.y
         el.component.style.top = el.component.style.top + distanceY
       })
+      basicStore.saveComponentData()
     },
     /**
      * 列对齐
@@ -178,6 +183,7 @@ const useComposeStore = defineStore({
         const distanceX = (left + right) / 2 - el.center.x
         el.component.style.left = el.component.style.left + distanceX
       })
+      basicStore.saveComponentData()
     }
   }
 })
