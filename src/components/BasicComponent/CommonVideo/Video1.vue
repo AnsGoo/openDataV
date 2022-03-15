@@ -4,12 +4,7 @@
     <teleport to="body">
       <div class="mask" v-show="showVideo">
         <span @click="handleClick">X</span>
-        <video
-          ref="video"
-          :width="propValue.videoWidth"
-          :height="propValue.videoHeight"
-          autoplay
-        ></video>
+        <video ref="video" :width="propValue.videoWidth" :height="propValue.videoHeight" autoplay></video>
       </div>
     </teleport>
   </div>
@@ -42,7 +37,6 @@ const borderStyle = computed(() => {
 })
 
 const handleClick = () => {
-  console.log('click')
   if (!basicStore.isEditMode) {
     showVideo.value = !showVideo.value
     playVideo(showVideo.value)
