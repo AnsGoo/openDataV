@@ -15,9 +15,21 @@
           <div class="options">
             <span class="desc">{{ item.name }}</span>
             <div class="bottom">
-              <span class="icon iconfont icon-bianji" title="编辑页面" @click="handleEdit(item)"></span>
-              <span class="icon iconfont icon-chakan" title="查看页面" @click="handleView(item)"></span>
-              <span class="icon iconfont icon-fuzhi" title="复制页面路由地址" @click="handleCopy(item)"></span>
+              <span
+                class="icon iconfont icon-bianji"
+                title="编辑页面"
+                @click="handleEdit(item)"
+              ></span>
+              <span
+                class="icon iconfont icon-chakan"
+                title="查看页面"
+                @click="handleView(item)"
+              ></span>
+              <span
+                class="icon iconfont icon-fuzhi"
+                title="复制页面路由地址"
+                @click="handleCopy(item)"
+              ></span>
               <span
                 v-if="!item.isHome"
                 class="icon iconfont icon-leijianzhuxiulix"
@@ -55,7 +67,12 @@
         </el-card>
       </div>
     </div>
-    <el-dialog v-model="isShow" title="分配页面权限" width="30%" :before-close="() => (isShow = false)">
+    <el-dialog
+      v-model="isShow"
+      title="分配页面权限"
+      width="30%"
+      :before-close="() => (isShow = false)"
+    >
       <el-form
         style="width: 100%"
         ref="ruleFormRef"
@@ -247,7 +264,7 @@ const setPagePermissionAction = async () => {
   .bg {
     @apply bg-gray-100 w-screen h-screen border border-transparent;
 
-    background: url("/images/bg.jpg") no-repeat center center;
+    background: url('/images/bg.jpg') no-repeat center center;
     background-size: cover;
   }
 

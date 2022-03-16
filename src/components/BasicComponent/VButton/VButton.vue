@@ -8,7 +8,6 @@
 import { useRouter } from 'vue-router'
 import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useEventBus } from '@/bus/useEventBus'
 
 const router = useRouter()
 const props = defineProps<{ propValue: Recordable<string>; element: ComponentInfo }>()

@@ -12,59 +12,53 @@
     <span class="iconfont icon-xuanzhuan" v-show="isActive" @mousedown="handleRotate"></span>
     <span class="iconfont icon-jiesuo" v-show="element.isLock"></span>
     <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
-    <!-- <div
-      class="shape-point"
-      v-for="item in isActive ? pointList : []"
-      @mousedown="handleStretchedShape(item, $event)"
-      :key="item"
-      :style="getPointStyle(item)"
-    ></div>-->
     <div
-      class="shape-point top-left"
+      :class="['shape-point', 'lt', rotateClassName]"
       v-show="isActive"
-      :style="{ top: '0%', left: '0%', cursor: 'se-resize' }"
+      :style="{ top: '0%', left: '0%' }"
       @mousedown="handleStretchedShape('lt', $event)"
     ></div>
     <div
-      class="shape-point"
+      :class="['shape-point', 't', rotateClassName]"
       v-show="isActive"
-      :style="{ top: '0%', left: '50%', cursor: 's-resize' }"
+      :style="{ top: '0%', left: '50%' }"
       @mousedown="handleStretchedShape('t', $event)"
     ></div>
     <div
-      class="shape-point"
+      :class="['shape-point', 'rt', rotateClassName]"
       v-show="isActive"
-      :style="{ top: '0%', left: '100%', cursor: 'ne-resize' }"
+      :style="{ top: '0%', left: '100%' }"
       @mousedown="handleStretchedShape('rt', $event)"
     ></div>
     <div
-      class="shape-point"
+      :class="['shape-point', 'r', rotateClassName]"
       v-show="isActive"
-      :style="{ top: '50%', left: '100%', cursor: 'w-resize' }"
+      :style="{ top: '50%', left: '100%' }"
       @mousedown="handleStretchedShape('r', $event)"
     ></div>
     <div
-      class="shape-point"
+      :class="['shape-point', 'rb', rotateClassName]"
       v-show="isActive"
-      :style="{ top: '100%', left: '100%', cursor: 'se-resize' }"
+      :style="{ top: '100%', left: '100%' }"
       @mousedown="handleStretchedShape('rb', $event)"
     ></div>
     <div
-      class="shape-point"
+      :class="['shape-point', 'b', rotateClassName]"
       v-show="isActive"
-      :style="{ top: '100%', left: '50%', cursor: 's-resize' }"
+      :style="{ top: '100%', left: '50%' }"
       @mousedown="handleStretchedShape('b', $event)"
     ></div>
     <div
       class="shape-point"
       v-show="isActive"
-      :style="{ top: '100%', left: '0%', cursor: 'ne-resize' }"
+      :class="['shape-point', 'lb', rotateClassName]"
+      :style="{ top: '100%', left: '0%' }"
       @mousedown="handleStretchedShape('lb', $event)"
     ></div>
     <div
-      class="shape-point"
+      :class="['shape-point', 'l', rotateClassName]"
       v-show="isActive"
-      :style="{ top: '50%', left: '0%', cursor: 'w-resize' }"
+      :style="{ top: '50%', left: '0%' }"
       @mousedown="handleStretchedShape('l', $event)"
     ></div>
     <slot></slot>
@@ -346,8 +340,6 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
     // 获取 point 与实际拖动基准点的差值 @justJokee
     // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
 
-    // 是否需要保存快照
-    // const needLockProportion: boolean = isNeedLockProportion()
     const move = (moveEvent) => {
       // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
       // 因此第一次点击时不触发 move 事件
@@ -452,6 +444,20 @@ const getCursor = () => {
   return result
 }
 
+const rotateClassName = computed(() => {
+  const prefix = 'rotate-'
+  const rotate = props.defaultStyle.rotate
+  if (rotate > -22.5 && rotate <= 22.5) return prefix + 0
+  else if (rotate > 22.5 && rotate <= 67.5) return prefix + 45
+  else if (rotate > 67.5 && rotate <= 112.5) return prefix + 90
+  else if (rotate > 112.5 && rotate <= 157.5) return prefix + 135
+  else if (rotate > 157.5 || rotate <= -157.5) return prefix + 0
+  else if (rotate > -157.5 && rotate <= -112.5) return prefix + 45
+  else if (rotate > -112.5 && rotate <= -67.5) return prefix + 90
+  else if (rotate > -67.5 && rotate <= -22.5) return prefix + 135
+  return prefix + 0
+})
+
 onMounted(() => {
   cursors.value = getCursor()
 })
@@ -514,6 +520,47 @@ onMounted(() => {
   div em {
     @apply absolute -top-6 left-0 text-red-600;
   }
+}
+
+.shape-point.lt.rotate-0,
+.shape-point.rb.rotate-0,
+.shape-point.l.rotate-45,
+.shape-point.r.rotate-45,
+.shape-point.lb.rotate-90,
+.shape-point.rt.rotate-90,
+.shape-point.t.rotate-135,
+.shape-point.b.rotate-135 {
+  cursor: nwse-resize;
+}
+.shape-point.t.rotate-0,
+.shape-point.b.rotate-0,
+.shape-point.lt.rotate-45,
+.shape-point.rb.rotate-45,
+.shape-point.l.rotate-90,
+.shape-point.r.rotate-90,
+.shape-point.lb.rotate-135,
+.shape-point.rt.rotate-135 {
+  cursor: ns-resize;
+}
+.shape-point.lb.rotate-0,
+.shape-point.rt.rotate-0,
+.shape-point.t.rotate-45,
+.shape-point.b.rotate-45,
+.shape-point.lt.rotate-90,
+.shape-point.rb.rotate-90,
+.shape-point.l.rotate-135,
+.shape-point.r.rotate-135 {
+  cursor: nesw-resize;
+}
+.shape-point.l.rotate-0,
+.shape-point.r.rotate-0,
+.shape-point.lb.rotate-45,
+.shape-point.rt.rotate-45,
+.shape-point.t.rotate-90,
+.shape-point.b.rotate-90,
+.shape-point.lt.rotate-135,
+.shape-point.rb.rotate-135 {
+  cursor: ew-resize;
 }
 
 // div.top-left {

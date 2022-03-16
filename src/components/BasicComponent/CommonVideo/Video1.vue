@@ -4,7 +4,12 @@
     <teleport to="body">
       <div class="mask" v-show="showVideo">
         <span @click="handleClick">X</span>
-        <video ref="video" :width="propValue.videoWidth" :height="propValue.videoHeight" autoplay></video>
+        <video
+          ref="video"
+          :width="propValue.videoWidth"
+          :height="propValue.videoHeight"
+          autoplay
+        ></video>
       </div>
     </teleport>
   </div>

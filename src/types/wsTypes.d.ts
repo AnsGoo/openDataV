@@ -29,7 +29,6 @@ interface WSDataType {
   TagValue: string
 }
 
-
 interface WSData {
   actualData: Array<WSDataType>
 }

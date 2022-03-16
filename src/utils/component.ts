@@ -30,8 +30,8 @@ function getComponentCenter(style: DOMRectStyle): Vector {
  * @param x x坐标
  * @returns y坐标
  */
- export function lineEquationY(k, p1: Vector, x: number): number {
-  return k*(x-p1.x) + p1.y
+export function lineEquationY(k, p1: Vector, x: number): number {
+  return k * (x - p1.x) + p1.y
 }
 
 /**
@@ -42,7 +42,7 @@ function getComponentCenter(style: DOMRectStyle): Vector {
  * @returns x坐标
  */
 export function lineEquationX(k, p1: Vector, y: number): number {
-  return p1.x - (p1.y - y)/k 
+  return p1.x - (p1.y - y) / k
 }
 
 /**
@@ -83,7 +83,7 @@ function calculateLeft(style: DOMRectStyle, toPoint: Vector): Postion {
   const { left, rotate, width, height, top } = cloneDeep(style)
   const center: Vector = getComponentCenter(style)
   // 不动点旋转前的坐标
-  
+
   const freezePoint: Vector = { x: left + width, y: top + height / 2 }
   const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)
   const k = (center.y - afterfreezePoint.y) / (center.x - afterfreezePoint.x)
@@ -99,7 +99,7 @@ function calculateLeft(style: DOMRectStyle, toPoint: Vector): Postion {
   // 反向旋转不懂的点，找的画布中的坐标
   const newfreezePoint: Vector = rotatePoint(afterfreezePoint, newCenter, -rotate)
   const realWidth = newfreezePoint.x - realPoint.x
-  return { top: newCenter.y - height/2, left: realPoint.x, width: realWidth, height: height }
+  return { top: newCenter.y - height / 2, left: realPoint.x, width: realWidth, height: height }
 }
 
 /**
@@ -133,8 +133,8 @@ function calculateBottom(style: DOMRectStyle, toPoint: Vector): Postion {
   const { top, left, rotate, width } = style
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left + width / 2, y: top }
-  const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)  
-  if(rotate != 0){ 
+  const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)
+  if (rotate != 0) {
     //  组件未旋转 斜率为无穷大
     const k = (center.y - afterfreezePoint.y) / (center.x - afterfreezePoint.x)
     const x = lineEquationX(k, center, toPoint.y)
@@ -161,7 +161,7 @@ function calculateTop(style: DOMRectStyle, toPoint: Vector): Postion {
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left + width / 2, y: top + height }
   const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)
-  if(rotate != 0){ 
+  if (rotate != 0) {
     //  组件未旋转 斜率为无穷大
     const k = (center.y - afterfreezePoint.y) / (center.x - afterfreezePoint.x)
     const x = lineEquationX(k, center, toPoint.y)
