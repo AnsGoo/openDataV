@@ -17,7 +17,7 @@ const baseCanvasStyleData: CanvasStyleData = {
   height: 1080,
   scale: 100,
   dataWs: '',
-  image: '/images/bg.jpg'
+  image: import.meta.env.VITE_BACKGROUND as string || '/images/bg.jpg'
 }
 const storageComponentData = useStorage('canvasData', JSON.stringify([]), window.localStorage)
 

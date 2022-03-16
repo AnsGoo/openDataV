@@ -25,7 +25,7 @@ const canvasStyle = ref<CanvasStyleData>({
   height: 0,
   scale: 0,
   dataWs: '',
-  image: '/images/bg.jpg'
+  image: import.meta.env.VITE_BACKGROUND as string || '/images/bg.jpg'
 })
 const bgStyle = computed<Recordable<string>>(() => {
   const style = {

@@ -82,7 +82,12 @@ onMounted(async () => {
 })
 
 const getImageList = async () => {
-  images.value = await getImages()
+  try {
+    images.value = await getImages()
+  } catch (e: any) {
+    console.log(e)
+  }
+
 }
 </script>
 
