@@ -20,7 +20,7 @@
             @change="changed"
             :name="name"
             :uid="uid"
-            :ukey="(curComponent.id as string)"
+            :ukey="curComponent.id"
           />
 
           <!-- 动态属性 -->
@@ -32,7 +32,7 @@
             :name="name"
             :uid="uid"
             :max="max"
-            :ukey="(curComponent.id as string)"
+            :ukey="curComponent.id"
           />
         </el-collapse>
       </el-form>

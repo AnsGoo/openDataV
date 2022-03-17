@@ -1,12 +1,11 @@
 <template>
-  <div ref="chartEl"></div>
+  <div ref="chartEl" v-resize="resizeHandler"></div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 import type { WatchStopHandle } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { ComponentInfo } from '@/types/component'
@@ -62,11 +61,12 @@ const initData = async () => {
   }
 }
 
-useResizeObserver(chartEl, (entries) => {
+
+const resizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   chart?.resize({ width, height })
-})
+}
 
 const getOption = (): EChartsOption => {
   let highSerie: Recordable<string>[] = []

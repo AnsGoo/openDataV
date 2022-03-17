@@ -34,9 +34,7 @@
       :placeholder="label"
       @change="changed($event, key)"
     >
-      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">
-        {{ item.label }}
-      </el-radio>
+      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">{{ item.label }}</el-radio>
     </el-radio-group>
     <el-switch
       v-else-if="type === 'switch'"
@@ -68,10 +66,10 @@ const props = defineProps<{
   ukey: string
 }>()
 
-const emits = defineEmits<{ (e: 'change', value: string | string[] | Event, key: any): void }>()
+const emits = defineEmits<{ (e: 'change', value: any, key: any): void }>()
 const formData = reactive<Recordable<any>>(props.data)
 
-const changed = (val: string | string[] | Event, key: string) => {
+const changed = (val: any, key: string) => {
   emits('change', val, key)
 }
 
