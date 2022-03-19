@@ -61,7 +61,6 @@ const initData = async () => {
   }
 }
 
-
 const resizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect

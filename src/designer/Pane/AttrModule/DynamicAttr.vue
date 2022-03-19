@@ -51,6 +51,7 @@ const isShowAdd = computed<boolean>(() => {
 
 const deleteItem = (index: number) => {
   arrayData.value.splice(index, 1)
+  emits('change', arrayData.value, props.uid)
 }
 
 const handleAddClick = () => {
@@ -64,6 +65,7 @@ const handleAddClick = () => {
     }
   })
   arrayData.value.push(child)
+  emits('change', arrayData.value, props.uid)
 }
 </script>
 

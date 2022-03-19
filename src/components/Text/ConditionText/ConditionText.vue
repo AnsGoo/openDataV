@@ -26,8 +26,8 @@ const conditionList = computed<Array<any>>(() => props.propValue.condition)
 
 const displayType = ref<string>('text')
 const displayContext = ref<string>('测试')
-const color = ref<string>('#ffffff')
-const fontSize = ref<string>('10px')
+const color = ref<string>('rgba(30, 144, 255, 1)')
+const fontSize = ref<string>('20px')
 const iconFit = ref<string>('contain')
 
 const customeSymbol = computed<string>(() => {
@@ -35,7 +35,6 @@ const customeSymbol = computed<string>(() => {
 })
 
 const handler = (_: any) => {
-  console.log('handler')
   switchDisplay('1')
 }
 
@@ -63,7 +62,7 @@ const switchDisplay = (curValue: string) => {
 
   displayContext.value = ''
   color.value = '#ffffff'
-  fontSize.value = '10px'
+  fontSize.value = '20px'
   displayType.value = 'text'
   iconFit.value = 'contain'
 }

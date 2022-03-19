@@ -1,5 +1,4 @@
-import type { Directive, DirectiveBinding } from "vue"
-
+import type { Directive, DirectiveBinding } from 'vue'
 
 const RESIZE_OBSERVE = 'RESIZE_OBSERVE'
 
@@ -8,12 +7,11 @@ const resizeDOM = (el: HTMLElement, binding: DirectiveBinding) => {
   const resizeObserver = new ResizeObserver(resizeHandler)
   resizeObserver.observe(el)
   return resizeObserver
-  
 }
 
 const ResizeDomDirective: Directive = {
   mounted(el: HTMLElement, binding) {
-    el[RESIZE_OBSERVE] = resizeDOM(el,  binding)
+    el[RESIZE_OBSERVE] = resizeDOM(el, binding)
   },
 
   unmounted(el: HTMLElement) {

@@ -34,7 +34,9 @@
       :placeholder="label"
       @change="changed($event, key)"
     >
-      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">{{ item.label }}</el-radio>
+      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">{{
+        item.label
+      }}</el-radio>
     </el-radio-group>
     <el-switch
       v-else-if="type === 'switch'"

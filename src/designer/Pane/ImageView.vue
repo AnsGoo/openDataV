@@ -87,7 +87,6 @@ const getImageList = async () => {
   } catch (e: any) {
     console.log(e)
   }
-
 }
 </script>
 

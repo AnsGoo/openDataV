@@ -52,7 +52,7 @@ export enum ComponentGroup {
   // 定制组件
   CUSTOM = '定制组件',
   TEXT = '文本',
-  SWITCH = '开关',
+
   // 其他组件
   Navigation = '导航',
   Progress = '进度图',

@@ -1,7 +1,6 @@
 import { Vector } from '@/types/common'
 import { DOMRectStyle } from '@/types/component'
 import { Postion } from '@/types/storeTypes'
-import { cloneDeep } from 'lodash-es'
 import { rotatePoint } from './utils'
 
 const funcs = {
@@ -80,7 +79,7 @@ export function calculateLeftTop(style: DOMRectStyle, toPoint: Vector): Postion 
  * @returns
  */
 function calculateLeft(style: DOMRectStyle, toPoint: Vector): Postion {
-  const { left, rotate, width, height, top } = cloneDeep(style)
+  const { left, rotate, width, height, top } = style
   const center: Vector = getComponentCenter(style)
   // 不动点旋转前的坐标
 

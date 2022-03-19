@@ -14,7 +14,7 @@ const component: ComponentConfig = {
   icon: 'wenben',
   style: {
     width: 100,
-    height: 120
+    height: 40
   }
 }
 
