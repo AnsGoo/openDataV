@@ -50,3 +50,17 @@ watch(
     <RouterView :key="currentRoute.path" :style="{ overflow }" />
   </div>
 </template>
+<style lang="less">
+.el-form-item {
+  margin-bottom: 3px !important;
+}
+
+.el-collapse {
+  --el-collapse-header-height: 30px !important;
+  --el-collapse-header-font-color: #1e90ff !important;
+}
+
+.el-input-number--mini {
+  width: 100% !important;
+}
+</style>

@@ -148,11 +148,11 @@ onUnmounted(() => {
 
     max-height: calc(100vh - 30px);
     flex: 1;
-    overflow: overlay;
+    overflow: hidden;
     ::-webkit-scrollbar {
       /*滚动条整体样式*/
-      width: 8px; /*高宽分别对应横竖滚动条的尺寸*/
-      height: 8px;
+      width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+      height: 6px;
     }
     ::-webkit-scrollbar-thumb {
       background-color: #8b8b8b;
