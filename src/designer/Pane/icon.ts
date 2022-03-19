@@ -10,7 +10,6 @@ const iconMap: Recordable<string> = {
   [ComponentGroup.PERCENTAGE]: 'icon-jindutu',
   [ComponentGroup.GAUGE]: 'icon-yibiaopan',
   [ComponentGroup.CUSTOM]: 'icon-dingzhi',
-  [ComponentGroup.SWITCH]: 'icon-anniuzu',
   [ComponentGroup.Navigation]: 'icon-daohang',
   [ComponentGroup.Thermometer]: 'icon-wenduji',
   [ComponentGroup.OTHER]: 'icon-qita',
