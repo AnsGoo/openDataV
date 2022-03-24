@@ -16,8 +16,8 @@
           <span v-if="item.props!.label">
             <RenderSlot :slots="item.props!.label" />
           </span>
-          <span v-else-if="item.children!.label">
-            <RenderSlot :slots="item.children!.label()" />
+          <span v-else-if="item.children!['label']">
+            <RenderSlot :slots="item.children!['label']()" />
           </span>
         </div>
       </template>
@@ -28,9 +28,9 @@
     <!-- <slot name="content"></slot> -->
     <div v-if="showContent" class="tabs-content">
       <div v-for="(slot, index) in defaultSlots" :key="index">
-        <template v-if="slot.type.name! === 'DvTabPane'">
+        <template v-if="slot.type['name']! === 'DvTabPane'">
           <div v-show="getShow(slot, index + 1)">
-            <RenderSlot :slots="slot.children!.default!()" />
+            <RenderSlot :slots="slot.children!['default']()" />
           </div>
         </template>
       </div>
