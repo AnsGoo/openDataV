@@ -27,12 +27,14 @@
           </el-icon>
           <span>样式</span>
         </template>
-        <StyleList v-if="curComponent" :curComponent="curComponent" />
-        <el-descriptions v-else class="placeholder">
-          <el-descriptions-item>
-            <el-empty description="请选择组件" />
-          </el-descriptions-item>
-        </el-descriptions>
+        <div v-show="mode === 'expand'">
+          <StyleList v-if="curComponent" :curComponent="curComponent" />
+          <el-descriptions v-else class="placeholder">
+            <el-descriptions-item>
+              <el-empty description="请选择组件" />
+            </el-descriptions-item>
+          </el-descriptions>
+        </div>
       </dv-tab-pane>
       <dv-tab-pane name="attr">
         <template #label>
@@ -41,12 +43,14 @@
           </el-icon>
           <span>属性</span>
         </template>
-        <AttrList v-if="curComponent" :curComponent="curComponent" />
-        <el-descriptions v-else class="placeholder">
-          <el-descriptions-item>
-            <el-empty description="请选择组件" />
-          </el-descriptions-item>
-        </el-descriptions>
+        <div v-show="mode === 'expand'">
+          <AttrList v-if="curComponent" :curComponent="curComponent" />
+          <el-descriptions v-else class="placeholder">
+            <el-descriptions-item>
+              <el-empty description="请选择组件" />
+            </el-descriptions-item>
+          </el-descriptions>
+        </div>
       </dv-tab-pane>
       <dv-tab-pane name="canvas">
         <template #label>
@@ -55,7 +59,7 @@
           </el-icon>
           <span>画布</span>
         </template>
-        <Canvas />
+        <Canvas v-show="mode === 'expand'" />
       </dv-tab-pane>
     </dv-tabs>
   </div>
