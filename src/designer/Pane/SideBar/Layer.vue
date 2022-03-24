@@ -1,16 +1,22 @@
 <template>
   <div style="height: calc(100vh - 100px)">
-    <el-scrollbar>
+    <el-scrollbar v-if="componentData.length > 0">
       <el-menu
         :unique-opened="true"
         :collapse-transition="false"
         @select="handleSelect"
         @open="handleSelect"
+        mode="vertical"
         ref="menu"
       >
         <LayerItem :components="componentData" @select="handleSelect" activeKey="activeKey" />
       </el-menu>
     </el-scrollbar>
+    <el-descriptions v-else class="placeholder">
+      <el-descriptions-item>
+        <el-empty description="画布为空" />
+      </el-descriptions-item>
+    </el-descriptions>
   </div>
 </template>
 
@@ -19,7 +25,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref } from 'vue'
 import LayerItem from './LayerItem.vue'
 import type { ComponentInfo } from '@/types/component'
-import { ElScrollbar, ElMenu } from 'element-plus'
+import { ElScrollbar, ElMenu, ElDescriptions, ElDescriptionsItem, ElEmpty } from 'element-plus'
 import { useEventBus } from '@/bus/useEventBus'
 
 const basicStore = useBasicStoreWithOut()
@@ -62,7 +68,6 @@ ul {
   flex: 1;
   /* width: 50px; */
   background-color: #f5f7fa;
-  text-shadow: 0 5px 5px #aaa;
 }
 li {
   display: block;

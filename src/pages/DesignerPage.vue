@@ -58,10 +58,7 @@ const rulerBorderStyle = reactive<{
 const route = useRoute()
 
 onMounted(async () => {
-  let index = ''
-  if (route.params.index) {
-    index = route.params.index as string
-  }
+  const index = route.params.index as string
   if (index) {
     await restore(index)
   }
@@ -141,6 +138,7 @@ onUnmounted(() => {
 @layer components {
   .home {
     @apply h-screen bg-white flex flex-col;
+    background-color: var(--theme-dark-color-primary);
   }
 
   main {
@@ -164,20 +162,6 @@ onUnmounted(() => {
       background-color: #ccc;
     }
   }
-
-  .left {
-    position: relative;
-    width: 200px;
-
-    transition: all 0.3s;
-  }
-
-  .right {
-    width: 260px;
-
-    transition: all 0.3s;
-  }
-
   .center {
     @apply bg-gray-50 overflow-auto;
 
@@ -186,29 +170,7 @@ onUnmounted(() => {
 
   .content {
     @apply overflow-auto;
-
-    box-shadow: 0 0 15px 7px;
   }
-
-  // .scrollbar::-webkit-scrollbar {
-  //   width: 4px; /*高宽分别对应横竖滚动条的尺寸*/
-  //   height: 4px;
-  //   scrollbar-arrow-color: red;
-  // }
-
-  // .scrollbar::-webkit-scrollbar-thumb {
-  //   /*滚动条里面小方块*/
-  //   border-radius: 5px;
-  //   -webkit-box-shadow: inset 0 0 5px rgba(128, 128, 128, 0.5);
-  //   background: darkslategray;
-  //   scrollbar-arrow-color: red;
-  // }
-  // .scrollbar::-webkit-scrollbar-track {
-  //   /*滚动条里面轨道*/
-  //   -webkit-box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  //   border-radius: 0;
-  //   background: darkgray;
-  // }
 
   .placeholder {
     @apply text-gray-800 text-center;

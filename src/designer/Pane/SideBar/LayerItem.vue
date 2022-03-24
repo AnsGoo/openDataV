@@ -13,8 +13,13 @@
         <span class="icon iconfont icon-zu"></span>
         <span>{{ item.label || '分组' }}</span>
         <el-icon style="vertical-align: middle">
-          <icon-preview-open theme="outline" size="24" fill="#1e90ff" v-if="item.display" />
-          <icon-preview-close-one theme="outline" size="24" fill="#1e90ff" v-else />
+          <icon-preview-open
+            theme="outline"
+            size="24"
+            fill="var(--el-color-primary)"
+            v-if="item.display"
+          />
+          <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
         </el-icon>
       </template>
       <LayerItem
@@ -36,8 +41,13 @@
         <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
         <span v-show="isShowText">{{ item.label }}</span>
         <el-icon style="vertical-align: middle">
-          <icon-preview-open theme="outline" size="24" fill="#1e90ff" v-if="item.display" />
-          <icon-preview-close-one theme="outline" size="24" fill="#1e90ff" v-else />
+          <icon-preview-open
+            theme="outline"
+            size="24"
+            fill="var(--el-color-primary)"
+            v-if="item.display"
+          />
+          <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
         </el-icon>
       </template>
     </el-menu-item>

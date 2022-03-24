@@ -1,15 +1,26 @@
 <template>
-  <div>
-    <Collapse
-      parentSelector=".right"
-      :expendWidth="260"
-      :shrinkWidth="12"
-      expendIcon="icon-jiantouyou"
-      shrinkIcon="icon-jiantoushangzuo-copy"
-      position="left"
-    />
-    <el-tabs v-model="activeName" :stretch="true" :lazy="true">
-      <el-tab-pane name="style">
+  <div class="side-bar">
+    <dv-tabs :mode="mode">
+      <template #prefix>
+        <!-- <el-icon style="vertical-align: middle"> -->
+        <icon-indent-right
+          v-if="expandStatus"
+          theme="outline"
+          size="18"
+          fill="var(--el-color-primary)"
+          @click="expandSideBar"
+        />
+        <icon-indent-left
+          v-else
+          theme="outline"
+          size="18"
+          fill="var(--el-color-primary)"
+          @click="expandSideBar"
+        />
+
+        <!-- </el-icon> -->
+      </template>
+      <dv-tab-pane name="style">
         <template #label>
           <el-icon style="vertical-align: middle">
             <icon-text-style theme="outline" size="24" />
@@ -22,8 +33,8 @@
             <el-empty description="请选择组件" />
           </el-descriptions-item>
         </el-descriptions>
-      </el-tab-pane>
-      <el-tab-pane name="attr">
+      </dv-tab-pane>
+      <dv-tab-pane name="attr">
         <template #label>
           <el-icon style="vertical-align: middle">
             <icon-internal-data theme="outline" size="24" />
@@ -36,8 +47,8 @@
             <el-empty description="请选择组件" />
           </el-descriptions-item>
         </el-descriptions>
-      </el-tab-pane>
-      <el-tab-pane name="canvas">
+      </dv-tab-pane>
+      <dv-tab-pane name="canvas">
         <template #label>
           <el-icon style="vertical-align: middle">
             <icon-page theme="outline" size="24" />
@@ -45,8 +56,8 @@
           <span>画布</span>
         </template>
         <Canvas />
-      </el-tab-pane>
-    </el-tabs>
+      </dv-tab-pane>
+    </dv-tabs>
   </div>
 </template>
 
@@ -56,24 +67,35 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import Canvas from '@/designer/Pane/Canvas.vue'
 import StyleList from '@/designer/Pane/StyleList.vue' // 右侧属性列表
 import AttrList from '@/designer/Pane/AttrModule/AttrList.vue'
-import Collapse from '@/designer/Pane/Collapse.vue'
-import {
-  ElDescriptions,
-  ElDescriptionsItem,
-  ElEmpty,
-  ElTabs,
-  ElTabPane,
-  ElIcon
-} from 'element-plus'
+import { DvTabs, DvTabPane } from '../modules/tabs'
+import { ElDescriptions, ElDescriptionsItem, ElEmpty, ElIcon } from 'element-plus'
 
 const basicStore = useBasicStoreWithOut()
-const activeName = ref<string>('style')
+const mode = ref<string>('expand')
+const expandStatus = ref<boolean>(true)
+const sideBarWdith = ref<string>('200px')
+const expandSideBar = () => {
+  expandStatus.value = !expandStatus.value
+  if (expandStatus.value) {
+    sideBarWdith.value = '260px'
+    mode.value = 'expand'
+  } else {
+    sideBarWdith.value = '20px'
+    mode.value = 'shrink'
+  }
+}
 
 const curComponent = computed(() => basicStore.curComponent || basicStore.layerComponent)
 </script>
 
 <style lang="less" scoped>
-:deep(.el-tabs__content) {
+:deep(.dv-tab__content) {
   padding: 0px 5px;
+}
+.side-bar {
+  position: relative;
+  width: v-bind(sideBarWdith);
+
+  // transition: all 0.3s;
 }
 </style>

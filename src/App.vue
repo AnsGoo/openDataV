@@ -51,16 +51,51 @@ watch(
   </div>
 </template>
 <style lang="less">
+:root {
+  --el-border-color-lighter: #1e8fff6c !important;
+  --el-collapse-header-text-color: #1e90ff;
+  --el-color-primary: #1e90ff;
+  // --theme-dark-color-primary: #24292f;
+  // --el-color-white: #24292f !important;
+  // --el-background-color-base: #24292f !important;
+  // --el-text-color-primary: #ffffff !important;
+  // --el-text-color-regular: #ffffff !important;
+}
 .el-form-item {
   margin-bottom: 3px !important;
 }
 
 .el-collapse {
+  // border-top: none !important;
+  border-bottom: none !important;
   --el-collapse-header-height: 30px !important;
-  --el-collapse-header-font-color: #1e90ff !important;
+  --el-collapse-header-font-color: var(--el-collapse-header-text-color) !important;
 }
 
 .el-input-number--mini {
   width: 100% !important;
+}
+
+.el-collapse-item__content {
+  padding-bottom: 5px !important;
+}
+
+.el-descriptions__body {
+  background-color: var(--theme-dark-color-primary) !important;
+}
+
+.el-input-number__decrease,
+.el-input-number__increase {
+  background-color: var(--theme-dark-color-primary) !important;
+}
+.el-scrollbar {
+  --el-scrollbar-background-color: var(--theme-dark-color-primary) !important;
+}
+
+.el-sub-menu {
+  background-color: var(--theme-dark-color-primary) !important;
+}
+
+.el-menu {
 }
 </style>

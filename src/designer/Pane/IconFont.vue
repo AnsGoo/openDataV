@@ -137,7 +137,6 @@ const handleClick = (icon: string) => {
   background-color: aliceblue;
   border-radius: 20px;
   padding: 20px;
-  box-shadow: 0px 0px 10px 5px #ccc;
 
   .total {
     text-align: center;

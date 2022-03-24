@@ -31,7 +31,9 @@ import {
   FileDoc,
   Translate,
   Moon,
-  Sun
+  Sun,
+  IndentRight,
+  IndentLeft
 } from '@icon-park/vue-next'
 
 export default {
@@ -67,5 +69,7 @@ export default {
     app.component(Moon.name, Moon)
     app.component(Sun.name, Sun)
     app.component(Next.name, Next)
+    app.component(IndentRight.name, IndentRight)
+    app.component(IndentLeft.name, IndentLeft)
   }
 }

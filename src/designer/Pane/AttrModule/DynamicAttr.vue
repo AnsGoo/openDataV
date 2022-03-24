@@ -10,7 +10,12 @@
         <div class="title">{{ max > 1 ? `${name}${index}` : name }}</div>
         <div class="delete">
           <el-icon style="vertical-align: middle">
-            <icon-delete-one theme="outline" size="24" fill="#1e90ff" @click="deleteItem(index)" />
+            <icon-delete-one
+              theme="outline"
+              size="24"
+              fill="var(--el-color-primary)"
+              @click="deleteItem(index)"
+            />
           </el-icon>
         </div>
       </div>

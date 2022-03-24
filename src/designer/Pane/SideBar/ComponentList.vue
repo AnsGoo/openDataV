@@ -6,7 +6,7 @@
           <el-sub-menu v-for="(key, index) in componentKeys" :index="index.toString()" :key="index">
             <template #title>
               <span :class="`icon iconfont ${iconMap[key]}`"></span>
-              <span v-show="isShowText">{{ key }}</span>
+              <span v-show="mode === 'expand'">{{ key }}</span>
             </template>
             <el-menu-item
               v-for="(item, i) in componentGroup[key!]"
@@ -30,28 +30,24 @@
 import { ComponentGroup } from '@/enum'
 import { componentList } from '@/designer/load'
 import type { ComponentInfo } from '@/types/component'
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import iconMap from '../icon'
 import { ElMenu, ElMenuItem, ElSubMenu, ElScrollbar } from 'element-plus'
-import { useEventBus } from '@/bus/useEventBus'
+
+withDefaults(
+  defineProps<{
+    mode?: string
+  }>(),
+  {
+    mode: 'expand'
+  }
+)
 
 const componentKeys = computed(() => {
   return Object.keys(ComponentGroup).map((item) => {
     return ComponentGroup[item]
   })
 })
-
-const isShowText = ref<boolean>(true)
-
-const open = (key: any) => {
-  const result = key as string
-  if (result === 'expend') {
-    isShowText.value = true
-  } else {
-    isShowText.value = false
-  }
-}
-useEventBus('collapse', open)
 
 const componentGroup = computed(() => {
   const groups: { group: string; component: ComponentInfo } = {} as any
@@ -90,8 +86,6 @@ const handleDragStart = (e) => {
     @apply border border-solid border-gray-300 cursor-pointer mb-2.5 text-center text-gray-600;
     @apply px-0.5 py-1.5 flex items-center justify-center active:cursor-pointer rounded-md;
     @apply w-full;
-
-    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
   }
 
   .el-menu {
@@ -115,7 +109,6 @@ const handleDragStart = (e) => {
     flex: 1;
     /* width: 50px; */
     background-color: #f5f7fa;
-    text-shadow: 0 5px 5px #aaa;
   }
 
   div.preview {
@@ -131,7 +124,6 @@ const handleDragStart = (e) => {
     line-height: 50px;
     text-align: center;
     font-size: 12px;
-    box-shadow: -5px 5px 10px #ccc;
   }
 
   li a {
@@ -148,9 +140,8 @@ const handleDragStart = (e) => {
 
   .active {
     border-right: none !important;
-    background-color: #fff;
+    background-color: #aaa;
     color: #409eff;
-    text-shadow: 0 10px 10px #aaa;
   }
   .iconfont {
     @apply mr-1 text-xl;
