@@ -45,14 +45,12 @@ import RenderSlot from './renderSlot'
 const props = withDefaults(
   defineProps<{
     modelValue?: string
-    beforeLeave?: Function
     showContent?: boolean
     mode?: string
   }>(),
   {
     modelValue: 'tab-1',
     showContent: true,
-    beforeLeave: (_) => true,
     mode: 'expand'
   }
 )
@@ -66,12 +64,11 @@ const emits = defineEmits<{
 const activeKey = ref<string>(props.modelValue)
 
 const tabsClick = (item: any, index: number) => {
-  if (props.beforeLeave && props.beforeLeave(item)) {
-    activeKey.value = item.props.name || 'tab-' + (index + 1)
-    emits('change', item, index)
-    emits('update:modelValue', activeKey.value)
-  }
+  activeKey.value = item.props.name || 'tab-' + (index + 1)
+  emits('change', item, index)
+  emits('update:modelValue', activeKey.value)
 }
+
 const getShow = (slot: VNode, index: number) => {
   return slot.props?.name === activeKey.value || activeKey.value === 'tab-' + (index + 1)
 }
