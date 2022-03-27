@@ -37,12 +37,7 @@
     <MarkLine />
     <!-- 选中区域 -->
     <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
-    <Area
-      :start="appendStart"
-      :width="appendWidth"
-      :height="appendHeight"
-      v-else-if="isShowAreas"
-    />
+    <Area :start="appendStart" :width="appendWidth" :height="appendHeight" v-else-if="isShowAreas" />
   </div>
 </template>
 
@@ -144,6 +139,7 @@ onUnmounted(() => {
 const componentData = computed(() => basicStore.componentData)
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
 const curComponent = computed(() => basicStore.curComponent)
+
 const bgStyle = computed<Recordable<string>>(() => {
   const style = {
     ...canvasStyleData.value,

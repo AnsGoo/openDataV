@@ -68,7 +68,6 @@ const props = withDefaults(
     isHotKey?: boolean
     isScaleRevise?: boolean
     contentLayout?: RulerToolPostion
-    parent?: HTMLDivElement | null
     visible?: boolean
     stepLength?: number
     borderStyle?: BorderStyle
@@ -78,7 +77,6 @@ const props = withDefaults(
     isHotKey: true,
     isScaleRevise: false,
     contentLayout: { top: 0, left: 0 } as any,
-    parent: undefined,
     visible: true,
     stepLength: 50, // 最好是50的倍数
     borderStyle: {
@@ -92,11 +90,9 @@ const props = withDefaults(
 
 const cloneList = reactive<LineType[]>([])
 const size = ref<number>(17)
-const left_top = ref<number>(18) // 内容左上填充
-const windowWidth = ref<number>(0) // 窗口宽度
-const windowHeight = ref<number>(0) // 窗口高度
-let xScale = reactive<any[]>([]) // 水平刻度
-let yScale = reactive<any[]>([]) // 垂直刻度
+const leftTop = ref<number>(18) // 内容左上填充
+let xScale = ref<any[]>([]) // 水平刻度
+let yScale = ref<any[]>([]) // 垂直刻度
 const topSpacing = ref<number>(0) // 标尺与窗口上间距
 const leftSpacing = ref<number>(0) //  标尺与窗口左间距
 const isDrag = ref<boolean>(false)
@@ -118,9 +114,11 @@ const horizontalRuler = ref<HTMLDivElement | null>(null)
 const basicStore = useBasicStoreWithOut()
 
 const wrapperStyle = computed(() => {
+  const height = basicStore.canvasData.height
+  const width = basicStore.canvasData.width
   return {
-    width: windowWidth.value + 'px',
-    height: windowHeight.value + 'px'
+    width: width + 18 + 'px',
+    height: height + 18 + 'px'
   }
 })
 
@@ -128,7 +126,7 @@ const contentStyle = computed(() => {
   return {
     left: props.contentLayout.left + 'px',
     top: props.contentLayout.top + 'px',
-    padding: left_top.value + 'px 0px 0px ' + left_top.value + 'px'
+    padding: leftTop.value + 'px 0px 0px ' + leftTop.value + 'px'
   }
 })
 
@@ -154,34 +152,33 @@ watch(
   { immediate: true }
 )
 
+watch(
+  () => basicStore.canvasData,
+  (_) => {
+    scaleCalc()
+  },
+  {
+    deep: true
+  }
+)
+
 onMounted(() => {
   document.addEventListener('mousemove', dottedLineMove)
   document.addEventListener('mouseup', dottedLineUp)
   document.addEventListener('keyup', keyboard)
   init()
-  window.onresize = () => {
-    windowResize()
-  }
 })
 
 onUnmounted(() => {
   document.removeEventListener('mousemove', dottedLineMove)
   document.removeEventListener('mouseup', dottedLineUp)
   document.removeEventListener('keyup', keyboard)
-  window.onresize = null
 })
 
 const init = () => {
   box()
   scaleCalc()
 }
-
-const windowResize = () => {
-  xScale = []
-  yScale = []
-  init()
-}
-
 const getLineStyle = ({ type, top, left }: any): CSSProperties => {
   const style = {
     borderWidth: props.borderStyle.width + 'px',
@@ -200,26 +197,6 @@ const handleDragLine = ({ type, id }) => {
 }
 
 const box = () => {
-  if (props.isScaleRevise) {
-    // 根据内容部分进行刻度修正
-    const content = contentEl.value!
-    const contentLeft = content.offsetLeft
-    const contentTop = content.offsetTop
-
-    getCalcRevise(xScale, contentLeft)
-    getCalcRevise(yScale, contentTop)
-  }
-  if (props.parent) {
-    const { width, height } = props.parent.getBoundingClientRect()
-    windowWidth.value = width
-    windowHeight.value = height
-  } else if (props.canvas) {
-    windowWidth.value = basicStore.canvasStyleData.width
-    windowHeight.value = basicStore.canvasStyleData.height
-  } else {
-    windowWidth.value = document.documentElement.clientWidth - leftSpacing.value
-    windowHeight.value = document.documentElement.clientHeight - topSpacing.value
-  }
   rulerWidth.value = verticalRuler.value!.clientWidth
   rulerHeight.value = horizontalRuler.value!.clientHeight
   setSpacing()
@@ -232,22 +209,17 @@ const setSpacing = () => {
 }
 
 const scaleCalc = () => {
-  getCalc(xScale, windowWidth.value)
-  getCalc(yScale, windowHeight.value)
+  xScale.value = []
+  yScale.value = []
+  const height = basicStore.canvasData.height
+  const width = basicStore.canvasData.width
+  getCalc(xScale.value, width + 18)
+  getCalc(yScale.value, height + 18)
 }
 // 计算刻度
 const getCalc = (array, length) => {
   for (let i = 0; i < (length * props.stepLength) / 50; i += props.stepLength) {
     if (i % props.stepLength === 0) {
-      array.push({ id: i })
-    }
-  }
-}
-
-// 获取刻度方法
-const getCalcRevise = (array, length) => {
-  for (let i = 0; i < length; i += 1) {
-    if (i % props.stepLength === 0 && i + props.stepLength <= length) {
       array.push({ id: i })
     }
   }
@@ -367,9 +339,9 @@ const keyboard = ($event) => {
     rulerToggle.value = !rulerToggle.value
     emits('update:visible', rulerToggle.value)
     if (rulerToggle.value) {
-      left_top.value = 18
+      leftTop.value = 18
     } else {
-      left_top.value = 0
+      leftTop.value = 0
     }
   }
 } // 键盘事件
@@ -489,12 +461,12 @@ const keyboard = ($event) => {
   left: -10px;
 }
 .vue-ruler-content {
-  position: absolute;
+  // position: absolute;
   z-index: 997;
 }
 
 .vue-ruler-content-mask {
-  position: absolute;
+  // position: absolute;
   width: 100%;
   height: 100%;
   background: transparent;

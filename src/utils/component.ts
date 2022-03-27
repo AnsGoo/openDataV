@@ -85,15 +85,14 @@ function calculateLeft(style: DOMRectStyle, toPoint: Vector): Postion {
 
   const freezePoint: Vector = { x: left + width, y: top + height / 2 }
   const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)
-  if(rotate % 180 != 90){
+  if (rotate % 180 != 90) {
     const k = (center.y - afterfreezePoint.y) / (center.x - afterfreezePoint.x)
     const y = lineEquationY(k, center, toPoint.x)
     toPoint.y = y
-
   } else {
     toPoint.x = center.x
   }
-    //  拖拽之后的新的组件中点
+  //  拖拽之后的新的组件中点
   const newCenter: Vector = {
     x: (afterfreezePoint.x + toPoint.x) / 2,
     y: (afterfreezePoint.y + toPoint.y) / 2
@@ -104,7 +103,6 @@ function calculateLeft(style: DOMRectStyle, toPoint: Vector): Postion {
   const newfreezePoint: Vector = rotatePoint(afterfreezePoint, newCenter, -rotate)
   const realWidth = newfreezePoint.x - realPoint.x
   return { top: newCenter.y - height / 2, left: realPoint.x, width: realWidth, height: height }
-  
 }
 
 /**
@@ -139,7 +137,7 @@ function calculateBottom(style: DOMRectStyle, toPoint: Vector): Postion {
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left + width / 2, y: top }
   const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)
-  if(rotate % 180 != 90) {
+  if (rotate % 180 != 90) {
     //  组件未旋转 斜率为无穷大
     const k = (center.y - afterfreezePoint.y) / (center.x - afterfreezePoint.x)
     const x = lineEquationX(k, center, toPoint.y)
@@ -166,7 +164,7 @@ function calculateTop(style: DOMRectStyle, toPoint: Vector): Postion {
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left + width / 2, y: top + height }
   const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)
-  if(rotate % 180 != 90) {
+  if (rotate % 180 != 90) {
     //  组件未旋转 斜率为无穷大
     const k = (center.y - afterfreezePoint.y) / (center.x - afterfreezePoint.x)
     const x = lineEquationX(k, center, toPoint.y)
@@ -232,7 +230,7 @@ function calculateRight(style: DOMRectStyle, toPoint: Vector): Postion {
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left, y: top + height / 2 }
   const afterfreezePoint: Vector = rotatePoint(freezePoint, center, rotate)
-  if(rotate % 180 != 90){
+  if (rotate % 180 != 90) {
     const k = (center.y - afterfreezePoint.y) / (center.x - afterfreezePoint.x)
     const y = lineEquationY(k, center, toPoint.x)
     toPoint.y = y

@@ -8,18 +8,17 @@
         <SideBar />
       </section>
       <!-- 中间画布 -->
-      <section class="center scrollbar">
-        <Ruler :borderStyle="rulerBorderStyle">
-          <div
-            class="content scrollbar"
-            @drop="handleDrop"
-            @dragover="handleDragOver"
-            @mousedown="handleMouseDown"
-            @mouseup="deselectCurComponent"
-          >
-            <Editor />
-          </div>
-        </Ruler>
+      <section class="center scrollbar" ref="editor" v-resize="editorWindowResizeHandler">
+        <div class="content scrollbar" :style="scrobarStyle">
+          <Ruler :borderStyle="rulerBorderStyle">
+            <Editor
+              @drop="handleDrop"
+              @dragover="handleDragOver"
+              @mousedown="handleMouseDown"
+              @mouseup="deselectCurComponent"
+            />
+          </Ruler>
+        </div>
       </section>
       <!-- 右侧属性列表 -->
       <section class="right">
@@ -38,13 +37,15 @@ import TabPane from '@/designer/Pane/TabPane.vue'
 import SideBar from '@/designer/Pane/SideBar/SideBar.vue'
 import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { ref, onMounted, onUnmounted, reactive, watch } from 'vue'
+import { ref, onMounted, onUnmounted, reactive, watch, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
 const basicStore = useBasicStoreWithOut()
 const websk = ref<WebSocket | null>(null)
+
+const editor = ref<HTMLDivElement | null>(null)
 
 const rulerBorderStyle = reactive<{
   type: 'dashed' | 'solid' | 'dotted'
@@ -70,6 +71,21 @@ const restore = async (index: string) => {
     return
   }
   basicStore.setLayoutData(resp)
+}
+const windowWidth = ref<number>(0)
+const windowHeight = ref<number>(0)
+const scrobarStyle = computed(() => {
+  return {
+    width: windowWidth.value - 18 + 'px',
+    height: windowHeight.value - 18 + 'px'
+  }
+})
+
+const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
+  const entry = entries[0]
+  const { width, height } = entry.contentRect
+  windowWidth.value = width
+  windowHeight.value = height
 }
 
 const handleDrop = async (e) => {
@@ -166,10 +182,16 @@ onUnmounted(() => {
     @apply bg-gray-50 overflow-auto;
 
     flex: 1;
+    border: var(--el-color-primary) 1px solid;
   }
 
   .content {
     @apply overflow-auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
   }
 
   .placeholder {
