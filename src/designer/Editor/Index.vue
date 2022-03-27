@@ -37,7 +37,12 @@
     <MarkLine />
     <!-- 选中区域 -->
     <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
-    <Area :start="appendStart" :width="appendWidth" :height="appendHeight" v-else-if="isShowAreas" />
+    <Area
+      :start="appendStart"
+      :width="appendWidth"
+      :height="appendHeight"
+      v-else-if="isShowAreas"
+    />
   </div>
 </template>
 

@@ -2,8 +2,15 @@
 <template>
   <div class="attr-list" style="height: calc(100vh - 100px)">
     <el-form size="mini" @submit.prevent>
-      <el-form-item>
-        <el-button @click="getScreenSize">点击获取屏幕大小</el-button>
+      <el-form-item label="分辨率">
+        <el-select v-model="myPixel" @change="setScreenSize" placeholder="选择分辨率">
+          <el-option
+            v-for="device in piexls"
+            :key="device.name"
+            :value="device.piexl"
+            :label="device.name"
+          />
+        </el-select>
       </el-form-item>
       <el-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
         <el-input-number v-if="key === 'scale'" v-model="scale" @input="handleScaleChange" />
@@ -18,12 +25,25 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, reactive, ref } from 'vue'
 import { cloneDeep, debounce } from 'lodash-es'
-import { ElForm, ElInput, ElInputNumber, ElFormItem, ElButton } from 'element-plus'
+import { ElForm, ElInput, ElInputNumber, ElFormItem, ElSelect, ElOption } from 'element-plus'
+import PixelEnum from '@/enum/pixel'
+
+const piexls = computed<Recordable<string>[]>(() => {
+  PixelEnum['本设备'] = `${window.innerWidth}X${window.innerHeight}`
+  const devices: string[] = ['本设备', ...Object.keys(PixelEnum)]
+  return devices.map((el: string) => {
+    return {
+      name: el,
+      piexl: PixelEnum[el]
+    }
+  })
+})
 
 const basicStore = useBasicStoreWithOut()
 
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
 
+const myPixel = ref<string>('')
 const styleKeys = [
   { key: 'width', label: '宽度', type: 'number' },
   { key: 'height', label: '高度', type: 'number' },
@@ -74,11 +94,14 @@ const handleScaleChange = debounce(() => {
   })
 }, 1000)
 
-const getScreenSize = () => {
+const setScreenSize = (piexl: string) => {
+  const piexls = piexl.split('X')
+  const width = parseInt(piexls[0])
+  const height = parseInt(piexls[1])
   basicStore.setCanvasStyle({
     ...canvasStyleData.value,
-    width: window.innerWidth,
-    height: window.innerHeight
+    width,
+    height
   })
 }
 </script>
