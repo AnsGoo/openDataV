@@ -57,7 +57,7 @@
 <script lang="ts" setup>
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
 import { ref } from 'vue'
-import iconMap from '../icon'
+import iconMap from './iconMap'
 import { ElMenuItem, ElSubMenu, ElIcon } from 'element-plus'
 
 import { eventBus } from '@/bus/useEventBus'

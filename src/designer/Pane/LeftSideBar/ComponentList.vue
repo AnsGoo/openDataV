@@ -31,7 +31,7 @@ import { ComponentGroup } from '@/enum'
 import { componentList } from '@/designer/load'
 import type { ComponentInfo } from '@/types/component'
 import { computed } from 'vue'
-import iconMap from '../icon'
+import iconMap from './iconMap'
 import { ElMenu, ElMenuItem, ElSubMenu, ElScrollbar } from 'element-plus'
 
 withDefaults(

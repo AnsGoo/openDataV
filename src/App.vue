@@ -69,7 +69,9 @@ watch(
   // border-top: none !important;
   border-bottom: none !important;
   --el-collapse-header-height: 30px !important;
-  --el-collapse-header-font-color: var(--el-collapse-header-text-color) !important;
+  --el-collapse-header-font-color: var(
+    --el-collapse-header-text-color
+  ) !important;
 }
 
 .el-input-number--mini {
@@ -96,6 +98,7 @@ watch(
   background-color: var(--theme-dark-color-primary) !important;
 }
 
-.el-menu {
+.el-select-dropdown {
+  min-width: 20px;
 }
 </style>

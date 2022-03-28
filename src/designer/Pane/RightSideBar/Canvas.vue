@@ -6,9 +6,9 @@
         <el-select v-model="myPixel" @change="setScreenSize" placeholder="选择分辨率">
           <el-option
             v-for="device in piexls"
-            :key="device.name"
-            :value="device.piexl"
-            :label="device.name"
+            :key="device.label"
+            :value="device.value"
+            :label="device.label"
           />
         </el-select>
       </el-form-item>
@@ -29,14 +29,11 @@ import { ElForm, ElInput, ElInputNumber, ElFormItem, ElSelect, ElOption } from '
 import PixelEnum from '@/enum/pixel'
 
 const piexls = computed<Recordable<string>[]>(() => {
-  PixelEnum['本设备'] = `${window.innerWidth}X${window.innerHeight}`
-  const devices: string[] = ['本设备', ...Object.keys(PixelEnum)]
-  return devices.map((el: string) => {
-    return {
-      name: el,
-      piexl: PixelEnum[el]
-    }
-  })
+  return [
+    { label: '本设备', value: `${window.innerWidth}X${window.innerHeight}` },
+    ...PixelEnum
+  ]
+
 })
 
 const basicStore = useBasicStoreWithOut()
@@ -112,6 +109,7 @@ const setScreenSize = (piexl: string) => {
     @apply overflow-auto p-1 pt-0 h-full;
 
     backdrop-filter: blur(50px);
+    margin-right: 10px;
   }
 }
 </style>

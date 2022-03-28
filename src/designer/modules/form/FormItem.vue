@@ -34,23 +34,28 @@
       :placeholder="label"
       @change="changed($event, key)"
     >
-      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">
-        {{ item.label }}
-      </el-radio>
+      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">{{ item.label }}</el-radio>
     </el-radio-group>
+    <el-input-number
+      v-else-if="type === 'number'"
+      v-model="formData[key]"
+      @change="changed($event, key)"
+    />
     <el-switch
       v-else-if="type === 'switch'"
       v-model="formData[key]"
       @change="changed($event, key)"
     />
+    <FontSelect v-else-if="type === 'font'" v-model="formData[key]" @change="changed($event, key)" />
     <el-input v-else :type="type" v-model="formData[key]" @change="changed($event, key)" />
   </el-form-item>
 </template>
 
 <script lang="ts" setup>
 import { reactive, watch } from 'vue'
-import ColorPicker from '../../Model/ColorPicker.vue'
-import ArrayItem from '../../Model/ArrayItem.vue'
+import ColorPicker from './ColorPicker.vue'
+import ArrayItem from './ArrayItem.vue'
+import FontSelect from './FontSelect.vue'
 import type { AttrType } from '@/types/component'
 import {
   ElInput,
@@ -59,7 +64,8 @@ import {
   ElFormItem,
   ElRadio,
   ElSwitch,
-  ElRadioGroup
+  ElRadioGroup,
+  ElInputNumber
 } from 'element-plus'
 
 const props = defineProps<{

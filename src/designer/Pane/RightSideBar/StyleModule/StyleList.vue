@@ -9,43 +9,14 @@
           v-for="{ name, uid, children } in styleKeys"
           :key="`${curComponent.id}${uid}`"
         >
-          <el-collapse-item :title="name" :name="uid">
-            <el-form-item
-              v-for="{ key, label, type, selectOptions } in children"
-              :key="`${curComponent.id}${key}`"
-              :label="label"
-            >
-              <ColorPicker
-                v-if="type === 'color'"
-                v-model:value="formData[key]"
-                @change="changed($event, key)"
-              />
-              <el-select
-                v-else-if="type === 'select'"
-                v-model="formData[key]"
-                :placeholder="label"
-                @change="changed($event, key)"
-              >
-                <el-option
-                  v-for="item in selectOptions"
-                  :key="item.value"
-                  :label="item.label"
-                  :value="item.value"
-                />
-              </el-select>
-              <el-input-number
-                v-else-if="type === 'number'"
-                v-model="formData[key]"
-                @change="changed($event, key)"
-              />
-              <el-input
-                v-else
-                :type="type"
-                v-model="formData[key]"
-                @change="changed($event, key)"
-              />
-            </el-form-item>
-          </el-collapse-item>
+          <FormAttr
+            :children="children"
+            :data="formData"
+            @change="changed"
+            :name="name"
+            :uid="uid"
+            :ukey="curComponent.id"
+          />
         </el-collapse>
       </el-form>
     </el-scrollbar>
@@ -59,20 +30,14 @@ import { componentList } from '@/designer/load'
 import { debounce } from 'lodash-es'
 import { computed, ref, reactive, watch } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
-import ColorPicker from '../Model/ColorPicker.vue'
+import FormAttr from '@/designer/modules/form/FormAttr.vue'
 import {
   ElScrollbar,
   ElCollapse,
-  ElForm,
-  ElInput,
-  ElSelect,
-  ElOption,
-  ElFormItem,
-  ElCollapseItem,
-  ElInputNumber
+  ElForm
 } from 'element-plus'
 import type { ComponentInfo } from '@/types/component'
-import { groupCommonStyle } from '../interface'
+import { groupCommonStyle } from '@/designer/interface'
 
 const props = defineProps<{
   curComponent: ComponentInfo
@@ -93,8 +58,9 @@ const styleKeys = computed(() => {
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.style
-const changed = (val: string, key: string) => {
+const changed = (key: string, val: string) => {
   if (props.curComponent) {
+    console.log(key, val)
     basicStore.setCurComponentStyle(key, val)
   }
 }
@@ -142,6 +108,7 @@ watch(
     @apply overflow-auto p-1 pt-0 h-full;
 
     backdrop-filter: blur(50px);
+    margin-right: 10px;
   }
 }
 </style>

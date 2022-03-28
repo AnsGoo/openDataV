@@ -68,20 +68,20 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import Canvas from '@/designer/Pane/Canvas.vue'
-import StyleList from '@/designer/Pane/StyleList.vue' // 右侧属性列表
-import AttrList from '@/designer/Pane/AttrModule/AttrList.vue'
-import { DvTabs, DvTabPane } from '../modules/tabs'
+import Canvas from './Canvas.vue'
+import StyleList from './StyleModule' // 右侧属性列表
+import AttrList from './AttrModule'
+import { DvTabs, DvTabPane } from '@/designer/modules/tabs'
 import { ElDescriptions, ElDescriptionsItem, ElEmpty, ElIcon } from 'element-plus'
 
 const basicStore = useBasicStoreWithOut()
 const mode = ref<string>('expand')
 const expandStatus = ref<boolean>(true)
-const sideBarWdith = ref<string>('200px')
+const sideBarWdith = ref<string>('240px')
 const expandSideBar = () => {
   expandStatus.value = !expandStatus.value
   if (expandStatus.value) {
-    sideBarWdith.value = '260px'
+    sideBarWdith.value = '240px'
     mode.value = 'expand'
   } else {
     sideBarWdith.value = '20px'

@@ -45,8 +45,8 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { componentList } from '@/designer/load'
 import { computed, ref, reactive, watch } from 'vue'
 import CompAttr from './CompAttr.vue'
-import FormAttr from './FormAttr.vue'
-import DynamicAttr from './DynamicAttr.vue'
+import FormAttr from '@/designer/modules/form/FormAttr.vue'
+import DynamicAttr from '@/designer/modules/form/DynamicAttr.vue'
 import { ElScrollbar, ElCollapse, ElForm } from 'element-plus'
 import type { ComponentInfo } from '@/types/component'
 import { cleanObjectProp } from '@/utils/utils'
@@ -94,7 +94,7 @@ watch(
 @layer components {
   .attr-list {
     @apply overflow-auto p-1 pt-0 h-full;
-
+    margin-right: 10px;
     backdrop-filter: blur(50px);
   }
 }

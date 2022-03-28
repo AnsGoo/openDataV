@@ -42,7 +42,7 @@ const style: Array<GroupType> = [
       {
         key: 'fontFamily',
         label: '字体',
-        type: 'text'
+        type: 'font'
       }
     ]
   }

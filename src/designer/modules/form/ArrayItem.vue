@@ -5,12 +5,17 @@
         <ColorPicker
           v-if="jsonSchema.type === 'color'"
           v-model:value="formData[`${jsonSchema.key}${index}`]"
-          @change="changed()"
+          @change="changed"
+        />
+        <FontSelect
+          v-if="jsonSchema.type === 'font'"
+          v-model:value="formData[`${jsonSchema.key}${index}`]"
+          @change="changed"
         />
         <el-select
           v-else-if="jsonSchema.type === 'select'"
           v-model="formData[`${jsonSchema.key}${index}`]"
-          @change="changed()"
+          @change="changed"
         >
           <el-option
             v-for="item in jsonSchema.selectOptions"
@@ -28,9 +33,11 @@
         <span class="iconfont icon-shanchu" @click="handleDelClick(index)"></span>
       </div>
     </template>
-    <el-button v-show="isShowAdd" style="border-style: dashed; width: 100%" @click="handleAddClick"
-      >+</el-button
-    >
+    <el-button
+      v-show="isShowAdd"
+      style="border-style: dashed; width: 100%"
+      @click="handleAddClick"
+    >+</el-button>
   </div>
 </template>
 
@@ -38,6 +45,7 @@
 import type { ArrayType } from '@/types/component'
 import { reactive, onMounted, computed } from 'vue'
 import ColorPicker from './ColorPicker.vue'
+import FontSelect from './FontSelect.vue'
 import { ElButton, ElInput, ElSelect, ElOption } from 'element-plus'
 
 const props = defineProps<{
