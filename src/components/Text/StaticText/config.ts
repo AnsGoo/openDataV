@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { StaticText } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<StaticText> = {
   component: 'StaticText',
   group: ComponentGroup.TEXT,
   label: '静态文本',

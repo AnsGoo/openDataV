@@ -31,11 +31,7 @@ import { debounce } from 'lodash-es'
 import { computed, ref, reactive, watch } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
-import {
-  ElScrollbar,
-  ElCollapse,
-  ElForm
-} from 'element-plus'
+import { ElScrollbar, ElCollapse, ElForm } from 'element-plus'
 import type { ComponentInfo } from '@/types/component'
 import { groupCommonStyle } from '@/designer/interface'
 

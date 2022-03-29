@@ -2,11 +2,11 @@ import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
 const component: ComponentConfig = {
-  component: 'Tab1',
+  component: 'Tabs',
   group: ComponentGroup.BASIC,
-  label: 'Tab组件',
+  label: 'Tabs组件',
   propValue: {
-    componentIds: '',
+    componentIds: [],
     displayStyle: 'visibility'
   },
   icon: 'wenben',
@@ -20,14 +20,9 @@ const style: Array<GroupType> = []
 
 const attrs: Array<GroupType> = [
   {
-    name: '数据',
-    uid: 'data',
+    name: '显示方式',
+    uid: 'displayStyle',
     children: [
-      {
-        key: 'componentIds',
-        label: '组件ID',
-        type: 'textarea'
-      },
       {
         key: 'displayStyle',
         label: '显示方式',
@@ -42,6 +37,18 @@ const attrs: Array<GroupType> = [
             label: 'visibility'
           }
         ]
+      }
+    ]
+  },
+  {
+    name: '数据',
+    uid: 'componentIds',
+    max: 10,
+    children: [
+      {
+        key: 'id',
+        label: '组件ID',
+        type: 'text'
       }
     ]
   }

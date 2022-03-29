@@ -29,11 +29,7 @@ import { ElForm, ElInput, ElInputNumber, ElFormItem, ElSelect, ElOption } from '
 import PixelEnum from '@/enum/pixel'
 
 const piexls = computed<Recordable<string>[]>(() => {
-  return [
-    { label: '本设备', value: `${window.innerWidth}X${window.innerHeight}` },
-    ...PixelEnum
-  ]
-
+  return [{ label: '本设备', value: `${window.innerWidth}X${window.innerHeight}` }, ...PixelEnum]
 })
 
 const basicStore = useBasicStoreWithOut()

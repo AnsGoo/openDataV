@@ -42,7 +42,7 @@ const predefineColors: string[] = reactive([
   '#ffd700',
   '#90ee90',
   '#00ced1',
-  'var(--el-color-primary)',
+  '#1e90ff',
   '#c71585'
 ])
 const colorValue = ref<string>(props.value)

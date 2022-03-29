@@ -18,7 +18,7 @@ const setupCustomComponent = (app: App<Element>): void => {
 const componentList: Record<string, ComponentOptions> = {}
 
 const createComponentList = () => {
-  const moduleFilesTs = import.meta.globEager('../components/**/*.ts')
+  const moduleFilesTs = import.meta.globEager('../components/**/config.ts')
   Object.keys(moduleFilesTs).forEach((key: string) => {
     const componentOptions = moduleFilesTs[key]?.default
 

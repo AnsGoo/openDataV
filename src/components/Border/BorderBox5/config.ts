@@ -1,13 +1,16 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { BorderBox5 } from './type'
 
-const component: ComponentConfig = {
-  component: 'BorderBox2',
+const component: ComponentConfig<BorderBox5> = {
+  component: 'BorderBox5',
   group: ComponentGroup.BORDER,
-  label: '02号边框',
+  label: '05号边框',
   propValue: {
-    colors: ['#4fd2dd', '#235fa7'],
-    backgroundColor: ''
+    colorLeft: '#11eefd',
+    colorRight: '#0078d2',
+    backgroundColor: '#00000000',
+    reverse: false
   },
   icon: 'line',
   style: {
@@ -24,19 +27,24 @@ const attrs: Array<GroupType> = [
     uid: 'display',
     children: [
       {
-        key: 'colors',
-        label: '边框色彩',
-        type: 'array',
-        arrayAttr: {
-          key: 'color',
-          type: 'color',
-          max: 2
-        }
+        key: 'colorLeft',
+        label: '边框颜色1',
+        type: 'color'
+      },
+      {
+        key: 'colorRight',
+        label: '边框颜色2',
+        type: 'color'
       },
       {
         key: 'backgroundColor',
         label: '底色',
         type: 'color'
+      },
+      {
+        key: 'reverse',
+        label: '反转',
+        type: 'switch'
       }
     ]
   }

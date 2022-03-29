@@ -8,7 +8,7 @@ const component: ComponentConfig = {
   propValue: {
     colorLeft: '#11eefd',
     colorRight: '#0078d2',
-    backgroundColor: ''
+    backgroundColor: '#00000000'
   },
   icon: 'line',
   style: {

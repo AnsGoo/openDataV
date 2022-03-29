@@ -1,19 +1,20 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { BorderBox10 } from './type'
 
-const component: ComponentConfig = {
-  component: 'BorderBox13',
+const component: ComponentConfig<BorderBox10> = {
+  component: 'BorderBox10',
   group: ComponentGroup.BORDER,
-  label: '13号边框',
+  label: '10号边框',
   propValue: {
-    color1: '#1a98fc',
-    color2: '#2cf7fe',
-    backgroundColor: 'transparent'
+    colorLeft: '#1d48c4',
+    colorRight: '#d3e1f8',
+    backgroundColor: ''
   },
   icon: 'line',
   style: {
-    width: 150,
-    height: 150
+    width: 200,
+    height: 200
   }
 }
 
@@ -25,12 +26,12 @@ const attrs: Array<GroupType> = [
     uid: 'display',
     children: [
       {
-        key: 'color1',
+        key: 'colorLeft',
         label: '边框颜色1',
         type: 'color'
       },
       {
-        key: 'color2',
+        key: 'colorRight',
         label: '边框颜色2',
         type: 'color'
       },

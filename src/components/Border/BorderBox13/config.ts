@@ -1,19 +1,20 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { BorderBox13 } from './type'
 
-const component: ComponentConfig = {
-  component: 'BorderBox1',
+const component: ComponentConfig<BorderBox13> = {
+  component: 'BorderBox13',
   group: ComponentGroup.BORDER,
-  label: '01号边框',
+  label: '13号边框',
   propValue: {
-    colorLeft: '#4fd2dd',
-    colorRight: '#235fa7',
-    backgroundColor: '#00000000'
+    colorLeft: '#1a98fc',
+    colorRight: '#2cf7fe',
+    backgroundColor: 'transparent'
   },
   icon: 'line',
   style: {
-    width: 200,
-    height: 200
+    width: 150,
+    height: 150
   }
 }
 

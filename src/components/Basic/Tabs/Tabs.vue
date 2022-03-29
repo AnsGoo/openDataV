@@ -14,21 +14,22 @@
 import { ref, computed, onMounted, nextTick } from 'vue'
 import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { Tabs } from './type'
 
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: Recordable<string>
+  propValue: Tabs
 }>()
 
 const width = computed<string>(() => {
-  let count: number = new Set(props.propValue.componentIds.split(',')).size
+  let count: number = new Set(props.propValue.componentIds.map((el) => el.id)).size
   return `${(1 / Number(count || 0)) * 100}%`
 })
 
 const aboutComponents = computed<Map<string, HTMLElement>>(() => {
-  const componentIds = new Set(props.propValue.componentIds.split(','))
+  const componentIds = new Set(props.propValue.componentIds.map((el) => el.id))
   const data: Map<string, HTMLElement> = new Map()
   componentIds.forEach((id: string) => {
     let element: HTMLElement | null
@@ -44,7 +45,7 @@ const aboutComponents = computed<Map<string, HTMLElement>>(() => {
   return data
 })
 const displayStyle = computed<string>(() => props.propValue.displayStyle)
-const activeKey = ref<string>(props.propValue.componentIds.split(',')[0])
+const activeKey = ref<string>(props.propValue.componentIds[0]?.id)
 const active = (key: string) => {
   activeKey.value = key
   if (displayStyle.value === 'display') {

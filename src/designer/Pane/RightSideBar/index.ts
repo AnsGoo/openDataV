@@ -1,3 +1,3 @@
-import RightSideBar from "./SideBar.vue";
+import RightSideBar from './SideBar.vue'
 
 export default RightSideBar

@@ -1,26 +1,56 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { BorderBox11 } from './type'
 
-const component: ComponentConfig = {
-  component: 'BorderBox4',
+const component: ComponentConfig<BorderBox11> = {
+  component: 'BorderBox11',
   group: ComponentGroup.BORDER,
-  label: '04号边框',
+  label: '11号边框',
   propValue: {
-    colorLeft: '#11eefd',
-    colorRight: '#0078d2',
+    colorLeft: '#8aaafb',
+    colorRight: '#1f33a2',
     backgroundColor: '',
-    reverse: false
+    titleWidth: 250,
+    titleSize: 18,
+    titleColor: '#fff',
+    title: '标题'
   },
   icon: 'line',
   style: {
-    width: 200,
-    height: 200
+    width: 500,
+    height: 250
   }
 }
 
 const style: Array<GroupType> = []
 
 const attrs: Array<GroupType> = [
+  {
+    name: '标题设置',
+    uid: 'title',
+    children: [
+      {
+        key: 'title',
+        label: '标题',
+        type: 'text'
+      },
+      {
+        key: 'titleWidth',
+        label: '标题宽',
+        type: 'number'
+      },
+      {
+        key: 'titleSize',
+        label: '文字大小',
+        type: 'number'
+      },
+      {
+        key: 'titleColor',
+        label: '文字颜色',
+        type: 'color'
+      }
+    ]
+  },
   {
     name: '边框色彩',
     uid: 'display',
@@ -39,11 +69,6 @@ const attrs: Array<GroupType> = [
         key: 'backgroundColor',
         label: '底色',
         type: 'color'
-      },
-      {
-        key: 'reverse',
-        label: '反转',
-        type: 'switch'
       }
     ]
   }

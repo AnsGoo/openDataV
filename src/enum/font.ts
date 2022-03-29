@@ -26,7 +26,7 @@ const SYS_FONTS = [
   { label: '圆体', value: 'Yuanti SC' },
   { label: '华文细黑', value: 'STXihei' },
   { label: '幼圆', value: 'YouYuan' },
-  { label: '隶书', value: 'LiSu' },
+  { label: '隶书', value: 'LiSu' }
 ]
 
 export default SYS_FONTS

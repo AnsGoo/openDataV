@@ -1,2 +1,2 @@
-import AttrList from "./AttrList.vue";
+import AttrList from './AttrList.vue'
 export default AttrList

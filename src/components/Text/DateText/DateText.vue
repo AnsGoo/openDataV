@@ -6,10 +6,11 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import moment from 'moment'
 import type { ComponentInfo } from '@/types/component'
+import type { DateText } from './type'
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: Recordable<string>
+  propValue: DateText
 }>()
 let intervalId: IntervalHandle
 const customeText = ref<string>(moment(Date.now()).format(props.propValue.format))

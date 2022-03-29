@@ -24,9 +24,8 @@ withDefaults(
   }
 )
 
-
 const font = ref<string>('')
-const fonts = reactive<{ label: string, value: string }[]>(SYS_FONTS)
+const fonts = reactive<{ label: string; value: string }[]>(SYS_FONTS)
 
 const emits = defineEmits<{
   (e: 'update:value', color: string): void
@@ -39,4 +38,3 @@ const changeColor = (val: string) => {
   emits('change', font.value)
 }
 </script>
-

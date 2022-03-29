@@ -1,2 +1,2 @@
-import StyleList from "./StyleList.vue";
+import StyleList from './StyleList.vue'
 export default StyleList

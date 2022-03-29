@@ -33,11 +33,9 @@
         <span class="iconfont icon-shanchu" @click="handleDelClick(index)"></span>
       </div>
     </template>
-    <el-button
-      v-show="isShowAdd"
-      style="border-style: dashed; width: 100%"
-      @click="handleAddClick"
-    >+</el-button>
+    <el-button v-show="isShowAdd" style="border-style: dashed; width: 100%" @click="handleAddClick"
+      >+</el-button
+    >
   </div>
 </template>
 

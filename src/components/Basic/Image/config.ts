@@ -1,7 +1,7 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
-
-const component: ComponentConfig = {
+import type { Image } from './type'
+const component: ComponentConfig<Image> = {
   component: 'CommonImage',
   group: ComponentGroup.BASIC,
   label: '图片',

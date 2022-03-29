@@ -68,6 +68,7 @@ const attrKeys = computed(() => {
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
 const changed = (key: string, val: any) => {
+  console.log(key, val)
   basicStore.setCurComponentPropValue(key, val)
 }
 
