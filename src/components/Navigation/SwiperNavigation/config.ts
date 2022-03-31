@@ -1,23 +1,11 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import { SwiperNavigation } from './type'
 
-export interface SwiperItem {
-  label: string
-  img: string
-  link: string
-}
-
-export interface PropValueType {
-  slidesPerView: number
-  spaceBetween: number
-  textAlgin: string
-  swiperList: Array<SwiperItem>
-}
-
-const component: ComponentConfig<PropValueType> = {
-  component: 'Navigation3',
+const component: ComponentConfig<SwiperNavigation> = {
+  component: 'SwiperNavigation',
   group: ComponentGroup.Navigation,
-  label: '导航3',
+  label: '动态导航',
   propValue: {
     slidesPerView: 3,
     spaceBetween: 5,
@@ -64,11 +52,6 @@ const attrs: Array<GroupType> = [
     uid: 'navigation',
     children: [
       {
-        key: 'slidesPerView',
-        label: '显示数量(奇数)',
-        type: 'number'
-      },
-      {
         key: 'spaceBetween',
         label: '间距',
         type: 'number'
@@ -92,11 +75,6 @@ const attrs: Array<GroupType> = [
       {
         key: 'link',
         label: '地址',
-        type: 'text'
-      },
-      {
-        key: 'img',
-        label: '图片',
         type: 'text'
       },
       {

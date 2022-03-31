@@ -1,16 +1,17 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ControlButton } from './type'
 
-const component: ComponentConfig = {
-  component: 'DisplayHiddenButton',
-  label: '显示隐藏组件按钮',
+const component: ComponentConfig<ControlButton> = {
+  component: 'ControlButton',
+  label: '控制按钮',
   group: ComponentGroup.CUSTOM,
   propValue: {
     componentId: '',
     displayStyle: 'visibility',
-    label: '',
+    label: 'icon-dingzhi',
     fontColor: 'yellow',
-    tooltip: '',
+    tooltip: '提示文本',
     fontSize: 60
   },
   style: {
@@ -28,17 +29,17 @@ const attrs: Array<GroupType> = [
     children: [
       {
         key: 'label',
-        label: '标签内容',
+        label: '图标',
         type: 'text'
       },
       {
         key: 'fontSize',
-        label: '按钮大小',
+        label: '大小',
         type: 'number'
       },
       {
         key: 'fontColor',
-        label: '按钮颜色',
+        label: '颜色',
         type: 'color'
       },
       {
@@ -49,7 +50,7 @@ const attrs: Array<GroupType> = [
     ]
   },
   {
-    name: '控制数据配置',
+    name: '控制配置',
     uid: 'datas',
     children: [
       {

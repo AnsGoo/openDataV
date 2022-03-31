@@ -1,9 +1,10 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { Progress } from './type'
 
-const component: ComponentConfig = {
-  component: 'HorizontalProgress',
-  label: '横向进度条1',
+const component: ComponentConfig<Progress> = {
+  component: 'Progress',
+  label: '进度条',
   group: ComponentGroup.Progress,
   propValue: {
     history: 'https://data.com',
@@ -13,13 +14,13 @@ const component: ComponentConfig = {
     color2: '#00BAFF',
     borderWidth: 3,
     borderGap: 3,
-    lineDash: '5,1',
+    lineDash: 5,
+    gapWeight: 1,
     textColor: '#fff',
     borderRadius: 5,
     localGradient: false,
     formatter: '{value}%',
     fontSize: 15,
-    rotate: 0
   },
   icon: 'wenben',
   style: {
@@ -78,8 +79,13 @@ const attrs: Array<GroupType> = [
       },
       {
         key: 'lineDash',
+        label: '线条宽度',
+        type: 'number'
+      },
+      {
+        key: 'gapWeight',
         label: '线条间隙',
-        type: 'text'
+        type: 'number'
       },
       {
         key: 'fontSize',
@@ -105,11 +111,6 @@ const attrs: Array<GroupType> = [
         key: 'formatter',
         label: '文字格式化',
         type: 'text'
-      },
-      {
-        key: 'rotate',
-        label: '旋转角度',
-        type: 'number'
       }
     ]
   }

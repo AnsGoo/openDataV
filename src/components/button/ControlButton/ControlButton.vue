@@ -5,7 +5,7 @@
       @click="clickBtn()"
       :style="buttonStyle"
     >
-      <span class="tooltiptext">{{ tooltip }}</span>
+      <span class="tooltiptext">{{ propValue.tooltip }}</span>
     </div>
   </div>
 </template>
@@ -14,12 +14,13 @@ import type { ComponentInfo } from '@/types/component'
 import { computed, ref, onMounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
+import type { ControlButton } from './type';
 
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: Recordable<any>
+  propValue: ControlButton
 }>()
 
 const fontColor = computed<string>(() => {
@@ -38,9 +39,6 @@ const fontSize = computed<string>(() => {
 
 const toolTipSize = computed<string>(() => {
   return `-${parseInt((Number(props.propValue.fontSize) / 2).toString())}px`
-})
-const tooltip = computed<string>(() => {
-  return props.propValue.tooltip
 })
 
 onMounted(() => {
@@ -159,7 +157,7 @@ const buttonStyle = computed(() => {
       position: absolute;
       z-index: 999;
       &::after {
-        content: ' ';
+        content: " ";
         position: absolute;
         top: 100%; /* 提示工具底部 */
         left: 50%;

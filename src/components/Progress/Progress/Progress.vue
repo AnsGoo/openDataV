@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-percent-pond" ref="mainEl" :style="rotateStyle">
+  <div class="dv-percent-pond" v-resize="resizeHandler">
     <svg>
       <defs>
         <linearGradient :id="gradientId1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -33,7 +33,7 @@
       />
       <polyline
         :stroke-width="polylineWidth"
-        :stroke-dasharray="mergedConfig ? mergedConfig.lineDash.join(',') : '0'"
+        :stroke-dasharray="mergedConfig ? [mergedConfig.lineDash, mergedConfig.gapWeight].join(',') : '0'"
         :stroke="`url(#${polylineGradient})`"
         :points="points"
       />
@@ -43,40 +43,38 @@
         :fill="mergedConfig ? mergedConfig.textColor : '#fff'"
         :x="width / 2"
         :y="height / 2"
-      >
-        {{ details }}
-      </text>
+      >{{ details }}</text>
     </svg>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import type { ComponentInfo } from '@/types/component'
 import type { TagType } from '@/types/wsTypes'
 import { uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus/useEventBus'
+import type { Progress } from './type'
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: Recordable<any>
+  propValue: Progress
 }>()
 
-const mainEl = ref<ElRef>(null)
 const width = ref<number>(150)
 const height = ref<number>(150)
 const dataValue = ref<number>(60)
 const gradientId1 = ref<string>(`percent-pond-gradientId1-${uuid()}`)
 const gradientId2 = ref<string>(`percent-pond-gradientId2-${uuid()}`)
 
-useResizeObserver(mainEl, (entries) => {
+const resizeHandler = (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-})
+}
+
 
 const handler = (event) => {
   const item: TagType = event as TagType
@@ -114,7 +112,8 @@ const mergedConfig = computed(() => {
     colors: [props.propValue.color1, props.propValue.color1], //['#3DE7C9', '#00BAFF'],
     borderWidth: Number(props.propValue.borderWidth),
     borderGap: Number(props.propValue.borderGap),
-    lineDash: props.propValue.lineDash.split(',').map((item) => Number(item)),
+    lineDash: props.propValue.lineDash,
+    gapWeight: props.propValue.gapWeight,
     textColor: props.propValue.textColor,
     fontSize: Number(props.propValue.fontSize),
     borderRadius: Number(props.propValue.borderRadius),
@@ -123,11 +122,6 @@ const mergedConfig = computed(() => {
   }
 })
 
-const rotateStyle = computed(() => {
-  return {
-    transform: `rotate(${props.propValue.rotate}deg)`
-  }
-})
 
 const rectWidth = computed(() => {
   if (!mergedConfig.value) {
@@ -177,9 +171,8 @@ const points = computed(() => {
 
   return `
         ${mergedConfig.value.borderWidth + mergedConfig.value.borderGap}, ${halfHeight}
-        ${mergedConfig.value.borderWidth + mergedConfig.value.borderGap + polylineLength}, ${
-    halfHeight + 0.001
-  }`
+        ${mergedConfig.value.borderWidth + mergedConfig.value.borderGap + polylineLength}, ${halfHeight + 0.001
+    }`
 })
 
 const linearGradient = computed(() => {

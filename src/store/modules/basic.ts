@@ -216,7 +216,6 @@ const useBasicStore = defineStore({
         return
       }
       curComponent.propValue[key] = value
-      console.log(curComponent)
       this.saveComponentData()
       eventBus.emit(curComponent.component + curComponent.id, { key: key, value: value })
     },

@@ -1,13 +1,17 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { FlvVideo } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<FlvVideo> = {
   component: 'FlvVideo',
   group: ComponentGroup.BASIC,
   label: 'FLV视频',
   propValue: {
-    url: 'https://www.w3school.com.cn/i/movie.ogg',
-    videoType: 'flv'
+    url: 'https://mazwai.com/videvo_files/video/free/2019-01/small_watermarked/181004_04_Dolphins-Whale_06_preview.webm',
+    videoType: 'webm',
+    controls: true,
+    autoplay: true,
+    muted: true
   },
   icon: 'line',
   style: {
@@ -32,6 +36,21 @@ const attrs: Array<GroupType> = [
         key: 'videoType',
         label: '视频类型',
         type: 'text'
+      },
+      {
+        key: 'controls',
+        label: '控制器',
+        type: 'switch'
+      },
+      {
+        key: 'autoplay',
+        label: '自动播放',
+        type: 'switch'
+      },
+      {
+        key: 'muted',
+        label: '静音',
+        type: 'switch'
       }
     ]
   }

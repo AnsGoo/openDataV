@@ -1,5 +1,12 @@
 <template>
-  <div><video ref="video" autoplay></video></div>
+  <div>
+    <video
+      ref="video"
+      :autoplay="propValue.autoplay"
+      :muted="propValue.muted"
+      :controls="propValue.controls"
+    ></video>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -8,9 +15,10 @@ import { onMounted, ref } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
+import type { FlvVideo } from './type'
 
 const props = defineProps<{
-  propValue: Recordable<any>
+  propValue: FlvVideo
   element: ComponentInfo
 }>()
 
