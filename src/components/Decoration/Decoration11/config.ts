@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { Decoration11 } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<Decoration11> = {
   component: 'Decoration11',
   group: ComponentGroup.DECORATION,
   label: '11号装饰',
@@ -38,7 +39,7 @@ const style: Array<GroupType> = [
       {
         key: 'fontWeight',
         label: '字体宽度',
-        type: 'number'
+        type: 'fontWeight'
       }
     ]
   }

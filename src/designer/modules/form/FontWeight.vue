@@ -1,7 +1,7 @@
 <template>
-  <el-select clearable v-model="font" placeholder="请选择字体" size="mini" @change="changeColor">
+  <el-select clearable v-model="weight" placeholder="请选择字重" size="mini" @change="change">
     <el-option
-      v-for="(item, index) in fonts"
+      v-for="(item, index) in weights"
       :key="index"
       :value="item.value"
       :label="item.label"
@@ -13,7 +13,7 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 import { ElSelect, ElOption } from 'element-plus'
-import SYS_FONTS from '@/enum/font'
+import { SYS_FONT_WEIGHT } from '@/enum/font'
 
 withDefaults(
   defineProps<{
@@ -24,17 +24,17 @@ withDefaults(
   }
 )
 
-const font = ref<string>('')
-const fonts = reactive<{ label: string; value: string }[]>(SYS_FONTS)
+const weight = ref<string>('')
+const weights = reactive<{ label: string; value: string }[]>(SYS_FONT_WEIGHT)
 
 const emits = defineEmits<{
   (e: 'update:value', color: string): void
   (e: 'change', color: string): void
 }>()
 
-const changeColor = (val: string) => {
-  font.value = val
-  emits('update:value', font.value)
-  emits('change', font.value)
+const change = (val: string) => {
+  weight.value = val
+  emits('update:value', weight.value)
+  emits('change', weight.value)
 }
 </script>

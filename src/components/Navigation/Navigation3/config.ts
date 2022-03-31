@@ -47,7 +47,7 @@ const style: Array<GroupType> = [
       {
         key: 'fontWeight',
         label: '字体粗细',
-        type: 'number'
+        type: 'fontWeight'
       },
       {
         key: 'color',

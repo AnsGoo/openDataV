@@ -1,22 +1,22 @@
 <template>
-  <div class="dv-decoration-8" ref="mainEl">
+  <div class="dv-decoration-8" v-resize="resizeHandler">
     <svg :width="width" :height="height">
       <polyline
-        :stroke="mergedColor[0]"
+        :stroke="propValue.color1"
         stroke-width="2"
         fill="transparent"
         :points="`${xPos(0)}, 0 ${xPos(30)}, ${height / 2}`"
       />
 
       <polyline
-        :stroke="mergedColor[0]"
+        :stroke="propValue.color1"
         stroke-width="2"
         fill="transparent"
         :points="`${xPos(20)}, 0 ${xPos(50)}, ${height / 2} ${xPos(width)}, ${height / 2}`"
       />
 
       <polyline
-        :stroke="mergedColor[1]"
+        :stroke="propValue.color2"
         fill="transparent"
         stroke-width="3"
         :points="`${xPos(0)}, ${height - 3}, ${xPos(200)}, ${height - 3}`"
@@ -26,35 +26,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
+import { ref } from 'vue'
 import type { ComponentInfo } from '@/types/component'
+import { Decoration8 } from './type';
 
-const mainEl = ref<ElRef>(null)
 const width = ref<number>(200)
 const height = ref<number>(60)
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: Recordable<any>
+  propValue: Decoration8
 }>()
 
-useResizeObserver(mainEl, (entries) => {
+const resizeHandler = (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-})
-
-const mergedColor = computed(() => {
-  return [props.propValue.color1, props.propValue.color2] //['#3f96a5', '#3f96a5']
-})
+}
 
 const xPos = (pos: number) => {
   if (!props.propValue.reverse) {
     return pos
   }
-
   return width.value - pos
 }
 </script>

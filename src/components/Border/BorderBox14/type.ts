@@ -1,5 +1,5 @@
-export interface BorderBox13 {
-  colorLeft: string
-  colorRight: string
-  backgroundColor: string
+export interface BorderBox14 {
+  color: string
+  width: number
+  style: string
 }

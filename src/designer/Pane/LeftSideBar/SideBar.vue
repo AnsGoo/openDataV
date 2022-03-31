@@ -21,7 +21,7 @@
             <div>图层</div>
           </div>
         </template>
-        <Layer />
+        <Layer :mode="mode" />
       </dv-tab-pane>
       <template #suffix>
         <!-- <el-icon style="vertical-align: middle"> -->

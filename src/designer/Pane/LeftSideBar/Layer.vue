@@ -9,11 +9,16 @@
         mode="vertical"
         ref="menu"
       >
-        <LayerItem :components="componentData" @select="handleSelect" activeKey="activeKey" />
+        <LayerItem
+          :components="componentData"
+          @select="handleSelect"
+          activeKey="activeKey"
+          :mode="mode"
+        />
       </el-menu>
     </el-scrollbar>
     <el-descriptions v-else class="placeholder">
-      <el-descriptions-item>
+      <el-descriptions-item v-show="mode === 'expand'">
         <el-empty description="画布为空" />
       </el-descriptions-item>
     </el-descriptions>
@@ -27,6 +32,15 @@ import LayerItem from './LayerItem.vue'
 import type { ComponentInfo } from '@/types/component'
 import { ElScrollbar, ElMenu, ElDescriptions, ElDescriptionsItem, ElEmpty } from 'element-plus'
 import { useEventBus } from '@/bus/useEventBus'
+
+withDefaults(
+  defineProps<{
+    mode?: string
+  }>(),
+  {
+    mode: 'expand'
+  }
+)
 
 const basicStore = useBasicStoreWithOut()
 

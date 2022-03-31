@@ -11,7 +11,7 @@
     >
       <template #title>
         <span class="icon iconfont icon-zu"></span>
-        <span>{{ item.label || '分组' }}</span>
+        <span v-show="mode === 'expand'">{{ item.label || '分组' }}</span>
         <el-icon style="vertical-align: middle">
           <icon-preview-open
             theme="outline"
@@ -39,7 +39,7 @@
     >
       <template #title>
         <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
-        <span v-show="isShowText">{{ item.label }}</span>
+        <span v-show="mode === 'expand'">{{ item.label }}</span>
         <el-icon style="vertical-align: middle">
           <icon-preview-open
             theme="outline"
@@ -56,37 +56,39 @@
 
 <script lang="ts" setup>
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
-import { ref } from 'vue'
 import iconMap from './iconMap'
 import { ElMenuItem, ElSubMenu, ElIcon } from 'element-plus'
 
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { decomposeComponent, copyText } from '@/utils/utils'
-import { useEventBus } from '@/bus/useEventBus'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 
-const props = defineProps<{
-  components: ComponentInfo[]
-  index?: string
-  activeKey?: string
-}>()
+// const props = defineProps<{
+//   components: ComponentInfo[]
+//   index?: string
+//   activeKey?: string
+
+// }>()
+
+const props = withDefaults(
+  defineProps<{
+    components: ComponentInfo[]
+    index?: string
+    activeKey?: string
+    mode?: string
+  }>(),
+  {
+    mode: 'expand'
+  }
+)
+
+
 
 const emits = defineEmits<{ (e: 'select', index: string): void }>()
-const isShowText = ref<boolean>(true)
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()
-
-const open = (key: any) => {
-  const result = key as string
-  if (result === 'expend') {
-    isShowText.value = true
-  } else {
-    isShowText.value = false
-  }
-}
-useEventBus('collapse', open)
 
 const caculIndex = (index: number) => {
   let fatherIndex: string | undefined = props.index

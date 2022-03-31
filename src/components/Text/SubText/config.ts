@@ -39,12 +39,12 @@ const style: Array<GroupType> = [
       {
         key: 'fontWeight',
         label: '字体宽度',
-        type: 'number'
+        type: 'fontWeight'
       },
       {
         key: 'fontFamily',
         label: '字体',
-        type: 'text'
+        type: 'fontStyle'
       }
     ]
   }

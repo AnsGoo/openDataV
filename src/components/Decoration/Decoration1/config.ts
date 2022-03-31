@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { Decoration1 } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<Decoration1> = {
   component: 'Decoration1',
   group: ComponentGroup.DECORATION,
   label: '1号装饰',

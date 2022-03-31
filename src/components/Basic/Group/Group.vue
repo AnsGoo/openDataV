@@ -10,6 +10,7 @@
           :propValue="item.propValue"
           :id="'component' + item.id"
           :element="item"
+          v-if="basicStore.isEditMode && item.display"
           :subComponents="item.subComponents"
         />
       </template>

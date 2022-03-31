@@ -9,12 +9,6 @@
       v-model:value="formData[key]"
       @change="changed($event, key)"
     />
-    <ArrayItem
-      v-else-if="type === 'array'"
-      v-model:data="formData[key]"
-      :jsonSchema="arrayAttr!"
-      @change="changed($event, key)"
-    />
     <el-select
       v-else-if="type === 'select'"
       v-model="formData[key]"
@@ -34,9 +28,11 @@
       :placeholder="label"
       @change="changed($event, key)"
     >
-      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">{{
-        item.label
-      }}</el-radio>
+      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">
+        {{
+          item.label
+        }}
+      </el-radio>
     </el-radio-group>
     <el-input-number
       v-else-if="type === 'number'"
@@ -48,8 +44,13 @@
       v-model="formData[key]"
       @change="changed($event, key)"
     />
-    <FontSelect
-      v-else-if="type === 'font'"
+    <FontStyle
+      v-else-if="type === 'fontStyle'"
+      v-model="formData[key]"
+      @change="changed($event, key)"
+    />
+    <FontWeight
+      v-else-if="type === 'fontWeight'"
       v-model="formData[key]"
       @change="changed($event, key)"
     />
@@ -60,8 +61,8 @@
 <script lang="ts" setup>
 import { reactive, watch } from 'vue'
 import ColorPicker from './ColorPicker.vue'
-import ArrayItem from './ArrayItem.vue'
-import FontSelect from './FontSelect.vue'
+import FontStyle from './FontStyle.vue'
+import FontWeight from './FontWeight.vue'
 import type { AttrType } from '@/types/component'
 import {
   ElInput,
