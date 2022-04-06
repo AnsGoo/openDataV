@@ -96,6 +96,7 @@ watch(
   background-color: var(--theme-dark-color-primary) !important;
 }
 
-.el-menu {
+.el-select-dropdown {
+  min-width: 20px;
 }
 </style>
