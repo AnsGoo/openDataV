@@ -4,19 +4,19 @@
       <defs>
         <linearGradient :id="gradientId1" x1="0%" y1="0%" x2="100%" y2="0%">
           <stop
-            v-for="lc in linearGradient"
-            :key="lc[0]"
+            v-for="(lc, index) in linearGradients"
+            :key="index"
             :offset="`${lc[0]}%`"
-            :stop-color="lc[1]"
+            :stop-color="lc[1] as string"
           />
         </linearGradient>
 
         <linearGradient :id="gradientId2" x1="0%" y1="0%" :x2="gradient2XPos" y2="0%">
           <stop
-            v-for="lc in linearGradient"
-            :key="lc[0]"
+            v-for="(lc, index) in linearGradients"
+            :key="index"
             :offset="`${lc[0]}%`"
-            :stop-color="lc[1]"
+            :stop-color="(lc[1] as string)"
           />
         </linearGradient>
       </defs>
@@ -124,7 +124,7 @@ const mergedConfig = computed(() => {
 
 
 const rectWidth = computed(() => {
-  if (!mergedConfig.value) {
+  if (!mergedConfig.value.borderWidth) {
     return 0
   }
 
@@ -132,7 +132,7 @@ const rectWidth = computed(() => {
 })
 
 const rectHeight = computed(() => {
-  if (!mergedConfig.value) {
+  if (!mergedConfig.value.borderWidth) {
     return 0
   }
 
@@ -175,8 +175,8 @@ const points = computed(() => {
     }`
 })
 
-const linearGradient = computed(() => {
-  if (!mergedConfig.value) {
+const linearGradients = computed(() => {
+  if (!mergedConfig.value.colors) {
     return []
   }
 

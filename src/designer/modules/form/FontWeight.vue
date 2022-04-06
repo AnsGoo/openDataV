@@ -25,7 +25,7 @@ withDefaults(
 )
 
 const weight = ref<string>('')
-const weights = reactive<{ label: string; value: string }[]>(SYS_FONT_WEIGHT)
+const weights = reactive<{ label: string; value: number }[]>(SYS_FONT_WEIGHT)
 
 const emits = defineEmits<{
   (e: 'update:value', color: string): void
