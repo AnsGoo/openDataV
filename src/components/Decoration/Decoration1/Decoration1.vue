@@ -82,11 +82,11 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { ComponentInfo } from '@/types/component'
+
 import type { Decoration1 } from './type'
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Decoration1
 }>()
 

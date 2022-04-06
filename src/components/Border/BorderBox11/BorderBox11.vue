@@ -215,7 +215,6 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentInfo } from '@/types/component'
 import { uuid } from '@/utils/utils'
 import { computed, ref } from 'vue'
 import type { BorderBox11 } from './type'
@@ -226,7 +225,7 @@ const height = ref<number>(150)
 const filterId = ref<string>(`border-box-11-filterId-${uuid()}`)
 const props = defineProps<{
   propValue: BorderBox11
-  element: ComponentInfo
+  componentId: string
 }>()
 
 // 监听窗口大小变化

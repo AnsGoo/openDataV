@@ -9,7 +9,7 @@ import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import { debounce } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { ComponentInfo } from '@/types/component'
+
 import type { TagType } from '@/types/wsTypes'
 import { useEventBus } from '@/bus/useEventBus'
 import mydark from '@/theme/mydark'
@@ -18,7 +18,7 @@ echarts.registerTheme('mydark', mydark)
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Recordable<any>
 }>()
 

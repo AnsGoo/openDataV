@@ -22,7 +22,7 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { ComponentInfo } from '@/types/component'
+
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -32,7 +32,7 @@ import type { Swiper as SwiperType } from 'swiper/types'
 
 const props = defineProps<{
   propValue: SwiperNavigation
-  element: ComponentInfo
+  componentId: string
 }>()
 
 const router = useRouter()

@@ -8,7 +8,7 @@ import 'echarts-liquidfill'
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import { http } from '@/utils/http'
-import type { ComponentInfo } from '@/types/component'
+
 import type { TagType } from '@/types/wsTypes'
 import { debounce } from 'lodash-es'
 
@@ -18,7 +18,7 @@ echarts.registerTheme('mydark', mydark)
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Recordable<string>
 }>()
 

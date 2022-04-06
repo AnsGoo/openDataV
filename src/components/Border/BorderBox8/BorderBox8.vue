@@ -41,7 +41,6 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentInfo } from '@/types/component'
 import { uuid } from '@/utils/utils'
 import { computed, ref } from 'vue'
 import type { BorderBox8 } from './type'
@@ -54,7 +53,7 @@ const mask = ref<string>(`border-box-8-mask-${uuid()}`)
 
 const props = defineProps<{
   propValue: BorderBox8
-  element: ComponentInfo
+  componentId: string
 }>()
 
 // 监听窗口大小变化

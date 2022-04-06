@@ -9,7 +9,6 @@ import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import type { BasicFetchResult } from '@/types/apiTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { ComponentInfo } from '@/types/component'
 
 import mydark from '@/theme/mydark'
 echarts.registerTheme('mydark', mydark)
@@ -17,7 +16,7 @@ echarts.registerTheme('mydark', mydark)
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Recordable<any>
 }>()
 const basicStore = useBasicStoreWithOut()

@@ -11,7 +11,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 import { useEventBus } from '@/bus/useEventBus'
 import { debounce } from 'lodash-es'
-import type { ComponentInfo } from '@/types/component'
+
 import type { TagType } from '@/types/wsTypes'
 
 import type { GradientColorStop } from '@/utils/echarts/echarts'
@@ -22,7 +22,7 @@ echarts.registerTheme('mydark', mydark)
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Recordable<any>
 }>()
 const basicStore = useBasicStoreWithOut()

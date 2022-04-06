@@ -10,7 +10,6 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { ComponentInfo } from '@/types/component'
 import { computed, ref, onMounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
@@ -19,7 +18,7 @@ import type { ControlButton } from './type'
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: ControlButton
 }>()
 

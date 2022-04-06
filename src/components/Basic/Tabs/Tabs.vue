@@ -12,14 +12,13 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue'
-import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { Tabs } from './type'
 
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Tabs
 }>()
 

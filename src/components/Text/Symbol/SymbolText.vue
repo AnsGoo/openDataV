@@ -4,11 +4,11 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { ComponentInfo } from '@/types/component'
+
 import type { SymbolText } from './type'
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: SymbolText
 }>()
 

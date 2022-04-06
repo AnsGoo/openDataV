@@ -5,13 +5,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
-import type { ComponentInfo } from '@/types/component'
+
 import type { TagType } from '@/types/wsTypes'
 import { http } from '@/utils/http'
 import type { SubText } from './type'
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: SubText
 }>()
 const customeText = ref<string>('0')

@@ -8,7 +8,6 @@ import { ref, onMounted, watch, onUnmounted } from 'vue'
 import type { WatchStopHandle } from 'vue'
 import { http } from '@/utils/http'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { ComponentInfo } from '@/types/component'
 
 import mydark from '@/theme/mydark'
 import { warnMessage } from '@/utils/message'
@@ -17,7 +16,7 @@ echarts.registerTheme('mydark', mydark)
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Recordable<any>
 }>()
 const basicStore = useBasicStoreWithOut()

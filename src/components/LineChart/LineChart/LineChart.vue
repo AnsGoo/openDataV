@@ -6,7 +6,7 @@
 import * as echarts from 'echarts'
 import { ref, onMounted } from 'vue'
 import { http } from '@/utils/http'
-import type { ComponentInfo } from '@/types/component'
+
 import type { EChartPropTypes, EChartLineSeriesOption } from '@/utils/echarts/propTypes'
 import { EChartTypeEnum } from '@/enum'
 import type { DataOption } from '@/types/common'
@@ -16,7 +16,7 @@ type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
   propValue: EChartPropTypes<EChartLineSeriesOption> & DataOption
-  element: ComponentInfo
+  componentId: string
 }>()
 
 const chartEl = ref<ElRef>(null)
@@ -26,7 +26,7 @@ const { updateChart, getOptions } = useEChart(
   props.propValue,
   chartEl,
   EChartTypeEnum.LINE,
-  props.element.component + props.element.id
+  props.componentId
 )
 
 const initData = () => {

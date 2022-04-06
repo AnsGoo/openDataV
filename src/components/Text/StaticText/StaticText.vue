@@ -6,14 +6,13 @@
 import { ref } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 
-import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { StaticText } from './type'
 
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: StaticText
 }>()
 
@@ -24,7 +23,7 @@ const handler = (event) => {
 }
 
 if (basicStore.isEditMode) {
-  useEventBus(props.element.component + props.element.id, handler)
+  useEventBus(props.componentId, handler)
 }
 </script>
 

@@ -13,13 +13,12 @@
 import flvjs from 'flv.js'
 import { onMounted, ref } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
-import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { FlvVideo } from './type'
 
 const props = defineProps<{
   propValue: FlvVideo
-  element: ComponentInfo
+  componentId: string
 }>()
 
 const basicStore = useBasicStoreWithOut()
@@ -46,7 +45,7 @@ const propChange = () => {
 }
 
 if (basicStore.isEditMode) {
-  useEventBus(props.element.component + props.element.id, propChange)
+  useEventBus(props.componentId, propChange)
 }
 </script>
 

@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
-import type { ComponentInfo } from '@/types/component'
+
 import type { TagType } from '@/types/wsTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { http } from '@/utils/http'
@@ -18,7 +18,7 @@ import type { ConditionText } from './type'
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: ConditionText
 }>()
 
@@ -92,7 +92,7 @@ const compare = (curValue: string, symbol: string, value: string): boolean => {
 }
 
 if (basicStore.isEditMode) {
-  useEventBus(props.element.component + props.element.id, handler)
+  useEventBus(props.componentId, handler)
 }
 useEventBus('actual', dataHandler)
 

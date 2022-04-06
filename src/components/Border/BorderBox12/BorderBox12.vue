@@ -94,7 +94,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import type { ComponentInfo } from '@/types/component'
+
 import { uuid } from '@/utils/utils'
 import type { BorderBox12 } from './type'
 
@@ -103,7 +103,7 @@ const height = ref<number>(150)
 const filterId = ref<string>(`borderr-box-12-filterId-${uuid()}`)
 
 defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: BorderBox12
 }>()
 

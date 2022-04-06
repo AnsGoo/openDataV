@@ -10,7 +10,7 @@
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
     <span class="iconfont icon-xuanzhuan" v-show="isActive" @mousedown="handleRotate"></span>
-    <span class="iconfont icon-jiesuo" v-show="element.isLock"></span>
+    <span class="iconfont icon-jiesuo" v-show="info.isLock"></span>
     <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
     <div
       :class="['shape-point', 'lt', rotateClassName]"
@@ -84,7 +84,7 @@ const copyStore = useCopyStoreWithOut()
 const props = withDefaults(
   defineProps<{
     active?: boolean
-    element: ComponentInfo
+    info: ComponentInfo
     defaultStyle: ComponentStyle
     index: string
   }>(),
@@ -143,7 +143,7 @@ const decompose = () => {
 }
 
 const contextmenus = (): ContextmenuItem[] => {
-  basicStore.setCurComponent(props.element)
+  basicStore.setCurComponent(props.info)
   return [
     {
       text: '拆分',
@@ -190,7 +190,7 @@ const contextmenus = (): ContextmenuItem[] => {
 const showEm = computed(() => basicStore.isShowEm)
 
 const shape = ref<ElRef>(null)
-const { element } = { ...toRefs(props) }
+const { info } = { ...toRefs(props) }
 const pointList = reactive<Array<string>>(['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l'])
 const initialAngle = reactive<Recordable<number>>({
   // 每个点对应的初始角度
@@ -227,7 +227,7 @@ onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: str
   if (info === 'render function') {
     if (basicStore.isEditMode) {
       if (instance) {
-        const { id, label }: { id: string; label: string } = instance['element'] || {}
+        const { id, label }: { id: string; label: string } = instance['info'] || {}
         errorInfo.value = `组件[${label}][${id}]渲染异常`
       } else {
         errorInfo.value = `组件渲染异常`
@@ -244,18 +244,18 @@ onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: str
 })
 
 const isActive = computed<boolean>(() => {
-  return (props.active && !props.element.isLock) || composeStore.isActived(props.element)
+  return (props.active && !props.info.isLock) || composeStore.isActived(props.info)
 })
 
 const isLayerActive = computed<boolean>(() => {
   if (basicStore.layerComponent) {
-    return basicStore.layerComponent.id === props.element.id
+    return basicStore.layerComponent.id === props.info.id
   }
   return false
 })
 
 const appendComponent = () => {
-  composeStore.appendComponent(props.element)
+  composeStore.appendComponent(props.info)
 }
 
 /**
@@ -266,8 +266,8 @@ const handleDragendShape = (e: MouseEvent) => {
     basicStore.setClickComponentStatus(true)
     e.preventDefault()
     e.stopPropagation()
-    basicStore.setCurComponent(props.element)
-    if (props.element.isLock) return
+    basicStore.setCurComponent(props.info)
+    if (props.info.isLock) return
 
     cursors.value = getCursor()
 
@@ -315,7 +315,7 @@ const selectCurComponent = (e) => {
   // 阻止向父组件冒泡
   e.stopPropagation()
   e.preventDefault()
-  basicStore.setCurComponent(props.element)
+  basicStore.setCurComponent(props.info)
 }
 
 /**
@@ -366,7 +366,7 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
  * 旋转组件
  */
 const handleRotate = (e: MouseEvent) => {
-  basicStore.setCurComponent(props.element)
+  basicStore.setCurComponent(props.info)
   if (e.button === 0) {
     if (!shape.value) {
       return

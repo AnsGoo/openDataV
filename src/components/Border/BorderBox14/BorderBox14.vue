@@ -6,14 +6,14 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import type { ComponentInfo } from '@/types/component'
+
 import type { BorderBox14 } from './type'
 
 const width = ref<number>(150)
 const height = ref<number>(150)
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: BorderBox14
 }>()
 

@@ -51,15 +51,15 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentInfo } from '@/types/component'
 import { ref } from 'vue'
+import type { BorderBox7 } from './type'
 
 const width = ref<number>(150)
 const height = ref<number>(150)
 
 defineProps<{
-  propValue: Recordable<string>
-  element: ComponentInfo
+  propValue: BorderBox7
+  componentId: string
 }>()
 
 // 监听窗口大小变化

@@ -17,7 +17,7 @@
         :defaultStyle="item.style"
         :style="getShapeStyle(item.style)"
         :active="item.id === (curComponent || {}).id"
-        :element="item"
+        :info="item"
         :index="index.toString()"
         :class="{ lock: item.isLock }"
         v-if="basicStore.isEditMode && item.display"
@@ -27,7 +27,7 @@
           :is="item.component"
           :style="getComponentShapeStyle(item)"
           :propValue="item.propValue"
-          :element="item"
+          :componentId="item.id"
           :id="'component' + item.id"
           :subComponents="item.subComponents"
         />

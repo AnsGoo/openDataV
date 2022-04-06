@@ -9,7 +9,7 @@
           :style="getComponentStyle(item)"
           :propValue="item.propValue"
           :id="'component' + item.id"
-          :element="item"
+          :componentId="item.id"
           v-if="isShow(item.display)"
           :subComponents="item.subComponents"
         />
@@ -25,7 +25,7 @@ import { getComponentStyle } from '@/utils/utils'
 const basicStore = useBasicStoreWithOut()
 withDefaults(
   defineProps<{
-    element: ComponentInfo
+    componentId: string
     subComponents: ComponentInfo[]
   }>(),
   {

@@ -55,14 +55,14 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import type { ComponentInfo } from '@/types/component'
+
 import type { Decoration11 } from './type'
 
 const width = ref<number>(200)
 const height = ref<number>(60)
 
 defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Decoration11
 }>()
 

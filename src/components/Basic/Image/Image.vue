@@ -5,9 +5,9 @@
 
 <script setup lang="ts">
 import type { Image } from './type'
-import type { ComponentInfo } from '@/types/component'
+
 defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Image
 }>()
 </script>

@@ -55,14 +55,14 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { http } from '@/utils/http'
-import type { ComponentInfo } from '@/types/component'
+
 import type { TagType } from '@/types/wsTypes'
 import { uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus/useEventBus'
 import type { Progress } from './type'
 
 const props = defineProps<{
-  element: ComponentInfo
+  componentId: string
   propValue: Progress
 }>()
 
@@ -218,7 +218,7 @@ const handerPropValue = (event: any) => {
   }
 }
 
-useEventBus(props.element.component + props.element.id, handerPropValue)
+useEventBus(props.componentId, handerPropValue)
 useEventBus('actual', handler)
 </script>
 

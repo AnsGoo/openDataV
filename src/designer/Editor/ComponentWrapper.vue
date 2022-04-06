@@ -4,7 +4,7 @@
     :is="component.component"
     :style="getComponentStyle(component)"
     :propValue="component.propValue"
-    :element="component"
+    :componentId="component.id"
     :id="'component' + component.id"
     :subComponents="component.subComponents"
   />

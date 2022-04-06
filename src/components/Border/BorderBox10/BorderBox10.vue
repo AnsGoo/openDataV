@@ -27,7 +27,6 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentInfo } from '@/types/component'
 import { ref } from 'vue'
 import type { BorderBox10 } from './type'
 
@@ -37,7 +36,7 @@ const height = ref<number>(150)
 const border = ref<string[]>(['left-top', 'right-top', 'left-bottom', 'right-bottom'])
 defineProps<{
   propValue: BorderBox10
-  element: ComponentInfo
+  componentId: string
 }>()
 
 // 监听窗口大小变化
