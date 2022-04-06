@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-decoration-1" v-resize="resizeHandler">
+  <div class="dv-decoration-1" ref="mainEl">
     <svg
       :width="`${svgWH[0]}px`"
       :height="`${svgWH[1]}px`"
@@ -9,7 +9,7 @@
         <rect
           v-if="Math.random() > 0.6"
           :key="i"
-          :fill="propValue.color1"
+          :fill="mergedColor[0]"
           :x="point[0] - halfPointSideLength"
           :y="point[1] - halfPointSideLength"
           :width="propValue.pointSideLength"
@@ -18,7 +18,7 @@
           <animate
             v-if="Math.random() > 0.6"
             attributeName="fill"
-            :values="`${propValue.color1};transparent`"
+            :values="`${mergedColor[0]};transparent`"
             dur="1s"
             :begin="Math.random() * 2"
             repeatCount="indefinite"
@@ -28,7 +28,7 @@
 
       <rect
         v-if="rects[0]"
-        :fill="propValue.color2"
+        :fill="mergedColor[1]"
         :x="rects[0][0] - propValue.pointSideLength"
         :y="rects[0][1] - propValue.pointSideLength"
         :width="propValue.pointSideLength * 2"
@@ -62,7 +62,7 @@
 
       <rect
         v-if="rects[1]"
-        :fill="propValue.color2"
+        :fill="mergedColor[1]"
         :x="rects[1][0] - 40"
         :y="rects[1][1] - propValue.pointSideLength"
         :width="40"
@@ -81,15 +81,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import type { ComponentInfo } from '@/types/component'
-import type { Decoration1 } from './type'
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: Decoration1
+  propValue: Recordable<any>
 }>()
 
+const mainEl = ref<ElRef>(null)
 const width = ref<number>(200)
 const height = ref<number>(60)
 const svgWH = ref<number[]>([200, 50])
@@ -100,17 +101,24 @@ const halfPointSideLength = ref<number>(Number(props.propValue.pointSideLength) 
 const points = ref<number[][]>([])
 const rects = ref<number[][]>([])
 
-const resizeHandler = (entries) => {
+useResizeObserver(mainEl, (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
+
   calcSVGData()
-}
+})
+
+const mergedColor = computed(() => {
+  return [props.propValue.color1, props.propValue.color2] //['#fff', '#0de7c2']
+})
 
 const calcSVGData = () => {
   calcPointsPosition()
+
   calcRectsPosition()
+
   calcScale()
 }
 

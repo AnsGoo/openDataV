@@ -1,11 +1,11 @@
 <template>
-  <div class="dv-border-box-11" v-resize="resizeHandler">
+  <div class="dv-border-box-11" ref="mainEl">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <filter :id="filterId" height="150%" width="150%" x="-25%" y="-25%">
           <feMorphology operator="dilate" radius="2" in="SourceAlpha" result="thicken" />
           <feGaussianBlur in="thicken" stdDeviation="3" result="blurred" />
-          <feFlood :flood-color="propValue.colorRight" result="glowColor" />
+          <feFlood :flood-color="mergedColor[1]" result="glowColor" />
           <feComposite in="glowColor" in2="blurred" operator="in" result="softGlowColored" />
           <feMerge>
             <feMergeNode in="softGlowColored" />
@@ -15,19 +15,17 @@
       </defs>
 
       <polygon
-        :fill="propValue.backgroundColor"
+        :fill="backgroundColor"
         :points="`
-          20, 32 ${width * 0.5 - titleWidth / 2}, 32 ${width * 0.5 - titleWidth / 2 + 20}, 53
-          ${width * 0.5 + titleWidth / 2 - 20}, 53 ${width * 0.5 + titleWidth / 2}, 32
-          ${width - 20}, 32 ${width - 8}, 48 ${width - 8}, ${height - 25} ${width - 20}, ${
-          height - 8
-        }
-          20, ${height - 8} 8, ${height - 25} 8, 50
-        `"
+        20, 32 ${width * 0.5 - titleWidth / 2}, 32 ${width * 0.5 - titleWidth / 2 + 20}, 53
+        ${width * 0.5 + titleWidth / 2 - 20}, 53 ${width * 0.5 + titleWidth / 2}, 32
+        ${width - 20}, 32 ${width - 8}, 48 ${width - 8}, ${height - 25} ${width - 20}, ${height - 8}
+        20, ${height - 8} 8, ${height - 25} 8, 50
+      `"
       />
 
       <polyline
-        :stroke="propValue.colorLeft"
+        :stroke="mergedColor[0]"
         :filter="`url(#${filterId})`"
         :points="`
           ${(width - titleWidth) / 2}, 30
@@ -45,7 +43,7 @@
       />
 
       <polygon
-        :stroke="propValue.colorLeft"
+        :stroke="mergedColor[0]"
         fill="transparent"
         :points="`
           ${(width + titleWidth) / 2 - 5}, 30 ${(width + titleWidth) / 2 - 21}, 11
@@ -54,7 +52,7 @@
       />
 
       <polygon
-        :stroke="propValue.colorLeft"
+        :stroke="mergedColor[0]"
         fill="transparent"
         :points="`
           ${(width - titleWidth) / 2 + 5}, 30 ${(width - titleWidth) / 2 + 22}, 49
@@ -63,8 +61,8 @@
       />
 
       <polygon
-        :stroke="propValue.colorLeft"
-        :fill="propValue.colorRight"
+        :stroke="mergedColor[0]"
+        :fill="mergedColor[1]"
         :filter="`url(#${filterId})`"
         :points="`
           ${(width + titleWidth) / 2 - 11}, 37 ${(width + titleWidth) / 2 - 32}, 11
@@ -75,7 +73,7 @@
 
       <polygon
         :filter="`url(#${filterId})`"
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         opacity="1"
         :points="`
           ${(width - titleWidth) / 2 - 10}, 37 ${(width - titleWidth) / 2 - 31}, 37
@@ -93,7 +91,7 @@
 
       <polygon
         :filter="`url(#${filterId})`"
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         opacity="0.7"
         :points="`
           ${(width - titleWidth) / 2 - 40}, 37 ${(width - titleWidth) / 2 - 61}, 37
@@ -111,7 +109,7 @@
 
       <polygon
         :filter="`url(#${filterId})`"
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         opacity="0.5"
         :points="`
           ${(width - titleWidth) / 2 - 70}, 37 ${(width - titleWidth) / 2 - 91}, 37
@@ -129,7 +127,7 @@
 
       <polygon
         :filter="`url(#${filterId})`"
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         opacity="1"
         :points="`
           ${(width + titleWidth) / 2 + 30}, 37 ${(width + titleWidth) / 2 + 9}, 37
@@ -147,7 +145,7 @@
 
       <polygon
         :filter="`url(#${filterId})`"
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         opacity="0.7"
         :points="`
           ${(width + titleWidth) / 2 + 60}, 37 ${(width + titleWidth) / 2 + 39}, 37
@@ -165,7 +163,7 @@
 
       <polygon
         :filter="`url(#${filterId})`"
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         opacity="0.5"
         :points="`
           ${(width + titleWidth) / 2 + 90}, 37 ${(width + titleWidth) / 2 + 69}, 37
@@ -185,16 +183,16 @@
         class="dv-border-box-11-title"
         :x="`${width / 2}`"
         y="32"
-        :fill="propValue.titleColor || '#ffff'"
-        :font-size="propValue.titleSize"
+        :fill="titleColor"
+        :font-size="titleSize"
         text-anchor="middle"
         dominant-baseline="middle"
       >
-        {{ propValue.title }}
+        {{ title }}
       </text>
 
       <polygon
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         :filter="`url(#${filterId})`"
         :points="`
           7, ${53 + (height - 167) / 2} 11, ${57 + (height - 167) / 2}
@@ -203,7 +201,7 @@
       />
 
       <polygon
-        :fill="propValue.colorLeft"
+        :fill="mergedColor[0]"
         :filter="`url(#${filterId})`"
         :points="`
           ${width - 7}, ${53 + (height - 167) / 2} ${width - 11}, ${57 + (height - 167) / 2}
@@ -216,33 +214,78 @@
 
 <script setup lang="ts">
 import type { ComponentInfo } from '@/types/component'
+import { useResizeObserver } from '@vueuse/core'
 import { uuid } from '@/utils/utils'
 import { computed, ref } from 'vue'
-import type { BorderBox11 } from './type'
 
+const mainEl = ref<ElRef>(null)
 const width = ref<number>(150)
 const height = ref<number>(150)
 
 const filterId = ref<string>(`border-box-11-filterId-${uuid()}`)
 const props = defineProps<{
-  propValue: BorderBox11
+  propValue: Recordable<string>
   element: ComponentInfo
 }>()
 
 // 监听窗口大小变化
-const resizeHandler = (entries) => {
+useResizeObserver(mainEl, (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-}
+})
+
+const mergedColor = computed(() => {
+  const colorLeft = props.propValue.colorLeft
+  const colorRight = props.propValue.colorRight
+  if (colorLeft && colorRight) {
+    return [colorLeft, colorRight]
+  } else if (colorLeft) {
+    return [colorLeft, colorLeft]
+  } else if (colorRight) {
+    return [colorRight, colorRight]
+  }
+
+  return ['#8aaafb', '#1f33a2']
+})
+
+const backgroundColor = computed(() => {
+  if (props.propValue.backgroundColor) {
+    return props.propValue.backgroundColor
+  }
+
+  return 'transparent'
+})
+
+const title = computed(() => {
+  if (props.propValue.title) {
+    return props.propValue.title
+  }
+  return ''
+})
 
 const titleWidth = computed(() => {
   if (props.propValue.titleWidth) {
-    return props.propValue.titleWidth
+    return parseInt(props.propValue.titleWidth)
   }
 
   return 250
+})
+
+const titleSize = computed(() => {
+  if (props.propValue.titleSize) {
+    return props.propValue.titleSize
+  }
+  return 18
+})
+
+const titleColor = computed(() => {
+  if (props.propValue.titleColor) {
+    return props.propValue.titleColor
+  }
+
+  return '#fff'
 })
 </script>
 

@@ -1,11 +1,11 @@
 <template>
   <div class="home">
-    <ToolBar />
+    <Toolbar />
 
     <main>
       <!-- 左侧组件列表 -->
       <section class="left">
-        <LeftSideBar />
+        <SideBar />
       </section>
       <!-- 中间画布 -->
       <section class="center scrollbar" ref="editor" v-resize="editorWindowResizeHandler">
@@ -22,7 +22,7 @@
       </section>
       <!-- 右侧属性列表 -->
       <section class="right">
-        <RightSideBar />
+        <TabPane />
       </section>
     </main>
   </div>
@@ -31,10 +31,10 @@
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
 import Editor from '@/designer/Editor/Index.vue'
-import ToolBar from '@/designer/Pane/Toolbar'
+import Toolbar from '@/designer/Pane/Toolbar.vue'
 import Ruler from '@/designer/Editor/Ruler.vue'
-import LeftSideBar from '@/designer/Pane/LeftSideBar'
-import RightSideBar from '@/designer/Pane/RightSideBar'
+import TabPane from '@/designer/Pane/TabPane.vue'
+import SideBar from '@/designer/Pane/SideBar/SideBar.vue'
 import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { ref, onMounted, onUnmounted, reactive, watch, computed } from 'vue'

@@ -1,17 +1,17 @@
 <template>
-  <div class="dv-border-box-12" v-resize="resizeHandler">
+  <div class="dv-border-box-12" ref="mainEl">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <filter :id="filterId" height="150%" width="150%" x="-25%" y="-25%">
           <feMorphology operator="dilate" radius="1" in="SourceAlpha" result="thicken" />
           <feGaussianBlur in="thicken" stdDeviation="2" result="blurred" />
-          <feFlood :flood-color="propValue.colorRight" result="glowColor">
+          <feFlood :flood-color="mergedColor[1]" result="glowColor">
             <animate
               attributeName="flood-color"
               :values="`
-                ${propValue.colorRight};
-                ${propValue.colorRight};
-                ${propValue.colorRight};
+                ${mergedColor[1]};
+                ${mergedColor[1]};
+                ${mergedColor[1]};
               `"
               dur="3s"
               begin="0s"
@@ -30,7 +30,7 @@
         v-if="width && height"
         :fill="propValue.backgroundColor"
         stroke-width="2"
-        :stroke="propValue.colorLeft"
+        :stroke="mergedColor[0]"
         :d="`
           M15 5 L ${width - 15} 5 Q ${width - 5} 5, ${width - 5} 15
           L ${width - 5} ${height - 15} Q ${width - 5} ${height - 5}, ${width - 15} ${height - 5}
@@ -44,7 +44,7 @@
         fill="transparent"
         stroke-linecap="round"
         :filter="`url(#${filterId})`"
-        :stroke="propValue.colorRight"
+        :stroke="mergedColor[1]"
         :d="`M 20 5 L 15 5 Q 5 5 5 15 L 5 20`"
       />
 
@@ -53,7 +53,7 @@
         fill="transparent"
         stroke-linecap="round"
         :filter="`url(#${filterId})`"
-        :stroke="propValue.colorRight"
+        :stroke="mergedColor[1]"
         :d="`M ${width - 20} 5 L ${width - 15} 5 Q ${width - 5} 5 ${width - 5} 15 L ${
           width - 5
         } 20`"
@@ -64,7 +64,7 @@
         fill="transparent"
         stroke-linecap="round"
         :filter="`url(#${filterId})`"
-        :stroke="propValue.colorRight"
+        :stroke="mergedColor[1]"
         :d="`
           M ${width - 20} ${height - 5} L ${width - 15} ${height - 5}
           Q ${width - 5} ${height - 5} ${width - 5} ${height - 15}
@@ -77,7 +77,7 @@
         fill="transparent"
         stroke-linecap="round"
         :filter="`url(#${filterId})`"
-        :stroke="propValue.colorRight"
+        :stroke="mergedColor[1]"
         :d="`
           M 20 ${height - 5} L 15 ${height - 5}
           Q 5 ${height - 5} 5 ${height - 15}
@@ -93,26 +93,31 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import type { ComponentInfo } from '@/types/component'
 import { uuid } from '@/utils/utils'
-import type { BorderBox12 } from './type'
 
+const mainEl = ref<ElRef>(null)
 const width = ref<number>(150)
 const height = ref<number>(150)
 const filterId = ref<string>(`borderr-box-12-filterId-${uuid()}`)
 
-defineProps<{
+const props = defineProps<{
   element: ComponentInfo
-  propValue: BorderBox12
+  propValue: Recordable<any>
 }>()
 
-const resizeHandler = (entries) => {
+useResizeObserver(mainEl, (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-}
+})
+
+const mergedColor = computed(() => {
+  return [props.propValue.color1, props.propValue.color2] //['#2e6099', '#7ce7fd']
+})
 </script>
 <style lang="less" scoped>
 .dv-border-box-12 {

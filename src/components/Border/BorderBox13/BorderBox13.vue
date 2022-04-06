@@ -1,9 +1,9 @@
 <template>
-  <div class="dv-border-box-13" v-resize="resizeHandler">
+  <div class="dv-border-box-13" ref="mainEl">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <path
         :fill="propValue.backgroundColor"
-        :stroke="propValue.colorLeft"
+        :stroke="mergedColor[0]"
         :d="`
           M 5 20 L 5 10 L 12 3  L 60 3 L 68 10
           L ${width - 20} 10 L ${width - 5} 25
@@ -16,20 +16,20 @@
         fill="transparent"
         stroke-width="3"
         stroke-linecap="round"
-        stroke-dasharray="10 5"
-        :stroke="propValue.colorLeft"
+        stroke-dasharray="10, 5"
+        :stroke="mergedColor[0]"
         :d="`M 16 9 L 61 9`"
       />
 
       <path
         fill="transparent"
-        :stroke="propValue.colorRight"
+        :stroke="mergedColor[1]"
         :d="`M 5 20 L 5 10 L 12 3  L 60 3 L 68 10`"
       />
 
       <path
         fill="transparent"
-        :stroke="propValue.colorRight"
+        :stroke="mergedColor[1]"
         :d="`M ${width - 5} ${height - 30} L ${width - 5} ${height - 5} L ${width - 30} ${
           height - 5
         }`"
@@ -43,24 +43,29 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import type { ComponentInfo } from '@/types/component'
-import type { BorderBox13 } from './type'
 
+const mainEl = ref<ElRef>(null)
 const width = ref<number>(150)
 const height = ref<number>(150)
 
-defineProps<{
+const props = defineProps<{
   element: ComponentInfo
-  propValue: BorderBox13
+  propValue: Recordable<any>
 }>()
 
-const resizeHandler = (entries) => {
+useResizeObserver(mainEl, (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-}
+})
+
+const mergedColor = computed(() => {
+  return [props.propValue.color1, props.propValue.color2] //['#2e6099', '#7ce7fd']
+})
 </script>
 
 <style lang="less" scoped>

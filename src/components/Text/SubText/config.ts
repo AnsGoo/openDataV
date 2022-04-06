@@ -1,8 +1,7 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
-import type { SubText } from './type'
 
-const component: ComponentConfig<SubText> = {
+const component: ComponentConfig = {
   component: 'SubText',
   group: ComponentGroup.TEXT,
   label: '数据订阅文本',
@@ -39,12 +38,12 @@ const style: Array<GroupType> = [
       {
         key: 'fontWeight',
         label: '字体宽度',
-        type: 'fontWeight'
+        type: 'number'
       },
       {
         key: 'fontFamily',
         label: '字体',
-        type: 'fontStyle'
+        type: 'text'
       }
     ]
   }
