@@ -1,8 +1,7 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
-import type { StaticText } from './type'
 
-const component: ComponentConfig<StaticText> = {
+const component: ComponentConfig = {
   component: 'StaticText',
   group: ComponentGroup.TEXT,
   label: '静态文本',
@@ -38,12 +37,12 @@ const style: Array<GroupType> = [
       {
         key: 'fontWeight',
         label: '字体宽度',
-        type: 'fontWeight'
+        type: 'number'
       },
       {
         key: 'fontFamily',
         label: '字体',
-        type: 'fontStyle'
+        type: 'text'
       }
     ]
   }

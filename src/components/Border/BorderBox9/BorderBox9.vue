@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-9" v-resize="resizeHandler">
+  <div class="dv-border-box-9" ref="mainEl">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <linearGradient :id="gradientId" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -19,19 +19,19 @@
             repeatCount="indefinite"
           />
 
-          <stop offset="0%" :stop-color="propValue.colorLeft">
+          <stop offset="0%" :stop-color="mergedColor[0]">
             <animate
               attributeName="stop-color"
-              :values="`${propValue.colorLeft};${propValue.colorRight};${propValue.colorLeft}`"
+              :values="`${mergedColor[0]};${mergedColor[1]};${mergedColor[0]}`"
               dur="10s"
               begin="0s"
               repeatCount="indefinite"
             />
           </stop>
-          <stop offset="100%" :stop-color="propValue.colorRight">
+          <stop offset="100%" :stop-color="mergedColor[1]">
             <animate
               attributeName="stop-color"
-              :values="`${propValue.colorRight};${propValue.colorLeft};${propValue.colorRight}`"
+              :values="`${mergedColor[1]};${mergedColor[0]};${mergedColor[1]}`"
               dur="10s"
               begin="0s"
               repeatCount="indefinite"
@@ -111,21 +111,21 @@
       </defs>
 
       <polygon
-        :fill="propValue.backgroundColor"
+        :fill="backgroundColor"
         :points="`
-          15, 9 ${width * 0.1 + 1}, 9 ${width * 0.1 + 4}, 6 ${width * 0.52 + 2}, 6
-          ${width * 0.52 + 6}, 10 ${width * 0.58 - 7}, 10 ${width * 0.58 - 2}, 6
-          ${width * 0.9 + 2}, 6 ${width * 0.9 + 6}, 10 ${width - 10}, 10 ${width - 10}, ${
+        15, 9 ${width * 0.1 + 1}, 9 ${width * 0.1 + 4}, 6 ${width * 0.52 + 2}, 6
+        ${width * 0.52 + 6}, 10 ${width * 0.58 - 7}, 10 ${width * 0.58 - 2}, 6
+        ${width * 0.9 + 2}, 6 ${width * 0.9 + 6}, 10 ${width - 10}, 10 ${width - 10}, ${
           height * 0.1 - 6
         }
-          ${width - 6}, ${height * 0.1 - 1} ${width - 6}, ${height * 0.8 + 1} ${width - 10}, ${
+        ${width - 6}, ${height * 0.1 - 1} ${width - 6}, ${height * 0.8 + 1} ${width - 10}, ${
           height * 0.8 + 6
         }
-          ${width - 10}, ${height - 10} ${width * 0.92 + 7}, ${height - 10}  ${width * 0.92 + 2}, ${
+        ${width - 10}, ${height - 10} ${width * 0.92 + 7}, ${height - 10}  ${width * 0.92 + 2}, ${
           height - 6
         }
-          11, ${height - 6} 11, ${height * 0.15 - 2} 15, ${height * 0.15 - 7}
-        `"
+        11, ${height - 6} 11, ${height * 0.15 - 2} 15, ${height * 0.15 - 7}
+      `"
       />
 
       <rect
@@ -142,27 +142,50 @@
 
 <script setup lang="ts">
 import type { ComponentInfo } from '@/types/component'
+import { useResizeObserver } from '@vueuse/core'
 import { uuid } from '@/utils/utils'
-import { ref } from 'vue'
-import { BorderBox9 } from './type'
+import { computed, ref } from 'vue'
 
+const mainEl = ref<ElRef>(null)
 const width = ref<number>(150)
 const height = ref<number>(150)
 const gradientId = ref<string>(`border-box-9-gradient-${uuid()}`)
 const maskId = ref<string>(`border-box-9-mask-${uuid()}`)
 
-defineProps<{
-  propValue: BorderBox9
+const props = defineProps<{
+  propValue: Recordable<string>
   element: ComponentInfo
 }>()
 
 // 监听窗口大小变化
-const resizeHandler = (entries) => {
+useResizeObserver(mainEl, (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-}
+})
+
+const mergedColor = computed(() => {
+  const colorLeft = props.propValue.colorLeft
+  const colorRight = props.propValue.colorRight
+  if (colorLeft && colorRight) {
+    return [colorLeft, colorRight]
+  } else if (colorLeft) {
+    return [colorLeft, colorLeft]
+  } else if (colorRight) {
+    return [colorRight, colorRight]
+  }
+
+  return ['#11eefd', '#0078d2']
+})
+
+const backgroundColor = computed(() => {
+  if (props.propValue.backgroundColor) {
+    return props.propValue.backgroundColor
+  }
+
+  return 'transparent'
+})
 </script>
 
 <style lang="less" scoped>

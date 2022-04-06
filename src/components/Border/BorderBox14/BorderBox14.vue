@@ -1,28 +1,29 @@
 <template>
   <div>
-    <div class="main" ref="mainEl" v-resize="resizeHandler"></div>
+    <div class="main" ref="mainEl"></div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import type { ComponentInfo } from '@/types/component'
-import type { BorderBox14 } from './type'
 
+const mainEl = ref<ElRef>(null)
 const width = ref<number>(150)
 const height = ref<number>(150)
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: BorderBox14
+  propValue: Recordable<any>
 }>()
 
-const resizeHandler = (entries) => {
+useResizeObserver(mainEl, (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-}
+})
 
 const bcolor = computed(() => {
   return props.propValue.color

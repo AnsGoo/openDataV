@@ -8,13 +8,12 @@ import { useEventBus } from '@/bus/useEventBus'
 
 import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { StaticText } from './type'
 
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: StaticText
+  propValue: Recordable<string>
 }>()
 
 const customeText = ref<string>(props.propValue.text)

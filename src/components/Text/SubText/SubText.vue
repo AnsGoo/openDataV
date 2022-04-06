@@ -8,11 +8,10 @@ import { useEventBus } from '@/bus/useEventBus'
 import type { ComponentInfo } from '@/types/component'
 import type { TagType } from '@/types/wsTypes'
 import { http } from '@/utils/http'
-import type { SubText } from './type'
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: SubText
+  propValue: Recordable<string>
 }>()
 const customeText = ref<string>('0')
 
