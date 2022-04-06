@@ -1,14 +1,14 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ConditionText } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<ConditionText> = {
   component: 'ConditionText',
   group: ComponentGroup.TEXT,
   label: '条件文本',
   propValue: {
     history: '',
     tagName: 'CMJ_ZCFMQ',
-
     condition: []
   },
   icon: 'wenben',
