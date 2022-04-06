@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-8" ref="mainEl">
+  <div class="dv-border-box-8" v-resize="resizeHandler">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <path :id="path" :d="pathD" fill="transparent" />
@@ -16,14 +16,14 @@
       </defs>
 
       <polygon
-        :fill="backgroundColor"
+        :fill="propValue.backgroundColor"
         :points="`5, 5 ${width - 5}, 5 ${width - 5} ${height - 5} 5, ${height - 5}`"
       />
 
-      <use :stroke="mergedColor[0]" stroke-width="1" :xlink:href="`#${path}`" />
+      <use :stroke="propValue.colorLeft" stroke-width="1" :xlink:href="`#${path}`" />
 
       <use
-        :stroke="mergedColor[1]"
+        :stroke="propValue.colorRight"
         stroke-width="3"
         :xlink:href="`#${path}`"
         :mask="`url(#${mask})`"
@@ -42,11 +42,10 @@
 
 <script setup lang="ts">
 import type { ComponentInfo } from '@/types/component'
-import { useResizeObserver } from '@vueuse/core'
 import { uuid } from '@/utils/utils'
 import { computed, ref } from 'vue'
+import type { BorderBox8 } from './type'
 
-const mainEl = ref<ElRef>(null)
 const width = ref<number>(150)
 const height = ref<number>(150)
 const path = ref<string>(`border-box-8-path-${uuid()}`)
@@ -54,45 +53,22 @@ const gradient = ref<string>(`border-box-8-gradient-${uuid()}`)
 const mask = ref<string>(`border-box-8-mask-${uuid()}`)
 
 const props = defineProps<{
-  propValue: Recordable<string>
+  propValue: BorderBox8
   element: ComponentInfo
 }>()
 
 // 监听窗口大小变化
-useResizeObserver(mainEl, (entries) => {
+const resizeHandler = (entries) => {
   const entry = entries[0]
   const rect = entry.contentRect
   width.value = rect.width
   height.value = rect.height
-})
-
-const mergedColor = computed(() => {
-  const colorLeft = props.propValue.colorLeft
-  const colorRight = props.propValue.colorRight
-  if (colorLeft && colorRight) {
-    return [colorLeft, colorRight]
-  } else if (colorLeft) {
-    return [colorLeft, colorLeft]
-  } else if (colorRight) {
-    return [colorRight, colorRight]
-  }
-
-  return ['rgba(126, 208, 234, 1)', 'rgba(96, 195, 231, 1)']
-})
-
-const backgroundColor = computed(() => {
-  if (props.propValue.backgroundColor) {
-    return props.propValue.backgroundColor
-  }
-
-  return 'transparent'
-})
+}
 
 const dur = computed(() => {
   if (props.propValue.dur) {
     return props.propValue.dur
   }
-
   return 3
 })
 

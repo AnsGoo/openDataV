@@ -1,8 +1,9 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { SymbolText } from './type'
 
-const component: ComponentConfig = {
-  component: 'Symbol1',
+const component: ComponentConfig<SymbolText> = {
+  component: 'SymbolText',
   group: ComponentGroup.TEXT,
   label: '符号',
   propValue: {

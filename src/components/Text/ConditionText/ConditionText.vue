@@ -13,12 +13,13 @@ import type { ComponentInfo } from '@/types/component'
 import type { TagType } from '@/types/wsTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { http } from '@/utils/http'
+import type { ConditionText } from './type'
 
 const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
   element: ComponentInfo
-  propValue: Recordable<any>
+  propValue: ConditionText
 }>()
 
 const mainEl = ref<ElRef>(null)
@@ -99,7 +100,7 @@ const initData = async () => {
   if (conditionList.value.length > 0) {
     switchDisplay(conditionList.value[0].value)
   }
-  const propValue: Recordable<string> = props.propValue
+  const propValue: ConditionText = props.propValue
   try {
     const res = await http.post({ url: propValue.history, data: [propValue.tagName] })
     if (res.ErrorCode === 200) {

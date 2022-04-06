@@ -1,12 +1,11 @@
 <template>
-  <div ref="chartEl"></div>
+  <div ref="chartEl" v-resize="resizeHandler"></div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import 'echarts-liquidfill'
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 import { useEventBus } from '@/bus/useEventBus'
 import { http } from '@/utils/http'
 import type { ComponentInfo } from '@/types/component'
@@ -88,11 +87,11 @@ const getValueData = () => {
   return [data, data - 0.1]
 }
 
-useResizeObserver(chartEl, (entries) => {
+const resizeHandler = (entries) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   chart?.resize({ width, height })
-})
+}
 
 const initChart = () => {
   chart = echarts.init(chartEl.value!, 'mydark')
