@@ -1,0 +1,18 @@
+import{_ as p,c as h}from"./index.2fc0df38.js";import{p as f,r as u,a7 as $,P as _,y as d,B as t,z as m,A as k,al as g,am as b,x as n}from"./@vue.7df1a0ef.js";import"./@vueuse.fe63d129.js";import"./vue-router.e129948e.js";import"./pinia.685e9614.js";import"./vue-demi.b3a9cad9.js";import"./mitt.550594b0.js";import"./element-plus.54ccd689.js";import"./lodash.8679a684.js";import"./nprogress.5f640c6a.js";import"./async-validator.5d25c98b.js";import"./@popperjs.a8a4a6a0.js";import"./resize-observer-polyfill.8deb1e21.js";import"./lodash-es.4775bb8f.js";import"./dexie.c25c286a.js";import"./@icon-park.87123711.js";const s=l=>(g("data-v-4e2e0e71"),l=l(),b(),l),j={class:"dv-border-box-12"},w=["width","height"],L=["id"],V=s(()=>t("feMorphology",{operator:"dilate",radius:"1",in:"SourceAlpha",result:"thicken"},null,-1)),x=s(()=>t("feGaussianBlur",{in:"thicken",stdDeviation:"2",result:"blurred"},null,-1)),y=["flood-color"],B=["values"],C=s(()=>t("feComposite",{in:"glowColor",in2:"blurred",operator:"in",result:"softGlowColored"},null,-1)),M=s(()=>t("feMerge",null,[t("feMergeNode",{in:"softGlowColored"}),t("feMergeNode",{in:"SourceGraphic"})],-1)),R=["fill","stroke","d"],Q=["filter","stroke"],I=["filter","stroke","d"],S=["filter","stroke","d"],z=["filter","stroke","d"],N={class:"border-box-content"},G=f({props:{element:null,propValue:null},setup(l){const e=u(150),o=u(150),r=u(`borderr-box-12-filterId-${h()}`),c=i=>{const a=i[0].contentRect;e.value=a.width,o.value=a.height};return(i,v)=>{const a=$("resize");return _((n(),d("div",j,[(n(),d("svg",{class:"dv-border-svg-container",width:e.value,height:o.value},[t("defs",null,[t("filter",{id:r.value,height:"150%",width:"150%",x:"-25%",y:"-25%"},[V,x,t("feFlood",{"flood-color":l.propValue.colorRight,result:"glowColor"},[t("animate",{attributeName:"flood-color",values:`
+                ${l.propValue.colorRight};
+                ${l.propValue.colorRight};
+                ${l.propValue.colorRight};
+              `,dur:"3s",begin:"0s",repeatCount:"indefinite"},null,8,B)],8,y),C,M],8,L)]),e.value&&o.value?(n(),d("path",{key:0,fill:l.propValue.backgroundColor,"stroke-width":"2",stroke:l.propValue.colorLeft,d:`
+          M15 5 L ${e.value-15} 5 Q ${e.value-5} 5, ${e.value-5} 15
+          L ${e.value-5} ${o.value-15} Q ${e.value-5} ${o.value-5}, ${e.value-15} ${o.value-5}
+          L 15, ${o.value-5} Q 5 ${o.value-5} 5 ${o.value-15} L 5 15
+          Q 5 5 15 5
+        `},null,8,R)):m("",!0),t("path",{"stroke-width":"2",fill:"transparent","stroke-linecap":"round",filter:`url(#${r.value})`,stroke:l.propValue.colorRight,d:"M 20 5 L 15 5 Q 5 5 5 15 L 5 20"},null,8,Q),t("path",{"stroke-width":"2",fill:"transparent","stroke-linecap":"round",filter:`url(#${r.value})`,stroke:l.propValue.colorRight,d:`M ${e.value-20} 5 L ${e.value-15} 5 Q ${e.value-5} 5 ${e.value-5} 15 L ${e.value-5} 20`},null,8,I),t("path",{"stroke-width":"2",fill:"transparent","stroke-linecap":"round",filter:`url(#${r.value})`,stroke:l.propValue.colorRight,d:`
+          M ${e.value-20} ${o.value-5} L ${e.value-15} ${o.value-5}
+          Q ${e.value-5} ${o.value-5} ${e.value-5} ${o.value-15}
+          L ${e.value-5} ${o.value-20}
+        `},null,8,S),t("path",{"stroke-width":"2",fill:"transparent","stroke-linecap":"round",filter:`url(#${r.value})`,stroke:l.propValue.colorRight,d:`
+          M 20 ${o.value-5} L 15 ${o.value-5}
+          Q 5 ${o.value-5} 5 ${o.value-15}
+          L 5 ${o.value-20}
+        `},null,8,z)],8,w)),t("div",N,[k(i.$slots,"default",{},void 0,!0)])],512)),[[a,c]])}}});var ee=p(G,[["__scopeId","data-v-4e2e0e71"]]);export{ee as default};
