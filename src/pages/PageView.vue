@@ -1,8 +1,6 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <div class="screen" :style="filterStyle(canvasStyle, ['width', 'height'])">
-      <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
-    </div>
+    <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
   </div>
 </template>
 
@@ -125,13 +123,6 @@ const setScale = () => {
 @layer components {
   .bg {
     @apply w-screen h-screen;
-
-    .screen {
-      position: relative;
-      left: 50%;
-      transform-origin: 0 0;
-      transform: translateX(-50%);
-    }
   }
 }
 </style>

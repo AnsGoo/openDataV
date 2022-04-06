@@ -5,23 +5,22 @@ import '@/css/index.less'
 import '@/css/font.less'
 import '@/assets/directionFonts/iconfont.css'
 import 'element-plus/dist/index.css'
-import { setupStore } from '@/store'
-import { setupCustomComponent } from '@/designer/load'
-import { setupRouter } from '@/router'
+import store from '@/store'
+import { AsyncComponent } from '@/designer/load'
+import router from '@/router'
 import Directive from '@/plugins/directive'
 import Icon from '@/plugins/icon'
 
 const app = createApp(App)
 app.use(Directive)
-
 app.use(Icon)
 
+app.use(AsyncComponent)
+
 // 注册状态管理器
-setupStore(app)
+app.use(store)
 
 // 注册路由模块
-setupRouter(app)
+app.use(router)
 
-// 注册自定义全局组件
-setupCustomComponent(app)
 app.mount('#app', true)

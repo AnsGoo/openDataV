@@ -213,7 +213,6 @@ const image = ref<string>(
 )
 
 const handleConfigAllowed = (item: LayoutData) => {
-  console.log(item)
   isShow.value = true
   currentPage.value = item
   formData.permissions = item.allowed ? item.allowed.split(',') : []

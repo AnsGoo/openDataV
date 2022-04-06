@@ -20,7 +20,7 @@ const component: ComponentConfig<Progress> = {
     borderRadius: 5,
     localGradient: false,
     formatter: '{value}%',
-    fontSize: 15,
+    fontSize: 15
   },
   icon: 'wenben',
   style: {

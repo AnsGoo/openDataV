@@ -9,7 +9,7 @@ const component: ComponentConfig<BorderBox10> = {
   propValue: {
     colorLeft: '#1d48c4',
     colorRight: '#d3e1f8',
-    backgroundColor: ''
+    backgroundColor: 'transparent'
   },
   icon: 'line',
   style: {

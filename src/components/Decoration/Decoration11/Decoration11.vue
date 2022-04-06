@@ -22,7 +22,8 @@
       <polygon
         :fill="propValue.color2"
         :stroke="propValue.color2"
-        :points="`${width - 20} ${height - 10}, ${width - 25} ${height - 4}, ${width - 55} ${height - 4
+        :points="`${width - 20} ${height - 10}, ${width - 25} ${height - 4}, ${width - 55} ${
+          height - 4
         } ${width - 60} ${height - 10}`"
       />
 
@@ -55,7 +56,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { ComponentInfo } from '@/types/component'
-import type { Decoration11 } from './type';
+import type { Decoration11 } from './type'
 
 const width = ref<number>(200)
 const height = ref<number>(60)
@@ -71,7 +72,6 @@ const resizeHandler = (entries) => {
   width.value = rect.width
   height.value = rect.height
 }
-
 </script>
 
 <style lang="less" scoped>

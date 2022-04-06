@@ -9,7 +9,7 @@ const component: ComponentConfig<BorderBox11> = {
   propValue: {
     colorLeft: '#8aaafb',
     colorRight: '#1f33a2',
-    backgroundColor: '',
+    backgroundColor: 'transparent',
     titleWidth: 250,
     titleSize: 18,
     titleColor: '#fff',

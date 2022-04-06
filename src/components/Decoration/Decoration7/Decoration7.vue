@@ -35,7 +35,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { ComponentInfo } from '@/types/component'
-import { Decoration7 } from './type';
+import { Decoration7 } from './type'
 
 const width = ref<number>(200)
 const height = ref<number>(60)
@@ -51,7 +51,6 @@ const resizeHandler = (entries) => {
   width.value = rect.width
   height.value = rect.height
 }
-
 </script>
 
 <style lang="less" scoped>

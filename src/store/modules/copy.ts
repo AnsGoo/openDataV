@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
+import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { Message } from '@/utils/message'

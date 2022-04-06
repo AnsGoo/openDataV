@@ -10,7 +10,7 @@
           :propValue="item.propValue"
           :id="'component' + item.id"
           :element="item"
-          v-if="basicStore.isEditMode && item.display"
+          v-if="isShow(item.display)"
           :subComponents="item.subComponents"
         />
       </template>
@@ -25,13 +25,16 @@ import { getComponentStyle } from '@/utils/utils'
 const basicStore = useBasicStoreWithOut()
 withDefaults(
   defineProps<{
+    element: ComponentInfo
     subComponents: ComponentInfo[]
   }>(),
   {
     subComponents: () => []
   }
 )
-
+const isShow = (display: boolean): boolean => {
+  return !(basicStore.isEditMode && display === false)
+}
 const isLayerActive = (id: string) => {
   if (basicStore.layerComponent) {
     return basicStore.layerComponent.id === id

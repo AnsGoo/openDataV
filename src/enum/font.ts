@@ -40,7 +40,7 @@ const SYS_FONT_WEIGHT = [
   { label: '600 Semi Bold', value: 600 },
   { label: '700 Bold', value: 700 },
   { label: 'Extra Bold', value: 800 },
-  { label: 'Black', value: 900 },
+  { label: 'Black', value: 900 }
 ]
 
 export { SYS_FONTS, SYS_FONT_WEIGHT }

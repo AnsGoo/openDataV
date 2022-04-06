@@ -3,17 +3,17 @@ import { defineAsyncComponent } from 'vue'
 import type { ComponentOptions } from '@/types/component'
 import { commonStyle, commonAttr, commonComponent } from './interface'
 
-const setupCustomComponent = (app: App<Element>): void => {
-  // 批量自动导入组件
-  const modules = import.meta.glob('../components/**/*.vue')
-  Object.keys(modules).forEach((key: string) => {
-    // 挂载全局组件
-    const name = key.slice(key.lastIndexOf('/') + 1, key.length - 4)
-    const AsyncComp = defineAsyncComponent(modules[key])
-    app.component(name, AsyncComp)
-  })
+const AsyncComponent = {
+  install: (app: App) => {
+    const modules = import.meta.glob('../components/**/*.vue')
+    Object.keys(modules).forEach((key: string) => {
+      // 挂载全局组件
+      const name = key.slice(key.lastIndexOf('/') + 1, key.length - 4)
+      const AsyncComp = defineAsyncComponent(modules[key])
+      app.component(name, AsyncComp)
+    })
+  }
 }
-
 // 编辑器左侧组件列表
 const componentList: Record<string, ComponentOptions> = {}
 
@@ -36,9 +36,10 @@ const createComponentList = () => {
       console.error(`${key} is not a valid component`)
     }
   })
+  return componentList
 }
 
 // 创建组件列表
 createComponentList()
 
-export { componentList, setupCustomComponent }
+export { componentList, AsyncComponent }

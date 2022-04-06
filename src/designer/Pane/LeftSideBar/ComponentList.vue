@@ -3,7 +3,12 @@
     <div class="components">
       <el-scrollbar>
         <el-menu :unique-opened="true">
-          <el-sub-menu v-for="(key, index) in componentKeys" :index="index.toString()" :key="index">
+          <el-sub-menu
+            v-for="(key, index) in componentKeys"
+            :index="index.toString()"
+            :key="index"
+            v-once
+          >
             <template #title>
               <span :class="`icon iconfont ${iconMap[key]}`"></span>
               <span v-show="mode === 'expand'">{{ key }}</span>

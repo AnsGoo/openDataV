@@ -2,7 +2,7 @@ import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 
 const component: ComponentConfig = {
-  component: 'barChart',
+  component: 'BarChart',
   group: ComponentGroup.BAR,
   label: '柱状图',
   propValue: {

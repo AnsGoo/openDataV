@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
+import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import type { CanvasStyleData, SnapData } from '@/types/storeTypes'
 import { snapshotDb, StoreComponentData } from '@/utils/db'

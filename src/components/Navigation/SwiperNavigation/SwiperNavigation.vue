@@ -54,7 +54,6 @@ initActiveSlide()
 const onSlideClick = (swiper: SwiperType) => {
   props.propValue.swiperList[swiper.clickedIndex].link &&
     router.push(props.propValue.swiperList[swiper.clickedIndex].link)
-  return
 }
 
 const swiperList = computed<SwiperItem[]>(() => {
@@ -95,7 +94,7 @@ const swiperList = computed<SwiperItem[]>(() => {
     display: inline-block;
 
     &::after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       top: 0;

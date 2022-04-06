@@ -1,4 +1,3 @@
-import type { App } from 'vue'
 import {
   Router,
   createRouter,
@@ -150,6 +149,4 @@ class RouteView {
 
 const router = new RouteView()
 
-export const setupRouter = (app: App<Element>) => {
-  app.use(router.getRouter())
-}
+export default router.getRouter()

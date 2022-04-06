@@ -7,7 +7,7 @@ import { basicEchartConfig, basicEchartAttr } from '@/utils/echarts/commonProp'
 import { eChartLineSeries, eChartLineSeriesAttr } from '@/utils/echarts/lineSeries'
 
 const component: ComponentConfig<EChartPropTypes<EChartLineSeriesOption> & DataOption> = {
-  component: 'line-chart',
+  component: 'LineChart',
   group: ComponentGroup.LINE,
   label: '折线图',
   propValue: {

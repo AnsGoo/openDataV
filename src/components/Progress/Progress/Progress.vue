@@ -33,7 +33,9 @@
       />
       <polyline
         :stroke-width="polylineWidth"
-        :stroke-dasharray="mergedConfig ? [mergedConfig.lineDash, mergedConfig.gapWeight].join(',') : '0'"
+        :stroke-dasharray="
+          mergedConfig ? [mergedConfig.lineDash, mergedConfig.gapWeight].join(',') : '0'
+        "
         :stroke="`url(#${polylineGradient})`"
         :points="points"
       />
@@ -43,7 +45,9 @@
         :fill="mergedConfig ? mergedConfig.textColor : '#fff'"
         :x="width / 2"
         :y="height / 2"
-      >{{ details }}</text>
+      >
+        {{ details }}
+      </text>
     </svg>
   </div>
 </template>
@@ -74,7 +78,6 @@ const resizeHandler = (entries) => {
   width.value = rect.width
   height.value = rect.height
 }
-
 
 const handler = (event) => {
   const item: TagType = event as TagType
@@ -121,7 +124,6 @@ const mergedConfig = computed(() => {
     formatter: props.propValue.formatter
   }
 })
-
 
 const rectWidth = computed(() => {
   if (!mergedConfig.value.borderWidth) {
@@ -171,8 +173,9 @@ const points = computed(() => {
 
   return `
         ${mergedConfig.value.borderWidth + mergedConfig.value.borderGap}, ${halfHeight}
-        ${mergedConfig.value.borderWidth + mergedConfig.value.borderGap + polylineLength}, ${halfHeight + 0.001
-    }`
+        ${mergedConfig.value.borderWidth + mergedConfig.value.borderGap + polylineLength}, ${
+    halfHeight + 0.001
+  }`
 })
 
 const linearGradients = computed(() => {

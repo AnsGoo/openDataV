@@ -14,7 +14,7 @@ import type { ComponentInfo } from '@/types/component'
 import { computed, ref, onMounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { ControlButton } from './type';
+import type { ControlButton } from './type'
 
 const basicStore = useBasicStoreWithOut()
 
@@ -157,7 +157,7 @@ const buttonStyle = computed(() => {
       position: absolute;
       z-index: 999;
       &::after {
-        content: " ";
+        content: ' ';
         position: absolute;
         top: 100%; /* 提示工具底部 */
         left: 50%;

@@ -1,15 +1,13 @@
 <template>
-  <div>
-    <component
-      class="component"
-      :is="component.component"
-      :style="getComponentStyle(component)"
-      :propValue="component.propValue"
-      :element="component"
-      :id="'component' + component.id"
-      :subComponents="component.subComponents"
-    />
-  </div>
+  <component
+    class="component"
+    :is="component.component"
+    :style="getComponentStyle(component)"
+    :propValue="component.propValue"
+    :element="component"
+    :id="'component' + component.id"
+    :subComponents="component.subComponents"
+  />
 </template>
 
 <script setup lang="ts">

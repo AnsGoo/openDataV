@@ -84,8 +84,6 @@ const props = withDefaults(
   }
 )
 
-
-
 const emits = defineEmits<{ (e: 'select', index: string): void }>()
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()

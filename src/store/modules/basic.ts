@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
+import store from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
 import { useStorage } from '@vueuse/core'

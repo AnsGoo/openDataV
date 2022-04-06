@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
+import store from '@/store'
 import type { UserInfo } from '@/types/storeTypes'
 import { TokenStorage } from '@/enum'
 

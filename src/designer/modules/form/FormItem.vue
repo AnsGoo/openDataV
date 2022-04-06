@@ -1,6 +1,6 @@
 <template>
   <el-form-item
-    v-for="{ key, label, type, selectOptions, arrayAttr } in children"
+    v-for="{ key, label, type, selectOptions } in children"
     :key="`${ukey}${key}`"
     :label="label"
   >
@@ -29,9 +29,7 @@
       @change="changed($event, key)"
     >
       <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">
-        {{
-          item.label
-        }}
+        {{ item.label }}
       </el-radio>
     </el-radio-group>
     <el-input-number

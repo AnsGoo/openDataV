@@ -1,8 +1,6 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <div class="screen" :style="filterStyle(canvasStyleData, ['width', 'height'])">
-      <ComponentWrapper v-for="(item, index) in componentData" :key="index" :component="item" />
-    </div>
+    <ComponentWrapper v-for="(item, index) in componentData" :key="index" :component="item" />
   </div>
 </template>
 
@@ -104,21 +102,9 @@ const setScale = () => {
 </script>
 
 <style scoped lang="less">
-@design_width: 1920px;
-@design_height: 1080px;
-
 @layer components {
   .bg {
     @apply w-screen h-screen;
-
-    .screen {
-      width: @design_width;
-      height: @design_height;
-      position: relative;
-      left: 50%;
-      transform-origin: 0 0;
-      transform: translateX(-50%);
-    }
   }
 }
 </style>

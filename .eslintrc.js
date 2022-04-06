@@ -78,6 +78,7 @@ module.exports = defineConfig({
     ],
     'vue/multi-word-component-names': 'off',
     'sonarjs/no-duplicate-string': 'off',
-    'sonarjs/cognitive-complexity': 'off'
+    'sonarjs/cognitive-complexity': 'off',
+    'sonarjs/no-identical-functions': 'off'
   }
 })

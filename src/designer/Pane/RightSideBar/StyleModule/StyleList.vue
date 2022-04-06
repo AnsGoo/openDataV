@@ -56,7 +56,6 @@ const styleKeys = computed(() => {
 // 样式页面改变，修改当前组件的样式：curComponent.style
 const changed = (key: string, val: string) => {
   if (props.curComponent) {
-    console.log(key, val)
     basicStore.setCurComponentStyle(key, val)
   }
 }

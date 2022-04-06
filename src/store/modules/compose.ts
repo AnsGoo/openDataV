@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { store } from '@/store'
+import store from '@/store'
 import type { AreaData } from '@/types/storeTypes'
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
