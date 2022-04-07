@@ -1,8 +1,8 @@
 import { App } from 'vue'
 
 import ContextMenu from './contextmenu'
-import ResizeDomDirective from './resize'
 import ActionDirective from './permission'
+import ResizeDomDirective from './resize'
 
 export default {
   install(app: App) {
