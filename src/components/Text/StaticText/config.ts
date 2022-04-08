@@ -15,8 +15,8 @@ const component: ComponentConfig<StaticText> = {
     height: 50,
     color: '#1E90FF',
     fontSize: 20,
-    fontWeight: 1,
-    fontFamily: ''
+    fontWeight: 100,
+    fontFamily: 'Arial'
   }
 }
 

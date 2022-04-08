@@ -3,7 +3,7 @@
     <!-- <div>{{ basicStore.name }}</div> -->
     <div class="tool-bar-item">
       <div>
-        <el-button size="small" @click="save" title="保存">
+        <el-button size="small" @click="save" title="保存" v-action="'add'">
           <el-icon style="vertical-align: middle">
             <icon-save-one theme="outline" size="22" fill="var(--el-color-primary)" />
           </el-icon>

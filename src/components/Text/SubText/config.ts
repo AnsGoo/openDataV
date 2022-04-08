@@ -17,7 +17,7 @@ const component: ComponentConfig<SubText> = {
     color: '#1E90FF',
     fontSize: 80,
     fontWeight: 900,
-    fontFamily: ''
+    fontFamily: 'Arial'
   }
 }
 

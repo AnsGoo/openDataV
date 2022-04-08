@@ -10,7 +10,7 @@ import { useResizeObserver } from '@vueuse/core'
 import mydark from '@/theme/mydark'
 echarts.registerTheme('mydark', mydark)
 const props = defineProps<{
-  element: Object
+  componentId: string
   propValue: Recordable<string>
 }>()
 

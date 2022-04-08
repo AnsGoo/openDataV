@@ -209,28 +209,26 @@ const getOption = (): EChartsOption => {
           {
             value: historyData,
             label: {
-              normal: {
-                show: true,
-                rich: {
-                  back: {
-                    align: 'center',
-                    lineHeight: 50,
-                    fontSize: 40,
-                    fontFamily: 'digifacewide',
-                    color: leftColor
-                  },
-                  unit: {
-                    fontFamily: '微软雅黑',
-                    fontSize: 15,
-                    lineHeight: 50,
-                    color: leftColor
-                  },
-                  downTxt: {
-                    lineHeight: 50,
-                    fontSize: 25,
-                    align: 'center',
-                    color: '#fff'
-                  }
+              show: true,
+              rich: {
+                back: {
+                  align: 'center',
+                  lineHeight: 50,
+                  fontSize: 40,
+                  fontFamily: 'Arial',
+                  color: leftColor
+                },
+                unit: {
+                  fontFamily: '微软雅黑',
+                  fontSize: 15,
+                  lineHeight: 50,
+                  color: leftColor
+                },
+                downTxt: {
+                  lineHeight: 50,
+                  fontSize: 25,
+                  align: 'center',
+                  color: '#fff'
                 }
               }
             }
@@ -272,7 +270,9 @@ const getOption = (): EChartsOption => {
       {
         name: '圆',
         type: 'scatter',
-        hoverAnimation: false,
+        emphasis: {
+          scale: true
+        },
         data: [0],
         xAxisIndex: 0,
         symbolSize: 25,
@@ -285,7 +285,9 @@ const getOption = (): EChartsOption => {
       {
         name: '白圆',
         type: 'scatter',
-        hoverAnimation: false,
+        emphasis: {
+          scale: true
+        },
         data: [0],
         xAxisIndex: 1,
         symbolSize: 35,
@@ -298,7 +300,9 @@ const getOption = (): EChartsOption => {
       {
         name: '外圆',
         type: 'scatter',
-        hoverAnimation: false,
+        emphasis: {
+          scale: true
+        },
         data: [0],
         xAxisIndex: 2,
         symbolSize: 43,
@@ -314,21 +318,19 @@ const getOption = (): EChartsOption => {
         yAxisIndex: 0,
         xAxisIndex: 3,
         label: {
-          normal: {
-            show: true,
-            position: 'left',
-            distance: 1,
-            color: 'white',
-            fontSize: 12,
-            formatter: function (params) {
-              if (params.dataIndex > maxValue || params.dataIndex < 0) {
-                return ''
+          show: true,
+          position: 'left',
+          distance: 1,
+          color: 'white',
+          fontSize: 12,
+          formatter: function (params) {
+            if (params.dataIndex > maxValue || params.dataIndex < 0) {
+              return ''
+            } else {
+              if (params.data === '-3') {
+                return params.dataIndex
               } else {
-                if (params.data === '-3') {
-                  return params.dataIndex
-                } else {
-                  return ''
-                }
+                return ''
               }
             }
           }

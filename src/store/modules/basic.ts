@@ -292,7 +292,7 @@ const useBasicStore = defineStore({
     getParentComponentData(indexs: number[]): ComponentInfo[] | undefined {
       let rootComponent: ComponentInfo = {
         subComponents: this.componentData,
-        component: '',
+        component: 'Root',
         display: false,
         style: {
           width: 0,
@@ -424,7 +424,7 @@ const useBasicStore = defineStore({
       let rootComponent: ComponentInfo = {
         subComponents: this.componentData,
         display: false,
-        component: '',
+        component: 'Root',
         style: {
           width: 0,
           left: 0,

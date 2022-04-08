@@ -208,6 +208,7 @@ const handleDrop = (event: DragEvent, index: string) => {
   const toIndex: string = calcDragIndex(compomentIndex, index)
   const result: boolean = isSameLayer(compomentIndex, index)
   const compoment: ComponentInfo | undefined = cutComponent(compomentIndex, result)
+  console.log(compoment)
   if (compoment && toIndex) {
     pasteComponent(toIndex, compoment, result)
   }
@@ -219,6 +220,8 @@ const cutComponent = (index: string, isMyLayer: boolean): ComponentInfo | undefi
   if (fatherComponent && fatherComponent.subComponents) {
     const components: ComponentInfo[] = fatherComponent.subComponents.splice(myindex, 1)
     const component: ComponentInfo = components[0]
+    console.log(component)
+    console.log(fatherComponent)
     if (isMyLayer || fatherComponent.component === 'Root') {
       return component
     } else if (fatherComponent.component === 'Group') {

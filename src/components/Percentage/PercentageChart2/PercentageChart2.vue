@@ -245,9 +245,7 @@ const getOption = (): EChartsOption => {
         z: 0,
         zlevel: 0,
         label: {
-          normal: {
-            position: 'center'
-          }
+          position: 'center'
         },
         data: [
           {
@@ -273,9 +271,7 @@ const getOption = (): EChartsOption => {
             value: 100 - historyData,
             name: '',
             label: {
-              normal: {
-                show: false
-              }
+              show: false
             },
             itemStyle: {
               color: '#173164'
@@ -292,7 +288,9 @@ const getOption = (): EChartsOption => {
         startAngle: 0,
         endAngle: 359.9,
         splitNumber: 8,
-        hoverAnimation: true,
+        emphasis: {
+          scale: true
+        },
         axisTick: {
           show: false
         },
