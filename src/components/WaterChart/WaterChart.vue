@@ -13,13 +13,14 @@ import type { TagType } from '@/types/wsTypes'
 import { debounce } from 'lodash-es'
 
 import mydark from '@/theme/mydark'
+import type { WaterChart } from './type'
 echarts.registerTheme('mydark', mydark)
 
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
   componentId: string
-  propValue: Recordable<string>
+  propValue: WaterChart
 }>()
 
 const chartEl = ref<ElRef>(null)
@@ -36,7 +37,7 @@ onMounted(() => {
     useEventBus('actual', handler)
   } else {
     clearInterval(intervalId)
-    intervalId = setInterval(updateData, parseInt(props.propValue.interval))
+    intervalId = setInterval(updateData, props.propValue.interval)
   }
 })
 
@@ -79,7 +80,7 @@ const delayUpdateData = debounce(() => {
 
 // 计算百分比数据
 const getValueData = () => {
-  const data = parseFloat((dataValue / parseFloat(props.propValue.maxValue)).toFixed(2))
+  const data = parseFloat((dataValue / props.propValue.maxValue).toFixed(2))
   if (data > 1.0) {
     return [1.0, 1.0]
   }
@@ -87,7 +88,7 @@ const getValueData = () => {
   return [data, data - 0.1]
 }
 
-const resizeHandler = (entries) => {
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   chart?.resize({ width, height })

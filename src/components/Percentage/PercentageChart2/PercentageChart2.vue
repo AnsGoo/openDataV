@@ -1,23 +1,23 @@
 <template>
-  <div ref="chartEl"></div>
+  <div ref="chartEl" v-resize="resizeHandler"></div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import type { BasicFetchResult } from '@/types/apiTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 import mydark from '@/theme/mydark'
+import type { PercentageChart } from './type'
 echarts.registerTheme('mydark', mydark)
 
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
   componentId: string
-  propValue: Recordable<any>
+  propValue: PercentageChart
 }>()
 const basicStore = useBasicStoreWithOut()
 const chartEl = ref<ElRef>(null)
@@ -50,11 +50,11 @@ function initData() {
     })
 }
 
-useResizeObserver(chartEl, (entries) => {
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   chart?.resize({ width, height })
-})
+}
 
 const getCirlPoint = (x0: number, y0: number, r: number, myAngle: number) => {
   let x1 = x0 + r * Math.cos((myAngle * Math.PI) / 180)

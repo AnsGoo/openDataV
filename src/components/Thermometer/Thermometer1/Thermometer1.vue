@@ -1,11 +1,10 @@
 <template>
-  <div ref="chartEl"></div>
+  <div ref="chartEl" v-resize="resizeHandler"></div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
@@ -17,13 +16,14 @@ import type { TagType } from '@/types/wsTypes'
 import type { GradientColorStop } from '@/utils/echarts/echarts'
 
 import mydark from '@/theme/mydark'
+import type { Thermometer1 } from './type'
 echarts.registerTheme('mydark', mydark)
 
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
   componentId: string
-  propValue: Recordable<any>
+  propValue: Thermometer1
 }>()
 const basicStore = useBasicStoreWithOut()
 const chartEl = ref<ElRef>(null)
@@ -123,7 +123,7 @@ function initData() {
     })
 }
 
-useResizeObserver(chartEl, (entries) => {
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   const option: any = chart?.getOption()
@@ -131,7 +131,7 @@ useResizeObserver(chartEl, (entries) => {
   option.xAxis[3].min = -(width / 2) + 50
   option.xAxis[3].max = width / 2
   chart?.setOption(option)
-})
+}
 
 const getOption = (): EChartsOption => {
   const maxValue = Number(props.propValue.maxValue || 100)

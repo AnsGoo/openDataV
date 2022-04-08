@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { BarChart } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<BarChart> = {
   component: 'BarChart',
   group: ComponentGroup.BAR,
   label: '柱状图',

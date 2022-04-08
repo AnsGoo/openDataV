@@ -299,7 +299,6 @@ const handleDragendShape = (e: MouseEvent) => {
     }
 
     const up = () => {
-      // hasMove && (await snapShotStore.recordSnapshot())
       // 触发元素停止移动事件，用于隐藏标线
       eventBus.emit('unmove')
       document.removeEventListener('mousemove', move)
@@ -404,7 +403,6 @@ const handleRotate = (e: MouseEvent) => {
     }
 
     const up = () => {
-      // hasMove && (await snapShotStore.recordSnapshot())
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
       // cursors.value = getCursor() // 根据旋转角度获取光标位置

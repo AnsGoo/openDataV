@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { GaugeTwo } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<GaugeTwo> = {
   component: 'Gauge2',
   label: '仪表盘2',
   group: ComponentGroup.GAUGE,

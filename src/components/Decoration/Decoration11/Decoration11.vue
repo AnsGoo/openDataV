@@ -66,9 +66,9 @@ defineProps<{
   propValue: Decoration11
 }>()
 
-const resizeHandler = (entries) => {
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
-  const rect = entry.contentRect
+  const rect: DOMRectReadOnly = entry.contentRect
   width.value = rect.width
   height.value = rect.height
 }

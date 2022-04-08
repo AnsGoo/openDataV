@@ -8,10 +8,11 @@ import { ref, onMounted, watch, onUnmounted } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 
 import mydark from '@/theme/mydark'
+import type { BarChart } from './type'
 echarts.registerTheme('mydark', mydark)
 const props = defineProps<{
   componentId: string
-  propValue: Recordable<string>
+  propValue: BarChart
 }>()
 
 const chartEl = ref<ElRef>(null)

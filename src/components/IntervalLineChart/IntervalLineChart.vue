@@ -11,13 +11,14 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 import mydark from '@/theme/mydark'
 import { warnMessage } from '@/utils/message'
+import type { IntervalLineChart } from './type'
 echarts.registerTheme('mydark', mydark)
 
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
   componentId: string
-  propValue: Recordable<any>
+  propValue: IntervalLineChart
 }>()
 const basicStore = useBasicStoreWithOut()
 const chartEl = ref<ElRef>(null)
@@ -67,7 +68,7 @@ const resizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) =
 }
 
 const getOption = (): EChartsOption => {
-  let highSerie: Recordable<string>[] = []
+  let highSerie: number[] = []
   let lowSerie: number[] = []
   const total = xAxis.length
   for (let i = 0; i < total; i++) {
@@ -127,7 +128,7 @@ const getOption = (): EChartsOption => {
     })
   }
   option.series = series
-  return option as EChartsOption
+  return option
 }
 
 const getData = async (url: string, params: Recordable<any>) => {

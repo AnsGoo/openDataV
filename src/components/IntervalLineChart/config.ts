@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { IntervalLineChart } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<IntervalLineChart> = {
   component: 'IntervalLineChart',
   group: ComponentGroup.LINE,
   label: '间隔线图',
@@ -12,7 +13,8 @@ const component: ComponentConfig = {
     data: '{}',
     interval: 3000,
     highflag: 400,
-    lowflag: 252
+    lowflag: 252,
+    method: 'GET'
   },
   icon: 'wenben',
   style: {

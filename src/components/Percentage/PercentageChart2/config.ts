@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { PercentageChart } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<PercentageChart> = {
   component: 'PercentageChart2',
   label: '百分比图2',
   group: ComponentGroup.PERCENTAGE,

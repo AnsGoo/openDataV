@@ -1,11 +1,10 @@
 <template>
-  <div ref="chartEl"></div>
+  <div ref="chartEl" v-resize="resizeHandler"></div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import { debounce } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
@@ -13,13 +12,14 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { TagType } from '@/types/wsTypes'
 import { useEventBus } from '@/bus/useEventBus'
 import mydark from '@/theme/mydark'
+import type { GaugeOne } from './type'
 echarts.registerTheme('mydark', mydark)
 
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
   componentId: string
-  propValue: Recordable<any>
+  propValue: GaugeOne
 }>()
 
 const chartEl = ref<ElRef>(null)
@@ -60,11 +60,11 @@ function initData() {
     })
 }
 
-useResizeObserver(chartEl, (entries) => {
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   chart?.resize({ width, height })
-})
+}
 
 const getOption = (): EChartsOption => {
   const highlight = '#03b7c9'
@@ -72,14 +72,7 @@ const getOption = (): EChartsOption => {
   const name = props.propValue.name
   const unit = props.propValue.unit
   const value = props.propValue.value
-  let option: Recordable<any> = {
-    // grid: {
-    //   top: '3%',
-    //   left: '3%',
-    //   right: '4%',
-    //   bottom: '10%',
-    //   containLabel: true
-    // },
+  let option: EChartsOption = {
     series: [
       // 外围刻度
       {
@@ -122,10 +115,10 @@ const getOption = (): EChartsOption => {
           fontWeight: 'bold'
         },
         pointer: {
-          show: 0
+          show: false
         },
         detail: {
-          show: 0
+          show: false
         }
       },
 
@@ -147,13 +140,13 @@ const getOption = (): EChartsOption => {
           }
         },
         axisTick: {
-          show: 0
+          show: false
         },
         splitLine: {
-          show: 0
+          show: false
         },
         axisLabel: {
-          show: 0
+          show: false
         },
         pointer: {
           show: true,
@@ -184,7 +177,7 @@ const getOption = (): EChartsOption => {
       }
     ]
   }
-  return option as EChartsOption
+  return option
 }
 const updateData = debounce(() => {
   const option: EChartsOption = getOption()
@@ -201,8 +194,7 @@ const initChart = () => {
 if (basicStore.isEditMode) {
   watch(
     () => props.propValue,
-    (newValue, _) => {
-      console.log(newValue)
+    () => {
       if (chart) {
         chart.clear()
         chart.setOption(getOption())

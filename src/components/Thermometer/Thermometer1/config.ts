@@ -1,7 +1,8 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { Thermometer1 } from './type'
 
-const component: ComponentConfig = {
+const component: ComponentConfig<Thermometer1> = {
   component: 'Thermometer1',
   label: '温度计1',
   group: ComponentGroup.Thermometer,

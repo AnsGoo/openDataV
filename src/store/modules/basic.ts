@@ -323,7 +323,6 @@ const useBasicStore = defineStore({
         this.getParentComponentData(indexs)
       if (fatherComponentData) {
         if (myindex > 0) {
-          // await snapShotStore.recordSnapshot()
           swap(fatherComponentData, myindex, myindex - 1)
           this.saveComponentData()
         } else {
@@ -343,7 +342,6 @@ const useBasicStore = defineStore({
       if (fatherComponentData) {
         const len: number = fatherComponentData.length
         if (myindex < len - 1) {
-          // await snapShotStore.recordSnapshot()
           swap(fatherComponentData, myindex, myindex + 1)
           this.saveComponentData()
         } else {
@@ -364,7 +362,6 @@ const useBasicStore = defineStore({
       if (fatherComponentData) {
         const len: number = fatherComponentData.length
         if (myindex < len - 1) {
-          // await snapShotStore.recordSnapshot()
           const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
           fatherComponentData.push(myComponments[0])
           this.saveComponentData()
@@ -383,7 +380,6 @@ const useBasicStore = defineStore({
       const fatherComponentData: Array<ComponentInfo> | undefined =
         this.getParentComponentData(indexs)
       if (fatherComponentData && myindex > 0) {
-        // await snapShotStore.recordSnapshot()
         const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
         fatherComponentData.unshift(myComponments[0])
         this.saveComponentData()
@@ -402,7 +398,6 @@ const useBasicStore = defineStore({
       const fatherComponentData: Array<ComponentInfo> | undefined =
         this.getParentComponentData(indexs)
       if (fatherComponentData) {
-        // await snapShotStore.recordSnapshot()
         fatherComponentData.splice(myindex, 1)
         this.saveComponentData()
 

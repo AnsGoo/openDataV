@@ -1,11 +1,10 @@
 <template>
-  <div ref="chartEl"></div>
+  <div ref="chartEl" v-resize="resizeHandler"></div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { ref, onMounted, watch, computed, onUnmounted } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 import { http } from '@/utils/http'
 import { debounce } from 'lodash-es'
 
@@ -13,13 +12,14 @@ import type { TagType } from '@/types/wsTypes'
 import { useEventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import mydark from '@/theme/mydark'
+import type { GaugeTwo } from './type'
 echarts.registerTheme('mydark', mydark)
 
 type EChartsOption = echarts.EChartsOption
 
 const props = defineProps<{
   componentId: string
-  propValue: Recordable<any>
+  propValue: GaugeTwo
 }>()
 
 const basicStore = useBasicStoreWithOut()
@@ -32,14 +32,14 @@ onMounted(() => {
   initChart()
 })
 
-useResizeObserver(chartEl, (entries) => {
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   chart?.resize({ width, height })
-})
+}
 
 const getOption = (): EChartsOption => {
-  const option = {
+  const option: EChartsOption = {
     series: [
       {
         type: 'gauge',
@@ -104,14 +104,13 @@ const getOption = (): EChartsOption => {
         ]
       }
     ]
-  } as EChartsOption
+  }
 
   // 如果起始角度和结束角度不一致，则需要设置起始角度，否则就采用图表默认的角度
   if (chartConfig.value.startAngle !== chartConfig.value.endAngle) {
     option.series![0].startAngle = chartConfig.value.startAngle
     option.series![0].endAngle = chartConfig.value.endAngle
   }
-
   return option
 }
 
@@ -157,19 +156,20 @@ const initChart = () => {
   chart.setOption(getOption())
 }
 
-watch(
-  () => props.propValue,
-  (newValue, _) => {
-    console.log(newValue)
-    if (chart) {
-      chart.clear()
-      chart.setOption(getOption())
+if (basicStore.isEditMode) {
+  watch(
+    () => props.propValue,
+    () => {
+      if (chart) {
+        chart.clear()
+        chart.setOption(getOption())
+      }
+    },
+    {
+      deep: true
     }
-  },
-  {
-    deep: true
-  }
-)
+  )
+}
 
 const chartConfig = computed(() => {
   return {
@@ -223,7 +223,7 @@ const chartConfig = computed(() => {
   }
 })
 
-const calcAxisColor = () => {
+const calcAxisColor = (): [number, string][] => {
   return props.propValue.axisColor.split(';').map((item) => {
     const arr = item.split(',')
     return [Number(arr[0]), arr[1]]
