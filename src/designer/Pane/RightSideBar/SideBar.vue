@@ -1,6 +1,6 @@
 <template>
   <div class="side-bar">
-    <dv-tabs :mode="mode">
+    <dv-tabs :mode="mode" v-if="curComponent">
       <template #prefix>
         <!-- <el-icon style="vertical-align: middle"> -->
         <icon-indent-right
@@ -28,12 +28,7 @@
           <span>样式</span>
         </template>
         <div v-show="mode === 'expand'">
-          <StyleList v-if="curComponent" :curComponent="curComponent" />
-          <el-descriptions v-else class="placeholder">
-            <el-descriptions-item>
-              <el-empty description="请选择组件" />
-            </el-descriptions-item>
-          </el-descriptions>
+          <StyleList :curComponent="curComponent" />
         </div>
       </dv-tab-pane>
       <dv-tab-pane name="attr">
@@ -44,14 +39,39 @@
           <span>属性</span>
         </template>
         <div v-show="mode === 'expand'">
-          <AttrList v-if="curComponent" :curComponent="curComponent" />
-          <el-descriptions v-else class="placeholder">
-            <el-descriptions-item>
-              <el-empty description="请选择组件" />
-            </el-descriptions-item>
-          </el-descriptions>
+          <AttrList :curComponent="curComponent" />
         </div>
       </dv-tab-pane>
+      <dv-tab-pane name="data">
+        <template #label>
+          <el-icon style="vertical-align: middle">
+            <icon-data theme="outline" size="24" />
+          </el-icon>
+          <span>数据</span>
+        </template>
+        <div v-show="mode === 'expand'">
+          <DataAttr />
+        </div>
+      </dv-tab-pane>
+    </dv-tabs>
+    <dv-tabs :mode="mode" v-else>
+      <template #prefix>
+        <!-- <el-icon style="vertical-align: middle"> -->
+        <icon-indent-right
+          v-if="expandStatus"
+          theme="outline"
+          size="18"
+          fill="var(--el-color-primary)"
+          @click="expandSideBar"
+        />
+        <icon-indent-left
+          v-else
+          theme="outline"
+          size="18"
+          fill="var(--el-color-primary)"
+          @click="expandSideBar"
+        />
+      </template>
       <dv-tab-pane name="canvas">
         <template #label>
           <el-icon style="vertical-align: middle">
@@ -72,7 +92,8 @@ import Canvas from './Canvas.vue'
 import StyleList from './StyleModule' // 右侧属性列表
 import AttrList from './AttrModule'
 import { DvTabs, DvTabPane } from '@/designer/modules/tabs'
-import { ElDescriptions, ElDescriptionsItem, ElEmpty, ElIcon } from 'element-plus'
+import { ElIcon } from 'element-plus'
+import DataAttr from './DataModule'
 
 const basicStore = useBasicStoreWithOut()
 const mode = ref<string>('expand')

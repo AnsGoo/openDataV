@@ -33,7 +33,9 @@ import {
   Moon,
   Sun,
   IndentRight,
-  IndentLeft
+  IndentLeft,
+  Data,
+  AddThree
 } from '@icon-park/vue-next'
 
 export default {
@@ -71,5 +73,7 @@ export default {
     app.component(Next.name, Next)
     app.component(IndentRight.name, IndentRight)
     app.component(IndentLeft.name, IndentLeft)
+    app.component(Data.name, Data)
+    app.component(AddThree.name, AddThree)
   }
 }
