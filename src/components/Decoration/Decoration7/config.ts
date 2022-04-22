@@ -17,7 +17,8 @@ const component: ComponentConfig<Decoration7> = {
     height: 60,
     color: 'rgba(0, 206, 209, 1)',
     fontSize: 20,
-    fontWeight: 600
+    fontWeight: 600,
+    fontFamily: 'Arial'
   }
 }
 
