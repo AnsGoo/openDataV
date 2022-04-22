@@ -27,7 +27,7 @@
   <el-form-item key="intervalTime" label="间隔时间" v-if="formData.isInterval">
     <el-input-number v-model="formData.intervalTime" placeholder="间隔时间" />
   </el-form-item>
-  <el-form-item :label="`参数:${item}`" v-for="(item, _) in paramList" :key="item">
+  <el-form-item :label="`参数:${item}`" v-for="item in paramList" :key="item">
     <el-input v-model="formData.params[item]" />
   </el-form-item>
   <el-form-item key="addParams" label="请求参数">
