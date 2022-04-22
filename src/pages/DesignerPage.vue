@@ -9,8 +9,8 @@
       </section>
       <!-- 中间画布 -->
       <section class="center scrollbar" ref="editor" v-resize="editorWindowResizeHandler">
-        <div class="content scrollbar" :style="scrobarStyle">
-          <Ruler :borderStyle="rulerBorderStyle">
+        <div class="scrollbar-content" :style="scrobarStyle">
+          <Ruler :borderStyle="rulerBorderStyle" class="ruler">
             <Editor
               @drop="handleDrop"
               @dragover="handleDragOver"
@@ -76,8 +76,8 @@ const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)
 const scrobarStyle = computed(() => {
   return {
-    width: windowWidth.value - 18 + 'px',
-    height: windowHeight.value - 18 + 'px'
+    width: windowWidth.value + 'px',
+    height: windowHeight.value + 'px'
   }
 })
 
@@ -184,16 +184,9 @@ onUnmounted(() => {
     flex: 1;
     border: var(--el-color-primary) 1px solid;
   }
-
-  .content {
-    @apply overflow-auto;
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-content: center;
-    justify-content: center;
+  :deep(.vue-ruler-wrapper) {
+    margin: 0 auto;
   }
-
   .placeholder {
     @apply text-gray-800 text-center;
   }

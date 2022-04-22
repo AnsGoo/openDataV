@@ -36,7 +36,7 @@ const basicStore = useBasicStoreWithOut()
 
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
 
-const myPixel = ref<string>('')
+const myPixel = ref<string>('本设备')
 const styleKeys = [
   { key: 'width', label: '宽度', type: 'number' },
   { key: 'height', label: '高度', type: 'number' },
