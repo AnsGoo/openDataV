@@ -1,30 +1,20 @@
 <template>
-  <span>{{ customeText }}</span>
+  <span v-if="propValue.type === 'text'">{{ customeText }}</span>
+  <span v-else-if="propValue.type === 'symbol'" :class="['icon', 'iconfont', customeText]"></span>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import { useEventBus } from '@/bus/useEventBus'
-
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { computed } from 'vue'
 import type { StaticText } from './type'
-
-const basicStore = useBasicStoreWithOut()
 
 const props = defineProps<{
   componentId: string
   propValue: StaticText
 }>()
 
-const customeText = ref<string>(props.propValue.text)
-
-const handler = (event) => {
-  customeText.value = event.value
-}
-
-if (basicStore.isEditMode) {
-  useEventBus(props.componentId, handler)
-}
+const customeText = computed<string>(() => {
+  return props.propValue.text
+})
 </script>
 
 <style lang="less" scoped>

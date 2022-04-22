@@ -7,12 +7,13 @@ const component: ComponentConfig<StaticText> = {
   group: ComponentGroup.TEXT,
   label: '静态文本',
   propValue: {
+    type: 'text',
     text: '自定义文本'
   },
   icon: 'wenben',
   style: {
     width: 150,
-    height: 50,
+    height: 20,
     color: '#1E90FF',
     fontSize: 20,
     fontWeight: 100,
@@ -54,6 +55,15 @@ const attrs: Array<GroupType> = [
     name: '基础配置',
     uid: 'base',
     children: [
+      {
+        key: 'type',
+        label: '文本类型',
+        type: 'select',
+        selectOptions: [
+          { value: 'text', label: '文本' },
+          { value: 'symbol', label: '符号' }
+        ]
+      },
       {
         key: 'text',
         label: '自定义文本',
