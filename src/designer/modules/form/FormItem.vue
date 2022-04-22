@@ -52,6 +52,11 @@
       v-model="formData[key]"
       @change="changed($event, key)"
     />
+    <LinearGradient
+      v-else-if="type === 'linearGradient'"
+      v-model:value="formData[key]"
+      @change="changed($event, key)"
+    />
     <el-input v-else :type="type" v-model="formData[key]" @change="changed($event, key)" />
   </el-form-item>
 </template>
@@ -61,6 +66,7 @@ import { reactive, watch } from 'vue'
 import ColorPicker from './ColorPicker.vue'
 import FontStyle from './FontStyle.vue'
 import FontWeight from './FontWeight.vue'
+import LinearGradient from './LinearGradient.vue'
 import type { AttrType } from '@/types/component'
 import {
   ElInput,

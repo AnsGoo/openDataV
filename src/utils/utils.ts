@@ -406,6 +406,8 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
       return { transform: `${key}(${(value[0], value[1])}deg)` }
     case 'backgroundImage':
       return { backgroundImage: `url(${value})` }
+    case 'linearGradient':
+      return { background: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})` }
     default:
       return { [key]: value }
   }

@@ -1,22 +1,16 @@
 import Axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios'
 import { httpConfig, ResultType } from '@/utils/http/config'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { useRouter, useRoute } from 'vue-router'
-import { LOGIN_URL } from '@/enum'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
-const route: Route = useRoute()
 
 class AxiosHttp {
   private axiosInstance: AxiosInstance
   private isBlock = false
-  private isLogout = false
-  constructor(isBlock = false, isLogout = false) {
+  constructor(isBlock = false) {
     this.axiosInstance = Axios.create(httpConfig())
     this.httpHookRequest()
     this.httpHookResponse()
     this.isBlock = isBlock
-    this.isLogout = isLogout
   }
 
   // 请求拦截
@@ -60,31 +54,7 @@ class AxiosHttp {
 
   // 异常请求处理
   private errorHandler(status: number, message?: string): void {
-    const router: Router = useRouter()
-    const userStore = useUserStoreWithOut()
-    switch (status) {
-      case 401: {
-        // 未登录
-        if (this.isLogout) {
-          userStore.logout()
-          router.push({
-            path: LOGIN_URL,
-            query: {
-              redirect: route.fullPath
-            }
-          })
-        }
-        break
-      }
-      case 403: {
-        // 跳转到登录页面，并删除 Token 记录
-        router.push({ name: '403' })
-        break
-      }
-      default: {
-        console.log(message)
-      }
-    }
+    console.log(status, message)
   }
 
   public get<T = any>(config: AxiosRequestConfig): Promise<T> {
@@ -122,5 +92,5 @@ class AxiosHttp {
 }
 
 const http = new AxiosHttp(true)
-const apiHttp = new AxiosHttp(false, true)
+const apiHttp = new AxiosHttp(false)
 export { http, apiHttp }
