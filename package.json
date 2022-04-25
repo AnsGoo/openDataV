@@ -53,7 +53,6 @@
     "stylelint-config-recommended-vue": "^1.0.0",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
     "typescript": "^4.4.3",
-    "unplugin-vue-components": "^0.15.6",
     "vite": "^2.6.0",
     "vue-eslint-parser": "^7.11.0",
     "vue-tsc": "^0.3.0"
