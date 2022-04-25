@@ -1,7 +1,7 @@
 <template>
   <div>
     <teleport to="body">
-      <div v-show="visible" class="tab-container" ref="iconDiv">
+      <div v-show="visible" class="tab-container" v-click-outside="clickOutsideHandler">
         <div class="total">图标数量：{{ iconList.length }}</div>
         <ul class="icon_lists">
           <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
@@ -14,10 +14,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive } from 'vue'
 import { copyText } from '@/utils/utils'
 import { successMessage } from '@/utils/message'
-import { onClickOutside } from '@vueuse/core'
 
 import icons from '@/enum/icon'
 
@@ -31,12 +30,9 @@ const emits = defineEmits<{
   (e: 'update:visible', visible: boolean): void
 }>()
 
-const iconDiv = ref<ElRef>(null)
-
-onClickOutside(iconDiv, () => {
+const clickOutsideHandler = () => {
   emits('update:visible', false)
-})
-
+}
 const handleClick = (icon: string) => {
   copyText(icon)
   successMessage(`复制图标: ${icon}`)

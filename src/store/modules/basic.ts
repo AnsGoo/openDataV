@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import store from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
-import { useStorage } from '@vueuse/core'
 import type { ComponentInfo } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
@@ -19,13 +18,9 @@ const baseCanvasStyleData: CanvasStyleData = {
   dataWs: '',
   image: (import.meta.env.VITE_BACKGROUND as string) || '/images/bg.jpg'
 }
-const storageComponentData = useStorage('canvasData', JSON.stringify([]), window.localStorage)
 
-const storageCanvasData = useStorage(
-  'canvasStyle',
-  JSON.stringify(baseCanvasStyleData),
-  window.localStorage
-)
+window.localStorage.setItem('canvasData', JSON.stringify([]))
+window.localStorage.setItem('canvasStyle', JSON.stringify(baseCanvasStyleData))
 
 const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
   get(target: CanvasStyleData, key) {
@@ -33,7 +28,7 @@ const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
   },
   set(target: CanvasStyleData, key, value) {
     Reflect.set(target, key, value)
-    storageCanvasData.value = JSON.stringify(target)
+    window.localStorage.setItem('canvasStyle', JSON.stringify(target))
     return true
   }
 }
@@ -439,7 +434,8 @@ const useBasicStore = defineStore({
       return rootComponent
     },
     saveComponentData() {
-      storageComponentData.value = JSON.stringify(this.componentData)
+      // storageComponentData.value = JSON.stringify(this.componentData)
+      window.localStorage.setItem('canvasData', JSON.stringify(this.componentData))
       new Promise((resolve) => {
         resolve(snapShotStore.saveSnapshot(this.componentData, this.canvasStyleData))
       })

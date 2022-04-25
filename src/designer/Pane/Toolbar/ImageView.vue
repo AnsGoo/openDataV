@@ -1,7 +1,7 @@
 <template>
   <div>
     <teleport to="body">
-      <ElScrollbar class="container" v-show="visible" ref="imgDiv">
+      <ElScrollbar class="container" v-show="visible" v-click-outside="clickOutsideHandler">
         <div v-for="item in images" :key="item.md5">
           <el-card class="card">
             <img :src="`${baseURL}${item.url}`" class="image" @click="handleClick(item.url)" />
@@ -32,7 +32,6 @@
 import { computed, onMounted, ref } from 'vue'
 import { copyText } from '@/utils/utils'
 import { successMessage, warnMessage } from '@/utils/message'
-import { onClickOutside } from '@vueuse/core'
 import type { ImageFile } from '@/types/file'
 import { getImages } from '@/api/file'
 import { ElCard, ElUpload, ElScrollbar, ElIcon } from 'element-plus'
@@ -64,13 +63,11 @@ const emits = defineEmits<{
   (e: 'update:visible', visible: boolean): void
 }>()
 
-const imgDiv = ref<ElRef>(null)
-
 let images = ref<ImageFile[]>([])
 
-onClickOutside(imgDiv, () => {
+const clickOutsideHandler = () => {
   emits('update:visible', false)
-})
+}
 
 const handleClick = (url: string) => {
   copyText(`${baseURL.value}${url}`)
