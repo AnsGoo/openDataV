@@ -1,7 +1,6 @@
 import type { Ref } from 'vue'
 import * as echarts from 'echarts'
 import mydark from '@/theme/mydark'
-import { useResizeObserver } from '@vueuse/core'
 import { EChartTypeEnum } from '@/enum'
 import { onMounted, onUnmounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
@@ -35,13 +34,6 @@ export const useEChart = (
   const basicStore = useBasicStoreWithOut()
   let chart: echarts.EChartsType | null = null
   const option: EChartsOption = {}
-
-  // 容器变化时，图表重新渲染
-  useResizeObserver(chartEl, (entries) => {
-    const entry = entries[0]
-    const { width, height } = entry.contentRect
-    chart?.resize({ width, height })
-  })
 
   const getOptions = (): EChartsOption => {
     option.color = propValue.color

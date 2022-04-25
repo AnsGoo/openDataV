@@ -136,7 +136,8 @@ class RouteView {
     }
 
     const myRouter = this.router as Router
-    myRouter.afterEach(() => {
+    myRouter.afterEach((to) => {
+      document.title = (to?.meta?.title as string) || import.meta.env.VITE_APP_TITLE
       NProgress.done()
     })
   }

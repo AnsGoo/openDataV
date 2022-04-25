@@ -1,11 +1,10 @@
 <template>
-  <div ref="chartEl"></div>
+  <div ref="chartEl" v-resize="resizeHandler"></div>
 </template>
 
 <script setup lang="ts">
 import * as echarts from 'echarts'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
-import { useResizeObserver } from '@vueuse/core'
 
 import mydark from '@/theme/mydark'
 import type { BarChart } from './type'
@@ -22,11 +21,11 @@ onMounted(() => {
   initChart()
 })
 
-useResizeObserver(chartEl, (entries) => {
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
   chart?.resize({ width, height })
-})
+}
 
 function getOption() {
   let propValue = props.propValue

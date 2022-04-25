@@ -12,7 +12,6 @@
   "dependencies": {
     "@icon-park/vue-next": "^1.3.6",
     "@vueuse/core": "^6.6.2",
-    "@vueuse/router": "^6.7.3",
     "axios": "^0.23.0",
     "dexie": "^3.2.1",
     "echarts": "^5.2.1",
@@ -27,8 +26,7 @@
     "pinia": "^2.0.0-rc.10",
     "swiper": "^7.4.1",
     "vue": "^3.2.20",
-    "vue-router": "^4.0.12",
-    "vue-types": "^4.1.1"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@tailwindcss/postcss7-compat": "^2.2.16",
