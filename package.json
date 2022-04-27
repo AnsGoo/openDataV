@@ -10,6 +10,13 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@codemirror/autocomplete": "^0.20.0",
+    "@codemirror/basic-setup": "^0.20.0",
+    "@codemirror/commands": "^0.20.0",
+    "@codemirror/gutter": "^0.19.9",
+    "@codemirror/lang-python": "^0.20.0",
+    "@codemirror/theme-one-dark": "^0.20.0",
+    "@codemirror/view": "^0.20.1",
     "@icon-park/vue-next": "^1.3.6",
     "axios": "^0.23.0",
     "dexie": "^3.2.1",
@@ -17,12 +24,14 @@
     "echarts-gl": "^2.0.8",
     "echarts-liquidfill": "3",
     "element-plus": "^1.1.0-beta.24",
+    "error-stack-parser": "^2.0.7",
     "flv.js": "^1.6.2",
     "lodash-es": "^4.17.21",
     "mitt": "^3.0.0",
     "moment": "^2.29.1",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.0-rc.10",
+    "pyodide": "^0.20.0",
     "swiper": "^7.4.1",
     "vue": "^3.2.20",
     "vue-router": "^4.0.12"
@@ -54,6 +63,7 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
     "typescript": "^4.4.3",
     "vite": "^2.6.0",
+    "vite-plugin-resolve-externals": "^0.2.1",
     "vue-eslint-parser": "^7.11.0",
     "vue-tsc": "^0.3.0"
   },
