@@ -69,6 +69,7 @@ class RouteView {
       // 如果网站不需要登录认证，所有路由直接切换
       if (to.meta.ignoreAuth) {
         next()
+        return
       }
       if (import.meta.env.VITE_APP_NO_AUTH === NoAuth.NO_AUTH) {
         next()
