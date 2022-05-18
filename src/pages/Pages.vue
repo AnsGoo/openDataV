@@ -111,7 +111,7 @@ import {
 } from '@/api/pages'
 import type { LayoutData } from '@/types/apiTypes'
 import { onMounted, reactive, ref } from 'vue'
-import defaultImg from '@/assets/default.jpg'
+import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
 import { copyText } from '@/utils/utils'
 import { successMessage, errorMessage, confirmMessage } from '@/utils/message'
