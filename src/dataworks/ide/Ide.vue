@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { ElButton } from 'element-plus'
 import CodeEditor from '../components/CodeEditor.vue'
 import type { PyodideInterface } from 'pyodide/api'
