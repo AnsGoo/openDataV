@@ -50,18 +50,17 @@ const emits = defineEmits<{
 
 const changed = (key: string, value: string | number) => {
   linearGradient.value[key] = value
+  console.log(linearGradient.value)
   emits('update:value', linearGradient.value)
   emits('change', linearGradient.value)
 }
+
 watch(
   () => props.value,
   (val) => {
     linearGradient.value.angle = val.angle
     linearGradient.value.color1 = val.color1
     linearGradient.value.color2 = val.color2
-  },
-  {
-    deep: true
   }
 )
 </script>

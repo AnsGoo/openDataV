@@ -80,21 +80,24 @@ const updateFormData = debounce((newVal: Recordable<any>) => {
 }, 200)
 
 const resetFormData = () => {
-  cleanObjectProp(formData)
   if (props.curComponent) {
-    updateFormData({
+    cleanObjectProp(formData)
+    const data = {
       ...props.curComponent.style,
       ...(props.curComponent.groupStyle || {})
-    })
+    }
+    updateFormData(data)
   }
 }
 
 watch(
-  [() => props.curComponent.style, () => props.curComponent.groupStyle],
+  [() => props.curComponent],
   () => {
-    resetFormData()
+    if (props.curComponent && props.curComponent.id) {
+      resetFormData()
+    }
   },
-  { immediate: true }
+  { immediate: true, deep: true }
 )
 </script>
 

@@ -48,14 +48,13 @@ const predefineColors: string[] = reactive([
 const colorValue = ref<string>(props.value)
 
 const changeColor = (val: string) => {
-  colorValue.value = val || ''
+  colorValue.value = val
   emits('update:value', colorValue.value)
   emits('change', colorValue.value)
 }
-
 watch(
   () => props.value,
-  (val) => {
+  (val: string) => {
     colorValue.value = val
   }
 )
