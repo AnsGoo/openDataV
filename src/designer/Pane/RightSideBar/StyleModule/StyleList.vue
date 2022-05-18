@@ -63,6 +63,7 @@ const changed = (key: string, val: string) => {
 const changeStyle = (eventValue: any) => {
   const attrVal = eventValue as Recordable<any>
   if (props.curComponent && props.curComponent.id === attrVal.id) {
+    console
     updateFormData(attrVal.style)
   }
 }
@@ -89,7 +90,7 @@ const resetFormData = () => {
 }
 
 watch(
-  () => props.curComponent.id,
+  [() => props.curComponent.style, () => props.curComponent.groupStyle],
   () => {
     resetFormData()
   },

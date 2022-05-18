@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { ref, watch } from 'vue'
 import { ElInputNumber } from 'element-plus'
 import ColorPicker from './ColorPicker.vue'
 
@@ -24,7 +24,7 @@ interface LinearGradient {
   color2: string
 }
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     value: LinearGradient
   }>(),
@@ -37,7 +37,11 @@ withDefaults(
   }
 )
 
-const linearGradient = reactive<LinearGradient>({ angle: 0, color1: '', color2: '' })
+const linearGradient = ref<LinearGradient>({
+  angle: props.value.angle || 0,
+  color1: props.value.color1 || '',
+  color2: props.value.color2 || ''
+})
 
 const emits = defineEmits<{
   (e: 'update:value', value: LinearGradient): void
@@ -45,8 +49,19 @@ const emits = defineEmits<{
 }>()
 
 const changed = (key: string, value: string | number) => {
-  linearGradient[key] = value
-  emits('update:value', linearGradient)
-  emits('change', linearGradient)
+  linearGradient.value[key] = value
+  emits('update:value', linearGradient.value)
+  emits('change', linearGradient.value)
 }
+watch(
+  () => props.value,
+  (val) => {
+    linearGradient.value.angle = val.angle
+    linearGradient.value.color1 = val.color1
+    linearGradient.value.color2 = val.color2
+  },
+  {
+    deep: true
+  }
+)
 </script>
