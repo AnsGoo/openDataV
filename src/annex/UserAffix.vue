@@ -1,21 +1,21 @@
 <template>
   <div class="login-affix">
-    <div class="box">
-      <div class="circle center" @click="handlerShow">
-        <span>{{ username.toUpperCase()[0] }}</span>
-      </div>
-      <div circle class="circle item logout" @click="logout" v-show="isShow">
+    <div class="box" v-if="isShow">
+      <div class="circle item" @click="logout">
         <span class="iconfont icon-kaiguan"></span>
       </div>
-      <div circle class="circle item setting" v-show="isShow" @click="toPath('Setting')">
+      <div class="circle item" @click="toPath('Setting')">
         <span class="iconfont icon-leijianzhuxiulix"></span>
       </div>
-      <div circle class="circle item home" v-show="isShow" @click="toPath('Home')">
+      <div class="circle item" @click="toPath('Home')">
         <span class="iconfont icon-shouye-moren"></span>
       </div>
-      <div circle class="circle item page" v-show="isShow" @click="toPath('Pages')">
+      <div class="circle item" @click="toPath('Pages')">
         <span class="iconfont icon-liebiao"></span>
       </div>
+    </div>
+    <div class="circle center" @click="handlerShow">
+      <span>{{ username.toUpperCase()[0] || 'A  ' }}</span>
     </div>
   </div>
 </template>
@@ -50,62 +50,42 @@ const handlerShow = () => {
 </script>
 <style scoped lang="less">
 .login-affix {
-  position: fixed;
+  position: absolute;
   left: calc(100% - 100px);
-  top: calc(100% - 120px);
+  bottom: 10px;
   z-index: 9999;
 
+  .center {
+    position: absolute;
+    bottom: 10px;
+  }
+
   .box {
-    position: relative;
-    // transition: 0s display;
+    position: absolute;
+    bottom: 60px;
+    overflow: hidden;
 
-    // &:hover .item{
-    //   display: block;
-    //   transition-delay:10s;
-    // }
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      border-color: #409eff;
-      border-width: 1px;
-      height: 40px;
-      width: 40px;
-      background: #409eff;
-      color: #fff;
-      vertical-align: middle;
-      text-align: center;
-
+    .item {
       & span {
         width: 100%;
-        height: 100%;
+        height: 40px;
         line-height: 40px;
-      }
-      &.center {
-        top: 0;
-        left: 0;
-        border-radius: 50%;
-        border-width: 1px;
-      }
-      &.logout {
-        top: -60px;
-        left: 0px;
-      }
-
-      &.setting {
-        top: -30px;
-        left: -46px;
-      }
-
-      &.home {
-        top: 30px;
-        left: -46px;
-      }
-
-      &.page {
-        top: 60px;
-        left: 0px;
       }
     }
   }
+}
+
+.circle {
+  border-radius: 50%;
+  border-color: #409eff;
+  border-width: 1px;
+  height: 40px;
+  width: 40px;
+  line-height: 40px;
+  background: #409eff;
+  color: #fff;
+  vertical-align: middle;
+  text-align: center;
+  margin: 10px 0;
 }
 </style>

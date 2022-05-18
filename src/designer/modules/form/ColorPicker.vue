@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, watch } from 'vue'
 import { ElInput, ElColorPicker } from 'element-plus'
 
 const props = withDefaults(
@@ -52,6 +52,13 @@ const changeColor = (val: string) => {
   emits('update:value', colorValue.value)
   emits('change', colorValue.value)
 }
+
+watch(
+  () => props.value,
+  (val) => {
+    colorValue.value = val
+  }
+)
 </script>
 
 <style scoped>
