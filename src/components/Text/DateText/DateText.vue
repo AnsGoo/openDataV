@@ -4,8 +4,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
-import moment from 'moment'
-
+import dayjs from 'dayjs'
 import type { DateText } from './type'
 
 const props = defineProps<{
@@ -13,11 +12,11 @@ const props = defineProps<{
   propValue: DateText
 }>()
 let intervalId: IntervalHandle
-const customeText = ref<string>(moment(Date.now()).format(props.propValue.format))
+const customeText = ref<string>(dayjs().format(props.propValue.format || 'YYYY-MM-DD HH:mm:ss'))
 
 const updateData = () => {
   const newformat: string = props.propValue.format
-  customeText.value = moment(Date.now()).format(newformat)
+  customeText.value = dayjs().format(newformat || 'YYYY-MM-DD HH:mm:ss')
 }
 onMounted(() => {
   intervalId = setInterval(updateData, 1000)

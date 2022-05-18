@@ -30,6 +30,7 @@
           <el-input
             placeholder="请输入密码"
             style="width: 100%; min-width: 360px"
+            type="password"
             v-model="formData.password"
             @keydown.enter="loginAction"
           />
