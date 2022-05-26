@@ -90,11 +90,11 @@ const resetFormData = () => {
 }
 
 watch(
-  [() => props.curComponent.style, () => props.curComponent.groupStyle],
+  [() => props.curComponent.id, () => props.curComponent.style],
   () => {
     resetFormData()
   },
-  { immediate: true }
+  { immediate: true, deep: true }
 )
 </script>
 
