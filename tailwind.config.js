@@ -6,14 +6,14 @@ module.exports = {
     },
     darkMode: false, // or 'media' or 'class'
     theme: {
-        extend: {},
+        extend: {}
     },
     variants: {
         extend: {
             cursor: ['active', 'hover'],
             backgroundColor: ['hover'],
-            color: ['hover', 'active'],
-        },
+            color: ['hover', 'active']
+        }
     },
-    plugins: [],
+    plugins: []
 }

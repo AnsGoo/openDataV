@@ -91,7 +91,7 @@ const resetFormData = () => {
 }
 
 watch(
-  [() => props.curComponent],
+  [() => props.curComponent.id, () => props.curComponent.style],
   () => {
     if (props.curComponent && props.curComponent.id) {
       resetFormData()

@@ -21,12 +21,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
   }
 
   return {
-    plugins: [
-      vue(),
-      resolveExternalsPlugin(
-        {"fs/promises": "fs/promises"}
-      )
-    ],
+    plugins: [vue(), resolveExternalsPlugin({ 'fs/promises': 'fs/promises' })],
     base: './',
     resolve: {
       alias: {
@@ -44,7 +39,8 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       open: false,
       proxy: createProxy(JSON.parse(VITE_APP_PROXY)),
       fs: {
-        allow: ['..']
+        allow: ['..'],
+        strict: false
       }
     },
     build: {

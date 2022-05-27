@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc --noEmit && tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit && vite build",
     "serve": "yarn build && vite preview",
     "lint": "eslint --ext .js,.ts,.vue src/",
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
@@ -25,13 +25,11 @@
     "echarts-gl": "^2.0.8",
     "echarts-liquidfill": "3",
     "element-plus": "^1.1.0-beta.24",
-    "error-stack-parser": "^2.0.7",
     "flv.js": "^1.6.2",
     "lodash-es": "^4.17.21",
     "mitt": "^3.0.0",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.0-rc.10",
-    "pyodide": "^0.20.0",
     "swiper": "^7.4.1",
     "vue": "^3.2.20",
     "vue-router": "^4.0.12"
