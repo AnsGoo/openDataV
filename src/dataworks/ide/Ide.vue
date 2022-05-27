@@ -10,36 +10,25 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref, onUnMounted } from 'vue'
+import { ref } from 'vue'
 import { ElButton } from 'element-plus'
 import CodeEditor from '../components/CodeEditor.vue'
-// import type { PyodideInterface } from '@/pyodide/api'
-import { loadScript } from '@/utils/utils'
-import type { PyodideInterface } from '@/types/pyodide'
+const pyodideWorker = new Worker('/webworker/index.js')
+
+const callbacks = { 1: (data: any) => console.log(data) }
+
+pyodideWorker.onmessage = (event: MessageEvent<any>) => {
+  const { id, ...data } = event.data
+  const onSuccess = callbacks[id]
+  delete callbacks[id]
+  onSuccess(data)
+}
 
 const code = ref<string>('')
 const run = async () => {
-  if (pyodide) {
-    const result = pyodide!.runPython(code.value)
-    console.log(result)
-  }
+  const id = 1
+  await pyodideWorker.postMessage({ id, python: code.value })
 }
-
-let pyodide: any
-onMounted(async () => {
-  const win: any = window
-  if (!win.loadPyodide) {
-    await loadScript('/pyodide/pyodide.js')
-  }
-  const pyodideLoader = win.loadPyodide! as Promise<PyodideInterface>
-  if (!pyodideLoader.inProgress) {
-    pyodide = await pyodideLoader()
-    win.pyodide = pyodide
-  } else {
-    pyodide = win.pyodide
-  }
-  await pyodide.loadPackage('pandas')
-})
 </script>
 <style lang="less" scoped>
 .ide {

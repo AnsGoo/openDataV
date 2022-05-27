@@ -19,7 +19,7 @@ const props = withDefaults(
   }>(),
   {
     code: 'import os',
-    initHeight: '900px'
+    initHeight: '890px'
   }
 )
 

@@ -875,4 +875,4 @@ declare function loadPyodide(options?: {
   stderr?: (msg: string) => void
   jsglobals?: object
 }): Promise<PyodideInterface>
-export { loadPyodide }
+export { loadPyodide, PyodideInterface }

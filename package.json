@@ -61,7 +61,6 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
     "typescript": "^4.4.3",
     "vite": "^2.6.0",
-    "vite-plugin-resolve-externals": "^0.2.1",
     "vue-eslint-parser": "^7.11.0",
     "vue-tsc": "^0.3.0"
   },

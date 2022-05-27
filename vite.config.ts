@@ -1,6 +1,5 @@
 import { UserConfigExport, ConfigEnv, loadEnv, ProxyOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import resolveExternalsPlugin from 'vite-plugin-resolve-externals'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
@@ -21,7 +20,7 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
   }
 
   return {
-    plugins: [vue(), resolveExternalsPlugin({ 'fs/promises': 'fs/promises' })],
+    plugins: [vue()],
     base: './',
     resolve: {
       alias: {
