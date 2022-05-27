@@ -10,12 +10,12 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, onUnMounted } from 'vue'
 import { ElButton } from 'element-plus'
 import CodeEditor from '../components/CodeEditor.vue'
 // import type { PyodideInterface } from '@/pyodide/api'
 import { loadScript } from '@/utils/utils'
-import type { loadPyodide } from '@/types/pyodide'
+import type { PyodideInterface } from '@/types/pyodide'
 
 const code = ref<string>('')
 const run = async () => {
@@ -27,19 +27,18 @@ const run = async () => {
 
 let pyodide: any
 onMounted(async () => {
-  await loadScript('/pyodide/pyodide.js')
   const win: any = window
-  const pyodideLoader = win.loadPyodide! as typeof loadPyodide
-  pyodide = await pyodideLoader()
+  if (!win.loadPyodide) {
+    await loadScript('/pyodide/pyodide.js')
+  }
+  const pyodideLoader = win.loadPyodide! as Promise<PyodideInterface>
+  if (!pyodideLoader.inProgress) {
+    pyodide = await pyodideLoader()
+    win.pyodide = pyodide
+  } else {
+    pyodide = win.pyodide
+  }
   await pyodide.loadPackage('pandas')
-  // if (!pyodide) {
-  //   const pyodidePkg = await import('@/pyodide/pyodide')
-  //   pyodide = (await pyodidePkg.loadPyodide({
-  //     // indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.20.0/full/'
-  //     indexURL: '/pyodide/'
-  //   })) as any as PyodideInterface
-  //   await pyodide.loadPackage('pandas')
-  // }
 })
 </script>
 <style lang="less" scoped>
