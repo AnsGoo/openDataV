@@ -80,6 +80,8 @@ const compare = (curValue: string, symbol: string, value: string): boolean => {
       return newValue === oldValue
     case '>':
       return newValue > oldValue
+    case '<':
+      return newValue < oldValue
     case '>=':
       return newValue >= oldValue
     case '<=':
