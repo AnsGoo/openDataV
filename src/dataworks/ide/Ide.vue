@@ -15,13 +15,10 @@ import { ElButton } from 'element-plus'
 import CodeEditor from '../components/CodeEditor.vue'
 const pyodideWorker = new Worker('/webworker/index.js')
 
-const callbacks = { 1: (data: any) => console.log(data) }
-
 pyodideWorker.onmessage = (event: MessageEvent<any>) => {
   const { id, ...data } = event.data
-  const onSuccess = callbacks[id]
-  delete callbacks[id]
-  onSuccess(data)
+  console.log(id)
+  console.log(data)
 }
 
 const code = ref<string>('')

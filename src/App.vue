@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { useRouter } from 'vue-router'
+import { useRouter, RouterView } from 'vue-router'
 import { ref, computed } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import UserAffix from '@/annex/UserAffix.vue'
