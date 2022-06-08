@@ -41,6 +41,7 @@ let state = EditorState.create({
     keymap.of([
       ...standardKeymap,
       // ...historyKeymap,
+
       indentWithTab,
       {
         key: 'Tab',
@@ -48,9 +49,8 @@ let state = EditorState.create({
       }
     ]),
     language.of(python()),
-    // lineNumbers(),
     autocompletion({ activateOnTyping: true }),
-    tabSize.of(EditorState.tabSize.of(8))
+    tabSize.of(EditorState.tabSize.of(4))
   ]
 })
 
@@ -75,9 +75,11 @@ onUnmounted(() => view.destroy())
 :deep(.cm-editor) {
   height: v-bind('$props.initHeight');
   font-size: 18px;
-  font-family: ui-monospace;
+  font-family: ui-monospace 'Roboto Mono';
+  line-height: 150%;
 }
 :deep(.cm-content) {
-  font-family: ui-monospace;
+  font-family: ui-monospace 'Roboto Mono';
+  line-height: 150%;
 }
 </style>
