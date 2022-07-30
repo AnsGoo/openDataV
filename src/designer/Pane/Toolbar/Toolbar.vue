@@ -3,87 +3,87 @@
     <!-- <div>{{ basicStore.name }}</div> -->
     <div class="tool-bar-item">
       <div>
-        <el-button size="small" @click="save" title="保存" v-action="'add'">
-          <el-icon style="vertical-align: middle">
+        <n-button size="small" @click="save" title="保存" v-action="'add'">
+          <n-icon style="vertical-align: middle">
             <icon-save-one theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>保存</span>
-        </el-button>
-        <el-button size="small" @click="preview" title="预览">
-          <el-icon style="vertical-align: middle">
+        </n-button>
+        <n-button size="small" @click="preview" title="预览">
+          <n-icon style="vertical-align: middle">
             <icon-computer theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>预览</span>
-        </el-button>
-        <el-button size="small" @click="undo" title="撤销">
-          <el-icon style="vertical-align: middle" @click="undo">
+        </n-button>
+        <n-button size="small" @click="undo" title="撤销">
+          <n-icon style="vertical-align: middle" @click="undo">
             <icon-back theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>撤销</span>
-        </el-button>
-        <el-button size="small" @click="recoveryDraft" title="恢复">
-          <el-icon style="vertical-align: middle">
+        </n-button>
+        <n-button size="small" @click="recoveryDraft" title="恢复">
+          <n-icon style="vertical-align: middle">
             <icon-next theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>恢复</span>
-        </el-button>
-        <el-button size="small" @click="exportCanvas" title="导出">
-          <el-icon style="vertical-align: middle">
+        </n-button>
+        <n-button size="small" @click="exportCanvas" title="导出">
+          <n-icon style="vertical-align: middle">
             <icon-download-one theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>导出</span>
-        </el-button>
-        <el-button size="small" @click="importCanvas" title="导入">
-          <el-icon style="vertical-align: middle">
+        </n-button>
+        <n-button size="small" @click="importCanvas" title="导入">
+          <n-icon style="vertical-align: middle">
             <icon-upload-one theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>导入</span>
-        </el-button>
-        <el-button size="small" @click="fullScreen" title="全屏">
-          <el-icon style="vertical-align: middle">
+        </n-button>
+        <n-button size="small" @click="fullScreen" title="全屏">
+          <n-icon style="vertical-align: middle">
             <icon-full-screen theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>全屏</span>
-        </el-button>
-        <el-button size="small" @click="setShowEm" title="坐标">
-          <el-icon style="vertical-align: middle">
+        </n-button>
+        <n-button size="small" @click="setShowEm" title="坐标">
+          <n-icon style="vertical-align: middle">
             <icon-cones theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>坐标</span>
-        </el-button>
+        </n-button>
       </div>
 
       <div>
-        <el-button class="resource" size="small" @click="showIcon" title="图标">
-          <el-icon style="vertical-align: middle">
+        <n-button class="resource" size="small" @click="showIcon" title="图标">
+          <n-icon style="vertical-align: middle">
             <icon-game-ps theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>图标</span>
-        </el-button>
-        <el-button class="resource" size="small" @click="() => (showImageView = true)" title="图片">
-          <el-icon style="vertical-align: middle">
+        </n-button>
+        <n-button class="resource" size="small" @click="() => (showImageView = true)" title="图片">
+          <n-icon style="vertical-align: middle">
             <icon-picture theme="outline" size="22" fill="var(--el-color-primary)" />
-          </el-icon>
+          </n-icon>
           <span>图片</span>
-        </el-button>
+        </n-button>
       </div>
     </div>
   </div>
 
-  <el-dialog v-model="saveDialogVisible" title="保存当前布局" width="30%" center>
-    <el-form :model="form" :rules="rules" @submit.prevent>
-      <el-form-item label="页面名称" prop="name">
-        <el-input v-model="form.name" placeholder="请输入页面名称" />
-      </el-form-item>
-    </el-form>
+  <n-modal v-model:show="saveDialogVisible" title="保存当前布局" width="30%" center>
+    <n-form :model="form" :rules="rules" @submit.prevent>
+      <n-form-item label="页面名称" prop="name">
+        <n-input v-model="form.name" placeholder="请输入页面名称" />
+      </n-form-item>
+    </n-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="saveDialogVisible = false">取消</el-button>
-        <el-button type="primary" @click="handleSubmit('new')" v-if="isCreate">新增页面</el-button>
-        <el-button type="primary" @click="handleSubmit('update')" v-else>更新页面</el-button>
+        <n-button @click="saveDialogVisible = false">取消</n-button>
+        <n-button type="primary" @click="handleSubmit('new')" v-if="isCreate">新增页面</n-button>
+        <n-button type="primary" @click="handleSubmit('update')" v-else>更新页面</n-button>
       </span>
     </template>
-  </el-dialog>
+  </n-modal>
   <IconFont v-model:visible="showIconFont" />
   <ImageView v-model:visible="showImageView" />
 </template>
@@ -100,8 +100,7 @@ import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
 import ImageView from './ImageView.vue'
-import { ElForm, ElInput, ElFormItem, ElButton, ElDialog, ElIcon } from 'element-plus'
-// import type { UploadFile } from 'element-plus/lib/components/upload/src/upload.type'
+import { NForm, NInput, NFormItem, NButton, NIcon, NModal } from 'naive-ui'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'

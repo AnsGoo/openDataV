@@ -1,6 +1,6 @@
 <template>
   <div class="linear-gradient">
-    <el-input-number
+    <n-input-number
       :modelValue="value!.angle"
       @change="changed('angle', $event)"
       :controls="true"
@@ -8,15 +8,14 @@
       :max="360"
       :step="1"
     />
-    <ColorPicker :value="value!.color1" @change="changed('color1', $event)" />
-    <ColorPicker :value="value!.color2" @change="changed('color2', $event)" />
+    <NColorPicker :value="value!.color1" @update:value="changed('color1', $event)" />
+    <NColorPicker :value="value!.color2" @update:value="changed('color2', $event)" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { ElInputNumber } from 'element-plus'
-import ColorPicker from './ColorPicker.vue'
+import { NColorPicker, NInputNumber } from 'naive-ui'
 
 interface LinearGradient {
   angle: number

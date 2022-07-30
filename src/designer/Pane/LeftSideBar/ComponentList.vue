@@ -1,7 +1,7 @@
 <template>
   <div @dragstart="handleDragStart" style="height: calc(100vh - 100px)">
     <div class="components">
-      <el-scrollbar>
+      <n-scrollbar>
         <el-menu :unique-opened="true">
           <el-sub-menu
             v-for="(key, index) in componentKeys"
@@ -26,7 +26,7 @@
             </el-menu-item>
           </el-sub-menu>
         </el-menu>
-      </el-scrollbar>
+      </n-scrollbar>
     </div>
   </div>
 </template>
@@ -37,7 +37,8 @@ import { componentList } from '@/designer/load'
 import type { ComponentInfo } from '@/types/component'
 import { computed } from 'vue'
 import iconMap from './iconMap'
-import { ElMenu, ElMenuItem, ElSubMenu, ElScrollbar } from 'element-plus'
+import { ElSubMenu, ElMenu, ElMenuItem } from 'element-plus'
+import { NMenu, NSubMenu, NScrollbar } from 'naive-ui'
 
 withDefaults(
   defineProps<{
@@ -93,14 +94,14 @@ const handleDragStart = (e) => {
     @apply w-full;
   }
 
-  .el-menu {
+  .n-menu {
     width: 200px;
   }
-  ul :deep(.el-sub-menu__title) {
+  ul :deep(.n-sub-menu__title) {
     height: 36px;
     line-height: 36px;
   }
-  ul :deep(.el-menu-item) {
+  ul :deep(.n-menu-item) {
     height: 30px;
     line-height: 30px;
   }

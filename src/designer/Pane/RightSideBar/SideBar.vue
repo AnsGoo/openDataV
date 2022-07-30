@@ -2,7 +2,7 @@
   <div class="side-bar">
     <dv-tabs :mode="mode" v-if="curComponent">
       <template #prefix>
-        <!-- <el-icon style="vertical-align: middle"> -->
+        <!-- <n-icon style="vertical-align: middle"> -->
         <icon-indent-right
           v-if="expandStatus"
           theme="outline"
@@ -18,13 +18,13 @@
           @click="expandSideBar"
         />
 
-        <!-- </el-icon> -->
+        <!-- </n-icon> -->
       </template>
       <dv-tab-pane name="style">
         <template #label>
-          <el-icon style="vertical-align: middle">
+          <n-icon style="vertical-align: middle">
             <icon-text-style theme="outline" size="24" />
-          </el-icon>
+          </n-icon>
           <span>样式</span>
         </template>
         <div v-show="mode === 'expand'">
@@ -33,9 +33,9 @@
       </dv-tab-pane>
       <dv-tab-pane name="attr">
         <template #label>
-          <el-icon style="vertical-align: middle">
+          <n-icon style="vertical-align: middle">
             <icon-internal-data theme="outline" size="24" />
-          </el-icon>
+          </n-icon>
           <span>属性</span>
         </template>
         <div v-show="mode === 'expand'">
@@ -44,9 +44,9 @@
       </dv-tab-pane>
       <dv-tab-pane name="data">
         <template #label>
-          <el-icon style="vertical-align: middle">
+          <n-icon style="vertical-align: middle">
             <icon-data theme="outline" size="24" />
-          </el-icon>
+          </n-icon>
           <span>数据</span>
         </template>
         <div v-show="mode === 'expand'">
@@ -56,7 +56,7 @@
     </dv-tabs>
     <dv-tabs :mode="mode" v-else>
       <template #prefix>
-        <!-- <el-icon style="vertical-align: middle"> -->
+        <!-- <n-icon style="vertical-align: middle"> -->
         <icon-indent-right
           v-if="expandStatus"
           theme="outline"
@@ -74,9 +74,9 @@
       </template>
       <dv-tab-pane name="canvas">
         <template #label>
-          <el-icon style="vertical-align: middle">
+          <n-icon style="vertical-align: middle">
             <icon-page theme="outline" size="24" />
-          </el-icon>
+          </n-icon>
           <span>画布</span>
         </template>
         <Canvas v-show="mode === 'expand'" />
@@ -92,7 +92,7 @@ import Canvas from './Canvas.vue'
 import StyleList from './StyleModule' // 右侧属性列表
 import AttrList from './AttrModule'
 import { DvTabs, DvTabPane } from '@/designer/modules/tabs'
-import { ElIcon } from 'element-plus'
+import { NIcon } from 'naive-ui'
 import DataAttr from './DataModule'
 
 const basicStore = useBasicStoreWithOut()

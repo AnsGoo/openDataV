@@ -1,15 +1,15 @@
 <template>
   <div>
     <teleport to="body">
-      <ElScrollbar class="container" v-show="visible" v-click-outside="clickOutsideHandler">
+      <n-scrollbar class="container" v-show="visible" v-click-outside="clickOutsideHandler">
         <div v-for="item in images" :key="item.md5">
-          <el-card class="card">
+          <n-card class="card">
             <img :src="`${baseURL}${item.url}`" class="image" @click="handleClick(item.url)" />
-          </el-card>
+          </n-card>
         </div>
         <div>
-          <el-card class="card upload-card">
-            <el-upload
+          <n-card class="card upload-card">
+            <n-upload
               class="upload"
               :action="`${baseURL}/upload`"
               list-type="picture-card"
@@ -19,11 +19,11 @@
               :on-error="uploadFail"
               :headers="headers"
             >
-              <el-icon>上传</el-icon>
-            </el-upload>
-          </el-card>
+              <n-icon>上传</n-icon>
+            </n-upload>
+          </n-card>
         </div>
-      </ElScrollbar>
+      </n-scrollbar>
     </teleport>
   </div>
 </template>
@@ -34,7 +34,7 @@ import { copyText } from '@/utils/utils'
 import { successMessage, warnMessage } from '@/utils/message'
 import type { ImageFile } from '@/types/file'
 import { getImages } from '@/api/file'
-import { ElCard, ElUpload, ElScrollbar, ElIcon } from 'element-plus'
+import { NCard, NScrollbar, NIcon } from 'naive-ui'
 import { useUserStoreWithOut } from '@/store/modules/user'
 const userStore = useUserStoreWithOut()
 

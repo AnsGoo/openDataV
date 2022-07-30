@@ -1,23 +1,21 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list" style="height: calc(100vh - 100px)">
-    <el-form size="mini" @submit.prevent>
-      <el-form-item label="分辨率">
-        <el-select v-model="myPixel" @change="setScreenSize" placeholder="选择分辨率">
-          <el-option
-            v-for="device in piexls"
-            :key="device.label"
-            :value="device.value"
-            :label="device.label"
-          />
-        </el-select>
-      </el-form-item>
-      <el-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
-        <el-input-number v-if="key === 'scale'" v-model="scale" @input="handleScaleChange" />
-        <el-input-number v-else-if="type === 'number'" v-model="canvasStyleData[key]" />
-        <el-input v-else v-model="canvasStyleData[key]" />
-      </el-form-item>
-    </el-form>
+    <n-form size="small" @submit.prevent label-placement="left" label-align="left">
+      <n-form-item label="分辨率">
+        <n-select
+          v-model:value="myPixel"
+          @update:value="setScreenSize"
+          placeholder="选择分辨率"
+          :options="piexls"
+        />
+      </n-form-item>
+      <n-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
+        <n-input-number v-if="key === 'scale'" v-model="scale" @input="handleScaleChange" />
+        <n-input-number v-else-if="type === 'number'" v-model:value="canvasStyleData[key]" />
+        <n-input v-else v-model:value="canvasStyleData[key]" />
+      </n-form-item>
+    </n-form>
   </div>
 </template>
 
@@ -25,7 +23,7 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, reactive, ref } from 'vue'
 import { cloneDeep, debounce } from 'lodash-es'
-import { ElForm, ElInput, ElInputNumber, ElFormItem, ElSelect, ElOption } from 'element-plus'
+import { NForm, NFormItem, NInput, NSelect, NInputNumber } from 'naive-ui'
 import PixelEnum from '@/enum/pixel'
 
 const piexls = computed<Recordable<string>[]>(() => {

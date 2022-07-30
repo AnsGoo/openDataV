@@ -1,7 +1,7 @@
 <template>
-  <el-collapse-item :key="ukey" :title="name">
-    <el-collapse accordion>
-      <el-collapse-item
+  <n-collapse-item :key="ukey" :title="name">
+    <n-collapse accordion>
+      <n-collapse-item
         v-for="(item, index) in arrayData"
         :key="`${ukey}${index}`"
         :name="max > 1 ? `${uid}${index}` : uid"
@@ -10,29 +10,30 @@
           <div class="dynamic">
             <div class="title">{{ max > 1 ? `${index + 1}` : name }}</div>
             <div class="delete">
-              <el-icon style="vertical-align: middle">
+              <n-icon>
                 <icon-delete-one
                   theme="outline"
                   size="24"
-                  fill="var(--el-color-primary)"
+                  fill="var(--n-color-primary)"
                   @click="deleteItem(index)"
                 />
-              </el-icon>
+              </n-icon>
             </div>
           </div>
         </template>
         <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" />
-      </el-collapse-item>
-    </el-collapse>
-    <el-button v-show="isShowAdd" class="add" @click="handleAddClick">+</el-button>
-  </el-collapse-item>
+      </n-collapse-item>
+    </n-collapse>
+    <n-button v-show="isShowAdd" class="add" @click="handleAddClick">+</n-button>
+  </n-collapse-item>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import type { AttrType } from '@/types/component'
 import FormItem from './FormItem.vue'
-import { ElButton, ElCollapseItem, ElIcon, ElCollapse } from 'element-plus'
+
+import { NCollapseItem, NButton, NCollapse, NIcon } from 'naive-ui'
 
 const props = defineProps<{
   data: Recordable<any>[]

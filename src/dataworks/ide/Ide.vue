@@ -4,14 +4,14 @@
       <CodeEditor v-model:code="code" />
     </div>
     <div>
-      <el-button @click="run" type="primary" round>Run</el-button>
+      <n-button @click="run" type="primary" round>Run</n-button>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
-import { ElButton } from 'element-plus'
+import { NButton } from 'naive-ui'
 import CodeEditor from '../components/CodeEditor.vue'
 const pyodideWorker = new Worker('/webworker/index.js')
 

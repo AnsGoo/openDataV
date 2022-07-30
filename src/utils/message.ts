@@ -1,56 +1,35 @@
-import { ElMessageBox, ElMessage, Callback } from 'element-plus'
-
+import { useMessage } from 'naive-ui'
+const messageObj = useMessage()
 // 消息
 const Message = (message: string): any => {
-  return ElMessage({
-    showClose: true,
-    message
+  return messageObj.info(message, {
+    closable: true,
+    duration: 5000
   })
 }
 
 // 成功
 const successMessage = (message: string): any => {
-  return ElMessage({
-    showClose: true,
-    message,
-    type: 'success'
+  return messageObj.success(message, {
+    closable: true,
+    duration: 5000
   })
 }
 
 // 警告
 const warnMessage = (message: string): any => {
-  return ElMessage({
-    showClose: true,
-    message,
-    type: 'warning'
+  return messageObj.warning(message, {
+    closable: true,
+    duration: 5000
   })
 }
 
 // 失败
 const errorMessage = (message: string): any => {
-  return ElMessage({
-    showClose: true,
-    message,
-    type: 'error'
+  return messageObj.error(message, {
+    closable: true,
+    duration: 5000
   })
 }
 
-// 确认弹框
-const confirmMessage = (
-  message: string,
-  title: string,
-  callback?: Callback,
-  confirmText?: string,
-  cancelText?: string
-): any => {
-  return ElMessageBox.confirm(message, title, {
-    confirmButtonText: confirmText ? confirmText : '确认',
-    cancelButtonText: cancelText ? cancelText : '取消',
-    type: 'success',
-    center: true,
-    callback: callback,
-    customClass: ''
-  })
-}
-
-export { Message, successMessage, warnMessage, errorMessage, confirmMessage }
+export { Message, successMessage, warnMessage, errorMessage }
