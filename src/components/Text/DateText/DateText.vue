@@ -1,5 +1,5 @@
 <template>
-  <span>{{ customeText }}</span>
+  <span v-resize="resizeHandler">{{ customeText }}</span>
 </template>
 
 <script setup lang="ts">
@@ -11,6 +11,12 @@ const props = defineProps<{
   componentId: string
   propValue: DateText
 }>()
+const lineHeight = ref<string>('20px')
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
+  const entry = entries[0]
+  const { height } = entry.contentRect
+  lineHeight.value = `${height}px`
+}
 let intervalId: IntervalHandle
 const customeText = ref<string>(dayjs().format(props.propValue.format || 'YYYY-MM-DD HH:mm:ss'))
 
@@ -33,5 +39,6 @@ span {
   width: 100%;
   text-align: center;
   pointer-events: none;
+  line-height: v-bind(lineHeight);
 }
 </style>

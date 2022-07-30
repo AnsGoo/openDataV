@@ -1,19 +1,17 @@
 <template>
-  <el-select clearable v-model="weight" placeholder="请选择字重" size="mini" @change="change">
-    <el-option
-      v-for="(item, index) in weights"
-      :key="index"
-      :value="item.value"
-      :label="item.label"
-      :filterable="true"
-    />
-  </el-select>
+  <n-select
+    clearable
+    v-model="weight"
+    placeholder="请选择字重"
+    @update:value="change"
+    :options="weights"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { ElSelect, ElOption } from 'element-plus'
 import { SYS_FONT_WEIGHT } from '@/enum/font'
+import { NSelect } from 'naive-ui'
 
 withDefaults(
   defineProps<{

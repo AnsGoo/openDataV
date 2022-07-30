@@ -1,19 +1,17 @@
 <template>
-  <el-select clearable v-model="font" placeholder="请选择字体" size="mini" @change="change">
-    <el-option
-      v-for="(item, index) in fonts"
-      :key="index"
-      :value="item.value"
-      :label="item.label"
-      :filterable="true"
-    />
-  </el-select>
+  <n-select
+    clearable
+    v-model="font"
+    placeholder="请选择字体"
+    @update:value="change"
+    :options="fonts"
+  />
 </template>
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { ElSelect, ElOption } from 'element-plus'
 import { SYS_FONTS } from '@/enum/font'
+import { NSelect } from 'naive-ui'
 
 withDefaults(
   defineProps<{

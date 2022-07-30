@@ -1,0 +1,102 @@
+{
+  "info": {
+    "arch": "wasm32",
+    "platform": "Emscripten-1.0"
+  },
+  "packages": {   
+    "distutils": {
+      "name": "distutils",
+      "version": "1.0",
+      "file_name": "distutils.tar",
+      "install_dir": "lib",
+      "depends": [],
+      "imports": [
+        "distutils"
+      ]
+    },
+    "numpy": {
+      "name": "numpy",
+      "version": "1.22.3",
+      "file_name": "numpy-1.22.3-cp310-cp310-emscripten_wasm32.whl",
+      "install_dir": "site",
+      "depends": [],
+      "imports": [
+        "numpy"
+      ],
+      "unvendored_tests": true
+    },
+    "pandas": {
+      "name": "pandas",
+      "version": "1.4.2",
+      "file_name": "pandas-1.4.2-cp310-cp310-emscripten_wasm32.whl",
+      "install_dir": "site",
+      "depends": [
+        "distutils",
+        "numpy",
+        "python-dateutil",
+        "pytz",
+        "setuptools"
+      ],
+      "imports": [
+        "pandas"
+      ],
+      "unvendored_tests": true
+    },
+    "pyparsing": {
+      "name": "pyparsing",
+      "version": "3.0.7",
+      "file_name": "pyparsing-3.0.7-py3-none-any.whl",
+      "install_dir": "site",
+      "depends": [],
+      "imports": [
+        "pyparsing"
+      ]
+    },
+    "python-dateutil": {
+      "name": "python-dateutil",
+      "version": "2.8.2",
+      "file_name": "python_dateutil-2.8.2-py2.py3-none-any.whl",
+      "install_dir": "site",
+      "depends": [
+        "six"
+      ],
+      "imports": [
+        "dateutil"
+      ]
+    },
+    "pytz": {
+      "name": "pytz",
+      "version": "2022.1",
+      "file_name": "pytz-2022.1-py2.py3-none-any.whl",
+      "install_dir": "site",
+      "depends": [],
+      "imports": [
+        "pytz"
+      ]
+    },
+    "setuptools": {
+      "name": "setuptools",
+      "version": "62.0.0",
+      "file_name": "setuptools-62.0.0-py3-none-any.whl",
+      "install_dir": "site",
+      "depends": [
+        "distutils",
+        "pyparsing"
+      ],
+      "imports": [
+        "setuptools",
+        "pkg_resources"
+      ]
+    },
+    "six": {
+      "name": "six",
+      "version": "1.16.0",
+      "file_name": "six-1.16.0-py2.py3-none-any.whl",
+      "install_dir": "site",
+      "depends": [],
+      "imports": [
+        "six"
+      ]
+    }
+  }
+}

@@ -1,10 +1,14 @@
 <template>
-  <el-form-item key="realTimeData" label="实时数据">
-    <el-input v-model="realTimeData" placeholder="实时数据" @change="realTimeDatachanged($event)" />
-  </el-form-item>
+  <n-form-item key="realTimeData" label="实时数据">
+    <n-input
+      v-model:value="realTimeData"
+      placeholder="实时数据"
+      @update:value="realTimeDatachanged($event)"
+    />
+  </n-form-item>
 </template>
 <script lang="ts" setup>
-import { ElFormItem, ElInput } from 'element-plus'
+import { NFormItem, NInput } from 'naive-ui'
 import { ref } from 'vue'
 const realTimeData = ref<any>(null)
 const realTimeDatachanged = (value: string) => {

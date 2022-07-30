@@ -1,12 +1,11 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list" style="height: calc(100vh - 120px)">
-    <el-scrollbar v-if="curComponent">
-      <el-form size="mini" @submit.prevent>
+    <n-scrollbar v-if="curComponent">
+      <n-form size="small" @submit.prevent label-placement="left" label-align="left">
         <!-- 组件通用属性 -->
         <CompAttr :curComponent="curComponent" />
-
-        <el-collapse
+        <n-collapse
           v-model="activeName"
           accordion
           v-for="{ name, uid, children, max } in attrKeys"
@@ -34,9 +33,9 @@
             :max="max"
             :ukey="curComponent.id"
           />
-        </el-collapse>
-      </el-form>
-    </el-scrollbar>
+        </n-collapse>
+      </n-form>
+    </n-scrollbar>
   </div>
 </template>
 
@@ -47,9 +46,9 @@ import { computed, ref, reactive, watch } from 'vue'
 import CompAttr from './CompAttr.vue'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
 import DynamicAttr from '@/designer/modules/form/DynamicAttr.vue'
-import { ElScrollbar, ElCollapse, ElForm } from 'element-plus'
 import type { ComponentInfo } from '@/types/component'
 import { cleanObjectProp } from '@/utils/utils'
+import { NForm, NCollapse, NScrollbar } from 'naive-ui'
 
 const props = defineProps<{
   curComponent: ComponentInfo

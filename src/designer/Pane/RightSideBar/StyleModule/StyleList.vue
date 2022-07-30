@@ -1,9 +1,9 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list" style="height: calc(100vh - 100px)">
-    <el-scrollbar>
-      <el-form size="mini" @submit.prevent>
-        <el-collapse
+    <n-scrollbar>
+      <n-form size="small" @submit.prevent label-placement="left" label-align="left">
+        <n-collapse
           v-model="activeName"
           accordion
           v-for="{ name, uid, children } in styleKeys"
@@ -17,9 +17,9 @@
             :uid="uid"
             :ukey="curComponent.id"
           />
-        </el-collapse>
-      </el-form>
-    </el-scrollbar>
+        </n-collapse>
+      </n-form>
+    </n-scrollbar>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ import { debounce } from 'lodash-es'
 import { computed, ref, reactive, watch } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
-import { ElScrollbar, ElCollapse, ElForm } from 'element-plus'
+import { NForm, NScrollbar, NCollapse } from 'naive-ui'
 import type { ComponentInfo } from '@/types/component'
 import { groupCommonStyle } from '@/designer/interface'
 
@@ -80,19 +80,22 @@ const updateFormData = debounce((newVal: Recordable<any>) => {
 }, 200)
 
 const resetFormData = () => {
-  cleanObjectProp(formData)
   if (props.curComponent) {
-    updateFormData({
+    cleanObjectProp(formData)
+    const data = {
       ...props.curComponent.style,
       ...(props.curComponent.groupStyle || {})
-    })
+    }
+    updateFormData(data)
   }
 }
 
 watch(
   [() => props.curComponent.id, () => props.curComponent.style],
   () => {
-    resetFormData()
+    if (props.curComponent && props.curComponent.id) {
+      resetFormData()
+    }
   },
   { immediate: true, deep: true }
 )

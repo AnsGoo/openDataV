@@ -36,7 +36,11 @@ export default ({ mode }: ConfigEnv): UserConfigExport => {
       port: Number(VITE_APP_PORT),
       host: '0.0.0.0',
       open: false,
-      proxy: createProxy(JSON.parse(VITE_APP_PROXY))
+      proxy: createProxy(JSON.parse(VITE_APP_PROXY)),
+      fs: {
+        allow: ['..'],
+        strict: false
+      }
     },
     build: {
       target: 'es2015',

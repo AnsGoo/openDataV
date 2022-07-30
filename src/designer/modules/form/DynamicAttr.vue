@@ -1,35 +1,39 @@
 <template>
-  <el-collapse-item
-    v-for="(item, index) in arrayData"
-    :key="`${ukey}${index}`"
-    :title="max > 1 ? `${name}${index}` : name"
-    :name="max > 1 ? `${uid}${index}` : uid"
-  >
-    <template #title>
-      <div class="dynamic">
-        <div class="title">{{ max > 1 ? `${name}${index}` : name }}</div>
-        <div class="delete">
-          <el-icon style="vertical-align: middle">
-            <icon-delete-one
-              theme="outline"
-              size="24"
-              fill="var(--el-color-primary)"
-              @click="deleteItem(index)"
-            />
-          </el-icon>
-        </div>
-      </div>
-    </template>
-    <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" />
-  </el-collapse-item>
-  <el-button v-show="isShowAdd" class="add" @click="handleAddClick">+</el-button>
+  <n-collapse-item :key="ukey" :title="name">
+    <n-collapse accordion>
+      <n-collapse-item
+        v-for="(item, index) in arrayData"
+        :key="`${ukey}${index}`"
+        :name="max > 1 ? `${uid}${index}` : uid"
+      >
+        <template #title>
+          <div class="dynamic">
+            <div class="title">{{ max > 1 ? `${index + 1}` : name }}</div>
+            <div class="delete">
+              <n-icon>
+                <icon-delete-one
+                  theme="outline"
+                  size="24"
+                  fill="var(--n-color-primary)"
+                  @click="deleteItem(index)"
+                />
+              </n-icon>
+            </div>
+          </div>
+        </template>
+        <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" />
+      </n-collapse-item>
+    </n-collapse>
+    <n-button v-show="isShowAdd" class="add" @click="handleAddClick">+</n-button>
+  </n-collapse-item>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import type { AttrType } from '@/types/component'
 import FormItem from './FormItem.vue'
-import { ElButton, ElCollapseItem, ElIcon } from 'element-plus'
+
+import { NCollapseItem, NButton, NCollapse, NIcon } from 'naive-ui'
 
 const props = defineProps<{
   data: Recordable<any>[]
@@ -66,7 +70,7 @@ const handleAddClick = () => {
     if (idx > 0) {
       child[item.key] = arrayData.value[idx - 1][item.key]
     } else {
-      child[item.key] = ''
+      child[item.key] = undefined
     }
   })
   arrayData.value.push(child)

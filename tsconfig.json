@@ -15,6 +15,8 @@
     "types": ["vite/client","element-plus/global"],
     "checkJs": true,
     "outDir": "./dist",
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "noImplicitAny": false, // 允许隐式的any类型（某些第三方库有隐式的any类型）
     "strictNullChecks": true, // 不允许把null、undefined赋值给其他类型的变量
     "strictPropertyInitialization": true, // 类的实例属性必须初始化
@@ -29,5 +31,5 @@
     }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
-  "exclude": ["node_modules", "dist", "**/*.js"]
+  "exclude": ["**/node_modules/**", "dist", "**/*.js"]
 }

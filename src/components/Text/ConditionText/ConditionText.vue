@@ -1,5 +1,5 @@
 <template>
-  <div ref="mainEl" class="main">
+  <div ref="mainEl" class="main" v-resize="resizeHandler">
     <span v-if="displayType === 'text'">{{ displayContext }}</span>
     <span v-else-if="displayType === 'symbol'" :class="customeSymbol"></span>
     <img v-else-if="displayType === 'image'" :src="displayContext" />
@@ -39,6 +39,12 @@ const handler = (_: any) => {
   switchDisplay('1')
 }
 
+const lineHeight = ref<string>('20px')
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
+  const entry = entries[0]
+  const { height } = entry.contentRect
+  lineHeight.value = `${height}px`
+}
 const dataHandler = (event: any) => {
   const item: TagType = event as TagType
   if (props.propValue.tagName && item.TagName === props.propValue.tagName) {
@@ -80,6 +86,8 @@ const compare = (curValue: string, symbol: string, value: string): boolean => {
       return newValue === oldValue
     case '>':
       return newValue > oldValue
+    case '<':
+      return newValue < oldValue
     case '>=':
       return newValue >= oldValue
     case '<=':
@@ -125,6 +133,7 @@ span {
   font-size: v-bind(fontSize);
   color: v-bind(color);
   pointer-events: none;
+  line-height: v-bind(lineHeight);
 }
 
 .main {
@@ -140,5 +149,6 @@ img {
   width: 100%;
   height: 100%;
   object-fit: v-bind(iconFit);
+  line-height: v-bind(lineHeight);
 }
 </style>

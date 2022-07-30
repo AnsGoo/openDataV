@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="right">
-      <el-form
+      <n-form
         ref="ruleFormRef"
         :rules="rules"
         :model="formData"
@@ -19,31 +19,31 @@
         :show-message="true"
       >
         <div class="tip">登陆</div>
-        <el-form-item prop="username">
-          <el-input
+        <n-form-item prop="username">
+          <n-input
             placeholder="请输入用户名"
             style="width: 100%; min-width: 360px"
             v-model="formData.username"
           />
-        </el-form-item>
-        <el-form-item prop="password">
-          <el-input
+        </n-form-item>
+        <n-form-item prop="password">
+          <n-input
             placeholder="请输入密码"
             style="width: 100%; min-width: 360px"
             type="password"
             v-model="formData.password"
             @keydown.enter="loginAction"
           />
-        </el-form-item>
-        <el-button type="primary" style="min-width: 360px; width: 100%" @click="loginAction"
-          >登陆</el-button
+        </n-form-item>
+        <n-button type="primary" style="min-width: 360px; width: 100%" @click="loginAction"
+          >登陆</n-button
         >
-      </el-form>
+      </n-form>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { ElForm, ElFormItem, ElInput, ElButton } from 'element-plus'
+import { NForm, NFormItem, NInput, NButton } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
 import { login } from '@/api/user'
@@ -58,7 +58,7 @@ const userStore = useUserStoreWithOut()
 const router: Router = useRouter()
 const route: Route = useRoute()
 
-const ruleFormRef = ref<InstanceType<typeof ElForm>>()
+const ruleFormRef = ref<InstanceType<typeof NForm>>()
 
 const formData = reactive<{
   username: string

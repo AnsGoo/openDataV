@@ -1,21 +1,15 @@
 <template>
-  <el-form-item key="staticData" label="静态数据">
-    <el-select
-      v-model="staticData"
+  <n-form-item key="staticData" label="静态数据">
+    <n-select
+      v-model:value="staticData"
       placeholder="请选择静态数据"
-      @change="staticDatachanged($event)"
-    >
-      <el-option
-        v-for="item in selectOptions"
-        :key="item.id"
-        :label="item.label"
-        :value="item.id"
-      />
-    </el-select>
-  </el-form-item>
+      @update:value="staticDatachanged($event)"
+      :options="selectOptions"
+    />
+  </n-form-item>
 </template>
 <script lang="ts" setup>
-import { ElFormItem, ElSelect, ElOption } from 'element-plus'
+import { NFormItem, NSelect } from 'naive-ui'
 import { ref } from 'vue'
 const selectOptions = ref<{ label: string; id: number }[]>([])
 const staticData = ref<any>(null)

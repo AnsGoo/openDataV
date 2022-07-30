@@ -12,7 +12,7 @@
       <template #title>
         <span class="icon iconfont icon-zu"></span>
         <span v-show="mode === 'expand'">{{ item.label || '分组' }}</span>
-        <el-icon style="vertical-align: middle">
+        <n-icon style="vertical-align: middle">
           <icon-preview-open
             theme="outline"
             size="24"
@@ -20,7 +20,7 @@
             v-if="item.display"
           />
           <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
-        </el-icon>
+        </n-icon>
       </template>
       <LayerItem
         v-if="item.subComponents && item.subComponents.length > 0"
@@ -40,7 +40,7 @@
       <template #title>
         <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
         <span v-show="mode === 'expand'">{{ item.label }}</span>
-        <el-icon style="vertical-align: middle">
+        <n-icon style="vertical-align: middle">
           <icon-preview-open
             theme="outline"
             size="24"
@@ -48,7 +48,7 @@
             v-if="item.display"
           />
           <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
-        </el-icon>
+        </n-icon>
       </template>
     </el-menu-item>
   </template>
@@ -57,7 +57,8 @@
 <script lang="ts" setup>
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
 import iconMap from './iconMap'
-import { ElMenuItem, ElSubMenu, ElIcon } from 'element-plus'
+import { ElMenuItem, ElSubMenu } from 'element-plus'
+import { NIcon } from 'naive-ui'
 
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'

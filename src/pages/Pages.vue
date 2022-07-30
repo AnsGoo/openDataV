@@ -2,7 +2,7 @@
   <div class="bg">
     <div class="container">
       <div class="card" v-for="item in layoutList" :key="item.id">
-        <el-card
+        <n-card
           :key="item.id"
           :body-style="{ padding: '0px', position: 'relative' }"
           :title="item.name"
@@ -50,10 +50,10 @@
               ></span>
             </div>
           </div>
-        </el-card>
+        </n-card>
       </div>
       <div class="card">
-        <el-card
+        <n-card
           class="box-card"
           @click="handleCreate()"
           :body-style="{ padding: '0px', position: 'relative' }"
@@ -64,71 +64,27 @@
               d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64h352z"
             />
           </svg>
-        </el-card>
+        </n-card>
       </div>
     </div>
-    <el-dialog
-      v-model="isShow"
-      title="分配页面权限"
-      width="30%"
-      :before-close="() => (isShow = false)"
-    >
-      <el-form
-        style="width: 100%"
-        ref="ruleFormRef"
-        :model="formData"
-        @submit.prevent
-        :show-message="true"
-      >
-        <el-form-item label="可访问用户" prop="permissions" style="width: 100%">
-          <el-select
-            :multiple="true"
-            :clearable="true"
-            v-model="formData.permissions"
-            style="width: 100%"
-            placeholder="请选择可访问用户"
-          >
-            <el-option v-for="item in users" :key="item" :value="item">{{ item }}</el-option>
-          </el-select>
-        </el-form-item>
-      </el-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <el-button @click="isShow = false">取消</el-button>
-          <el-button type="primary" @click="setPagePermissionAction">提交</el-button>
-        </span>
-      </template>
-    </el-dialog>
   </div>
 </template>
 
 <script setup lang="ts">
-import {
-  getUIComponentsList,
-  deleteUIComponents,
-  setHomePage,
-  setPagePermission
-} from '@/api/pages'
+import { getUIComponentsList, deleteUIComponents, setHomePage } from '@/api/pages'
 import type { LayoutData } from '@/types/apiTypes'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, ref } from 'vue'
 import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
 import { copyText } from '@/utils/utils'
-import { successMessage, errorMessage, confirmMessage } from '@/utils/message'
-import { ElCard, ElForm, ElFormItem, ElSelect, ElOption, ElDialog, ElButton } from 'element-plus'
+import { successMessage, errorMessage } from '@/utils/message'
+import { NCard } from 'naive-ui'
 import { getUsers } from '@/api/user'
 const router = useRouter()
 const layoutList = ref<LayoutData[]>([])
 const isShow = ref<boolean>(false)
 const users = ref<string[]>([])
 const currentPage = ref<LayoutData | null>(null)
-
-const ruleFormRef = ref<InstanceType<typeof ElForm>>()
-const formData = reactive<{
-  permissions: string[]
-}>({
-  permissions: []
-})
 
 onMounted(async () => {
   await loadUsers()
@@ -178,30 +134,24 @@ const handleCopy = (item: LayoutData) => {
   successMessage(`路由复制成功: /page/${item.id}/view`)
 }
 
-const handleSetHome = (item: LayoutData) => {
-  confirmMessage('确定设置为首页吗？', '设置首页', async () => {
-    try {
-      await setHomePage(item.id!)
-      successMessage('设置成功')
-      await initUI()
-    } catch (e: any) {
-      errorMessage('设置失败')
-    }
-  })
+const handleSetHome = async (item: LayoutData) => {
+  try {
+    await setHomePage(item.id!)
+    successMessage('设置成功')
+    await initUI()
+  } catch (e: any) {
+    errorMessage('设置失败')
+  }
 }
 
-const handleDelete = (item: LayoutData) => {
-  confirmMessage(`确定删除页面【${item.name}】吗？`, '删除页面', async (action: string) => {
-    if (action === 'confirm') {
-      try {
-        await deleteUIComponents(item.id as string)
-        await initUI()
-      } catch (e: any) {
-        console.log(e?.message || e)
-        errorMessage('删除失败')
-      }
-    }
-  })
+const handleDelete = async (item: LayoutData) => {
+  try {
+    await deleteUIComponents(item.id as string)
+    await initUI()
+  } catch (e: any) {
+    console.log(e?.message || e)
+    errorMessage('删除失败')
+  }
 }
 
 const previewIcon = (icon: string | undefined) => {
@@ -216,19 +166,6 @@ const handleConfigAllowed = (item: LayoutData) => {
   isShow.value = true
   currentPage.value = item
   formData.permissions = item.allowed ? item.allowed.split(',') : []
-}
-
-const setPagePermissionAction = async () => {
-  confirmMessage('确定改变页面访问权限吗？', '设置访问权限', async () => {
-    try {
-      await setPagePermission(currentPage.value!.id!, formData.permissions)
-      successMessage('设置成功')
-      isShow.value = false
-      await initUI()
-    } catch (e: any) {
-      errorMessage('设置失败')
-    }
-  })
 }
 </script>
 

@@ -1,46 +1,40 @@
 <template>
-  <el-form-item
+  <n-form-item
     v-for="{ key, label, type, selectOptions } in children"
     :key="`${ukey}${key}`"
     :label="label"
   >
-    <ColorPicker
+    <NColorPicker
       v-if="type === 'color'"
       v-model:value="formData[key]"
-      @change="changed($event, key)"
+      @update:value="changed($event, key)"
     />
-    <el-select
+    <n-select
       v-else-if="type === 'select'"
       v-model="formData[key]"
       :placeholder="label"
-      @change="changed($event, key)"
-    >
-      <el-option
-        v-for="item in selectOptions"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value"
-      />
-    </el-select>
-    <el-radio-group
-      v-else-if="type === 'radio'"
-      v-model="formData[key]"
-      :placeholder="label"
-      @change="changed($event, key)"
-    >
-      <el-radio v-for="item in selectOptions" :label="item.value" :key="item.value">
-        {{ item.label }}
-      </el-radio>
-    </el-radio-group>
-    <el-input-number
-      v-else-if="type === 'number'"
-      v-model="formData[key]"
-      @change="changed($event, key)"
+      update:value="changed($event, key)"
+      :options="selectOptions"
     />
-    <el-switch
+    <n-radio-group
+      v-else-if="type === 'radio'"
+      v-model:value="formData[key]"
+      :placeholder="label"
+      @update:value="changed($event, key)"
+    >
+      <n-radio v-for="item in selectOptions" :label="item.value" :key="item.value">
+        {{ item.label }}
+      </n-radio>
+    </n-radio-group>
+    <n-input-number
+      v-else-if="type === 'number'"
+      v-model:value="formData[key]"
+      @update:value="changed($event, key)"
+    />
+    <n-switch
       v-else-if="type === 'switch'"
-      v-model="formData[key]"
-      @change="changed($event, key)"
+      v-model:value="formData[key]"
+      @update:value="changed($event, key)"
     />
     <FontStyle
       v-else-if="type === 'fontStyle'"
@@ -57,27 +51,26 @@
       v-model:value="formData[key]"
       @change="changed($event, key)"
     />
-    <el-input v-else :type="type" v-model="formData[key]" @change="changed($event, key)" />
-  </el-form-item>
+    <n-input v-else clearable v-model:value="formData[key]" @update:value="changed($event, key)" />
+  </n-form-item>
 </template>
 
 <script lang="ts" setup>
 import { reactive, watch } from 'vue'
-import ColorPicker from './ColorPicker.vue'
 import FontStyle from './FontStyle.vue'
 import FontWeight from './FontWeight.vue'
 import LinearGradient from './LinearGradient.vue'
-import type { AttrType } from '@/types/component'
 import {
-  ElInput,
-  ElSelect,
-  ElOption,
-  ElFormItem,
-  ElRadio,
-  ElSwitch,
-  ElRadioGroup,
-  ElInputNumber
-} from 'element-plus'
+  NFormItem,
+  NInput,
+  NRadioGroup,
+  NRadio,
+  NSelect,
+  NSwitch,
+  NInputNumber,
+  NColorPicker
+} from 'naive-ui'
+import type { AttrType } from '@/types/component'
 
 const props = defineProps<{
   data: Recordable<any>

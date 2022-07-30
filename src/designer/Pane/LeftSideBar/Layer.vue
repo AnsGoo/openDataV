@@ -1,6 +1,6 @@
 <template>
   <div style="height: calc(100vh - 100px)">
-    <el-scrollbar v-if="componentData.length > 0">
+    <n-scrollbar v-if="componentData.length > 0">
       <el-menu
         :unique-opened="true"
         :collapse-transition="false"
@@ -16,12 +16,12 @@
           :mode="mode"
         />
       </el-menu>
-    </el-scrollbar>
-    <el-descriptions v-else class="placeholder">
-      <el-descriptions-item v-show="mode === 'expand'">
-        <el-empty description="画布为空" />
-      </el-descriptions-item>
-    </el-descriptions>
+    </n-scrollbar>
+    <n-descriptions v-else class="placeholder">
+      <n-descriptions-item v-show="mode === 'expand'">
+        <n-empty description="画布为空" />
+      </n-descriptions-item>
+    </n-descriptions>
   </div>
 </template>
 
@@ -30,7 +30,8 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref } from 'vue'
 import LayerItem from './LayerItem.vue'
 import type { ComponentInfo } from '@/types/component'
-import { ElScrollbar, ElMenu, ElDescriptions, ElDescriptionsItem, ElEmpty } from 'element-plus'
+import { ElMenu } from 'element-plus'
+import { NScrollbar, NDescriptions, NEmpty, NDescriptionsItem } from 'naive-ui'
 import { useEventBus } from '@/bus/useEventBus'
 
 withDefaults(
