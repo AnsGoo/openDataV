@@ -1,5 +1,5 @@
 <template>
-  <span v-resize="resizeHandler">{{ customeText }}</span>
+  <span v-resize="resizeHandler">{{ customeText }}{{ propValue.unit }}</span>
 </template>
 
 <script setup lang="ts">
@@ -34,7 +34,7 @@ onMounted(async () => {
   try {
     const res = await http.post({ url: props.propValue.history, data: [props.propValue.tagName] })
     if (res.ErrorCode === 200) {
-      customeText.value = res.Results[0].TagValue
+      dataHandler(res.Results[0])
     }
   } catch (error: any) {
     console.log(error?.message)

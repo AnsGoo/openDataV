@@ -8,7 +8,8 @@ const component: ComponentConfig<SubText> = {
   label: '数据订阅文本',
   propValue: {
     tagName: 'ZJGD_2212#ZJGD',
-    history: ''
+    history: '',
+    unit: ''
   },
   icon: 'wenben',
   style: {
@@ -63,6 +64,11 @@ const attrs: Array<GroupType> = [
       {
         key: 'history',
         label: '最新数据',
+        type: 'text'
+      },
+      {
+        key: 'unit',
+        label: '单位',
         type: 'text'
       }
     ]
