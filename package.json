@@ -24,7 +24,6 @@
     "echarts": "^5.2.1",
     "echarts-gl": "^2.0.8",
     "echarts-liquidfill": "3",
-    "element-plus": "^1.1.0-beta.24",
     "flv.js": "^1.6.2",
     "lodash-es": "^4.17.21",
     "mitt": "^3.0.0",

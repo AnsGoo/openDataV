@@ -2,43 +2,23 @@
   <div @dragstart="handleDragStart" style="height: calc(100vh - 100px)">
     <div class="components">
       <n-scrollbar>
-        <el-menu :unique-opened="true">
-          <el-sub-menu
-            v-for="(key, index) in componentKeys"
-            :index="index.toString()"
-            :key="index"
-            v-once
-          >
-            <template #title>
-              <span :class="`icon iconfont ${iconMap[key]}`"></span>
-              <span v-show="mode === 'expand'">{{ key }}</span>
-            </template>
-            <el-menu-item
-              v-for="(item, i) in componentGroup[key!]"
-              :key="i"
-              :index="`${index}-${i}`"
-              draggable="true"
-              :data-component="item.component"
-            >
-              <template #title>
-                <span>{{ item.label }}</span>
-              </template>
-            </el-menu-item>
-          </el-sub-menu>
-        </el-menu>
+        <n-menu :options="menuOptions" :accordion="false"></n-menu>
       </n-scrollbar>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ComponentGroup } from '@/enum'
+import { ComponentGroupList } from '@/enum'
 import { componentList } from '@/designer/load'
 import type { ComponentInfo } from '@/types/component'
-import { computed } from 'vue'
-import iconMap from './iconMap'
-import { ElSubMenu, ElMenu, ElMenuItem } from 'element-plus'
-import { NMenu, NSubMenu, NScrollbar } from 'naive-ui'
+import { computed,h } from 'vue'
+import { NMenu, NScrollbar } from 'naive-ui'
+import type { MentionOption } from 'naive-ui'
+import ComponentItem from './ComponentItem.vue'
+import type { GroupType } from '@/enum'
+import RenderIcon from './RenderIcon.vue'
+
 
 withDefaults(
   defineProps<{
@@ -49,14 +29,8 @@ withDefaults(
   }
 )
 
-const componentKeys = computed(() => {
-  return Object.keys(ComponentGroup).map((item) => {
-    return ComponentGroup[item]
-  })
-})
-
-const componentGroup = computed(() => {
-  const groups: { group: string; component: ComponentInfo } = {} as any
+const menuOptions = computed<MentionOption[]>(() => {
+  const groups: { group: string; component: ComponentInfo[] } | {} = {}
   Object.keys(componentList)
     .filter((key) => {
       if (componentList[key].component.show !== false) {
@@ -74,7 +48,29 @@ const componentGroup = computed(() => {
       }
       groups[group].push(componentList[key].component)
     })
-  return groups
+  const menus: MentionOption[] = []
+  ComponentGroupList.forEach((item: GroupType) => {
+    menus.push(
+      {
+        label: () => item.name ,
+        key: item.key,
+        icon: () => h(RenderIcon,{
+          name:`icon${item.icon}`,
+        }),
+        children: groups[item.key]?.map((el) => {
+            return {
+              label:  () => h(ComponentItem, {
+                component: el.component,
+                name:el.label
+                }),
+              key: el.component
+            }
+          }
+        )
+      }
+    )
+  }) 
+  return menus
 })
 
 const handleDragStart = (e) => {
@@ -94,7 +90,7 @@ const handleDragStart = (e) => {
     @apply w-full;
   }
 
-  .n-menu {
+  /* .n-menu {
     width: 200px;
   }
   ul :deep(.n-sub-menu__title) {
@@ -104,7 +100,7 @@ const handleDragStart = (e) => {
   ul :deep(.n-menu-item) {
     height: 30px;
     line-height: 30px;
-  }
+  } */
 
   .components {
     display: flex;
