@@ -5,7 +5,7 @@ import type { Progress } from './type'
 const component: ComponentConfig<Progress> = {
   component: 'Progress',
   label: '进度条',
-  group: ComponentGroup.Progress,
+  group: ComponentGroup.PROGERSS,
   propValue: {
     history: 'https://data.com',
     datatag: 'CMJ_CMJQYSD',

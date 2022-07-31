@@ -19,7 +19,7 @@ import { NScrollbar, NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'nai
 import { useEventBus } from '@/bus/useEventBus'
 import RenderIcon from './RenderIcon.vue'
 import LayerItem from './LayerItem.vue'
-import type { MentionOption } from 'naive-ui'
+import type { MenuOption } from 'naive-ui'
 import { ComponentGroupList } from '@/enum'
 
 withDefaults(
@@ -52,25 +52,24 @@ const open = (event: any) => {
 useEventBus('ActiveMenu', open)
 
 const handleSelect = (key: string) => {
-  console.log(key)
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
   basicStore.setActiveComponent(activedComponent)
 }
 
-const menuOptions = ref<MentionOption[]>([])
+const menuOptions = ref<MenuOption[]>([])
 
 const getMenuOptions = (
   fatherIndex: string,
   compoments: ComponentInfo[],
-  options: MentionOption[]
-): MentionOption[] => {
+  options: MenuOption[]
+): MenuOption[] => {
   for (let i = 0; i < compoments.length; i++) {
     const item = compoments[i]
 
     if (item.component === 'Group') {
-      const childrenOptions: MentionOption[] = []
+      const childrenOptions: MenuOption[] = []
       options.push({
         label: () =>
           h(LayerItem, {
@@ -117,6 +116,7 @@ watch(
   () => {
     const compoments = basicStore.componentData
     menuOptions.value = []
+    // @ts-ignore
     menuOptions.value = getMenuOptions('', compoments, [])
   },
   {

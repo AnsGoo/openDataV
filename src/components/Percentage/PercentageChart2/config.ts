@@ -5,7 +5,7 @@ import type { PercentageChart } from './type'
 const component: ComponentConfig<PercentageChart> = {
   component: 'PercentageChart2',
   label: '百分比图2',
-  group: ComponentGroup.PERCENTAGE,
+  group: ComponentGroup.PIE,
   propValue: {
     title: '标题',
     history: 'https://data.com',

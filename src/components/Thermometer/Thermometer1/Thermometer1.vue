@@ -13,8 +13,6 @@ import { debounce } from 'lodash-es'
 
 import type { TagType } from '@/types/wsTypes'
 
-import type { GradientColorStop } from '@/utils/echarts/echarts'
-
 import mydark from '@/theme/mydark'
 import type { Thermometer1 } from './type'
 echarts.registerTheme('mydark', mydark)
@@ -32,6 +30,11 @@ let historyData = 100
 let intervalId: IntervalHandle
 
 let marks: string[] = []
+
+interface GradientColorStop {
+  offset: number
+  color: string
+}
 
 const handler = (event) => {
   const item: TagType = event as TagType

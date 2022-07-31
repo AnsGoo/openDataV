@@ -4,7 +4,7 @@ import type { WaterChart } from './type'
 
 const component: ComponentConfig<WaterChart> = {
   component: 'WaterChart',
-  group: ComponentGroup.Progress,
+  group: ComponentGroup.PROGERSS,
   label: '水波图',
   propValue: {
     title: '标题',

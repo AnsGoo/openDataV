@@ -2,14 +2,14 @@
   <div class="linear-gradient">
     <n-input-number
       :modelValue="value!.angle"
-      @change="changed('angle', $event)"
+      @update:value="(value) => changed('angle', value)"
       :controls="true"
       :min="0"
       :max="360"
       :step="1"
     />
-    <NColorPicker :value="value!.color1" @update:value="changed('color1', $event)" />
-    <NColorPicker :value="value!.color2" @update:value="changed('color2', $event)" />
+    <NColorPicker :value="value!.color1" @update:value="(value) => changed('color1', value)" />
+    <NColorPicker :value="value!.color2" @update:value="(value) => changed('color2', value)" />
   </div>
 </template>
 
@@ -47,7 +47,7 @@ const emits = defineEmits<{
   (e: 'change', value: LinearGradient): void
 }>()
 
-const changed = (key: string, value: string | number) => {
+const changed = (key: string, value: string | number | null) => {
   linearGradient.value[key] = value
   console.log(linearGradient.value)
   emits('update:value', linearGradient.value)
