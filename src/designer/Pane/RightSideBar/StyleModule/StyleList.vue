@@ -3,20 +3,22 @@
   <div class="attr-list" style="height: calc(100vh - 100px)">
     <n-scrollbar>
       <n-form size="small" @submit.prevent label-placement="left" label-align="left">
-        <n-collapse
-          v-model="activeName"
-          accordion
-          v-for="{ name, uid, children } in styleKeys"
-          :key="`${curComponent.id}${uid}`"
-        >
-          <FormAttr
-            :children="children"
-            :data="formData"
-            @change="changed"
-            :name="name"
-            :uid="uid"
-            :ukey="curComponent.id"
-          />
+        <n-collapse accordion>
+          <n-collapse-item
+            v-for="{ name, uid, children } in styleKeys"
+            :key="`${curComponent.id}${uid}`"
+            :title="name"
+            :name="uid"
+          >
+            <FormAttr
+              :children="children"
+              :data="formData"
+              @change="changed"
+              :name="name"
+              :uid="uid"
+              :ukey="curComponent.id"
+            />
+          </n-collapse-item>
         </n-collapse>
       </n-form>
     </n-scrollbar>
@@ -28,17 +30,16 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { checkDiff, cleanObjectProp } from '@/utils/utils'
 import { componentList } from '@/designer/load'
 import { debounce } from 'lodash-es'
-import { computed, ref, reactive, watch } from 'vue'
+import { computed, reactive, watch } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
-import { NForm, NScrollbar, NCollapse } from 'naive-ui'
+import { NForm, NScrollbar, NCollapse, NCollapseItem } from 'naive-ui'
 import type { ComponentInfo } from '@/types/component'
 import { groupCommonStyle } from '@/designer/interface'
 
 const props = defineProps<{
   curComponent: ComponentInfo
 }>()
-const activeName = ref<string>()
 const basicStore = useBasicStoreWithOut()
 
 const formData = reactive<Recordable<any>>({})

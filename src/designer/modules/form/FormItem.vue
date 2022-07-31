@@ -7,13 +7,14 @@
     <NColorPicker
       v-if="type === 'color'"
       v-model:value="formData[key]"
+      :modes="['hex', 'rgb', 'hsl']"
       @update:value="changed($event, key)"
     />
     <n-select
       v-else-if="type === 'select'"
       v-model="formData[key]"
       :placeholder="label"
-      update:value="changed($event, key)"
+      @update:value="changed($event, key)"
       :options="selectOptions"
     />
     <n-radio-group

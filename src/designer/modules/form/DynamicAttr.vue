@@ -1,31 +1,22 @@
 <template>
-  <n-collapse-item :key="ukey" :title="name">
-    <n-collapse accordion>
-      <n-collapse-item
-        v-for="(item, index) in arrayData"
-        :key="`${ukey}${index}`"
-        :name="max > 1 ? `${uid}${index}` : uid"
-      >
-        <template #title>
-          <div class="dynamic">
-            <div class="title">{{ max > 1 ? `${index + 1}` : name }}</div>
-            <div class="delete">
-              <n-icon>
-                <icon-delete-one
-                  theme="outline"
-                  size="24"
-                  fill="var(--n-color-primary)"
-                  @click="deleteItem(index)"
-                />
-              </n-icon>
-            </div>
-          </div>
-        </template>
-        <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" />
-      </n-collapse-item>
-    </n-collapse>
-    <n-button v-show="isShowAdd" class="add" @click="handleAddClick">+</n-button>
-  </n-collapse-item>
+  <n-collapse accordion>
+    <n-collapse-item
+      v-for="(item, index) in arrayData"
+      :key="`${ukey}${index}`"
+      :name="max > 1 ? `${uid}${index}` : uid"
+    >
+      <template #header>
+        <div class="title">{{ name }}{{ index + 1 }}</div>
+      </template>
+      <template #header-extra>
+        <n-icon @click="deleteItem(index)">
+          <icon-delete-one theme="outline" size="24" fill="#333" />
+        </n-icon>
+      </template>
+      <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" # />
+    </n-collapse-item>
+  </n-collapse>
+  <n-button v-show="isShowAdd" class="add" @click="handleAddClick">+</n-button>
 </template>
 
 <script lang="ts" setup>
@@ -82,18 +73,5 @@ const handleAddClick = () => {
 .add {
   border-style: dashed;
   width: 100%;
-}
-
-.dynamic {
-  display: flex;
-  width: 100%;
-  // justify-content: space-between;
-  align-content: center;
-  flex-wrap: nowrap;
-  flex-direction: row;
-
-  .delete {
-    color: #ef4444;
-  }
 }
 </style>
