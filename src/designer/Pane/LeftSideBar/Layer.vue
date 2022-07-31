@@ -79,7 +79,7 @@ const getMenuOptions = (
         key: calcIndex(i, fatherIndex),
         icon: () =>
           h(RenderIcon, {
-            name: `icon${iconMap[item.group!]}`
+            name: 'icon-branch-one'
           }),
         children: getMenuOptions(
           calcIndex(i, fatherIndex),
