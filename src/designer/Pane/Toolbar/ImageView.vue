@@ -9,18 +9,7 @@
         </div>
         <div>
           <n-card class="card upload-card">
-            <n-upload
-              class="upload"
-              :action="`${baseURL}/upload`"
-              list-type="picture-card"
-              :thumbnail-mode="false"
-              :show-file-list="false"
-              :on-success="uploadSuccess"
-              :on-error="uploadFail"
-              :headers="headers"
-            >
-              <n-icon>上传</n-icon>
-            </n-upload>
+            <n-icon>上传</n-icon>
           </n-card>
         </div>
       </n-scrollbar>

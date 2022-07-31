@@ -35,7 +35,21 @@ import {
   IndentRight,
   IndentLeft,
   Data,
-  AddThree
+  AddThree,
+  CubeThree,
+  Text,
+  Rectangle,
+  Headwear,
+  ChartLine,
+  ChartHistogram,
+  ChartPie,
+  Dashboard,
+  SwitchButton,
+  Thermometer,
+  LoadingThree,
+  MoreFour,
+  HamburgerButton,
+
 } from '@icon-park/vue-next'
 
 export default {
@@ -75,5 +89,18 @@ export default {
     app.component(IndentLeft.name, IndentLeft)
     app.component(Data.name, Data)
     app.component(AddThree.name, AddThree)
+    app.component(CubeThree.name, CubeThree)
+    app.component(Text.name, Text)
+    app.component(Rectangle.name, Rectangle)
+    app.component(ChartLine.name, ChartLine)
+    app.component(ChartHistogram.name, ChartHistogram)
+    app.component(ChartPie.name, ChartPie)
+    app.component(Dashboard.name, Dashboard)
+    app.component(Headwear.name, Thermometer)
+    app.component(Thermometer.name, Headwear)
+    app.component(SwitchButton.name, SwitchButton)
+    app.component(LoadingThree.name, LoadingThree)
+    app.component(HamburgerButton.name, HamburgerButton)
+    app.component(MoreFour.name, MoreFour)
   }
 }
