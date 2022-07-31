@@ -48,42 +48,4 @@ const isAuth = computed<boolean>(() => {
   // --el-text-color-primary: #ffffff !important;
   // --el-text-color-regular: #ffffff !important;
 }
-.el-form-item {
-  margin-bottom: 3px !important;
-}
-
-.el-collapse {
-  // border-top: none !important;
-  border-bottom: none !important;
-  --el-collapse-header-height: 30px !important;
-  --el-collapse-header-font-color: var(--el-collapse-header-text-color) !important;
-}
-
-.el-input-number--mini {
-  width: 100% !important;
-}
-
-.el-collapse-item__content {
-  padding-bottom: 5px !important;
-}
-
-.el-descriptions__body {
-  background-color: var(--theme-dark-color-primary) !important;
-}
-
-.el-input-number__decrease,
-.el-input-number__increase {
-  background-color: var(--theme-dark-color-primary) !important;
-}
-.el-scrollbar {
-  --el-scrollbar-background-color: var(--theme-dark-color-primary) !important;
-}
-
-.el-sub-menu {
-  background-color: var(--theme-dark-color-primary) !important;
-}
-
-.el-select-dropdown {
-  min-width: 20px;
-}
 </style>
