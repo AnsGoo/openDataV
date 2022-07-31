@@ -2,7 +2,7 @@
   <div @dragstart="handleDragStart" style="height: calc(100vh - 100px)">
     <div class="components">
       <n-scrollbar>
-        <n-menu :options="menuOptions" :accordion="false"></n-menu>
+        <n-menu :options="menuOptions" :accordion="false" />
       </n-scrollbar>
     </div>
   </div>
@@ -12,13 +12,12 @@
 import { ComponentGroupList } from '@/enum'
 import { componentList } from '@/designer/load'
 import type { ComponentInfo } from '@/types/component'
-import { computed,h } from 'vue'
+import { computed, h } from 'vue'
 import { NMenu, NScrollbar } from 'naive-ui'
-import type { MentionOption } from 'naive-ui'
+import type { MenuOption } from 'naive-ui'
 import ComponentItem from './ComponentItem.vue'
 import type { GroupType } from '@/enum'
 import RenderIcon from './RenderIcon.vue'
-
 
 withDefaults(
   defineProps<{
@@ -29,7 +28,7 @@ withDefaults(
   }
 )
 
-const menuOptions = computed<MentionOption[]>(() => {
+const menuOptions = computed<MenuOption[]>(() => {
   const groups: { group: string; component: ComponentInfo[] } | {} = {}
   Object.keys(componentList)
     .filter((key) => {
@@ -48,28 +47,27 @@ const menuOptions = computed<MentionOption[]>(() => {
       }
       groups[group].push(componentList[key].component)
     })
-  const menus: MentionOption[] = []
+  const menus: MenuOption[] = []
   ComponentGroupList.forEach((item: GroupType) => {
-    menus.push(
-      {
-        label: () => item.name ,
-        key: item.key,
-        icon: () => h(RenderIcon,{
-          name:`icon${item.icon}`,
+    menus.push({
+      label: () => item.name,
+      key: item.key,
+      icon: () =>
+        h(RenderIcon, {
+          name: `icon${item.icon}`
         }),
-        children: groups[item.key]?.map((el) => {
-            return {
-              label:  () => h(ComponentItem, {
-                component: el.component,
-                name:el.label
-                }),
-              key: el.component
-            }
-          }
-        )
-      }
-    )
-  }) 
+      children: groups[item.key]?.map((el) => {
+        return {
+          label: () =>
+            h(ComponentItem, {
+              component: el.component,
+              name: el.label
+            }),
+          key: el.component
+        }
+      })
+    })
+  })
   return menus
 })
 

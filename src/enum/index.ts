@@ -34,23 +34,20 @@ export enum EditMode {
   PREVIEW = 'preview'
 }
 
-
 export class GroupType {
-  public name:string
-  private _icon:string
-  public key:string
+  public name: string
+  private _icon: string
+  public key: string
 
-  constructor(name:string, key:string, icon:string ,) {
+  constructor(name: string, key: string, icon: string) {
     this.name = name
     this._icon = icon
     this.key = key
   }
-  get icon(){
-    return this._icon.replace(/([A-Z])/g,"-$1").toLowerCase()
+  get icon() {
+    return this._icon.replace(/([A-Z])/g, '-$1').toLowerCase()
   }
 }
-
-
 
 export enum ComponentGroup {
   // 基础组件
@@ -80,20 +77,20 @@ export enum ComponentGroup {
   OTHER = '其他'
 }
 
-export const ComponentGroupList:GroupType[]  = [
-  new GroupType('基础', ComponentGroup.BASIC,'CubeThree' ),
-  new GroupType('边框', ComponentGroup.BORDER,'Rectangle' ),
-  new GroupType('装饰', ComponentGroup.DECORATION,'Headwear' ),
-  new GroupType('线状图', ComponentGroup.LINE,'ChartLine' ),
-  new GroupType('柱状图', ComponentGroup.BAR,'ChartHistogram' ),
-  new GroupType('饼图', ComponentGroup.PIE,'ChartPie' ),
-  new GroupType('仪表盘', ComponentGroup.GAUGE,'Dashboard' ),
-  new GroupType('按钮', ComponentGroup.BUTTON,'SwitchButton' ),
-  new GroupType('文本', ComponentGroup.TEXT,'Text' ),
-  new GroupType('温度计', ComponentGroup.THERMOMETER,'Thermometer' ),
-  new GroupType('导航', ComponentGroup.NAVIFATION,'HamburgerButton' ),
-  new GroupType('进度图', ComponentGroup.PROGERSS,'LoadingThree' ),
-  new GroupType('其他', ComponentGroup.OTHER,'MoreFour' ),
+export const ComponentGroupList: GroupType[] = [
+  new GroupType('基础', ComponentGroup.BASIC, 'CubeThree'),
+  new GroupType('边框', ComponentGroup.BORDER, 'Rectangle'),
+  new GroupType('装饰', ComponentGroup.DECORATION, 'Headwear'),
+  new GroupType('线状图', ComponentGroup.LINE, 'ChartLine'),
+  new GroupType('柱状图', ComponentGroup.BAR, 'ChartHistogram'),
+  new GroupType('饼图', ComponentGroup.PIE, 'ChartPie'),
+  new GroupType('仪表盘', ComponentGroup.GAUGE, 'Dashboard'),
+  new GroupType('按钮', ComponentGroup.BUTTON, 'SwitchButton'),
+  new GroupType('文本', ComponentGroup.TEXT, 'Text'),
+  new GroupType('温度计', ComponentGroup.THERMOMETER, 'Thermometer'),
+  new GroupType('导航', ComponentGroup.NAVIFATION, 'HamburgerButton'),
+  new GroupType('进度图', ComponentGroup.PROGERSS, 'LoadingThree'),
+  new GroupType('其他', ComponentGroup.OTHER, 'MoreFour')
 ]
 
 export enum ControlType {

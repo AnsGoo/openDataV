@@ -35,7 +35,7 @@ interface ComponentStyle extends DOMRectStyle {
 }
 
 interface ComponentInfo<T = Recordable<string | number | any>> extends ComponentCommon {
-key: any
+  key: any
   id: string
   component: string
   label: string
