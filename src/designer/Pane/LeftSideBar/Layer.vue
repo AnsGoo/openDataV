@@ -1,7 +1,7 @@
 <template>
   <div style="height: calc(100vh - 100px)">
     <n-scrollbar v-if="componentData.length > 0">
-      <n-menu :options="menuOptions"/>
+      <n-menu :options="menuOptions" @update:value="handleSelect" />
     </n-scrollbar>
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item v-show="mode === 'expand'">
@@ -19,9 +19,8 @@ import { NScrollbar, NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'nai
 import { useEventBus } from '@/bus/useEventBus'
 import RenderIcon from './RenderIcon.vue'
 import LayerItem from './LayerItem.vue'
-import type {MentionOption} from 'naive-ui'
+import type { MentionOption } from 'naive-ui'
 import { ComponentGroupList } from '@/enum'
-
 
 withDefaults(
   defineProps<{
@@ -34,8 +33,8 @@ withDefaults(
 
 const basicStore = useBasicStoreWithOut()
 
-const iconMap : Recordable<string> = {}
-ComponentGroupList.map( (ele) => {
+const iconMap: Recordable<string> = {}
+ComponentGroupList.map((ele) => {
   iconMap[ele.key] = ele.icon
 })
 
@@ -59,60 +58,72 @@ const handleSelect = (key: string) => {
   basicStore.setActiveComponent(activedComponent)
 }
 
-const menuOptions =  ref<MentionOption[] >([])
+const menuOptions = ref<MentionOption[]>([])
 
-
-const getMenuOptions = (fatherIndex:string, compoments: ComponentInfo[], options:MentionOption[]): MentionOption[] => {
-  for (let i = 0; i< compoments.length; i++) {
+const getMenuOptions = (
+  fatherIndex: string,
+  compoments: ComponentInfo[],
+  options: MentionOption[]
+): MentionOption[] => {
+  for (let i = 0; i < compoments.length; i++) {
     const item = compoments[i]
 
-    if (item.component === 'Group' ) {
+    if (item.component === 'Group') {
       const childrenOptions: MentionOption[] = []
-        options.push(
-          {
-            label: () => h(LayerItem,{
-              component: item,
-              index: calcIndex(i, fatherIndex)
-            }),
-            key: calcIndex(i, fatherIndex),
-            icon: () => h(RenderIcon,{
-              name:`icon${iconMap[item.group!]}`,
-            }),
-            children: getMenuOptions(calcIndex(i, fatherIndex), item.subComponents|| [],childrenOptions)
-          }
+      options.push({
+        label: () =>
+          h(LayerItem, {
+            component: item,
+            index: calcIndex(i, fatherIndex)
+          }),
+        key: calcIndex(i, fatherIndex),
+        icon: () =>
+          h(RenderIcon, {
+            name: `icon${iconMap[item.group!]}`
+          }),
+        children: getMenuOptions(
+          calcIndex(i, fatherIndex),
+          item.subComponents || [],
+          childrenOptions
         )
-
-      } else {
-        options.push( {
-            label: () => h(LayerItem,{
-              component: item,
-              index: calcIndex(i, fatherIndex)
-            }),
-            key: calcIndex(i, fatherIndex),
-            icon: () => h(RenderIcon,{
-              name:`icon${iconMap[item.group!]}`,
-            }),
+      })
+    } else {
+      options.push({
+        label: () =>
+          h(LayerItem, {
+            component: item,
+            index: calcIndex(i, fatherIndex)
+          }),
+        key: calcIndex(i, fatherIndex),
+        icon: () =>
+          h(RenderIcon, {
+            name: `icon${iconMap[item.group!]}`
           })
-      }
+      })
+    }
   }
   return options
-} 
-const calcIndex = (index: number, fatherIndex:string) => {
-  if (fatherIndex!== '0') {
+}
+const calcIndex = (index: number, fatherIndex: string) => {
+  if (fatherIndex !== '0') {
     return `${fatherIndex}-${index}`
   } else {
     return index.toString()
   }
 }
-watch( () => basicStore.componentData, ()=> {
-  const compoments = basicStore.componentData
-  menuOptions.value = []
-  menuOptions.value =  getMenuOptions('0', compoments,menuOptions.value)
-  console.log(menuOptions.value)
-},{
-  deep:true,
-  immediate: true
-})
+watch(
+  () => basicStore.componentData,
+  () => {
+    const compoments = basicStore.componentData
+    menuOptions.value = []
+    menuOptions.value = getMenuOptions('0', compoments, menuOptions.value)
+    console.log(menuOptions.value)
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 </script>
 
 <style lang="less" scoped>

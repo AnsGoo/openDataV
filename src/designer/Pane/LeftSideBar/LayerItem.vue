@@ -1,9 +1,11 @@
 <template>
-<div draggable="true"
+  <div
+    draggable="true"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
-    v-contextmenu="() => contextmenus($el, index)">
+    v-contextmenu="() => contextmenus($el, index)"
+  >
     <div v-if="component.component === 'Group'">
       <!-- <span class="icon iconfont icon-zu"></span> -->
       <span v-show="mode === 'expand'">{{ component.label || '分组' }}</span>
@@ -31,7 +33,6 @@
       </n-icon>
     </div>
   </div>
-
 </template>
 
 <script lang="ts" setup>
@@ -64,6 +65,7 @@ const copy = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const component: ComponentInfo = basicStore.getComponentByIndex(indexs)
   if (component) {
+    component.groupStyle = undefined
     copyText(JSON.stringify(component))
     copyStore.copy()
   }

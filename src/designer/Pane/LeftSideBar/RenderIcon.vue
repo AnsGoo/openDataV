@@ -1,12 +1,6 @@
 <template>
   <i>
-    <component
-      :is="name"
-      :theme="theme"
-      :size="size"
-      :fill="color"
-      v-bind="$attrs"
-    ></component>
+    <component :is="name" :theme="theme" :size="size" :fill="color" v-bind="$attrs" />
   </i>
 </template>
 
@@ -16,7 +10,7 @@ withDefaults(
     name: string
     size?: number
     color?: string
-    theme?:string
+    theme?: string
   }>(),
   {
     size: 18,

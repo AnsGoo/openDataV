@@ -48,8 +48,7 @@ import {
   Thermometer,
   LoadingThree,
   MoreFour,
-  HamburgerButton,
-
+  HamburgerButton
 } from '@icon-park/vue-next'
 
 export default {
