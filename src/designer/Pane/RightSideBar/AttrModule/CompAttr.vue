@@ -27,13 +27,13 @@ const props = defineProps<{
 const labn = ref<string>('')
 const basicStore = useBasicStoreWithOut()
 const labnChange = (value) => {
-  basicStore.setCurComponentProps('labn', value)
+  basicStore.setCurComponentProps('label', value)
 }
 
 watch(
   () => props.curComponent,
   () => {
-    labn.value = props.curComponent.labn || ''
+    labn.value = props.curComponent.label || ''
   },
   { immediate: true }
 )

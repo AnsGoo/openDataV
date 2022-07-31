@@ -52,6 +52,7 @@ const open = (event: any) => {
 useEventBus('ActiveMenu', open)
 
 const handleSelect = (key: string) => {
+  console.log(key)
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
@@ -105,7 +106,7 @@ const getMenuOptions = (
   return options
 }
 const calcIndex = (index: number, fatherIndex: string) => {
-  if (fatherIndex !== '0') {
+  if (fatherIndex) {
     return `${fatherIndex}-${index}`
   } else {
     return index.toString()
@@ -116,8 +117,7 @@ watch(
   () => {
     const compoments = basicStore.componentData
     menuOptions.value = []
-    menuOptions.value = getMenuOptions('0', compoments, menuOptions.value)
-    console.log(menuOptions.value)
+    menuOptions.value = getMenuOptions('', compoments, [])
   },
   {
     deep: true,
@@ -127,18 +127,6 @@ watch(
 </script>
 
 <style lang="less" scoped>
-:deep(.el-sub-menu__title) {
-  height: 36px;
-  line-height: 36px;
-}
-:deep(.el-sub-menu .el-menu-item) {
-  height: 30px;
-  line-height: 30px;
-}
-:deep(.el-menu-item) {
-  height: 30px;
-  line-height: 30px;
-}
 ul {
   flex: 1;
   /* width: 50px; */
