@@ -48,7 +48,8 @@ import {
   Thermometer,
   LoadingThree,
   MoreFour,
-  HamburgerButton
+  HamburgerButton,
+  BranchOne
 } from '@icon-park/vue-next'
 
 export default {
@@ -101,5 +102,6 @@ export default {
     app.component(LoadingThree.name, LoadingThree)
     app.component(HamburgerButton.name, HamburgerButton)
     app.component(MoreFour.name, MoreFour)
+    app.component(BranchOne.name, BranchOne)
   }
 }
