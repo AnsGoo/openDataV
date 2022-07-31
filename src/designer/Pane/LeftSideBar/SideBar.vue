@@ -67,10 +67,6 @@ const expandSideBar = () => {
 </script>
 
 <style lang="less" scoped>
-:deep(.el-tabs__header) {
-  margin-bottom: 0;
-}
-
 .side-bar {
   position: relative;
   width: v-bind(sideBarWdith);

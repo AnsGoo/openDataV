@@ -5,7 +5,7 @@ import type { Thermometer1 } from './type'
 const component: ComponentConfig<Thermometer1> = {
   component: 'Thermometer1',
   label: '温度计1',
-  group: ComponentGroup.Thermometer,
+  group: ComponentGroup.THERMOMETER,
   propValue: {
     history: 'https://data.com',
     datatag: 'ZJGD_2212#ZJGD',

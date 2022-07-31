@@ -91,39 +91,5 @@ const getImageList = async () => {
   border-radius: 20px;
   overflow-y: auto;
   padding: 20px;
-  :deep(.el-scrollbar__view) {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    .card {
-      width: 150px;
-      height: 150px;
-      padding: 0 0;
-      margin: 10px 10px;
-      .el-card__body {
-        padding: 0 0;
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        height: 150px;
-        weight: 150px;
-        .image {
-          max-width: 150px;
-          max-height: 150px;
-        }
-      }
-    }
-    .upload-card {
-      .el-card__body {
-        .upload {
-          .el-upload--picture-card {
-            width: 110px !important;
-            height: 110px !important;
-          }
-        }
-      }
-    }
-  }
 }
 </style>

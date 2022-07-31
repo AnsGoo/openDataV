@@ -3,7 +3,7 @@
     <n-select
       v-model:value="formData.data"
       placeholder="请选择数据接口"
-      @update:value="dynamicDatachanged($event)"
+      @update:value="dynamicDatachanged"
       :options="selectOptions"
     />
   </n-form-item>
@@ -11,7 +11,7 @@
     <n-input-number
       v-model:value="formData.timeout"
       placeholder="超时时间"
-      @update:value="dynamicDatachanged($event)"
+      @update:value="dynamicDatachanged"
     />
   </n-form-item>
   <n-form-item key="isInterval" label="是否定时获取时间">
@@ -47,7 +47,7 @@ const formData = reactive({
   params: {}
 })
 const activeParam = ref<string>()
-const dynamicDatachanged = (value: number) => {
+const dynamicDatachanged = (value: number | string | null) => {
   console.log(value)
 }
 

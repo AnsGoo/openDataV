@@ -85,7 +85,7 @@
     </template>
   </n-modal>
   <IconFont v-model:visible="showIconFont" />
-  <ImageView v-model:visible="showImageView" />
+  <!-- <ImageView v-model:visible="showImageView" /> -->
 </template>
 
 <script setup lang="ts">
@@ -99,7 +99,6 @@ import type { LayoutData } from '@/types/apiTypes'
 import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
-import ImageView from './ImageView.vue'
 import { NForm, NInput, NFormItem, NButton, NIcon, NModal } from 'naive-ui'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
