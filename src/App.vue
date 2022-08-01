@@ -6,7 +6,7 @@ import { ref, computed } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import UserAffix from '@/annex/UserAffix.vue'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { zhCN, dateZhCN, NConfigProvider } from 'naive-ui'
+import { zhCN, dateZhCN, NConfigProvider, darkTheme, lightTheme } from 'naive-ui'
 const userStore = useUserStoreWithOut()
 
 const basicStore = useBasicStoreWithOut()
@@ -29,7 +29,7 @@ const isAuth = computed<boolean>(() => {
 </script>
 
 <template>
-  <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
+  <n-config-provider :locale="zhCN" :date-locale="dateZhCN" :theme="false ? darkTheme : lightTheme">
     <div>
       <UserAffix v-if="isAuth" />
       <RouterView :key="currentRoute.path" :style="{ overflow }" />
