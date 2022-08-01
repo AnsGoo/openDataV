@@ -21,7 +21,7 @@
 // import { computed, onMounted, ref } from 'vue'
 import { onMounted, ref } from 'vue'
 import { copyText } from '@/utils/utils'
-import { successMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 import type { ImageFile } from '@/types/file'
 import { getImages } from '@/api/file'
 import { NCard, NScrollbar, NIcon } from 'naive-ui'
@@ -61,7 +61,7 @@ const clickOutsideHandler = () => {
 
 const handleClick = (url: string) => {
   copyText(`${baseURL.value}${url}`)
-  successMessage(`复制图片地址: ${url}`)
+  message.success(`复制图片地址: ${url}`)
 }
 
 onMounted(async () => {

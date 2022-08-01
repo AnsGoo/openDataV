@@ -33,10 +33,11 @@
   </n-form-item>
 </template>
 <script lang="ts" setup>
-import { warnMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 import { NFormItem, NSelect, NInput, NInputNumber, NSwitch } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { reactive, ref } from 'vue'
+
 const selectOptions = ref<SelectOption[]>([])
 const paramList = ref<string[]>([])
 const formData = reactive({
@@ -56,10 +57,10 @@ const addParams = () => {
     if (!paramList.value.includes(activeParam.value)) {
       paramList.value.push(activeParam.value)
     } else {
-      warnMessage('参数重复')
+      message.warning('参数重复')
     }
   } else {
-    warnMessage('请填写参数')
+    message.warning('请填写参数')
   }
 }
 </script>
