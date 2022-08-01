@@ -10,4 +10,4 @@ const { message, dialog, notification, loadingBar } = createDiscreteApi(
     configProviderProps: configProviderPropsRef
   }
 )
-export default { message, dialog, notification, loadingBar }
+export { message, dialog, notification, loadingBar }
