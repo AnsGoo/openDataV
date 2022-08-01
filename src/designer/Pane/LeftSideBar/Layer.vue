@@ -17,7 +17,7 @@ import { computed, ref, h, watch } from 'vue'
 import type { ComponentInfo } from '@/types/component'
 import { NScrollbar, NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
 import { useEventBus } from '@/bus/useEventBus'
-import RenderIcon from './RenderIcon.vue'
+import { IconPark } from '@/plugins/icon'
 import LayerItem from './LayerItem.vue'
 import type { MenuOption } from 'naive-ui'
 import { ComponentGroupList } from '@/enum'
@@ -78,7 +78,7 @@ const getMenuOptions = (
           }),
         key: calcIndex(i, fatherIndex),
         icon: () =>
-          h(RenderIcon, {
+          h(IconPark, {
             name: 'icon-branch-one'
           }),
         children: getMenuOptions(
@@ -96,8 +96,8 @@ const getMenuOptions = (
           }),
         key: calcIndex(i, fatherIndex),
         icon: () =>
-          h(RenderIcon, {
-            name: `icon${iconMap[item.group!]}`
+          h(IconPark, {
+            name: `${iconMap[item.group!]}`
           })
       })
     }

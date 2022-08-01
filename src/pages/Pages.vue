@@ -77,7 +77,7 @@ import { onMounted, ref } from 'vue'
 import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
 import { copyText } from '@/utils/utils'
-import { successMessage, errorMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 import { NCard } from 'naive-ui'
 import { getUsers } from '@/api/user'
 const router = useRouter()
@@ -131,16 +131,16 @@ const handleView = (item: LayoutData) => {
 
 const handleCopy = (item: LayoutData) => {
   copyText(`/page/${item.id}/view`)
-  successMessage(`路由复制成功: /page/${item.id}/view`)
+  message.success(`路由复制成功: /page/${item.id}/view`)
 }
 
 const handleSetHome = async (item: LayoutData) => {
   try {
     await setHomePage(item.id!)
-    successMessage('设置成功')
+    message.success('设置成功')
     await initUI()
   } catch (e: any) {
-    errorMessage('设置失败')
+    message.error('设置失败')
   }
 }
 
@@ -150,7 +150,7 @@ const handleDelete = async (item: LayoutData) => {
     await initUI()
   } catch (e: any) {
     console.log(e?.message || e)
-    errorMessage('删除失败')
+    message.error('删除失败')
   }
 }
 
@@ -158,14 +158,9 @@ const previewIcon = (icon: string | undefined) => {
   return icon ? icon : defaultImg
 }
 
-const image = ref<string>(
-  `url('${(import.meta.env.VITE_BACKGROUND as string) || '/images/bg.jpg'}')`
-)
-
 const handleConfigAllowed = (item: LayoutData) => {
   isShow.value = true
   currentPage.value = item
-  // formData.permissions = item.allowed ? item.allowed.split(',') : []
 }
 </script>
 
@@ -203,9 +198,6 @@ const handleConfigAllowed = (item: LayoutData) => {
 
   .bg {
     @apply bg-gray-100 w-screen h-screen border border-transparent;
-
-    background: v-bind(image) no-repeat center center;
-    background-size: cover;
   }
 
   .delete {

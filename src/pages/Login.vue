@@ -52,7 +52,7 @@ import { useUserStoreWithOut } from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
 import { UserInfo } from '@/types/storeTypes'
-import { errorMessage, successMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 
 const userStore = useUserStoreWithOut()
 const router: Router = useRouter()
@@ -83,7 +83,7 @@ const loginAction = async () => {
     try {
       const resp: UserInfo = await login(data)
       userStore.setUserInfo(resp)
-      successMessage('登陆成功')
+      message.success('登陆成功')
       const redirect: string | undefined = route.query.redirect as string | undefined
       if (redirect) {
         router.push({
@@ -95,7 +95,7 @@ const loginAction = async () => {
         })
       }
     } catch (e: any) {
-      errorMessage(`登陆失败,请输入正确的账号密码`)
+      message.error(`登陆失败,请输入正确的账号密码`)
     }
   } catch (e: unknown) {
     console.log(e)

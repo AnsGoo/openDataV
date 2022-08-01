@@ -36,6 +36,7 @@ const createComponentList = () => {
       console.error(`${key} is not a valid component`)
     }
   })
+  console.log(componentList)
   return componentList
 }
 

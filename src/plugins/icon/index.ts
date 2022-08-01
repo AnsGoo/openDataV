@@ -49,12 +49,26 @@ import {
   LoadingThree,
   MoreFour,
   HamburgerButton,
-  BranchOne
+  BranchOne,
+  FullScreenOne,
+  OffScreenOne,
+  Refresh,
+  User,
+  Check,
+  SunOne,
+  Zijinyunying,
+  Rotation,
+  Lock,
+  Unlock
 } from '@icon-park/vue-next'
+import IconPark from './index.vue'
+
+export { IconPark }
 
 export default {
   install(app: App) {
     // 插入元素
+    app.component('IconPark', IconPark)
     app.component(DeleteOne.name, DeleteOne)
     app.component(PreviewCloseOne.name, PreviewCloseOne)
     app.component(PreviewOpen.name, PreviewOpen)
@@ -92,16 +106,26 @@ export default {
     app.component(CubeThree.name, CubeThree)
     app.component(Text.name, Text)
     app.component(Rectangle.name, Rectangle)
+    app.component(Headwear.name, Headwear)
     app.component(ChartLine.name, ChartLine)
     app.component(ChartHistogram.name, ChartHistogram)
     app.component(ChartPie.name, ChartPie)
     app.component(Dashboard.name, Dashboard)
-    app.component(Headwear.name, Thermometer)
-    app.component(Thermometer.name, Headwear)
     app.component(SwitchButton.name, SwitchButton)
+    app.component(Thermometer.name, Thermometer)
     app.component(LoadingThree.name, LoadingThree)
-    app.component(HamburgerButton.name, HamburgerButton)
     app.component(MoreFour.name, MoreFour)
+    app.component(HamburgerButton.name, HamburgerButton)
     app.component(BranchOne.name, BranchOne)
+    app.component(FullScreenOne.name, FullScreenOne)
+    app.component(OffScreenOne.name, OffScreenOne)
+    app.component(Refresh.name, Refresh)
+    app.component(User.name, User)
+    app.component(Check.name, Check)
+    app.component(SunOne.name, SunOne)
+    app.component(Zijinyunying.name, Zijinyunying)
+    app.component(Rotation.name, Rotation)
+    app.component(Lock.name, Lock)
+    app.component(Unlock.name, Unlock)
   }
 }

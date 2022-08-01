@@ -2,30 +2,15 @@
   <div class="side-bar">
     <dv-tabs :mode="mode" v-if="curComponent">
       <template #prefix>
-        <!-- <n-icon style="vertical-align: middle"> -->
-        <icon-indent-right
-          v-if="expandStatus"
-          theme="outline"
-          size="18"
-          fill="var(--el-color-primary)"
-          @click="expandSideBar"
-        />
-        <icon-indent-left
-          v-else
-          theme="outline"
-          size="18"
-          fill="var(--el-color-primary)"
-          @click="expandSideBar"
-        />
-
-        <!-- </n-icon> -->
+        <icon-park v-if="expandStatus" name="indent-right" @click="expandSideBar" />
+        <icon-park v-else name="indent-left" @click="expandSideBar" />
       </template>
       <dv-tab-pane name="style">
         <template #label>
-          <n-icon style="vertical-align: middle">
-            <icon-text-style theme="outline" size="24" />
-          </n-icon>
-          <span>样式</span>
+          <div class="label">
+            <icon-park name="text-style" />
+            <span>样式</span>
+          </div>
         </template>
         <div v-show="mode === 'expand'">
           <StyleList :curComponent="curComponent" />
@@ -33,10 +18,10 @@
       </dv-tab-pane>
       <dv-tab-pane name="attr">
         <template #label>
-          <n-icon style="vertical-align: middle">
-            <icon-internal-data theme="outline" size="24" />
-          </n-icon>
-          <span>属性</span>
+          <div class="label">
+            <icon-park name="internal-data" />
+            <span>属性</span>
+          </div>
         </template>
         <div v-show="mode === 'expand'">
           <AttrList :curComponent="curComponent" />
@@ -44,10 +29,10 @@
       </dv-tab-pane>
       <dv-tab-pane name="data">
         <template #label>
-          <n-icon style="vertical-align: middle">
-            <icon-data theme="outline" size="24" />
-          </n-icon>
-          <span>数据</span>
+          <div class="label">
+            <icon-park name="data" />
+            <span>数据</span>
+          </div>
         </template>
         <div v-show="mode === 'expand'">
           <DataAttr />
@@ -56,28 +41,15 @@
     </dv-tabs>
     <dv-tabs :mode="mode" v-else>
       <template #prefix>
-        <!-- <n-icon style="vertical-align: middle"> -->
-        <icon-indent-right
-          v-if="expandStatus"
-          theme="outline"
-          size="18"
-          fill="var(--el-color-primary)"
-          @click="expandSideBar"
-        />
-        <icon-indent-left
-          v-else
-          theme="outline"
-          size="18"
-          fill="var(--el-color-primary)"
-          @click="expandSideBar"
-        />
+        <icon-park v-if="expandStatus" name="indent-right" @click="expandSideBar" />
+        <icon-park v-else name="indent-left" @click="expandSideBar" />
       </template>
       <dv-tab-pane name="canvas">
         <template #label>
-          <n-icon style="vertical-align: middle">
-            <icon-page theme="outline" size="24" />
-          </n-icon>
-          <span>画布</span>
+          <div class="label">
+            <icon-park name="page" />
+            <span>画布</span>
+          </div>
         </template>
         <Canvas v-show="mode === 'expand'" />
       </dv-tab-pane>
@@ -92,7 +64,6 @@ import Canvas from './Canvas.vue'
 import StyleList from './StyleModule' // 右侧属性列表
 import AttrList from './AttrModule'
 import { DvTabs, DvTabPane } from '@/designer/modules/tabs'
-import { NIcon } from 'naive-ui'
 import DataAttr from './DataModule'
 
 const basicStore = useBasicStoreWithOut()
@@ -122,5 +93,12 @@ const curComponent = computed(() => basicStore.curComponent || basicStore.layerC
   width: v-bind(sideBarWdith);
 
   // transition: all 0.3s;
+}
+.label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
 }
 </style>

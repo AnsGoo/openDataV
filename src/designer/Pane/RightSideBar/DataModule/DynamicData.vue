@@ -26,9 +26,7 @@
   </n-form-item>
   <n-form-item key="addParams" label="请求参数">
     <n-input placeholder="参数" v-model:value="activeParam">
-      <template #suffix>
-        <icon-add-three theme="outline" size="18" fill="var(--n-color-primary)" @click="addParams"
-      /></template>
+      <template #suffix> <icon-park name="add-three" @click="addParams" /></template>
     </n-input>
   </n-form-item>
 </template>

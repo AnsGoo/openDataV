@@ -1,69 +1,48 @@
 <template>
   <div class="tool-bar">
-    <!-- <div>{{ basicStore.name }}</div> -->
     <div class="tool-bar-item">
       <div>
         <n-button size="small" @click="save" title="保存" v-action="'add'">
-          <n-icon style="vertical-align: middle">
-            <icon-save-one theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="save-one" size="22" />
           <span>保存</span>
         </n-button>
         <n-button size="small" @click="preview" title="预览">
-          <n-icon style="vertical-align: middle">
-            <icon-computer theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="computer" size="22" />
           <span>预览</span>
         </n-button>
         <n-button size="small" @click="undo" title="撤销">
-          <n-icon style="vertical-align: middle" @click="undo">
-            <icon-back theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="back" size="22" />
           <span>撤销</span>
         </n-button>
         <n-button size="small" @click="recoveryDraft" title="恢复">
-          <n-icon style="vertical-align: middle">
-            <icon-next theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="next" size="22" />
           <span>恢复</span>
         </n-button>
         <n-button size="small" @click="exportCanvas" title="导出">
-          <n-icon style="vertical-align: middle">
-            <icon-download-one theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="download-one" size="22" />
           <span>导出</span>
         </n-button>
         <n-button size="small" @click="importCanvas" title="导入">
-          <n-icon style="vertical-align: middle">
-            <icon-upload-one theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="upload-one" size="22" />
           <span>导入</span>
         </n-button>
         <n-button size="small" @click="fullScreen" title="全屏">
-          <n-icon style="vertical-align: middle">
-            <icon-full-screen theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="full-screen" size="22" />
           <span>全屏</span>
         </n-button>
         <n-button size="small" @click="setShowEm" title="坐标">
-          <n-icon style="vertical-align: middle">
-            <icon-cones theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="cones" size="22" />
           <span>坐标</span>
         </n-button>
       </div>
 
       <div>
         <n-button class="resource" size="small" @click="showIcon" title="图标">
-          <n-icon style="vertical-align: middle">
-            <icon-game-ps theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="game-ps" size="22" />
           <span>图标</span>
         </n-button>
         <n-button class="resource" size="small" @click="() => (showImageView = true)" title="图片">
-          <n-icon style="vertical-align: middle">
-            <icon-picture theme="outline" size="22" fill="var(--el-color-primary)" />
-          </n-icon>
+          <icon-park name="picture" size="22" />
           <span>图片</span>
         </n-button>
       </div>
@@ -101,7 +80,7 @@ import type { LayoutData } from '@/types/apiTypes'
 import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
-import { NForm, NInput, NFormItem, NButton, NIcon, NModal, NCard } from 'naive-ui'
+import { NForm, NInput, NFormItem, NButton, NModal, NCard } from 'naive-ui'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'

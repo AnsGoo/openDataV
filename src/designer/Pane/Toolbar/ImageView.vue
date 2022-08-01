@@ -8,9 +8,7 @@
           </n-card>
         </div>
         <div>
-          <n-card class="card upload-card">
-            <n-icon>上传</n-icon>
-          </n-card>
+          <n-card class="card upload-card"> 上传 </n-card>
         </div>
       </n-scrollbar>
     </teleport>
@@ -18,36 +16,17 @@
 </template>
 
 <script lang="ts" setup>
-// import { computed, onMounted, ref } from 'vue'
 import { onMounted, ref } from 'vue'
 import { copyText } from '@/utils/utils'
 import { message } from '@/utils/message'
 import type { ImageFile } from '@/types/file'
 import { getImages } from '@/api/file'
-import { NCard, NScrollbar, NIcon } from 'naive-ui'
-// import { useUserStoreWithOut } from '@/store/modules/user'
-// const userStore = useUserStoreWithOut()
-
-// const uploadSuccess = async () => {
-//   successMessage('上传成功')
-//   await getImageList()
-// }
-// const uploadFail = async () => {
-//   warnMessage('上传失败')
-// }
+import { NCard, NScrollbar } from 'naive-ui'
 
 const baseURL = ref<string>(import.meta.env.VITE_APP_BASE_URL)
 defineProps<{
   visible: boolean
 }>()
-
-// const headers = computed<any>(() => {
-//   const token: string | undefined = userStore.userToken
-//   if (token) {
-//     return { authorization: token }
-//   }
-//   return undefined
-// })
 
 const emits = defineEmits<{
   (e: 'update:visible', visible: boolean): void

@@ -45,7 +45,10 @@ export class GroupType {
     this.key = key
   }
   get icon() {
-    return this._icon.replace(/([A-Z])/g, '-$1').toLowerCase()
+    return this._icon
+      .replace(/([A-Z])/g, '-$1')
+      .toLowerCase()
+      .slice(1)
   }
 }
 

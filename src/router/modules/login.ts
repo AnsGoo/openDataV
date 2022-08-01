@@ -1,4 +1,4 @@
-import type { AppRouteRecordRaw } from '@/router/interface'
+import type { AppRouteRecordRaw } from '@/router/types'
 
 const routes: AppRouteRecordRaw[] = [
   {
@@ -7,7 +7,8 @@ const routes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/Login.vue'),
     meta: {
       title: '登陆',
-      ignoreAuth: true
+      ignoreAuth: true,
+      hideInMenu: true
     }
   }
 ]
