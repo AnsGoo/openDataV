@@ -29,7 +29,6 @@ const overflow = ref<string>(
     }
   })()
 )
-
 const { currentRoute } = useRouter()
 
 const getThemeOverrides = computed(() => {
