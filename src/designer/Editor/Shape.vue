@@ -10,6 +10,8 @@
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
     <span class="iconfont icon-xuanzhuan" v-show="isActive" @mousedown="handleRotate"></span>
+    <!-- <icon-park name="rotation" v-show="isActive" @mousedown="handleRotate" /> -->
+    <!-- <icon-park name="lock" v-show="info.isLock" /> -->
     <span class="iconfont icon-jiesuo" v-show="info.isLock"></span>
     <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
     <div

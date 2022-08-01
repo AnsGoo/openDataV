@@ -15,12 +15,12 @@ const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
     name: string
-    size?: number
+    size?: string
     color?: string
     theme?: string
   }>(),
   {
-    size: 18,
+    size: '18',
     color: '',
     theme: 'outline'
   }
@@ -30,13 +30,12 @@ const iconColor = computed<string>(() => {
   if (props.color) {
     return props.color
   }
-  console.log(designStore.getDarkTheme, projectStore.getNavTheme)
   return designStore.getDarkTheme ? '#eee' : '#333'
 })
 </script>
 
 <style lang="less" scoped>
 .icon {
-  @apply h-full flex justify-center items-center;
+  @apply h-full inline-flex justify-center items-center;
 }
 </style>

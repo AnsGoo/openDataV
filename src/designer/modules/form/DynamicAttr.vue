@@ -9,9 +9,7 @@
         <div class="title">{{ name }}{{ index + 1 }}</div>
       </template>
       <template #header-extra>
-        <n-icon @click="deleteItem(index)">
-          <icon-delete-one theme="outline" size="24" fill="#333" />
-        </n-icon>
+        <icon-park name="delete-one" size="24" @click="deleteItem(index)" />
       </template>
       <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" # />
     </n-collapse-item>
@@ -24,7 +22,7 @@ import { ref, computed } from 'vue'
 import type { AttrType } from '@/types/component'
 import FormItem from './FormItem.vue'
 
-import { NCollapseItem, NButton, NCollapse, NIcon } from 'naive-ui'
+import { NCollapseItem, NButton, NCollapse } from 'naive-ui'
 
 const props = defineProps<{
   data: Recordable<any>[]

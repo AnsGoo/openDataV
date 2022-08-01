@@ -17,7 +17,7 @@ import { NMenu, NScrollbar } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import ComponentItem from './ComponentItem.vue'
 import type { GroupType } from '@/enum'
-import RenderIcon from './RenderIcon.vue'
+import { IconPark } from '@/plugins/icon'
 
 withDefaults(
   defineProps<{
@@ -53,8 +53,8 @@ const menuOptions = computed<MenuOption[]>(() => {
       label: () => item.name,
       key: item.key,
       icon: () =>
-        h(RenderIcon, {
-          name: `icon${item.icon}`
+        h(IconPark, {
+          name: `${item.icon}`
         }),
       children: groups[item.key]?.map((el) => {
         return {

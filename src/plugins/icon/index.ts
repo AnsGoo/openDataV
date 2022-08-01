@@ -36,13 +36,30 @@ import {
   IndentLeft,
   Data,
   AddThree,
+  CubeThree,
+  Text,
+  Rectangle,
+  Headwear,
+  ChartLine,
+  ChartHistogram,
+  ChartPie,
+  Dashboard,
+  SwitchButton,
+  Thermometer,
+  LoadingThree,
+  MoreFour,
+  HamburgerButton,
+  BranchOne,
   FullScreenOne,
   OffScreenOne,
   Refresh,
   User,
   Check,
   SunOne,
-  Zijinyunying
+  Zijinyunying,
+  Rotation,
+  Lock,
+  Unlock
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -86,6 +103,20 @@ export default {
     app.component(IndentLeft.name, IndentLeft)
     app.component(Data.name, Data)
     app.component(AddThree.name, AddThree)
+    app.component(CubeThree.name, CubeThree)
+    app.component(Text.name, Text)
+    app.component(Rectangle.name, Rectangle)
+    app.component(Headwear.name, Headwear)
+    app.component(ChartLine.name, ChartLine)
+    app.component(ChartHistogram.name, ChartHistogram)
+    app.component(ChartPie.name, ChartPie)
+    app.component(Dashboard.name, Dashboard)
+    app.component(SwitchButton.name, SwitchButton)
+    app.component(Thermometer.name, Thermometer)
+    app.component(LoadingThree.name, LoadingThree)
+    app.component(MoreFour.name, MoreFour)
+    app.component(HamburgerButton.name, HamburgerButton)
+    app.component(BranchOne.name, BranchOne)
     app.component(FullScreenOne.name, FullScreenOne)
     app.component(OffScreenOne.name, OffScreenOne)
     app.component(Refresh.name, Refresh)
@@ -93,5 +124,8 @@ export default {
     app.component(Check.name, Check)
     app.component(SunOne.name, SunOne)
     app.component(Zijinyunying.name, Zijinyunying)
+    app.component(Rotation.name, Rotation)
+    app.component(Lock.name, Lock)
+    app.component(Unlock.name, Unlock)
   }
 }

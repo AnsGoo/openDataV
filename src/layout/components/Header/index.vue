@@ -78,19 +78,12 @@
 <script lang="ts" setup>
 import { ref, computed, unref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
-import {
-  useDialog,
-  useMessage,
-  NTooltip,
-  NDropdown,
-  NAvatar,
-  NBreadcrumb,
-  NBreadcrumbItem
-} from 'naive-ui'
+import { NTooltip, NDropdown, NAvatar, NBreadcrumb, NBreadcrumbItem } from 'naive-ui'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import ProjectSetting from './setting.vue'
 import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import { message, dialog } from '@/utils/message'
 
 defineProps<{
   collapsed: boolean
@@ -101,8 +94,6 @@ const emits = defineEmits<{
 }>()
 
 const userStore = useUserStoreWithOut()
-const message = useMessage()
-const dialog = useDialog()
 const designStore = useDesignSettingWithOut()
 const projectStore = useProjectSettingStoreWithOut()
 

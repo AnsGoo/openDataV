@@ -9,10 +9,10 @@
             <template #trigger>
               <n-switch v-model:value="designStore.darkTheme" class="dark-theme-switch">
                 <template #checked>
-                  <icon-park name="sun-one" :size="14" color="#ffd93b" />
+                  <icon-park name="sun-one" size="14" color="#ffd93b" />
                 </template>
                 <template #unchecked>
-                  <icon-park name="moon" :size="14" color="#ffd93b" />
+                  <icon-park name="moon" size="14" color="#ffd93b" />
                 </template>
               </n-switch>
             </template>
@@ -30,7 +30,7 @@
             :style="{ 'background-color': item }"
             @click="togTheme(item)"
           >
-            <icon-park :size="12" v-if="item === designStore.appTheme" name="check" color="#FFF" />
+            <icon-park size="12" v-if="item === designStore.appTheme" name="check" color="#FFF" />
           </span>
         </div>
 

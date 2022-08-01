@@ -4,9 +4,7 @@
       <dv-tab-pane name="component">
         <template #label>
           <div class="label" v-show="expandStatus">
-            <div>
-              <icon-components theme="outline" size="18" fill="var(--el-color-primary)" />
-            </div>
+            <icon-park name="components" />
             <div>组件</div>
           </div>
         </template>
@@ -15,31 +13,15 @@
       <dv-tab-pane name="layer">
         <template #label>
           <div class="label" v-show="expandStatus">
-            <div>
-              <icon-layers theme="outline" size="18" fill="var(--el-color-primary)" />
-            </div>
+            <icon-park name="layers" />
             <div>图层</div>
           </div>
         </template>
         <Layer :mode="mode" />
       </dv-tab-pane>
       <template #suffix>
-        <!-- <el-icon style="vertical-align: middle"> -->
-        <icon-indent-left
-          v-if="expandStatus"
-          theme="outline"
-          size="18"
-          fill="var(--el-color-primary)"
-          @click="expandSideBar"
-        />
-        <icon-indent-right
-          v-else
-          theme="outline"
-          size="18"
-          fill="var(--el-color-primary)"
-          @click="expandSideBar"
-        />
-        <!-- </el-icon> -->
+        <icon-park v-if="expandStatus" name="indent-left" @click="expandSideBar" />
+        <icon-park v-else name="indent-right" @click="expandSideBar" />
       </template>
     </dv-tabs>
   </div>
@@ -78,6 +60,5 @@ const expandSideBar = () => {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  align-content: center;
 }
 </style>
