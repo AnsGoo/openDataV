@@ -1,35 +1,13 @@
-import { useMessage } from 'naive-ui'
-const messageObj = useMessage()
-// 消息
-const Message = (message: string): any => {
-  return messageObj.info(message, {
-    closable: true,
-    duration: 5000
-  })
-}
+import { ConfigProviderProps, createDiscreteApi } from 'naive-ui'
+import { computed } from 'vue'
 
-// 成功
-const successMessage = (message: string): any => {
-  return messageObj.success(message, {
-    closable: true,
-    duration: 5000
-  })
-}
+// const themeRef = ref<'light' | 'dark'>('dark')
+const configProviderPropsRef = computed<ConfigProviderProps>(() => ({}))
 
-// 警告
-const warnMessage = (message: string): any => {
-  return messageObj.warning(message, {
-    closable: true,
-    duration: 5000
-  })
-}
-
-// 失败
-const errorMessage = (message: string): any => {
-  return messageObj.error(message, {
-    closable: true,
-    duration: 5000
-  })
-}
-
-export { Message, successMessage, warnMessage, errorMessage }
+const { message, dialog, notification, loadingBar } = createDiscreteApi(
+  ['message', 'dialog', 'notification', 'loadingBar'],
+  {
+    configProviderProps: configProviderPropsRef
+  }
+)
+export default { message, dialog, notification, loadingBar }

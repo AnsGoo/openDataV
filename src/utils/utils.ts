@@ -5,7 +5,7 @@ import type {
   GroupStyle,
   Rect
 } from '@/types/component'
-import { errorMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 import type { Vector } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
 
@@ -335,7 +335,7 @@ export const importRaw = (fileHandler, accept = '.*') => {
     if (e.currentTarget && e.currentTarget['files']) {
       const length = e.currentTarget['files'].length || 0
       if (length === 0) {
-        errorMessage('请选择文件')
+        message.info('请选择文件')
       } else {
         const reader = new FileReader()
         reader.readAsText(e.currentTarget['files'][0])

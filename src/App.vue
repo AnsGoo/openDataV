@@ -6,7 +6,7 @@ import { ref, computed } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import UserAffix from '@/annex/UserAffix.vue'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { NDialogProvider } from 'naive-ui'
+import { zhCN, dateZhCN, NConfigProvider } from 'naive-ui'
 const userStore = useUserStoreWithOut()
 
 const basicStore = useBasicStoreWithOut()
@@ -20,7 +20,6 @@ const overflow = ref<string>(
     }
   })()
 )
-
 const { currentRoute } = useRouter()
 const isAuth = computed<boolean>(() => {
   const isNeedAuth: boolean = currentRoute.value.meta.ignoreAuth ? false : true
@@ -30,12 +29,12 @@ const isAuth = computed<boolean>(() => {
 </script>
 
 <template>
-  <n-dialog-provider>
+  <n-config-provider :locale="zhCN" :date-locale="dateZhCN">
     <div>
       <UserAffix v-if="isAuth" />
       <RouterView :key="currentRoute.path" :style="{ overflow }" />
     </div>
-  </n-dialog-provider>
+  </n-config-provider>
 </template>
 <style lang="less">
 :root {

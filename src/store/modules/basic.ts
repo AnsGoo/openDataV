@@ -6,7 +6,7 @@ import type { ComponentInfo } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
 import { swap, uuid } from '@/utils/utils'
-import { Message } from '@/utils/message'
+import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
 
 const snapShotStore = useSnapShotStoreWithOut()
@@ -321,7 +321,7 @@ const useBasicStore = defineStore({
           swap(fatherComponentData, myindex, myindex - 1)
           this.saveComponentData()
         } else {
-          Message('图层已经到底了')
+          message.info('图层已经到底了')
         }
       }
     },
@@ -340,7 +340,7 @@ const useBasicStore = defineStore({
           swap(fatherComponentData, myindex, myindex + 1)
           this.saveComponentData()
         } else {
-          Message('图层已经到顶了')
+          message.info('图层已经到顶了')
         }
       }
     },
@@ -361,7 +361,7 @@ const useBasicStore = defineStore({
           fatherComponentData.push(myComponments[0])
           this.saveComponentData()
         } else {
-          Message('图层已经到顶了')
+          message.info('图层已经到顶了')
         }
       }
     },
@@ -379,7 +379,7 @@ const useBasicStore = defineStore({
         fatherComponentData.unshift(myComponments[0])
         this.saveComponentData()
       } else {
-        Message('图层已经到底了')
+        message.info('图层已经到底了')
       }
     },
     /**

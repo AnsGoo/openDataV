@@ -10,7 +10,7 @@ import { http } from '@/utils/http'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 import mydark from '@/theme/mydark'
-import { warnMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 import type { IntervalLineChart } from './type'
 echarts.registerTheme('mydark', mydark)
 
@@ -39,7 +39,7 @@ const initData = async () => {
   try {
     params = JSON.parse(props.propValue.data)
   } catch (err: any) {
-    warnMessage(err.message)
+    message.warning(err.message)
   }
   if (params) {
     const url = props.propValue.history
@@ -158,7 +158,7 @@ const updateData = async () => {
   try {
     params = JSON.parse(props.propValue.data)
   } catch (err: any) {
-    warnMessage(err.message)
+    message.error(err.message)
   }
   if (params) {
     const url = props.propValue.history

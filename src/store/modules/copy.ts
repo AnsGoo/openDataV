@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { Message } from '@/utils/message'
+import { message } from '@/utils/message'
 import type { CopyItem } from '@/types/storeTypes'
 
 const useCopyStore = defineStore({
@@ -24,7 +24,7 @@ const useCopyStore = defineStore({
 
     paste(isMouse: boolean, x?: number, y?: number): void {
       if (!this.copyData) {
-        Message('请选择组件')
+        message.info('请选择组件')
         return
       }
 
