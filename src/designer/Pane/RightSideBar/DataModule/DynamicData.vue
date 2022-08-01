@@ -3,7 +3,7 @@
     <n-select
       v-model:value="formData.data"
       placeholder="请选择数据接口"
-      @update:value="dynamicDatachanged($event)"
+      @update:value="dynamicDatachanged"
       :options="selectOptions"
     />
   </n-form-item>
@@ -11,7 +11,7 @@
     <n-input-number
       v-model:value="formData.timeout"
       placeholder="超时时间"
-      @update:value="dynamicDatachanged($event)"
+      @update:value="dynamicDatachanged"
     />
   </n-form-item>
   <n-form-item key="isInterval" label="是否定时获取时间">
@@ -33,10 +33,11 @@
   </n-form-item>
 </template>
 <script lang="ts" setup>
-import { warnMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 import { NFormItem, NSelect, NInput, NInputNumber, NSwitch } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { reactive, ref } from 'vue'
+
 const selectOptions = ref<SelectOption[]>([])
 const paramList = ref<string[]>([])
 const formData = reactive({
@@ -47,7 +48,7 @@ const formData = reactive({
   params: {}
 })
 const activeParam = ref<string>()
-const dynamicDatachanged = (value: number) => {
+const dynamicDatachanged = (value: number | string | null) => {
   console.log(value)
 }
 
@@ -56,10 +57,10 @@ const addParams = () => {
     if (!paramList.value.includes(activeParam.value)) {
       paramList.value.push(activeParam.value)
     } else {
-      warnMessage('参数重复')
+      message.warning('参数重复')
     }
   } else {
-    warnMessage('请填写参数')
+    message.warning('请填写参数')
   }
 }
 </script>

@@ -1,63 +1,42 @@
 <template>
-  <template v-for="(item, i) in components" :key="i">
-    <el-sub-menu
-      v-if="item.component === 'Group'"
-      :index="caculIndex(i)"
-      draggable="true"
-      @dragstart="handleDragStart($event, caculIndex(i))"
-      @drop="handleDrop($event, caculIndex(i))"
-      @dragover="handleDragOver($event, caculIndex(i), true)"
-      v-contextmenu="() => contextmenus($el, caculIndex(i))"
-    >
-      <template #title>
-        <span class="icon iconfont icon-zu"></span>
-        <span v-show="mode === 'expand'">{{ item.label || '分组' }}</span>
-        <n-icon style="vertical-align: middle">
-          <icon-preview-open
-            theme="outline"
-            size="24"
-            fill="var(--el-color-primary)"
-            v-if="item.display"
-          />
-          <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
-        </n-icon>
-      </template>
-      <LayerItem
-        v-if="item.subComponents && item.subComponents.length > 0"
-        :components="item.subComponents"
-        :index="caculIndex(i)"
-      />
-    </el-sub-menu>
-    <el-menu-item
-      v-else
-      draggable="true"
-      :index="caculIndex(i)"
-      @drop="handleDrop($event, caculIndex(i))"
-      @dragover="handleDragOver($event, caculIndex(i))"
-      @dragstart="handleDragStart($event, caculIndex(i))"
-      v-contextmenu="() => contextmenus($el, caculIndex(i))"
-    >
-      <template #title>
-        <span :class="`icon iconfont ${iconMap[item.group as string]}`"></span>
-        <span v-show="mode === 'expand'">{{ item.label }}</span>
-        <n-icon style="vertical-align: middle">
-          <icon-preview-open
-            theme="outline"
-            size="24"
-            fill="var(--el-color-primary)"
-            v-if="item.display"
-          />
-          <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
-        </n-icon>
-      </template>
-    </el-menu-item>
-  </template>
+  <div
+    draggable="true"
+    @dragstart="handleDragStart($event, index)"
+    @drop="handleDrop($event, index)"
+    @dragover="handleDragOver($event, index, true)"
+    v-contextmenu="() => contextmenus($el, index)"
+  >
+    <div v-if="component.component === 'Group'">
+      <!-- <span class="icon iconfont icon-zu"></span> -->
+      <span v-show="mode === 'expand'">{{ component.label || '分组' }}</span>
+      <n-icon style="vertical-align: middle">
+        <icon-preview-open
+          theme="outline"
+          size="24"
+          fill="var(--el-color-primary)"
+          v-if="component.display"
+        />
+        <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
+      </n-icon>
+    </div>
+    <div v-else>
+      <!-- <span :class="`icon iconfont ${iconMap[component.group as string]}`"></span> -->
+      <span v-show="mode === 'expand'">{{ component.label }}</span>
+      <n-icon style="vertical-align: middle">
+        <icon-preview-open
+          theme="outline"
+          size="24"
+          fill="var(--el-color-primary)"
+          v-if="component.display"
+        />
+        <icon-preview-close-one theme="outline" size="24" fill="var(--el-color-primary)" v-else />
+      </n-icon>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
-import iconMap from './iconMap'
-import { ElMenuItem, ElSubMenu } from 'element-plus'
 import { NIcon } from 'naive-ui'
 
 import { eventBus } from '@/bus/useEventBus'
@@ -66,17 +45,10 @@ import { decomposeComponent, copyText } from '@/utils/utils'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 
-// const props = defineProps<{
-//   components: ComponentInfo[]
-//   index?: string
-//   activeKey?: string
-
-// }>()
-
 const props = withDefaults(
   defineProps<{
-    components: ComponentInfo[]
-    index?: string
+    component: ComponentInfo
+    index: string
     activeKey?: string
     mode?: string
   }>(),
@@ -89,19 +61,11 @@ const emits = defineEmits<{ (e: 'select', index: string): void }>()
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()
 
-const caculIndex = (index: number) => {
-  let fatherIndex: string | undefined = props.index
-  if (fatherIndex) {
-    return `${fatherIndex}-${index}`
-  } else {
-    return index.toString()
-  }
-}
-
 const copy = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const component: ComponentInfo = basicStore.getComponentByIndex(indexs)
   if (component) {
+    component.groupStyle = undefined
     copyText(JSON.stringify(component))
     copyStore.copy()
   }

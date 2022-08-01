@@ -1,21 +1,7 @@
 <template>
   <div style="height: calc(100vh - 100px)">
     <n-scrollbar v-if="componentData.length > 0">
-      <el-menu
-        :unique-opened="true"
-        :collapse-transition="false"
-        @select="handleSelect"
-        @open="handleSelect"
-        mode="vertical"
-        ref="menu"
-      >
-        <LayerItem
-          :components="componentData"
-          @select="handleSelect"
-          activeKey="activeKey"
-          :mode="mode"
-        />
-      </el-menu>
+      <n-menu :options="menuOptions" @update:value="handleSelect" />
     </n-scrollbar>
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item v-show="mode === 'expand'">
@@ -27,12 +13,14 @@
 
 <script lang="ts" setup>
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { computed, ref } from 'vue'
-import LayerItem from './LayerItem.vue'
+import { computed, ref, h, watch } from 'vue'
 import type { ComponentInfo } from '@/types/component'
-import { ElMenu } from 'element-plus'
-import { NScrollbar, NDescriptions, NEmpty, NDescriptionsItem } from 'naive-ui'
+import { NScrollbar, NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
 import { useEventBus } from '@/bus/useEventBus'
+import RenderIcon from './RenderIcon.vue'
+import LayerItem from './LayerItem.vue'
+import type { MenuOption } from 'naive-ui'
+import { ComponentGroupList } from '@/enum'
 
 withDefaults(
   defineProps<{
@@ -44,6 +32,11 @@ withDefaults(
 )
 
 const basicStore = useBasicStoreWithOut()
+
+const iconMap: Recordable<string> = {}
+ComponentGroupList.map((ele) => {
+  iconMap[ele.key] = ele.icon
+})
 
 const componentData = computed(() => basicStore.componentData)
 
@@ -64,21 +57,76 @@ const handleSelect = (key: string) => {
   const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
   basicStore.setActiveComponent(activedComponent)
 }
+
+const menuOptions = ref<MenuOption[]>([])
+
+const getMenuOptions = (
+  fatherIndex: string,
+  compoments: ComponentInfo[],
+  options: MenuOption[]
+): MenuOption[] => {
+  for (let i = 0; i < compoments.length; i++) {
+    const item = compoments[i]
+
+    if (item.component === 'Group') {
+      const childrenOptions: MenuOption[] = []
+      options.push({
+        label: () =>
+          h(LayerItem, {
+            component: item,
+            index: calcIndex(i, fatherIndex)
+          }),
+        key: calcIndex(i, fatherIndex),
+        icon: () =>
+          h(RenderIcon, {
+            name: 'icon-branch-one'
+          }),
+        children: getMenuOptions(
+          calcIndex(i, fatherIndex),
+          item.subComponents || [],
+          childrenOptions
+        )
+      })
+    } else {
+      options.push({
+        label: () =>
+          h(LayerItem, {
+            component: item,
+            index: calcIndex(i, fatherIndex)
+          }),
+        key: calcIndex(i, fatherIndex),
+        icon: () =>
+          h(RenderIcon, {
+            name: `icon${iconMap[item.group!]}`
+          })
+      })
+    }
+  }
+  return options
+}
+const calcIndex = (index: number, fatherIndex: string) => {
+  if (fatherIndex) {
+    return `${fatherIndex}-${index}`
+  } else {
+    return index.toString()
+  }
+}
+watch(
+  () => basicStore.componentData,
+  () => {
+    const compoments = basicStore.componentData
+    menuOptions.value = []
+    // @ts-ignore
+    menuOptions.value = getMenuOptions('', compoments, [])
+  },
+  {
+    deep: true,
+    immediate: true
+  }
+)
 </script>
 
 <style lang="less" scoped>
-:deep(.el-sub-menu__title) {
-  height: 36px;
-  line-height: 36px;
-}
-:deep(.el-sub-menu .el-menu-item) {
-  height: 30px;
-  line-height: 30px;
-}
-:deep(.el-menu-item) {
-  height: 30px;
-  line-height: 30px;
-}
 ul {
   flex: 1;
   /* width: 50px; */

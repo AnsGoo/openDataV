@@ -5,7 +5,7 @@ import { commonStyle, commonAttr, commonComponent } from './interface'
 
 const AsyncComponent = {
   install: (app: App) => {
-    const modules = import.meta.glob('../components/**/*.vue')
+    const modules = import.meta.glob('../resource/components/**/*.vue')
     Object.keys(modules).forEach((key: string) => {
       // 挂载全局组件
       const name = key.slice(key.lastIndexOf('/') + 1, key.length - 4)
@@ -18,7 +18,7 @@ const AsyncComponent = {
 const componentList: Record<string, ComponentOptions> = {}
 
 const createComponentList = () => {
-  const moduleFilesTs = import.meta.globEager('../components/**/config.ts')
+  const moduleFilesTs = import.meta.globEager('../resource/components/**/config.ts')
   Object.keys(moduleFilesTs).forEach((key: string) => {
     const componentOptions = moduleFilesTs[key]?.default
 

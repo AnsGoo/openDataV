@@ -70,22 +70,24 @@
     </div>
   </div>
 
-  <n-modal v-model:show="saveDialogVisible" title="保存当前布局" width="30%" center>
-    <n-form :model="form" :rules="rules" @submit.prevent>
-      <n-form-item label="页面名称" prop="name">
-        <n-input v-model="form.name" placeholder="请输入页面名称" />
-      </n-form-item>
-    </n-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <n-button @click="saveDialogVisible = false">取消</n-button>
-        <n-button type="primary" @click="handleSubmit('new')" v-if="isCreate">新增页面</n-button>
-        <n-button type="primary" @click="handleSubmit('update')" v-else>更新页面</n-button>
-      </span>
-    </template>
+  <n-modal v-model:show="saveDialogVisible" center>
+    <n-card title="保存当前布局" :style="{ width: '30%' }" size="medium">
+      <n-form :model="form" :rules="rules" @submit.prevent>
+        <n-form-item label="页面名称" prop="name">
+          <n-input v-model="form.name" placeholder="请输入页面名称" />
+        </n-form-item>
+      </n-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <n-button @click="saveDialogVisible = false">取消</n-button>
+          <n-button type="primary" @click="handleSubmit('new')" v-if="isCreate">新增</n-button>
+          <n-button type="primary" @click="handleSubmit('update')" v-else>更新</n-button>
+        </span>
+      </template>
+    </n-card>
   </n-modal>
   <IconFont v-model:visible="showIconFont" />
-  <ImageView v-model:visible="showImageView" />
+  <!-- <ImageView v-model:visible="showImageView" /> -->
 </template>
 
 <script setup lang="ts">
@@ -93,14 +95,13 @@ import { computed, reactive, ref, onMounted, watch, onUnmounted } from 'vue'
 import type { WatchStopHandle } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
-import { successMessage, errorMessage, warnMessage } from '@/utils/message'
+import { message } from '@/utils/message'
 import { useRoute, useRouter } from 'vue-router'
 import type { LayoutData } from '@/types/apiTypes'
 import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
-import ImageView from './ImageView.vue'
-import { NForm, NInput, NFormItem, NButton, NIcon, NModal } from 'naive-ui'
+import { NForm, NInput, NFormItem, NButton, NIcon, NModal, NCard } from 'naive-ui'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
@@ -116,7 +117,7 @@ const route = useRoute()
 // 计算属性
 const componentData = computed(() => basicStore.componentData)
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
-const isCreate = computed(() => route.path === '/create')
+const isCreate = computed(() => route.name === 'Create')
 
 let index = ''
 
@@ -162,7 +163,7 @@ const undo = async () => {
     snapShotId = snapshot.id!
     basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
   } else {
-    warnMessage('没有快照了')
+    message.warning('没有快照了')
   }
 }
 
@@ -194,7 +195,7 @@ const recoveryDraft = async () => {
     snapShotId = snapshot.id!
     basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
   } else {
-    warnMessage('没有快照了')
+    message.warning('没有快照了')
   }
 }
 
@@ -216,7 +217,7 @@ const fullScreen = () => {
 const handleSubmit = async (type: string) => {
   const { name, thumbnail } = form
   if (!name) {
-    errorMessage('请输入页面名称')
+    message.error('请输入页面名称')
     return
   }
 
@@ -232,16 +233,16 @@ const handleSubmit = async (type: string) => {
   if (type === 'update') {
     try {
       await updateUIComponents(index, layoutData)
-      successMessage('修改成功')
+      message.success('修改成功')
     } catch (e) {
-      errorMessage('保存失败，请导出到本地，并重新进入此页面')
+      message.error('保存失败，请导出到本地，并重新进入此页面')
     } finally {
       saveDialogVisible.value = false
     }
   } else {
     try {
       const result: LayoutData = await saveUIComponents(layoutData)
-      successMessage('保存成功')
+      message.success('保存成功')
       // // 新增页面成功，则跳转到编辑页面
       router.push({
         name: 'Editor',
@@ -250,7 +251,7 @@ const handleSubmit = async (type: string) => {
         }
       })
     } catch (e: any) {
-      errorMessage(`保存失败，失败信息:${e?.message || e}`)
+      message.error(`保存失败，失败信息:${e?.message || e}`)
     } finally {
       saveDialogVisible.value = false
     }
@@ -296,9 +297,6 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
-.tool-bar {
-  border-bottom: var(--el-border-color-lighter) 1px solid;
-}
 .tool-bar-item {
   display: flex;
   align-items: center;
@@ -311,7 +309,6 @@ onUnmounted(() => {
 }
 button {
   margin-left: 0px !important;
-  color: var(--el-color-primary);
   border: none;
   padding: 5px 5px;
 }

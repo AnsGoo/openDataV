@@ -1,26 +1,32 @@
 <template>
   <div>
-    <teleport to="body">
-      <div v-show="visible" class="tab-container" v-click-outside="clickOutsideHandler">
-        <div class="total">图标数量：{{ iconList.length }}</div>
+    <n-modal :show="visible">
+      <n-card
+        :title="`图标数量${iconList.length}`"
+        class="tab-container"
+        v-click-outside="clickOutsideHandler"
+      >
         <ul class="icon_lists">
           <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
             <span :class="`icon iconfont ${icon}`"></span>
           </li>
         </ul>
-      </div>
-    </teleport>
+      </n-card>
+    </n-modal>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { computed } from 'vue'
 import { copyText } from '@/utils/utils'
-import { successMessage } from '@/utils/message'
+import { message } from '@/utils/message'
+import { NModal, NCard } from 'naive-ui'
 
-import icons from '@/enum/icon'
+import iconfontList from '@/assets/directionFonts/iconfont.json'
 
-const iconList = reactive<string[]>(icons)
+const iconList = computed<string[]>(() => {
+  return iconfontList.glyphs.map((item) => `icon-${item.font_class}`)
+})
 
 defineProps<{
   visible: boolean
@@ -35,7 +41,7 @@ const clickOutsideHandler = () => {
 }
 const handleClick = (icon: string) => {
   copyText(icon)
-  successMessage(`复制图标: ${icon}`)
+  message.success(`复制图标: ${icon}`)
 }
 </script>
 

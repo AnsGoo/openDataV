@@ -2,6 +2,7 @@
   <div class="side-bar">
     <dv-tabs :mode="mode" v-if="curComponent">
       <template #prefix>
+        <!-- <n-icon style="vertical-align: middle"> -->
         <icon-indent-right
           v-if="expandStatus"
           theme="outline"
@@ -17,11 +18,13 @@
           @click="expandSideBar"
         />
 
+        <!-- </n-icon> -->
       </template>
       <dv-tab-pane name="style">
         <template #label>
           <n-icon style="vertical-align: middle">
             <icon-text-style theme="outline" size="24" />
+          </n-icon>
           <span>样式</span>
         </template>
         <div v-show="mode === 'expand'">
@@ -53,6 +56,7 @@
     </dv-tabs>
     <dv-tabs :mode="mode" v-else>
       <template #prefix>
+        <!-- <n-icon style="vertical-align: middle"> -->
         <icon-indent-right
           v-if="expandStatus"
           theme="outline"
