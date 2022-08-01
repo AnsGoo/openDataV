@@ -58,7 +58,7 @@ const getDarkTheme = computed(() => (designStore.darkTheme ? darkTheme : lightTh
     :date-locale="dateZhCN"
   >
     <n-loading-bar-provider>
-            <RouterView :key="currentRoute.path" :style="{ overflow }" />
+      <RouterView :key="currentRoute.path" :style="{ overflow }" />
     </n-loading-bar-provider>
   </n-config-provider>
 </template>
