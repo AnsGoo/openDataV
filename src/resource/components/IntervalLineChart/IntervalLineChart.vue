@@ -9,7 +9,7 @@ import type { WatchStopHandle } from 'vue'
 import { http } from '@/utils/http'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
-import mydark from '@/theme/mydark'
+import mydark from '../../utils/echarts/mydark'
 import { message } from '@/utils/message'
 import type { IntervalLineChart } from './type'
 echarts.registerTheme('mydark', mydark)

@@ -12,7 +12,7 @@ import { http } from '@/utils/http'
 import type { TagType } from '@/types/wsTypes'
 import { debounce } from 'lodash-es'
 
-import mydark from '@/theme/mydark'
+import mydark from '../../utils/echarts/mydark'
 import type { WaterChart } from './type'
 echarts.registerTheme('mydark', mydark)
 

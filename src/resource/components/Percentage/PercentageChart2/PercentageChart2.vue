@@ -9,7 +9,7 @@ import { http } from '@/utils/http'
 import type { BasicFetchResult } from '@/types/apiTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
-import mydark from '@/theme/mydark'
+import mydark from '../../utils/echarts/mydark'
 import type { PercentageChart } from './type'
 echarts.registerTheme('mydark', mydark)
 

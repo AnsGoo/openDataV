@@ -6,7 +6,7 @@
 import * as echarts from 'echarts'
 import { ref, onMounted, watch, onUnmounted } from 'vue'
 
-import mydark from '@/theme/mydark'
+import mydark from '../../utils/echarts/mydark'
 import type { BarChart } from './type'
 echarts.registerTheme('mydark', mydark)
 const props = defineProps<{

@@ -13,7 +13,7 @@ import { debounce } from 'lodash-es'
 
 import type { TagType } from '@/types/wsTypes'
 
-import mydark from '@/theme/mydark'
+import mydark from '../../utils/echarts/mydark'
 import type { Thermometer1 } from './type'
 echarts.registerTheme('mydark', mydark)
 
