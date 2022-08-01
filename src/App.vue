@@ -4,12 +4,21 @@
 import { useRouter, RouterView } from 'vue-router'
 import { ref, computed } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import UserAffix from '@/annex/UserAffix.vue'
-import { useUserStoreWithOut } from '@/store/modules/user'
-import { NDialogProvider } from 'naive-ui'
-const userStore = useUserStoreWithOut()
+import { useDesignSettingWithOut } from '@/store/modules/designSetting'
+import {
+  NConfigProvider,
+  NDialogProvider,
+  NNotificationProvider,
+  NMessageProvider,
+  NLoadingBarProvider,
+  zhCN,
+  dateZhCN,
+  darkTheme,
+  lightTheme
+} from 'naive-ui'
 
 const basicStore = useBasicStoreWithOut()
+const designStore = useDesignSettingWithOut()
 
 const overflow = ref<string>(
   (() => {
@@ -22,68 +31,42 @@ const overflow = ref<string>(
 )
 
 const { currentRoute } = useRouter()
-const isAuth = computed<boolean>(() => {
-  const isNeedAuth: boolean = currentRoute.value.meta.ignoreAuth ? false : true
-  const isLogin: boolean = userStore.userToken ? true : false
-  return isNeedAuth && isLogin
+
+const getThemeOverrides = computed(() => {
+  const appTheme = designStore.appTheme
+  const lightenStr = appTheme //lighten(designStore.appTheme, 6)
+  return {
+    common: {
+      primaryColor: appTheme,
+      primaryColorHover: lightenStr,
+      primaryColorPressed: lightenStr
+    },
+    LoadingBar: {
+      colorLoading: appTheme
+    }
+  }
 })
+
+const getDarkTheme = computed(() => (designStore.darkTheme ? darkTheme : lightTheme))
 </script>
 
 <template>
-  <n-dialog-provider>
-    <div>
-      <UserAffix v-if="isAuth" />
-      <RouterView :key="currentRoute.path" :style="{ overflow }" />
-    </div>
-  </n-dialog-provider>
+  <n-config-provider
+    :locale="zhCN"
+    :theme="getDarkTheme"
+    :theme-overrides="getThemeOverrides"
+    :date-locale="dateZhCN"
+  >
+    <n-loading-bar-provider>
+      <n-dialog-provider>
+        <n-notification-provider>
+          <n-message-provider>
+            <RouterView :key="currentRoute.path" :style="{ overflow }" />
+          </n-message-provider>
+        </n-notification-provider>
+      </n-dialog-provider>
+    </n-loading-bar-provider>
+  </n-config-provider>
 </template>
-<style lang="less">
-:root {
-  --el-border-color-lighter: #1e8fff6c !important;
-  --el-collapse-header-text-color: #1e90ff;
-  --el-color-primary: #1e90ff;
-  // --theme-dark-color-primary: #24292f;
-  // --el-color-white: #24292f !important;
-  // --el-background-color-base: #24292f !important;
-  // --el-text-color-primary: #ffffff !important;
-  // --el-text-color-regular: #ffffff !important;
-}
-.el-form-item {
-  margin-bottom: 3px !important;
-}
 
-.el-collapse {
-  // border-top: none !important;
-  border-bottom: none !important;
-  --el-collapse-header-height: 30px !important;
-  --el-collapse-header-font-color: var(--el-collapse-header-text-color) !important;
-}
-
-.el-input-number--mini {
-  width: 100% !important;
-}
-
-.el-collapse-item__content {
-  padding-bottom: 5px !important;
-}
-
-.el-descriptions__body {
-  background-color: var(--theme-dark-color-primary) !important;
-}
-
-.el-input-number__decrease,
-.el-input-number__increase {
-  background-color: var(--theme-dark-color-primary) !important;
-}
-.el-scrollbar {
-  --el-scrollbar-background-color: var(--theme-dark-color-primary) !important;
-}
-
-.el-sub-menu {
-  background-color: var(--theme-dark-color-primary) !important;
-}
-
-.el-select-dropdown {
-  min-width: 20px;
-}
-</style>
+<style lang="less"></style>

@@ -35,12 +35,23 @@ import {
   IndentRight,
   IndentLeft,
   Data,
-  AddThree
+  AddThree,
+  FullScreenOne,
+  OffScreenOne,
+  Refresh,
+  User,
+  Check,
+  SunOne,
+  Zijinyunying
 } from '@icon-park/vue-next'
+import IconPark from './index.vue'
+
+export { IconPark }
 
 export default {
   install(app: App) {
     // 插入元素
+    app.component('IconPark', IconPark)
     app.component(DeleteOne.name, DeleteOne)
     app.component(PreviewCloseOne.name, PreviewCloseOne)
     app.component(PreviewOpen.name, PreviewOpen)
@@ -75,5 +86,12 @@ export default {
     app.component(IndentLeft.name, IndentLeft)
     app.component(Data.name, Data)
     app.component(AddThree.name, AddThree)
+    app.component(FullScreenOne.name, FullScreenOne)
+    app.component(OffScreenOne.name, OffScreenOne)
+    app.component(Refresh.name, Refresh)
+    app.component(User.name, User)
+    app.component(Check.name, Check)
+    app.component(SunOne.name, SunOne)
+    app.component(Zijinyunying.name, Zijinyunying)
   }
 }

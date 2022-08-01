@@ -8,14 +8,14 @@ import {
   NavigationGuardNext
 } from 'vue-router'
 import { LOGIN_URL, NoAuth, RouteMode } from '@/enum'
-import { AppRouteRecordRaw } from '@/router/interface'
+import type { AppRouteRecordRaw, MenuType } from './types'
 import NProgress from '@/utils/progress'
 import { useUserStoreWithOut } from '@/store/modules/user'
 
 const userStore = useUserStoreWithOut()
 class RouteView {
   // 路由对象
-  private router: Router | unknown = undefined
+  private router: Router | undefined = undefined
 
   constructor() {
     this.router = this.createRouter()
@@ -143,12 +143,83 @@ class RouteView {
     })
   }
 
+  // 获取所有子路由
+  private getChildRoutes(route: AppRouteRecordRaw): string[] {
+    const childList: string[] = []
+    if (!route.children?.length) {
+      return childList
+    }
+
+    for (let item of route.children) {
+      childList.push(item.path)
+      childList.push(...this.getChildRoutes(item))
+    }
+    return childList
+  }
+
+  private getNormalRoutes(): AppRouteRecordRaw[] {
+    if (!this.router) {
+      return []
+    }
+
+    // 因为所有路由都是平铺结构，而且路由间的嵌套关系依然存在，因此我们要找到真正的顶层路由，根据嵌套关系显示在菜单中
+    const routes = this.router?.getRoutes()
+    const childRoutes: string[] = []
+    for (const route of routes) {
+      childRoutes.push(...this.getChildRoutes(route as unknown as AppRouteRecordRaw))
+    }
+
+    // 去重重复路径
+    const noDuplicatePaths = new Set([...childRoutes])
+
+    return routes.filter((route) => {
+      if (noDuplicatePaths.has(route.path)) {
+        return false
+      }
+      return true
+    }) as unknown as AppRouteRecordRaw[]
+  }
+
+  private formatRouteToMenu(routes: Optional<AppRouteRecordRaw[]>): MenuType[] {
+    if (!routes) {
+      return []
+    }
+
+    const menuRoutes = routes.filter((route) => {
+      if (route.meta.hideInMenu) {
+        return false
+      }
+      return true
+    })
+
+    const menus: MenuType[] = []
+    for (const item of menuRoutes) {
+      const children = this.formatRouteToMenu(item.children)
+      menus.push({
+        name: item.name,
+        title: item.meta.title,
+        icon: item.meta.icon ? item.meta.icon : '',
+        children: children.length ? children : undefined
+      })
+    }
+
+    return menus
+  }
+
+  // 生成路由菜单
+  public generatorMenu() {
+    const routes = this.getNormalRoutes()
+    return this.formatRouteToMenu(routes)
+  }
+
   // 获取路由对象
   public getRouter(): Router {
     return this.router as Router
   }
 }
 
-const router = new RouteView()
+const routeView = new RouteView()
 
-export default router.getRouter()
+export { routeView, MenuType }
+
+export default routeView.getRouter()

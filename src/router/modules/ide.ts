@@ -1,4 +1,4 @@
-import type { AppRouteRecordRaw } from '@/router/interface'
+import type { AppRouteRecordRaw } from '@/router/types'
 const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/ide',
@@ -6,7 +6,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/dataworks/ide/Ide.vue'),
     meta: {
       title: '代码编辑器',
-      ignoreAuth: true
+      ignoreAuth: true,
+      icon: 'user'
     }
   }
 ]

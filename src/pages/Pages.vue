@@ -165,7 +165,6 @@ const image = ref<string>(
 const handleConfigAllowed = (item: LayoutData) => {
   isShow.value = true
   currentPage.value = item
-  formData.permissions = item.allowed ? item.allowed.split(',') : []
 }
 </script>
 
@@ -203,9 +202,6 @@ const handleConfigAllowed = (item: LayoutData) => {
 
   .bg {
     @apply bg-gray-100 w-screen h-screen border border-transparent;
-
-    background: v-bind(image) no-repeat center center;
-    background-size: cover;
   }
 
   .delete {

@@ -1,13 +1,16 @@
-import type { AppRouteRecordRaw } from '@/router/interface'
+import type { AppRouteRecordRaw } from '@/router/types'
+import { Layout } from '@/layout'
 
 const basicRoutes: AppRouteRecordRaw[] = [
   {
     path: '/',
     name: 'Home',
-    component: () => import('@/pages/PageView.vue'),
+    component: () => Layout,
+    redirect: 'Pages',
     meta: {
       title: '首页',
-      ignoreAuth: true
+      ignoreAuth: true,
+      hideInMenu: true
     }
   },
   {
@@ -16,7 +19,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/PageView.vue'),
     meta: {
       title: '页面',
-      ignoreAuth: true
+      ignoreAuth: true,
+      hideInMenu: true
     }
   },
   {
@@ -25,7 +29,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/DesignerPage.vue'),
     meta: {
       title: '创建页面',
-      permission: 'CreatePage'
+      permission: 'CreatePage',
+      hideInMenu: true
     }
   },
   {
@@ -34,7 +39,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/DesignerPage.vue'),
     meta: {
       title: '编辑页面',
-      permission: 'EditePage'
+      permission: 'EditePage',
+      hideInMenu: true
     }
   },
   {
@@ -43,17 +49,29 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/Preview.vue'),
     meta: {
       title: '预览界面',
-      permission: 'PerviewPage'
+      permission: 'PerviewPage',
+      hideInMenu: true
     }
   },
   {
-    path: '/pages',
-    name: 'Pages',
-    component: () => import('@/pages/Pages.vue'),
+    path: '/pageLayout',
+    name: 'PageLayout',
+    component: Layout,
     meta: {
       title: '布局界面',
-      permission: 'Pages'
-    }
+      icon: 'user'
+    },
+    children: [
+      {
+        path: '/pages',
+        name: 'Pages',
+        component: () => import('@/pages/Pages.vue'),
+        meta: {
+          title: '布局界面',
+          icon: 'user'
+        }
+      }
+    ]
   },
   {
     path: '/404',
@@ -61,7 +79,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/exception/404.vue'),
     meta: {
       title: '错误页面',
-      ignoreAuth: true
+      ignoreAuth: true,
+      hideInMenu: true
     }
   },
   {
@@ -70,7 +89,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/exception/403.vue'),
     meta: {
       title: '无权限',
-      ignoreAuth: true
+      ignoreAuth: true,
+      hideInMenu: true
     }
   },
   {
@@ -79,7 +99,8 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: () => import('@/pages/exception/404.vue'),
     meta: {
       title: '错误页面',
-      ignoreAuth: true
+      ignoreAuth: true,
+      hideInMenu: true
     }
   }
 ]

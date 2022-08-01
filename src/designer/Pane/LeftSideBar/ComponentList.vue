@@ -38,7 +38,7 @@ import type { ComponentInfo } from '@/types/component'
 import { computed } from 'vue'
 import iconMap from './iconMap'
 import { ElSubMenu, ElMenu, ElMenuItem } from 'element-plus'
-import { NMenu, NSubMenu, NScrollbar } from 'naive-ui'
+import { NMenu, NScrollbar } from 'naive-ui'
 
 withDefaults(
   defineProps<{

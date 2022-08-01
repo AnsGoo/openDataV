@@ -45,7 +45,7 @@ const useUserStore = defineStore({
       this.token = userInfo.token
       this.permissions = userInfo.permissions
     },
-    logout(): void {
+    async logout(): Promise<string> {
       this.username = ''
       this.token = undefined
       this.permissions = []
@@ -57,6 +57,7 @@ const useUserStore = defineStore({
           window.sessionStorage.removeItem('userInfo')
           break
       }
+      return Promise.resolve('')
     },
     async setUserInfo(userInfo: UserInfo) {
       this.assignUserInfo(userInfo)
