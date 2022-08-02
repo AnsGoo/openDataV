@@ -11,7 +11,7 @@ import { debounce } from 'lodash-es'
 import type { TagType } from '@/types/wsTypes'
 import { useEventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import mydark from '../../utils/echarts/mydark'
+import mydark from '../../../utils/echarts/mydark'
 import type { GaugeTwo } from './type'
 echarts.registerTheme('mydark', mydark)
 

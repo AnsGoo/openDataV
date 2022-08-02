@@ -185,7 +185,6 @@ const toggleFullscreenIcon = () => {
 
 // 切换主题
 const toggleTheme = () => {
-  console.log(projectStore.navTheme, designStore.darkTheme)
   if (projectStore.getNavTheme !== 'light') {
     projectStore.navTheme = 'light'
     designStore.darkTheme = false

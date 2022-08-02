@@ -4,7 +4,7 @@
       <n-menu :options="menuOptions" @update:value="handleSelect" />
     </n-scrollbar>
     <n-descriptions v-else class="placeholder">
-      <n-descriptions-item v-show="mode === 'expand'">
+      <n-descriptions-item>
         <n-empty description="画布为空" />
       </n-descriptions-item>
     </n-descriptions>
@@ -21,15 +21,6 @@ import { IconPark } from '@/plugins/icon'
 import LayerItem from './LayerItem.vue'
 import type { MenuOption } from 'naive-ui'
 import { ComponentGroupList } from '@/enum'
-
-withDefaults(
-  defineProps<{
-    mode?: string
-  }>(),
-  {
-    mode: 'expand'
-  }
-)
 
 const basicStore = useBasicStoreWithOut()
 
@@ -126,16 +117,4 @@ watch(
 )
 </script>
 
-<style lang="less" scoped>
-ul {
-  flex: 1;
-  /* width: 50px; */
-  background-color: #f5f7fa;
-}
-li {
-  display: block;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-}
-</style>
+<style lang="less" scoped></style>
