@@ -1,18 +1,18 @@
 <template>
   <n-tabs type="line" animated v-if="curComponent">
     <n-tab-pane name="style" tab="样式">
-      <StyleList :curComponent="curComponent" />
+      <StyleList :curComponent="curComponent" v-show="!iscollapsed" />
     </n-tab-pane>
     <n-tab-pane name="attr" tab="属性">
-      <AttrList :curComponent="curComponent" />
+      <AttrList :curComponent="curComponent" v-show="!iscollapsed" />
     </n-tab-pane>
     <n-tab-pane name="data" tab="数据">
-      <DataAttr />
+      <DataAttr v-show="!iscollapsed" />
     </n-tab-pane>
   </n-tabs>
   <n-tabs type="line" animated v-else>
     <n-tab-pane name="canvas" tab="画布">
-      <Canvas />
+      <Canvas v-show="!iscollapsed" />
     </n-tab-pane>
   </n-tabs>
 </template>
@@ -28,6 +28,12 @@ import DataAttr from './DataModule'
 
 const basicStore = useBasicStoreWithOut()
 const sideBarWdith = ref<string>('240px')
+withDefaults(
+  defineProps<{
+    iscollapsed: boolean
+  }>(),
+  { iscollapsed: false }
+)
 
 const curComponent = computed(() => basicStore.curComponent || basicStore.layerComponent)
 </script>

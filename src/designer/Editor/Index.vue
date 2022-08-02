@@ -328,17 +328,9 @@ const keyDown = (e: KeyboardEvent): void => {
     @apply relative bg-white m-auto;
   }
 
-  .lock {
-    @apply opacity-50;
-  }
-
   .edit .component {
     @apply outline-none w-full h-full;
     position: static !important;
-  }
-
-  .chosen {
-    @apply border-2 border-red-600;
   }
 }
 </style>
