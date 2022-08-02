@@ -1,14 +1,16 @@
 <template>
-  <div class="home">
-    <ToolBar />
-
-    <main>
-      <!-- 左侧组件列表 -->
-      <section class="left">
+  <n-layout class="home">
+    <n-layout-header class="tool-bar">
+      <ToolBar />
+    </n-layout-header>
+    <!-- 左侧组件列表 -->
+    <n-layout has-sider>
+      <n-layout-sider class="left" width="200">
         <LeftSideBar />
-      </section>
+      </n-layout-sider>
+
       <!-- 中间画布 -->
-      <section class="center scrollbar" ref="editor" v-resize="editorWindowResizeHandler">
+      <n-layout-content class="content" ref="editor" v-resize="editorWindowResizeHandler">
         <div class="scrollbar-content" :style="scrobarStyle">
           <Ruler :borderStyle="rulerBorderStyle" class="ruler">
             <Editor
@@ -19,13 +21,15 @@
             />
           </Ruler>
         </div>
-      </section>
+        <!-- </section> -->
+      </n-layout-content>
+
       <!-- 右侧属性列表 -->
-      <section class="right">
+      <n-layout-sider class="right" width="240">
         <RightSideBar />
-      </section>
-    </main>
-  </div>
+      </n-layout-sider>
+    </n-layout>
+  </n-layout>
 </template>
 
 <script setup lang="ts">
@@ -42,6 +46,7 @@ import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
+import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider } from 'naive-ui'
 const basicStore = useBasicStoreWithOut()
 const websk = ref<WebSocket | null>(null)
 
@@ -150,45 +155,4 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped lang="less">
-@layer components {
-  .home {
-    @apply h-screen bg-white flex flex-col;
-    background-color: var(--theme-dark-color-primary);
-  }
-
-  main {
-    @apply relative flex;
-
-    max-height: calc(100vh - 30px);
-    flex: 1;
-    overflow: hidden;
-    ::-webkit-scrollbar {
-      /*滚动条整体样式*/
-      width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
-      height: 6px;
-    }
-    ::-webkit-scrollbar-thumb {
-      background-color: #8b8b8b;
-      -webkit-border-radius: 2em;
-      -moz-border-radius: 2em;
-      border-radius: 2em;
-    }
-    ::-webkit-scrollbar-track {
-      background-color: #ccc;
-    }
-  }
-  .center {
-    @apply bg-gray-50 overflow-auto;
-
-    flex: 1;
-    border: var(--el-color-primary) 1px solid;
-  }
-  :deep(.vue-ruler-wrapper) {
-    margin: 0 auto;
-  }
-  .placeholder {
-    @apply text-gray-800 text-center;
-  }
-}
-</style>
+<style scoped lang="less"></style>
