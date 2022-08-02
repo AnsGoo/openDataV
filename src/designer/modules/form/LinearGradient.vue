@@ -49,7 +49,6 @@ const emits = defineEmits<{
 
 const changed = (key: string, value: string | number | null) => {
   linearGradient.value[key] = value
-  console.log(linearGradient.value)
   emits('update:value', linearGradient.value)
   emits('change', linearGradient.value)
 }
