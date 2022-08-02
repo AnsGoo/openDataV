@@ -57,7 +57,7 @@ import { Logo } from './components/Logo'
 import { useLoadingBar } from 'naive-ui'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { useDesignSettingWithOut } from '@/store/modules/designSetting'
-import { NLayout, NLayoutSider, NDrawer, NLayoutHeader, NLayoutContent, NBackTop } from 'naive-ui'
+import { NLayout, NLayoutSider, NLayoutHeader, NLayoutContent, NBackTop } from 'naive-ui'
 
 const designStore = useDesignSettingWithOut()
 const projectStore = useProjectSettingStoreWithOut()

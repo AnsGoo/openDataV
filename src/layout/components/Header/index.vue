@@ -124,7 +124,7 @@ const generator: any = (routerMap) => {
     // 是否有子菜单，并递归处理
     if (item.children && item.children.length > 0) {
       // Recursion
-      currentMenu.children = generator(item.children, currentMenu)
+      currentMenu.children = generator(item.children)
     }
     return currentMenu
   })

@@ -7,9 +7,6 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 import {
   NConfigProvider,
-  NDialogProvider,
-  NNotificationProvider,
-  NMessageProvider,
   NLoadingBarProvider,
   zhCN,
   dateZhCN,
