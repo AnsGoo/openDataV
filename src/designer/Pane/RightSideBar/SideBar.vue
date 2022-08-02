@@ -1,9 +1,10 @@
 <template>
-  <div v-if="!iscollapsed" justify-content="center">
+  <div v-if="!iscollapsed">
     <n-tabs
       type="line"
       animated
       v-if="curComponent"
+      justify-content="center"
       v-model:value="activeKey"
       @update:value="(key) => (activeKey = key)"
     >
@@ -58,7 +59,6 @@ import { IconPark } from '@/plugins/icon'
 const activeKey = ref<string>('attr')
 
 const basicStore = useBasicStoreWithOut()
-const sideBarWdith = ref<string>('240px')
 withDefaults(
   defineProps<{
     iscollapsed: boolean
@@ -120,57 +120,6 @@ const collapsedTabPane = (key: string) => {
   emits('update:iscollapsed', false)
   activeKey.value = key
 }
-// const menuOptions: MenuOption[] = [
-//   {
-//     label: '画布',
-//     key: '1',
-//     icon: () =>
-//       h(IconPark, {
-//         name: 'page'
-//       })
-//   },
-//   {
-//     label: '样式',
-//     key: '4',
-//     icon: () =>
-//       h(IconPark, {
-//         name: 'text-style'
-//       })
-//   },
-//   {
-//     label: '属性',
-//     key: '2',
-//     icon: () =>
-//       h(IconPark, {
-//         name: 'internal-data'
-//       })
-//   },
-//   {
-//     label: '数据',
-//     key: '3',
-//     icon: () =>
-//       h(IconPark, {
-//         name: 'data'
-//       })
-//   }
-// ]
 </script>
 
-<style lang="less" scoped>
-:deep(.dv-tab__content) {
-  padding: 0px 5px;
-}
-.side-bar {
-  position: relative;
-  width: v-bind(sideBarWdith);
-
-  // transition: all 0.3s;
-}
-.label {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  align-content: center;
-}
-</style>
+<style lang="less" scoped></style>
