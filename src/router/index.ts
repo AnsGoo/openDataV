@@ -150,7 +150,7 @@ class RouteView {
       return childList
     }
 
-    for (let item of route.children) {
+    for (const item of route.children) {
       childList.push(item.path)
       childList.push(...this.getChildRoutes(item))
     }

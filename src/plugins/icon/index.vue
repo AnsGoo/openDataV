@@ -7,10 +7,8 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { useDesignSettingWithOut } from '@/store/modules/designSetting'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
 const designStore = useDesignSettingWithOut()
-const projectStore = useProjectSettingStoreWithOut()
 
 const props = withDefaults(
   defineProps<{

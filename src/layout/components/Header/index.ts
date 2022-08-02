@@ -1,4 +1,4 @@
-import PageHeader from './index.vue';
+import PageHeader from './index.vue'
 import ProjectSetting from './setting.vue'
 
-export { PageHeader, ProjectSetting };
+export { PageHeader, ProjectSetting }
