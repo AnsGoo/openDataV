@@ -19,15 +19,6 @@ import ComponentItem from './ComponentItem.vue'
 import type { GroupType } from '@/enum'
 import { IconPark } from '@/plugins/icon'
 
-withDefaults(
-  defineProps<{
-    mode?: string
-  }>(),
-  {
-    mode: 'expand'
-  }
-)
-
 const menuOptions = computed<MenuOption[]>(() => {
   const groups: { group: string; component: ComponentInfo[] } | {} = {}
   Object.keys(componentList)
@@ -76,76 +67,4 @@ const handleDragStart = (e) => {
 }
 </script>
 
-<style scoped>
-@layer components {
-  .component-list {
-    @apply flex flex-wrap justify-between p-2.5;
-  }
-
-  .component {
-    @apply border border-solid border-gray-300 cursor-pointer mb-2.5 text-center text-gray-600;
-    @apply px-0.5 py-1.5 flex items-center justify-center active:cursor-pointer rounded-md;
-    @apply w-full;
-  }
-
-  /* .n-menu {
-    width: 200px;
-  }
-  ul :deep(.n-sub-menu__title) {
-    height: 36px;
-    line-height: 36px;
-  }
-  ul :deep(.n-menu-item) {
-    height: 30px;
-    line-height: 30px;
-  } */
-
-  .components {
-    display: flex;
-    height: 100%;
-  }
-
-  .components ul {
-    flex: 1;
-    /* width: 50px; */
-    background-color: #f5f7fa;
-  }
-
-  div.preview {
-    flex: 3;
-    display: flex;
-    overflow: auto;
-    flex-direction: column;
-  }
-
-  div .group {
-    width: 50px;
-    height: 50px;
-    line-height: 50px;
-    text-align: center;
-    font-size: 12px;
-  }
-
-  li a {
-    display: block;
-    width: 100%;
-    height: 100%;
-    text-decoration: none;
-  }
-
-  .components li {
-    border-bottom: 1px solid #e4e7ed;
-    border-right: 1px solid #e4e7ed;
-  }
-
-  .active {
-    border-right: none !important;
-    background-color: #aaa;
-    color: #409eff;
-  }
-  .iconfont {
-    @apply mr-1 text-xl;
-    color: rgba(30, 144, 255, 1);
-  }
-}
-</style>
+<style scoped></style>

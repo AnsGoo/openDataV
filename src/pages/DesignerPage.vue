@@ -5,13 +5,26 @@
     </n-layout-header>
     <!-- 左侧组件列表 -->
     <n-layout has-sider>
-      <n-layout-sider class="left" width="200">
-        <LeftSideBar />
+      <n-layout-sider
+        class="left"
+        width="200"
+        :collapsed="collapsedLeft"
+        bordered
+        collapse-mode="width"
+        show-trigger
+        :trigger-style="triggerStyle"
+        @collapse="() => (collapsedLeft = true)"
+        @expand="() => (collapsedLeft = false)"
+      >
+        <LeftSideBar
+          v-model:iscollapsed="collapsedLeft"
+          @update:iscollapsed="(value) => (collapsedLeft = value)"
+        />
       </n-layout-sider>
 
       <!-- 中间画布 -->
-      <n-layout-content class="content" ref="editor" v-resize="editorWindowResizeHandler">
-        <div class="scrollbar-content" :style="scrobarStyle">
+      <n-layout-content class="content" v-resize="editorWindowResizeHandler">
+        <div class="scrollbar-content" :style="scrobarStyle" ref="editor">
           <Ruler :borderStyle="rulerBorderStyle" class="ruler">
             <Editor
               @drop="handleDrop"
@@ -25,9 +38,26 @@
       </n-layout-content>
 
       <!-- 右侧属性列表 -->
-      <n-layout-sider class="right" width="240">
-        <RightSideBar />
-      </n-layout-sider>
+      <n-layout has-sider sider-placement="right">
+        <n-layout-sider
+          class="right"
+          width="240"
+          :collapsed="collapsedRight"
+          :native-scrollbar="false"
+          bordered
+          :collapsed-width="38"
+          :trigger-style="triggerStyle"
+          collapse-mode="width"
+          show-trigger="arrow-circle"
+          @collapse="() => (collapsedRight = true)"
+          @expand="() => (collapsedRight = false)"
+        >
+          <RightSideBar
+            v-model:iscollapsed="collapsedRight"
+            @update:iscollapsed="(value) => (collapsedRight = value)"
+          />
+        </n-layout-sider>
+      </n-layout>
     </n-layout>
   </n-layout>
 </template>
@@ -52,6 +82,9 @@ const websk = ref<WebSocket | null>(null)
 
 const editor = ref<HTMLDivElement | null>(null)
 
+const collapsedLeft = ref(false)
+const collapsedRight = ref(false)
+
 const rulerBorderStyle = reactive<{
   type: 'dashed' | 'solid' | 'dotted'
   width: number
@@ -62,6 +95,12 @@ const rulerBorderStyle = reactive<{
   color: 'red'
 })
 const route = useRoute()
+
+const triggerStyle = {
+  width: '30px',
+  height: '30px',
+  fontSize: '30px'
+}
 
 onMounted(async () => {
   const index = route.params.index as string
@@ -155,4 +194,22 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+:deep(.scrollbar-content) {
+  overflow: auto;
+}
+::-webkit-scrollbar {
+  /*滚动条整体样式*/
+  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+  height: 6px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #8b8b8b;
+  -webkit-border-radius: 2em;
+  -moz-border-radius: 2em;
+  border-radius: 2em;
+}
+::-webkit-scrollbar-track {
+  background-color: #ccc;
+}
+</style>

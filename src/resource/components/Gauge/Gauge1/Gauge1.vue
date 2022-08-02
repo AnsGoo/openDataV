@@ -11,7 +11,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 import type { TagType } from '@/types/wsTypes'
 import { useEventBus } from '@/bus/useEventBus'
-import mydark from '../../utils/echarts/mydark'
+import mydark from '../../../utils/echarts/mydark'
 import type { GaugeOne } from './type'
 echarts.registerTheme('mydark', mydark)
 
