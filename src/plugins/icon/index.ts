@@ -59,7 +59,8 @@ import {
   Zijinyunying,
   Rotation,
   Lock,
-  Unlock
+  Unlock,
+  Code
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -127,5 +128,6 @@ export default {
     app.component(Rotation.name, Rotation)
     app.component(Lock.name, Lock)
     app.component(Unlock.name, Unlock)
+    app.component(Code.name, Code)
   }
 }

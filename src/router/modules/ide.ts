@@ -7,7 +7,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
     meta: {
       title: '代码编辑器',
       ignoreAuth: true,
-      icon: 'user'
+      icon: 'code'
     }
   }
 ]

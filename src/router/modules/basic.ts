@@ -34,7 +34,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
     }
   },
   {
-    path: '/page/:index/edite',
+    path: '/page/:index/edit',
     name: 'Editor',
     component: () => import('@/pages/DesignerPage.vue'),
     meta: {
@@ -59,7 +59,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
     component: Layout,
     meta: {
       title: '布局界面',
-      icon: 'user'
+      icon: 'page-template'
     },
     children: [
       {
@@ -68,7 +68,7 @@ const basicRoutes: AppRouteRecordRaw[] = [
         component: () => import('@/pages/Pages.vue'),
         meta: {
           title: '布局界面',
-          icon: 'user'
+          icon: 'page'
         }
       }
     ]

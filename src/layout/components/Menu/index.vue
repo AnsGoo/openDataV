@@ -24,10 +24,6 @@ defineProps<{
   collapsed: boolean
 }>()
 
-// const emits = defineEmits<{
-//   (e: 'update:collapsed', collapse: boolean)
-// }>()
-
 // 当前路由
 const currentRoute = useRoute()
 const settingStore = useProjectSettingStoreWithOut()
