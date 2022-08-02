@@ -16,4 +16,10 @@ import { ref } from 'vue'
 import { NTabs, NTabPane } from 'naive-ui'
 
 const mode = ref<string>('expand')
+withDefaults(
+  defineProps<{
+    iscollapsed: boolean
+  }>(),
+  { iscollapsed: false }
+)
 </script>
