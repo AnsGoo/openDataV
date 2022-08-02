@@ -1,71 +1,69 @@
 <template>
-  <div class="bg">
-    <div class="container">
-      <div class="card" v-for="item in layoutList" :key="item.id">
-        <n-card
-          :key="item.id"
-          :body-style="{ padding: '0px', position: 'relative' }"
-          :title="item.name"
-        >
-          <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" />
-          <div class="delete">
-            <span class="icon iconfont icon-shouye shouye" v-show="item.isHome"></span>
-            <span class="icon iconfont icon-shanchu shanchu" @click="handleDelete(item)"></span>
+  <div class="container">
+    <div class="card" v-for="item in layoutList" :key="item.id">
+      <n-card
+        :key="item.id"
+        :body-style="{ padding: '0px', position: 'relative' }"
+        :title="item.name"
+      >
+        <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" />
+        <div class="delete">
+          <span class="icon iconfont icon-shouye shouye" v-show="item.isHome"></span>
+          <span class="icon iconfont icon-shanchu shanchu" @click="handleDelete(item)"></span>
+        </div>
+        <div class="options">
+          <span class="desc">{{ item.name }}</span>
+          <div class="bottom">
+            <span
+              class="icon iconfont icon-bianji"
+              title="编辑页面"
+              @click="handleEdit(item)"
+            ></span>
+            <span
+              class="icon iconfont icon-chakan"
+              title="查看页面"
+              @click="handleView(item)"
+            ></span>
+            <span
+              class="icon iconfont icon-fuzhi"
+              title="复制页面路由地址"
+              @click="handleCopy(item)"
+            ></span>
+            <span
+              v-if="!item.isHome"
+              class="icon iconfont icon-leijianzhuxiulix"
+              title="配置"
+              @click="handleConfigAllowed(item)"
+            ></span>
+            <span
+              v-if="!item.isHome"
+              class="icon iconfont icon-shouye-moren"
+              title="设置为默认首页"
+              @click="handleSetHome(item)"
+            ></span>
+            <span
+              v-else
+              style="color: #67c23a"
+              class="icon iconfont icon-shouye-moren"
+              title="首页"
+            ></span>
           </div>
-          <div class="options">
-            <span class="desc">{{ item.name }}</span>
-            <div class="bottom">
-              <span
-                class="icon iconfont icon-bianji"
-                title="编辑页面"
-                @click="handleEdit(item)"
-              ></span>
-              <span
-                class="icon iconfont icon-chakan"
-                title="查看页面"
-                @click="handleView(item)"
-              ></span>
-              <span
-                class="icon iconfont icon-fuzhi"
-                title="复制页面路由地址"
-                @click="handleCopy(item)"
-              ></span>
-              <span
-                v-if="!item.isHome"
-                class="icon iconfont icon-leijianzhuxiulix"
-                title="配置"
-                @click="handleConfigAllowed(item)"
-              ></span>
-              <span
-                v-if="!item.isHome"
-                class="icon iconfont icon-shouye-moren"
-                title="设置为默认首页"
-                @click="handleSetHome(item)"
-              ></span>
-              <span
-                v-else
-                style="color: #67c23a"
-                class="icon iconfont icon-shouye-moren"
-                title="首页"
-              ></span>
-            </div>
-          </div>
-        </n-card>
-      </div>
-      <div class="card">
-        <n-card
-          class="box-card"
-          @click="handleCreate()"
-          :body-style="{ padding: '0px', position: 'relative' }"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-            <path
-              fill="#ddd"
-              d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64h352z"
-            />
-          </svg>
-        </n-card>
-      </div>
+        </div>
+      </n-card>
+    </div>
+    <div class="card">
+      <n-card
+        class="box-card"
+        @click="handleCreate()"
+        :body-style="{ padding: '0px', position: 'relative' }"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+          <path
+            fill="#ddd"
+            d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64h352z"
+          />
+        </svg>
+      </n-card>
     </div>
   </div>
 </template>
@@ -169,9 +167,6 @@ const handleConfigAllowed = (item: LayoutData) => {
   .container {
     @apply flex h-full mx-auto flex-wrap;
     align-content: flex-start;
-    width: 80vw;
-    margin: 5vw auto;
-
     .card {
       @apply p-2;
 
@@ -194,10 +189,6 @@ const handleConfigAllowed = (item: LayoutData) => {
         height: calc(100%);
       }
     }
-  }
-
-  .bg {
-    @apply bg-gray-100 w-screen h-screen border border-transparent;
   }
 
   .delete {

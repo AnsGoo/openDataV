@@ -169,7 +169,9 @@ const animates = [
 watch(
   () => designStore.darkTheme,
   (to) => {
-    settingStore.navTheme = to ? 'header-dark' : 'dark'
+    if (isDrawer.value) {
+      settingStore.navTheme = to ? 'light' : 'dark'
+    }
   }
 )
 

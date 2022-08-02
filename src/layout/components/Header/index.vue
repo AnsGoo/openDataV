@@ -47,6 +47,14 @@
           <span>全屏</span>
         </n-tooltip>
       </div>
+      <div class="layout-header-trigger layout-header-trigger-min">
+        <n-tooltip placement="bottom">
+          <template #trigger>
+            <icon-park :name="themeIcon" @click="toggleTheme" :color="iconColor" />
+          </template>
+          <span>主题</span>
+        </n-tooltip>
+      </div>
       <!-- 个人中心 -->
       <div class="layout-header-trigger layout-header-trigger-min">
         <n-dropdown trigger="hover" @select="avatarSelect" :options="avatarOptions">
@@ -101,6 +109,7 @@ const username = userStore?.userName || ''
 
 const drawerSetting = ref()
 const fullscreenIcon = ref<string>('full-screen-one')
+const themeIcon = ref<string>('sun-one')
 
 const router = useRouter()
 const route = useRoute()
@@ -172,6 +181,19 @@ const doLogout = () => {
 // 切换全屏图标
 const toggleFullscreenIcon = () => {
   fullscreenIcon.value = document.fullscreenElement !== null ? 'off-screen-one' : 'full-screen-one'
+}
+
+// 切换主题
+const toggleTheme = () => {
+  console.log(projectStore.navTheme, designStore.darkTheme)
+  if (projectStore.getNavTheme !== 'light') {
+    projectStore.navTheme = 'light'
+    designStore.darkTheme = false
+  } else {
+    projectStore.navTheme = 'dark'
+    designStore.darkTheme = true
+  }
+  themeIcon.value = projectStore.getNavTheme === 'light' ? 'sun-one' : 'moon'
 }
 
 // 监听全屏切换事件
