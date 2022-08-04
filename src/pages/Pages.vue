@@ -170,8 +170,7 @@ const handleConfigAllowed = (item: LayoutData) => {
     .card {
       @apply p-2;
 
-      width: 10vw;
-      // height: 230px;
+      width: 20%;
       transition: all 0.3s ease;
       transform-origin: center;
 
