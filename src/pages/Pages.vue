@@ -4,7 +4,7 @@
       <n-card
         :key="item.id"
         :body-style="{ padding: '0px', position: 'relative' }"
-        :title="item.name"
+        :title="`${item.name}asdfasfasfadsfsafsafsdfasdfasdfasdfasfasfsafsafsfsfsadfsafasdfasfasdf`"
       >
         <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" />
         <div class="delete">
@@ -170,8 +170,7 @@ const handleConfigAllowed = (item: LayoutData) => {
     .card {
       @apply p-2;
 
-      width: 10vw;
-      // height: 230px;
+      width: 20%;
       transition: all 0.3s ease;
       transform-origin: center;
 
