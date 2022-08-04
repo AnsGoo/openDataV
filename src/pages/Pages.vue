@@ -4,7 +4,7 @@
       <n-card
         :key="item.id"
         :body-style="{ padding: '0px', position: 'relative' }"
-        :title="`${item.name}asdfasfasfadsfsafsafsdfasdfasdfasdfasfasfsafsafsfsfsadfsafasdfasfasdf`"
+        :title="item.name"
       >
         <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" />
         <div class="delete">
