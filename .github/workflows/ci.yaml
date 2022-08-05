@@ -51,4 +51,4 @@ jobs:
           # 部署目录为Vite项目的默认输出目录
           build_dir: ./dist
         env:
-          GITHUB_TOKEN: ${{ secrets.openDataV }}
+          GITHUB_TOKEN: ${{ secrets.OPENDATAV }}
