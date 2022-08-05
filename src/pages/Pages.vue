@@ -1,101 +1,80 @@
 <template>
   <div class="container">
-    <div class="card" v-for="item in layoutList" :key="item.id">
-      <n-card
-        :key="item.id"
-        :body-style="{ padding: '0px', position: 'relative' }"
-        :title="item.name"
-      >
-        <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" />
-        <div class="delete">
-          <span class="icon iconfont icon-shouye shouye" v-show="item.isHome"></span>
-          <span class="icon iconfont icon-shanchu shanchu" @click="handleDelete(item)"></span>
-        </div>
-        <div class="options">
-          <span class="desc">{{ item.name }}</span>
-          <div class="bottom">
-            <span
-              class="icon iconfont icon-bianji"
-              title="编辑页面"
-              @click="handleEdit(item)"
-            ></span>
-            <span
-              class="icon iconfont icon-chakan"
-              title="查看页面"
-              @click="handleView(item)"
-            ></span>
-            <span
-              class="icon iconfont icon-fuzhi"
-              title="复制页面路由地址"
-              @click="handleCopy(item)"
-            ></span>
-            <span
-              v-if="!item.isHome"
-              class="icon iconfont icon-leijianzhuxiulix"
-              title="配置"
-              @click="handleConfigAllowed(item)"
-            ></span>
-            <span
-              v-if="!item.isHome"
-              class="icon iconfont icon-shouye-moren"
-              title="设置为默认首页"
-              @click="handleSetHome(item)"
-            ></span>
-            <span
-              v-else
-              style="color: #67c23a"
-              class="icon iconfont icon-shouye-moren"
-              title="首页"
-            ></span>
-          </div>
-        </div>
-      </n-card>
+    <div class="toolbar">
+      <n-button type="primary" :loading="loading" @click="handleCreate"> 新建 </n-button>
     </div>
-    <div class="card">
-      <n-card
-        class="box-card"
-        @click="handleCreate()"
-        :body-style="{ padding: '0px', position: 'relative' }"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
-          <path
-            fill="#ddd"
-            d="M480 480V128a32 32 0 0 1 64 0v352h352a32 32 0 1 1 0 64H544v352a32 32 0 1 1-64 0V544H128a32 32 0 0 1 0-64h352z"
-          />
-        </svg>
+
+    <div class="card" v-for="item in layoutList" :key="item.id">
+      <n-card :key="item.id" hoverable>
+        <template #header>
+          <n-ellipsis style="max-width: 8rem">
+            {{ item.name }}
+          </n-ellipsis>
+        </template>
+        <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" alt="" />
+        <template #action>
+          <div class="options">
+            <n-tooltip trigger="hover">
+              <template #trigger>
+                <n-button quaternary @click="handleEdit(item)">
+                  <template #icon>
+                    <icon-park name="editor" />
+                  </template>
+                </n-button>
+              </template>
+              <span>编辑</span>
+            </n-tooltip>
+            <n-dropdown
+              trigger="hover"
+              @select="(key) => handleSelect(key, item)"
+              :options="options"
+            >
+              <icon-park name="setting" />
+            </n-dropdown>
+          </div>
+        </template>
       </n-card>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { getUIComponentsList, deleteUIComponents, setHomePage } from '@/api/pages'
+import { getUIComponentsList, deleteUIComponents } from '@/api/pages'
 import type { LayoutData } from '@/types/apiTypes'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, h } from 'vue'
 import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
-import { copyText } from '@/utils/utils'
 import { message } from '@/utils/message'
-import { NCard } from 'naive-ui'
-import { getUsers } from '@/api/user'
+import { IconPark } from '@/plugins/icon'
+import { NCard, NEllipsis, NTooltip, NDropdown, DropdownOption, NButton } from 'naive-ui'
+
 const router = useRouter()
+const loading = ref<boolean>(false)
 const layoutList = ref<LayoutData[]>([])
-const isShow = ref<boolean>(false)
-const users = ref<string[]>([])
-const currentPage = ref<LayoutData | null>(null)
+const options: DropdownOption[] = [
+  {
+    key: 'preview',
+    label: '预览',
+    icon: renderIcon('preview-open')
+  },
+  {
+    key: 'delete',
+    label: '删除',
+    icon: renderIcon('delete-one')
+  }
+]
 
 onMounted(async () => {
-  await loadUsers()
   await initUI()
 })
 
-const loadUsers = async (): Promise<void> => {
-  try {
-    users.value = await getUsers()
-  } catch (err: any) {
-    console.log(err.message || err)
-  }
+function renderIcon(icon: string) {
+  return () =>
+    h(IconPark, {
+      name: icon
+    })
 }
+
 const initUI = async (): Promise<void> => {
   const resp: LayoutData[] = await getUIComponentsList()
   if (resp) {
@@ -103,13 +82,42 @@ const initUI = async (): Promise<void> => {
   }
 }
 
+const handleSelect = async (key: string | number, item: LayoutData) => {
+  if (key === 'preview') {
+    router.push({
+      name: 'PageView',
+      params: {
+        index: item.id
+      }
+    })
+  } else if (key === 'delete') {
+    try {
+      await deleteUIComponents(item.id as string)
+      await initUI()
+    } catch (e: any) {
+      console.log(e?.message || e)
+      message.error('删除失败')
+    }
+  }
+}
+
 const handleCreate = () => {
+  if (loading.value) {
+    return false
+  }
+
+  loading.value = true
   router.push({
     name: 'Create'
   })
 }
 
 const handleEdit = (item: LayoutData) => {
+  if (loading.value) {
+    return false
+  }
+
+  loading.value = true
   router.push({
     name: 'Editor',
     params: {
@@ -127,119 +135,33 @@ const handleView = (item: LayoutData) => {
   })
 }
 
-const handleCopy = (item: LayoutData) => {
-  copyText(`/page/${item.id}/view`)
-  message.success(`路由复制成功: /page/${item.id}/view`)
-}
-
-const handleSetHome = async (item: LayoutData) => {
-  try {
-    await setHomePage(item.id!)
-    message.success('设置成功')
-    await initUI()
-  } catch (e: any) {
-    message.error('设置失败')
-  }
-}
-
-const handleDelete = async (item: LayoutData) => {
-  try {
-    await deleteUIComponents(item.id as string)
-    await initUI()
-  } catch (e: any) {
-    console.log(e?.message || e)
-    message.error('删除失败')
-  }
-}
-
 const previewIcon = (icon: string | undefined) => {
   return icon ? icon : defaultImg
-}
-
-const handleConfigAllowed = (item: LayoutData) => {
-  isShow.value = true
-  currentPage.value = item
 }
 </script>
 
 <style lang="less" scoped>
 @layer components {
   .container {
-    @apply flex h-full mx-auto flex-wrap;
+    @apply flex h-full mx-auto flex-wrap relative;
     align-content: flex-start;
+
     .card {
       @apply p-2;
 
       width: 20%;
       transition: all 0.3s ease;
       transform-origin: center;
-
-      &:hover {
-        transform: scale(1.1);
-      }
-
-      &:active {
-        transform: scale(1);
-      }
-
-      .box-card {
-        @apply w-full h-full;
-
-        height: calc(100%);
-      }
-    }
-  }
-
-  .delete {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    color: red;
-    overflow: hidden;
-    text-align: center;
-    cursor: pointer;
-
-    .shanchu {
-      position: absolute;
-      display: none;
-      color: red;
-      right: 0;
-      top: 0;
     }
 
-    .shouye {
-      position: absolute;
-      color: red;
-      left: 50%;
-      top: 50%;
-      font-size: 30px;
-      transform: translate(-50%, -50%);
+    .toolbar {
+      @apply flex flex-col justify-start items-center absolute top-4 -left-16;
     }
-  }
-
-  .card:hover .shanchu {
-    display: block;
-  }
-
-  .bottom {
-    display: flex;
-    margin-top: 5px;
-    color: #1296db;
-    justify-content: space-between;
   }
 
   .options {
     padding: 5px 14px 14px 14px;
-    c {
-      white-space: nowrap; /*强制span不换行*/
-      display: inline-block; /*将span当做块级元素对待*/
-      width: 100%; /*限制宽度*/
-      overflow: hidden; /*超出宽度部分隐藏*/
-      text-overflow: ellipsis; /*超出部分以点号代替*/
-      line-height: 0.9; /*数字与之前的文字对齐*/
-    }
+    @apply flex justify-between items-center;
   }
 }
 </style>

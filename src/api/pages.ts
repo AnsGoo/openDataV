@@ -45,20 +45,6 @@ export const deleteUIComponents = (id: string): Promise<string> => {
   })
 }
 
-// 获取首页配置数据
-export const getHomeData = async (): Promise<LayoutData> => {
-  return http.get<LayoutData>({
-    url: '/home'
-  })
-}
-
-// 设置首页
-export const setHomePage = (id: string) => {
-  return http.put<BasicFetchResult<string>>({
-    url: `/home/${id}`
-  })
-}
-
 // 设置页面权限
 export const setPagePermission = (id: string, permissions: string[]) => {
   return http.put<BasicFetchResult<string>>({
