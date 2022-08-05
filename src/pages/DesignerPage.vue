@@ -25,16 +25,22 @@
       <!-- 中间画布 -->
       <n-layout-content class="content" v-resize="editorWindowResizeHandler">
         <div class="scrollbar-content" :style="scrobarStyle" ref="editor">
-          <Ruler :borderStyle="rulerBorderStyle" class="ruler">
-            <Editor
-              @drop="handleDrop"
-              @dragover="handleDragOver"
-              @mousedown="handleMouseDown"
-              @mouseup="deselectCurComponent"
-            />
-          </Ruler>
+          <SketchRule
+            :thick="thick"
+            :scale="scale"
+            :width="1920"
+            :height="1080"
+            :startX="startX"
+            :startY="startY"
+            :lines="lines"
+          />
+          <Editor
+            @drop="handleDrop"
+            @dragover="handleDragOver"
+            @mousedown="handleMouseDown"
+            @mouseup="deselectCurComponent"
+          />
         </div>
-        <!-- </section> -->
       </n-layout-content>
 
       <!-- 右侧属性列表 -->
@@ -66,17 +72,28 @@
 import { cloneDeep } from 'lodash-es'
 import Editor from '@/designer/Editor/Index.vue'
 import ToolBar from '@/designer/Pane/Toolbar'
-import Ruler from '@/designer/Editor/Ruler.vue'
 import LeftSideBar from '@/designer/Pane/LeftSideBar'
 import RightSideBar from '@/designer/Pane/RightSideBar'
 import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { ref, onMounted, onUnmounted, reactive, watch, computed } from 'vue'
+import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import SketchRule from 'vue3-sketch-ruler'
+import 'vue3-sketch-ruler/lib/style.css'
+
+const scale = 1
+const startX = 0
+const startY = 0
+const lines = {
+  h: [],
+  v: []
+}
+const thick = 20
+
 const basicStore = useBasicStoreWithOut()
 const websk = ref<WebSocket | null>(null)
 
@@ -85,15 +102,6 @@ const editor = ref<HTMLDivElement | null>(null)
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
 
-const rulerBorderStyle = reactive<{
-  type: 'dashed' | 'solid' | 'dotted'
-  width: number
-  color: string
-}>({
-  type: 'dashed',
-  width: 1,
-  color: 'red'
-})
 const route = useRoute()
 
 const triggerStyle = {
