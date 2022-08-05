@@ -60,7 +60,8 @@ import {
   Rotation,
   Lock,
   Unlock,
-  Code
+  Code,
+  Editor
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -129,5 +130,6 @@ export default {
     app.component(Lock.name, Lock)
     app.component(Unlock.name, Unlock)
     app.component(Code.name, Code)
+    app.component(Editor.name, Editor)
   }
 }

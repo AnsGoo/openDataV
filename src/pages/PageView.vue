@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, computed } from 'vue'
-import { getUIComponents, getHomeData } from '@/api/pages'
+import { getUIComponents } from '@/api/pages'
 import type { ComponentInfo } from '@/types/component'
 import { useRoute, useRouter } from 'vue-router'
 import { filterStyle, pageScale } from '@/utils/utils'
@@ -48,17 +48,6 @@ const initComponents = async (index: string): Promise<void> => {
   }
 }
 
-const initHome = async (): Promise<void> => {
-  try {
-    const resp: LayoutData = await getHomeData()
-    setPageData(resp)
-  } catch (e: any) {
-    router.push({
-      name: 'Error'
-    })
-  }
-}
-
 const setPageData = (data: LayoutData): void => {
   if (data.canvasStyle) {
     canvasStyle.value = data.canvasStyle
@@ -74,11 +63,7 @@ const setPageData = (data: LayoutData): void => {
 
 onMounted(async () => {
   // 如果是首页
-  if (route.name === 'Home') {
-    await initHome()
-  } else {
-    await initComponents(route.params.index as string)
-  }
+  await initComponents(route.params.index as string)
 
   window.addEventListener('resize', setScale)
 })
