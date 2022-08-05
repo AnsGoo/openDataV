@@ -25,15 +25,6 @@
       <!-- 中间画布 -->
       <n-layout-content class="content" v-resize="editorWindowResizeHandler">
         <div class="scrollbar-content" :style="scrobarStyle" ref="editor">
-          <SketchRule
-            :thick="thick"
-            :scale="scale"
-            :width="1920"
-            :height="1080"
-            :startX="startX"
-            :startY="startY"
-            :lines="lines"
-          />
           <Editor
             @drop="handleDrop"
             @dragover="handleDragOver"
@@ -82,8 +73,6 @@ import { useRoute } from 'vue-router'
 import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider } from 'naive-ui'
-import SketchRule from 'vue3-sketch-ruler'
-import 'vue3-sketch-ruler/lib/style.css'
 
 const scale = 1
 const startX = 0

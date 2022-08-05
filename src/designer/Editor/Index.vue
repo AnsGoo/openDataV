@@ -10,6 +10,9 @@
     <!-- 网格线 -->
     <Grid />
 
+    <!-- 标尺 -->
+    <Ruler />
+
     <!--页面组件列表展示-->
     <template v-for="(item, index) in componentData" :key="item.id">
       <Shape
@@ -48,6 +51,7 @@
 
 <script setup lang="ts">
 import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
+import Ruler from '@/designer/Editor/Ruler.vue'
 import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
