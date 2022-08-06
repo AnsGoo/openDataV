@@ -76,9 +76,13 @@ function renderIcon(icon: string) {
 }
 
 const initUI = async (): Promise<void> => {
-  const resp: LayoutData[] = await getUIComponentsList()
-  if (resp) {
-    layoutList.value = resp
+  try {
+    const resp: LayoutData[] = await getUIComponentsList()
+    if (resp) {
+      layoutList.value = resp
+    }
+  } catch (_) {
+    message.error('页面数据请求异常')
   }
 }
 

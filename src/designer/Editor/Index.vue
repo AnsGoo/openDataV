@@ -11,7 +11,7 @@
     <Grid />
 
     <!-- 标尺 -->
-    <Ruler />
+    <Ruler :width="canvasStyleData.width" :height="canvasStyleData.height" />
 
     <!--页面组件列表展示-->
     <template v-for="(item, index) in componentData" :key="item.id">
