@@ -32,13 +32,7 @@
             'fluid-header': fixedHeader === 'static'
           }"
         >
-          <div
-            class="main-view"
-            :class="{
-              noMultiTabs: true,
-              'mt-3': true
-            }"
-          >
+          <div class="main-view mt-3">
             <MainView />
           </div>
         </div>
@@ -154,6 +148,7 @@ onMounted(() => {
   .layout-content {
     flex: auto;
     min-height: 100vh;
+    height: 100vh;
   }
 
   .n-layout-header.n-layout-header--absolute-positioned {
@@ -169,6 +164,7 @@ onMounted(() => {
   margin: 0 10px 10px;
   position: relative;
   padding-top: 64px;
+  height: 100%;
 }
 
 .layout-content-main-fix {
@@ -181,9 +177,5 @@ onMounted(() => {
 
 .main-view-fix {
   padding-top: 44px;
-}
-
-.noMultiTabs {
-  padding-top: 0;
 }
 </style>
