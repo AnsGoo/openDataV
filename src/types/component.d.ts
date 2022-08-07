@@ -57,7 +57,7 @@ interface ComponentConfig<T = Recordable<string | number | any>> {
 interface ArrayType {
   key: string
   type: string
-  selectOptions?: Array<{ value: string; label: string }>
+  componentOptions?: any
   max?: number
 }
 
@@ -65,7 +65,7 @@ interface AttrType {
   key: string
   label: string
   type?: string
-  selectOptions?: Array<{ value: string; label: string }>
+  componentOptions?: any
   arrayAttr?: ArrayType
 }
 

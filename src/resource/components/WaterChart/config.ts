@@ -54,16 +54,18 @@ const attrs: Array<GroupType> = [
         key: 'shape',
         label: '形状',
         type: 'select',
-        selectOptions: [
-          { value: 'diamond', label: '菱形' },
-          { value: 'rect', label: '长方形' },
-          { value: 'roundRect', label: '圆角' },
-          { value: 'pin', label: '水滴' },
-          { value: 'whale', label: '鲸鱼' },
-          { value: 'circle', label: '圆形' },
-          { value: 'triangle', label: '三角形' },
-          { value: 'arrow', label: '箭头形' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'diamond', label: '菱形' },
+            { value: 'rect', label: '长方形' },
+            { value: 'roundRect', label: '圆角' },
+            { value: 'pin', label: '水滴' },
+            { value: 'whale', label: '鲸鱼' },
+            { value: 'circle', label: '圆形' },
+            { value: 'triangle', label: '三角形' },
+            { value: 'arrow', label: '箭头形' }
+          ]
+        }
       },
       {
         key: 'waveAnimation',
@@ -89,10 +91,12 @@ const attrs: Array<GroupType> = [
         key: 'direction',
         label: '水波方向',
         type: 'select',
-        selectOptions: [
-          { value: 'left', label: '向左飘动' },
-          { value: 'right', label: '向右飘动' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'left', label: '向左飘动' },
+            { value: 'right', label: '向右飘动' }
+          ]
+        }
       }
     ]
   },

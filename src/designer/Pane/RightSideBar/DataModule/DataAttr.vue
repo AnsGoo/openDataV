@@ -1,5 +1,5 @@
 <template>
-  <div class="data-list" style="height: calc(100vh - 120px)">
+  <div class="data-list">
     <n-form size="small" @submit.prevent label-placement="left" label-align="left">
       <n-form-item key="dataType" label="数据类型">
         <n-select

@@ -27,16 +27,18 @@ const attrs: Array<GroupType> = [
         key: 'displayStyle',
         label: '显示方式',
         type: 'select',
-        selectOptions: [
-          {
-            value: 'display',
-            label: 'display'
-          },
-          {
-            value: 'visibility',
-            label: 'visibility'
-          }
-        ]
+        componentOptions: {
+          options: [
+            {
+              value: 'display',
+              label: 'display'
+            },
+            {
+              value: 'visibility',
+              label: 'visibility'
+            }
+          ]
+        }
       }
     ]
   },

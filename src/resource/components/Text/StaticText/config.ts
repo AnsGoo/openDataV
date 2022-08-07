@@ -1,6 +1,7 @@
 import { ComponentGroup } from '@/enum'
 import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
 import type { StaticText } from './type'
+import { NDatePicker } from 'naive-ui'
 
 const component: ComponentConfig<StaticText> = {
   component: 'StaticText',
@@ -59,15 +60,25 @@ const attrs: Array<GroupType> = [
         key: 'type',
         label: '文本类型',
         type: 'select',
-        selectOptions: [
-          { value: 'text', label: '文本' },
-          { value: 'symbol', label: '符号' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'text', label: '文本' },
+            { value: 'symbol', label: '符号' }
+          ]
+        }
       },
       {
         key: 'text',
         label: '自定义文本',
         type: 'text'
+      },
+      {
+        key: 'date',
+        label: '测试组件',
+        type: 'custom',
+        componentOptions: {
+          componentType: NDatePicker
+        }
       }
     ]
   }

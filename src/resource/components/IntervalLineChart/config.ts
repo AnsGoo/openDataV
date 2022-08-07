@@ -55,10 +55,12 @@ const attrs: Array<GroupType> = [
         key: 'method',
         label: 'HTTP方法',
         type: 'select',
-        selectOptions: [
-          { value: 'GET', label: 'GET' },
-          { value: 'POST', label: 'POST' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'GET', label: 'GET' },
+            { value: 'POST', label: 'POST' }
+          ]
+        }
       },
       {
         key: 'data',

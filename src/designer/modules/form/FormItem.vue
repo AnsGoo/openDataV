@@ -1,6 +1,6 @@
 <template>
   <n-form-item
-    v-for="{ key, label, type, selectOptions } in children"
+    v-for="{ key, label, type, componentOptions } in children"
     :key="`${ukey}${key}`"
     :label="label"
   >
@@ -15,7 +15,7 @@
       v-model="formData[key]"
       :placeholder="label"
       @update:value="changed($event, key)"
-      :options="selectOptions"
+      :options="componentOptions?.options || []"
     />
     <n-radio-group
       v-else-if="type === 'radio'"
@@ -23,7 +23,11 @@
       :placeholder="label"
       @update:value="changed($event, key)"
     >
-      <n-radio v-for="item in selectOptions" :label="item.value" :key="item.value">
+      <n-radio
+        v-for="item in componentOptions?.options || []"
+        :label="item.value"
+        :key="item.value"
+      >
         {{ item.label }}
       </n-radio>
     </n-radio-group>
@@ -52,6 +56,13 @@
       v-model:value="formData[key]"
       @change="changed($event, key)"
     />
+    <CustomRender
+      v-else-if="type === 'custom'"
+      v-model:value="formData[key]"
+      @change="changed($event, key)"
+      :component="componentOptions.componentType"
+      :args="componentOptions.args"
+    />
     <n-input v-else clearable v-model:value="formData[key]" @update:value="changed($event, key)" />
   </n-form-item>
 </template>
@@ -61,6 +72,7 @@ import { reactive, watch } from 'vue'
 import FontStyle from './FontStyle.vue'
 import FontWeight from './FontWeight.vue'
 import LinearGradient from './LinearGradient.vue'
+import CustomRender from './utils/render'
 import {
   NFormItem,
   NInput,

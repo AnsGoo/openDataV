@@ -36,7 +36,9 @@ const style: Array<GroupType> = [
         key: 'borderStyle',
         label: '边框风格',
         type: 'select',
-        selectOptions: []
+        componentOptions: {
+          options: []
+        }
       },
       {
         key: 'borderColor',

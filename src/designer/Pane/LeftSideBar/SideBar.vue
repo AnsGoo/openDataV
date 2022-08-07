@@ -13,14 +13,14 @@
         <IconPark name="components" />
         <span>组件</span>
       </template>
-      <ComponentList :mode="mode" />
+      <ComponentList />
     </n-tab-pane>
     <n-tab-pane name="layer">
       <template #tab>
         <IconPark name="layers" />
         <span>图层</span>
       </template>
-      <Layer :mode="mode" />
+      <Layer />
     </n-tab-pane>
   </n-tabs>
   <n-tabs
@@ -52,7 +52,6 @@ import Layer from './Layer.vue'
 import { ref } from 'vue'
 import { NTabs, NTabPane } from 'naive-ui'
 
-const mode = ref<string>('expand')
 const activeKey = ref<string>('components')
 const emits = defineEmits<{
   (e: 'update:iscollapsed', iscollapsed: boolean): void

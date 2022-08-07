@@ -39,12 +39,14 @@ const attrs: Array<GroupType> = [
         key: 'style',
         label: '样式',
         type: 'select',
-        selectOptions: [
-          { value: 'dotted', label: '点线' },
-          { value: 'solid ', label: '实线' },
-          { value: 'double ', label: '双实线' },
-          { value: 'dashed', label: '虚线' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'dotted', label: '点线' },
+            { value: 'solid ', label: '实线' },
+            { value: 'double ', label: '双实线' },
+            { value: 'dashed', label: '虚线' }
+          ]
+        }
       }
     ]
   }

@@ -214,11 +214,13 @@ const attrs: Array<GroupType> = [
         key: 'pointStyle',
         label: '指针样式',
         type: 'select',
-        selectOptions: [
-          { label: '三角形', value: 'triangle' },
-          { label: '箭头形', value: 'arrow' },
-          { label: '菱形', value: 'diamond' }
-        ]
+        componentOptions: {
+          options: [
+            { label: '三角形', value: 'triangle' },
+            { label: '箭头形', value: 'arrow' },
+            { label: '菱形', value: 'diamond' }
+          ]
+        }
       },
       {
         key: 'pointerLength',

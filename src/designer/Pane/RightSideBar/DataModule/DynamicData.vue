@@ -4,7 +4,7 @@
       v-model:value="formData.data"
       placeholder="请选择数据接口"
       @update:value="dynamicDatachanged"
-      :options="selectOptions"
+      :options="options"
     />
   </n-form-item>
   <n-form-item key="timeout" label="超时时间">
@@ -36,7 +36,7 @@ import { NFormItem, NSelect, NInput, NInputNumber, NSwitch } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-const selectOptions = ref<SelectOption[]>([])
+const options = ref<SelectOption[]>([])
 const paramList = ref<string[]>([])
 const formData = reactive({
   data: undefined,

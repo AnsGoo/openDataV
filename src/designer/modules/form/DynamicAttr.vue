@@ -9,7 +9,7 @@
         <div class="title">{{ name }}{{ index + 1 }}</div>
       </template>
       <template #header-extra>
-        <icon-park name="delete-one" size="24" @click="deleteItem(index)" />
+        <icon-park name="delete-one" size="14" @click="deleteItem(index)" />
       </template>
       <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" # />
     </n-collapse-item>
