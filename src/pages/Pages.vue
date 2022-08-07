@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="toolbar">
+    <n-card>
       <n-button type="primary" :loading="loading" @click="handleCreate"> 新建 </n-button>
-    </div>
+    </n-card>
 
     <div class="card" v-for="item in layoutList" :key="item.id">
       <n-card :key="item.id" hoverable>
@@ -76,9 +76,13 @@ function renderIcon(icon: string) {
 }
 
 const initUI = async (): Promise<void> => {
-  const resp: LayoutData[] = await getUIComponentsList()
-  if (resp) {
-    layoutList.value = resp
+  try {
+    const resp: LayoutData[] = await getUIComponentsList()
+    if (resp) {
+      layoutList.value = resp
+    }
+  } catch (_) {
+    message.error('页面数据请求异常')
   }
 }
 
@@ -152,10 +156,6 @@ const previewIcon = (icon: string | undefined) => {
       width: 20%;
       transition: all 0.3s ease;
       transform-origin: center;
-    }
-
-    .toolbar {
-      @apply flex flex-col justify-start items-center absolute top-4 -left-16;
     }
   }
 
