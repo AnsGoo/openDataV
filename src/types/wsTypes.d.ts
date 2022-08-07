@@ -13,4 +13,4 @@ interface WSData {
   actualData: Array<WSDataType>
 }
 
-export { WSData, WSDataType, TagType}
+export { WSData, WSDataType, TagType }
