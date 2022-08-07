@@ -54,19 +54,11 @@ interface ComponentConfig<T = Recordable<string | number | any>> {
   show?: boolean | undefined
 }
 
-interface ArrayAttrType {
-  key: string
-  type: string
-  componentOptions?: any
-  max?: number
-}
-
 interface AttrType {
   key: string
   label: string
   type?: string
   componentOptions?: any
-  arrayAttr?: ArrayAttrType
   help?: string
 }
 
