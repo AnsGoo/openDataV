@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { BarChart } from './type'
 
 const component: ComponentConfig<BarChart> = {
@@ -22,7 +22,7 @@ const component: ComponentConfig<BarChart> = {
   }
 }
 
-const style: Array<GroupType> = [
+const style: Array<PropsType> = [
   {
     name: '边框设置',
     uid: 'border',
@@ -54,7 +54,7 @@ const style: Array<GroupType> = [
   }
 ]
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '标题配置',
     uid: 'title',

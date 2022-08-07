@@ -54,7 +54,7 @@ interface ComponentConfig<T = Recordable<string | number | any>> {
   show?: boolean | undefined
 }
 
-interface ArrayType {
+interface ArrayAttrType {
   key: string
   type: string
   componentOptions?: any
@@ -66,11 +66,12 @@ interface AttrType {
   label: string
   type?: string
   componentOptions?: any
-  arrayAttr?: ArrayType
+  arrayAttr?: ArrayAttrType
+  help?: string
 }
 
 // 分组类型
-interface GroupType {
+interface PropsType {
   name: string
   uid: string
   max?: number
@@ -79,17 +80,17 @@ interface GroupType {
 
 interface ComponentOptions {
   component: ComponentConfig
-  style: Array<GroupType>
-  attrs: Array<GroupType>
+  style: Array<PropsType>
+  attrs: Array<PropsType>
 }
 
 export type {
   ComponentInfo,
   ComponentStyle,
   ComponentOptions,
-  GroupType,
+  PropsType,
   AttrType,
-  ArrayType,
+  ArrayAttrType,
   ComponentCommon,
   DOMRectStyle,
   GroupStyle,

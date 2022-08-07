@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { IntervalLineChart } from './type'
 
 const component: ComponentConfig<IntervalLineChart> = {
@@ -23,9 +23,9 @@ const component: ComponentConfig<IntervalLineChart> = {
   }
 }
 
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '标题配置',
     uid: 'title',

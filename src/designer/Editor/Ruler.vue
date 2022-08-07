@@ -7,16 +7,16 @@
     :startX="startX"
     :startY="startY"
     :lines="lines"
+    :isShowReferLine="isShowReferLine"
   />
 </template>
 
 <script setup lang="ts">
-import SketchRule from 'vue3-sketch-ruler'
-import 'vue3-sketch-ruler/lib/style.css'
-
+import SketchRule from '../modules/ruler'
 defineProps<{
   width: number
   height: number
+  isShowReferLine: boolean
 }>()
 
 const scale = 1

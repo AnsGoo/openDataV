@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 const component: ComponentConfig = {
   component: 'Image',
   group: ComponentGroup.BASIC,
@@ -15,7 +15,7 @@ const component: ComponentConfig = {
   }
 }
 
-const style: Array<GroupType> = [
+const style: Array<PropsType> = [
   {
     name: '背景设置',
     uid: 'background',
@@ -92,7 +92,7 @@ const style: Array<GroupType> = [
   }
 ]
 
-const attrs: Array<GroupType> = []
+const attrs: Array<PropsType> = []
 
 const componentOptions: ComponentOptions = { component, style, attrs }
 export default componentOptions

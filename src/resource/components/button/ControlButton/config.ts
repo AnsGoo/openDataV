@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { ControlButton } from './type'
 
 const component: ComponentConfig<ControlButton> = {
@@ -20,9 +20,9 @@ const component: ComponentConfig<ControlButton> = {
   },
   icon: ''
 }
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '基本配置',
     uid: 'basic',
