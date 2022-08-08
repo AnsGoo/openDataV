@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { BorderBox11 } from './type'
 
 const component: ComponentConfig<BorderBox11> = {
@@ -22,9 +22,9 @@ const component: ComponentConfig<BorderBox11> = {
   }
 }
 
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '标题设置',
     uid: 'title',

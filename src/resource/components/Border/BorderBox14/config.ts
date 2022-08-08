@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { BorderBox14 } from './type'
 
 const component: ComponentConfig<BorderBox14> = {
@@ -18,9 +18,9 @@ const component: ComponentConfig<BorderBox14> = {
   }
 }
 
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '边框色彩',
     uid: 'display',
@@ -39,12 +39,14 @@ const attrs: Array<GroupType> = [
         key: 'style',
         label: '样式',
         type: 'select',
-        selectOptions: [
-          { value: 'dotted', label: '点线' },
-          { value: 'solid ', label: '实线' },
-          { value: 'double ', label: '双实线' },
-          { value: 'dashed', label: '虚线' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'dotted', label: '点线' },
+            { value: 'solid ', label: '实线' },
+            { value: 'double ', label: '双实线' },
+            { value: 'dashed', label: '虚线' }
+          ]
+        }
       }
     ]
   }

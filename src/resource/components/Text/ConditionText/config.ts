@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { ConditionText } from './type'
 
 const component: ComponentConfig<ConditionText> = {
@@ -18,9 +18,9 @@ const component: ComponentConfig<ConditionText> = {
   }
 }
 
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '数据配置',
     uid: 'data',
@@ -46,14 +46,16 @@ const attrs: Array<GroupType> = [
         key: 'symbol',
         label: '判别符号',
         type: 'select',
-        selectOptions: [
-          { value: '>', label: '大于' },
-          { value: '<', label: '小于' },
-          { value: '=', label: '等于' },
-          { value: '>=', label: '大于等于' },
-          { value: '<=', label: '小于等于' },
-          { value: '!', label: '不等于' }
-        ]
+        componentOptions: {
+          options: [
+            { value: '>', label: '大于' },
+            { value: '<', label: '小于' },
+            { value: '=', label: '等于' },
+            { value: '>=', label: '大于等于' },
+            { value: '<=', label: '小于等于' },
+            { value: '!', label: '不等于' }
+          ]
+        }
       },
       {
         key: 'value',
@@ -64,11 +66,13 @@ const attrs: Array<GroupType> = [
         key: 'displayType',
         label: '显示类型',
         type: 'select',
-        selectOptions: [
-          { value: 'symbol', label: '符号' },
-          { value: 'text', label: '文本' },
-          { value: 'image', label: '图片' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'symbol', label: '符号' },
+            { value: 'text', label: '文本' },
+            { value: 'image', label: '图片' }
+          ]
+        }
       },
       {
         key: 'displayContext',
@@ -89,10 +93,12 @@ const attrs: Array<GroupType> = [
         key: 'iconFit',
         label: '图片填充方式',
         type: 'select',
-        selectOptions: [
-          { value: 'contain', label: '最小填充' },
-          { value: 'cover', label: '最大填充' }
-        ]
+        componentOptions: {
+          options: [
+            { value: 'contain', label: '最小填充' },
+            { value: 'cover', label: '最大填充' }
+          ]
+        }
       }
     ]
   }

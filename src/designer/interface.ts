@@ -1,8 +1,8 @@
 import { ComponentGroup } from '@/enum'
-import type { GroupType, ComponentCommon } from '@/types/component'
+import type { PropsType, ComponentCommon } from '@/types/component'
 
 // 公共样式
-export const commonStyle: Array<GroupType> = [
+export const commonStyle: Array<PropsType> = [
   {
     name: '基础',
     uid: 'base',
@@ -36,7 +36,7 @@ export const commonStyle: Array<GroupType> = [
   }
 ]
 
-export const groupCommonStyle: GroupType = {
+export const groupCommonStyle: PropsType = {
   name: '基础',
   uid: 'base',
   children: [
@@ -68,7 +68,7 @@ export const groupCommonStyle: GroupType = {
   ]
 }
 
-export const commonAttr: Array<GroupType> = []
+export const commonAttr: Array<PropsType> = []
 
 export const commonComponent: ComponentCommon = {
   isLock: false, // 是否锁定组件

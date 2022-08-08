@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { SubText } from './type'
 
 const component: ComponentConfig<SubText> = {
@@ -22,7 +22,7 @@ const component: ComponentConfig<SubText> = {
   }
 }
 
-const style: Array<GroupType> = [
+const style: Array<PropsType> = [
   {
     name: '字体设置',
     uid: 'background',
@@ -51,7 +51,7 @@ const style: Array<GroupType> = [
   }
 ]
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '基础配置',
     uid: 'base',

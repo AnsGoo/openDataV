@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { PercentageChart } from './type'
 
 const component: ComponentConfig<PercentageChart> = {
@@ -20,9 +20,9 @@ const component: ComponentConfig<PercentageChart> = {
   }
 }
 
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '样式',
     uid: 'style',

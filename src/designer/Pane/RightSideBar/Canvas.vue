@@ -1,21 +1,23 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list" style="height: calc(100vh - 100px)">
-    <n-form size="small" @submit.prevent label-placement="left" label-align="left">
-      <n-form-item label="分辨率">
-        <n-select
-          v-model:value="myPixel"
-          @update:value="setScreenSize"
-          placeholder="选择分辨率"
-          :options="piexls"
-        />
-      </n-form-item>
-      <n-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
-        <n-input-number v-if="key === 'scale'" v-model="scale" @input="handleScaleChange" />
-        <n-input-number v-else-if="type === 'number'" v-model:value="canvasStyleData[key]" />
-        <n-input v-else v-model:value="canvasStyleData[key]" />
-      </n-form-item>
-    </n-form>
+    <n-scrollbar>
+      <n-form size="small" @submit.prevent label-placement="left" label-align="left">
+        <n-form-item label="分辨率">
+          <n-select
+            v-model:value="myPixel"
+            @update:value="setScreenSize"
+            placeholder="选择分辨率"
+            :options="piexls"
+          />
+        </n-form-item>
+        <n-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
+          <n-input-number v-if="key === 'scale'" v-model="scale" @input="handleScaleChange" />
+          <n-input-number v-else-if="type === 'number'" v-model:value="canvasStyleData[key]" />
+          <n-input v-else v-model:value="canvasStyleData[key]" />
+        </n-form-item>
+      </n-form>
+    </n-scrollbar>
   </div>
 </template>
 
@@ -23,7 +25,7 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, reactive, ref } from 'vue'
 import { cloneDeep, debounce } from 'lodash-es'
-import { NForm, NFormItem, NInput, NSelect, NInputNumber } from 'naive-ui'
+import { NForm, NFormItem, NInput, NSelect, NInputNumber, NScrollbar } from 'naive-ui'
 import PixelEnum from '@/enum/pixel'
 
 const piexls = computed<Recordable<string>[]>(() => {

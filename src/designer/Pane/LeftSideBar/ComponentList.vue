@@ -1,10 +1,6 @@
 <template>
-  <div @dragstart="handleDragStart" style="height: calc(100vh - 100px)">
-    <div class="components">
-      <n-scrollbar>
-        <n-menu :options="menuOptions" :accordion="false" />
-      </n-scrollbar>
-    </div>
+  <div @dragstart="handleDragStart" class="components">
+    <n-menu :options="menuOptions" :accordion="false" />
   </div>
 </template>
 
@@ -13,7 +9,7 @@ import { ComponentGroupList } from '@/enum'
 import { componentList } from '@/designer/load'
 import type { ComponentInfo } from '@/types/component'
 import { computed, h } from 'vue'
-import { NMenu, NScrollbar } from 'naive-ui'
+import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import ComponentItem from './ComponentItem.vue'
 import type { GroupType } from '@/enum'

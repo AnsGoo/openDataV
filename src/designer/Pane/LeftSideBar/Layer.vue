@@ -1,8 +1,6 @@
 <template>
   <div style="height: calc(100vh - 100px)">
-    <n-scrollbar v-if="componentData.length > 0">
-      <n-menu :options="menuOptions" @update:value="handleSelect" />
-    </n-scrollbar>
+    <n-menu :options="menuOptions" @update:value="handleSelect" v-if="componentData.length > 0" />
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item>
         <n-empty description="画布为空" />
@@ -15,7 +13,7 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref, h, watch } from 'vue'
 import type { ComponentInfo } from '@/types/component'
-import { NScrollbar, NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
+import { NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
 import { useEventBus } from '@/bus/useEventBus'
 import { IconPark } from '@/plugins/icon'
 import LayerItem from './LayerItem.vue'

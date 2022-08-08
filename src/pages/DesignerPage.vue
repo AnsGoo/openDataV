@@ -4,15 +4,15 @@
       <ToolBar />
     </n-layout-header>
     <!-- 左侧组件列表 -->
-    <n-layout has-sider>
+    <n-layout has-sider style="height: calc(100vh - 32px)">
       <n-layout-sider
         class="left"
         width="200"
         :collapsed="collapsedLeft"
+        :native-scrollbar="false"
         bordered
         collapse-mode="width"
         show-trigger
-        :trigger-style="triggerStyle"
         @collapse="() => (collapsedLeft = true)"
         @expand="() => (collapsedLeft = false)"
       >
@@ -42,8 +42,7 @@
           :collapsed="collapsedRight"
           :native-scrollbar="false"
           bordered
-          :collapsed-width="38"
-          :trigger-style="triggerStyle"
+          :collapsed-width="35"
           collapse-mode="width"
           show-trigger="arrow-circle"
           @collapse="() => (collapsedRight = true)"
@@ -74,15 +73,6 @@ import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider } from 'naive-ui'
 
-const scale = 1
-const startX = 0
-const startY = 0
-const lines = {
-  h: [],
-  v: []
-}
-const thick = 20
-
 const basicStore = useBasicStoreWithOut()
 const websk = ref<WebSocket | null>(null)
 
@@ -92,12 +82,6 @@ const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
 
 const route = useRoute()
-
-const triggerStyle = {
-  width: '30px',
-  height: '30px',
-  fontSize: '30px'
-}
 
 onMounted(async () => {
   const index = route.params.index as string
@@ -192,6 +176,9 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
+.content {
+  background-color: dimgrey;
+}
 :deep(.scrollbar-content) {
   overflow: auto;
 }

@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import { Decoration8 } from './type'
 
 const component: ComponentConfig<Decoration8> = {
@@ -18,9 +18,9 @@ const component: ComponentConfig<Decoration8> = {
   }
 }
 
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '边框色彩',
     uid: 'display',

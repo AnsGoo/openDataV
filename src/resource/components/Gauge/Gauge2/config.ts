@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import type { ComponentConfig, GroupType, ComponentOptions } from '@/types/component'
+import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { GaugeTwo } from './type'
 
 const component: ComponentConfig<GaugeTwo> = {
@@ -47,9 +47,9 @@ const component: ComponentConfig<GaugeTwo> = {
   }
 }
 
-const style: Array<GroupType> = []
+const style: Array<PropsType> = []
 
-const attrs: Array<GroupType> = [
+const attrs: Array<PropsType> = [
   {
     name: '标题配置',
     uid: 'title',
@@ -214,11 +214,13 @@ const attrs: Array<GroupType> = [
         key: 'pointStyle',
         label: '指针样式',
         type: 'select',
-        selectOptions: [
-          { label: '三角形', value: 'triangle' },
-          { label: '箭头形', value: 'arrow' },
-          { label: '菱形', value: 'diamond' }
-        ]
+        componentOptions: {
+          options: [
+            { label: '三角形', value: 'triangle' },
+            { label: '箭头形', value: 'arrow' },
+            { label: '菱形', value: 'diamond' }
+          ]
+        }
       },
       {
         key: 'pointerLength',
