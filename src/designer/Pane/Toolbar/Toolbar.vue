@@ -1,51 +1,95 @@
 <template>
   <div class="tool-bar">
     <div class="tool-bar-item">
-      <div>
-        <n-button size="small" @click="save" title="保存" v-action="'add'">
-          <icon-park name="save-one" size="22" />
-          <span>保存</span>
-        </n-button>
-        <n-button size="small" @click="preview" title="预览">
-          <icon-park name="computer" size="22" />
-          <span>预览</span>
-        </n-button>
-        <n-button size="small" @click="undo" title="撤销">
-          <icon-park name="back" size="22" />
-          <span>撤销</span>
-        </n-button>
-        <n-button size="small" @click="recoveryDraft" title="恢复">
-          <icon-park name="next" size="22" />
-          <span>恢复</span>
-        </n-button>
-        <n-button size="small" @click="exportCanvas" title="导出">
-          <icon-park name="download-one" size="22" />
-          <span>导出</span>
-        </n-button>
-        <n-button size="small" @click="importCanvas" title="导入">
-          <icon-park name="upload-one" size="22" />
-          <span>导入</span>
-        </n-button>
-        <n-button size="small" @click="fullScreen" title="全屏">
-          <icon-park name="full-screen" size="22" />
-          <span>全屏</span>
-        </n-button>
-        <n-button size="small" @click="setShowEm" title="坐标">
-          <icon-park name="cones" size="22" />
-          <span>坐标</span>
-        </n-button>
-      </div>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="save" title="保存" v-action="'add'">
+            <icon-park name="save-one" size="22" />
+          </n-button>
+        </template>
+        <span>保存</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="preview" title="预览">
+            <icon-park name="computer" size="22" />
+          </n-button>
+        </template>
+        <span>预览</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="undo" title="撤销">
+            <icon-park name="back" size="22" />
+          </n-button>
+        </template>
+        <span>撤销</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="recoveryDraft" title="恢复">
+            <icon-park name="next" size="22" />
+          </n-button>
+        </template>
+        <span>恢复</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="exportCanvas" title="导出">
+            <icon-park name="download-one" size="22" />
+          </n-button>
+        </template>
+        <span>导出</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="importCanvas" title="导入">
+            <icon-park name="upload-one" size="22" />
+          </n-button>
+        </template>
+        <span>导入</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="fullScreen" title="全屏">
+            <icon-park name="full-screen" size="22" />
+          </n-button>
+        </template>
+        <span>全屏</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary size="small" @click="setShowEm" title="坐标">
+            <icon-park name="cones" size="22" />
+          </n-button>
+        </template>
+        <span>坐标</span>
+      </n-tooltip>
+    </div>
 
-      <div>
-        <n-button class="resource" size="small" @click="showIcon" title="图标">
-          <icon-park name="game-ps" size="22" />
-          <span>图标</span>
-        </n-button>
-        <n-button class="resource" size="small" @click="() => (showImageView = true)" title="图片">
-          <icon-park name="picture" size="22" />
-          <span>图片</span>
-        </n-button>
-      </div>
+    <div class="tool-bar-item">
+      <n-tooltip>
+        <template #trigger>
+          <n-button quaternary class="resource" size="small" @click="showIcon" title="图标">
+            <icon-park name="game-ps" size="22" />
+          </n-button>
+        </template>
+        <span>图标</span>
+      </n-tooltip>
+      <n-tooltip>
+        <template #trigger>
+          <n-button
+            quaternary
+            class="resource"
+            size="small"
+            @click="() => (showImageView = true)"
+            title="图片"
+          >
+            <icon-park name="picture" size="22" />
+          </n-button>
+        </template>
+        <span>图片</span>
+      </n-tooltip>
     </div>
   </div>
 
@@ -80,7 +124,7 @@ import type { LayoutData } from '@/types/apiTypes'
 import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
-import { NForm, NInput, NFormItem, NButton, NModal, NCard } from 'naive-ui'
+import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip } from 'naive-ui'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
@@ -276,19 +320,19 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
-.tool-bar-item {
+.tool-bar {
   display: flex;
   align-items: center;
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  /* .resource {
-    align-items: right;
-  } */
+  height: 100%;
+  border-bottom: 1px solid #c9cdd4;
 }
+
 button {
-  margin-left: 0px !important;
   border: none;
   padding: 5px 5px;
+  margin: auto 3px;
 }
 </style>

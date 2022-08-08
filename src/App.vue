@@ -59,4 +59,11 @@ const getDarkTheme = computed(() => (designStore.darkTheme ? darkTheme : lightTh
   </n-config-provider>
 </template>
 
-<style lang="less"></style>
+<style lang="less">
+html,
+body,
+#app {
+  height: 100vh;
+  width: 100vw;
+}
+</style>

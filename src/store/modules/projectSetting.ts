@@ -2,7 +2,6 @@ import { defineStore } from 'pinia'
 import store from '@/store'
 
 export interface IheaderSetting {
-  bgColor: string
   fixed: boolean
   isReload: boolean
 }
@@ -16,7 +15,6 @@ export interface ImenuSetting {
 
 export interface IcrumbsSetting {
   show: boolean
-  showIcon: boolean
 }
 
 interface ProjectSettingState {
@@ -34,8 +32,6 @@ const useProjectSettingStore = defineStore({
   state: (): ProjectSettingState => ({
     navTheme: 'dark',
     headerSetting: {
-      //背景色
-      bgColor: '#fff',
       //固定顶部
       fixed: true,
       //显示重载按钮
@@ -54,9 +50,7 @@ const useProjectSettingStore = defineStore({
     },
     crumbsSetting: {
       //是否显示
-      show: true,
-      //显示图标
-      showIcon: false
+      show: true
     },
     isPageAnimate: true,
     pageAnimateType: 'zoom-fade'
