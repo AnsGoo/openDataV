@@ -1,5 +1,5 @@
 <template>
-  <div style="height: calc(100vh - 100px)">
+  <div>
     <n-menu :options="menuOptions" @update:value="handleSelect" v-if="componentData.length > 0" />
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item>

@@ -1,6 +1,6 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
-  <div class="attr-list" style="height: calc(100vh - 100px)">
+  <div class="attr-list">
     <n-scrollbar>
       <n-form size="small" @submit.prevent label-placement="left" label-align="left">
         <n-form-item label="分辨率">

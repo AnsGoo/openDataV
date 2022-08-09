@@ -345,7 +345,7 @@ const keyDown = (e: KeyboardEvent): void => {
 <style scoped lang="less">
 @layer components {
   .editor {
-    @apply relative bg-white m-auto;
+    @apply relative m-auto;
   }
 
   .edit .component {

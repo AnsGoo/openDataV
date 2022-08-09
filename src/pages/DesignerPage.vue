@@ -1,10 +1,10 @@
 <template>
   <n-layout class="home">
-    <n-layout-header class="tool-bar">
+    <n-layout-header class="header">
       <ToolBar />
     </n-layout-header>
     <!-- 左侧组件列表 -->
-    <n-layout has-sider style="height: calc(100vh - 32px)">
+    <n-layout has-sider class="main">
       <n-layout-sider
         class="left"
         width="200"
@@ -24,14 +24,14 @@
 
       <!-- 中间画布 -->
       <n-layout-content class="content" v-resize="editorWindowResizeHandler">
-        <div class="scrollbar-content" :style="scrobarStyle" ref="editor">
+        <n-scrollbar x-scrollable :style="scrobarStyle">
           <Editor
             @drop="handleDrop"
             @dragover="handleDragOver"
             @mousedown="handleMouseDown"
             @mouseup="deselectCurComponent"
           />
-        </div>
+        </n-scrollbar>
       </n-layout-content>
 
       <!-- 右侧属性列表 -->
@@ -71,7 +71,7 @@ import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { eventBus } from '@/bus/useEventBus'
 import { ComponentInfo } from '@/types/component'
-import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
 
 const basicStore = useBasicStoreWithOut()
 const websk = ref<WebSocket | null>(null)
@@ -176,24 +176,15 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
+.header {
+  height: 5vh;
+}
+
+.main {
+  height: 95vh;
+}
+
 .content {
-  background-color: dimgrey;
-}
-:deep(.scrollbar-content) {
-  overflow: auto;
-}
-::-webkit-scrollbar {
-  /*滚动条整体样式*/
-  width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
-  height: 6px;
-}
-::-webkit-scrollbar-thumb {
-  background-color: #8b8b8b;
-  -webkit-border-radius: 2em;
-  -moz-border-radius: 2em;
-  border-radius: 2em;
-}
-::-webkit-scrollbar-track {
-  background-color: #ccc;
+  box-shadow: inset 0px 0px 3px black;
 }
 </style>
