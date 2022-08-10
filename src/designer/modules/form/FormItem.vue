@@ -1,77 +1,70 @@
 <template>
-  <n-form size="small" @submit.prevent label-placement="left" label-align="left">
-    <n-form-item
-      v-for="{ key, label, type, componentOptions } in children"
-      :key="`${ukey}${key}`"
-      :label="label"
+  <n-form-item
+    v-for="{ key, label, type, componentOptions } in children"
+    :key="`${ukey}${key}`"
+    :label="label"
+  >
+    <NColorPicker
+      v-if="type === 'color'"
+      v-model:value="formData[key]"
+      :modes="['hex', 'rgb', 'hsl']"
+      @update:value="changed($event, key)"
+    />
+    <n-select
+      v-else-if="type === 'select'"
+      v-model="formData[key]"
+      :placeholder="label"
+      @update:value="changed($event, key)"
+      :options="componentOptions?.options || []"
+    />
+    <n-radio-group
+      v-else-if="type === 'radio'"
+      v-model:value="formData[key]"
+      :placeholder="label"
+      @update:value="changed($event, key)"
     >
-      <NColorPicker
-        v-if="type === 'color'"
-        v-model:value="formData[key]"
-        :modes="['hex', 'rgb', 'hsl']"
-        @update:value="changed($event, key)"
-      />
-      <n-select
-        v-else-if="type === 'select'"
-        v-model="formData[key]"
-        :placeholder="label"
-        @update:value="changed($event, key)"
-        :options="componentOptions?.options || []"
-      />
-      <n-radio-group
-        v-else-if="type === 'radio'"
-        v-model:value="formData[key]"
-        :placeholder="label"
-        @update:value="changed($event, key)"
+      <n-radio
+        v-for="item in componentOptions?.options || []"
+        :label="item.value"
+        :key="item.value"
       >
-        <n-radio
-          v-for="item in componentOptions?.options || []"
-          :label="item.value"
-          :key="item.value"
-        >
-          {{ item.label }}
-        </n-radio>
-      </n-radio-group>
-      <n-input-number
-        v-else-if="type === 'number'"
-        v-model:value="formData[key]"
-        @update:value="changed($event, key)"
-      />
-      <n-switch
-        v-else-if="type === 'switch'"
-        v-model:value="formData[key]"
-        @update:value="changed($event, key)"
-      />
-      <FontStyle
-        v-else-if="type === 'fontStyle'"
-        v-model="formData[key]"
-        @change="changed($event, key)"
-      />
-      <FontWeight
-        v-else-if="type === 'fontWeight'"
-        v-model="formData[key]"
-        @change="changed($event, key)"
-      />
-      <LinearGradient
-        v-else-if="type === 'linearGradient'"
-        v-model:value="formData[key]"
-        @change="changed($event, key)"
-      />
-      <CustomRender
-        v-else-if="type === 'custom'"
-        v-model:value="formData[key]"
-        @change="changed($event, key)"
-        :component="componentOptions.componentType"
-        :args="componentOptions.args"
-      />
-      <n-input
-        v-else
-        clearable
-        v-model:value="formData[key]"
-        @update:value="changed($event, key)"
-      />
-    </n-form-item>
-  </n-form>
+        {{ item.label }}
+      </n-radio>
+    </n-radio-group>
+    <n-input-number
+      v-else-if="type === 'number'"
+      v-model:value="formData[key]"
+      @update:value="changed($event, key)"
+    />
+    <n-switch
+      v-else-if="type === 'switch'"
+      v-model:value="formData[key]"
+      @update:value="changed($event, key)"
+    />
+    <FontStyle
+      v-else-if="type === 'fontStyle'"
+      v-model="formData[key]"
+      @change="changed($event, key)"
+    />
+    <FontWeight
+      v-else-if="type === 'fontWeight'"
+      v-model="formData[key]"
+      @change="changed($event, key)"
+    />
+    <LinearGradient
+      v-else-if="type === 'linearGradient'"
+      v-model:value="formData[key]"
+      @change="changed($event, key)"
+    />
+    <CustomRender
+      v-else-if="type === 'custom'"
+      v-model:value="formData[key]"
+      @change="changed($event, key)"
+      :component="componentOptions.componentType"
+      :args="componentOptions.args"
+    />
+    <n-input v-else clearable v-model:value="formData[key]" @update:value="changed($event, key)" />
+  </n-form-item>
 </template>
 
 <script lang="ts" setup>
@@ -81,7 +74,6 @@ import FontWeight from './FontWeight.vue'
 import LinearGradient from './LinearGradient.vue'
 import CustomRender from './utils/render'
 import {
-  NForm,
   NFormItem,
   NInput,
   NRadioGroup,
