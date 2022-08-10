@@ -11,7 +11,7 @@
       <template #header-extra>
         <icon-park name="delete-one" size="14" @click="deleteItem(index)" />
       </template>
-      <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" # />
+      <FormItem :children="children" :data="item" :ukey="ukey" @change="changed" />
     </n-collapse-item>
   </n-collapse>
   <n-button v-show="isShowAdd" class="add" @click="handleAddClick">+</n-button>

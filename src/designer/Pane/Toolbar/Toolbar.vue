@@ -3,6 +3,15 @@
     <div class="tool-bar-item">
       <n-tooltip>
         <template #trigger>
+          <n-button quaternary size="small" @click="toHome" title="首页">
+            <icon-park name="home" size="24" />
+          </n-button>
+        </template>
+        <span>首页</span>
+      </n-tooltip>
+      <n-divider vertical />
+      <n-tooltip>
+        <template #trigger>
           <n-button quaternary size="small" @click="save" title="保存" v-action="'add'">
             <icon-park name="save-one" size="22" />
           </n-button>
@@ -124,7 +133,7 @@ import type { LayoutData } from '@/types/apiTypes'
 import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
-import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip } from 'naive-ui'
+import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip, NDivider } from 'naive-ui'
 import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
@@ -195,17 +204,15 @@ const preview = () => {
   window.open(href, '_blank')
 }
 
+const toHome = () => {
+  router.push({
+    name: 'Pages'
+  })
+}
+
 const save = () => {
   saveDialogVisible.value = true
 }
-
-// const handleChangeFile = (file: UploadFile, _) => {
-//   const reader: FileReader = new FileReader()
-//   reader.readAsDataURL(file['raw'])
-//   reader.onload = () => {
-//     form.thumbnail = reader.result as string
-//   }
-// }
 
 const recoveryDraft = async () => {
   let snapshot: StoreComponentData | undefined

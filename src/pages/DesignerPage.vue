@@ -76,8 +76,6 @@ import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from
 const basicStore = useBasicStoreWithOut()
 const websk = ref<WebSocket | null>(null)
 
-const editor = ref<HTMLDivElement | null>(null)
-
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
 
