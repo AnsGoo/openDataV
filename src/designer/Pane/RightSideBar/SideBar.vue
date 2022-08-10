@@ -70,9 +70,9 @@ const emits = defineEmits<{
   (e: 'update:iscollapsed', iscollapsed: boolean): void
 }>()
 
-const curComponent = computed(() => basicStore.curComponent || basicStore.layerComponent)
+const curComponent = computed(() => basicStore.curComponent)
 const menuOptions = computed<MenuOption[]>(() => {
-  if (basicStore.curComponent || basicStore.layerComponent) {
+  if (basicStore.curComponent) {
     return [
       {
         label: '样式',

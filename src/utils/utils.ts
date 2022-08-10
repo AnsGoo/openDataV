@@ -99,6 +99,16 @@ export const getComponentShapeStyle = (component: ComponentInfo) => {
 }
 
 /**
+ * 转化组件样式为css
+ * @param component 主要转化样式的组件
+ * @returns css
+ */
+export const getInnerComponentShapeStyle = (component: ComponentInfo) => {
+  const style = cloneDeep(component.style)
+  return excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
+}
+
+/**
  * 计算组件笛卡尔坐标系坐标
  * @param style 组件在画布中的位置
  * @returns 组件坐标

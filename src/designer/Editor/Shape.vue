@@ -2,7 +2,7 @@
   <div
     ref="shape"
     class="shape"
-    :class="{ active: isActive || active, layerActive: isLayerActive }"
+    :class="{ active: isActive || active }"
     @click.ctrl.exact="appendComponent"
     @click.exact="selectCurComponent"
     @mousedown="handleDragendShape"
@@ -249,13 +249,6 @@ const isActive = computed<boolean>(() => {
   return (props.active && !props.info.isLock) || composeStore.isActived(props.info)
 })
 
-const isLayerActive = computed<boolean>(() => {
-  if (basicStore.layerComponent) {
-    return basicStore.layerComponent.id === props.info.id
-  }
-  return false
-})
-
 const appendComponent = () => {
   composeStore.appendComponent(props.info)
 }
@@ -466,10 +459,10 @@ onMounted(() => {
 <style lang="less" scoped>
 @layer components {
   .shape {
-    @apply absolute hover:cursor-move;
     border-width: v-bind(borderWidth);
     border-color: v-bind(borderColor);
     border-style: v-bind(borderStyle);
+    position: absolute;
 
     .error-info {
       color: red;
@@ -479,7 +472,7 @@ onMounted(() => {
   }
 
   .active {
-    @apply select-none;
+    @apply select-none hover:cursor-move;
 
     outline: 1px solid #70c0ff;
   }

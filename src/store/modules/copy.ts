@@ -14,7 +14,7 @@ const useCopyStore = defineStore({
   actions: {
     copy() {
       const basicStore = useBasicStoreWithOut()
-      const curComponent = basicStore.curComponent || basicStore.layerComponent
+      const curComponent = basicStore.curComponent
       if (!curComponent) {
         return
       }
