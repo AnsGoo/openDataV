@@ -384,23 +384,6 @@ const selectCurComponent = (e: MouseEvent) => {
   e.preventDefault()
   e.stopPropagation()
   basicStore.setCurComponent(props.info)
-
-  // const indexs: number[] = props.index.split('-').map((i) => Number(i))
-  // console.log(indexs)
-  // indexs.pop()
-  // const parentComponent = basicStore.findParentComponentByIndex(indexs)
-  // console.log(parentComponent)
-  // console.log(props.index)
-
-  // if (!parentComponent) {
-  //   basicStore.setCurComponent(props.info)
-  //   e.stopPropagation()
-  // } else {
-  //   if (parentComponent.id === props.info.id) {
-  //     basicStore.setCurComponent(props.info)
-  //     e.stopPropagation()
-  //   }
-  // }
 }
 
 /**

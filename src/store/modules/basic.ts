@@ -267,35 +267,6 @@ const useBasicStore = defineStore({
       this.isShowEm = false
       this.canvasStyleData = baseCanvasStyleData
     },
-    findParentComponentByIndex(indexs: number[]): ComponentInfo | undefined {
-      let rootComponent: ComponentInfo = {
-        subComponents: this.componentData,
-        component: 'Root',
-        display: false,
-        style: {
-          width: 0,
-          height: 0,
-          left: 0,
-          top: 0,
-          rotate: 0
-        },
-        id: '',
-        label: '',
-        icon: ''
-      }
-
-      indexs.forEach((el: number) => {
-        if (rootComponent.subComponents) {
-          rootComponent = rootComponent.subComponents[el]
-        }
-      })
-
-      if (rootComponent.component === 'Root') {
-        return undefined
-      } else {
-        return rootComponent
-      }
-    },
     /**
      * 根据组件索引获取该组件的父级组件
      * @param indexs
