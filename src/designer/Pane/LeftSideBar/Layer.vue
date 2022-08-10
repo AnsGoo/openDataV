@@ -41,6 +41,7 @@ const open = (event: any) => {
 useEventBus('ActiveMenu', open)
 
 const handleSelect = (key: string) => {
+  console.log(key)
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
@@ -63,7 +64,8 @@ const getMenuOptions = (
         label: () =>
           h(LayerItem, {
             component: item,
-            index: calcIndex(i, fatherIndex)
+            index: calcIndex(i, fatherIndex),
+            onclick: () => handleSelect(calcIndex(i, fatherIndex))
           }),
         key: calcIndex(i, fatherIndex),
         icon: () =>

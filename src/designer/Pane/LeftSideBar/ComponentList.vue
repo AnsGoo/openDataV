@@ -1,5 +1,5 @@
 <template>
-  <div @dragstart="handleDragStart" class="components">
+  <div class="components">
     <n-menu :options="menuOptions" :accordion="false" />
   </div>
 </template>
@@ -48,7 +48,8 @@ const menuOptions = computed<MenuOption[]>(() => {
           label: () =>
             h(ComponentItem, {
               component: el.component,
-              name: el.label
+              name: el.label,
+              ondragstart: handleDragStart
             }),
           key: el.component
         }

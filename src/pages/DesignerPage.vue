@@ -21,21 +21,18 @@
           @update:iscollapsed="(value) => (collapsedLeft = value)"
         />
       </n-layout-sider>
-
-      <!-- 中间画布 -->
-      <n-layout-content class="content" v-resize="editorWindowResizeHandler">
-        <n-scrollbar x-scrollable :style="scrobarStyle">
-          <Editor
-            @drop="handleDrop"
-            @dragover="handleDragOver"
-            @mousedown="handleMouseDown"
-            @mouseup="deselectCurComponent"
-          />
-        </n-scrollbar>
-      </n-layout-content>
-
-      <!-- 右侧属性列表 -->
       <n-layout has-sider sider-placement="right">
+        <!-- 中间画布 -->
+        <n-layout-content class="content" v-resize="editorWindowResizeHandler">
+          <n-scrollbar x-scrollable :style="scrobarStyle">
+            <Editor
+              @drop="handleDrop"
+              @dragover="handleDragOver"
+              @mousedown="handleMouseDown"
+              @mouseup="deselectCurComponent"
+            />
+          </n-scrollbar>
+        </n-layout-content>
         <n-layout-sider
           class="right"
           width="240"
@@ -54,6 +51,8 @@
           />
         </n-layout-sider>
       </n-layout>
+
+      <!-- 右侧属性列表 -->
     </n-layout>
   </n-layout>
 </template>
@@ -178,7 +177,7 @@ onUnmounted(() => {
 }
 
 .main {
-  height: 95vh;
+  height: 94vh;
 }
 
 .content {

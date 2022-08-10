@@ -1,47 +1,38 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list">
-    <n-form
-      size="small"
-      @submit.prevent
-      label-placement="left"
-      label-align="left"
-      v-if="curComponent"
-    >
-      <!-- 组件通用属性 -->
-      <n-collapse accordion>
+    <n-collapse accordion>
+      <n-collapse-item title="公共属性">
         <CompAttr :curComponent="curComponent" />
-        <n-collapse-item
-          v-for="{ name, uid, children, max } in attrKeys"
-          :key="`${curComponent.id}${uid}`"
-          :title="name"
-          :name="uid"
-        >
-          <!-- 普通表单属性 -->
-          <FormAttr
-            v-if="!max || max < 1"
-            :children="children"
-            :data="formData"
-            @change="changed"
-            :name="name"
-            :uid="uid"
-            :ukey="curComponent.id"
-          />
+      </n-collapse-item>
+      <n-collapse-item
+        v-for="{ name, uid, children, max } in attrKeys"
+        :key="`${curComponent.id}${uid}`"
+        :title="name"
+        :name="uid"
+      >
+        <FormAttr
+          v-if="!max || max < 1"
+          :children="children"
+          :data="formData"
+          @change="changed"
+          :name="name"
+          :uid="uid"
+          :ukey="curComponent.id"
+        />
 
-          <!-- 动态属性 -->
-          <DynamicAttr
-            v-else
-            :children="children"
-            :data="formData[uid] || []"
-            @change="changed"
-            :name="name"
-            :uid="uid"
-            :max="max"
-            :ukey="curComponent.id"
-          />
-        </n-collapse-item>
-      </n-collapse>
-    </n-form>
+        <DynamicAttr
+          v-else
+          :children="children"
+          :data="formData[uid] || []"
+          @change="changed"
+          :name="name"
+          :uid="uid"
+          :max="max"
+          :ukey="curComponent.id"
+        />
+      </n-collapse-item>
+    </n-collapse>
   </div>
 </template>
 
@@ -54,7 +45,7 @@ import FormAttr from '@/designer/modules/form/FormAttr.vue'
 import DynamicAttr from '@/designer/modules/form/DynamicAttr.vue'
 import type { ComponentInfo } from '@/types/component'
 import { cleanObjectProp } from '@/utils/utils'
-import { NForm, NCollapse, NCollapseItem } from 'naive-ui'
+import { NCollapse, NCollapseItem } from 'naive-ui'
 
 const props = defineProps<{
   curComponent: ComponentInfo

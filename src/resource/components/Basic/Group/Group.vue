@@ -14,17 +14,17 @@
     </template>
   </div>
   <div class="group" v-else>
-    <span style="color: red">ED</span>
-    <template v-for="(item, index) in subComponents" :key="item.id">
+    <template v-for="(item, i) in subComponents" :key="item.id">
       <Shape
         :id="'shape' + item.id"
         :defaultStyle="item.style"
-        :style="getShapeStyle(item.groupStyle)"
+        :style="getShapeStyle(item)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
-        :index="index.toString()"
+        :index="`${index}-${i.toString()}`"
         :class="{ lock: item.isLock }"
-        v-if="basicStore.isEditMode && item.display"
+        :isInner="true"
+        v-if="isShow(item.display)"
       >
         <component
           class="component"
@@ -34,6 +34,7 @@
           :componentId="item.id"
           :id="'component' + item.id"
           :subComponents="item.subComponents"
+          :index="`${index}-${i.toString()}`"
         />
       </Shape>
     </template>
@@ -52,6 +53,7 @@ withDefaults(
   defineProps<{
     componentId: string
     subComponents: ComponentInfo[]
+    index: string
   }>(),
   {
     subComponents: () => []
@@ -62,8 +64,12 @@ const curComponent = computed(() => basicStore.curComponent)
 const isShow = (display: boolean): boolean => {
   return !(basicStore.isEditMode && display === false)
 }
-const getShapeStyle = (style) => {
-  return filterStyle(style, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
+const getShapeStyle = (item: ComponentInfo) => {
+  if (item.groupStyle?.gheight) {
+    return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
+  } else {
+    return filterStyle(item.style, ['top', 'left', 'width', 'height', 'rotate'])
+  }
 }
 </script>
 

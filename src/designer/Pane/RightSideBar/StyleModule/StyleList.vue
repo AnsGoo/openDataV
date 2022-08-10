@@ -1,25 +1,23 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list">
-    <n-form size="small" @submit.prevent label-placement="left" label-align="left">
-      <n-collapse accordion>
-        <n-collapse-item
-          v-for="{ name, uid, children } in styleKeys"
-          :key="`${curComponent.id}${uid}`"
-          :title="name"
-          :name="uid"
-        >
-          <FormAttr
-            :children="children"
-            :data="formData"
-            @change="changed"
-            :name="name"
-            :uid="uid"
-            :ukey="curComponent.id"
-          />
-        </n-collapse-item>
-      </n-collapse>
-    </n-form>
+    <n-collapse accordion>
+      <n-collapse-item
+        v-for="{ name, uid, children } in styleKeys"
+        :key="`${curComponent.id}${uid}`"
+        :title="name"
+        :name="uid"
+      >
+        <FormAttr
+          :children="children"
+          :data="formData"
+          @change="changed"
+          :name="name"
+          :uid="uid"
+          :ukey="curComponent.id"
+        />
+      </n-collapse-item>
+    </n-collapse>
   </div>
 </template>
 
@@ -31,7 +29,7 @@ import { debounce } from 'lodash-es'
 import { computed, reactive, watch } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
-import { NForm, NCollapse, NCollapseItem } from 'naive-ui'
+import { NCollapse, NCollapseItem } from 'naive-ui'
 import type { ComponentInfo } from '@/types/component'
 import { groupCommonStyle } from '@/designer/interface'
 
