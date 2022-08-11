@@ -1,52 +1,82 @@
 <template>
-  <div class="group">
-    <div>
-      <template v-for="item in subComponents" :key="item.id">
+  <div class="group" v-if="!editMode">
+    <template v-for="item in subComponents" :key="item.id">
+      <component
+        class="component"
+        :is="item.component"
+        :style="getComponentStyle(item)"
+        :propValue="item.propValue"
+        :id="'component' + item.id"
+        :componentId="item.id"
+        :subComponents="item.subComponents"
+        v-if="isShow(item.display)"
+      />
+    </template>
+  </div>
+  <div class="group" v-else>
+    <template v-for="(item, i) in subComponents" :key="item.id">
+      <Shape
+        :id="'shape' + item.id"
+        :defaultStyle="item.style"
+        :style="getShapeStyle(item)"
+        :active="item.id === (curComponent || {}).id"
+        :info="item"
+        :index="`${index}-${i.toString()}`"
+        :class="{ lock: item.isLock }"
+        :isInner="true"
+        v-if="isShow(item.display)"
+      >
         <component
           class="component"
-          :class="{ active: isLayerActive(item.id as string) }"
           :is="item.component"
-          :style="getComponentStyle(item)"
+          :style="getInnerComponentShapeStyle(item)"
           :propValue="item.propValue"
-          :id="'component' + item.id"
           :componentId="item.id"
-          v-if="isShow(item.display)"
+          :id="'component' + item.id"
           :subComponents="item.subComponents"
+          :index="`${index}-${i.toString()}`"
         />
-      </template>
-    </div>
+      </Shape>
+    </template>
   </div>
 </template>
 
 <script setup lang="ts">
 import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { getComponentStyle } from '@/utils/utils'
+import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
+import Shape from '@/designer/Editor/Shape.vue'
+import { computed } from 'vue'
+const editMode = computed<boolean>(() => basicStore.isEditMode)
 const basicStore = useBasicStoreWithOut()
 withDefaults(
   defineProps<{
     componentId: string
     subComponents: ComponentInfo[]
+    index: string
   }>(),
   {
     subComponents: () => []
   }
 )
+
+const curComponent = computed(() => basicStore.curComponent)
 const isShow = (display: boolean): boolean => {
   return !(basicStore.isEditMode && display === false)
 }
-const isLayerActive = (id: string) => {
-  if (basicStore.layerComponent) {
-    return basicStore.layerComponent.id === id
+const getShapeStyle = (item: ComponentInfo) => {
+  if (item.groupStyle?.gheight) {
+    return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
+  } else {
+    return filterStyle(item.style, ['top', 'left', 'width', 'height', 'rotate'])
   }
-  return false
 }
 </script>
 
 <style lang="less" scoped>
 .group {
   & > div {
-    position: relative;
+    position: absolute;
     width: 100%;
     height: 100%;
     // pointer-events: none;

@@ -8,14 +8,14 @@
     v-model:value="activeKey"
     @update:value="(key) => (activeKey = key)"
   >
-    <n-tab-pane name="components">
+    <n-tab-pane name="components" display-directive="show:lazy">
       <template #tab>
         <IconPark name="components" />
         <span>组件</span>
       </template>
       <ComponentList />
     </n-tab-pane>
-    <n-tab-pane name="layer">
+    <n-tab-pane name="layer" display-directive="show:lazy">
       <template #tab>
         <IconPark name="layers" />
         <span>图层</span>
@@ -30,16 +30,17 @@
     :bar-width="48"
     justify-content="center"
     @update:value="collapsedTabPane"
+    v-model:value="activeKey"
   >
-    <n-tab-pane name="components" v-if="activeKey === 'components'">
+    <n-tab-pane name="components" v-if="activeKey === 'components'" display-directive="show:lazy">
       <template #tab>
-        <IconPark name="components" />
+        <IconPark name="components" @click="switchTab('layer')" />
       </template>
       <ComponentList />
     </n-tab-pane>
-    <n-tab-pane name="layer" v-else-if="activeKey === 'layer'">
+    <n-tab-pane name="layer" v-else-if="activeKey === 'layer'" display-directive="show:lazy">
       <template #tab>
-        <IconPark name="layers" />
+        <IconPark name="layers" @click="switchTab('components')" />
       </template>
       <Layer />
     </n-tab-pane>
@@ -64,6 +65,10 @@ withDefaults(
 )
 const collapsedTabPane = (key: string) => {
   emits('update:iscollapsed', false)
+  activeKey.value = key
+}
+
+const switchTab = (key: string) => {
   activeKey.value = key
 }
 </script>

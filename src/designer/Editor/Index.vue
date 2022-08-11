@@ -36,6 +36,7 @@
           :propValue="item.propValue"
           :componentId="item.id"
           :id="'component' + item.id"
+          :index="index.toString()"
           :subComponents="item.subComponents"
         />
       </Shape>

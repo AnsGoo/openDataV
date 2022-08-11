@@ -94,7 +94,21 @@ export const getComponentShapeStyle = (component: ComponentInfo) => {
       ...getGroupStyle(groupStyle)
     }
   } else {
-    return excludeStyle(style, ['rotate'])
+    return excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
+  }
+}
+
+/**
+ * 转化组件样式为css
+ * @param component 主要转化样式的组件
+ * @returns css
+ */
+export const getInnerComponentShapeStyle = (component: ComponentInfo) => {
+  const style = cloneDeep(component.style)
+  return {
+    ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
+    width: '100%',
+    height: '100%'
   }
 }
 

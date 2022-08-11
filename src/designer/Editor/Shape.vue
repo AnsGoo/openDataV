@@ -1,18 +1,91 @@
 <template>
   <div
+    v-if="isInner"
     ref="shape"
     class="shape"
-    :class="{ active: isActive || active, layerActive: isLayerActive }"
-    @click.ctrl.exact="appendComponent"
-    @click.exact="selectCurComponent"
-    @mousedown="handleDragendShape"
+    :class="{ active: isActive || active }"
+    @dblclick.exact="selectCurComponent"
+    @mousedown.capture="handleDragendShape"
     v-contextmenu="contextmenus"
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
-    <span class="iconfont icon-xuanzhuan" v-show="isActive" @mousedown="handleRotate"></span>
-    <!-- <icon-park name="rotation" v-show="isActive" @mousedown="handleRotate" /> -->
-    <!-- <icon-park name="lock" v-show="info.isLock" /> -->
-    <span class="iconfont icon-jiesuo" v-show="info.isLock"></span>
+    <icon-park
+      class="rotation"
+      name="one-third-rotation"
+      color="#fff"
+      v-show="isActive"
+      @mousedown="handleRotate"
+    />
+    <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
+    <div
+      :class="['shape-point', 'lt', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '0%', left: '0%' }"
+      @mousedown="handleStretchedShape('lt', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 't', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '0%', left: '50%' }"
+      @mousedown="handleStretchedShape('t', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'rt', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '0%', left: '100%' }"
+      @mousedown="handleStretchedShape('rt', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'r', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '50%', left: '100%' }"
+      @mousedown="handleStretchedShape('r', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'rb', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '100%', left: '100%' }"
+      @mousedown="handleStretchedShape('rb', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'b', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '100%', left: '50%' }"
+      @mousedown="handleStretchedShape('b', $event)"
+    ></div>
+    <div
+      class="shape-point"
+      v-show="isActive"
+      :class="['shape-point', 'lb', rotateClassName]"
+      :style="{ top: '100%', left: '0%' }"
+      @mousedown="handleStretchedShape('lb', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'l', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '50%', left: '0%' }"
+      @mousedown="handleStretchedShape('l', $event)"
+    ></div>
+    <slot></slot>
+  </div>
+  <div
+    v-else
+    ref="shape"
+    class="shape"
+    :class="{ active: isActive || active }"
+    @click.ctrl.exact="appendComponent"
+    @click.exact="selectCurComponent"
+    @mousedown.capture="handleDragendShape"
+    v-contextmenu="contextmenus"
+  >
+    <span class="error-info" v-show="isError">{{ errorInfo }}</span>
+    <icon-park
+      class="rotation"
+      name="one-third-rotation"
+      color="#fff"
+      v-show="isActive"
+      @mousedown="handleRotate"
+    />
     <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
     <div
       :class="['shape-point', 'lt', rotateClassName]"
@@ -70,7 +143,7 @@
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { reactive, toRefs, ref, computed, onMounted, onErrorCaptured } from 'vue'
+import { reactive, ref, computed, onMounted, onErrorCaptured } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import { mod360, copyText } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
@@ -89,9 +162,11 @@ const props = withDefaults(
     info: ComponentInfo
     defaultStyle: ComponentStyle
     index: string
+    isInner?: boolean
   }>(),
   {
-    active: false
+    active: false,
+    isInner: false
   }
 )
 
@@ -192,7 +267,6 @@ const contextmenus = (): ContextmenuItem[] => {
 const showEm = computed(() => basicStore.isShowEm)
 
 const shape = ref<ElRef>(null)
-const { info } = { ...toRefs(props) }
 const pointList = reactive<Array<string>>(['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l'])
 const initialAngle = reactive<Recordable<number>>({
   // 每个点对应的初始角度
@@ -249,13 +323,6 @@ const isActive = computed<boolean>(() => {
   return (props.active && !props.info.isLock) || composeStore.isActived(props.info)
 })
 
-const isLayerActive = computed<boolean>(() => {
-  if (basicStore.layerComponent) {
-    return basicStore.layerComponent.id === props.info.id
-  }
-  return false
-})
-
 const appendComponent = () => {
   composeStore.appendComponent(props.info)
 }
@@ -268,7 +335,7 @@ const handleDragendShape = (e: MouseEvent) => {
     basicStore.setClickComponentStatus(true)
     e.preventDefault()
     e.stopPropagation()
-    basicStore.setCurComponent(props.info)
+    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
     if (props.info.isLock) return
 
     cursors.value = getCursor()
@@ -312,10 +379,10 @@ const handleDragendShape = (e: MouseEvent) => {
   }
 }
 
-const selectCurComponent = (e) => {
+const selectCurComponent = (e: MouseEvent) => {
   // 阻止向父组件冒泡
-  e.stopPropagation()
   e.preventDefault()
+  e.stopPropagation()
   basicStore.setCurComponent(props.info)
 }
 
@@ -466,10 +533,10 @@ onMounted(() => {
 <style lang="less" scoped>
 @layer components {
   .shape {
-    @apply absolute hover:cursor-move;
     border-width: v-bind(borderWidth);
     border-color: v-bind(borderColor);
     border-style: v-bind(borderStyle);
+    position: absolute;
 
     .error-info {
       color: red;
@@ -479,7 +546,7 @@ onMounted(() => {
   }
 
   .active {
-    @apply select-none;
+    @apply select-none hover:cursor-move;
 
     outline: 1px solid #70c0ff;
   }
@@ -496,17 +563,14 @@ onMounted(() => {
     margin-top: -4px;
   }
 
-  .icon-xuanzhuan {
+  .rotation {
     position: absolute;
-    top: -34px;
+    top: -24px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 16px;
     font-weight: 600;
+    height: 20px;
     cursor: grab;
-    color: #59c7f9;
-    font-size: 20px;
-    font-weight: 600;
 
     &:active {
       cursor: grabbing;

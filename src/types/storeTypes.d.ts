@@ -22,7 +22,6 @@ export interface EditData {
   curComponent: ComponentInfo | undefined
   isClickComponent: boolean
   isShowEm: boolean
-  layerComponent: ComponentInfo | undefined
   ids: Set<string>
 }
 

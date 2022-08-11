@@ -44,7 +44,7 @@ const handleSelect = (key: string) => {
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
-  basicStore.setActiveComponent(activedComponent)
+  basicStore.setCurComponent(activedComponent)
 }
 
 const menuOptions = ref<MenuOption[]>([])
@@ -63,12 +63,13 @@ const getMenuOptions = (
         label: () =>
           h(LayerItem, {
             component: item,
-            index: calcIndex(i, fatherIndex)
+            index: calcIndex(i, fatherIndex),
+            onclick: () => handleSelect(calcIndex(i, fatherIndex))
           }),
         key: calcIndex(i, fatherIndex),
         icon: () =>
           h(IconPark, {
-            name: 'icon-branch-one'
+            name: 'branch-one'
           }),
         children: getMenuOptions(
           calcIndex(i, fatherIndex),

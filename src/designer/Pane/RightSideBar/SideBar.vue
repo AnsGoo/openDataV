@@ -8,21 +8,21 @@
       v-model:value="activeKey"
       @update:value="(key) => (activeKey = key)"
     >
-      <n-tab-pane name="style">
+      <n-tab-pane name="style" display-directive="show:lazy">
         <template #tab>
           <IconPark name="text-style" />
           <span v-show="!iscollapsed">样式</span>
         </template>
         <StyleList :curComponent="curComponent" />
       </n-tab-pane>
-      <n-tab-pane name="attr">
+      <n-tab-pane name="attr" display-directive="show:lazy">
         <template #tab>
           <IconPark name="internal-data" />
           <span v-show="!iscollapsed">属性</span>
         </template>
         <AttrList :curComponent="curComponent" />
       </n-tab-pane>
-      <n-tab-pane name="data">
+      <n-tab-pane name="data" display-directive="show:lazy">
         <template #tab>
           <IconPark name="data" />
           <span v-show="!iscollapsed">数据</span>
@@ -31,7 +31,7 @@
       </n-tab-pane>
     </n-tabs>
     <n-tabs type="line" animated v-else justify-content="center">
-      <n-tab-pane name="canvas">
+      <n-tab-pane name="canvas" display-directive="show:lazy">
         <template #tab>
           <IconPark name="page" />
           <span v-show="!iscollapsed">画布</span>
@@ -70,9 +70,9 @@ const emits = defineEmits<{
   (e: 'update:iscollapsed', iscollapsed: boolean): void
 }>()
 
-const curComponent = computed(() => basicStore.curComponent || basicStore.layerComponent)
+const curComponent = computed(() => basicStore.curComponent)
 const menuOptions = computed<MenuOption[]>(() => {
-  if (basicStore.curComponent || basicStore.layerComponent) {
+  if (basicStore.curComponent) {
     return [
       {
         label: '样式',

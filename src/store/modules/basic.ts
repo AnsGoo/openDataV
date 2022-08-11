@@ -44,7 +44,6 @@ const useBasicStore = defineStore({
     curComponent: undefined,
     isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
-    layerComponent: undefined,
     ids: new Set()
   }),
   getters: {
@@ -105,7 +104,6 @@ const useBasicStore = defineStore({
      */
     setCurComponent(component: any): void {
       this.curComponent = component
-      this.layerComponent = undefined
     },
 
     /**
@@ -206,7 +204,7 @@ const useBasicStore = defineStore({
      * @returns
      */
     setCurComponentPropValue(key: string, value: any): void {
-      const curComponent = this.curComponent || this.layerComponent
+      const curComponent = this.curComponent
       if (!curComponent || !curComponent.propValue) {
         return
       }
@@ -222,7 +220,7 @@ const useBasicStore = defineStore({
      */
     setCurComponentStyle(key: string, value: any): void {
       const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
-      const curComponent = this.curComponent || this.layerComponent
+      const curComponent = this.curComponent
       if (!curComponent) {
         return
       }
@@ -242,7 +240,7 @@ const useBasicStore = defineStore({
      * @returns
      */
     setCurComponentProps(key: string, value: any): void {
-      const curComponent = this.curComponent || this.layerComponent
+      const curComponent = this.curComponent
       if (!curComponent) {
         return
       }
@@ -259,15 +257,6 @@ const useBasicStore = defineStore({
       }
       return -1
     },
-
-    /**
-     * 设置图层激活组件，选择图层组件时，取消当前组件的选中状态
-     * @param component
-     */
-    setActiveComponent(component: ComponentInfo): void {
-      this.curComponent = undefined
-      this.layerComponent = component
-    },
     /**
      * 清空画布
      */
@@ -276,7 +265,6 @@ const useBasicStore = defineStore({
       this.curComponent = undefined
       this.isClickComponent = false
       this.isShowEm = false
-      this.layerComponent = undefined
       this.canvasStyleData = baseCanvasStyleData
     },
     /**
