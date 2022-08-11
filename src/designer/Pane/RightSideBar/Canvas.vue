@@ -27,6 +27,7 @@ import { computed, reactive, ref } from 'vue'
 import { cloneDeep, debounce } from 'lodash-es'
 import { NForm, NFormItem, NInput, NSelect, NInputNumber, NScrollbar } from 'naive-ui'
 import PixelEnum from '@/enum/pixel'
+import { FormType } from '@/enum'
 
 const piexls = computed<Recordable<string>[]>(() => {
   return [{ label: '本设备', value: `${window.innerWidth}X${window.innerHeight}` }, ...PixelEnum]
