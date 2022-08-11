@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { SubText } from './type'
 
@@ -30,22 +30,22 @@ const style: Array<PropsType> = [
       {
         key: 'color',
         label: '颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'fontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'fontWeight',
         label: '字体宽度',
-        type: 'fontWeight'
+        type: FormType.FONT_WEIGHT
       },
       {
         key: 'fontFamily',
         label: '字体',
-        type: 'fontStyle'
+        type: FormType.FONT_STYLE
       }
     ]
   }
@@ -59,17 +59,17 @@ const attrs: Array<PropsType> = [
       {
         key: 'tagName',
         label: '数据订阅Tag',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'history',
         label: '最新数据',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'unit',
         label: '单位',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   }

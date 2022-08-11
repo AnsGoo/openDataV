@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { FlvVideo } from './type'
 
@@ -30,27 +30,27 @@ const attrs: Array<PropsType> = [
       {
         key: 'url',
         label: '视频地址',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'videoType',
         label: '视频类型',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'controls',
         label: '控制器',
-        type: 'switch'
+        type: FormType.SWITCH
       },
       {
         key: 'autoplay',
         label: '自动播放',
-        type: 'switch'
+        type: FormType.SWITCH
       },
       {
         key: 'muted',
         label: '静音',
-        type: 'switch'
+        type: FormType.SWITCH
       }
     ]
   }

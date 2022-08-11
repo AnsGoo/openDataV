@@ -96,7 +96,7 @@ export const ComponentGroupList: GroupType[] = [
   new GroupType('其他', ComponentGroup.OTHER, 'MoreFour')
 ]
 
-export enum ControlType {
+export enum FormType {
   // 文本框
   TEXT = 'text',
   // 文本域，多行文本属性
@@ -110,7 +110,15 @@ export enum ControlType {
   // 单选框
   RADIO = 'radio',
   // 开关，主要为 true、false 值使用
-  SWITCH = 'switch'
+  SWITCH = 'switch',
+  //  字体选择
+  FONT_STYLE = 'fontStyle',
+  //  字重选择
+  FONT_WEIGHT = 'fontWeight',
+  // 背景色渐变选择
+  LINEAR_GRADIENT = 'linearGradient',
+  // 自定义
+  CUSTOM = 'custom'
 }
 
 export enum EChartTypeEnum {
@@ -121,3 +129,5 @@ export enum EChartTypeEnum {
   // 饼图
   PIE = 'pie'
 }
+
+export const GlobalColorSwatches = ['#FFFFFF', '#18A058', '#2080F0', '#F0A020', '#D03050FF']

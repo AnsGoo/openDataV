@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { PercentageChart } from './type'
 
@@ -30,12 +30,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'fontSize',
         label: '字体大小',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'lineLength',
         label: '分割线长度',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   },
@@ -46,12 +46,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'history',
         label: '历史数据地址',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'interval',
         label: '更新间隔',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   }

@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { ConditionText } from './type'
 
@@ -28,12 +28,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'tagName',
         label: '数据标签',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'history',
         label: '最新数据',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   },
@@ -45,7 +45,7 @@ const attrs: Array<PropsType> = [
       {
         key: 'symbol',
         label: '判别符号',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: '>', label: '大于' },
@@ -60,12 +60,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'value',
         label: '判别值',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'displayType',
         label: '显示类型',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'symbol', label: '符号' },
@@ -77,22 +77,22 @@ const attrs: Array<PropsType> = [
       {
         key: 'displayContext',
         label: '显示内容',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'color',
         label: '颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'fontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'iconFit',
         label: '图片填充方式',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'contain', label: '最小填充' },

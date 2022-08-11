@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { GaugeTwo } from './type'
 
@@ -57,22 +57,22 @@ const attrs: Array<PropsType> = [
       {
         key: 'title',
         label: '名称',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'titleOffset',
         label: '偏移',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'titleFontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'titleColor',
         label: '颜色',
-        type: 'color'
+        type: FormType.COLOR
       }
     ]
   },
@@ -83,12 +83,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'startAngle',
         label: '起始角度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'endAngle',
         label: '结束角度',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   },
@@ -99,27 +99,27 @@ const attrs: Array<PropsType> = [
       {
         key: 'history',
         label: '历史数据地址',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'datatag',
         label: '数据标签',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'unit',
         label: '单位',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'maxValue',
         label: '最大值',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'minValue',
         label: '最小值',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   },
@@ -130,12 +130,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'axisWidth',
         label: '宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'axisColor',
         label: '颜色',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   },
@@ -146,37 +146,37 @@ const attrs: Array<PropsType> = [
       {
         key: 'tickLength',
         label: '长度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'tickColor',
         label: '颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'tickWidth',
         label: '宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'tickShow',
         label: '是否显示',
-        type: 'switch'
+        type: FormType.SWITCH
       },
       {
         key: 'tickFontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'tickFontColor',
         label: '字体颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'tickDistance',
         label: '间距',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   },
@@ -187,22 +187,22 @@ const attrs: Array<PropsType> = [
       {
         key: 'splitLength',
         label: '长度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'splitColor',
         label: '颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'splitWidth',
         label: '宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'splitNumber',
         label: '分割数量',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   },
@@ -213,7 +213,7 @@ const attrs: Array<PropsType> = [
       {
         key: 'pointStyle',
         label: '指针样式',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { label: '三角形', value: 'triangle' },
@@ -225,22 +225,22 @@ const attrs: Array<PropsType> = [
       {
         key: 'pointerLength',
         label: '长度占比',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'pointerColor',
         label: '颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'pointerWidth',
         label: '宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'pointerOffset',
         label: '偏移',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   },
@@ -251,17 +251,17 @@ const attrs: Array<PropsType> = [
       {
         key: 'detailFontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'detailOffset',
         label: '偏移',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'detailFontColor',
         label: '字体颜色',
-        type: 'color'
+        type: FormType.COLOR
       }
     ]
   }

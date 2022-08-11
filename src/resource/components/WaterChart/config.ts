@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { WaterChart } from './type'
 
@@ -43,17 +43,17 @@ const attrs: Array<PropsType> = [
       {
         key: 'title',
         label: '标题',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'textColor',
         label: '文字颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'shape',
         label: '形状',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'diamond', label: '菱形' },
@@ -70,27 +70,27 @@ const attrs: Array<PropsType> = [
       {
         key: 'waveAnimation',
         label: '是否流动',
-        type: 'switch'
+        type: FormType.SWITCH
       },
       {
         key: 'fontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'offsetLeft',
         label: '偏左',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'offsetRight',
         label: '偏右',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'direction',
         label: '水波方向',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'left', label: '向左飘动' },
@@ -107,27 +107,27 @@ const attrs: Array<PropsType> = [
       {
         key: 'borderColor',
         label: '边框颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'borderWidth',
         label: '边框宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'outline',
         label: '边框显示',
-        type: 'switch'
+        type: FormType.SWITCH
       },
       {
         key: 'shadowColor',
         label: '阴影色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'shadowBlur',
         label: '阴影深度',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   },
@@ -138,27 +138,27 @@ const attrs: Array<PropsType> = [
       {
         key: 'dataTag',
         label: '标签',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'maxValue',
         label: '最大值',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'isInterval',
         label: '是否定时刷新',
-        type: 'switch'
+        type: FormType.SWITCH
       },
       {
         key: 'interval',
         label: '定时',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'history',
         label: '历史数据',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   }
