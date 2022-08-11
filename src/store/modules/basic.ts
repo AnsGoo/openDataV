@@ -5,9 +5,10 @@ import type { LayoutData } from '@/types/apiTypes'
 import type { ComponentInfo } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
-import { swap, uuid } from '@/utils/utils'
+import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
+import { cloneDeep } from 'lodash'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -111,19 +112,53 @@ const useBasicStore = defineStore({
      * @param postion 位置
      * @returns
      */
-    syncComponentLoction(postion: Postion): void {
+    syncComponentLoction(postion: Postion, parentComponent?: ComponentInfo): void {
       if (!this.curComponent) {
         return
       }
       const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
-      const ablePostion = {}
+      const ablePostion: Postion = {}
       const style = this.curComponent!.style
       styleKyes.forEach((el) => {
         if (postion[el] != undefined) {
           ablePostion[el] = postion[el]
         }
       })
-      this.curComponent!.style = { ...style, ...ablePostion }
+      if (parentComponent) {
+        const parentStyle = parentComponent.style
+        const groupStyle = this.curComponent.groupStyle!
+        const gStyle = {
+          gleft:
+            ablePostion.left !== undefined
+              ? toPercent((ablePostion.left! - parentStyle.left) / parentStyle.width)
+              : groupStyle.gleft,
+          gtop:
+            ablePostion.top !== undefined
+              ? toPercent((ablePostion.top! - parentStyle.top) / parentStyle.height)
+              : groupStyle.gtop,
+          gwidth:
+            ablePostion.width !== undefined
+              ? toPercent(ablePostion.width! / parentStyle.width)
+              : groupStyle.gwidth,
+          gheight:
+            ablePostion.height !== undefined
+              ? toPercent(ablePostion.height! / parentStyle.height)
+              : groupStyle.gheight,
+          grotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : groupStyle.grotate
+        }
+        const newStyle = {
+          left: ablePostion.left !== undefined ? ablePostion.left : style.left,
+          top: ablePostion.top !== undefined ? ablePostion.top : style.top,
+          width: ablePostion.width !== undefined ? ablePostion.width : style.width,
+          height: ablePostion.height !== undefined ? ablePostion.height : style.height,
+          rotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : style.rotate
+        }
+        this.curComponent.groupStyle = gStyle
+        this.curComponent!.style = { ...style, ...newStyle }
+      } else {
+        this.curComponent!.style = { ...style, ...ablePostion }
+      }
+
       this.saveComponentData()
 
       eventBus.emit('changeStyle', {
@@ -132,6 +167,40 @@ const useBasicStore = defineStore({
       })
     },
 
+    /**
+     * 重新自动调整组件尺寸
+     * @param component
+     */
+    resizeAutoComponent(indexs: number[]): void {
+      console.log('--------', indexs)
+      const parentComponent = this.getComponentByIndex(indexs)
+      console.log(parentComponent)
+      if (parentComponent && parentComponent.component === 'Group') {
+        const parentStyle = cloneDeep(parentComponent.style)
+        const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents!)
+        console.log(top, left, height, width)
+        if (
+          top === parentStyle.top &&
+          left === parentStyle.left &&
+          height === parentStyle.height &&
+          width === parentStyle.width
+        ) {
+          return
+        } else {
+          console.log({ top, left, height, width })
+          parentComponent.style = { ...parentStyle, top, left, height, width }
+          this.saveComponentData()
+          // eventBus.emit('changeStyle', {
+          //   id: parentComponent!.id,
+          //   style: { top, left, height, width }
+          // })
+          indexs.pop()
+          if (indexs.length > 0) {
+            this.resizeAutoComponent(indexs)
+          }
+        }
+      }
+    },
     /**
      * 设置单个组件的样式属性
      * @param param0 样式

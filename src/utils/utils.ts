@@ -240,6 +240,7 @@ export function decomposeComponent(component: ComponentInfo, parentStyle: Compon
       rotate
     }
     component.groupStyle = undefined
+    component.parentComponent = undefined
   }
 }
 
@@ -270,7 +271,9 @@ export function calcComponentsRect(components: ComponentInfo[]) {
   components.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
     const style: DOMRectStyle = component.style
+    console.log(style)
     const componentRect: Rect = calcComponentAxis(style)
+    console.log(componentRect)
     leftSet.add(componentRect.left)
     topSet.add(componentRect.top)
     rightSet.add(componentRect.right)

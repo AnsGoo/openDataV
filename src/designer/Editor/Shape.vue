@@ -5,7 +5,7 @@
     class="shape"
     :class="{ active: isActive || active }"
     @dblclick.exact="selectCurComponent"
-    @mousedown.capture="handleDragendShape"
+    @mousedown="handleDragendShape"
     v-contextmenu="contextmenus"
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
@@ -75,7 +75,7 @@
     :class="{ active: isActive || active }"
     @click.ctrl.exact="appendComponent"
     @click.exact="selectCurComponent"
-    @mousedown.capture="handleDragendShape"
+    @mousedown="handleDragendShape"
     v-contextmenu="contextmenus"
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
@@ -337,10 +337,13 @@ const handleDragendShape = (e: MouseEvent) => {
     e.stopPropagation()
     if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
     if (props.info.isLock) return
-
+    const indexs: number[] = props.index.split('-').map((i) => Number(i))
+    indexs.pop()
+    const parentComponent = basicStore.getComponentByIndex(indexs)
     cursors.value = getCursor()
 
     let { top, left } = props.defaultStyle
+    console.log({ top, left })
     const startY = e.clientY
     const startX = e.clientX
     // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
@@ -354,8 +357,11 @@ const handleDragendShape = (e: MouseEvent) => {
       top = curY - startY + startTop
       left = curX - startX + startLeft
 
-      // 修改当前组件样式
-      basicStore.syncComponentLoction({ top, left })
+      // // 修改当前组件样式
+      basicStore.syncComponentLoction(
+        { top, left },
+        parentComponent.component === 'Root' ? undefined : parentComponent
+      )
       // 等更新完当前组件的样式并绘制到屏幕后再判断是否需要吸附
       // 如果不使用 $nextTick，吸附后将无法移动
       // nextTick(() => {
@@ -366,12 +372,15 @@ const handleDragendShape = (e: MouseEvent) => {
       //   eventBus.emit('move', { isDownward: curY - startY > 0, isRightward: curX - startX > 0 })
       // })
     }
-
     const up = () => {
       // 触发元素停止移动事件，用于隐藏标线
       eventBus.emit('unmove')
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
+      if (parentComponent) {
+        console.log(indexs)
+        basicStore.resizeAutoComponent(indexs)
+      }
     }
 
     document.addEventListener('mousemove', move)
