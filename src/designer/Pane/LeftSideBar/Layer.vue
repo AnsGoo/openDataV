@@ -41,7 +41,6 @@ const open = (event: any) => {
 useEventBus('ActiveMenu', open)
 
 const handleSelect = (key: string) => {
-  console.log(key)
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)

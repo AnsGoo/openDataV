@@ -89,11 +89,6 @@ export const getComponentShapeStyle = (component: ComponentInfo) => {
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
-    const result = {
-      ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
-      ...getGroupStyle(groupStyle)
-    }
-    console.log(result)
     return {
       ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
       ...getGroupStyle(groupStyle)
