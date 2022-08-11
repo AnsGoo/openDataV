@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 
 const component: ComponentConfig = {
@@ -26,7 +26,7 @@ const attrs: Array<PropsType> = [
       {
         key: 'displayStyle',
         label: '显示方式',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             {
@@ -50,7 +50,7 @@ const attrs: Array<PropsType> = [
       {
         key: 'id',
         label: '组件ID',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   }

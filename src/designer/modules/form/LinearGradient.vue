@@ -8,14 +8,23 @@
       :max="360"
       :step="1"
     />
-    <NColorPicker :value="value!.color1" @update:value="(value) => changed('color1', value)" />
-    <NColorPicker :value="value!.color2" @update:value="(value) => changed('color2', value)" />
+    <NColorPicker
+      :value="value!.color1"
+      @update:value="(value) => changed('color1', value)"
+      :swatches="GlobalColorSwatches"
+    />
+    <NColorPicker
+      :value="value!.color2"
+      @update:value="(value) => changed('color2', value)"
+      :swatches="GlobalColorSwatches"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue'
 import { NColorPicker, NInputNumber } from 'naive-ui'
+import { GlobalColorSwatches } from '@/enum'
 
 interface LinearGradient {
   angle: number

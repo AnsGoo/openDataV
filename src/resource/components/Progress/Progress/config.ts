@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { Progress } from './type'
 
@@ -39,17 +39,17 @@ const attrs: Array<PropsType> = [
       {
         key: 'history',
         label: '历史数据地址',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'datatag',
         label: '数据标签',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'maxValue',
         label: '最大值',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   },
@@ -60,57 +60,57 @@ const attrs: Array<PropsType> = [
       {
         key: 'color1',
         label: '颜色1',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'color2',
         label: '颜色2',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'borderWidth',
         label: '边框宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'borderGap',
         label: '边框间隔',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'lineDash',
         label: '线条宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'gapWeight',
         label: '线条间隙',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'fontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'textColor',
         label: '文字颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'borderRadius',
         label: '圆角',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'localGradient',
         label: '局部渐变',
-        type: 'switch'
+        type: FormType.SWITCH
       },
       {
         key: 'formatter',
         label: '文字格式化',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   }

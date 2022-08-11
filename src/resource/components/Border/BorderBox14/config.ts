@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { BorderBox14 } from './type'
 
@@ -28,17 +28,17 @@ const attrs: Array<PropsType> = [
       {
         key: 'color',
         label: '边框颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'width',
         label: '边框宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'style',
         label: '样式',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'dotted', label: '点线' },

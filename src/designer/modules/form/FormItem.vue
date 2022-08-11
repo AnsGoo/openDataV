@@ -5,20 +5,21 @@
     :label="label"
   >
     <NColorPicker
-      v-if="type === 'color'"
+      v-if="type === FormType.COLOR"
       v-model:value="formData[key]"
+      :swatches="GlobalColorSwatches"
       :modes="['hex', 'rgb', 'hsl']"
       @update:value="changed($event, key)"
     />
     <n-select
-      v-else-if="type === 'select'"
+      v-else-if="type === FormType.SELECT"
       v-model="formData[key]"
       :placeholder="label"
       @update:value="changed($event, key)"
       :options="componentOptions?.options || []"
     />
     <n-radio-group
-      v-else-if="type === 'radio'"
+      v-else-if="type === FormType.RADIO"
       v-model:value="formData[key]"
       :placeholder="label"
       @update:value="changed($event, key)"
@@ -32,32 +33,32 @@
       </n-radio>
     </n-radio-group>
     <n-input-number
-      v-else-if="type === 'number'"
+      v-else-if="type === FormType.NUMBER"
       v-model:value="formData[key]"
       @update:value="changed($event, key)"
     />
     <n-switch
-      v-else-if="type === 'switch'"
+      v-else-if="type === FormType.SWITCH"
       v-model:value="formData[key]"
       @update:value="changed($event, key)"
     />
     <FontStyle
-      v-else-if="type === 'fontStyle'"
+      v-else-if="type === FormType.FONT_STYLE"
       v-model="formData[key]"
       @change="changed($event, key)"
     />
     <FontWeight
-      v-else-if="type === 'fontWeight'"
+      v-else-if="type === FormType.FONT_WEIGHT"
       v-model="formData[key]"
       @change="changed($event, key)"
     />
     <LinearGradient
-      v-else-if="type === 'linearGradient'"
+      v-else-if="type === FormType.LINEAR_GRADIENT"
       v-model:value="formData[key]"
       @change="changed($event, key)"
     />
     <CustomRender
-      v-else-if="type === 'custom'"
+      v-else-if="type === FormType.CUSTOM"
       v-model:value="formData[key]"
       @change="changed($event, key)"
       :component="componentOptions.componentType"
@@ -83,6 +84,7 @@ import {
   NInputNumber,
   NColorPicker
 } from 'naive-ui'
+import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType } from '@/types/component'
 
 const props = defineProps<{

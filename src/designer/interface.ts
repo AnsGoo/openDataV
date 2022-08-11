@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType, ComponentCommon } from '@/types/component'
 
 // 公共样式
@@ -10,27 +10,27 @@ export const commonStyle: Array<PropsType> = [
       {
         key: 'left',
         label: 'x 坐标',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'top',
         label: 'y 坐标',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'width',
         label: '宽',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'height',
         label: '高',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'rotate',
         label: '旋转角度',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   }
@@ -43,27 +43,27 @@ export const groupCommonStyle: PropsType = {
     {
       key: 'gleft',
       label: '相对坐标x',
-      type: 'number'
+      type: FormType.NUMBER
     },
     {
       key: 'gtop',
       label: '相对坐标y',
-      type: 'number'
+      type: FormType.NUMBER
     },
     {
       key: 'gwidth',
       label: '相对宽度',
-      type: 'number'
+      type: FormType.NUMBER
     },
     {
       key: 'gheight',
       label: '相对高度',
-      type: 'number'
+      type: FormType.NUMBER
     },
     {
       key: 'grotate',
       label: '旋转角度',
-      type: 'number'
+      type: FormType.NUMBER
     }
   ]
 }

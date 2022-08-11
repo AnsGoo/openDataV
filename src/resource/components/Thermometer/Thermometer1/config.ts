@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { Thermometer1 } from './type'
 
@@ -29,22 +29,22 @@ const attrs: Array<PropsType> = [
       {
         key: 'history',
         label: '历史数据地址',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'datatag',
         label: '数据标签',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'maxValue',
         label: '最大值',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'splitNumber',
         label: '间隔',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   }

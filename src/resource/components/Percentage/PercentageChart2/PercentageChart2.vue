@@ -91,7 +91,7 @@ const getOption = (): EChartsOption => {
     series: [
       {
         name: 'ring5',
-        type: 'custom',
+        type: FormType.CUSTOM,
         coordinateSystem: 'none',
         renderItem: function (_, api) {
           return {
@@ -115,7 +115,7 @@ const getOption = (): EChartsOption => {
       },
       {
         name: 'ring5',
-        type: 'custom',
+        type: FormType.CUSTOM,
         coordinateSystem: 'none',
         renderItem: function (_, api) {
           return {
@@ -139,7 +139,7 @@ const getOption = (): EChartsOption => {
       },
       {
         name: 'ring5',
-        type: 'custom',
+        type: FormType.CUSTOM,
         coordinateSystem: 'none',
         renderItem: function (_, api) {
           return {
@@ -163,7 +163,7 @@ const getOption = (): EChartsOption => {
       },
       {
         name: 'ring5',
-        type: 'custom',
+        type: FormType.CUSTOM,
         coordinateSystem: 'none',
         renderItem: function (_, api) {
           return {
@@ -187,7 +187,7 @@ const getOption = (): EChartsOption => {
       },
       {
         name: 'ring5',
-        type: 'custom',
+        type: FormType.CUSTOM,
         coordinateSystem: 'none',
         renderItem: function (_, api) {
           let x0 = api.getWidth() / 2
@@ -212,7 +212,7 @@ const getOption = (): EChartsOption => {
       },
       {
         name: 'ring5', //绿点
-        type: 'custom',
+        type: FormType.CUSTOM,
         coordinateSystem: 'none',
         renderItem: function (_, api) {
           let x0 = api.getWidth() / 2

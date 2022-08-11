@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { IntervalLineChart } from './type'
 
@@ -33,12 +33,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'title',
         label: '标题',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'subTitle',
         label: '子标题',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   },
@@ -49,12 +49,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'history',
         label: '历史数据地址',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'method',
         label: 'HTTP方法',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'GET', label: 'GET' },
@@ -65,22 +65,22 @@ const attrs: Array<PropsType> = [
       {
         key: 'data',
         label: '查询条件',
-        type: 'textarea'
+        type: FormType.TEXTAREA
       },
       {
         key: 'interval',
         label: '更新间隔',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'highflag',
         label: '最大报警线',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'lowflag',
         label: '最小报警线',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   }

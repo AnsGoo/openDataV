@@ -38,11 +38,11 @@ const canvasStyleData = computed(() => basicStore.canvasStyleData)
 
 const myPixel = ref<string>('本设备')
 const styleKeys = [
-  { key: 'width', label: '宽度', type: 'number' },
-  { key: 'height', label: '高度', type: 'number' },
-  { key: 'scale', label: '比例', type: 'number' },
-  { key: 'dataWs', label: '实时数据', type: 'text' },
-  { key: 'image', label: '背景图', type: 'text' }
+  { key: 'width', label: '宽度', type: FormType.NUMBER },
+  { key: 'height', label: '高度', type: FormType.NUMBER },
+  { key: 'scale', label: '比例', type: FormType.NUMBER },
+  { key: 'dataWs', label: '实时数据', type: FormType.TEXT },
+  { key: 'image', label: '背景图', type: FormType.TEXT }
 ]
 
 // 需要随着画布大小变化的属性

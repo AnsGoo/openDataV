@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { BarChart } from './type'
 
@@ -30,12 +30,12 @@ const style: Array<PropsType> = [
       {
         key: 'borderWidth',
         label: '边框宽度',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'borderStyle',
         label: '边框风格',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: []
         }
@@ -43,12 +43,12 @@ const style: Array<PropsType> = [
       {
         key: 'borderColor',
         label: '边框颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'borderRadius',
         label: '圆角半径',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   }
@@ -62,12 +62,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'title',
         label: '标题',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'subTitle',
         label: '子标题',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   },
@@ -78,12 +78,12 @@ const attrs: Array<PropsType> = [
       {
         key: 'xAxis',
         label: '横坐标',
-        type: 'textarea'
+        type: FormType.TEXTAREA
       },
       {
         key: 'series',
         label: '数据',
-        type: 'textarea'
+        type: FormType.TEXTAREA
       }
     ]
   }

@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 
 interface GroupStyle {
   gwidth: number
@@ -54,10 +54,25 @@ interface ComponentConfig<T = Recordable<string | number | any>> {
   show?: boolean | undefined
 }
 
+interface BaseFormSchema {
+  editable?: boolean
+  disable?: boolean
+  required?: boolean
+  defaultValue?: any
+}
+
+type InputFormSchema = BaseFormSchema
+
+interface InputNumberFormSchema extends BaseFormSchema {
+  min: number
+  max: number
+  step: number
+}
+
 interface AttrType {
   key: string
   label: string
-  type?: string
+  type?: FormType
   componentOptions?: any
   help?: string
 }

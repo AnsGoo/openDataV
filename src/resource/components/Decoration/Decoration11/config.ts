@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { Decoration11 } from './type'
 
@@ -29,17 +29,17 @@ const style: Array<PropsType> = [
       {
         key: 'color',
         label: '颜色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'fontSize',
         label: '字体大小',
-        type: 'number'
+        type: FormType.NUMBER
       },
       {
         key: 'fontWeight',
         label: '字体宽度',
-        type: 'fontWeight'
+        type: FormType.FONT_WEIGHT
       }
     ]
   }
@@ -53,17 +53,17 @@ const attrs: Array<PropsType> = [
       {
         key: 'color1',
         label: '边框颜色1',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'color2',
         label: '边框颜色2',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'text',
         label: '文字',
-        type: 'text'
+        type: FormType.TEXT
       }
     ]
   }

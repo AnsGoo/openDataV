@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 import type { GaugeOne } from './type'
 
@@ -31,27 +31,27 @@ const attrs: Array<PropsType> = [
       {
         key: 'name',
         label: '名称',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'history',
         label: '历史数据地址',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'datatag',
         label: '数据标签',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'unit',
         label: '单位',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'maxValue',
         label: '最大值',
-        type: 'number'
+        type: FormType.NUMBER
       }
     ]
   }

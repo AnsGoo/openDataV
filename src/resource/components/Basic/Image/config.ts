@@ -1,4 +1,4 @@
-import { ComponentGroup } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
 const component: ComponentConfig = {
   component: 'Image',
@@ -23,17 +23,17 @@ const style: Array<PropsType> = [
       {
         key: 'backgroundColor',
         label: '背景色',
-        type: 'color'
+        type: FormType.COLOR
       },
       {
         key: 'backgroundImage',
         label: '背景图片',
-        type: 'text'
+        type: FormType.TEXT
       },
       {
         key: 'backgroundRepeat',
         label: '背景填充',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'repeat-x', label: '横向平铺' },
@@ -48,7 +48,7 @@ const style: Array<PropsType> = [
       {
         key: 'backgroundAttachment',
         label: '背景附着',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'fixed', label: '固定位置' },
@@ -60,7 +60,7 @@ const style: Array<PropsType> = [
       {
         key: 'backgroundPosition',
         label: '背景位置',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'center', label: '水平垂直居中' },
@@ -74,7 +74,7 @@ const style: Array<PropsType> = [
       {
         key: 'backgroundSize',
         label: '背景尺寸',
-        type: 'select',
+        type: FormType.SELECT,
         componentOptions: {
           options: [
             { value: 'auto', label: '真实大小' },
@@ -86,7 +86,7 @@ const style: Array<PropsType> = [
       {
         key: 'linearGradient',
         label: '背景渐变',
-        type: 'linearGradient'
+        type: FormType.LINEAR_GRADIENT
       }
     ]
   }

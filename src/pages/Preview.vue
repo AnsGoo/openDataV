@@ -25,7 +25,7 @@ const canvasStyleData = ref<CanvasStyleData>({
   height: 0,
   scale: 0,
   dataWs: '',
-  image: '/images/bg.jpg'
+  image: '/images/bg.png'
 })
 
 const bgStyle = computed<Recordable<string>>(() => {
