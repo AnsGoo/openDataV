@@ -143,7 +143,7 @@
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { reactive, ref, computed, onMounted, onErrorCaptured } from 'vue'
+import { reactive, ref, computed, onMounted, onErrorCaptured, watch } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import { mod360, copyText } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
@@ -343,7 +343,6 @@ const handleDragendShape = (e: MouseEvent) => {
     cursors.value = getCursor()
 
     let { top, left } = props.defaultStyle
-    console.log({ top, left })
     const startY = e.clientY
     const startX = e.clientX
     // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
@@ -378,7 +377,6 @@ const handleDragendShape = (e: MouseEvent) => {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
       if (parentComponent) {
-        console.log(indexs)
         basicStore.resizeAutoComponent(indexs)
       }
     }
@@ -400,9 +398,13 @@ const selectCurComponent = (e: MouseEvent) => {
  */
 const handleStretchedShape = (point: string, e: MouseEvent) => {
   if (e.button === 0) {
-    basicStore.setClickComponentStatus(true)
+    // basicStore.setClickComponentStatus(true)
+    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
     e.stopPropagation()
     e.preventDefault()
+    const indexs: number[] = props.index.split('-').map((i) => Number(i))
+    indexs.pop()
+    const parentComponent = basicStore.getComponentByIndex(indexs)
 
     const position = {
       top: props.defaultStyle.top,
@@ -426,12 +428,18 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
       }
 
       const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-      basicStore.syncComponentLoction({ top, left, width, height })
+      basicStore.syncComponentLoction(
+        { top, left, width, height },
+        parentComponent.component === 'Root' ? undefined : parentComponent
+      )
     }
 
     const up = () => {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
+      if (parentComponent) {
+        basicStore.resizeAutoComponent(indexs)
+      }
     }
 
     document.addEventListener('mousemove', move)
@@ -443,15 +451,19 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
  * 旋转组件
  */
 const handleRotate = (e: MouseEvent) => {
-  basicStore.setCurComponent(props.info)
   if (e.button === 0) {
     if (!shape.value) {
       return
     }
 
-    basicStore.setClickComponentStatus(true)
+    // basicStore.setClickComponentStatus(true)
     e.preventDefault()
     e.stopPropagation()
+    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+    if (props.info.isLock) return
+    const indexs: number[] = props.index.split('-').map((i) => Number(i))
+    indexs.pop()
+    const parentComponent = basicStore.getComponentByIndex(indexs)
     // 初始坐标和初始角度
     let { rotate } = { ...props.defaultStyle }
     const startY: number = e.clientY
@@ -477,12 +489,18 @@ const handleRotate = (e: MouseEvent) => {
       // 获取旋转的角度值
       rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
       // 修改当前组件样式
-      basicStore.syncComponentLoction({ rotate })
+      basicStore.syncComponentLoction(
+        { rotate },
+        parentComponent.component === 'Root' ? undefined : parentComponent
+      )
     }
 
     const up = () => {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
+      if (parentComponent) {
+        basicStore.resizeAutoComponent(indexs)
+      }
       // cursors.value = getCursor() // 根据旋转角度获取光标位置
     }
 
@@ -534,9 +552,78 @@ const rotateClassName = computed(() => {
   return prefix + 0
 })
 
+/**
+ * 方向键控制组件移动
+ */
+const keyDown = (e: KeyboardEvent): void => {
+  document.addEventListener('keyup', keyUp)
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  const indexs: number[] = props.index.split('-').map((i) => Number(i))
+  indexs.pop()
+  e.stopPropagation()
+  const parentComponent = basicStore.getComponentByIndex(indexs)
+  if (props.info && e.ctrlKey) {
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { left: props.info.style.left - 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      case 'ArrowUp':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { top: props.info.style.top - 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      case 'ArrowRight':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { left: props.info.style.left + 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      case 'ArrowDown':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { top: props.info.style.top + 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      default:
+        return
+    }
+  }
+}
+
+const keyUp = (e: KeyboardEvent): void => {
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  const indexs: number[] = props.index.split('-').map((i) => Number(i))
+  indexs.pop()
+  e.stopPropagation()
+  const parentComponent = basicStore.getComponentByIndex(indexs)
+  if (props.info && parentComponent) {
+    basicStore.resizeAutoComponent(indexs)
+  }
+  document.removeEventListener('keyup', keyUp)
+}
+
 onMounted(() => {
   cursors.value = getCursor()
 })
+
+watch(
+  () => basicStore.curComponent,
+  (newValue: ComponentInfo | undefined) => {
+    if (newValue && props.info.id === newValue.id) {
+      document.addEventListener('keydown', keyDown)
+    } else {
+      document.removeEventListener('keydown', keyDown)
+    }
+  }
+)
 </script>
 
 <style lang="less" scoped>
