@@ -9,9 +9,9 @@
       :thick="thick"
       :ratio="ratio"
       :start="startX"
-      :lines="lines.h"
-      :select-start="shadow.x"
-      :select-length="shadow.width"
+      :lines="lines?.h || []"
+      :select-start="shadow?.x || 0"
+      :select-length="shadow?.width || 0"
       :scale="scale"
       :palette="paletteCpu"
     />
@@ -24,9 +24,9 @@
       :thick="thick"
       :ratio="ratio"
       :start="startY"
-      :lines="lines.v"
-      :select-start="shadow.y"
-      :select-length="shadow.height"
+      :lines="lines?.v || []"
+      :select-start="shadow?.y || 0"
+      :select-length="shadow?.height || 0"
       :scale="scale"
       :palette="paletteCpu"
     />
@@ -59,18 +59,7 @@ const props = withDefaults(
     width: 200,
     height: 200,
     isShowReferLine: true,
-    ratio: 0,
-    shadow: {
-      x: 0,
-      y: 0,
-      width: 0,
-      height: 0
-    },
-
-    lines: {
-      h: [],
-      v: []
-    }
+    ratio: 0
   }
 )
 
