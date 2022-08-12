@@ -150,14 +150,12 @@ useEventBus('hideArea', hideArea)
 onMounted(() => {
   console.log('进入编辑模式')
   basicStore.setEditMode(EditMode.EDIT)
-  document.addEventListener('keydown', keyDown)
   document.addEventListener('paste', pasteText)
 })
 
 onUnmounted(() => {
   console.log('进入预览模式')
   basicStore.setEditMode(EditMode.PREVIEW)
-  document.removeEventListener('keydown', keyDown)
   document.removeEventListener('paste', pasteText)
   basicStore.clearCanvas()
 })
@@ -266,6 +264,8 @@ const handleMouseDown = (e: MouseEvent) => {
         start.y = rect.top
         width.value = rect.right - rect.left
         height.value = rect.bottom - rect.top
+      } else {
+        hideArea()
       }
     }
     document.addEventListener('mousemove', move)
@@ -309,36 +309,6 @@ const getSelectArea = (
       components: selectedComponents,
       rect: { left, right, top, bottom }
     }
-  }
-}
-
-/**
- * 方向键控制组件移动
- */
-const keyDown = (e: KeyboardEvent): void => {
-  if (curComponent.value && e.ctrlKey) {
-    switch (e.key) {
-      case 'ArrowLeft':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.style.left - 1 })
-        break
-      case 'ArrowUp':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.style.top - 1 })
-        break
-      case 'ArrowRight':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.style.left + 1 })
-        break
-      case 'ArrowDown':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.style.top + 1 })
-        break
-      default:
-        e.stopPropagation()
-    }
-  } else {
-    e.stopPropagation()
   }
 }
 </script>

@@ -5,7 +5,7 @@
     class="shape"
     :class="{ active: isActive || active }"
     @dblclick.exact="selectCurComponent"
-    @mousedown.capture="handleDragendShape"
+    @mousedown="handleDragendShape"
     v-contextmenu="contextmenus"
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
@@ -75,7 +75,7 @@
     :class="{ active: isActive || active }"
     @click.ctrl.exact="appendComponent"
     @click.exact="selectCurComponent"
-    @mousedown.capture="handleDragendShape"
+    @mousedown="handleDragendShape"
     v-contextmenu="contextmenus"
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
@@ -143,7 +143,7 @@
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { reactive, ref, computed, onMounted, onErrorCaptured } from 'vue'
+import { reactive, ref, computed, onMounted, onErrorCaptured, watch } from 'vue'
 import type { ComponentPublicInstance } from 'vue'
 import { mod360, copyText } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
@@ -337,7 +337,9 @@ const handleDragendShape = (e: MouseEvent) => {
     e.stopPropagation()
     if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
     if (props.info.isLock) return
-
+    const indexs: number[] = props.index.split('-').map((i) => Number(i))
+    indexs.pop()
+    const parentComponent = basicStore.getComponentByIndex(indexs)
     cursors.value = getCursor()
 
     let { top, left } = props.defaultStyle
@@ -354,8 +356,11 @@ const handleDragendShape = (e: MouseEvent) => {
       top = curY - startY + startTop
       left = curX - startX + startLeft
 
-      // 修改当前组件样式
-      basicStore.syncComponentLoction({ top, left })
+      // // 修改当前组件样式
+      basicStore.syncComponentLoction(
+        { top, left },
+        parentComponent.component === 'Root' ? undefined : parentComponent
+      )
       // 等更新完当前组件的样式并绘制到屏幕后再判断是否需要吸附
       // 如果不使用 $nextTick，吸附后将无法移动
       // nextTick(() => {
@@ -366,12 +371,14 @@ const handleDragendShape = (e: MouseEvent) => {
       //   eventBus.emit('move', { isDownward: curY - startY > 0, isRightward: curX - startX > 0 })
       // })
     }
-
     const up = () => {
       // 触发元素停止移动事件，用于隐藏标线
       eventBus.emit('unmove')
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
+      if (parentComponent) {
+        basicStore.resizeAutoComponent(indexs)
+      }
     }
 
     document.addEventListener('mousemove', move)
@@ -391,9 +398,13 @@ const selectCurComponent = (e: MouseEvent) => {
  */
 const handleStretchedShape = (point: string, e: MouseEvent) => {
   if (e.button === 0) {
-    basicStore.setClickComponentStatus(true)
+    // basicStore.setClickComponentStatus(true)
+    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
     e.stopPropagation()
     e.preventDefault()
+    const indexs: number[] = props.index.split('-').map((i) => Number(i))
+    indexs.pop()
+    const parentComponent = basicStore.getComponentByIndex(indexs)
 
     const position = {
       top: props.defaultStyle.top,
@@ -417,12 +428,18 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
       }
 
       const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-      basicStore.syncComponentLoction({ top, left, width, height })
+      basicStore.syncComponentLoction(
+        { top, left, width, height },
+        parentComponent.component === 'Root' ? undefined : parentComponent
+      )
     }
 
     const up = () => {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
+      if (parentComponent) {
+        basicStore.resizeAutoComponent(indexs)
+      }
     }
 
     document.addEventListener('mousemove', move)
@@ -434,15 +451,19 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
  * 旋转组件
  */
 const handleRotate = (e: MouseEvent) => {
-  basicStore.setCurComponent(props.info)
   if (e.button === 0) {
     if (!shape.value) {
       return
     }
 
-    basicStore.setClickComponentStatus(true)
+    // basicStore.setClickComponentStatus(true)
     e.preventDefault()
     e.stopPropagation()
+    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+    if (props.info.isLock) return
+    const indexs: number[] = props.index.split('-').map((i) => Number(i))
+    indexs.pop()
+    const parentComponent = basicStore.getComponentByIndex(indexs)
     // 初始坐标和初始角度
     let { rotate } = { ...props.defaultStyle }
     const startY: number = e.clientY
@@ -468,12 +489,18 @@ const handleRotate = (e: MouseEvent) => {
       // 获取旋转的角度值
       rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
       // 修改当前组件样式
-      basicStore.syncComponentLoction({ rotate })
+      basicStore.syncComponentLoction(
+        { rotate },
+        parentComponent.component === 'Root' ? undefined : parentComponent
+      )
     }
 
     const up = () => {
       document.removeEventListener('mousemove', move)
       document.removeEventListener('mouseup', up)
+      if (parentComponent) {
+        basicStore.resizeAutoComponent(indexs)
+      }
       // cursors.value = getCursor() // 根据旋转角度获取光标位置
     }
 
@@ -525,9 +552,78 @@ const rotateClassName = computed(() => {
   return prefix + 0
 })
 
+/**
+ * 方向键控制组件移动
+ */
+const keyDown = (e: KeyboardEvent): void => {
+  document.addEventListener('keyup', keyUp)
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  const indexs: number[] = props.index.split('-').map((i) => Number(i))
+  indexs.pop()
+  e.stopPropagation()
+  const parentComponent = basicStore.getComponentByIndex(indexs)
+  if (props.info && e.ctrlKey) {
+    switch (e.key) {
+      case 'ArrowLeft':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { left: props.info.style.left - 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      case 'ArrowUp':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { top: props.info.style.top - 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      case 'ArrowRight':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { left: props.info.style.left + 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      case 'ArrowDown':
+        e.preventDefault()
+        basicStore.syncComponentLoction(
+          { top: props.info.style.top + 1 },
+          parentComponent.component === 'Root' ? undefined : parentComponent
+        )
+        break
+      default:
+        return
+    }
+  }
+}
+
+const keyUp = (e: KeyboardEvent): void => {
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  const indexs: number[] = props.index.split('-').map((i) => Number(i))
+  indexs.pop()
+  e.stopPropagation()
+  const parentComponent = basicStore.getComponentByIndex(indexs)
+  if (props.info && parentComponent) {
+    basicStore.resizeAutoComponent(indexs)
+  }
+  document.removeEventListener('keyup', keyUp)
+}
+
 onMounted(() => {
   cursors.value = getCursor()
 })
+
+watch(
+  () => basicStore.curComponent,
+  (newValue: ComponentInfo | undefined) => {
+    if (newValue && props.info.id === newValue.id) {
+      document.addEventListener('keydown', keyDown)
+    } else {
+      document.removeEventListener('keydown', keyDown)
+    }
+  }
+)
 </script>
 
 <style lang="less" scoped>

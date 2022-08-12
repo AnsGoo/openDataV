@@ -9,13 +9,17 @@
       :step="1"
     />
     <NColorPicker
+      size="small"
       :value="value!.color1"
       @update:value="(value) => changed('color1', value)"
+      :modes="['hex', 'rgb', 'hsl']"
       :swatches="GlobalColorSwatches"
     />
     <NColorPicker
+      size="small"
       :value="value!.color2"
       @update:value="(value) => changed('color2', value)"
+      :modes="['hex', 'rgb', 'hsl']"
       :swatches="GlobalColorSwatches"
     />
   </div>

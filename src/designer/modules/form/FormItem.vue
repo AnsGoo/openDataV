@@ -4,11 +4,12 @@
     :key="`${ukey}${key}`"
     :label="label"
   >
-    <NColorPicker
+    <n-color-picker
       v-if="type === FormType.COLOR"
       v-model:value="formData[key]"
       :swatches="GlobalColorSwatches"
       :modes="['hex', 'rgb', 'hsl']"
+      size="small"
       @update:value="changed($event, key)"
     />
     <n-select

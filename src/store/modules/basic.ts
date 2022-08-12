@@ -2,12 +2,14 @@ import { defineStore } from 'pinia'
 import store from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
-import type { ComponentInfo } from '@/types/component'
+import type { ComponentInfo, GroupStyle } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
-import { swap, uuid } from '@/utils/utils'
+import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
+import { cloneDeep } from 'lodash'
+import { Vector } from '@/types/common'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -111,19 +113,56 @@ const useBasicStore = defineStore({
      * @param postion 位置
      * @returns
      */
-    syncComponentLoction(postion: Postion): void {
+    syncComponentLoction(postion: Postion, parentComponent?: ComponentInfo): void {
       if (!this.curComponent) {
         return
       }
       const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
-      const ablePostion = {}
+      const ablePostion: Postion = {}
       const style = this.curComponent!.style
       styleKyes.forEach((el) => {
         if (postion[el] != undefined) {
           ablePostion[el] = postion[el]
         }
       })
-      this.curComponent!.style = { ...style, ...ablePostion }
+      if (parentComponent) {
+        const parentStyle = parentComponent.style
+        const groupStyle = this.curComponent.groupStyle!
+        const gStyle = {
+          gleft:
+            ablePostion.left !== undefined
+              ? toPercent((ablePostion.left! - parentStyle.left) / parentStyle.width)
+              : groupStyle.gleft,
+          gtop:
+            ablePostion.top !== undefined
+              ? toPercent((ablePostion.top! - parentStyle.top) / parentStyle.height)
+              : groupStyle.gtop,
+          gwidth:
+            ablePostion.width !== undefined
+              ? toPercent(ablePostion.width! / parentStyle.width)
+              : groupStyle.gwidth,
+          gheight:
+            ablePostion.height !== undefined
+              ? toPercent(ablePostion.height! / parentStyle.height)
+              : groupStyle.gheight,
+          grotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : groupStyle.grotate
+        }
+        const newStyle = {
+          left: ablePostion.left !== undefined ? ablePostion.left : style.left,
+          top: ablePostion.top !== undefined ? ablePostion.top : style.top,
+          width: ablePostion.width !== undefined ? ablePostion.width : style.width,
+          height: ablePostion.height !== undefined ? ablePostion.height : style.height,
+          rotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : style.rotate
+        }
+        this.curComponent.groupStyle = gStyle
+        this.curComponent!.style = { ...style, ...newStyle }
+      } else {
+        this.curComponent!.style = { ...style, ...ablePostion }
+      }
+      if (this.curComponent.subComponents) {
+        this.resizeChildenComponent(this.curComponent.subComponents, this.curComponent)
+      }
+
       this.saveComponentData()
 
       eventBus.emit('changeStyle', {
@@ -132,6 +171,79 @@ const useBasicStore = defineStore({
       })
     },
 
+    /**
+     * 重新自动调整组件尺寸
+     * @param component
+     */
+    resizeAutoComponent(indexs: number[]): void {
+      const parentComponent = this.getComponentByIndex(indexs)
+      if (parentComponent && parentComponent.component === 'Group') {
+        const parentStyle = cloneDeep(parentComponent.style)
+        const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents!)
+        if (
+          top === parentStyle.top &&
+          left === parentStyle.left &&
+          height === parentStyle.height &&
+          width === parentStyle.width
+        ) {
+          return
+        } else {
+          const newGroupStyle = { ...parentStyle, top, left, height, width }
+          parentComponent.style = newGroupStyle
+          parentComponent.subComponents?.forEach((el: ComponentInfo) => {
+            const myStyle = el.style
+            const gStyle = {
+              gleft: toPercent((myStyle.left! - newGroupStyle.left) / newGroupStyle.width),
+              gtop: toPercent((myStyle.top! - newGroupStyle.top) / newGroupStyle.height),
+              gwidth: toPercent(myStyle.width! / newGroupStyle.width),
+              gheight: toPercent(myStyle.height! / newGroupStyle.height),
+              grotate: myStyle.rotate!
+            }
+            el.groupStyle = gStyle
+          })
+          this.saveComponentData()
+          eventBus.emit('changeStyle', {
+            id: parentComponent!.id,
+            style: { top, left, height, width }
+          })
+          indexs.pop()
+          if (indexs.length > 0) {
+            this.resizeAutoComponent(indexs)
+          }
+        }
+      }
+    },
+    resizeChildenComponent(components: ComponentInfo[], parentComponent: ComponentInfo): void {
+      const parentStyle = parentComponent.style
+      components.forEach((el: ComponentInfo) => {
+        const groupStyle: GroupStyle = el.groupStyle!
+        const center: Vector = {
+          y: parentStyle.top + parentStyle.height / 2,
+          x: parentStyle.left + parentStyle.width / 2
+        }
+        const { top, left, height, width, rotate } = {
+          top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
+          left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
+          height: (parentStyle.height * groupStyle.gheight) / 100,
+          width: (parentStyle.width * groupStyle.gwidth) / 100,
+          rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
+        }
+        const point: Vector = {
+          y: top + height / 2,
+          x: left + width / 2
+        }
+
+        const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
+        el.style = {
+          ...el.style,
+          top: Math.round(afterPoint.y - height / 2),
+          left: Math.round(afterPoint.x - width / 2),
+          height: Math.round(height),
+          width: Math.round(width),
+          rotate
+        }
+      })
+    },
     /**
      * 设置单个组件的样式属性
      * @param param0 样式
