@@ -31,11 +31,11 @@ const useCopyStore = defineStore({
       const basicStore = useBasicStoreWithOut()
 
       if (isMouse) {
-        this.copyData.style.top = y
-        this.copyData.style.left = x
+        this.copyData.change('top', y!)
+        this.copyData.change('left', x!)
       } else {
-        this.copyData.style.top = this.copyData.style.top + 10
-        this.copyData.style.left = this.copyData.style.left + 10
+        this.copyData.change('top', (this.copyData.style.top as number) + 10)
+        this.copyData.change('left', (this.copyData.style.left as number) + 10)
       }
       basicStore.appendComponent(cloneDeep(this.copyData))
     }

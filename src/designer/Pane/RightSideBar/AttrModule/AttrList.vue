@@ -2,33 +2,18 @@
 <template>
   <div class="attr-list">
     <n-collapse accordion>
-      <n-collapse-item title="公共属性">
-        <CompAttr :curComponent="curComponent" />
-      </n-collapse-item>
       <n-collapse-item
-        v-for="{ name, uid, children, max } in attrKeys"
-        :key="`${curComponent.id}${uid}`"
-        :title="name"
-        :name="uid"
+        v-for="{ label, prop, children } in attrKeys"
+        :key="`${curComponent.id}${prop}`"
+        :title="label"
+        :name="prop"
       >
         <FormAttr
-          v-if="!max || max < 1"
           :children="children"
           :data="formData"
           @change="changed"
-          :name="name"
-          :uid="uid"
-          :ukey="curComponent.id"
-        />
-
-        <DynamicAttr
-          v-else
-          :children="children"
-          :data="formData[uid] || []"
-          @change="changed"
-          :name="name"
-          :uid="uid"
-          :max="max"
+          :name="label"
+          :uid="prop"
           :ukey="curComponent.id"
         />
       </n-collapse-item>
@@ -40,15 +25,13 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { componentList } from '@/designer/load'
 import { computed, reactive, watch } from 'vue'
-import CompAttr from './CompAttr.vue'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
-import DynamicAttr from '@/designer/modules/form/DynamicAttr.vue'
-import type { ComponentInfo } from '@/types/component'
 import { cleanObjectProp } from '@/utils/utils'
 import { NCollapse, NCollapseItem } from 'naive-ui'
+import { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
-  curComponent: ComponentInfo
+  curComponent: BaseComponent
 }>()
 const basicStore = useBasicStoreWithOut()
 
@@ -62,8 +45,8 @@ const attrKeys = computed(() => {
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
-const changed = (key: string, val: any) => {
-  basicStore.setCurComponentPropValue(key, val)
+const changed = (key: string, val: any, form: string) => {
+  basicStore.setCurComponentPropValue(form, key, val)
 }
 
 const resetFormData = () => {

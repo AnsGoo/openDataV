@@ -2,12 +2,12 @@ import { defineStore } from 'pinia'
 import store from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
-import type { ComponentInfo } from '@/types/component'
 import { EditMode } from '@/enum'
 import { eventBus } from '@/bus/useEventBus'
 import { swap, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
+import { BaseComponent, createComponent } from '@/resource/models'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -102,7 +102,7 @@ const useBasicStore = defineStore({
      * @param component 当前组件
      * @param index
      */
-    setCurComponent(component: any): void {
+    setCurComponent(component: BaseComponent | undefined): void {
       this.curComponent = component
     },
 
@@ -123,13 +123,12 @@ const useBasicStore = defineStore({
           ablePostion[el] = postion[el]
         }
       })
-      this.curComponent!.style = { ...style, ...ablePostion }
-      this.saveComponentData()
 
-      eventBus.emit('changeStyle', {
-        id: this.curComponent!.id,
-        style: { ...postion }
-      })
+      for (const key in ablePostion) {
+        this.curComponent.change(key, ablePostion[key])
+      }
+
+      this.saveComponentData()
     },
 
     /**
@@ -142,13 +141,8 @@ const useBasicStore = defineStore({
         return
       }
 
-      this.curComponent.style[key] = value
+      this.curComponent.change(key, value)
       this.saveComponentData()
-
-      eventBus.emit('changeStyle', {
-        id: this.curComponent.id,
-        style: { [key]: value }
-      })
     },
     /**
      * 重置组件数据ID
@@ -156,17 +150,14 @@ const useBasicStore = defineStore({
      * @param ids
      * @param isUpdate
      */
-    resetComponentData(componentData: Array<ComponentInfo>) {
-      componentData.forEach((item: ComponentInfo) => {
+    resetComponentData(componentData: Array<BaseComponent>) {
+      componentData.forEach((item: BaseComponent) => {
         // 重置组件 ID
 
         if (this.ids.has(item.id!)) {
           item.id = uuid()
         }
-        // 添加 rotate
-        if (item.style.rotate === undefined) {
-          item.style.rotate = 0
-        }
+
         this.ids.add(item.id!)
         if (item.subComponents) {
           this.resetComponentData(item.subComponents)
@@ -177,20 +168,18 @@ const useBasicStore = defineStore({
      * 设置画图的组件数据
      * @param componentData
      */
-    setComponentData(componentData: Array<ComponentInfo> = []): void {
-      this.resetComponentData(componentData)
-      this.componentData = componentData
+    setComponentData(componentData: Record<string, string | number | boolean>[] = []): void {
+      this.componentData = []
+      componentData.forEach((item) => {
+        this.componentData.push(createComponent(item))
+      })
+      this.resetComponentData(this.componentData)
     },
     /**
      * 想画布中添加组件
      * @param component 组件
      */
-    appendComponent(component: ComponentInfo): void {
-      component.id = uuid()
-      // 如果没有 rotate 属性，就添加一个属性
-      if (component.style.rotate === undefined) {
-        component.style.rotate = 0
-      }
+    appendComponent(component: BaseComponent): void {
       if (component.subComponents) {
         this.resetComponentData(component.subComponents)
       }
@@ -203,14 +192,13 @@ const useBasicStore = defineStore({
      * @param value 值
      * @returns
      */
-    setCurComponentPropValue(key: string, value: any): void {
+    setCurComponentPropValue(form: string, key: string, value: any): void {
       const curComponent = this.curComponent
       if (!curComponent || !curComponent.propValue) {
         return
       }
-      curComponent.propValue[key] = value
+      curComponent.change(form, key, value)
       this.saveComponentData()
-      eventBus.emit(curComponent.component + curComponent.id, { key: key, value: value })
     },
     /**
      * 设置当前组件的样式
@@ -220,37 +208,22 @@ const useBasicStore = defineStore({
      */
     setCurComponentStyle(key: string, value: any): void {
       const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
-      const curComponent = this.curComponent
-      if (!curComponent) {
+      if (!this.curComponent) {
         return
       }
 
-      if (curComponent.groupStyle && groupStyleKeys.includes(key)) {
-        curComponent.groupStyle[key] = value
+      if (this.curComponent.groupStyle && groupStyleKeys.includes(key)) {
+        this.curComponent.groupStyle[key] = value
         this.saveComponentData()
         return
       }
-      curComponent.style[key] = value
-      this.saveComponentData()
-    },
-    /**
-     * 设置组件的属性值
-     * @param key 属性
-     * @param value 值
-     * @returns
-     */
-    setCurComponentProps(key: string, value: any): void {
-      const curComponent = this.curComponent
-      if (!curComponent) {
-        return
-      }
-      curComponent[key] = value
+      this.curComponent.change(key, value)
       this.saveComponentData()
     },
 
     getComponentIndexById(id: string): number {
       for (let i = 0; i < this.componentData.length; ++i) {
-        const item: ComponentInfo = this.componentData[i]
+        const item: BaseComponent = this.componentData[i]
         if (item.id === id) {
           return i
         }
@@ -272,8 +245,8 @@ const useBasicStore = defineStore({
      * @param indexs
      * @returns
      */
-    getParentComponentData(indexs: number[]): ComponentInfo[] | undefined {
-      let rootComponent: ComponentInfo = {
+    getParentComponentData(indexs: number[]): BaseComponent[] | undefined {
+      let rootComponent: BaseComponent = {
         subComponents: this.componentData,
         component: 'Root',
         display: false,
@@ -299,37 +272,34 @@ const useBasicStore = defineStore({
      * 组件图层下移
      * @param index 组件索引
      */
-    downComponent(index: string) {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        if (myindex > 0) {
-          swap(fatherComponentData, myindex, myindex - 1)
-          this.saveComponentData()
-        } else {
-          message.info('图层已经到底了')
-        }
+    downComponent(index: number, parent: BaseComponent | undefined) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+      if (index > 0) {
+        swap(componentData, index, index - 1)
+        this.saveComponentData()
+      } else {
+        message.info('图层已经到底了')
       }
     },
     /**
      * 组件图层上移
      * @param index 组件索引
      */
-    upComponent(index: string) {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        const len: number = fatherComponentData.length
-        if (myindex < len - 1) {
-          swap(fatherComponentData, myindex, myindex + 1)
-          this.saveComponentData()
-        } else {
-          message.info('图层已经到顶了')
-        }
+    upComponent(index: number, parent: BaseComponent | undefined) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      const len: number = componentData.length
+      if (index < len - 1 && index >= 0) {
+        swap(componentData, index, index + 1)
+        this.saveComponentData()
+      } else {
+        message.info('图层已经到顶了')
       }
     },
 
@@ -337,34 +307,33 @@ const useBasicStore = defineStore({
      * 组件图层置顶
      * @param index 组件索引
      */
-    topComponent(index: string) {
-      const indexs: Array<number> = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        const len: number = fatherComponentData.length
-        if (myindex < len - 1) {
-          const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
-          fatherComponentData.push(myComponments[0])
-          this.saveComponentData()
-        } else {
-          message.info('图层已经到顶了')
-        }
+    topComponent(index: number, parent: BaseComponent | undefined) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+      const len: number = componentData.length
+      if (index < len - 1 && index >= 0) {
+        const myComponments: BaseComponent[] = componentData.splice(index, 1)
+        componentData.push(myComponments[0])
+        this.saveComponentData()
+      } else {
+        message.info('图层已经到顶了')
       }
     },
     /**
      * 组件图层置底
      * @param index 组件索引
      */
-    bottomComponent(index: string) {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData && myindex > 0) {
-        const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
-        fatherComponentData.unshift(myComponments[0])
+    bottomComponent(index: number, parent: BaseComponent | undefined) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      if (index > 0) {
+        const myComponments: BaseComponent[] = componentData.splice(index, 1)
+        componentData.unshift(myComponments[0])
         this.saveComponentData()
       } else {
         message.info('图层已经到底了')
@@ -375,31 +344,28 @@ const useBasicStore = defineStore({
      * @param index 索引
      * @returns 移除结果
      */
-    removeComponent(index: string): boolean {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        fatherComponentData.splice(myindex, 1)
-        this.saveComponentData()
-
-        return true
+    removeComponent(index: number, parent: BaseComponent | undefined) {
+      console.log(2222, this.componentData)
+      if (parent && parent.subComponents) {
+        parent.subComponents.slice(index, 1)
+      } else {
+        this.componentData.slice(index, 1)
+        console.log(this.componentData)
       }
-      return false
+      this.saveComponentData()
     },
     showComponent(index: string): void {
       const indexs: number[] = index.split('-').map((i) => Number(i))
-      const component: ComponentInfo = this.getComponentByIndex(indexs)
-      component.display = true
+      const component: BaseComponent = this.getComponentByIndex(indexs)
+      component.change('display', true)
     },
     hiddenComponent(index: string): void {
       const indexs: number[] = index.split('-').map((i) => Number(i))
-      const component: ComponentInfo = this.getComponentByIndex(indexs)
-      component.display = false
+      const component: BaseComponent = this.getComponentByIndex(indexs)
+      component.change('display', false)
     },
-    getComponentByIndex(indexs: number[]): ComponentInfo {
-      let rootComponent: ComponentInfo = {
+    getComponentByIndex(indexs: number[]): BaseComponent {
+      let rootComponent: BaseComponent = {
         subComponents: this.componentData,
         display: false,
         component: 'Root',
@@ -422,11 +388,10 @@ const useBasicStore = defineStore({
       return rootComponent
     },
     saveComponentData() {
-      // storageComponentData.value = JSON.stringify(this.componentData)
-      window.localStorage.setItem('canvasData', JSON.stringify(this.componentData))
-      new Promise((resolve) => {
-        resolve(snapShotStore.saveSnapshot(this.componentData, this.canvasStyleData))
-      })
+      // window.localStorage.setItem('canvasData', JSON.stringify(this.componentData))
+      // new Promise((resolve) => {
+      //   resolve(snapShotStore.saveSnapshot(this.componentData, this.canvasStyleData))
+      // })
     }
   }
 })

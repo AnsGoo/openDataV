@@ -12,9 +12,9 @@
 
 <script setup lang="ts">
 import { getComponentStyle } from '@/utils/utils'
-import type { ComponentInfo } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
-defineProps<{ component: ComponentInfo }>()
+defineProps<{ component: BaseComponent }>()
 </script>
 
 <style lang="less" scoped>

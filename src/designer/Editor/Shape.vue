@@ -150,8 +150,10 @@ import { eventBus } from '@/bus/useEventBus'
 import type { Vector } from '@/types/common'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-import { ComponentInfo, ComponentStyle } from '@/types/component'
+import { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
+import { BaseComponent } from '@/resource/models'
+
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
@@ -159,10 +161,10 @@ const copyStore = useCopyStoreWithOut()
 const props = withDefaults(
   defineProps<{
     active?: boolean
-    info: ComponentInfo
+    info: BaseComponent
     defaultStyle: ComponentStyle
-    index: string
     isInner?: boolean
+    index: number
   }>(),
   {
     active: false,
@@ -176,43 +178,33 @@ const copy = () => {
 }
 
 const deleteComponent = () => {
-  if (props.index) {
-    basicStore.removeComponent(props.index)
-  }
+  console.log(props.index, props.info.parent)
+  basicStore.removeComponent(props.index, props.info.parent)
 }
 
 const upComponent = () => {
-  if (props.index) {
-    basicStore.upComponent(props.index)
-  }
+  basicStore.upComponent(props.index, props.info.parent)
 }
 
 const downComponent = () => {
-  if (props.index) {
-    basicStore.downComponent(props.index)
-  }
+  basicStore.downComponent(props.index, props.info.parent)
 }
 
 const topComponent = () => {
-  if (props.index) {
-    basicStore.topComponent(props.index)
-  }
+  basicStore.topComponent(props.index, props.info.parent)
 }
 
 /**
  * 复制组件ID
  */
 const copyComponentId = () => {
-  if (props.index) {
-    let id = basicStore.curComponent!.id
-    copyText(id as string)
+  if (basicStore.curComponent) {
+    copyText(basicStore.curComponent.id)
   }
 }
 
 const bottomComponent = () => {
-  if (props.index) {
-    basicStore.bottomComponent(props.index)
-  }
+  basicStore.bottomComponent(props.index, props.info.parent)
 }
 
 const decompose = () => {
@@ -320,7 +312,7 @@ onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: str
 })
 
 const isActive = computed<boolean>(() => {
-  return (props.active && !props.info.isLock) || composeStore.isActived(props.info)
+  return (props.active && !props.info.locked) || composeStore.isActived(props.info)
 })
 
 const appendComponent = () => {
@@ -336,7 +328,7 @@ const handleDragendShape = (e: MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
     if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-    if (props.info.isLock) return
+    if (props.info.locked) return
 
     cursors.value = getCursor()
 

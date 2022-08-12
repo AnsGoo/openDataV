@@ -1,9 +1,9 @@
 import type { CanvasStyleData } from '@/types/storeTypes'
-import type { ComponentInfo } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
 export interface ComponentData {
   canvasStyle: CanvasStyleData
-  canvasData: ComponentInfo[]
+  canvasData: BaseComponent[]
 }
 
 export interface LayoutData {
@@ -13,7 +13,7 @@ export interface LayoutData {
   author?: string
   createTime?: string
   isHome?: boolean
-  canvasData: ComponentInfo[]
+  canvasData: BaseComponent[]
   canvasStyle: CanvasStyleData
   allowed?: string | null
 }

@@ -134,9 +134,9 @@ import { saveUIComponents, updateUIComponents } from '@/api/pages'
 import { exportRaw, importRaw } from '@/utils/utils'
 import IconFont from './IconFont.vue'
 import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip, NDivider } from 'naive-ui'
-import { ComponentInfo } from '@/types/component'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
+import { BaseComponent } from '@/resource/models'
 
 // 状态管理
 const basicStore = useBasicStoreWithOut()
@@ -305,7 +305,7 @@ const importCanvas = () => {
 
 const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   if (loadEvent.target && loadEvent.target.result) {
-    const layoutComponents: { canvasData: ComponentInfo[]; canvasStyle: CanvasStyleData } =
+    const layoutComponents: { canvasData: BaseComponent[]; canvasStyle: CanvasStyleData } =
       JSON.parse(loadEvent.target.result as string)
     if (layoutComponents) {
       basicStore.setComponentData(layoutComponents.canvasData)

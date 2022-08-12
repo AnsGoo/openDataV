@@ -1,28 +1,28 @@
 <template>
   <n-form-item
-    v-for="{ key, label, type, componentOptions } in children"
-    :key="`${ukey}${key}`"
+    v-for="{ prop, label, type, componentOptions } in children"
+    :key="`${ukey}${prop}`"
     :label="label"
   >
     <NColorPicker
       v-if="type === FormType.COLOR"
-      v-model:value="formData[key]"
+      v-model:value="formData[prop]"
       :swatches="GlobalColorSwatches"
       :modes="['hex', 'rgb', 'hsl']"
-      @update:value="changed($event, key)"
+      @update:value="changed($event, prop)"
     />
     <n-select
       v-else-if="type === FormType.SELECT"
-      v-model="formData[key]"
+      v-model="formData[prop]"
       :placeholder="label"
-      @update:value="changed($event, key)"
+      @update:value="changed($event, prop)"
       :options="componentOptions?.options || []"
     />
     <n-radio-group
       v-else-if="type === FormType.RADIO"
-      v-model:value="formData[key]"
+      v-model:value="formData[prop]"
       :placeholder="label"
-      @update:value="changed($event, key)"
+      @update:value="changed($event, prop)"
     >
       <n-radio
         v-for="item in componentOptions?.options || []"
@@ -34,37 +34,37 @@
     </n-radio-group>
     <n-input-number
       v-else-if="type === FormType.NUMBER"
-      v-model:value="formData[key]"
-      @update:value="changed($event, key)"
+      v-model:value="formData[prop]"
+      @update:value="changed($event, prop)"
     />
     <n-switch
       v-else-if="type === FormType.SWITCH"
-      v-model:value="formData[key]"
-      @update:value="changed($event, key)"
+      v-model:value="formData[prop]"
+      @update:value="changed($event, prop)"
     />
     <FontStyle
       v-else-if="type === FormType.FONT_STYLE"
-      v-model="formData[key]"
-      @change="changed($event, key)"
+      v-model="formData[prop]"
+      @change="changed($event, prop)"
     />
     <FontWeight
       v-else-if="type === FormType.FONT_WEIGHT"
-      v-model="formData[key]"
-      @change="changed($event, key)"
+      v-model="formData[prop]"
+      @change="changed($event, prop)"
     />
     <LinearGradient
       v-else-if="type === FormType.LINEAR_GRADIENT"
-      v-model:value="formData[key]"
-      @change="changed($event, key)"
+      v-model:value="formData[prop]"
+      @change="changed($event, prop)"
     />
     <CustomRender
       v-else-if="type === FormType.CUSTOM"
-      v-model:value="formData[key]"
-      @change="changed($event, key)"
+      v-model:value="formData[prop]"
+      @change="changed($event, prop)"
       :component="componentOptions.componentType"
       :args="componentOptions.args"
     />
-    <n-input v-else clearable v-model:value="formData[key]" @update:value="changed($event, key)" />
+    <n-input v-else clearable v-model:value="formData[prop]" @update:value="changed($event, prop)" />
   </n-form-item>
 </template>
 

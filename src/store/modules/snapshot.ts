@@ -3,7 +3,7 @@ import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import type { CanvasStyleData, SnapData } from '@/types/storeTypes'
 import { snapshotDb, StoreComponentData } from '@/utils/db'
-import { ComponentInfo } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
 const useSnapShotStore = defineStore({
   id: 'snapshot',
@@ -25,7 +25,7 @@ const useSnapShotStore = defineStore({
         return snapshot
       }
     },
-    recordSnapshot(canvasData: Array<ComponentInfo>, canvasStyle: CanvasStyleData) {
+    recordSnapshot(canvasData: Array<BaseComponent>, canvasStyle: CanvasStyleData) {
       this.latestSnapshot = {
         canvasData: cloneDeep(canvasData),
         canvasStyle: cloneDeep(canvasStyle)
@@ -45,7 +45,7 @@ const useSnapShotStore = defineStore({
       await snapshotDb.snapshot.clear()
       this.latestSnapshot = undefined
     },
-    saveSnapshot(canvasData: Array<ComponentInfo>, canvasStyle: CanvasStyleData) {
+    saveSnapshot(canvasData: Array<BaseComponent>, canvasStyle: CanvasStyleData) {
       if (this.timeHandler) {
         clearTimeout(this.timeHandler)
         this.timeHandler = undefined

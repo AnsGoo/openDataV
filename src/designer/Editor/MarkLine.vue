@@ -16,7 +16,8 @@ import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useEventBus } from '@/bus/useEventBus'
 import { calcComponentAxis } from '@/utils/utils'
-import { ComponentInfo, Rect } from '@/types/component'
+import { Rect } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
 const basicStore = useBasicStoreWithOut()
 
@@ -63,7 +64,7 @@ useEventBus('unmove', () => {
 })
 
 const showLine = (isDownward, isRightward) => {
-  const components = basicStore.componentData as Array<ComponentInfo>
+  const components = basicStore.componentData as Array<BaseComponent>
   if (basicStore.curComponent) {
     const {
       top: mytop,

@@ -30,11 +30,11 @@ import { computed, reactive, watch } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
 import { NCollapse, NCollapseItem } from 'naive-ui'
-import type { ComponentInfo } from '@/types/component'
 import { groupCommonStyle } from '@/designer/interface'
+import { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
-  curComponent: ComponentInfo
+  curComponent: BaseComponent
 }>()
 const basicStore = useBasicStoreWithOut()
 
@@ -61,7 +61,6 @@ const changed = (key: string, val: string) => {
 const changeStyle = (eventValue: any) => {
   const attrVal = eventValue as Recordable<any>
   if (props.curComponent && props.curComponent.id === attrVal.id) {
-    console
     updateFormData(attrVal.style)
   }
 }

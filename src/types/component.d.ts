@@ -58,7 +58,8 @@ interface BaseFormSchema {
   editable?: boolean
   disable?: boolean
   required?: boolean
-  defaultValue?: any
+  defaultValue: string | number
+  options?: any
 }
 
 type InputFormSchema = BaseFormSchema
@@ -70,18 +71,17 @@ interface InputNumberFormSchema extends BaseFormSchema {
 }
 
 interface AttrType {
-  key: string
+  prop: string
   label: string
   type?: FormType
-  componentOptions?: any
+  componentOptions: InputFormSchema | InputNumberFormSchema | any
   help?: string
 }
 
 // 分组类型
 interface PropsType {
-  name: string
-  uid: string
-  max?: number
+  label: string
+  prop: string
   children: AttrType[]
 }
 

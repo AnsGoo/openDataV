@@ -58,7 +58,6 @@
 </template>
 
 <script setup lang="ts">
-import { cloneDeep } from 'lodash-es'
 import Editor from '@/designer/Editor/Index.vue'
 import ToolBar from '@/designer/Pane/Toolbar'
 import LeftSideBar from '@/designer/Pane/LeftSideBar'
@@ -69,8 +68,8 @@ import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { eventBus } from '@/bus/useEventBus'
-import { ComponentInfo } from '@/types/component'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
+import { BaseComponent } from '@/resource/models'
 
 const basicStore = useBasicStoreWithOut()
 const websk = ref<WebSocket | null>(null)
@@ -114,10 +113,10 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component = cloneDeep(componentList[componentName].component)
-    component.style.top = e.offsetY
-    component.style.left = e.offsetX
-    basicStore.appendComponent(component as ComponentInfo)
+    const component: BaseComponent = new componentList[componentName]()
+    component.change('top', e.offsetY)
+    component.change('left', e.offsetX)
+    basicStore.appendComponent(component)
   }
 }
 

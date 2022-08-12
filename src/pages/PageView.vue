@@ -8,16 +8,16 @@
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
-import type { ComponentInfo } from '@/types/component'
 import { useRoute, useRouter } from 'vue-router'
 import { filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { eventBus } from '@/bus/useEventBus'
 import { LayoutData } from '@/types/apiTypes'
+import {BaseComponent} from '@/resource/models'
 
 const websockets: WebSocket[] = []
 
-const componentData = ref<Array<ComponentInfo>>([])
+const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({
   width: 0,
   height: 0,

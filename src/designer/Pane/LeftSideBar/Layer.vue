@@ -12,13 +12,13 @@
 <script lang="ts" setup>
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref, h, watch } from 'vue'
-import type { ComponentInfo } from '@/types/component'
 import { NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
 import { useEventBus } from '@/bus/useEventBus'
 import { IconPark } from '@/plugins/icon'
 import LayerItem from './LayerItem.vue'
 import type { MenuOption } from 'naive-ui'
 import { ComponentGroupList } from '@/enum'
+import { BaseComponent } from '@/resource/models'
 
 const basicStore = useBasicStoreWithOut()
 
@@ -43,7 +43,7 @@ useEventBus('ActiveMenu', open)
 const handleSelect = (key: string) => {
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
-  const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
+  const activedComponent: BaseComponent = basicStore.getComponentByIndex(indexs)
   basicStore.setCurComponent(activedComponent)
 }
 
@@ -51,7 +51,7 @@ const menuOptions = ref<MenuOption[]>([])
 
 const getMenuOptions = (
   fatherIndex: string,
-  compoments: ComponentInfo[],
+  compoments: BaseComponent[],
   options: MenuOption[]
 ): MenuOption[] => {
   for (let i = 0; i < compoments.length; i++) {

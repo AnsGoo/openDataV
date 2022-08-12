@@ -20,7 +20,7 @@
         <IconPark name="layers" />
         <span>图层</span>
       </template>
-      <Layer />
+      <!-- <Layer /> -->
     </n-tab-pane>
   </n-tabs>
   <n-tabs

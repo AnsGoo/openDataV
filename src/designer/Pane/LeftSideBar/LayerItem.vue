@@ -7,30 +7,31 @@
     v-contextmenu="() => contextmenus($el, index)"
   >
     <div v-if="component.component === 'Group'">
-      <span v-show="mode === 'expand'">{{ component.label || '分组' }}</span>
-      <icon-park name="preview-open" size="24" v-if="component.display" />
+      <span v-show="mode === 'expand'">{{ component.name || '分组' }}</span>
+      <icon-park name="preview-open" size="24" v-if="component.hided" />
       <icon-park name="preview-close-one" size="24" v-else />
     </div>
     <div v-else>
-      <span v-show="mode === 'expand'">{{ component.label }}</span>
-      <icon-park size="24" name="preview-open" v-if="component.display" />
+      <span v-show="mode === 'expand'">{{ component.name }}</span>
+      <icon-park size="24" name="preview-open" v-if="component.hided" />
       <icon-park size="24" name="preview-close-one" v-else />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { ComponentInfo, ComponentStyle, DOMRectStyle } from '@/types/component'
+import type { ComponentStyle, DOMRectStyle } from '@/types/component'
 
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { decomposeComponent, copyText } from '@/utils/utils'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { BaseComponent } from '@/resource/models'
 
 const props = withDefaults(
   defineProps<{
-    component: ComponentInfo
+    component: BaseComponent
     index: string
     activeKey?: string
     mode?: string
@@ -46,7 +47,7 @@ const copyStore = useCopyStoreWithOut()
 
 const copy = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  const component: ComponentInfo = basicStore.getComponentByIndex(indexs)
+  const component: BaseComponent = basicStore.getComponentByIndex(indexs)
   if (component) {
     component.groupStyle = undefined
     copyText(JSON.stringify(component))
@@ -155,19 +156,19 @@ const handleDrop = (event: DragEvent, index: string) => {
   const compomentIndex: string = event.dataTransfer?.getData('compomentIndex') as string
   const toIndex: string = calcDragIndex(compomentIndex, index)
   const result: boolean = isSameLayer(compomentIndex, index)
-  const compoment: ComponentInfo | undefined = cutComponent(compomentIndex, result)
+  const compoment: BaseComponent | undefined = cutComponent(compomentIndex, result)
   console.log(compoment)
   if (compoment && toIndex) {
     pasteComponent(toIndex, compoment, result)
   }
 }
-const cutComponent = (index: string, isMyLayer: boolean): ComponentInfo | undefined => {
+const cutComponent = (index: string, isMyLayer: boolean): BaseComponent | undefined => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const myindex: number = indexs.pop() as number
-  const fatherComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
+  const fatherComponent: BaseComponent = basicStore.getComponentByIndex(indexs)
   if (fatherComponent && fatherComponent.subComponents) {
-    const components: ComponentInfo[] = fatherComponent.subComponents.splice(myindex, 1)
-    const component: ComponentInfo = components[0]
+    const components: BaseComponent[] = fatherComponent.subComponents.splice(myindex, 1)
+    const component: BaseComponent = components[0]
     console.log(component)
     console.log(fatherComponent)
     if (isMyLayer || fatherComponent.component === 'Root') {
@@ -210,10 +211,10 @@ const isSameLayer = (fromIndex: string, toIndex: string): boolean => {
   return fromParentIndex === toParentIndex
 }
 
-const pasteComponent = (index: string, component: ComponentInfo, isMyLayer: boolean): void => {
+const pasteComponent = (index: string, component: BaseComponent, isMyLayer: boolean): void => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const myindex: number = indexs.pop() as number
-  const fatherComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
+  const fatherComponent: BaseComponent = basicStore.getComponentByIndex(indexs)
   if (fatherComponent && fatherComponent.subComponents) {
     if (fatherComponent.component === 'Root' || isMyLayer) {
       fatherComponent.subComponents.splice(myindex, 0, component)

@@ -21,23 +21,30 @@
     <template v-for="(item, index) in componentData" :key="item.id">
       <Shape
         :id="'shape' + item.id"
-        :defaultStyle="item.style"
+        :defaultStyle="(item.style as any)"
         :style="getShapeStyle(item.style)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
-        :index="index.toString()"
-        :class="{ lock: item.isLock }"
-        v-if="basicStore.isEditMode && item.display"
+        :class="{ lock: item.locked }"
+        :index="index"
+        v-if="basicStore.isEditMode && !item.hided"
       >
         <component
+          v-if="item.component === 'Group'"
+          class="component"
+          :is="item.component"
+          :id="'component' + item.id"
+          :style="getComponentShapeStyle(item)"
+          :propValue="item.propValue"
+          :subComponents="item.subComponents"
+        />
+        <component
+          v-else
           class="component"
           :is="item.component"
           :style="getComponentShapeStyle(item)"
           :propValue="item.propValue"
-          :componentId="item.id"
           :id="'component' + item.id"
-          :index="index.toString()"
-          :subComponents="item.subComponents"
         />
       </Shape>
     </template>
@@ -67,10 +74,12 @@ import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
 import { Vector } from '@/types/common'
-import { ComponentInfo, DOMRectStyle, Rect } from '@/types/component'
+import { DOMRectStyle, Rect } from '@/types/component'
 import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
+import { BaseComponent } from '@/resource/models'
+
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
@@ -162,7 +171,10 @@ onUnmounted(() => {
   basicStore.clearCanvas()
 })
 
-const componentData = computed(() => basicStore.componentData)
+const componentData = computed(() => {
+  return basicStore.componentData
+})
+
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
 const curComponent = computed(() => basicStore.curComponent)
 
@@ -179,7 +191,7 @@ const pasteText = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
-      const component: ComponentInfo = JSON.parse(textData)
+      const component: BaseComponent = JSON.parse(textData)
       if ('component' in component) {
         event.preventDefault()
         basicStore.appendComponent(component)
@@ -275,8 +287,8 @@ const handleMouseDown = (e: MouseEvent) => {
 
 const getSelectArea = (
   rect: Rect
-): { components: Array<ComponentInfo>; rect: Rect } | undefined => {
-  const selectedComponents: Array<ComponentInfo> = []
+): { components: Array<BaseComponent>; rect: Rect } | undefined => {
+  const selectedComponents: Array<BaseComponent> = []
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
   const rightSet: Set<number> = new Set()
@@ -285,8 +297,14 @@ const getSelectArea = (
   // 计算所有的组件数据，判断是否在选中区域内
   basicStore.componentData.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const style: DOMRectStyle = component.style
-    const componentRect: Rect = calcComponentAxis(style)
+    const { width, height, left, top, rotate } = component.style
+    const componentRect: Rect = calcComponentAxis({
+      width,
+      height,
+      left,
+      top,
+      rotate
+    } as DOMRectStyle)
     if (
       componentRect.left >= rect.left &&
       componentRect.right <= rect.right &&
@@ -320,19 +338,19 @@ const keyDown = (e: KeyboardEvent): void => {
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.style.left - 1 })
+        basicStore.syncComponentLoction({ left: (curComponent.value.style.left as number) - 1 })
         break
       case 'ArrowUp':
         e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.style.top - 1 })
+        basicStore.syncComponentLoction({ top: (curComponent.value.style.top as number) - 1 })
         break
       case 'ArrowRight':
         e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.style.left + 1 })
+        basicStore.syncComponentLoction({ left: (curComponent.value.style.left as number) + 1 })
         break
       case 'ArrowDown':
         e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.style.top + 1 })
+        basicStore.syncComponentLoction({ top: (curComponent.value.style.top as number) + 1 })
         break
       default:
         e.stopPropagation()

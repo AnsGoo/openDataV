@@ -8,6 +8,7 @@ import type {
 import { message } from '@/utils/message'
 import type { Vector } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
+import { BaseComponent } from '@/resource/models'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))
@@ -67,7 +68,7 @@ export const getGroupStyle = (style: Recordable<any>) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getComponentStyle = (component: ComponentInfo) => {
+export const getComponentStyle = (component: BaseComponent) => {
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
@@ -85,7 +86,7 @@ export const getComponentStyle = (component: ComponentInfo) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getComponentShapeStyle = (component: ComponentInfo) => {
+export const getComponentShapeStyle = (component: BaseComponent) => {
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
@@ -103,7 +104,7 @@ export const getComponentShapeStyle = (component: ComponentInfo) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getInnerComponentShapeStyle = (component: ComponentInfo) => {
+export const getInnerComponentShapeStyle = (component: BaseComponent) => {
   const style = cloneDeep(component.style)
   return {
     ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
@@ -118,23 +119,12 @@ export const getInnerComponentShapeStyle = (component: ComponentInfo) => {
  * @returns 组件坐标
  */
 export function calcComponentAxis(style: DOMRectStyle): Rect {
-  // 这里很重要，切记不能删除，将属性复制一份，否则会影响原始的属性值
-  style = { ...style }
-
-  const {
-    width,
-    height,
-    left,
-    top,
-    rotate
-  }: { width: number; height: number; left: number; top: number; rotate: number } = style
-
-  const leftUpPoint: Vector = { x: left, y: top }
-  const rightUpPoint: Vector = { x: left + width, y: top }
-  const rightDownPoint: Vector = { x: left + width, y: top + height }
-  const leftDownPoint: Vector = { x: left, y: top + height }
-  const center: Vector = { x: left + width / 2, y: top + height / 2 }
-  const realRotate = mod360(rotate)
+  const leftUpPoint: Vector = { x: style.left, y: style.top }
+  const rightUpPoint: Vector = { x: style.left + style.width, y: style.top }
+  const rightDownPoint: Vector = { x: style.left + style.width, y: style.top + style.height }
+  const leftDownPoint: Vector = { x: style.left, y: style.top + style.height }
+  const center: Vector = { x: style.left + style.width / 2, y: style.top + style.height / 2 }
+  const realRotate = mod360(style.rotate)
   if (realRotate != 0) {
     const alu: Vector = rotatePoint(leftUpPoint, center, realRotate)
     const aru: Vector = rotatePoint(rightUpPoint, center, realRotate)
@@ -146,7 +136,12 @@ export function calcComponentAxis(style: DOMRectStyle): Rect {
     const bottom = Math.max(alu.y, aru.y, ard.y, ald.y)
     return { left, right, top, bottom }
   } else {
-    return { top, left, right: left + width, bottom: top + height }
+    return {
+      top: style.top,
+      left: style.left,
+      right: style.left + style.width,
+      bottom: style.top + style.height
+    }
   }
 }
 
@@ -209,7 +204,7 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-export function decomposeComponent(component: ComponentInfo, parentStyle: ComponentStyle) {
+export function decomposeComponent(component: BaseComponent, parentStyle: ComponentStyle) {
   // 获取元素的中心点坐标
   const groupStyle: GroupStyle = component.groupStyle!
   const center: Vector = {
@@ -243,7 +238,7 @@ export function decomposeComponent(component: ComponentInfo, parentStyle: Compon
   }
 }
 
-export function createGroupStyle(groupComponent: ComponentInfo) {
+export function createGroupStyle(groupComponent: BaseComponent) {
   const parentStyle: ComponentStyle = groupComponent.style
   groupComponent.subComponents!.forEach((component) => {
     // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
@@ -262,7 +257,7 @@ export function createGroupStyle(groupComponent: ComponentInfo) {
 /**
  * 计算组合组件的位置信息
  */
-export function calcComponentsRect(components: ComponentInfo[]) {
+export function calcComponentsRect(components: BaseComponent[]) {
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
   const rightSet: Set<number> = new Set()
@@ -445,14 +440,14 @@ export const pageScale = (rootEl: HTMLDivElement, width: number, height: number)
  * @param components
  * @returns
  */
-export const getComponentRealRect = (components: ComponentInfo[]) => {
+export const getComponentRealRect = (components: BaseComponent[]) => {
   const maxRect: {
     right: number
     left: number
     top: number
     bottom: number
     center: Vector
-    component: ComponentInfo
+    component: BaseComponent
   }[] = []
 
   const xAxisSet: Array<number> = []
@@ -462,7 +457,7 @@ export const getComponentRealRect = (components: ComponentInfo[]) => {
     const width: number = ele.style.width! as number
     const top: number = ele.style.top! as number
     const height: number = ele.style.height! as number
-    const rotate: number = ele.style.rotate! as number
+    const rotate: number = Number(ele.style.rotate)
     const leftTop: Vector = { x: left, y: top }
     const rightTop: Vector = { x: left + width, y: top }
     const rightbottom: Vector = { x: left + width, y: top + height }

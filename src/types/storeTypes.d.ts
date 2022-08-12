@@ -1,5 +1,6 @@
-import type { ComponentInfo, DOMRectStyle } from '@/types/component'
+import type { DOMRectStyle } from '@/types/component'
 import { StoreComponentData } from '@/utils/db'
+import { BaseComponent } from '@/resource/models'
 
 export interface Component {
   style: Recordable<string>
@@ -18,8 +19,8 @@ export interface EditData {
   thumbnail: string
   editMode: string
   canvasStyleData: CanvasStyleData
-  componentData: Array<ComponentInfo>
-  curComponent: ComponentInfo | undefined
+  componentData: BaseComponent[]
+  curComponent: BaseComponent | undefined
   isClickComponent: boolean
   isShowEm: boolean
   ids: Set<string>
@@ -32,7 +33,7 @@ export interface MenuStatus {
 }
 
 export interface CopyItem {
-  copyData: any | undefined
+  copyData: BaseComponent | undefined
   isCut: boolean
 }
 
@@ -44,7 +45,7 @@ export interface SnapData {
 
 export interface AreaData {
   style: DOMRectStyle
-  components: Array<ComponentInfo>
+  components: Array<BaseComponent>
 }
 
 export interface UserInfo {

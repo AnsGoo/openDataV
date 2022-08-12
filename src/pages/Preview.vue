@@ -11,15 +11,15 @@ import { onUnmounted, onMounted, ref, computed } from 'vue'
 import { channels, eventBus } from '@/bus/useEventBus'
 import type { ChannelItem } from '@/bus/useEventBus'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import { ComponentInfo } from '@/types/component'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { BaseComponent } from '@/resource/models'
 const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 
 const websockets: WebSocket[] = []
 
-const componentData = computed<ComponentInfo[]>(() => basicStore.componentData)
+const componentData = computed<BaseComponent[]>(() => basicStore.componentData)
 const canvasStyleData = ref<CanvasStyleData>({
   width: 0,
   height: 0,
