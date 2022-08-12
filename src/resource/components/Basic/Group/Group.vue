@@ -84,12 +84,6 @@ const getShapeStyle = (item: ComponentInfo) => {
     .component {
       position: absolute;
     }
-
-    .active {
-      @apply select-none;
-
-      outline: 1px solid red;
-    }
   }
 }
 </style>

@@ -43,8 +43,8 @@ const useBasicStore = defineStore({
     editMode: EditMode.PREVIEW,
     canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
     componentData: [],
+    activeIndex: undefined,
     curComponent: undefined,
-    isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
     ids: new Set()
   }),
@@ -82,11 +82,6 @@ const useBasicStore = defineStore({
     setThumbnail(thumbnail: string) {
       this.thumbnail = thumbnail
     },
-
-    setClickComponentStatus(status: boolean): void {
-      this.isClickComponent = status
-    },
-
     setEditMode(mode: string): void {
       this.editMode = mode
     },
@@ -104,8 +99,9 @@ const useBasicStore = defineStore({
      * @param component 当前组件
      * @param index
      */
-    setCurComponent(component: any): void {
+    setCurComponent(component: ComponentInfo | undefined, index: string | undefined): void {
       this.curComponent = component
+      this.activeIndex = index
     },
 
     /**
@@ -375,7 +371,6 @@ const useBasicStore = defineStore({
     clearCanvas(): void {
       this.componentData = []
       this.curComponent = undefined
-      this.isClickComponent = false
       this.isShowEm = false
       this.canvasStyleData = baseCanvasStyleData
     },

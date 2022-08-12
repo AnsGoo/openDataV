@@ -18,9 +18,9 @@ export interface EditData {
   thumbnail: string
   editMode: string
   canvasStyleData: CanvasStyleData
+  activeIndex?: string
   componentData: Array<ComponentInfo>
   curComponent: ComponentInfo | undefined
-  isClickComponent: boolean
   isShowEm: boolean
   ids: Set<string>
 }

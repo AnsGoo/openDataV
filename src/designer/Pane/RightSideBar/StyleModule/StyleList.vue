@@ -31,7 +31,6 @@ import { useEventBus } from '@/bus/useEventBus'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
 import { NCollapse, NCollapseItem } from 'naive-ui'
 import type { ComponentInfo } from '@/types/component'
-import { groupCommonStyle } from '@/designer/interface'
 
 const props = defineProps<{
   curComponent: ComponentInfo
@@ -41,27 +40,38 @@ const basicStore = useBasicStoreWithOut()
 const formData = reactive<Recordable<any>>({})
 const styleKeys = computed(() => {
   if (props.curComponent && props.curComponent.component in componentList) {
-    const style = componentList[props.curComponent.component].style
-    const groupStyle = props.curComponent.groupStyle
-    if (groupStyle) {
-      style[0] = groupCommonStyle
-    }
     return componentList[props.curComponent.component].style
   }
   return []
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.style
-const changed = (key: string, val: string) => {
+const changed = debounce((key: string, val: any) => {
   if (props.curComponent) {
-    basicStore.setCurComponentStyle(key, val)
+    console.log({ [key]: val as number })
+    console.log(basicStore.activeIndex)
+    const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
+    if (locationKeys.findIndex((el: string) => el === key) > -1) {
+      const indexs: number[] = basicStore.activeIndex!.split('-').map((i) => Number(i))
+      indexs.pop()
+      const parentComponent = basicStore.getComponentByIndex(indexs)
+      key as 'top' | 'left' | 'width' | 'height' | 'rotate'
+      basicStore.syncComponentLoction(
+        { [key]: val as number },
+        parentComponent.component === 'Root' ? undefined : parentComponent
+      )
+      if (parentComponent) {
+        basicStore.resizeAutoComponent(indexs)
+      }
+    } else {
+      basicStore.setCurComponentStyle(key, val)
+    }
   }
-}
+}, 300)
 
 const changeStyle = (eventValue: any) => {
   const attrVal = eventValue as Recordable<any>
   if (props.curComponent && props.curComponent.id === attrVal.id) {
-    console
     updateFormData(attrVal.style)
   }
 }

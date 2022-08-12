@@ -220,7 +220,7 @@ const decompose = () => {
 }
 
 const contextmenus = (): ContextmenuItem[] => {
-  basicStore.setCurComponent(props.info)
+  basicStore.setCurComponent(props.info, props.index)
   return [
     {
       text: '拆分',
@@ -332,7 +332,6 @@ const appendComponent = () => {
  */
 const handleDragendShape = (e: MouseEvent) => {
   if (e.button === 0) {
-    basicStore.setClickComponentStatus(true)
     e.preventDefault()
     e.stopPropagation()
     if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
@@ -390,7 +389,7 @@ const selectCurComponent = (e: MouseEvent) => {
   // 阻止向父组件冒泡
   e.preventDefault()
   e.stopPropagation()
-  basicStore.setCurComponent(props.info)
+  basicStore.setCurComponent(props.info, props.index)
 }
 
 /**
@@ -398,7 +397,6 @@ const selectCurComponent = (e: MouseEvent) => {
  */
 const handleStretchedShape = (point: string, e: MouseEvent) => {
   if (e.button === 0) {
-    // basicStore.setClickComponentStatus(true)
     if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
     e.stopPropagation()
     e.preventDefault()
@@ -455,8 +453,6 @@ const handleRotate = (e: MouseEvent) => {
     if (!shape.value) {
       return
     }
-
-    // basicStore.setClickComponentStatus(true)
     e.preventDefault()
     e.stopPropagation()
     if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
@@ -645,12 +641,6 @@ watch(
     @apply select-none hover:cursor-move;
 
     outline: 1px solid #70c0ff;
-  }
-
-  .layerActive {
-    @apply select-none;
-
-    outline: 1px solid red;
   }
 
   .shape-point {

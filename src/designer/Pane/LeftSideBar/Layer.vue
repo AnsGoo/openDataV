@@ -44,7 +44,7 @@ const handleSelect = (key: string) => {
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: ComponentInfo = basicStore.getComponentByIndex(indexs)
-  basicStore.setCurComponent(activedComponent)
+  basicStore.setCurComponent(activedComponent, key)
 }
 
 const menuOptions = ref<MenuOption[]>([])
