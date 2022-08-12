@@ -115,7 +115,6 @@ const handleLineRelease = (value: number, index: number) => {
   }
 }
 const handleLineRemove = (index: any) => {
-  console.log(index)
   lines.value.splice(index, 1)
 }
 </script>
