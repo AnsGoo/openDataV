@@ -202,7 +202,7 @@ const isShowReferLine = ref<boolean>(true)
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
   if (e.button === 0) {
-    basicStore.setCurComponent(undefined)
+    basicStore.setCurComponent(undefined, undefined)
     e.preventDefault()
     e.stopPropagation()
     hideArea()

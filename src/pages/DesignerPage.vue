@@ -28,8 +28,8 @@
             <Editor
               @drop="handleDrop"
               @dragover="handleDragOver"
-              @mousedown="handleMouseDown"
-              @mouseup="deselectCurComponent"
+              @mousedown="deselectCurComponent"
+              @click="deselectCurComponent"
             />
           </n-scrollbar>
         </n-layout-content>
@@ -126,13 +126,9 @@ const handleDragOver = (e) => {
   e.dataTransfer.dropEffect = 'copy'
 }
 
-const handleMouseDown = () => {
-  basicStore.setClickComponentStatus(false)
-}
-
 const deselectCurComponent = () => {
-  if (!basicStore.isClickComponent) {
-    basicStore.setCurComponent(undefined)
+  if (!basicStore.curComponent) {
+    basicStore.setCurComponent(undefined, undefined)
   }
 }
 

@@ -85,7 +85,7 @@ const useComposeStore = defineStore({
       basicStore.appendComponent(groupComponent)
 
       const index = basicStore.componentData.length - 1
-      basicStore.setCurComponent(basicStore.componentData[index])
+      basicStore.setCurComponent(basicStore.componentData[index], index.toString())
       this.components = []
     },
     /**

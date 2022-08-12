@@ -97,7 +97,6 @@ export type {
   ComponentOptions,
   PropsType,
   AttrType,
-  ArrayAttrType,
   ComponentCommon,
   DOMRectStyle,
   GroupStyle,
