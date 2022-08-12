@@ -5,6 +5,7 @@ export interface PaletteType {
   fontColor?: string
   shadowColor?: string
   lineColor?: string
+  lineBoardStyle?: string
   borderColor?: string
   cornerActiveColor?: string
   menu?: MenuType
