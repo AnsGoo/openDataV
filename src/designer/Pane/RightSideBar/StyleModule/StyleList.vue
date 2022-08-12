@@ -48,8 +48,6 @@ const styleKeys = computed(() => {
 // 样式页面改变，修改当前组件的样式：curComponent.style
 const changed = debounce((key: string, val: any) => {
   if (props.curComponent) {
-    console.log({ [key]: val as number })
-    console.log(basicStore.activeIndex)
     const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
     if (locationKeys.findIndex((el: string) => el === key) > -1) {
       const indexs: number[] = basicStore.activeIndex!.split('-').map((i) => Number(i))
