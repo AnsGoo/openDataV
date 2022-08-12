@@ -17,32 +17,30 @@
       :startY="0"
       :startX="0"
     />
-    <div>
-      <!--页面组件列表展示-->
-      <template v-for="(item, index) in componentData" :key="item.id">
-        <Shape
-          :id="'shape' + item.id"
-          :defaultStyle="item.style"
-          :style="getShapeStyle(item.style)"
-          :active="item.id === (curComponent || {}).id"
-          :info="item"
+    <!--页面组件列表展示-->
+    <template v-for="(item, index) in componentData" :key="item.id">
+      <Shape
+        :id="'shape' + item.id"
+        :defaultStyle="item.style"
+        :style="getShapeStyle(item.style)"
+        :active="item.id === (curComponent || {}).id"
+        :info="item"
+        :index="index.toString()"
+        :class="{ lock: item.isLock }"
+        v-if="basicStore.isEditMode && item.display"
+      >
+        <component
+          class="component"
+          :is="item.component"
+          :style="getComponentShapeStyle(item)"
+          :propValue="item.propValue"
+          :componentId="item.id"
+          :id="'component' + item.id"
           :index="index.toString()"
-          :class="{ lock: item.isLock }"
-          v-if="basicStore.isEditMode && item.display"
-        >
-          <component
-            class="component"
-            :is="item.component"
-            :style="getComponentShapeStyle(item)"
-            :propValue="item.propValue"
-            :componentId="item.id"
-            :id="'component' + item.id"
-            :index="index.toString()"
-            :subComponents="item.subComponents"
-          />
-        </Shape>
-      </template>
-    </div>
+          :subComponents="item.subComponents"
+        />
+      </Shape>
+    </template>
 
     <!-- 标线 -->
     <MarkLine />
