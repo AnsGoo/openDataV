@@ -1,4 +1,4 @@
-import{N as et,G as F,k as N,B as Be,s as tt,d as je,i as j,m as qe,p as ae,r as nt,w as rt}from"./@vue.a2815691.js";/*!
+import{N as et,G as F,k as N,B as Be,i as j,s as tt,d as je,m as qe,p as ae,r as nt,w as rt}from"./@vue.a2815691.js";/*!
   * vue-router v4.1.3
   * (c) 2022 Eduardo San Martin Morote
   * @license MIT
