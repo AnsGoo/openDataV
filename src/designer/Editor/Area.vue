@@ -59,6 +59,11 @@ const handleFlushColumn = () => {
   eventBus.emit('hideArea')
 }
 
+const batchDelete = () => {
+  composeStore.batchDeleteComponent(composeStore.components)
+  eventBus.emit('hideArea')
+}
+
 const contextmenus = (): ContextmenuItem[] => {
   return [
     {
@@ -66,6 +71,13 @@ const contextmenus = (): ContextmenuItem[] => {
       subText: '',
       disable: !composeStore.canCompose,
       handler: compose
+    },
+    { divider: true },
+    {
+      text: '删除',
+      subText: '',
+      disable: composeStore.components.length <= 0,
+      handler: batchDelete
     },
     { divider: true },
     {

@@ -14,9 +14,9 @@
     <Ruler
       :width="canvasStyleData.width"
       :height="canvasStyleData.height"
-      :isShowReferLine="isShowReferLine"
+      :startY="0"
+      :startX="0"
     />
-
     <!--页面组件列表展示-->
     <template v-for="(item, index) in componentData" :key="item.id">
       <Shape
@@ -41,6 +41,7 @@
         />
       </Shape>
     </template>
+
     <!-- 标线 -->
     <MarkLine />
     <!-- 选中区域 -->
@@ -129,18 +130,6 @@ const contextmenus = (): ContextmenuItem[] => {
       text: '清空画布',
       subText: '',
       handler: clearCanvas
-    },
-    {
-      text: '显示辅助线',
-      subText: '',
-      disable: isShowReferLine.value,
-      handler: () => (isShowReferLine.value = true)
-    },
-    {
-      text: '隐藏辅助线',
-      subText: '',
-      disable: !isShowReferLine.value,
-      handler: () => (isShowReferLine.value = false)
     }
   ]
 }
@@ -198,7 +187,6 @@ const width = ref<number>(0)
 const height = ref<number>(0)
 const isShowArea = ref<boolean>(false)
 const editor = ref<ElRef>(null)
-const isShowReferLine = ref<boolean>(true)
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
   if (e.button === 0) {

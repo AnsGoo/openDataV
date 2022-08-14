@@ -1,13 +1,11 @@
 <template>
   <SketchRule
-    :thick="thick"
-    :scale="scale"
+    :thick="16"
+    :scale="1"
     :width="width"
     :height="height"
     :startX="startX"
     :startY="startY"
-    :lines="lines"
-    :isShowReferLine="isShowReferLine"
   />
 </template>
 
@@ -16,25 +14,7 @@ import SketchRule from '../modules/ruler'
 defineProps<{
   width: number
   height: number
-  isShowReferLine: boolean
+  startX: number
+  startY: number
 }>()
-
-const scale = 1
-const startX = 0
-const startY = 0
-const lines = {
-  h: [],
-  v: []
-}
-const thick = 20
 </script>
-
-<style lang="less" scoped>
-:deep(.line) {
-  border-left: 1px dashed #37d4cf !important;
-}
-
-:deep(.indicator) {
-  border-left: 1px dashed #37d4cf !important;
-}
-</style>
