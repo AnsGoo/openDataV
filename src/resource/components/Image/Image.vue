@@ -4,9 +4,9 @@
 </template>
 
 <script setup lang="ts">
+import { BaseComponent } from '@/resource/models'
 defineProps<{
-  componentId: string
-  propValue: {}
+  component: BaseComponent
 }>()
 </script>
 

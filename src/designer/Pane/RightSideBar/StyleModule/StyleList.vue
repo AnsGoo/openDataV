@@ -40,13 +40,14 @@ const basicStore = useBasicStoreWithOut()
 
 const formData = reactive<Recordable<any>>({})
 const styleKeys = computed(() => {
-  if (props.curComponent && props.curComponent.component in componentList) {
-    const style = componentList[props.curComponent.component].style
+  if (props.curComponent) {
+    const style = props.curComponent.style
+    console.log(style)
     const groupStyle = props.curComponent.groupStyle
     if (groupStyle) {
       style[0] = groupCommonStyle
     }
-    return componentList[props.curComponent.component].style
+    return style
   }
   return []
 })

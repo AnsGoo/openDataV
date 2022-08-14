@@ -4,9 +4,7 @@
     :is="component.component"
     :style="getComponentStyle(component)"
     :propValue="component.propValue"
-    :componentId="component.id"
     :id="'component' + component.id"
-    :subComponents="component.subComponents"
   />
 </template>
 

@@ -30,20 +30,10 @@
         v-if="basicStore.isEditMode && !item.hided"
       >
         <component
-          v-if="item.component === 'Group'"
-          class="component"
-          :is="item.component"
-          :id="'component' + item.id"
-          :style="getComponentShapeStyle(item)"
-          :propValue="item.propValue"
-          :subComponents="item.subComponents"
-        />
-        <component
-          v-else
           class="component"
           :is="item.component"
           :style="getComponentShapeStyle(item)"
-          :propValue="item.propValue"
+          :component="item"
           :id="'component' + item.id"
         />
       </Shape>

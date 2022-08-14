@@ -305,7 +305,7 @@ const importCanvas = () => {
 
 const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   if (loadEvent.target && loadEvent.target.result) {
-    const layoutComponents: { canvasData: BaseComponent[]; canvasStyle: CanvasStyleData } =
+    const layoutComponents: { canvasData: Record<string, any>[]; canvasStyle: CanvasStyleData } =
       JSON.parse(loadEvent.target.result as string)
     if (layoutComponents) {
       basicStore.setComponentData(layoutComponents.canvasData)
