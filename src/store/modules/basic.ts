@@ -495,11 +495,19 @@ const useBasicStore = defineStore({
       }
       return false
     },
+    /**
+     * 显示组件
+     * @param index  组件索引
+     */
     showComponent(index: string): void {
       const indexs: number[] = index.split('-').map((i) => Number(i))
       const component: ComponentInfo = this.getComponentByIndex(indexs)
       component.display = true
     },
+    /**
+     * 隐藏组件
+     * @param index 组件索引
+     */
     hiddenComponent(index: string): void {
       const indexs: number[] = index.split('-').map((i) => Number(i))
       const component: ComponentInfo = this.getComponentByIndex(indexs)
@@ -534,6 +542,35 @@ const useBasicStore = defineStore({
       new Promise((resolve) => {
         resolve(snapShotStore.saveSnapshot(this.componentData, this.canvasStyleData))
       })
+    },
+    cutComponent(index: string): ComponentInfo | undefined {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const myindex: number = indexs.pop() as number
+      const fatherComponent: ComponentInfo = this.getComponentByIndex(indexs)
+      if (fatherComponent && fatherComponent.subComponents) {
+        const components: ComponentInfo[] = fatherComponent.subComponents.splice(myindex, 1)
+        const component: ComponentInfo = components[0]
+        if (fatherComponent.component === 'Root') {
+          return component
+        } else if (fatherComponent.component === 'Group') {
+          component.groupStyle = undefined
+          this.resizeAutoComponent(indexs)
+          return component
+        }
+      }
+    },
+    insertComponent(index: string, component: ComponentInfo): void {
+      const indexs: number[] = index.split('-').map((i) => Number(i))
+      const myindex: number = indexs.pop() as number
+      const fatherComponent: ComponentInfo = this.getComponentByIndex(indexs)
+      if (fatherComponent && fatherComponent.subComponents) {
+        if (fatherComponent.component === 'Root') {
+          fatherComponent.subComponents.splice(myindex, 0, component)
+        } else if (fatherComponent.component === 'Group') {
+          fatherComponent.subComponents.splice(myindex, 0, component)
+          this.resizeAutoComponent(indexs)
+        }
+      }
     }
   }
 })

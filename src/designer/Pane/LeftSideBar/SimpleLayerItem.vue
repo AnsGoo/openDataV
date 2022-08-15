@@ -1,22 +1,12 @@
 <template>
-  <div
+  <IconPark
     draggable="true"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
     v-contextmenu="contextmenus"
-  >
-    <div v-if="component.component === 'Group'" class="layer">
-      <span v-show="mode === 'expand'">{{ component.label || '分组' }}</span>
-      <icon-park name="preview-open" size="24" v-if="component.display" />
-      <icon-park name="preview-close-one" size="24" v-else />
-    </div>
-    <div v-else class="layer">
-      <span v-show="mode === 'expand'">{{ component.label }}</span>
-      <icon-park size="24" name="preview-open" v-if="component.display" />
-      <icon-park size="24" name="preview-close-one" v-else />
-    </div>
-  </div>
+    :name="name"
+  />
 </template>
 
 <script lang="ts" setup>
@@ -32,6 +22,7 @@ const props = withDefaults(
     index: string
     activeKey?: string
     mode?: string
+    name: string
     contextmenus: () => ContextmenuItem[]
   }>(),
   {
@@ -90,7 +81,8 @@ const calcDragIndex = (fromIndex: string, toIndex: string): string => {
 </script>
 
 <style lang="less" scoped>
-.layer {
-  display: flex;
+.iconfont {
+  @apply mr-1 text-xl;
+  color: rgba(30, 144, 255, 1);
 }
 </style>

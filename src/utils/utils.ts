@@ -380,7 +380,7 @@ export const copyText = (text: string): void => {
 export const pasteText = (): string => {
   let textData
   const paste = (event: ClipboardEvent) => {
-    textData = event.clipboardData?.getData('text')
+    textData = event.clipboardData?.getData('text') as unknown as ComponentInfo
     event.preventDefault()
   }
   document.addEventListener('paste', paste)
