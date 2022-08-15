@@ -5,7 +5,7 @@ export interface ContextmenuItem {
   disable?: boolean
   hide?: boolean
   children?: ContextmenuItem[]
-  handler?: (el: HTMLElement) => void
+  handler?: (el: HTMLElement, e: MouseEvent) => void
 }
 
 export interface Axis {
