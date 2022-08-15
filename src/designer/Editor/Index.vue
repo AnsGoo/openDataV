@@ -115,8 +115,11 @@ const clearCanvas = () => {
   basicStore.clearCanvas()
 }
 
-const paste = () => {
-  copyStore.paste(false)
+const paste = (_: HTMLElement, event: MouseEvent) => {
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+  const y = event.pageY - editorRectInfo.top
+  const x = event.pageX - editorRectInfo.left
+  copyStore.paste(true, x, y)
 }
 
 const contextmenus = (): ContextmenuItem[] => {

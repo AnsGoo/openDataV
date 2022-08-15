@@ -115,8 +115,9 @@ const handleDrop = async (e) => {
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
     const component = cloneDeep(componentList[componentName].component)
-    component.style.top = e.offsetY
-    component.style.left = e.offsetX
+    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+    component.style.top = e.pageY - editorRectInfo.top
+    component.style.left = e.pageX - editorRectInfo.left
     basicStore.appendComponent(component as ComponentInfo)
   }
 }

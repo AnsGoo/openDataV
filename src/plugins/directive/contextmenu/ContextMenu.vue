@@ -51,10 +51,10 @@ const style = computed(() => {
   }
 })
 
-const handleClickMenuItem = (item: ContextmenuItem) => {
+const handleClickMenuItem = (item: ContextmenuItem, event: MouseEvent) => {
   if (item.disable) return
   if (item.children && !item.handler) return
-  if (item.handler) item.handler(props.el)
+  if (item.handler) item.handler(props.el, event)
   props.removeContextmenu()
 }
 </script>
