@@ -170,7 +170,6 @@ const pasteComponent = (event: ClipboardEvent) => {
     const textData = event.clipboardData.getData('text')
     try {
       const component: ComponentInfo = JSON.parse(textData)
-      console.log(component)
       if ('component' in component) {
         component.style.top = component.style.top + 10
         component.style.left = component.style.left + 10
