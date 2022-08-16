@@ -363,6 +363,7 @@ export const importRaw = (fileHandler, accept = '.*') => {
 }
 
 // 复制文本到剪贴板
+
 export const copyText = (text: string): void => {
   const copy = (event: ClipboardEvent) => {
     event.clipboardData?.setData('text', text)

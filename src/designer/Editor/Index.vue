@@ -62,7 +62,7 @@ import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape.vue'
-import { filterStyle, calcComponentAxis } from '@/utils/utils'
+import { filterStyle, calcComponentAxis, copyText } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
@@ -142,13 +142,13 @@ useEventBus('hideArea', hideArea)
 onMounted(() => {
   console.log('进入编辑模式')
   basicStore.setEditMode(EditMode.EDIT)
-  document.addEventListener('paste', pasteText)
+  document.addEventListener('paste', pasteComponent)
 })
 
 onUnmounted(() => {
   console.log('进入预览模式')
   basicStore.setEditMode(EditMode.PREVIEW)
-  document.removeEventListener('paste', pasteText)
+  document.removeEventListener('paste', pasteComponent)
   basicStore.clearCanvas()
 })
 
@@ -165,12 +165,15 @@ const bgStyle = computed<Recordable<string>>(() => {
   return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
 })
 
-const pasteText = (event: ClipboardEvent) => {
+const pasteComponent = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
       const component: ComponentInfo = JSON.parse(textData)
       if ('component' in component) {
+        component.style.top = component.style.top + 10
+        component.style.left = component.style.left + 10
+        copyText(JSON.stringify(component))
         event.preventDefault()
         basicStore.appendComponent(component)
       }
