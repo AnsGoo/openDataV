@@ -4,7 +4,7 @@
       <li
         v-if="!menu.hide"
         class="menu-item"
-        @click.stop="handleClickMenuItem(menu)"
+        @click.stop="(event:MouseEvent) => handleClickMenuItem(menu, event)"
         :class="{ divider: menu.divider, disable: menu.disable }"
       >
         <div

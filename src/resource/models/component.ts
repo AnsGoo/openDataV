@@ -1,6 +1,8 @@
+import { cloneDeep } from 'lodash-es'
 import { ComponentGroup, FormType } from '@/enum'
 import { uuid } from '@/utils/utils'
-import type { DOMRectStyle, PropsType } from '@/types/component'
+import type { DOMRectStyle, GroupStyle, PropsType } from '@/types/component'
+import type { ComponentDataType } from './types'
 
 export abstract class BaseComponent {
   id: string
@@ -11,17 +13,23 @@ export abstract class BaseComponent {
   locked: boolean = false
   hided: boolean = false
   selected: boolean = false
+  display: boolean = true
   callbackProp: Function | undefined = undefined
   callbackStyle: Function | undefined = undefined
 
+  // form表单中使用
   _prop: PropsType[] = []
   _style: PropsType[] = []
+
   extraStyle: Record<string, string | number | boolean> = {} as never
-  groupStyle: Record<'gtop' | 'gleft' | 'gweight' | 'gheight' | 'grotate', number> = {} as never
-  baseStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
+  groupStyle: GroupStyle | undefined = undefined
+  positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
   parent: BaseComponent | undefined = undefined
   subComponents: BaseComponent[] = []
+
+  _propValue: Record<string, any> = {}
+  _styleValue: Record<string, any> = {}
 
   constructor(
     component: string,
@@ -46,20 +54,19 @@ export abstract class BaseComponent {
     }
 
     if (width) {
-      this.baseStyle.width = width
+      this.positionStyle.width = width
     } else {
-      this.baseStyle.width = 100
+      this.positionStyle.width = 100
     }
 
     if (height) {
-      this.baseStyle.height = height
+      this.positionStyle.height = height
     } else {
-      this.baseStyle.height = 100
+      this.positionStyle.height = 100
     }
   }
 
-  // 获取属性表单
-  getPropFormJson() {
+  get propFromValue(): PropsType[] {
     const common: PropsType = {
       label: '公共属性',
       prop: 'common',
@@ -92,20 +99,10 @@ export abstract class BaseComponent {
         }
       ]
     }
-    return this.getFormJson([common, ...this._prop])
+    return [common, ...this._prop]
   }
 
-  // 获取样式表单
-  getStyleFormJson() {
-    return this.getFormJson(this.styleValue)
-  }
-
-  // 生成Form表单需要的Json
-  getFormJson(config: PropsType[]) {
-    return config
-  }
-
-  get styleValue(): PropsType[] {
+  get styleFormValue(): PropsType[] {
     if (!this._style.find((item) => item.prop === 'position')) {
       const common: PropsType = {
         label: '位置大小',
@@ -116,7 +113,7 @@ export abstract class BaseComponent {
             prop: 'left',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.baseStyle.left
+              defaultValue: this.positionStyle.left
             }
           },
           {
@@ -124,7 +121,7 @@ export abstract class BaseComponent {
             prop: 'top',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.baseStyle.top
+              defaultValue: this.positionStyle.top
             }
           },
           {
@@ -132,7 +129,7 @@ export abstract class BaseComponent {
             prop: 'width',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.baseStyle.width
+              defaultValue: this.positionStyle.width
             }
           },
           {
@@ -140,7 +137,7 @@ export abstract class BaseComponent {
             prop: 'height',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.baseStyle.height
+              defaultValue: this.positionStyle.height
             }
           },
           {
@@ -148,7 +145,7 @@ export abstract class BaseComponent {
             prop: 'rotate',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.baseStyle.rotate
+              defaultValue: this.positionStyle.rotate
             }
           }
         ]
@@ -160,65 +157,84 @@ export abstract class BaseComponent {
   }
 
   get propValue() {
-    const prop: Record<string, any> = {}
+    this._propValue['common'] = {
+      name: this.name,
+      component: this.component,
+      id: this.id
+    }
+
     this._prop.forEach((item) => {
-      prop[item.prop] = {}
+      if (!Reflect.has(this._propValue, item.prop)) {
+        this._propValue[item.prop] = {}
+      }
+
       item.children.forEach((obj) => {
-        prop[item.prop][obj.prop] = obj.componentOptions.defaultValue
+        this._propValue[item.prop][obj.prop] = obj.componentOptions.defaultValue
       })
     })
 
-    return prop
+    return this._propValue
   }
 
   get style(): Record<string, string | number | boolean> {
-    const style: Record<string, string | number | boolean> = {}
-    this.styleValue.forEach((item) => {
+    this.styleFormValue.forEach((item) => {
       item.children.forEach((obj) => {
-        style[obj.prop] = obj.componentOptions.defaultValue
+        this._styleValue[obj.prop] = obj.componentOptions.defaultValue
       })
     })
 
-    return style
+    for (const [key, value] of Object.entries(this.extraStyle)) {
+      this._styleValue[key] = value
+    }
+    return this._styleValue
   }
 
   // 生成后端存储需要的Json
-  toJson() {
-    const component: Record<string, any> = {
+  toJson(): ComponentDataType {
+    const component: ComponentDataType = {
       id: this.id,
       component: this.component,
       name: this.name,
-      group: this.group,
-      groupStyle: this.groupStyle
+      propValue: this.propValue,
+      style: this.style,
+      subComponents: []
     }
 
-    component.propValue = this.propValue
+    if (this.groupStyle) {
+      component.groupStyle = this.groupStyle
+    }
 
-    component.style = this.style
-
+    this.subComponents.forEach((item) => component.subComponents.push(item.toJson()))
     return component
   }
 
   // 后端数据回填propValue
   setPropValue(component: Record<string, any>) {
-    this.setValue(component.propValue)
+    for (const prop in component.propValue) {
+      const form = this._prop.find((obj) => obj.prop === prop)
+      if (!form) continue
+
+      for (const child in component.propValue[prop]) {
+        const item = form.children.find((obj) => obj.prop === child)
+        if (!item) continue
+        item.componentOptions.defaultValue = component.propValue[prop][child]
+      }
+    }
   }
 
   // 后端数据回填style
   setStyleValue(component: Record<string, any>) {
-    this.setValue(component.style)
-  }
+    for (const prop in component.style) {
+      this.styleFormValue.forEach((item) => {
+        const propObj = item.children.find((obj) => obj.prop === prop)
+        if (propObj) {
+          propObj.componentOptions.defaultValue = component.style[prop]
 
-  setValue(propList: Record<string, any>) {
-    for (const prop in propList) {
-      const form = this.propValue.find((obj) => obj.prop === prop)
-      if (!form) continue
-
-      for (const child in propList[prop]) {
-        const item = form.children.find((obj) => obj.prop === child)
-        if (!item) continue
-        item.componentOptions.defaultValue = propList[prop][child]
-      }
+          if (prop in this.positionStyle) {
+            this.positionStyle[prop] = component.style[prop]
+          }
+        }
+      })
     }
   }
 
@@ -231,7 +247,12 @@ export abstract class BaseComponent {
   }
   // 修改属性
   changeProp(form: string, prop: string, value: string | number | boolean) {
-    const formObj = this.propValue.find((item) => item.prop === form)
+    if (form === 'common' && prop === 'name') {
+      this.name = value as string
+      return
+    }
+
+    const formObj = this.propFromValue.find((item) => item.prop === form)
     if (!formObj) return
 
     const propObj = formObj.children.find((obj) => obj.prop === prop)
@@ -239,30 +260,59 @@ export abstract class BaseComponent {
     propObj.componentOptions.defaultValue = value
 
     if (this.callbackProp) {
-      this.callbackProp(prop, value)
+      this.callbackProp(form, prop, value)
     }
   }
 
-  changePropCallback(callback: (prop: string, value: any) => void) {
+  changePropCallback(callback: (prop: string, key: string, value: any) => void) {
     this.callbackProp = callback
   }
 
   // 修改样式
   changeStyle(prop: string, value: string | number | boolean) {
-    for (const item of this.styleValue) {
+    for (const item of this.styleFormValue) {
       const propObj = item.children.find((obj) => obj.prop === prop)
       if (!propObj) continue
 
       propObj.componentOptions.defaultValue = value
+      if (prop in this.positionStyle) {
+        this.positionStyle[prop] = value
+      }
 
       if (this.callbackStyle) {
         this.callbackStyle(prop, value)
       }
       break
     }
+
+    this.extraStyle[prop] = value
   }
 
   changeStyleCallback(callback: (prop: string, value: any) => void) {
     this.callbackStyle = callback
+  }
+
+  // 添加子组件
+  addComponent(components: BaseComponent[], deep: boolean = false, clear: boolean = false) {
+    if (clear) {
+      this.subComponents = []
+    }
+
+    components.forEach((item) => {
+      let com = item
+      if (deep) {
+        com = cloneDeep(item)
+      }
+      com.parent = this
+      this.subComponents.push(com)
+    })
+  }
+
+  // 获取当前组件在父组件中的索引
+  getIndex() {
+    if (this.parent) {
+      return this.parent.subComponents.findIndex((item) => item.id === this.id)
+    }
+    return -1
   }
 }

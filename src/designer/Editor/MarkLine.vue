@@ -71,14 +71,14 @@ const showLine = (isDownward, isRightward) => {
       left: myleft,
       right: myright,
       bottom: mybottom
-    }: Rect = calcComponentAxis(basicStore.curComponent!.style)
+    }: Rect = calcComponentAxis(basicStore.curComponent.positionStyle)
     const curComponentHalfwidth = (myright - myleft) / 2
     const curComponentHalfHeight = (mybottom - mytop) / 2
 
     hideLine()
     components.forEach((component) => {
       if (component == basicStore.curComponent) return
-      const componentStyle = calcComponentAxis(component.style)
+      const componentStyle = calcComponentAxis(component.positionStyle)
       const { top, left, bottom, right } = componentStyle
       const componentHalfwidth = (right - left) / 2
       const componentHalfHeight = (bottom - top) / 2
@@ -180,7 +180,7 @@ const showLine = (isDownward, isRightward) => {
                   height: mybottom - mytop
                 })
               : condition.dragShift
-          basicStore.setComponentSingleStyle({ key, value })
+          basicStore.setCurComponentStyle(key, value)
 
           condition.lineNode.style[key] = `${condition.lineShift}px`
           needToShow.push(condition.line)

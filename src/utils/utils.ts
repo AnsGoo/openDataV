@@ -1,10 +1,4 @@
-import type {
-  ComponentInfo,
-  ComponentStyle,
-  DOMRectStyle,
-  GroupStyle,
-  Rect
-} from '@/types/component'
+import type { ComponentStyle, DOMRectStyle, GroupStyle, Rect } from '@/types/component'
 import { message } from '@/utils/message'
 import type { Vector } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
@@ -226,30 +220,26 @@ export function decomposeComponent(component: BaseComponent, parentStyle: Compon
     }
 
     const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-    component.style = {
-      ...component.style,
-      top: Math.round(afterPoint.y - height / 2),
-      left: Math.round(afterPoint.x - width / 2),
-      height: Math.round(height),
-      width: Math.round(width),
-      rotate
-    }
+    component.change('top', Math.round(afterPoint.y - height / 2))
+    component.change('left', Math.round(afterPoint.x - width / 2))
+    component.change('height', Math.round(height))
+    component.change('width', Math.round(width))
+    component.change('rotate', rotate)
     component.groupStyle = undefined
   }
 }
 
 export function createGroupStyle(groupComponent: BaseComponent) {
-  const parentStyle: ComponentStyle = groupComponent.style
+  const parentStyle: DOMRectStyle = groupComponent.positionStyle
   groupComponent.subComponents!.forEach((component) => {
     // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
     // 如果已存在 component.groupStyle，说明已经计算过一次了。不需要再次计算
-    const style = { ...component.style } as DOMRectStyle
     component.groupStyle = {
-      gleft: toPercent((style.left - parentStyle.left) / parentStyle.width),
-      gtop: toPercent((style.top - parentStyle.top) / parentStyle.height),
-      gwidth: toPercent(style.width / parentStyle.width),
-      gheight: toPercent(style.height / parentStyle.height),
-      grotate: style.rotate
+      gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
+      gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),
+      gwidth: toPercent(component.positionStyle.width / parentStyle.width),
+      gheight: toPercent(component.positionStyle.height / parentStyle.height),
+      grotate: component.positionStyle.rotate
     }
   })
 }
@@ -264,7 +254,7 @@ export function calcComponentsRect(components: BaseComponent[]) {
   const bottomSet: Set<number> = new Set()
   components.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const style: DOMRectStyle = component.style
+    const style: DOMRectStyle = component.positionStyle
     const componentRect: Rect = calcComponentAxis(style)
     leftSet.add(componentRect.left)
     topSet.add(componentRect.top)
@@ -453,11 +443,11 @@ export const getComponentRealRect = (components: BaseComponent[]) => {
   const xAxisSet: Array<number> = []
   const yAxisSet: Array<number> = []
   components.forEach((ele) => {
-    const left: number = ele.style.left! as number
-    const width: number = ele.style.width! as number
-    const top: number = ele.style.top! as number
-    const height: number = ele.style.height! as number
-    const rotate: number = Number(ele.style.rotate)
+    const left: number = ele.positionStyle.left
+    const width: number = ele.positionStyle.width
+    const top: number = ele.positionStyle.top
+    const height: number = ele.positionStyle.height
+    const rotate: number = Number(ele.positionStyle.rotate)
     const leftTop: Vector = { x: left, y: top }
     const rightTop: Vector = { x: left + width, y: top }
     const rightbottom: Vector = { x: left + width, y: top + height }

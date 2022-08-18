@@ -12,6 +12,8 @@ import {
 } from '@/utils/utils'
 import { cloneDeep } from 'lodash-es'
 import { BaseComponent } from '@/resource/models'
+import { componentList } from '@/designer/load'
+
 const basicStore = useBasicStoreWithOut()
 
 const useComposeStore = defineStore({
@@ -34,7 +36,7 @@ const useComposeStore = defineStore({
       // 当前组件没有锁定，并且是分组组件，就可以拆分
       if (
         basicStore.curComponent &&
-        !basicStore.curComponent.isLock &&
+        !basicStore.curComponent.locked &&
         basicStore.curComponent.component === 'Group'
       ) {
         return false
@@ -47,7 +49,7 @@ const useComposeStore = defineStore({
       return this.components.findIndex((el: BaseComponent) => el.id === component.id) !== -1
     },
 
-    setAreaData(style: DOMRectStyle, components: Array<BaseComponent>) {
+    setAreaData(style: DOMRectStyle, components: BaseComponent[]) {
       this.style = style || {}
       this.components = components || []
     },
@@ -72,21 +74,18 @@ const useComposeStore = defineStore({
       if (this.style.width === 0) {
         this.style = { ...this.style, ...calcComponentsRect(this.components) }
       }
-      const groupComponent: BaseComponent = {
-        component: 'Group',
-        id: uuid(),
-        display: true,
-        icon: '',
-        style: this.style,
-        subComponents: cloneDeep(this.components),
-        label: ''
+      const GroupClass = componentList['Group']
+      const groupComponent: BaseComponent = new GroupClass()
+      for (const prop in this.style) {
+        groupComponent.change(prop, this.style[prop])
       }
+      groupComponent.addComponent(this.components, true)
       createGroupStyle(groupComponent)
       this.batchDeleteComponent(this.components)
       basicStore.appendComponent(groupComponent)
 
       const index = basicStore.componentData.length - 1
-      basicStore.setCurComponent(basicStore.componentData[index])
+      basicStore.setCurComponent(basicStore.componentData[index], index.toString())
       this.components = []
     },
     /**
@@ -112,11 +111,14 @@ const useComposeStore = defineStore({
         return
       }
 
-      const parentStyle: ComponentStyle = basicStore.curComponent!.style
+      const parentStyle: ComponentStyle = basicStore.curComponent.positionStyle
       const components: BaseComponent[] = basicStore.curComponent.subComponents
       if (components.length > 0) {
-        const index: number = basicStore.getComponentIndexById(basicStore.curComponent.id)
-        basicStore.removeComponent(index.toString())
+        const index: number = basicStore.getComponentIndexById(
+          basicStore.curComponent.id,
+          basicStore.curComponent.parent
+        )
+        basicStore.removeComponent(index, basicStore.curComponent.parent)
         components.forEach((component) => {
           decomposeComponent(component, parentStyle)
           basicStore.appendComponent(component)
@@ -130,7 +132,7 @@ const useComposeStore = defineStore({
       const { right, items } = getComponentRealRect(this.components)
       items.forEach((el) => {
         const distance = right - el.right
-        el.component.style.left = el.component.style.left + distance
+        el.component.change('left', el.component.positionStyle.left + distance)
       })
       basicStore.saveComponentData()
     },
@@ -141,7 +143,7 @@ const useComposeStore = defineStore({
       const { left, items } = getComponentRealRect(this.components)
       items.forEach((el) => {
         const distance = el.left - left
-        el.component.style.left = el.component.style.left - distance
+        el.component.change('left', el.component.positionStyle.left - distance)
       })
       basicStore.saveComponentData()
     },
@@ -152,7 +154,7 @@ const useComposeStore = defineStore({
       const { top, items } = getComponentRealRect(this.components)
       items.forEach((el) => {
         const distance = el.top - top
-        el.component.style.top = el.component.style.top - distance
+        el.component.change('top', el.component.positionStyle.top - distance)
       })
       basicStore.saveComponentData()
     },
@@ -163,7 +165,7 @@ const useComposeStore = defineStore({
       const { bottom, items } = getComponentRealRect(this.components)
       items.forEach((el) => {
         const distance = bottom - el.bottom
-        el.component.style.top = el.component.style.top + distance
+        el.component.change('top', el.component.positionStyle.top + distance)
       })
       basicStore.saveComponentData()
     },
@@ -174,7 +176,7 @@ const useComposeStore = defineStore({
       const { top, bottom, items } = getComponentRealRect(this.components)
       items.forEach((el) => {
         const distanceY = (bottom + top) / 2 - el.center.y
-        el.component.style.top = el.component.style.top + distanceY
+        el.component.change('top', el.component.positionStyle.top + distanceY)
       })
       basicStore.saveComponentData()
     },
@@ -185,7 +187,7 @@ const useComposeStore = defineStore({
       const { left, right, items } = getComponentRealRect(this.components)
       items.forEach((el) => {
         const distanceX = (left + right) / 2 - el.center.x
-        el.component.style.left = el.component.style.left + distanceX
+        el.component.change('left', el.component.positionStyle.left + distanceX)
       })
       basicStore.saveComponentData()
     }

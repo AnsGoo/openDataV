@@ -3,7 +3,7 @@ import { BaseComponent } from '@/resource/models'
 
 export interface ComponentData {
   canvasStyle: CanvasStyleData
-  canvasData: BaseComponent[]
+  canvasData: Record<string, any>[]
 }
 
 export interface LayoutData {
@@ -13,7 +13,7 @@ export interface LayoutData {
   author?: string
   createTime?: string
   isHome?: boolean
-  canvasData: BaseComponent[]
+  canvasData: ComponentDataType[]
   canvasStyle: CanvasStyleData
   allowed?: string | null
 }

@@ -3,11 +3,12 @@ import store from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
 import { EditMode } from '@/enum'
-import { eventBus } from '@/bus/useEventBus'
-import { swap, uuid } from '@/utils/utils'
+import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
-import { BaseComponent, createComponent } from '@/resource/models'
+import { BaseComponent, ComponentDataType, createComponent } from '@/resource/models'
+import { GroupStyle } from '@/types/component'
+import { Vector } from '@/types/common'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -41,6 +42,7 @@ const useBasicStore = defineStore({
     editMode: EditMode.PREVIEW,
     canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
     componentData: [],
+    activeIndex: undefined,
     curComponent: undefined,
     isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
@@ -52,6 +54,14 @@ const useBasicStore = defineStore({
     },
     canvasData(): CanvasStyleData {
       return new Proxy(this.canvasStyleData, storeCanvasHandler)
+    },
+    layoutData(): ComponentDataType[] {
+      const result: ComponentDataType[] = []
+      this.componentData.forEach((item) => {
+        console.log(item)
+        result.push(item.toJson())
+      })
+      return result
     }
   },
   actions: {
@@ -102,8 +112,10 @@ const useBasicStore = defineStore({
      * @param component 当前组件
      * @param index
      */
-    setCurComponent(component: BaseComponent | undefined): void {
+    setCurComponent(component: Optional<BaseComponent>, index?: string): void {
+      console.log(index)
       this.curComponent = component
+      this.activeIndex = index
     },
 
     /**
@@ -111,39 +123,77 @@ const useBasicStore = defineStore({
      * @param postion 位置
      * @returns
      */
-    syncComponentLoction(postion: Postion): void {
+    syncComponentLoction(postion: Postion, parentComponent?: BaseComponent): void {
       if (!this.curComponent) {
         return
       }
       const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
-      const ablePostion = {}
-      const style = this.curComponent!.style
+      const ablePostion: Postion = {}
       styleKyes.forEach((el) => {
         if (postion[el] != undefined) {
           ablePostion[el] = postion[el]
         }
       })
 
-      for (const key in ablePostion) {
-        this.curComponent.change(key, ablePostion[key])
+      if (parentComponent) {
+        const parentStyle = parentComponent.positionStyle
+        const groupStyle = this.curComponent.groupStyle!
+        const gStyle = {
+          gleft:
+            ablePostion.left !== undefined
+              ? toPercent((ablePostion.left! - parentStyle.left) / parentStyle.width)
+              : groupStyle.gleft,
+          gtop:
+            ablePostion.top !== undefined
+              ? toPercent((ablePostion.top! - parentStyle.top) / parentStyle.height)
+              : groupStyle.gtop,
+          gwidth:
+            ablePostion.width !== undefined
+              ? toPercent(ablePostion.width! / parentStyle.width)
+              : groupStyle.gwidth,
+          gheight:
+            ablePostion.height !== undefined
+              ? toPercent(ablePostion.height! / parentStyle.height)
+              : groupStyle.gheight,
+          grotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : groupStyle.grotate
+        }
+        const newStyle = {
+          left:
+            ablePostion.left !== undefined
+              ? ablePostion.left
+              : this.curComponent.positionStyle.left,
+          top:
+            ablePostion.top !== undefined ? ablePostion.top : this.curComponent.positionStyle.top,
+          width:
+            ablePostion.width !== undefined
+              ? ablePostion.width
+              : this.curComponent.positionStyle.width,
+          height:
+            ablePostion.height !== undefined
+              ? ablePostion.height
+              : this.curComponent.positionStyle.height,
+          rotate:
+            ablePostion.rotate !== undefined
+              ? ablePostion.rotate!
+              : this.curComponent.positionStyle.rotate
+        }
+        this.curComponent.groupStyle = gStyle
+        for (const key in newStyle) {
+          this.curComponent.change(key, newStyle[key])
+        }
+      } else {
+        for (const key in ablePostion) {
+          this.curComponent.change(key, ablePostion[key])
+        }
+      }
+
+      if (this.curComponent.subComponents) {
+        this.resizeChildenComponent(this.curComponent.subComponents, this.curComponent)
       }
 
       this.saveComponentData()
     },
 
-    /**
-     * 设置单个组件的样式属性
-     * @param param0 样式
-     * @returns
-     */
-    setComponentSingleStyle({ key, value }): void {
-      if (!this.curComponent) {
-        return
-      }
-
-      this.curComponent.change(key, value)
-      this.saveComponentData()
-    },
     /**
      * 重置组件数据ID
      * @param componentData 需要被重置的组件数据
@@ -183,6 +233,7 @@ const useBasicStore = defineStore({
       if (component.subComponents) {
         this.resetComponentData(component.subComponents)
       }
+      component.parent = undefined
       this.componentData.push(component)
       this.saveComponentData()
     },
@@ -192,12 +243,13 @@ const useBasicStore = defineStore({
      * @param value 值
      * @returns
      */
-    setCurComponentPropValue(form: string, key: string, value: any): void {
+    setCurComponentPropValue(prop: string, key: string, value: any): void {
       const curComponent = this.curComponent
       if (!curComponent || !curComponent.propValue) {
         return
       }
-      curComponent.change(form, key, value)
+      curComponent.change(key, value, prop)
+      console.log(key, value, prop)
       this.saveComponentData()
     },
     /**
@@ -214,21 +266,17 @@ const useBasicStore = defineStore({
 
       if (this.curComponent.groupStyle && groupStyleKeys.includes(key)) {
         this.curComponent.groupStyle[key] = value
-        this.saveComponentData()
-        return
+      } else {
+        this.curComponent.change(key, value)
       }
-      this.curComponent.change(key, value)
       this.saveComponentData()
     },
 
-    getComponentIndexById(id: string): number {
-      for (let i = 0; i < this.componentData.length; ++i) {
-        const item: BaseComponent = this.componentData[i]
-        if (item.id === id) {
-          return i
-        }
+    getComponentIndexById(id: string, parent: Optional<BaseComponent>): number {
+      if (parent) {
+        return parent.subComponents.findIndex((item) => item.id === id)
       }
-      return -1
+      return this.componentData.findIndex((item) => item.id === id)
     },
     /**
      * 清空画布
@@ -241,38 +289,10 @@ const useBasicStore = defineStore({
       this.canvasStyleData = baseCanvasStyleData
     },
     /**
-     * 根据组件索引获取该组件的父级组件
-     * @param indexs
-     * @returns
-     */
-    getParentComponentData(indexs: number[]): BaseComponent[] | undefined {
-      let rootComponent: BaseComponent = {
-        subComponents: this.componentData,
-        component: 'Root',
-        display: false,
-        style: {
-          width: 0,
-          height: 0,
-          left: 0,
-          top: 0,
-          rotate: 0
-        },
-        id: '',
-        label: '',
-        icon: ''
-      }
-      indexs.forEach((el: number) => {
-        rootComponent = rootComponent.subComponents
-          ? rootComponent.subComponents[el]
-          : rootComponent
-      })
-      return rootComponent.subComponents
-    },
-    /**
      * 组件图层下移
      * @param index 组件索引
      */
-    downComponent(index: number, parent: BaseComponent | undefined) {
+    downComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
       if (parent && parent.subComponents) {
         componentData = parent.subComponents
@@ -288,7 +308,7 @@ const useBasicStore = defineStore({
      * 组件图层上移
      * @param index 组件索引
      */
-    upComponent(index: number, parent: BaseComponent | undefined) {
+    upComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
       if (parent && parent.subComponents) {
         componentData = parent.subComponents
@@ -307,7 +327,7 @@ const useBasicStore = defineStore({
      * 组件图层置顶
      * @param index 组件索引
      */
-    topComponent(index: number, parent: BaseComponent | undefined) {
+    topComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
       if (parent && parent.subComponents) {
         componentData = parent.subComponents
@@ -325,7 +345,7 @@ const useBasicStore = defineStore({
      * 组件图层置底
      * @param index 组件索引
      */
-    bottomComponent(index: number, parent: BaseComponent | undefined) {
+    bottomComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
       if (parent && parent.subComponents) {
         componentData = parent.subComponents
@@ -344,54 +364,152 @@ const useBasicStore = defineStore({
      * @param index 索引
      * @returns 移除结果
      */
-    removeComponent(index: number, parent: BaseComponent | undefined) {
-      console.log(2222, this.componentData)
+    removeComponent(index: number, parent: Optional<BaseComponent>) {
+      console.log(index, parent)
       if (parent && parent.subComponents) {
-        parent.subComponents.slice(index, 1)
+        parent.subComponents.splice(index, 1)
       } else {
-        this.componentData.slice(index, 1)
-        console.log(this.componentData)
+        this.componentData.splice(index, 1)
       }
       this.saveComponentData()
     },
-    showComponent(index: string): void {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const component: BaseComponent = this.getComponentByIndex(indexs)
-      component.change('display', true)
-    },
-    hiddenComponent(index: string): void {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const component: BaseComponent = this.getComponentByIndex(indexs)
-      component.change('display', false)
-    },
-    getComponentByIndex(indexs: number[]): BaseComponent {
-      let rootComponent: BaseComponent = {
-        subComponents: this.componentData,
-        display: false,
-        component: 'Root',
-        style: {
-          width: 0,
-          left: 0,
-          top: 0,
-          height: 0,
-          rotate: 0
-        },
-        id: '',
-        label: '',
-        icon: ''
+    showComponent(index: number, parent: Optional<BaseComponent>): void {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
       }
-      indexs.forEach((el: number) => {
+
+      if (index < componentData.length && index >= 0) {
+        componentData[index].display = true
+      }
+    },
+    hiddenComponent(index: number, parent: Optional<BaseComponent>): void {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      if (index < componentData.length && index >= 0) {
+        componentData[index].display = false
+      }
+    },
+    getComponentByIndex(indexs: readonly number[]): Optional<BaseComponent> {
+      const firstIndex = indexs[0]
+      if (firstIndex === undefined || firstIndex < 0 || firstIndex >= this.componentData.length) {
+        return undefined
+      }
+
+      let rootComponent = this.componentData[firstIndex]
+      indexs.slice(1).forEach((el: number) => {
         rootComponent = rootComponent.subComponents
           ? rootComponent.subComponents[el]
           : rootComponent
+        console.log(el, rootComponent)
       })
       return rootComponent
     },
     saveComponentData() {
-      // window.localStorage.setItem('canvasData', JSON.stringify(this.componentData))
+      // window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
       // new Promise((resolve) => {
-      //   resolve(snapShotStore.saveSnapshot(this.componentData, this.canvasStyleData))
+      //   resolve(snapShotStore.saveSnapshot(this.layoutData, this.canvasStyleData))
       // })
+    },
+    cutComponent(index: number, parent: Optional<BaseComponent>): Optional<BaseComponent> {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      if (index < componentData.length && index >= 0) {
+        const components: BaseComponent[] = componentData.splice(index, 1)
+        if (parent) {
+          components[0].groupStyle = undefined
+          this.resizeAutoComponent(parent)
+        }
+        return components[0]
+      }
+    },
+    insertComponent(
+      index: number,
+      insertComponent: BaseComponent,
+      parent: Optional<BaseComponent>
+    ): void {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      if (index < componentData.length && index >= 0) {
+        componentData.splice(index, 0, insertComponent)
+        if (parent) {
+          this.resizeAutoComponent(parent)
+        }
+      }
+    },
+    /**
+     * 重新自动调整组件尺寸
+     * @param component
+     */
+    resizeAutoComponent(parentComponent: Optional<BaseComponent>): void {
+      if (parentComponent && parentComponent.component === 'Group') {
+        const parentStyle = parentComponent.positionStyle
+        const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents)
+        if (
+          top === parentStyle.top &&
+          left === parentStyle.left &&
+          height === parentStyle.height &&
+          width === parentStyle.width
+        ) {
+          return
+        } else {
+          const newGroupStyle = { ...parentStyle, top, left, height, width }
+          for (const key in newGroupStyle) {
+            parentComponent.change(key, newGroupStyle[key])
+          }
+          parentComponent.subComponents?.forEach((el: BaseComponent) => {
+            const gStyle = {
+              gleft: toPercent((el.positionStyle.left - newGroupStyle.left) / newGroupStyle.width),
+              gtop: toPercent((el.positionStyle.top - newGroupStyle.top) / newGroupStyle.height),
+              gwidth: toPercent(el.positionStyle.width / newGroupStyle.width),
+              gheight: toPercent(el.positionStyle.height / newGroupStyle.height),
+              grotate: el.positionStyle.rotate
+            }
+            el.groupStyle = gStyle
+          })
+          this.saveComponentData()
+          if (parentComponent.parent) {
+            this.resizeAutoComponent(parentComponent.parent)
+          }
+        }
+      }
+    },
+    resizeChildenComponent(components: BaseComponent[], parentComponent: BaseComponent): void {
+      const parentStyle = parentComponent.positionStyle
+      components.forEach((el: BaseComponent) => {
+        const groupStyle: GroupStyle = el.groupStyle!
+        const center: Vector = {
+          y: parentStyle.top + parentStyle.height / 2,
+          x: parentStyle.left + parentStyle.width / 2
+        }
+        const { top, left, height, width, rotate } = {
+          top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
+          left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
+          height: (parentStyle.height * groupStyle.gheight) / 100,
+          width: (parentStyle.width * groupStyle.gwidth) / 100,
+          rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
+        }
+        const point: Vector = {
+          y: top + height / 2,
+          x: left + width / 2
+        }
+
+        const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
+        el.change('top', Math.round(afterPoint.y - height / 2))
+        el.change('left', Math.round(afterPoint.x - width / 2))
+        el.change('height', Math.round(height))
+        el.change('width', Math.round(width))
+        el.change('rotate', rotate)
+      })
     }
   }
 })

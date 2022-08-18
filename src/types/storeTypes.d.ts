@@ -20,7 +20,8 @@ export interface EditData {
   editMode: string
   canvasStyleData: CanvasStyleData
   componentData: BaseComponent[]
-  curComponent: BaseComponent | undefined
+  activeIndex?: string
+  curComponent: Optional<BaseComponent>
   isClickComponent: boolean
   isShowEm: boolean
   ids: Set<string>
@@ -33,7 +34,7 @@ export interface MenuStatus {
 }
 
 export interface CopyItem {
-  copyData: BaseComponent | undefined
+  copyData: Optional<BaseComponent>
   isCut: boolean
 }
 
@@ -45,7 +46,7 @@ export interface SnapData {
 
 export interface AreaData {
   style: DOMRectStyle
-  components: Array<BaseComponent>
+  components: BaseComponent[]
 }
 
 export interface UserInfo {

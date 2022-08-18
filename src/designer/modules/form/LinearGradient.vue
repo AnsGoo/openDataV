@@ -37,11 +37,11 @@ const props = withDefaults(
     value: LinearGradient
   }>(),
   {
-    value: {
+    value: () => ({
       angle: 0,
       color1: '',
       color2: ''
-    } as any
+    })
   }
 )
 

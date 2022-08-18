@@ -1,13 +1,19 @@
 <template>
   <!-- 线的显示 -->
-  <div v-show="showLine" class="line" :style="[offset, borderCursor]" @mousedown="handleDown">
+  <div
+    v-show="showLine"
+    v-contextmenu="contextmenus"
+    class="line"
+    :style="[offset, borderCursor]"
+    @mousedown="handleDown"
+  >
     <div class="action" :style="actionStyle">
-      <span class="del" @click="handleRemove">&times;</span>
       <span class="value">{{ startValue }}</span>
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { ref, computed, onMounted } from 'vue'
 import { PaletteType } from '../index-types'
 
@@ -43,7 +49,7 @@ const offset = computed(() => {
   return props.vertical ? { top: positionValue } : { left: positionValue }
 })
 const borderCursor = computed(() => {
-  const borderValue = `1px solid ${props.palette?.lineColor}`
+  const borderValue = `1px ${props.palette?.lineBoardStyle || 'dashed'} ${props.palette?.lineColor}`
   const border = props.vertical ? { borderTop: borderValue } : { borderLeft: borderValue }
   const cursorValue = props.isShowReferLine ? (props.vertical ? 'ns-resize' : 'ew-resize') : 'none'
   return {
@@ -56,6 +62,7 @@ const actionStyle = computed(() => {
 })
 
 const handleDown = (e: MouseEvent) => {
+  e.stopPropagation()
   const startD = props.vertical ? e.clientY : e.clientX
   const initValue = startValue.value
   emit('onMouseDown')
@@ -66,14 +73,23 @@ const handleDown = (e: MouseEvent) => {
   }
   const onEnd = () => {
     emit('onRelease', startValue.value, props.index)
-    document.removeEventListener('mousemove', onMove)
+    document.removeEventListener('mousemove', onMove, true)
     document.removeEventListener('mouseup', onEnd)
   }
-  document.addEventListener('mousemove', onMove)
+  document.addEventListener('mousemove', onMove, true)
   document.addEventListener('mouseup', onEnd)
 }
 const handleRemove = () => {
   emit('onRemove', props.index)
+}
+const contextmenus = (): ContextmenuItem[] => {
+  return [
+    {
+      text: '删除',
+      subText: '',
+      handler: () => handleRemove()
+    }
+  ]
 }
 </script>
 

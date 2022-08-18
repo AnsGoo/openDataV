@@ -54,7 +54,6 @@ const props = withDefaults(
     width?: number
     height?: number
     start?: number
-    lines?: number[]
   }>(),
   {
     vertical: true,
@@ -66,19 +65,26 @@ const props = withDefaults(
 
 const showIndicator = ref(false)
 const valueNum = ref(0)
+const lines = ref<number[]>([])
 const rwClassName = computed(() => {
   return props.vertical ? 'v-container' : 'h-container'
 })
+
+const clearLines = () => {
+  lines.value = []
+}
+
+defineExpose({ clearLines })
 const rwStyle = computed(() => {
   const hContainer = {
     width: `calc(100% - ${props.thick}px)`,
     height: `${props.thick! + 1}px`,
-    left: `${props.thick}` + 'px'
+    left: `${props.start}` + 'px'
   }
   const vContainer = {
     width: `${props.thick && props.thick + 1}px`,
     height: `calc(100% - ${props.thick}px)`,
-    top: `${props.thick}` + 'px'
+    top: `${props.start}` + 'px'
   }
   return props.vertical ? vContainer : hContainer
 })
@@ -91,12 +97,12 @@ const indicatorStyle = computed(() => {
   boderKey = props.vertical ? 'borderBottom' : 'borderLeft'
   return {
     [positionKey]: indicatorOffset + 'px',
-    [boderKey]: `1px solid ${props.palette?.lineColor}`
+    [boderKey]: `1px ${props.palette?.lineBoardStyle || 'dashed'} ${props.palette?.lineColor}`
   }
 })
 
 const handleNewLine = (value: number) => {
-  ;(props.lines || []).push(value)
+  lines.value.push(value)
 }
 const handleLineRelease = (value: number, index: number) => {
   // 左右或上下超出时, 删除该条对齐线
@@ -105,11 +111,11 @@ const handleLineRelease = (value: number, index: number) => {
   if (offset < 0 || offset > maxOffset) {
     handleLineRemove(index)
   } else {
-    ;(props.lines || [])[index] = value
+    lines.value[index] = value
   }
 }
 const handleLineRemove = (index: any) => {
-  ;(props.lines || []).splice(index, 1)
+  lines.value.splice(index, 1)
 }
 </script>
 

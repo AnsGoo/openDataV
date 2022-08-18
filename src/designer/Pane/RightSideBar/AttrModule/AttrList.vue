@@ -10,8 +10,8 @@
       >
         <FormAttr
           :children="children"
-          :data="formData"
-          @change="changed"
+          :data="formData[prop]"
+          @change="(key, value) => changed(prop, key, value)"
           :name="label"
           :uid="prop"
           :ukey="curComponent.id"
@@ -23,7 +23,6 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { componentList } from '@/designer/load'
 import { computed, reactive, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
 import { cleanObjectProp } from '@/utils/utils'
@@ -38,23 +37,23 @@ const basicStore = useBasicStoreWithOut()
 const formData = reactive<Recordable<any>>({})
 
 const attrKeys = computed(() => {
-  if (props.curComponent && props.curComponent.component in componentList) {
-    return componentList[props.curComponent.component].attrs
+  if (props.curComponent) {
+    return props.curComponent.propFromValue
   }
   return []
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
-const changed = (key: string, val: any, form: string) => {
+const changed = (form: string, key: string, val: any) => {
+  console.log(11111, form, key, val)
   basicStore.setCurComponentPropValue(form, key, val)
 }
 
 const resetFormData = () => {
   cleanObjectProp(formData)
   if (props.curComponent && props.curComponent.propValue) {
-    const propValue = props.curComponent.propValue!
-    Object.keys(propValue).forEach((key) => {
-      formData[key] = propValue[key]
+    Object.keys(props.curComponent.propValue).forEach((key) => {
+      formData[key] = props.curComponent.propValue[key]
     })
   }
 }

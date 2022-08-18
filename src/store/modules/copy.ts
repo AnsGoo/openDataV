@@ -1,3 +1,4 @@
+import { uuid } from '@/utils/utils';
 import { defineStore } from 'pinia'
 import store from '@/store'
 import { cloneDeep } from 'lodash-es'
@@ -37,7 +38,10 @@ const useCopyStore = defineStore({
         this.copyData.change('top', (this.copyData.style.top as number) + 10)
         this.copyData.change('left', (this.copyData.style.left as number) + 10)
       }
-      basicStore.appendComponent(cloneDeep(this.copyData))
+
+      const data = cloneDeep(this.copyData)
+      data.id = uuid()
+      basicStore.appendComponent(data)
     }
   }
 })

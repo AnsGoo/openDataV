@@ -92,7 +92,11 @@ export class ImageComponent extends BaseComponent {
           label: '背景渐变',
           type: FormType.LINEAR_GRADIENT,
           componentOptions: {
-            defaultValue: ''
+            defaultValue: {
+              angle: 0,
+              color1: '',
+              color2: ''
+            }
           }
         }
       ]

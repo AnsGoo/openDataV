@@ -3,17 +3,17 @@
   <div class="attr-list">
     <n-collapse accordion>
       <n-collapse-item
-        v-for="{ name, uid, children } in styleKeys"
-        :key="`${curComponent.id}${uid}`"
-        :title="name"
-        :name="uid"
+        v-for="{ label, prop, children } in styleKeys"
+        :key="`${curComponent.id}${prop}`"
+        :title="label"
+        :name="prop"
       >
         <FormAttr
           :children="children"
           :data="formData"
           @change="changed"
-          :name="name"
-          :uid="uid"
+          :name="label"
+          :uid="prop"
           :ukey="curComponent.id"
         />
       </n-collapse-item>
@@ -24,13 +24,11 @@
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { checkDiff, cleanObjectProp } from '@/utils/utils'
-import { componentList } from '@/designer/load'
 import { debounce } from 'lodash-es'
 import { computed, reactive, watch } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
 import { NCollapse, NCollapseItem } from 'naive-ui'
-import { groupCommonStyle } from '@/designer/interface'
 import { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
@@ -41,15 +39,8 @@ const basicStore = useBasicStoreWithOut()
 const formData = reactive<Recordable<any>>({})
 const styleKeys = computed(() => {
   if (props.curComponent) {
-    const style = props.curComponent.style
-    console.log(style)
-    const groupStyle = props.curComponent.groupStyle
-    if (groupStyle) {
-      style[0] = groupCommonStyle
-    }
-    return style
+    return props.curComponent.styleFormValue
   }
-  return []
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.style
@@ -80,16 +71,12 @@ const updateFormData = debounce((newVal: Recordable<any>) => {
 const resetFormData = () => {
   if (props.curComponent) {
     cleanObjectProp(formData)
-    const data = {
-      ...props.curComponent.style,
-      ...(props.curComponent.groupStyle || {})
-    }
-    updateFormData(data)
+    updateFormData(props.curComponent.style)
   }
 }
 
 watch(
-  [() => props.curComponent.id, () => props.curComponent.style],
+  () => props.curComponent.id,
   () => {
     if (props.curComponent && props.curComponent.id) {
       resetFormData()

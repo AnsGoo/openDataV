@@ -10,17 +10,22 @@
 </template>
 
 <script lang="ts" setup>
-import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref, h, watch } from 'vue'
+import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { useCopyStoreWithOut } from '@/store/modules/copy'
+import { copyText, uuid } from '@/utils/utils'
 import { NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
 import { useEventBus } from '@/bus/useEventBus'
-import { IconPark } from '@/plugins/icon'
 import LayerItem from './LayerItem.vue'
+import SimpleLayerItem from './SimpleLayerItem.vue'
 import type { MenuOption } from 'naive-ui'
 import { ComponentGroupList } from '@/enum'
+import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { cloneDeep } from 'lodash'
 import { BaseComponent } from '@/resource/models'
 
 const basicStore = useBasicStoreWithOut()
+const copyStore = useCopyStoreWithOut()
 
 const iconMap: Recordable<string> = {}
 ComponentGroupList.map((ele) => {
@@ -43,8 +48,10 @@ useEventBus('ActiveMenu', open)
 const handleSelect = (key: string) => {
   activeKey.value = key
   const indexs: number[] = key.split('-').map((i) => Number(i))
-  const activedComponent: BaseComponent = basicStore.getComponentByIndex(indexs)
-  basicStore.setCurComponent(activedComponent)
+  const activedComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  if (activedComponent) {
+    basicStore.setCurComponent(activedComponent, key)
+  }
 }
 
 const menuOptions = ref<MenuOption[]>([])
@@ -56,38 +63,44 @@ const getMenuOptions = (
 ): MenuOption[] => {
   for (let i = 0; i < compoments.length; i++) {
     const item = compoments[i]
-
+    const currentIndex = calcIndex(i, fatherIndex)
     if (item.component === 'Group') {
       const childrenOptions: MenuOption[] = []
       options.push({
         label: () =>
           h(LayerItem, {
             component: item,
-            index: calcIndex(i, fatherIndex),
-            onclick: () => handleSelect(calcIndex(i, fatherIndex))
+            index: currentIndex,
+            contextmenus: () => contextmenus(currentIndex),
+            onclick: () => handleSelect(currentIndex)
           }),
-        key: calcIndex(i, fatherIndex),
+        key: currentIndex,
         icon: () =>
-          h(IconPark, {
-            name: 'branch-one'
+          h(SimpleLayerItem, {
+            name: 'branch-one',
+            component: item,
+            index: currentIndex,
+            contextmenus: () => contextmenus(currentIndex),
+            onclick: () => handleSelect(currentIndex)
           }),
-        children: getMenuOptions(
-          calcIndex(i, fatherIndex),
-          item.subComponents || [],
-          childrenOptions
-        )
+        children: getMenuOptions(currentIndex, item.subComponents || [], childrenOptions)
       })
     } else {
       options.push({
         label: () =>
           h(LayerItem, {
             component: item,
-            index: calcIndex(i, fatherIndex)
+            index: currentIndex,
+            contextmenus: () => contextmenus(currentIndex)
           }),
-        key: calcIndex(i, fatherIndex),
+        key: currentIndex,
         icon: () =>
-          h(IconPark, {
-            name: `${iconMap[item.group!]}`
+          h(SimpleLayerItem, {
+            name: `${iconMap[item.group!]}`,
+            component: item,
+            index: currentIndex,
+            contextmenus: () => contextmenus(currentIndex),
+            onclick: () => handleSelect(currentIndex)
           })
       })
     }
@@ -101,6 +114,146 @@ const calcIndex = (index: number, fatherIndex: string) => {
     return index.toString()
   }
 }
+
+const copy = (index: string) => {
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  const component: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  if (component) {
+    component.groupStyle = undefined
+    copyText(JSON.stringify(component.toJson()))
+    copyStore.copy()
+  }
+}
+
+const remove = async (index: string) => {
+  handleSelect(index)
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  basicStore.removeComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+}
+
+const up = async (index: string) => {
+  handleSelect(index)
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  basicStore.upComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+}
+
+const down = async (index: string) => {
+  handleSelect(index)
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  basicStore.downComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+}
+
+const top = async (index: string) => {
+  handleSelect(index)
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  basicStore.topComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+}
+
+const bottom = async (index: string) => {
+  handleSelect(index)
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  basicStore.bottomComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+}
+
+const hidden = (index: string) => {
+  handleSelect(index)
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  basicStore.hiddenComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+}
+
+const display = (index: string) => {
+  handleSelect(index)
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  basicStore.showComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+}
+const cut = (index: string) => {
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  console.log(11111111, cutComponent)
+  const component: Optional<BaseComponent> = basicStore.cutComponent(
+    indexs[indexs.length - 1],
+    cutComponent?.parent
+  )
+  console.log(22222222, component)
+  if (component) {
+    copyText(JSON.stringify(component.toJson()))
+    copyStore.copy()
+  }
+}
+
+const paste = (index: string) => {
+  const indexs: number[] = index.split('-').map((i) => Number(i))
+  const component: Optional<BaseComponent> = copyStore.copyData
+  const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  console.log(55555, indexs)
+  if (component) {
+    const data = cloneDeep(copyStore.copyData) as BaseComponent
+    data.id = uuid()
+    basicStore.insertComponent(indexs[indexs.length - 1], data, insertComponent?.parent)
+  }
+}
+
+const contextmenus = (index: string): ContextmenuItem[] => {
+  const indexs = index.split('-').map((el) => parseInt(el))
+  return [
+    {
+      text: '复制',
+      subText: 'Ctrl + C',
+      handler: () => copy(index)
+    },
+    {
+      text: '粘贴',
+      subText: 'Ctrl + V',
+      handler: () => paste(index)
+    },
+    {
+      text: '剪切',
+      subText: 'Ctrl + V',
+      handler: () => cut(index)
+    },
+    {
+      text: '拆分',
+      subText: 'Ctrl + V',
+      handler: () => copy(index)
+    },
+    {
+      text: '删除',
+      subText: '',
+      handler: () => remove(index)
+    },
+    { divider: true },
+    {
+      text: '置于顶层',
+      handler: () => top(index),
+      children: [
+        { text: '置于顶层', handler: () => top(index) },
+        { text: '上移一层', handler: () => up(index) }
+      ]
+    },
+    {
+      text: '置于底层',
+      handler: () => bottom(index),
+      children: [
+        { text: '置于底层', handler: () => bottom(index) },
+        { text: '下移一层', handler: () => down(index) }
+      ]
+    },
+    { divider: true },
+    {
+      text: '显示',
+      disable: basicStore.getComponentByIndex(indexs)?.display,
+      subText: '',
+      handler: () => display(index)
+    },
+    {
+      text: '隐藏',
+      disable: basicStore.getComponentByIndex(indexs)?.display,
+      subText: '',
+      handler: () => hidden(index)
+    }
+  ]
+}
+
 watch(
   () => basicStore.componentData,
   () => {

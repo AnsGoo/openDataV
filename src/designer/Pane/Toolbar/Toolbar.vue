@@ -238,7 +238,7 @@ const showIcon = () => {
 }
 
 const fullScreen = () => {
-  const el: HTMLElement | null = document.querySelector('.center.scrollbar')
+  const el: HTMLElement | null = document.querySelector('#editor')
   if (document.fullscreenEnabled && el) {
     el.requestFullscreen()
   }
@@ -293,7 +293,7 @@ const exportCanvas = () => {
   exportRaw(
     `${name}.json`,
     JSON.stringify({
-      canvasData: componentData.value,
+      canvasData: basicStore.layoutData,
       canvasStyle: canvasStyleData.value
     })
   )
