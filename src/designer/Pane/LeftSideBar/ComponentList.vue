@@ -20,7 +20,7 @@ const menuOptions = computed<MenuOption[]>(() => {
   Object.keys(componentList).forEach((key) => {
     const component: BaseComponent = new componentList[key]()
     const group = component.group
-    if (!group) {
+    if (!group || !component.show) {
       return
     }
 

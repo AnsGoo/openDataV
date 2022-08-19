@@ -113,9 +113,15 @@ const useBasicStore = defineStore({
      * @param index
      */
     setCurComponent(component: Optional<BaseComponent>, index?: string): void {
-      console.log(index)
+      // 设置前清理当前
+      if (this.curComponent) {
+        this.curComponent.active = false
+      }
       this.curComponent = component
       this.activeIndex = index
+      if (this.curComponent) {
+        this.curComponent.active = true
+      }
     },
 
     /**

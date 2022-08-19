@@ -14,6 +14,8 @@ export abstract class BaseComponent {
   hided: boolean = false
   selected: boolean = false
   display: boolean = true
+  show: boolean = true
+  active: boolean = false
   callbackProp: Function | undefined = undefined
   callbackStyle: Function | undefined = undefined
 
