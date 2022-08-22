@@ -1,4 +1,4 @@
-import type { ComponentStyle, DOMRectStyle, GroupStyle, Rect } from '@/types/component'
+import type { DOMRectStyle, GroupStyle, Rect } from '@/types/component'
 import { message } from '@/utils/message'
 import type { Vector } from '@/types/common'
 import { cloneDeep } from 'lodash-es'

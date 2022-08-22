@@ -3,7 +3,7 @@ import store from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
 import { EditMode } from '@/enum'
-import { calcComponentsRect, createGroupStyle, swap, toPercent, uuid } from '@/utils/utils'
+import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
 import { BaseComponent, ComponentDataType, createComponent } from '@/resource/models'
@@ -475,9 +475,7 @@ const useBasicStore = defineStore({
         const parentComponent = this.curComponent.parent
         if (parentComponent) {
           const parentStyle: DOMRectStyle = parentComponent.positionStyle
-          components.forEach((item) => {
-            item.groupStyle = undefined
-            item.parent = parentComponent
+          components.forEach((item: BaseComponent) => {
             item.groupStyle = {
               gleft: toPercent((item.positionStyle.left - parentStyle.left) / parentStyle.width),
               gtop: toPercent((item.positionStyle.top - parentStyle.top) / parentStyle.height),
@@ -485,7 +483,7 @@ const useBasicStore = defineStore({
               gheight: toPercent(item.positionStyle.height / parentStyle.height),
               grotate: item.positionStyle.rotate
             }
-            parentComponent?.subComponents!.push(item)
+            parentComponent?.addComponent([item])
           })
         } else {
           components.forEach((item) => {
