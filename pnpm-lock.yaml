@@ -10,7 +10,6 @@ specifiers:
   '@vitejs/plugin-vue': ^1.9.2
   autoprefixer: ^9.8.7
   axios: ^0.23.0
-  dayjs: ^1.11.2
   dexie: ^3.2.2
   eslint: ^7.32.0
   eslint-config-airbnb-base: ^14.2.1
@@ -43,7 +42,6 @@ specifiers:
 dependencies:
   '@icon-park/vue-next': 1.4.2_vue@3.2.37
   axios: 0.23.0
-  dayjs: 1.11.5
   dexie: 3.2.2
   lodash-es: 4.17.21
   mitt: 3.0.0
@@ -843,10 +841,6 @@ packages:
   /date-fns/2.29.2:
     resolution: {integrity: sha512-0VNbwmWJDS/G3ySwFSJA3ayhbURMTJLtwM2DTxf9CWondCnh6DTNlO9JgRSq6ibf4eD0lfMJNBxUdEAHHix+bA==}
     engines: {node: '>=0.11'}
-    dev: false
-
-  /dayjs/1.11.5:
-    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
     dev: false
 
   /debug/2.6.9:
