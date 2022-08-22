@@ -64,10 +64,9 @@ import LeftSideBar from '@/designer/Pane/LeftSideBar'
 import RightSideBar from '@/designer/Pane/RightSideBar'
 import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
-import { eventBus } from '@/bus/useEventBus'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
 import { BaseComponent } from '@/resource/models'
 
@@ -135,34 +134,24 @@ const deselectCurComponent = () => {
   }
 }
 
-watch(
-  () => basicStore.canvasStyleData.dataWs,
-  (newValue) => {
-    websk.value?.close()
-    if (newValue) {
-      websk.value = initWebsocket('actual', newValue)
-    }
-  }
-)
+// const initWebsocket = (key: string, url: string): WebSocket => {
+//   const ws = new WebSocket(url)
 
-const initWebsocket = (key: string, url: string): WebSocket => {
-  const ws = new WebSocket(url)
+//   ws.onopen = () => {
+//     console.log('websocket连接成功')
+//   }
 
-  ws.onopen = () => {
-    console.log('websocket连接成功')
-  }
+//   ws.onclose = () => {
+//     console.log('websocket连接被关闭')
+//   }
 
-  ws.onclose = () => {
-    console.log('websocket连接被关闭')
-  }
+//   ws.onmessage = (ev) => {
+//     const data = JSON.parse(ev.data)
+//     eventBus.emit(key, data)
+//   }
 
-  ws.onmessage = (ev) => {
-    const data = JSON.parse(ev.data)
-    eventBus.emit(key, data)
-  }
-
-  return ws
-}
+//   return ws
+// }
 
 onUnmounted(() => {
   websk.value?.close()

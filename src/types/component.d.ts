@@ -83,7 +83,6 @@ export type {
   ComponentOptions,
   PropsType,
   AttrType,
-  ArrayAttrType,
   DOMRectStyle,
   GroupStyle,
   Rect,

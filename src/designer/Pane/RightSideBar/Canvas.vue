@@ -42,7 +42,6 @@ const styleKeys = [
   { key: 'width', label: '宽度', type: FormType.NUMBER },
   { key: 'height', label: '高度', type: FormType.NUMBER },
   { key: 'scale', label: '比例', type: FormType.NUMBER },
-  { key: 'dataWs', label: '实时数据', type: FormType.TEXT },
   { key: 'image', label: '背景图', type: FormType.TEXT }
 ]
 

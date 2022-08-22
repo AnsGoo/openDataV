@@ -56,7 +56,6 @@
 import { ref, computed, onMounted } from 'vue'
 import { http } from '@/utils/http'
 import { useProp } from '@/resource/hooks'
-import type { TagType } from '@/types/wsTypes'
 import { uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus/useEventBus'
 import type { Progress } from './type'
@@ -82,7 +81,7 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const handler = (event) => {
-  const item: TagType = event as TagType
+  const item: Recordable<any> = event as Recordable<any>
 
   if (propValue.data.datatag && item.TagName === propValue.data.datatag) {
     dataValue.value = Number(
@@ -211,14 +210,6 @@ const details = computed(() => {
 const textSize = computed(() => {
   return { fontSize: (propValue.attr.fontSize || 12) + 'px' }
 })
-
-const handerPropValue = (event: any) => {
-  if (event.key === 'maxValue') {
-    dataValue.value = Number(
-      ((Number(event.value) * 100) / Number(propValue.data.maxValue)).toFixed(2)
-    )
-  }
-}
 
 useEventBus('actual', handler)
 </script>

@@ -10,7 +10,6 @@ export interface CanvasStyleData {
   width: number
   height: number
   scale: number
-  dataWs: string
   image: string
 }
 
