@@ -41,6 +41,7 @@ export interface SnapData {
   snapshotMax: number
   latestSnapshot?: StoreComponentData
   timeHandler?: TimeoutHandle
+  cursor: number
 }
 
 export interface AreaData {

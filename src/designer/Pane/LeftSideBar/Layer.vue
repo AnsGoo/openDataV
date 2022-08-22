@@ -158,23 +158,23 @@ const bottom = async (index: string) => {
 const hidden = (index: string) => {
   handleSelect(index)
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  basicStore.hiddenComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+  const component = basicStore.getComponentByIndex(indexs)
+  if (component) component.hiddenComponent()
 }
 
 const display = (index: string) => {
   handleSelect(index)
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  basicStore.showComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
+  const component = basicStore.getComponentByIndex(indexs)
+  if (component) component.showComponent()
 }
 const cut = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
-  console.log(11111111, cutComponent)
   const component: Optional<BaseComponent> = basicStore.cutComponent(
     indexs[indexs.length - 1],
     cutComponent?.parent
   )
-  console.log(22222222, component)
   if (component) {
     copyText(JSON.stringify(component.toJson()))
     copyStore.copy()
@@ -185,7 +185,6 @@ const paste = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
   const component: Optional<BaseComponent> = copyStore.copyData
   const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
-  console.log(55555, indexs)
   if (component) {
     const data = cloneDeep(copyStore.copyData) as BaseComponent
     data.id = uuid()
@@ -247,7 +246,7 @@ const contextmenus = (index: string): ContextmenuItem[] => {
     },
     {
       text: '隐藏',
-      disable: basicStore.getComponentByIndex(indexs)?.display,
+      disable: !basicStore.getComponentByIndex(indexs)?.display,
       subText: '',
       handler: () => hidden(index)
     }

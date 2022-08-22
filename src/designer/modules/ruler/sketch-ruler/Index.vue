@@ -65,7 +65,9 @@ const VRulerWrapperref = ref<InstanceType<typeof RulerWrapper> | null>(null)
 const HRulerWrapperref = ref<InstanceType<typeof RulerWrapper> | null>(null)
 const isShowReferLine = ref<boolean>(true)
 const clearLines = () => {
+  // @ts-ignore
   VRulerWrapperref.value?.clearLines()
+  // @ts-igonre
   HRulerWrapperref.value?.clearLines()
   isShowReferLine.value = true
 }

@@ -136,7 +136,7 @@ import IconFont from './IconFont.vue'
 import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip, NDivider } from 'naive-ui'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
-
+import { ComponentDataType } from '@/resource/models'
 // 状态管理
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
@@ -175,7 +175,6 @@ const rules = reactive<{
   name: [{ required: true, message: '请输入页面名称', trigger: 'blur' }]
 })
 
-let snapShotId = 0
 onMounted(() => {
   setTimeout(() => {
     form.name = basicStore.name
@@ -184,14 +183,8 @@ onMounted(() => {
 })
 
 const undo = async () => {
-  let snapshot: StoreComponentData | undefined
-  if (snapShotId <= 0) {
-    snapshot = await snapShotStore.undo()
-  } else {
-    snapshot = await snapShotStore.undo(snapShotId - 1)
-  }
+  const snapshot: StoreComponentData | undefined = await snapShotStore.lastRecord()
   if (snapshot) {
-    snapShotId = snapshot.id!
     basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
   } else {
     message.warning('没有快照了')
@@ -214,14 +207,8 @@ const save = () => {
 }
 
 const recoveryDraft = async () => {
-  let snapshot: StoreComponentData | undefined
-  if (snapShotId <= 0) {
-    snapshot = await snapShotStore.undo()
-  } else {
-    snapshot = await snapShotStore.undo(snapShotId + 1)
-  }
+  const snapshot: StoreComponentData | undefined = await snapShotStore.nextRecord()
   if (snapshot) {
-    snapShotId = snapshot.id!
     basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
   } else {
     message.warning('没有快照了')
@@ -257,7 +244,6 @@ const handleSubmit = async (type: string) => {
     canvasStyle: canvasStyleData.value
   }
   basicStore.setName(name)
-  basicStore.setThumbnail(thumbnail!)
 
   if (type === 'update') {
     try {
@@ -304,7 +290,7 @@ const importCanvas = () => {
 
 const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   if (loadEvent.target && loadEvent.target.result) {
-    const layoutComponents: { canvasData: Record<string, any>[]; canvasStyle: CanvasStyleData } =
+    const layoutComponents: { canvasData: ComponentDataType[]; canvasStyle: CanvasStyleData } =
       JSON.parse(loadEvent.target.result as string)
     if (layoutComponents) {
       basicStore.setComponentData(layoutComponents.canvasData)

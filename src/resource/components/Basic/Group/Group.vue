@@ -19,7 +19,7 @@
         :style="getShapeStyle(item)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
-        :class="{ lock: item.hided }"
+        :class="{ lock: item.locked }"
         :isInner="true"
         :index="i"
         v-if="isShow(item.display)"

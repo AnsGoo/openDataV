@@ -57,9 +57,9 @@ const handleAddClick = () => {
   const child: Recordable<any> = {}
   props.children.map((item) => {
     if (idx > 0) {
-      child[item.key] = arrayData.value[idx - 1][item.key]
+      child[item.prop] = arrayData.value[idx - 1][item.prop]
     } else {
-      child[item.key] = undefined
+      child[item.prop] = undefined
     }
   })
   arrayData.value.push(child)

@@ -1,8 +1,9 @@
 import { cloneDeep } from 'lodash-es'
 import { ComponentGroup, FormType } from '@/enum'
-import { uuid } from '@/utils/utils'
+import { mod360, rotatePoint, uuid } from '@/utils/utils'
 import type { DOMRectStyle, GroupStyle, PropsType } from '@/types/component'
 import type { ComponentDataType } from './types'
+import { Vector } from '@/types/common'
 
 export abstract class BaseComponent {
   id: string
@@ -11,7 +12,6 @@ export abstract class BaseComponent {
   name: string
   icon = ''
   locked = false
-  hided = false
   selected = false
   display = true
   show = true
@@ -294,7 +294,12 @@ export abstract class BaseComponent {
     this.callbackStyle = callback
   }
 
-  // 添加子组件
+  /**
+   * 添加子组件
+   * @param components
+   * @param deep
+   * @param clear
+   */
   addComponent(components: BaseComponent[], deep = false, clear = false) {
     if (clear) {
       this.subComponents = []
@@ -309,12 +314,51 @@ export abstract class BaseComponent {
       this.subComponents.push(com)
     })
   }
+  /**
+   * 隐藏组件
+   */
+  hiddenComponent() {
+    this.display = false
+  }
+  /**
+   * 显示组件
+   */
+  showComponent() {
+    this.display = true
+  }
 
-  // 获取当前组件在父组件中的索引
-  getIndex() {
-    if (this.parent) {
-      return this.parent.subComponents.findIndex((item) => item.id === this.id)
-    }
-    return -1
+  /**
+   * 重新调整当前组件的子组件
+   * @returns
+   */
+  resizeSubComponents() {
+    if (!this.subComponents) return
+    const subComponents = this.subComponents
+    const parentStyle = this.positionStyle
+    subComponents.forEach((el: BaseComponent) => {
+      const groupStyle: GroupStyle = el.groupStyle!
+      const center: Vector = {
+        y: parentStyle.top + parentStyle.height / 2,
+        x: parentStyle.left + parentStyle.width / 2
+      }
+      const { top, left, height, width, rotate } = {
+        top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
+        left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
+        height: (parentStyle.height * groupStyle.gheight) / 100,
+        width: (parentStyle.width * groupStyle.gwidth) / 100,
+        rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
+      }
+      const point: Vector = {
+        y: top + height / 2,
+        x: left + width / 2
+      }
+
+      const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
+      el.change('top', Math.round(afterPoint.y - height / 2))
+      el.change('left', Math.round(afterPoint.x - width / 2))
+      el.change('height', Math.round(height))
+      el.change('width', Math.round(width))
+      el.change('rotate', rotate)
+    })
   }
 }

@@ -27,7 +27,7 @@
         :info="item"
         :class="{ lock: item.locked }"
         :index="index"
-        v-if="basicStore.isEditMode && !item.hided"
+        v-if="basicStore.isEditMode && item.display"
       >
         <component
           class="component"
@@ -141,14 +141,12 @@ useEventBus('hideArea', hideArea)
 onMounted(() => {
   console.log('进入编辑模式')
   basicStore.setEditMode(EditMode.EDIT)
-  document.addEventListener('keydown', keyDown)
   document.addEventListener('paste', pasteComponent)
 })
 
 onUnmounted(() => {
   console.log('进入预览模式')
   basicStore.setEditMode(EditMode.PREVIEW)
-  document.removeEventListener('keydown', keyDown)
   document.removeEventListener('paste', pasteComponent)
   basicStore.clearCanvas()
 })
@@ -309,36 +307,6 @@ const getSelectArea = (
       components: selectedComponents,
       rect: { left, right, top, bottom }
     }
-  }
-}
-
-/**
- * 方向键控制组件移动
- */
-const keyDown = (e: KeyboardEvent): void => {
-  if (curComponent.value && e.ctrlKey) {
-    switch (e.key) {
-      case 'ArrowLeft':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.positionStyle.left - 1 })
-        break
-      case 'ArrowUp':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.positionStyle.top - 1 })
-        break
-      case 'ArrowRight':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.positionStyle.left + 1 })
-        break
-      case 'ArrowDown':
-        e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.positionStyle.top + 1 })
-        break
-      default:
-        e.stopPropagation()
-    }
-  } else {
-    e.stopPropagation()
   }
 }
 
