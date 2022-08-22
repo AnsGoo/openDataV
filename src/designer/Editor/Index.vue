@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed, onMounted, onUnmounted, watch } from 'vue'
+import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import Ruler from '@/designer/Editor/Ruler.vue'
 import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'

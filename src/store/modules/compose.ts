@@ -7,10 +7,8 @@ import {
   decomposeComponent,
   createGroupStyle,
   calcComponentsRect,
-  uuid,
   getComponentRealRect
 } from '@/utils/utils'
-import { cloneDeep } from 'lodash-es'
 import { BaseComponent } from '@/resource/models'
 import { componentList } from '@/designer/load'
 

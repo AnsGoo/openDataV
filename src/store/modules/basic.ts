@@ -5,18 +5,17 @@ import type { LayoutData } from '@/types/apiTypes'
 import { EditMode } from '@/enum'
 import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
-import { useSnapShotStoreWithOut } from './snapshot'
+// import { useSnapShotStoreWithOut } from './snapshot'
 import { BaseComponent, ComponentDataType, createComponent } from '@/resource/models'
 import { GroupStyle } from '@/types/component'
 import { Vector } from '@/types/common'
 
-const snapShotStore = useSnapShotStoreWithOut()
+// const snapShotStore = useSnapShotStoreWithOut()
 
 const baseCanvasStyleData: CanvasStyleData = {
   width: 1920,
   height: 1080,
   scale: 100,
-  dataWs: '',
   image: import.meta.env.VITE_BACKGROUND as string
 }
 
@@ -227,7 +226,7 @@ const useBasicStore = defineStore({
     setComponentData(componentData: Record<string, string | number | boolean>[] = []): void {
       this.componentData = []
       componentData.forEach((item) => {
-        this.componentData.push(createComponent(item))
+        return this.componentData.push(createComponent(item))
       })
       this.resetComponentData(this.componentData)
     },

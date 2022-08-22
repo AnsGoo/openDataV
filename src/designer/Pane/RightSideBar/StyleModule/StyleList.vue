@@ -40,6 +40,8 @@ const formData = reactive<Recordable<any>>({})
 const styleKeys = computed(() => {
   if (props.curComponent) {
     return props.curComponent.styleFormValue
+  } else {
+    return {}
   }
 })
 
