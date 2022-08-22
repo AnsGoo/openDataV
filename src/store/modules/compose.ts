@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import store from '@/store'
 import type { AreaData } from '@/types/storeTypes'
-import type { DOMRectStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { createGroupStyle, calcComponentsRect, getComponentRealRect } from '@/utils/utils'
 import { BaseComponent } from '@/resource/models'
@@ -16,8 +15,7 @@ const useComposeStore = defineStore({
       top: 0,
       left: 0,
       width: 0,
-      height: 0,
-      rotate: 0
+      height: 0
     },
     components: []
   }),
@@ -31,7 +29,7 @@ const useComposeStore = defineStore({
       return this.components.findIndex((el: BaseComponent) => el.id === component.id) !== -1
     },
 
-    setAreaData(style: DOMRectStyle, components: BaseComponent[]) {
+    setAreaData(style: Postion, components: BaseComponent[]) {
       this.style = style || {}
       this.components = components || []
     },

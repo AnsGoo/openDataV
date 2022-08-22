@@ -8,12 +8,6 @@ interface GroupStyle {
   grotate: number
 }
 
-interface Rect {
-  left: number
-  top: number
-  right: number
-  bottom: number
-}
 interface DOMRectStyle {
   width: number
   height: number
@@ -24,16 +18,6 @@ interface DOMRectStyle {
 
 interface ComponentStyle extends DOMRectStyle {
   [propName: string]: string | number | boolean
-}
-
-interface ComponentConfig<T = Recordable<string | number | any>> {
-  component: string
-  label: string
-  propValue: T
-  icon: string
-  group: ComponentGroup
-  style: Recordable<any>
-  show?: boolean | undefined
 }
 
 interface BaseFormSchema {
@@ -72,20 +56,12 @@ interface PropsType {
   children: AttrType[]
 }
 
-interface ComponentOptions {
-  component: ComponentConfig
-  style: Array<PropsType>
-  attrs: Array<PropsType>
-}
-
 export type {
   ComponentStyle,
-  ComponentOptions,
   PropsType,
   AttrType,
   DOMRectStyle,
   GroupStyle,
-  Rect,
   ComponentConfig,
   CustomFormSchema
 }

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import store from '@/store'
-import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
+import type { EditData, CanvasStyleData, Position } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
 import { EditMode } from '@/enum'
 import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
@@ -125,7 +125,7 @@ const useBasicStore = defineStore({
         return
       }
       const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
-      const ablePostion: Postion = {}
+      const ablePostion: Position = {}
       styleKyes.forEach((el) => {
         if (postion[el] != undefined) {
           ablePostion[el] = postion[el]

@@ -64,8 +64,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
-import { Vector } from '@/types/common'
-import { DOMRectStyle, Rect } from '@/types/component'
+import { Postion, Vector } from '@/types/common'
 import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
@@ -103,8 +102,7 @@ const hideArea = () => {
       left: 0,
       top: 0,
       width: 0,
-      height: 0,
-      rotate: 0
+      height: 0
     },
     []
   )
@@ -233,7 +231,7 @@ const handleMouseDown = (e: MouseEvent) => {
         hideArea()
         return
       }
-      const selectedRect: Rect = {
+      const selectedRect: Position = {
         left: start.x,
         top: start.y,
         right: width.value + start.x,
@@ -266,8 +264,8 @@ const handleMouseDown = (e: MouseEvent) => {
 }
 
 const getSelectArea = (
-  rect: Rect
-): { components: Array<BaseComponent>; rect: Rect } | undefined => {
+  rect: Postion
+): { components: Array<BaseComponent>; rect: Position } | undefined => {
   const selectedComponents: Array<BaseComponent> = []
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
@@ -278,13 +276,13 @@ const getSelectArea = (
   basicStore.componentData.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
     const { width, height, left, top, rotate } = component.style
-    const componentRect: Rect = calcComponentAxis({
+    const componentRect: Position = calcComponentAxis({
       width,
       height,
       left,
       top,
       rotate
-    } as DOMRectStyle)
+    })
     if (
       componentRect.left >= rect.left &&
       componentRect.right <= rect.right &&

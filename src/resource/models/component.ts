@@ -32,11 +32,7 @@ export abstract class BaseComponent {
 
   _propValue: Record<string, any> = {}
   _styleValue: ComponentStyle = {
-    top: 0,
-    left: 0,
-    height: 0,
-    width: 0,
-    rotate: 0
+    ...this.positionStyle
   }
 
   constructor(
