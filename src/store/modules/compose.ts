@@ -1,14 +1,9 @@
 import { defineStore } from 'pinia'
 import store from '@/store'
 import type { AreaData } from '@/types/storeTypes'
-import type { ComponentStyle, DOMRectStyle } from '@/types/component'
+import type { DOMRectStyle } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import {
-  decomposeComponent,
-  createGroupStyle,
-  calcComponentsRect,
-  getComponentRealRect
-} from '@/utils/utils'
+import { createGroupStyle, calcComponentsRect, getComponentRealRect } from '@/utils/utils'
 import { BaseComponent } from '@/resource/models'
 import { componentList } from '@/designer/load'
 
@@ -29,17 +24,6 @@ const useComposeStore = defineStore({
   getters: {
     canCompose(): boolean {
       return this.components.length > 1
-    },
-    canDecompose(): boolean {
-      // 当前组件没有锁定，并且是分组组件，就可以拆分
-      if (
-        basicStore.curComponent &&
-        !basicStore.curComponent.locked &&
-        basicStore.curComponent.component === 'Group'
-      ) {
-        return false
-      }
-      return true
     }
   },
   actions: {
@@ -99,29 +83,6 @@ const useComposeStore = defineStore({
           }
         }
       })
-    },
-    /**
-     * 取消组件间的组合
-     * @returns
-     */
-    decompose() {
-      if (!basicStore.curComponent) {
-        return
-      }
-
-      const parentStyle: ComponentStyle = basicStore.curComponent.positionStyle
-      const components: BaseComponent[] = basicStore.curComponent.subComponents
-      if (components.length > 0) {
-        const index: number = basicStore.getComponentIndexById(
-          basicStore.curComponent.id,
-          basicStore.curComponent.parent
-        )
-        basicStore.removeComponent(index, basicStore.curComponent.parent)
-        components.forEach((component) => {
-          decomposeComponent(component, parentStyle)
-          basicStore.appendComponent(component)
-        })
-      }
     },
     /**
      * 右对齐

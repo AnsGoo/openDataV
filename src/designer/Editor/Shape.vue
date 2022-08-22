@@ -206,7 +206,7 @@ const bottomComponent = () => {
 }
 
 const decompose = () => {
-  composeStore.decompose()
+  basicStore.decompose()
 }
 
 const contextmenus = (): ContextmenuItem[] => {
@@ -215,7 +215,7 @@ const contextmenus = (): ContextmenuItem[] => {
     {
       text: '拆分',
       subText: '',
-      disable: composeStore.canDecompose,
+      disable: basicStore.curComponent?.component !== 'Group',
       handler: decompose
     },
     { divider: true },
