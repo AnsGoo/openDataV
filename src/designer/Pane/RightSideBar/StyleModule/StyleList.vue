@@ -48,11 +48,9 @@ const styleKeys = computed(() => {
 const changed = debounce((key: string, val: any) => {
   if (props.curComponent) {
     const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
-    if (locationKeys.findIndex((el: string) => el === key) > -1) {
-      const indexs: number[] = basicStore.activeIndex!.split('-').map((i) => Number(i))
-      indexs.pop()
+    if (locationKeys.includes(key)) {
       const parentComponent = props.curComponent.parent
-      key as 'top' | 'left' | 'width' | 'height' | 'rotate'
+      // key as 'top' | 'left' | 'width' | 'height' | 'rotate'
       basicStore.syncComponentLoction({ [key]: val as number }, parentComponent, true)
       if (parentComponent) {
         basicStore.resizeAutoComponent(parentComponent)

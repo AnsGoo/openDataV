@@ -86,5 +86,6 @@ export type {
   DOMRectStyle,
   GroupStyle,
   Rect,
-  ComponentConfig
+  ComponentConfig,
+  CustomFormSchema
 }

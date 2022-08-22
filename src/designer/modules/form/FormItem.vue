@@ -61,8 +61,8 @@
       v-else-if="type === FormType.CUSTOM"
       v-model:value="formData[prop]"
       @change="changed($event, prop)"
-      :component="componentOptions.componentType"
-      :args="componentOptions.args"
+      :component="(componentOptions as CustomFormSchema).componentType"
+      :args="(componentOptions as CustomFormSchema).args"
     />
     <n-input
       v-else
@@ -90,7 +90,7 @@ import {
   NColorPicker
 } from 'naive-ui'
 import { FormType, GlobalColorSwatches } from '@/enum'
-import type { AttrType } from '@/types/component'
+import type { AttrType, CustomFormSchema } from '@/types/component'
 
 const props = defineProps<{
   data: Recordable<any>

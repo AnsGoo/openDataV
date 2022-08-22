@@ -136,6 +136,7 @@ import IconFont from './IconFont.vue'
 import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip, NDivider } from 'naive-ui'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
+import { ComponentDataType } from '@/resource/models'
 // 状态管理
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
@@ -289,7 +290,7 @@ const importCanvas = () => {
 
 const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   if (loadEvent.target && loadEvent.target.result) {
-    const layoutComponents: { canvasData: Record<string, any>[]; canvasStyle: CanvasStyleData } =
+    const layoutComponents: { canvasData: ComponentDataType[]; canvasStyle: CanvasStyleData } =
       JSON.parse(loadEvent.target.result as string)
     if (layoutComponents) {
       basicStore.setComponentData(layoutComponents.canvasData)

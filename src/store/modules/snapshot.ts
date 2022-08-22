@@ -14,6 +14,9 @@ const useSnapShotStore = defineStore({
     cursor: 0
   }),
   actions: {
+    async latestRecord() {
+      return await snapshotDb.snapshot.orderBy('id').last()
+    },
     /**
      * 上一次记录
      * @returns 快照

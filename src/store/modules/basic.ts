@@ -214,7 +214,7 @@ const useBasicStore = defineStore({
      * 设置画图的组件数据
      * @param componentData
      */
-    setComponentData(componentData: Record<string, string | number | boolean>[] = []): void {
+    setComponentData(componentData: ComponentDataType[] = []): void {
       this.componentData = []
       componentData.forEach((item) => {
         return this.componentData.push(createComponent(item))
