@@ -1,7 +1,6 @@
-import type { AppRouteRecordRaw } from '@/router/types'
 import { Layout } from '@/layout'
 
-const basicRoutes: AppRouteRecordRaw[] = [
+const basicRoutes = [
   {
     path: '/',
     name: 'Home',

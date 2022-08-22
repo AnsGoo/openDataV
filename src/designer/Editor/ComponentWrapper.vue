@@ -16,11 +16,9 @@ defineProps<{ component: BaseComponent }>()
 </script>
 
 <style lang="less" scoped>
-@layer components {
-  div.component,
-  img.component,
-  span.component {
-    @apply absolute;
-  }
+div.component,
+img.component,
+span.component {
+  @apply absolute;
 }
 </style>

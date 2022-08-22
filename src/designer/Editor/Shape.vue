@@ -594,53 +594,51 @@ watch(
 </script>
 
 <style lang="less" scoped>
-@layer components {
-  .shape {
-    border-width: v-bind(borderWidth);
-    border-color: v-bind(borderColor);
-    border-style: v-bind(borderStyle);
-    position: absolute;
+.shape {
+  border-width: v-bind(borderWidth);
+  border-color: v-bind(borderColor);
+  border-style: v-bind(borderStyle);
+  position: absolute;
 
-    .error-info {
-      color: red;
-      font-size: 20px;
-      white-space: nowrap;
-    }
+  .error-info {
+    color: red;
+    font-size: 20px;
+    white-space: nowrap;
   }
+}
 
-  .active {
-    @apply select-none hover:cursor-move;
+.active {
+  @apply select-none hover:cursor-move;
 
-    outline: 1px solid #70c0ff;
+  outline: 1px solid #70c0ff;
+}
+
+.shape-point {
+  @apply absolute bg-white border border-solid border-blue-400 w-2 h-2 rounded-full z-10;
+  margin-left: -4px;
+  margin-top: -4px;
+}
+
+.rotation {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  height: 20px;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
   }
+}
 
-  .shape-point {
-    @apply absolute bg-white border border-solid border-blue-400 w-2 h-2 rounded-full z-10;
-    margin-left: -4px;
-    margin-top: -4px;
-  }
+.icon-jiesuo {
+  @apply absolute top-0 right-0;
+}
 
-  .rotation {
-    position: absolute;
-    top: -24px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: 600;
-    height: 20px;
-    cursor: grab;
-
-    &:active {
-      cursor: grabbing;
-    }
-  }
-
-  .icon-jiesuo {
-    @apply absolute top-0 right-0;
-  }
-
-  div em {
-    @apply absolute -top-6 left-0 text-red-600;
-  }
+div em {
+  @apply absolute -top-6 left-0 text-red-600;
 }
 
 .shape-point.lt.rotate-0,

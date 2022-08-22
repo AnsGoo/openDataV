@@ -320,15 +320,13 @@ const getSelectArea = (
 </script>
 
 <style scoped lang="less">
-@layer components {
-  .editor {
-    @apply relative m-auto;
-    background-color: slategrey;
-  }
+.editor {
+  @apply relative m-auto;
+  background-color: slategrey;
+}
 
-  .edit .component {
-    @apply outline-none w-full h-full;
-    position: static !important;
-  }
+.edit .component {
+  @apply outline-none w-full h-full;
+  position: static !important;
 }
 </style>

@@ -67,7 +67,7 @@ const isShowReferLine = ref<boolean>(true)
 const clearLines = () => {
   // @ts-ignore
   VRulerWrapperref.value?.clearLines()
-  // @ts-igonre
+  // @ts-ignore
   HRulerWrapperref.value?.clearLines()
   isShowReferLine.value = true
 }
