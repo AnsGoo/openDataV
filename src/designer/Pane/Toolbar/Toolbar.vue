@@ -136,7 +136,6 @@ import IconFont from './IconFont.vue'
 import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip, NDivider } from 'naive-ui'
 import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
-import { BaseComponent } from '@/resource/models'
 
 // 状态管理
 const basicStore = useBasicStoreWithOut()

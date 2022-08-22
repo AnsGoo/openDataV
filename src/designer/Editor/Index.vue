@@ -357,6 +357,7 @@ const keyDown = (e: KeyboardEvent): void => {
 @layer components {
   .editor {
     @apply relative m-auto;
+    background-color: slategrey;
   }
 
   .edit .component {

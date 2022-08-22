@@ -2,7 +2,7 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
-export const componentName: string = 'Progress'
+export const componentName = 'Progress'
 export class ProgressComponent extends BaseComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super(componentName, ComponentGroup.PROGERSS, name ? name : '进度条', id, 200, 50, icon)

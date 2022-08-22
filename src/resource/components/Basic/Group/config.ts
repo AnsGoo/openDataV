@@ -1,9 +1,9 @@
-import { ComponentGroup, FormType } from '@/enum'
+import { ComponentGroup } from '@/enum'
 import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'Group'
 export class GroupComponent extends BaseComponent {
-  show: boolean = false
+  show = false
   constructor(id?: string, name?: string) {
     super(componentName, ComponentGroup.BASIC, name ? name : '分组', id, 200, 200)
   }

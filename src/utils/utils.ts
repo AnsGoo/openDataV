@@ -404,7 +404,7 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
     case 'scale':
       return { transform: `${key}(${(value[0], value[1])}deg)` }
     case 'backgroundImage':
-      return { backgroundImage: `url(${value})` }
+      return { backgroundImage: value ? `url(${value})` : null }
     case 'linearGradient':
       return { background: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})` }
     default:
@@ -447,7 +447,7 @@ export const getComponentRealRect = (components: BaseComponent[]) => {
     const width: number = ele.positionStyle.width
     const top: number = ele.positionStyle.top
     const height: number = ele.positionStyle.height
-    const rotate: number = Number(ele.positionStyle.rotate)
+    const rotate = Number(ele.positionStyle.rotate)
     const leftTop: Vector = { x: left, y: top }
     const rightTop: Vector = { x: left + width, y: top }
     const rightbottom: Vector = { x: left + width, y: top + height }
