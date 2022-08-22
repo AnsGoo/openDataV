@@ -9,13 +9,13 @@ export abstract class BaseComponent {
   component: string
   group: ComponentGroup
   name: string
-  icon: string = ''
-  locked: boolean = false
-  hided: boolean = false
-  selected: boolean = false
-  display: boolean = true
-  show: boolean = true
-  active: boolean = false
+  icon = ''
+  locked = false
+  hided = false
+  selected = false
+  display = true
+  show = true
+  active = false
   callbackProp: Function | undefined = undefined
   callbackStyle: Function | undefined = undefined
 
@@ -295,7 +295,7 @@ export abstract class BaseComponent {
   }
 
   // 添加子组件
-  addComponent(components: BaseComponent[], deep: boolean = false, clear: boolean = false) {
+  addComponent(components: BaseComponent[], deep = false, clear = false) {
     if (clear) {
       this.subComponents = []
     }

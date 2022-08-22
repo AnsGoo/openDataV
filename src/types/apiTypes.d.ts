@@ -1,5 +1,4 @@
 import type { CanvasStyleData } from '@/types/storeTypes'
-import { BaseComponent } from '@/resource/models'
 
 export interface ComponentData {
   canvasStyle: CanvasStyleData

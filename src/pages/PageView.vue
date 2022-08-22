@@ -13,7 +13,7 @@ import { filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { eventBus } from '@/bus/useEventBus'
 import { LayoutData } from '@/types/apiTypes'
-import {BaseComponent} from '@/resource/models'
+import { BaseComponent } from '@/resource/models'
 
 const websockets: WebSocket[] = []
 
@@ -23,7 +23,7 @@ const canvasStyle = ref<CanvasStyleData>({
   height: 0,
   scale: 0,
   dataWs: '',
-  image: (import.meta.env.VITE_BACKGROUND as string) || '/images/bg.png'
+  image: import.meta.env.VITE_BACKGROUND as string
 })
 const bgStyle = computed<Recordable<string>>(() => {
   const style = {

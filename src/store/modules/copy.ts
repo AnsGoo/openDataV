@@ -1,4 +1,4 @@
-import { uuid } from '@/utils/utils';
+import { uuid } from '@/utils/utils'
 import { defineStore } from 'pinia'
 import store from '@/store'
 import { cloneDeep } from 'lodash-es'

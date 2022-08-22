@@ -64,7 +64,12 @@
       :component="componentOptions.componentType"
       :args="componentOptions.args"
     />
-    <n-input v-else clearable v-model:value="formData[prop]" @update:value="changed($event, prop)" />
+    <n-input
+      v-else
+      clearable
+      v-model:value="formData[prop]"
+      @update:value="changed($event, prop)"
+    />
   </n-form-item>
 </template>
 
