@@ -12,9 +12,6 @@ specifiers:
   axios: ^0.23.0
   dayjs: ^1.11.2
   dexie: ^3.2.2
-  echarts: ^5.2.1
-  echarts-gl: ^2.0.8
-  echarts-liquidfill: '3'
   eslint: ^7.32.0
   eslint-config-airbnb-base: ^14.2.1
   eslint-config-prettier: ^8.3.0
@@ -23,7 +20,6 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-sonarjs: ^0.11.0
   eslint-plugin-vue: ^7.19.1
-  flv.js: ^1.6.2
   husky: ^7.0.4
   less: ^4.1.2
   lodash-es: ^4.17.21
@@ -49,10 +45,6 @@ dependencies:
   axios: 0.23.0
   dayjs: 1.11.5
   dexie: 3.2.2
-  echarts: 5.3.3
-  echarts-gl: 2.0.9_echarts@5.3.3
-  echarts-liquidfill: 3.1.0_echarts@5.3.3
-  flv.js: 1.6.2
   lodash-es: 4.17.21
   mitt: 3.0.0
   naive-ui: 2.32.2_vue@3.2.37
@@ -754,10 +746,6 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /claygl/1.3.0:
-    resolution: {integrity: sha512-+gGtJjT6SSHD2l2yC3MCubW/sCV40tZuSs5opdtn79vFSGUgp/lH139RNEQ6Jy078/L0aV8odCw8RSrUcMfLaQ==}
-    dev: false
-
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
     dependencies:
@@ -985,31 +973,6 @@ packages:
       domhandler: 5.0.3
     dev: true
 
-  /echarts-gl/2.0.9_echarts@5.3.3:
-    resolution: {integrity: sha512-oKeMdkkkpJGWOzjgZUsF41DOh6cMsyrGGXimbjK2l6Xeq/dBQu4ShG2w2Dzrs/1bD27b2pLTGSaUzouY191gzA==}
-    peerDependencies:
-      echarts: ^5.1.2
-    dependencies:
-      claygl: 1.3.0
-      echarts: 5.3.3
-      zrender: 5.3.2
-    dev: false
-
-  /echarts-liquidfill/3.1.0_echarts@5.3.3:
-    resolution: {integrity: sha512-5Dlqs/jTsdTUAsd+K5LPLLTgrbbNORUSBQyk8PSy1Mg2zgHDWm83FmvA4s0ooNepCJojFYRITTQ4GU1UUSKYLw==}
-    peerDependencies:
-      echarts: ^5.0.1
-    dependencies:
-      echarts: 5.3.3
-    dev: false
-
-  /echarts/5.3.3:
-    resolution: {integrity: sha512-BRw2serInRwO5SIwRviZ6Xgm5Lb7irgz+sLiFMmy/HOaf4SQ+7oYqxKzRHAKp4xHQ05AuHw1xvoQWJjDQq/FGw==}
-    dependencies:
-      tslib: 2.3.0
-      zrender: 5.3.2
-    dev: false
-
   /electron-to-chromium/1.4.225:
     resolution: {integrity: sha512-ICHvGaCIQR3P88uK8aRtx8gmejbVJyC6bB4LEC3anzBrIzdzC7aiZHY4iFfXhN4st6I7lMO0x4sgBHf/7kBvRw==}
     dev: true
@@ -1088,10 +1051,6 @@ packages:
       is-date-object: 1.0.5
       is-symbol: 1.0.4
     dev: true
-
-  /es6-promise/4.2.8:
-    resolution: {integrity: sha512-HJDGx5daxeIvxdBxvG2cb9g4tEvwIk3i8+nhX0yGrYmZUzbkdg8QbDevheDB8gd0//uPj4c1EQua8Q+MViT0/w==}
-    dev: false
 
   /esbuild-android-64/0.14.54:
     resolution: {integrity: sha512-Tz2++Aqqz0rJ7kYBfz+iqyE3QMycD4vk7LBRyWaAVFgFtQ/O8EJOnVmTOiDWYZ/uYzB4kvP+bqejYdVKzE5lAQ==}
@@ -1643,13 +1602,6 @@ packages:
   /flatted/3.2.7:
     resolution: {integrity: sha512-5nqDSxl8nn5BSNxyR3n4I6eDmbolI6WT+QqR547RwxQapgjQBmtktdP+HTBb/a/zLsbzERTONyUB5pefh5TtjQ==}
     dev: true
-
-  /flv.js/1.6.2:
-    resolution: {integrity: sha512-xre4gUbX1MPtgQRKj2pxJENp/RnaHaxYvy3YToVVCrSmAWUu85b9mug6pTXF6zakUjNP2lFWZ1rkSX7gxhB/2A==}
-    dependencies:
-      es6-promise: 4.2.8
-      webworkify-webpack: 2.1.5
-    dev: false
 
   /follow-redirects/1.15.1:
     resolution: {integrity: sha512-yLAMQs+k0b2m7cVxpS1VKJVvoz7SS9Td1zss3XRwXj+ZDH00RJgnuLx7E44wx02kQLrdM3aOOy+FpzS7+8OizA==}
@@ -3136,10 +3088,6 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
-  /tslib/2.3.0:
-    resolution: {integrity: sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg==}
-    dev: false
-
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
     dev: true
@@ -3349,10 +3297,6 @@ packages:
       vue: 3.2.37
     dev: false
 
-  /webworkify-webpack/2.1.5:
-    resolution: {integrity: sha512-2akF8FIyUvbiBBdD+RoHpoTbHMQF2HwjcxfDvgztAX5YwbZNyrtfUMgvfgFVsgDhDPVTlkbb5vyasqDHfIDPQw==}
-    dev: false
-
   /which-boxed-primitive/1.0.2:
     resolution: {integrity: sha512-bwZdv0AKLpplFY2KZRX6TvyuN7ojjr7lwkg6ml0roIy9YeuSr7JS372qlNW18UQYzgYK9ziGcerWqZOmEn9VNg==}
     dependencies:
@@ -3413,9 +3357,3 @@ packages:
     resolution: {integrity: sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w==}
     engines: {node: '>=10'}
     dev: true
-
-  /zrender/5.3.2:
-    resolution: {integrity: sha512-8IiYdfwHj2rx0UeIGZGGU4WEVSDEdeVCaIg/fomejg1Xu6OifAL1GVzIPHg2D+MyUkbNgPWji90t0a8IDk+39w==}
-    dependencies:
-      tslib: 2.3.0
-    dev: false
