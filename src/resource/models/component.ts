@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash-es'
 import { ComponentGroup, FormType } from '@/enum'
 import { mod360, rotatePoint, uuid } from '@/utils/utils'
-import type { DOMRectStyle, GroupStyle, PropsType } from '@/types/component'
+import type { ComponentStyle, DOMRectStyle, GroupStyle, PropsType } from '@/types/component'
 import type { ComponentDataType } from './types'
 import { Vector } from '@/types/common'
 
@@ -31,7 +31,13 @@ export abstract class BaseComponent {
   subComponents: BaseComponent[] = []
 
   _propValue: Record<string, any> = {}
-  _styleValue: Record<string, any> = {}
+  _styleValue: ComponentStyle = {
+    top: 0,
+    left: 0,
+    height: 0,
+    width: 0,
+    rotate: 0
+  }
 
   constructor(
     component: string,
@@ -178,7 +184,7 @@ export abstract class BaseComponent {
     return this._propValue
   }
 
-  get style(): Record<string, string | number | boolean> {
+  get style(): ComponentStyle {
     this.styleFormValue.forEach((item) => {
       item.children.forEach((obj) => {
         this._styleValue[obj.prop] = obj.componentOptions.defaultValue

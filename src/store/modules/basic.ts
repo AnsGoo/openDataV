@@ -7,6 +7,8 @@ import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
 import { BaseComponent, ComponentDataType, createComponent } from '@/resource/models'
+import { cloneDeep } from 'lodash'
+import { DOMRectStyle } from '@/types/component'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -456,6 +458,42 @@ const useBasicStore = defineStore({
           }
         }
       }
+    },
+    /**
+     * 取消组件间的组合
+     * @returns
+     */
+    decompose() {
+      if (!(this.curComponent && this.curComponent.component === 'Group')) return
+      const components: BaseComponent[] = cloneDeep(this.curComponent.subComponents)
+      if (components.length > 0) {
+        const index: number = this.getComponentIndexById(
+          this.curComponent.id,
+          this.curComponent.parent
+        )
+        this.removeComponent(index, this.curComponent.parent)
+        const parentComponent = this.curComponent.parent
+        if (parentComponent) {
+          const parentStyle: DOMRectStyle = parentComponent.positionStyle
+          components.forEach((item: BaseComponent) => {
+            item.groupStyle = {
+              gleft: toPercent((item.positionStyle.left - parentStyle.left) / parentStyle.width),
+              gtop: toPercent((item.positionStyle.top - parentStyle.top) / parentStyle.height),
+              gwidth: toPercent(item.positionStyle.width / parentStyle.width),
+              gheight: toPercent(item.positionStyle.height / parentStyle.height),
+              grotate: item.positionStyle.rotate
+            }
+            parentComponent?.addComponent([item])
+          })
+        } else {
+          components.forEach((item) => {
+            item.groupStyle = undefined
+            item.parent = undefined
+            this.appendComponent(item)
+          })
+        }
+      }
+      this.saveComponentData()
     }
   }
 })

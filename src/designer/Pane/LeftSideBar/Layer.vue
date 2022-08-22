@@ -213,7 +213,10 @@ const contextmenus = (index: string): ContextmenuItem[] => {
     {
       text: '拆分',
       subText: 'Ctrl + V',
-      handler: () => copy(index)
+      disable:
+        basicStore.getComponentByIndex(index.split('-').map((i) => Number(i)))?.component !==
+        'Group',
+      handler: () => basicStore.decompose()
     },
     {
       text: '删除',

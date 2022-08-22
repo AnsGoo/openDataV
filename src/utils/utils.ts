@@ -1,4 +1,4 @@
-import type { ComponentStyle, DOMRectStyle, GroupStyle, Rect } from '@/types/component'
+import type { DOMRectStyle, GroupStyle, Rect } from '@/types/component'
 import { message } from '@/utils/message'
 import type { Vector } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
@@ -198,7 +198,7 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-export function decomposeComponent(component: BaseComponent, parentStyle: ComponentStyle) {
+export function decomposeComponent(component: BaseComponent, parentStyle: DOMRectStyle) {
   // 获取元素的中心点坐标
   const groupStyle: GroupStyle = component.groupStyle!
   const center: Vector = {

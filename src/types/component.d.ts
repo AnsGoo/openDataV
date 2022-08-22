@@ -23,7 +23,7 @@ interface DOMRectStyle {
 }
 
 interface ComponentStyle extends DOMRectStyle {
-  [propName: string]: string | number
+  [propName: string]: string | number | boolean
 }
 
 interface ComponentConfig<T = Recordable<string | number | any>> {
