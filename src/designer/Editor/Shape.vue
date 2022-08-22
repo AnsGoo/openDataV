@@ -178,7 +178,6 @@ const copy = () => {
 }
 
 const deleteComponent = () => {
-  console.log('index', props.index)
   basicStore.removeComponent(props.index, props.info.parent)
 }
 

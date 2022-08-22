@@ -55,7 +55,6 @@ const useBasicStore = defineStore({
     layoutData(): ComponentDataType[] {
       const result: ComponentDataType[] = []
       this.componentData.forEach((item) => {
-        console.log(item)
         result.push(item.toJson())
       })
       return result
@@ -246,7 +245,6 @@ const useBasicStore = defineStore({
         return
       }
       curComponent.change(key, value, prop)
-      console.log(key, value, prop)
       this.saveComponentData()
     },
     /**
@@ -362,7 +360,6 @@ const useBasicStore = defineStore({
      * @returns 移除结果
      */
     removeComponent(index: number, parent: Optional<BaseComponent>) {
-      console.log(index, parent)
       if (parent && parent.subComponents) {
         parent.subComponents.splice(index, 1)
       } else {
@@ -381,7 +378,6 @@ const useBasicStore = defineStore({
         rootComponent = rootComponent.subComponents
           ? rootComponent.subComponents[el]
           : rootComponent
-        console.log(el, rootComponent)
       })
       return rootComponent
     },
