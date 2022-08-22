@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia'
 import store from '@/store'
-import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
+import type { EditData, CanvasStyleData } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
 import { EditMode } from '@/enum'
 import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
-import { BaseComponent, ComponentDataType, createComponent } from '@/resource/models'
+import { BaseComponent, createComponent } from '@/resource/models'
 import { cloneDeep } from 'lodash'
-import { DOMRectStyle } from '@/types/component'
+import { ComponentDataType, DOMRectStyle } from '@/types/component'
+import { Position } from '@/types/common'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -120,12 +121,12 @@ const useBasicStore = defineStore({
      * @param postion 位置
      * @returns
      */
-    syncComponentLoction(postion: Postion, parentComponent?: BaseComponent, isSave = true): void {
+    syncComponentLoction(postion: Position, parentComponent?: BaseComponent, isSave = true): void {
       if (!this.curComponent) {
         return
       }
       const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
-      const ablePostion: Postion = {}
+      const ablePostion: Position = {}
       styleKyes.forEach((el) => {
         if (postion[el] != undefined) {
           ablePostion[el] = postion[el]

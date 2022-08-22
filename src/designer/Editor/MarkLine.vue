@@ -16,8 +16,8 @@ import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useEventBus } from '@/bus/useEventBus'
 import { calcComponentAxis } from '@/utils/utils'
-import { Rect } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import { Position } from '@/types/common'
 
 const basicStore = useBasicStoreWithOut()
 
@@ -71,7 +71,7 @@ const showLine = (isDownward, isRightward) => {
       left: myleft,
       right: myright,
       bottom: mybottom
-    }: Rect = calcComponentAxis(basicStore.curComponent.positionStyle)
+    }: Position = calcComponentAxis(basicStore.curComponent.positionStyle)
     const curComponentHalfwidth = (myright - myleft) / 2
     const curComponentHalfHeight = (mybottom - mytop) / 2
 
