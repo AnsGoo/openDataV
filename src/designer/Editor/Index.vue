@@ -27,7 +27,7 @@
         :info="item"
         :class="{ lock: item.locked }"
         :index="index"
-        v-if="basicStore.isEditMode && !item.hided"
+        v-if="basicStore.isEditMode && item.display"
       >
         <component
           class="component"
@@ -320,19 +320,35 @@ const keyDown = (e: KeyboardEvent): void => {
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.positionStyle.left - 1 })
+        basicStore.syncComponentLoction(
+          { left: curComponent.value.positionStyle.left - 1 },
+          undefined,
+          false
+        )
         break
       case 'ArrowUp':
         e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.positionStyle.top - 1 })
+        basicStore.syncComponentLoction(
+          { top: curComponent.value.positionStyle.top - 1 },
+          undefined,
+          false
+        )
         break
       case 'ArrowRight':
         e.preventDefault()
-        basicStore.syncComponentLoction({ left: curComponent.value.positionStyle.left + 1 })
+        basicStore.syncComponentLoction(
+          { left: curComponent.value.positionStyle.left + 1 },
+          undefined,
+          false
+        )
         break
       case 'ArrowDown':
         e.preventDefault()
-        basicStore.syncComponentLoction({ top: curComponent.value.positionStyle.top + 1 })
+        basicStore.syncComponentLoction(
+          { top: curComponent.value.positionStyle.top + 1 },
+          undefined,
+          false
+        )
         break
       default:
         e.stopPropagation()

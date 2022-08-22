@@ -3,18 +3,16 @@ import store from '@/store'
 import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
 import { EditMode } from '@/enum'
-import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
+import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
-// import { useSnapShotStoreWithOut } from './snapshot'
+import { useSnapShotStoreWithOut } from './snapshot'
 import { BaseComponent, ComponentDataType, createComponent } from '@/resource/models'
-import { GroupStyle } from '@/types/component'
-import { Vector } from '@/types/common'
 
-// const snapShotStore = useSnapShotStoreWithOut()
+const snapShotStore = useSnapShotStoreWithOut()
 
 const baseCanvasStyleData: CanvasStyleData = {
-  width: 1920,
-  height: 1080,
+  width: window.screen.width,
+  height: window.screen.height,
   scale: 100,
   image: import.meta.env.VITE_BACKGROUND as string
 }
@@ -81,15 +79,6 @@ const useBasicStore = defineStore({
         this.thumbnail = data.thumbnail
       }
     },
-
-    setName(name: string) {
-      this.name = name
-    },
-
-    setThumbnail(thumbnail: string) {
-      this.thumbnail = thumbnail
-    },
-
     setClickComponentStatus(status: boolean): void {
       this.isClickComponent = status
     },
@@ -101,7 +90,9 @@ const useBasicStore = defineStore({
     toggleShowEm(): void {
       this.isShowEm = !this.isShowEm
     },
-
+    setName(name: string): void {
+      this.name = name
+    },
     setCanvasStyle(style: CanvasStyleData): void {
       this.canvasStyleData = style
     },
@@ -128,7 +119,7 @@ const useBasicStore = defineStore({
      * @param postion 位置
      * @returns
      */
-    syncComponentLoction(postion: Postion, parentComponent?: BaseComponent): void {
+    syncComponentLoction(postion: Postion, parentComponent?: BaseComponent, isSave = true): void {
       if (!this.curComponent) {
         return
       }
@@ -193,10 +184,11 @@ const useBasicStore = defineStore({
       }
 
       if (this.curComponent.subComponents) {
-        this.resizeChildenComponent(this.curComponent.subComponents, this.curComponent)
+        this.curComponent.resizeSubComponents()
       }
-
-      this.saveComponentData()
+      if (isSave) {
+        this.saveComponentData()
+      }
     },
 
     /**
@@ -205,8 +197,8 @@ const useBasicStore = defineStore({
      * @param ids
      * @param isUpdate
      */
-    resetComponentData(componentData: Array<BaseComponent>) {
-      componentData.forEach((item: BaseComponent) => {
+    resetComponentData(components: Array<BaseComponent>) {
+      components.forEach((item: BaseComponent) => {
         // 重置组件 ID
 
         if (this.ids.has(item.id!)) {
@@ -378,26 +370,6 @@ const useBasicStore = defineStore({
       }
       this.saveComponentData()
     },
-    showComponent(index: number, parent: Optional<BaseComponent>): void {
-      let componentData = this.componentData
-      if (parent && parent.subComponents) {
-        componentData = parent.subComponents
-      }
-
-      if (index < componentData.length && index >= 0) {
-        componentData[index].display = true
-      }
-    },
-    hiddenComponent(index: number, parent: Optional<BaseComponent>): void {
-      let componentData = this.componentData
-      if (parent && parent.subComponents) {
-        componentData = parent.subComponents
-      }
-
-      if (index < componentData.length && index >= 0) {
-        componentData[index].display = false
-      }
-    },
     getComponentByIndex(indexs: readonly number[]): Optional<BaseComponent> {
       const firstIndex = indexs[0]
       if (firstIndex === undefined || firstIndex < 0 || firstIndex >= this.componentData.length) {
@@ -414,10 +386,10 @@ const useBasicStore = defineStore({
       return rootComponent
     },
     saveComponentData() {
-      // window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
-      // new Promise((resolve) => {
-      //   resolve(snapShotStore.saveSnapshot(this.layoutData, this.canvasStyleData))
-      // })
+      window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
+      new Promise((resolve) => {
+        resolve(snapShotStore.saveSnapshot(this.layoutData, this.canvasStyleData))
+      })
     },
     cutComponent(index: number, parent: Optional<BaseComponent>): Optional<BaseComponent> {
       let componentData = this.componentData
@@ -431,6 +403,7 @@ const useBasicStore = defineStore({
           components[0].groupStyle = undefined
           this.resizeAutoComponent(parent)
         }
+        this.saveComponentData()
         return components[0]
       }
     },
@@ -450,6 +423,7 @@ const useBasicStore = defineStore({
           this.resizeAutoComponent(parent)
         }
       }
+      this.saveComponentData()
     },
     /**
      * 重新自动调整组件尺寸
@@ -481,40 +455,11 @@ const useBasicStore = defineStore({
             }
             el.groupStyle = gStyle
           })
-          this.saveComponentData()
           if (parentComponent.parent) {
             this.resizeAutoComponent(parentComponent.parent)
           }
         }
       }
-    },
-    resizeChildenComponent(components: BaseComponent[], parentComponent: BaseComponent): void {
-      const parentStyle = parentComponent.positionStyle
-      components.forEach((el: BaseComponent) => {
-        const groupStyle: GroupStyle = el.groupStyle!
-        const center: Vector = {
-          y: parentStyle.top + parentStyle.height / 2,
-          x: parentStyle.left + parentStyle.width / 2
-        }
-        const { top, left, height, width, rotate } = {
-          top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
-          left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
-          height: (parentStyle.height * groupStyle.gheight) / 100,
-          width: (parentStyle.width * groupStyle.gwidth) / 100,
-          rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
-        }
-        const point: Vector = {
-          y: top + height / 2,
-          x: left + width / 2
-        }
-
-        const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-        el.change('top', Math.round(afterPoint.y - height / 2))
-        el.change('left', Math.round(afterPoint.x - width / 2))
-        el.change('height', Math.round(height))
-        el.change('width', Math.round(width))
-        el.change('rotate', rotate)
-      })
     }
   }
 })

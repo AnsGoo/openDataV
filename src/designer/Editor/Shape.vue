@@ -329,7 +329,6 @@ const handleDragendShape = (e: MouseEvent) => {
       return
     }
     if (props.info.id !== basicStore.curComponent.id) return
-    if (props.info.hided) return
 
     e.stopPropagation()
     cursors.value = getCursor()
@@ -349,7 +348,7 @@ const handleDragendShape = (e: MouseEvent) => {
       left = curX - startX + startLeft
 
       // // 修改当前组件样式
-      basicStore.syncComponentLoction({ top, left }, props.info.parent)
+      basicStore.syncComponentLoction({ top, left }, props.info.parent, false)
     }
     const up = () => {
       // 触发元素停止移动事件，用于隐藏标线
@@ -359,6 +358,7 @@ const handleDragendShape = (e: MouseEvent) => {
       if (props.info && props.info.parent) {
         basicStore.resizeAutoComponent(props.info.parent)
       }
+      basicStore.saveComponentData()
     }
 
     document.addEventListener('mousemove', move)
@@ -404,7 +404,7 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
       }
 
       const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-      basicStore.syncComponentLoction({ top, left, width, height }, props.info.parent)
+      basicStore.syncComponentLoction({ top, left, width, height }, props.info.parent, false)
     }
 
     const up = () => {
@@ -413,6 +413,7 @@ const handleStretchedShape = (point: string, e: MouseEvent) => {
       if (props.info) {
         basicStore.resizeAutoComponent(props.info.parent)
       }
+      basicStore.saveComponentData()
     }
 
     document.addEventListener('mousemove', move)
@@ -458,7 +459,7 @@ const handleRotate = (e: MouseEvent) => {
       // 获取旋转的角度值
       rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
       // 修改当前组件样式
-      basicStore.syncComponentLoction({ rotate }, props.info.parent)
+      basicStore.syncComponentLoction({ rotate }, props.info.parent, false)
     }
 
     const up = () => {
@@ -467,6 +468,7 @@ const handleRotate = (e: MouseEvent) => {
       if (props.info) {
         basicStore.resizeAutoComponent(props.info.parent)
       }
+      basicStore.saveComponentData()
     }
 
     document.addEventListener('mousemove', move)
@@ -531,28 +533,32 @@ const keyDown = (e: KeyboardEvent): void => {
         e.preventDefault()
         basicStore.syncComponentLoction(
           { left: props.info.positionStyle.left - 1 },
-          props.info.parent
+          props.info.parent,
+          false
         )
         break
       case 'ArrowUp':
         e.preventDefault()
         basicStore.syncComponentLoction(
           { top: props.info.positionStyle.top - 1 },
-          props.info.parent
+          props.info.parent,
+          false
         )
         break
       case 'ArrowRight':
         e.preventDefault()
         basicStore.syncComponentLoction(
           { left: props.info.positionStyle.left + 1 },
-          props.info.parent
+          props.info.parent,
+          false
         )
         break
       case 'ArrowDown':
         e.preventDefault()
         basicStore.syncComponentLoction(
           { top: props.info.positionStyle.top + 1 },
-          props.info.parent
+          props.info.parent,
+          false
         )
         break
       default:
@@ -568,6 +574,7 @@ const keyUp = (e: KeyboardEvent): void => {
   if (props.info) {
     basicStore.resizeAutoComponent(props.info.parent)
   }
+  basicStore.saveComponentData()
   document.removeEventListener('keyup', keyUp)
 }
 
