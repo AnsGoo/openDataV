@@ -64,7 +64,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
-import { Postion, Vector } from '@/types/common'
+import { Position, Vector } from '@/types/common'
 import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
@@ -264,7 +264,7 @@ const handleMouseDown = (e: MouseEvent) => {
 }
 
 const getSelectArea = (
-  rect: Postion
+  rect: Position
 ): { components: Array<BaseComponent>; rect: Position } | undefined => {
   const selectedComponents: Array<BaseComponent> = []
   const leftSet: Set<number> = new Set()

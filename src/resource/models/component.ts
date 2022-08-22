@@ -1,8 +1,13 @@
 import { cloneDeep } from 'lodash-es'
 import { ComponentGroup, FormType } from '@/enum'
 import { mod360, rotatePoint, uuid } from '@/utils/utils'
-import type { ComponentStyle, DOMRectStyle, GroupStyle, PropsType } from '@/types/component'
-import type { ComponentDataType } from './types'
+import type {
+  ComponentDataType,
+  ComponentStyle,
+  DOMRectStyle,
+  GroupStyle,
+  PropsType
+} from '@/types/component'
 import { Vector } from '@/types/common'
 
 export abstract class BaseComponent {
