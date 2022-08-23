@@ -15,57 +15,57 @@
       name="one-third-rotation"
       color="#fff"
       v-show="isActive"
-      @mousedown="handleRotate"
+      @mousedown.left="handleRotate"
     />
     <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
     <div
       :class="['shape-point', 'lt', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '0%' }"
-      @mousedown="handleStretchedShape('lt', $event)"
+      @mousedown.left="handleStretchedShape('lt', $event)"
     ></div>
     <div
       :class="['shape-point', 't', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '50%' }"
-      @mousedown="handleStretchedShape('t', $event)"
+      @mousedown.left="handleStretchedShape('t', $event)"
     ></div>
     <div
       :class="['shape-point', 'rt', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '100%' }"
-      @mousedown="handleStretchedShape('rt', $event)"
+      @mousedown.left="handleStretchedShape('rt', $event)"
     ></div>
     <div
       :class="['shape-point', 'r', rotateClassName]"
       v-show="isActive"
       :style="{ top: '50%', left: '100%' }"
-      @mousedown="handleStretchedShape('r', $event)"
+      @mousedown.left="handleStretchedShape('r', $event)"
     ></div>
     <div
       :class="['shape-point', 'rb', rotateClassName]"
       v-show="isActive"
       :style="{ top: '100%', left: '100%' }"
-      @mousedown="handleStretchedShape('rb', $event)"
+      @mousedown.left="handleStretchedShape('rb', $event)"
     ></div>
     <div
       :class="['shape-point', 'b', rotateClassName]"
       v-show="isActive"
       :style="{ top: '100%', left: '50%' }"
-      @mousedown="handleStretchedShape('b', $event)"
+      @mousedown.left="handleStretchedShape('b', $event)"
     ></div>
     <div
       class="shape-point"
       v-show="isActive"
       :class="['shape-point', 'lb', rotateClassName]"
       :style="{ top: '100%', left: '0%' }"
-      @mousedown="handleStretchedShape('lb', $event)"
+      @mousedown.left="handleStretchedShape('lb', $event)"
     ></div>
     <div
       :class="['shape-point', 'l', rotateClassName]"
       v-show="isActive"
       :style="{ top: '50%', left: '0%' }"
-      @mousedown="handleStretchedShape('l', $event)"
+      @mousedown.left="handleStretchedShape('l', $event)"
     ></div>
     <slot></slot>
   </div>
@@ -85,57 +85,57 @@
       name="one-third-rotation"
       color="#fff"
       v-show="isActive"
-      @mousedown="handleRotate"
+      @mousedown.left="handleRotate"
     />
     <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
     <div
       :class="['shape-point', 'lt', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '0%' }"
-      @mousedown="handleStretchedShape('lt', $event)"
+      @mousedown.left="handleStretchedShape('lt', $event)"
     ></div>
     <div
       :class="['shape-point', 't', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '50%' }"
-      @mousedown="handleStretchedShape('t', $event)"
+      @mousedown.left="handleStretchedShape('t', $event)"
     ></div>
     <div
       :class="['shape-point', 'rt', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '100%' }"
-      @mousedown="handleStretchedShape('rt', $event)"
+      @mousedown.left="handleStretchedShape('rt', $event)"
     ></div>
     <div
       :class="['shape-point', 'r', rotateClassName]"
       v-show="isActive"
       :style="{ top: '50%', left: '100%' }"
-      @mousedown="handleStretchedShape('r', $event)"
+      @mousedown.left="handleStretchedShape('r', $event)"
     ></div>
     <div
       :class="['shape-point', 'rb', rotateClassName]"
       v-show="isActive"
       :style="{ top: '100%', left: '100%' }"
-      @mousedown="handleStretchedShape('rb', $event)"
+      @mousedown.left="handleStretchedShape('rb', $event)"
     ></div>
     <div
       :class="['shape-point', 'b', rotateClassName]"
       v-show="isActive"
       :style="{ top: '100%', left: '50%' }"
-      @mousedown="handleStretchedShape('b', $event)"
+      @mousedown.left="handleStretchedShape('b', $event)"
     ></div>
     <div
       class="shape-point"
       v-show="isActive"
       :class="['shape-point', 'lb', rotateClassName]"
       :style="{ top: '100%', left: '0%' }"
-      @mousedown="handleStretchedShape('lb', $event)"
+      @mousedown.left="handleStretchedShape('lb', $event)"
     ></div>
     <div
       :class="['shape-point', 'l', rotateClassName]"
       v-show="isActive"
       :style="{ top: '50%', left: '0%' }"
-      @mousedown="handleStretchedShape('l', $event)"
+      @mousedown.left="handleStretchedShape('l', $event)"
     ></div>
     <slot></slot>
   </div>
@@ -212,11 +212,10 @@ const decompose = () => {
 
 const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
   // 如果当前有选中组件，并且接受到contextmenu事件的组件正是当前组件，就停止事件冒泡
-  console.log(basicStore.curComponent)
   if (basicStore.curComponent && basicStore.curComponent.id === props.info.id) {
     event.stopPropagation()
-  } else if (!basicStore.curComponent) {
-    // 如果当前没有选中组件，就选中当前点击的组件
+  } else if (!basicStore.curComponent && !props.info.parent) {
+    // 如果当前没有选中组件，就选中最底层的组件
     basicStore.setCurComponent(props.info, props.index.toString())
     event.stopPropagation()
   } else {
@@ -395,7 +394,6 @@ const selectCurComponent = (e: MouseEvent) => {
 
 const dbselectCurComponent = (e: MouseEvent) => {
   e.preventDefault()
-  console.log(props.info.parent)
   if (!props.info.parent || props.info.parent?.active) {
     // 阻止向父组件冒泡
     e.stopPropagation()
@@ -407,103 +405,99 @@ const dbselectCurComponent = (e: MouseEvent) => {
  * 拉伸组件
  */
 const handleStretchedShape = (point: string, e: MouseEvent) => {
-  if (e.button === 0) {
-    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-    e.stopPropagation()
-    e.preventDefault()
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  e.stopPropagation()
+  e.preventDefault()
 
-    const position = {
-      top: props.defaultStyle.top,
-      left: props.defaultStyle.left,
-      height: props.defaultStyle.height,
-      width: props.defaultStyle.width,
-      rotate: props.defaultStyle.rotate
-    }
-    // 获取画布位移信息
-    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-
-    // 获取 point 与实际拖动基准点的差值 @justJokee
-    // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
-
-    const move = (moveEvent) => {
-      // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
-      // 因此第一次点击时不触发 move 事件
-      const curPositon: Vector = {
-        x: moveEvent.clientX - editorRectInfo.left,
-        y: moveEvent.clientY - editorRectInfo.top
-      }
-
-      const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-      basicStore.syncComponentLoction({ top, left, width, height }, props.info.parent, false)
-    }
-
-    const up = () => {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-      if (props.info) {
-        basicStore.resizeAutoComponent(props.info.parent)
-      }
-      basicStore.saveComponentData()
-    }
-
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
+  const position = {
+    top: props.defaultStyle.top,
+    left: props.defaultStyle.left,
+    height: props.defaultStyle.height,
+    width: props.defaultStyle.width,
+    rotate: props.defaultStyle.rotate
   }
+  // 获取画布位移信息
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+
+  // 获取 point 与实际拖动基准点的差值 @justJokee
+  // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
+
+  const move = (moveEvent) => {
+    // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
+    // 因此第一次点击时不触发 move 事件
+    const curPositon: Vector = {
+      x: moveEvent.clientX - editorRectInfo.left,
+      y: moveEvent.clientY - editorRectInfo.top
+    }
+
+    const { top, left, width, height } = stretchedComponents(point, position, curPositon)
+    basicStore.syncComponentLoction({ top, left, width, height }, props.info.parent, false)
+  }
+
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (props.info) {
+      basicStore.resizeAutoComponent(props.info.parent)
+    }
+    basicStore.saveComponentData()
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 /**
  * 旋转组件
  */
 const handleRotate = (e: MouseEvent) => {
-  if (e.button === 0) {
-    if (!shape.value) {
-      return
-    }
-    e.preventDefault()
-    e.stopPropagation()
-    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-    if (props.info.locked) return
-
-    // 初始坐标和初始角度
-    let { rotate } = { ...props.defaultStyle }
-    const startY: number = e.clientY
-    const startX: number = e.clientX
-    const startRotate: number = rotate
-
-    // 获取元素中心点位置
-    const rect: DOMRect = shape.value.getBoundingClientRect()
-    const centerX: number = rect.left + rect.width / 2
-    const centerY: number = rect.top + rect.height / 2
-
-    // 旋转前的角度
-    const rotateDegreeBefore = Math.atan2(startY - centerY, startX - centerX) / (Math.PI / 180)
-
-    // 如果元素没有移动，则不保存快照
-    // let hasMove = false
-    const move = (moveEvent) => {
-      // hasMove = true
-      const curX = moveEvent.clientX
-      const curY = moveEvent.clientY
-      // 旋转后的角度
-      const rotateDegreeAfter = Math.atan2(curY - centerY, curX - centerX) / (Math.PI / 180)
-      // 获取旋转的角度值
-      rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
-      // 修改当前组件样式
-      basicStore.syncComponentLoction({ rotate }, props.info.parent, false)
-    }
-
-    const up = () => {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-      if (props.info) {
-        basicStore.resizeAutoComponent(props.info.parent)
-      }
-      basicStore.saveComponentData()
-    }
-
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
+  if (!shape.value) {
+    return
   }
+  e.preventDefault()
+  e.stopPropagation()
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  if (props.info.locked) return
+
+  // 初始坐标和初始角度
+  let { rotate } = { ...props.defaultStyle }
+  const startY: number = e.clientY
+  const startX: number = e.clientX
+  const startRotate: number = rotate
+
+  // 获取元素中心点位置
+  const rect: DOMRect = shape.value.getBoundingClientRect()
+  const centerX: number = rect.left + rect.width / 2
+  const centerY: number = rect.top + rect.height / 2
+
+  // 旋转前的角度
+  const rotateDegreeBefore = Math.atan2(startY - centerY, startX - centerX) / (Math.PI / 180)
+
+  // 如果元素没有移动，则不保存快照
+  // let hasMove = false
+  const move = (moveEvent) => {
+    // hasMove = true
+    const curX = moveEvent.clientX
+    const curY = moveEvent.clientY
+    // 旋转后的角度
+    const rotateDegreeAfter = Math.atan2(curY - centerY, curX - centerX) / (Math.PI / 180)
+    // 获取旋转的角度值
+    rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
+    // 修改当前组件样式
+    basicStore.syncComponentLoction({ rotate }, props.info.parent, false)
+  }
+
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (props.info) {
+      basicStore.resizeAutoComponent(props.info.parent)
+    }
+    basicStore.saveComponentData()
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 const getCursor = () => {

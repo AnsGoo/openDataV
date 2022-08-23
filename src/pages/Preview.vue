@@ -49,36 +49,6 @@ onMounted(async () => {
   window.addEventListener('resize', setScale)
 })
 
-// const initWebsocket = (key: string, url: string): WebSocket => {
-//   const ws = new WebSocket(url)
-
-//   ws.onopen = () => {
-//     console.log('websocket连接成功')
-//   }
-
-//   ws.onclose = () => {
-//     console.log('websocket连接被关闭')
-//   }
-
-//   ws.onmessage = (ev) => {
-//     const data = JSON.parse(ev.data)
-//     eventBus.emit(key, data)
-//     channels.forEach((value: ChannelItem, channel: string) => {
-//       if (value.isRegExp) {
-//         const reg = new RegExp(key)
-//         if (reg.test(data.TagName)) {
-//           eventBus.emit(channel, data)
-//         }
-//       } else {
-//         if (channel === data.TagName) {
-//           eventBus.emit(channel, data)
-//         }
-//       }
-//     })
-//   }
-//   return ws
-// }
-
 onUnmounted(() => {
   window.removeEventListener('resize', setScale)
 })

@@ -4,7 +4,7 @@
     ref="editor"
     id="editor"
     :style="bgStyle"
-    @mousedown="handleMouseDown"
+    @mousedown.left="handleMouseDown"
     v-contextmenu.stop="contextmenus"
   >
     <!-- 网格线 -->
@@ -15,15 +15,6 @@
       :width="canvasStyleData.width"
       :height="canvasStyleData.height"
       :isShowReferLine="isShowReferLine"
-    />
-
-    <!-- 选中区域 -->
-    <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
-    <Area
-      :start="appendStart"
-      :width="appendWidth"
-      :height="appendHeight"
-      v-else-if="isShowAreas"
     />
 
     <!--页面组件列表展示-->
@@ -49,6 +40,15 @@
     </template>
     <!-- 标线 -->
     <MarkLine />
+
+    <!-- 选中区域 -->
+    <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
+    <Area
+      :start="appendStart"
+      :width="appendWidth"
+      :height="appendHeight"
+      v-else-if="isShowAreas"
+    />
   </div>
 </template>
 
@@ -79,7 +79,7 @@ const getShapeStyle = (style) => {
 }
 
 const isShowAreas = computed<boolean>(() => {
-  return composeStore.style.width > 0 && !isShowArea.value
+  return composeStore.style.width > 0 && !isShowArea.value && !basicStore.isClickComponent
 })
 
 const appendStart = computed<Vector>(() => {
@@ -196,71 +196,69 @@ const editor = ref<ElRef>(null)
 const isShowReferLine = ref<boolean>(true)
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
-  if (e.button === 0) {
-    basicStore.setCurComponent(undefined)
-    e.preventDefault()
-    e.stopPropagation()
-    hideArea()
-    // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
-    const rectInfo = editor.value?.getBoundingClientRect()
-    editorX.value = rectInfo!.x
-    editorY.value = rectInfo!.y
-    const startX = e.clientX
-    const startY = e.clientY
-    start.x = startX - editorX.value
-    start.y = startY - editorY.value
+  basicStore.setCurComponent(undefined)
+  e.preventDefault()
+  e.stopPropagation()
+  hideArea()
+  // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
+  const rectInfo = editor.value?.getBoundingClientRect()
+  editorX.value = rectInfo!.x
+  editorY.value = rectInfo!.y
+  const startX = e.clientX
+  const startY = e.clientY
+  start.x = startX - editorX.value
+  start.y = startY - editorY.value
 
-    // 展示选中区域
-    isShowArea.value = true
-    const move = (moveEvent: MouseEvent) => {
-      moveEvent.preventDefault()
-      moveEvent.stopPropagation()
-      width.value = Math.abs(moveEvent.clientX - startX)
-      height.value = Math.abs(moveEvent.clientY - startY)
-      if (moveEvent.clientX < startX) {
-        start.x = moveEvent.clientX - editorX.value
-      }
-      if (moveEvent.clientY < startY) {
-        start.y = moveEvent.clientY - editorY.value
-      }
+  // 展示选中区域
+  isShowArea.value = true
+  const move = (moveEvent: MouseEvent) => {
+    moveEvent.preventDefault()
+    moveEvent.stopPropagation()
+    width.value = Math.abs(moveEvent.clientX - startX)
+    height.value = Math.abs(moveEvent.clientY - startY)
+    if (moveEvent.clientX < startX) {
+      start.x = moveEvent.clientX - editorX.value
     }
-    const up = (UpMoveEvent: MouseEvent) => {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-      if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
-        hideArea()
-        return
-      }
-      const selectedRect: Position = {
-        left: start.x,
-        top: start.y,
-        right: width.value + start.x,
-        bottom: start.y + height.value
-      }
-      const result = getSelectArea(selectedRect)
-      if (result) {
-        const rect = result.rect
-        composeStore.setAreaData(
-          {
-            top: rect.top,
-            left: rect.left,
-            width: rect.right - rect.left,
-            height: rect.bottom - rect.top,
-            rotate: 0
-          },
-          result.components
-        )
-        start.x = rect.left
-        start.y = rect.top
-        width.value = rect.right - rect.left
-        height.value = rect.bottom - rect.top
-      } else {
-        hideArea()
-      }
+    if (moveEvent.clientY < startY) {
+      start.y = moveEvent.clientY - editorY.value
     }
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
   }
+  const up = (UpMoveEvent: MouseEvent) => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
+      hideArea()
+      return
+    }
+    const selectedRect: Position = {
+      left: start.x,
+      top: start.y,
+      right: width.value + start.x,
+      bottom: start.y + height.value
+    }
+    const result = getSelectArea(selectedRect)
+    if (result) {
+      const rect = result.rect
+      composeStore.setAreaData(
+        {
+          top: rect.top,
+          left: rect.left,
+          width: rect.right - rect.left,
+          height: rect.bottom - rect.top,
+          rotate: 0
+        },
+        result.components
+      )
+      start.x = rect.left
+      start.y = rect.top
+      width.value = rect.right - rect.left
+      height.value = rect.bottom - rect.top
+    } else {
+      hideArea()
+    }
+  }
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 const getSelectArea = (
