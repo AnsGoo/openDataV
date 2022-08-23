@@ -4,7 +4,7 @@
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
     :name="name"
   />
 </template>

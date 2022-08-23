@@ -1,5 +1,5 @@
 <template>
-  <div id="mb-ruler" class="style-ruler mb-ruler" v-contextmenu="ruleContextmenus">
+  <div id="mb-ruler" class="style-ruler mb-ruler" v-contextmenu.stop="ruleContextmenus">
     <!-- 水平方向 -->
     <RulerWrapper
       :vertical="false"

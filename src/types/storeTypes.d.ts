@@ -24,6 +24,7 @@ export interface EditData {
   isClickComponent: boolean
   isShowEm: boolean
   ids: Set<string>
+  benchmarkComponent: Optional<BaseComponent>
 }
 
 export interface MenuStatus {

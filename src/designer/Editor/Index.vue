@@ -5,7 +5,7 @@
     id="editor"
     :style="bgStyle"
     @mousedown="handleMouseDown"
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
   >
     <!-- 网格线 -->
     <Grid />
@@ -15,6 +15,15 @@
       :width="canvasStyleData.width"
       :height="canvasStyleData.height"
       :isShowReferLine="isShowReferLine"
+    />
+
+    <!-- 选中区域 -->
+    <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
+    <Area
+      :start="appendStart"
+      :width="appendWidth"
+      :height="appendHeight"
+      v-else-if="isShowAreas"
     />
 
     <!--页面组件列表展示-->
@@ -40,15 +49,6 @@
     </template>
     <!-- 标线 -->
     <MarkLine />
-
-    <!-- 选中区域 -->
-    <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
-    <Area
-      :start="appendStart"
-      :width="appendWidth"
-      :height="appendHeight"
-      v-else-if="isShowAreas"
-    />
   </div>
 </template>
 

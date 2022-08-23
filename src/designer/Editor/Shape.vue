@@ -4,7 +4,8 @@
     ref="shape"
     class="shape"
     :class="{ active: isActive || active }"
-    @dblclick.exact="selectCurComponent"
+    @dblclick.exact="dbselectCurComponent"
+    @click.exact="selectCurComponent"
     @mousedown="handleDragendShape"
     v-contextmenu="contextmenus"
   >
@@ -75,7 +76,7 @@
     :class="{ active: isActive || active }"
     @click.ctrl.exact="appendComponent"
     @click.exact="selectCurComponent"
-    @mousedown="handleDragendShape"
+    @mousedown.left="handleDragendShape"
     v-contextmenu="contextmenus"
   >
     <span class="error-info" v-show="isError">{{ errorInfo }}</span>
@@ -209,8 +210,19 @@ const decompose = () => {
   composeStore.decompose()
 }
 
-const contextmenus = (): ContextmenuItem[] => {
-  basicStore.setCurComponent(props.info, props.index.toString())
+const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
+  // 如果当前有选中组件，并且接受到contextmenu事件的组件正是当前组件，就停止事件冒泡
+  console.log(basicStore.curComponent)
+  if (basicStore.curComponent && basicStore.curComponent.id === props.info.id) {
+    event.stopPropagation()
+  } else if (!basicStore.curComponent) {
+    // 如果当前没有选中组件，就选中当前点击的组件
+    basicStore.setCurComponent(props.info, props.index.toString())
+    event.stopPropagation()
+  } else {
+    return
+  }
+
   return [
     {
       text: '拆分',
@@ -321,55 +333,74 @@ const appendComponent = () => {
  * 拖动组件
  */
 const handleDragendShape = (e: MouseEvent) => {
-  if (e.button === 0) {
-    e.preventDefault()
-    if (!basicStore.curComponent) {
-      e.stopPropagation()
-      return
-    }
-    if (props.info.id !== basicStore.curComponent.id) return
-
+  e.preventDefault()
+  // 如果当前组件的父组件为undefined，则阻止冒泡像画布传递
+  if (!props.info.parent) {
     e.stopPropagation()
-    cursors.value = getCursor()
-
-    let { top, left } = props.defaultStyle
-    const startY = e.clientY
-    const startX = e.clientX
-    // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
-    const startTop = top
-    const startLeft = left
-
-    // 如果元素没有移动，则不保存快照
-    const move = (moveEvent) => {
-      const curX = moveEvent.clientX
-      const curY = moveEvent.clientY
-      top = curY - startY + startTop
-      left = curX - startX + startLeft
-
-      // // 修改当前组件样式
-      basicStore.syncComponentLoction({ top, left }, props.info.parent, false)
-    }
-    const up = () => {
-      // 触发元素停止移动事件，用于隐藏标线
-      eventBus.emit('unmove')
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-      if (props.info && props.info.parent) {
-        basicStore.resizeAutoComponent(props.info.parent)
-      }
-      basicStore.saveComponentData()
-    }
-
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
   }
+
+  // 如果没选择组件，或者选中的组件不是自己，就把事件向外冒泡
+  if (!basicStore.curComponent || props.info.id !== basicStore.curComponent.id) return
+
+  // 如果组件锁定了，就把事件向外冒泡
+  if (props.info.locked) return
+
+  e.stopPropagation()
+  cursors.value = getCursor()
+
+  let { top, left } = props.defaultStyle
+  const startY = e.clientY
+  const startX = e.clientX
+  // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
+  const startTop = top
+  const startLeft = left
+
+  // 如果元素没有移动，则不保存快照
+  const move = (moveEvent) => {
+    const curX = moveEvent.clientX
+    const curY = moveEvent.clientY
+    top = curY - startY + startTop
+    left = curX - startX + startLeft
+
+    // // 修改当前组件样式
+    basicStore.syncComponentLoction({ top, left }, props.info.parent, false)
+  }
+  const up = () => {
+    // 触发元素停止移动事件，用于隐藏标线
+    eventBus.emit('unmove')
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (props.info && props.info.parent) {
+      basicStore.resizeAutoComponent(props.info.parent)
+    }
+    basicStore.saveComponentData()
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 const selectCurComponent = (e: MouseEvent) => {
-  // 阻止向父组件冒泡
   e.preventDefault()
-  e.stopPropagation()
-  basicStore.setCurComponent(props.info, props.index.toString())
+  if (!props.isInner) {
+    e.stopPropagation()
+    basicStore.setCurComponent(props.info, props.index.toString())
+  } else {
+    if (props.info.parent?.id === basicStore.benchmarkComponent?.id) {
+      e.stopPropagation()
+      basicStore.setCurComponent(props.info, props.index.toString())
+    }
+  }
+}
+
+const dbselectCurComponent = (e: MouseEvent) => {
+  e.preventDefault()
+  console.log(props.info.parent)
+  if (!props.info.parent || props.info.parent?.active) {
+    // 阻止向父组件冒泡
+    e.stopPropagation()
+    basicStore.setCurComponent(props.info, props.index.toString())
+  }
 }
 
 /**

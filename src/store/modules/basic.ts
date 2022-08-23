@@ -43,7 +43,8 @@ const useBasicStore = defineStore({
     curComponent: undefined,
     isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
-    ids: new Set()
+    ids: new Set(),
+    benchmarkComponent: undefined
   }),
   getters: {
     isEditMode(): boolean {
@@ -110,6 +111,8 @@ const useBasicStore = defineStore({
       this.activeIndex = index
       if (this.curComponent) {
         this.curComponent.active = true
+        this.isClickComponent = true
+        this.benchmarkComponent = this.curComponent.parent
       }
     },
 
