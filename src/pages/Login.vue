@@ -19,19 +19,19 @@
         :show-message="true"
       >
         <div class="tip">登陆</div>
-        <n-form-item prop="username">
+        <n-form-item path="username">
           <n-input
             placeholder="请输入用户名"
             style="width: 100%; min-width: 360px"
-            v-model="formData.username"
+            v-model:value="formData.username"
           />
         </n-form-item>
-        <n-form-item prop="password">
+        <n-form-item path="password">
           <n-input
             placeholder="请输入密码"
             style="width: 100%; min-width: 360px"
             type="password"
-            v-model="formData.password"
+            v-model:value="formData.password"
             @keydown.enter="loginAction"
           />
         </n-form-item>

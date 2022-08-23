@@ -17,9 +17,4 @@ export interface LayoutData {
   allowed?: string | null
 }
 
-export interface BasicFetchResult<T = any> {
-  ErrorCode?: number
-  Results: T
-  Message?: string
-  [key: string]: any
-}
+export type SimpleLayoutData = Omit<LayoutData, 'canvasStyle', 'canvasData'>

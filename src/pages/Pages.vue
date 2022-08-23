@@ -40,7 +40,7 @@
 
 <script setup lang="ts">
 import { getUIComponentsList, deleteUIComponents } from '@/api/pages'
-import type { LayoutData } from '@/types/apiTypes'
+import type { SimpleLayoutData } from '@/types/apiTypes'
 import { onMounted, ref, h } from 'vue'
 import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
@@ -50,7 +50,7 @@ import { NCard, NEllipsis, NTooltip, NDropdown, DropdownOption, NButton } from '
 
 const router = useRouter()
 const loading = ref<boolean>(false)
-const layoutList = ref<LayoutData[]>([])
+const layoutList = ref<SimpleLayoutData[]>([])
 const options: DropdownOption[] = [
   {
     key: 'preview',
@@ -77,7 +77,7 @@ function renderIcon(icon: string) {
 
 const initUI = async (): Promise<void> => {
   try {
-    const resp: LayoutData[] = await getUIComponentsList()
+    const resp: SimpleLayoutData[] = await getUIComponentsList()
     if (resp) {
       layoutList.value = resp
     }
@@ -86,7 +86,7 @@ const initUI = async (): Promise<void> => {
   }
 }
 
-const handleSelect = async (key: string | number, item: LayoutData) => {
+const handleSelect = async (key: string | number, item: SimpleLayoutData) => {
   if (key === 'preview') {
     router.push({
       name: 'PageView',
@@ -116,7 +116,7 @@ const handleCreate = () => {
   })
 }
 
-const handleEdit = (item: LayoutData) => {
+const handleEdit = (item: SimpleLayoutData) => {
   if (loading.value) {
     return false
   }
@@ -130,7 +130,7 @@ const handleEdit = (item: LayoutData) => {
   })
 }
 
-const handleView = (item: LayoutData) => {
+const handleView = (item: SimpleLayoutData) => {
   router.push({
     name: 'PageView',
     params: {
