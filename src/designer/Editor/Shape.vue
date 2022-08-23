@@ -207,7 +207,7 @@ const bottomComponent = () => {
 }
 
 const decompose = () => {
-  composeStore.decompose()
+  basicStore.decompose()
 }
 
 const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
@@ -227,7 +227,7 @@ const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<Contextmen
     {
       text: '拆分',
       subText: '',
-      disable: composeStore.canDecompose,
+      disable: basicStore.curComponent?.component !== 'Group',
       handler: decompose
     },
     { divider: true },

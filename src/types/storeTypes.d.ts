@@ -1,10 +1,5 @@
-import type { DOMRectStyle } from '@/types/component'
 import { StoreComponentData } from '@/utils/db'
 import { BaseComponent } from '@/resource/models'
-
-export interface Component {
-  style: Recordable<string>
-}
 
 export interface CanvasStyleData {
   width: number
@@ -46,7 +41,7 @@ export interface SnapData {
 }
 
 export interface AreaData {
-  style: DOMRectStyle
+  style: Postion
   components: BaseComponent[]
 }
 
@@ -54,12 +49,4 @@ export interface UserInfo {
   username: string
   token: string | undefined
   permissions: string[]
-}
-
-export interface Postion {
-  width?: number
-  height?: number
-  left?: number
-  top?: number
-  rotate?: number
 }

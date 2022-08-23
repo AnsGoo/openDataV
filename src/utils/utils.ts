@@ -1,6 +1,6 @@
-import type { ComponentStyle, DOMRectStyle, GroupStyle, Rect } from '@/types/component'
+import type { DOMRectStyle, GroupStyle } from '@/types/component'
 import { message } from '@/utils/message'
-import type { Vector } from '@/types/common'
+import type { Vector, Position } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
 import { BaseComponent } from '@/resource/models'
 
@@ -112,7 +112,7 @@ export const getInnerComponentShapeStyle = (component: BaseComponent) => {
  * @param style 组件在画布中的位置
  * @returns 组件坐标
  */
-export function calcComponentAxis(style: DOMRectStyle): Rect {
+export function calcComponentAxis(style: DOMRectStyle): Position {
   const leftUpPoint: Vector = { x: style.left, y: style.top }
   const rightUpPoint: Vector = { x: style.left + style.width, y: style.top }
   const rightDownPoint: Vector = { x: style.left + style.width, y: style.top + style.height }
@@ -198,7 +198,7 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-export function decomposeComponent(component: BaseComponent, parentStyle: ComponentStyle) {
+export function decomposeComponent(component: BaseComponent, parentStyle: DOMRectStyle) {
   // 获取元素的中心点坐标
   const groupStyle: GroupStyle = component.groupStyle!
   const center: Vector = {
@@ -255,7 +255,7 @@ export function calcComponentsRect(components: BaseComponent[]) {
   components.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
     const style: DOMRectStyle = component.positionStyle
-    const componentRect: Rect = calcComponentAxis(style)
+    const componentRect: Position = calcComponentAxis(style)
     leftSet.add(componentRect.left)
     topSet.add(componentRect.top)
     rightSet.add(componentRect.right)

@@ -1,6 +1,6 @@
 import { componentList } from '@/designer/load'
+import { ComponentDataType } from '@/types/component'
 import { BaseComponent } from './component'
-import { ComponentDataType } from './types'
 
 export function createComponent(component: ComponentDataType): any {
   if ((component.component as string) in componentList) {
