@@ -1,4 +1,4 @@
-import { FormType } from '@/enum'
+import { FormType, ComponentGroup } from '@/enum'
 
 interface GroupStyle {
   gwidth: number
@@ -67,4 +67,22 @@ export interface ComponentDataType {
   subComponents: ComponentDataType[]
 }
 
-export type { ComponentStyle, PropsType, AttrType, DOMRectStyle, GroupStyle, CustomFormSchema }
+export interface ComponentType {
+  component: string
+  group: ComponentGroup
+  name: string
+  id?: string
+  width?: number
+  height?: number
+  icon?: string
+}
+
+export type {
+  ComponentStyle,
+  ComponentType,
+  PropsType,
+  AttrType,
+  DOMRectStyle,
+  GroupStyle,
+  CustomFormSchema
+}

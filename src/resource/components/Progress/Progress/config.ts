@@ -5,7 +5,15 @@ import { BaseComponent } from '@/resource/models'
 export const componentName = 'Progress'
 export class ProgressComponent extends BaseComponent {
   constructor(id?: string, name?: string, icon?: string) {
-    super(componentName, ComponentGroup.PROGERSS, name ? name : '进度条', id, 200, 50, icon)
+    super({
+      component: componentName,
+      group: ComponentGroup.PROGERSS,
+      name: name ? name : '进度条',
+      id,
+      width: 200,
+      height: 50,
+      icon
+    })
   }
 
   _prop: PropsType[] = [
