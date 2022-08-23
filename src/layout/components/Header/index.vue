@@ -114,13 +114,7 @@ const themeIcon = ref<string>('sun-one')
 const router = useRouter()
 const route = useRoute()
 
-const iconColor = computed<string>(() => {
-  if (designStore.getDarkTheme) {
-    return '#eee'
-  }
-
-  return projectStore.getNavTheme !== 'header-dark' ? '#333' : '#eee'
-})
+const iconColor = computed<string>(() => designStore.getIconColor)
 
 const generator: any = (routerMap) => {
   return routerMap.map((item) => {

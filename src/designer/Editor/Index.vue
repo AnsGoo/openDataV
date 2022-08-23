@@ -320,7 +320,6 @@ const getSelectArea = (
 <style scoped lang="less">
 .editor {
   @apply relative m-auto;
-  background-color: slategrey;
 }
 
 .edit .component {

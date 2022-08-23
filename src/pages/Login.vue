@@ -121,7 +121,6 @@ const loginAction = async () => {
     background: radial-gradient(circle at 130% 40%, #80808024 30%, #2944b2 30%);
     align-items: center;
     .name {
-      color: #ffff;
       font-size: 40px;
       font-weight: bold;
       min-height: 80px;
@@ -139,7 +138,6 @@ const loginAction = async () => {
       margin-left: 10%;
     }
     .desc {
-      color: #ffff;
       font-size: 20px;
       align-self: self-start;
       margin-left: 10vh;
@@ -157,7 +155,6 @@ const loginAction = async () => {
       font-size: 30px;
       font-weight: bold;
       margin-bottom: 20px;
-      color: #ffff;
     }
   }
 }
