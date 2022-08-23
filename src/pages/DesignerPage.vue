@@ -71,7 +71,6 @@ import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from
 import { BaseComponent } from '@/resource/models'
 
 const basicStore = useBasicStoreWithOut()
-const websk = ref<WebSocket | null>(null)
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
 
@@ -127,41 +126,17 @@ const handleDragOver = (e) => {
   e.dataTransfer.dropEffect = 'copy'
 }
 
-const handleMouseDown = (e: MouseEvent) => {
-  if (e.button === 0) {
-    basicStore.setClickComponentStatus(false)
-  }
+const handleMouseDown = () => {
+  basicStore.setClickComponentStatus(false)
 }
 
-const deselectCurComponent = (e: MouseEvent) => {
-  if (e.button === 0) {
-    if (!basicStore.isClickComponent) {
-      basicStore.setCurComponent(undefined)
-    }
+const deselectCurComponent = () => {
+  if (!basicStore.isClickComponent) {
+    basicStore.setCurComponent(undefined)
   }
 }
-
-// const initWebsocket = (key: string, url: string): WebSocket => {
-//   const ws = new WebSocket(url)
-
-//   ws.onopen = () => {
-//     console.log('websocket连接成功')
-//   }
-
-//   ws.onclose = () => {
-//     console.log('websocket连接被关闭')
-//   }
-
-//   ws.onmessage = (ev) => {
-//     const data = JSON.parse(ev.data)
-//     eventBus.emit(key, data)
-//   }
-
-//   return ws
-// }
 
 onUnmounted(() => {
-  websk.value?.close()
   basicStore.clearCanvas()
 })
 </script>
