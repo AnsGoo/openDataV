@@ -253,21 +253,19 @@ const chooseTheTureLine = (needToShow, isDownward, isRightward) => {
 </script>
 
 <style scoped>
-@layer components {
-  .mark-line {
-    @apply h-full;
-  }
+.mark-line {
+  @apply h-full;
+}
 
-  .line {
-    @apply bg-blue-300 absolute z-50;
-  }
+.line {
+  @apply bg-blue-300 absolute z-50;
+}
 
-  .xline {
-    @apply w-full h-px;
-  }
+.xline {
+  @apply w-full h-px;
+}
 
-  .yline {
-    @apply w-px h-full;
-  }
+.yline {
+  @apply w-px h-full;
 }
 </style>

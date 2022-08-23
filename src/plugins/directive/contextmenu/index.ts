@@ -5,9 +5,12 @@ const CTX_CONTEXTMENU_HANDLER = 'CTX_CONTEXTMENU_HANDLER'
 
 const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: DirectiveBinding) => {
   event.preventDefault()
-  event.stopPropagation()
+  const { stop } = binding.modifiers
+  if (stop) {
+    event.stopPropagation()
+  }
 
-  const menus = binding.value(el)
+  const menus = binding.value(el, event)
   if (!menus) return
 
   let container: HTMLDivElement | null = null

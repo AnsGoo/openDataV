@@ -145,23 +145,21 @@ const previewIcon = (icon: string | undefined) => {
 </script>
 
 <style lang="less" scoped>
-@layer components {
-  .container {
-    @apply flex h-full mx-auto flex-wrap relative;
-    align-content: flex-start;
+.container {
+  @apply flex h-full mx-auto flex-wrap relative;
+  align-content: flex-start;
 
-    .card {
-      @apply p-2;
+  .card {
+    @apply p-2;
 
-      width: 20%;
-      transition: all 0.3s ease;
-      transform-origin: center;
-    }
+    width: 20%;
+    transition: all 0.3s ease;
+    transform-origin: center;
   }
+}
 
-  .options {
-    padding: 5px 14px 14px 14px;
-    @apply flex justify-between items-center;
-  }
+.options {
+  padding: 5px 14px 14px 14px;
+  @apply flex justify-between items-center;
 }
 </style>

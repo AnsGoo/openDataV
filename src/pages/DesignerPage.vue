@@ -127,13 +127,17 @@ const handleDragOver = (e) => {
   e.dataTransfer.dropEffect = 'copy'
 }
 
-const handleMouseDown = () => {
-  basicStore.setClickComponentStatus(false)
+const handleMouseDown = (e: MouseEvent) => {
+  if (e.button === 0) {
+    basicStore.setClickComponentStatus(false)
+  }
 }
 
-const deselectCurComponent = () => {
-  if (!basicStore.isClickComponent) {
-    basicStore.setCurComponent(undefined)
+const deselectCurComponent = (e: MouseEvent) => {
+  if (e.button === 0) {
+    if (!basicStore.isClickComponent) {
+      basicStore.setCurComponent(undefined)
+    }
   }
 }
 

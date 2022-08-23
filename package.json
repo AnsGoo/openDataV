@@ -5,19 +5,14 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "yarn build && vite preview",
-    "lint": "eslint --ext .js,.ts,.vue src/",
+    "lint": "eslint --ext .js,.ts,.vue src/ ",
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
     "prepare": "husky install"
   },
   "dependencies": {
     "@icon-park/vue-next": "^1.3.6",
     "axios": "^0.23.0",
-    "dayjs": "^1.11.2",
     "dexie": "^3.2.2",
-    "echarts": "^5.2.1",
-    "echarts-gl": "^2.0.8",
-    "echarts-liquidfill": "3",
-    "flv.js": "^1.6.2",
     "lodash-es": "^4.17.21",
     "mitt": "^3.0.0",
     "naive-ui": "^2.32.1",
@@ -27,7 +22,6 @@
     "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@tailwindcss/postcss7-compat": "^2.2.16",
     "@types/lodash-es": "^4.17.5",
     "@types/node": "^16.10.3",
     "@types/nprogress": "^0.2.0",
@@ -50,11 +44,11 @@
     "prettier": "^2.4.1",
     "stylelint": "^14.0.1",
     "stylelint-config-recommended-vue": "^1.0.0",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.2.16",
+    "tailwindcss": "3.1.8",
     "typescript": "^4.4.3",
-    "vite": "^2.6.0",
+    "vite": "^2.9.0",
     "vue-eslint-parser": "^7.11.0",
-    "vue-tsc": "^0.3.0"
+    "vue-tsc": "^0.40.1"
   },
   "prettier": {
     "useTabs": false,

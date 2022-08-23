@@ -67,11 +67,9 @@ watch(
 </script>
 
 <style scoped>
-@layer components {
-  .attr-list {
-    @apply overflow-auto p-1 pt-0 h-full;
-    margin-right: 10px;
-    backdrop-filter: blur(50px);
-  }
+.attr-list {
+  @apply overflow-auto p-1 pt-0 h-full;
+  margin-right: 10px;
+  backdrop-filter: blur(50px);
 }
 </style>

@@ -58,12 +58,10 @@ const setScreenSize = (piexl: string) => {
 </script>
 
 <style scoped>
-@layer components {
-  .attr-list {
-    @apply overflow-auto p-1 pt-0 h-full;
+.attr-list {
+  @apply overflow-auto p-1 pt-0 h-full;
 
-    backdrop-filter: blur(50px);
-    margin-right: 10px;
-  }
+  backdrop-filter: blur(50px);
+  margin-right: 10px;
 }
 </style>

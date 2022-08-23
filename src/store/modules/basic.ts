@@ -7,7 +7,7 @@ import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
 import { BaseComponent, createComponent } from '@/resource/models'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 import { ComponentDataType, DOMRectStyle } from '@/types/component'
 import { Position } from '@/types/common'
 
@@ -46,7 +46,8 @@ const useBasicStore = defineStore({
     curComponent: undefined,
     isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
-    ids: new Set()
+    ids: new Set(),
+    benchmarkComponent: undefined
   }),
   getters: {
     isEditMode(): boolean {
@@ -113,6 +114,8 @@ const useBasicStore = defineStore({
       this.activeIndex = index
       if (this.curComponent) {
         this.curComponent.active = true
+        this.isClickComponent = true
+        this.benchmarkComponent = this.curComponent.parent
       }
     },
 

@@ -11,9 +11,7 @@ defineProps<{
 </script>
 
 <style lang="less" scoped>
-@layer components {
-  .bg {
-    @apply w-full h-full;
-  }
+.bg {
+  @apply w-full h-full;
 }
 </style>

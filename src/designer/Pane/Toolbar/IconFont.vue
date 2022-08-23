@@ -65,7 +65,6 @@ const handleClick = (icon: string) => {
 .icon_lists {
   width: 100% !important;
   overflow: hidden;
-  *zoom: 1;
   display: flex;
   flex-wrap: wrap;
 }

@@ -4,7 +4,7 @@
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
   >
     <div v-if="component.component === 'Group'" class="layer">
       <span v-show="mode === 'expand'">{{ component.name || '分组' }}</span>
