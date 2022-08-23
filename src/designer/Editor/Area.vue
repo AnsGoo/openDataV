@@ -1,6 +1,6 @@
 <template>
   <div
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
     :style="{
       left: start.x + 'px',
       top: start.y + 'px',
