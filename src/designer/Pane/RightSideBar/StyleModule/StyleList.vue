@@ -37,7 +37,6 @@ const basicStore = useBasicStoreWithOut()
 
 const formData = reactive<Recordable<any>>({})
 const styleKeys = computed(() => {
-  console.log(111111, props.curComponent)
   if (props.curComponent) {
     return props.curComponent.styleFormValue
   } else {

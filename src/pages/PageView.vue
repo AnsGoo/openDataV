@@ -64,29 +64,7 @@ onMounted(async () => {
   window.addEventListener('resize', setScale)
 })
 
-// const initWebsocket = (key: string, url: string): WebSocket => {
-//   const ws = new WebSocket(url)
-//   ws.onopen = () => {
-//     console.log('websocket连接成功')
-//   }
-
-//   ws.onclose = () => {
-//     console.log('websocket连接被关闭')
-//   }
-
-//   ws.onmessage = (ev) => {
-//     const data = JSON.parse(ev.data)
-//     eventBus.emit(key, data)
-//   }
-
-//   return ws
-// }
-
 onUnmounted(() => {
-  // websockets.forEach((ws) => {
-  //   console.log('关闭websocket')
-  //   ws.close()
-  // })
   window.removeEventListener('resize', setScale)
 })
 
