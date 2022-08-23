@@ -7,7 +7,7 @@ import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
 import { BaseComponent, createComponent } from '@/resource/models'
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash-es'
 import { ComponentDataType, DOMRectStyle } from '@/types/component'
 import { Position } from '@/types/common'
 

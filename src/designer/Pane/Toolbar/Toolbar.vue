@@ -85,20 +85,6 @@
         </template>
         <span>图标</span>
       </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button
-            quaternary
-            class="resource"
-            size="small"
-            @click="() => (showImageView = true)"
-            title="图片"
-          >
-            <icon-park name="picture" size="22" />
-          </n-button>
-        </template>
-        <span>图片</span>
-      </n-tooltip>
     </div>
   </div>
 
@@ -119,7 +105,6 @@
     </n-card>
   </n-modal>
   <IconFont v-model:visible="showIconFont" />
-  <!-- <ImageView v-model:visible="showImageView" /> -->
 </template>
 
 <script setup lang="ts">
@@ -155,7 +140,6 @@ let index = ''
 // 自定义属性
 const saveDialogVisible = ref<boolean>(false)
 const showIconFont = ref<boolean>(false)
-const showImageView = ref<boolean>(false)
 const form = reactive<{
   name: string
   thumbnail: string
