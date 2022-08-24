@@ -67,14 +67,11 @@ export interface ComponentDataType {
   subComponents: ComponentDataType[]
 }
 
-export interface ComponentType {
-  component: string
+export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
   group: ComponentGroup
-  name: string
   id?: string
   width?: number
   height?: number
-  icon?: string
 }
 
 export type {
