@@ -87,7 +87,7 @@
       </n-tooltip>
       <n-tooltip placement="bottom">
         <template #trigger>
-          <icon-park :name="themeIcon" @click="toggleTheme" :color="designStore.getIconColor" />
+          <icon-park :name="themeIcon" @click="toggleTheme" :color="projectStore.iconColor" />
         </template>
         <span>主题</span>
       </n-tooltip>
@@ -128,11 +128,9 @@ import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
 import { ComponentDataType } from '@/types/component'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 // 状态管理
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
-const designStore = useDesignSettingWithOut()
 const projectStore = useProjectSettingStoreWithOut()
 // const userStore = useUserStoreWithOut()
 
@@ -140,14 +138,9 @@ const router = useRouter()
 const route = useRoute()
 const themeIcon = ref<string>('sun-one')
 const toggleTheme = () => {
-  if (projectStore.getNavTheme !== 'light') {
-    projectStore.navTheme = 'light'
-    designStore.darkTheme = false
-  } else {
-    projectStore.navTheme = 'dark'
-    designStore.darkTheme = true
-  }
-  themeIcon.value = projectStore.getNavTheme === 'light' ? 'sun-one' : 'moon'
+  projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
+  projectStore.setDarkTheme(!projectStore.darkTheme)
+  themeIcon.value = projectStore.darkTheme ? 'sun-one' : 'moon'
 }
 
 // 计算属性

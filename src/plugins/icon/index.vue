@@ -6,9 +6,9 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
+import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
-const designStore = useDesignSettingWithOut()
+const projectStore = useProjectSettingStoreWithOut()
 
 const props = withDefaults(
   defineProps<{
@@ -24,12 +24,7 @@ const props = withDefaults(
   }
 )
 
-const iconColor = computed<string>(() => {
-  if (props.color) {
-    return props.color
-  }
-  return designStore.getDarkTheme ? '#eee' : '#333'
-})
+const iconColor = computed<string>(() => (props.color ? props.color : projectStore.iconColor))
 </script>
 
 <style lang="less" scoped>

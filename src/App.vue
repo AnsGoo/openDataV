@@ -4,18 +4,19 @@
 import { useRouter, RouterView } from 'vue-router'
 import { ref, computed } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 import {
   NConfigProvider,
   NLoadingBarProvider,
+  NGlobalStyle,
   zhCN,
   dateZhCN,
   darkTheme,
   lightTheme
 } from 'naive-ui'
+import { useProjectSettingStoreWithOut } from './store/modules/projectSetting'
 
 const basicStore = useBasicStoreWithOut()
-const designStore = useDesignSettingWithOut()
+const projectSettingsStore = useProjectSettingStoreWithOut()
 
 const overflow = ref<string>(
   (() => {
@@ -29,7 +30,7 @@ const overflow = ref<string>(
 const { currentRoute } = useRouter()
 
 const getThemeOverrides = computed(() => {
-  const appTheme = designStore.appTheme
+  const appTheme = projectSettingsStore.appTheme
   const lightenStr = appTheme //lighten(designStore.appTheme, 6)
   return {
     common: {
@@ -43,7 +44,7 @@ const getThemeOverrides = computed(() => {
   }
 })
 
-const getDarkTheme = computed(() => (designStore.darkTheme ? darkTheme : lightTheme))
+const getDarkTheme = computed(() => (projectSettingsStore.darkTheme ? darkTheme : lightTheme))
 </script>
 
 <template>
@@ -55,6 +56,7 @@ const getDarkTheme = computed(() => (designStore.darkTheme ? darkTheme : lightTh
   >
     <n-loading-bar-provider>
       <RouterView :key="currentRoute.path" :style="{ overflow }" />
+      <n-global-style />
     </n-loading-bar-provider>
   </n-config-provider>
 </template>

@@ -7,7 +7,7 @@
         <div class="justify-center drawer-setting-item dark-switch">
           <n-tooltip placement="bottom">
             <template #trigger>
-              <n-switch v-model:value="designStore.darkTheme" class="dark-theme-switch">
+              <n-switch v-model:value="currentThemeSettings.darkTheme" class="dark-theme-switch">
                 <template #checked>
                   <icon-park name="sun-one" size="14" color="#ffd93b" />
                 </template>
@@ -16,7 +16,7 @@
                 </template>
               </n-switch>
             </template>
-            <span>{{ designStore.darkTheme ? '深' : '浅' }}色主题</span>
+            <span>{{ currentThemeSettings.darkTheme ? '深' : '浅' }}色主题</span>
           </n-tooltip>
         </div>
 
@@ -30,7 +30,12 @@
             :style="{ 'background-color': item }"
             @click="togTheme(item)"
           >
-            <icon-park size="12" v-if="item === designStore.appTheme" name="check" color="#FFF" />
+            <icon-park
+              size="12"
+              v-if="item === currentThemeSettings.appTheme"
+              name="check"
+              color="#FFF"
+            />
           </span>
         </div>
 
@@ -44,7 +49,7 @@
               </template>
               <span>暗色侧边栏</span>
             </n-tooltip>
-            <n-badge dot color="#19be6b" v-if="settingStore.navTheme === 'dark'" />
+            <n-badge dot color="#19be6b" v-if="currentThemeSettings.navTheme === 'dark'" />
           </div>
 
           <div class="drawer-setting-item-style">
@@ -54,7 +59,7 @@
               </template>
               <span>白色侧边栏</span>
             </n-tooltip>
-            <n-badge dot color="#19be6b" v-if="settingStore.navTheme === 'light'" />
+            <n-badge dot color="#19be6b" v-if="currentThemeSettings.navTheme === 'light'" />
           </div>
 
           <div class="drawer-setting-item-style">
@@ -64,7 +69,7 @@
               </template>
               <span>暗色顶栏</span>
             </n-tooltip>
-            <n-badge dot color="#19be6b" v-if="settingStore.navTheme === 'header-dark'" />
+            <n-badge dot color="#19be6b" v-if="currentThemeSettings.navTheme === 'header-dark'" />
           </div>
         </div>
         <n-divider title-placement="center">界面功能</n-divider>
@@ -72,7 +77,7 @@
         <div class="drawer-setting-item">
           <div class="drawer-setting-item-title">固定顶栏</div>
           <div class="drawer-setting-item-action">
-            <n-switch v-model:value="settingStore.headerSetting.fixed" />
+            <n-switch v-model:value="currentThemeSettings.headerSetting.fixed" />
           </div>
         </div>
 
@@ -81,14 +86,14 @@
         <div class="drawer-setting-item">
           <div class="drawer-setting-item-title">显示重载页面按钮</div>
           <div class="drawer-setting-item-action">
-            <n-switch v-model:value="settingStore.headerSetting.isReload" />
+            <n-switch v-model:value="currentThemeSettings.headerSetting.isReload" />
           </div>
         </div>
 
         <div class="drawer-setting-item">
           <div class="drawer-setting-item-title">显示面包屑导航</div>
           <div class="drawer-setting-item-action">
-            <n-switch v-model:value="settingStore.crumbsSetting.show" />
+            <n-switch v-model:value="currentThemeSettings.crumbsSetting.show" />
           </div>
         </div>
 
@@ -97,14 +102,14 @@
         <div class="drawer-setting-item">
           <div class="drawer-setting-item-title">禁用动画</div>
           <div class="drawer-setting-item-action">
-            <n-switch v-model:value="settingStore.isPageAnimate" />
+            <n-switch v-model:value="currentThemeSettings.isPageAnimate" />
           </div>
         </div>
 
         <div class="drawer-setting-item">
           <div class="drawer-setting-item-title">动画类型</div>
           <div class="drawer-setting-item-select">
-            <n-select v-model:value="settingStore.pageAnimateType" :options="animates" />
+            <n-select v-model:value="currentThemeSettings.pageAnimateType" :options="animates" />
           </div>
         </div>
 
@@ -120,8 +125,7 @@
 
 <script lang="ts" setup>
 import { ref, watch, computed } from 'vue'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
+import { ProjectSettingState, useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import {
   NDrawer,
   NDrawerContent,
@@ -149,13 +153,32 @@ withDefaults(
 )
 
 const settingStore = useProjectSettingStoreWithOut()
-const designStore = useDesignSettingWithOut()
+const currentThemeSettings = computed<ProjectSettingState>(() => settingStore)
 const isDrawer = ref<boolean>(false)
 const placement = ref<DrawerPlacement>('right')
 const alertText = ref<string>(
   '该功能主要实时预览各种布局效果，更多完整配置在 projectSetting.ts 中设置，建议在生产环境关闭该布局预览功能。'
 )
-const appThemeList = computed(() => designStore.appThemeList)
+const appThemeList = [
+  '#2d8cf0',
+  '#0960bd',
+  '#0084f4',
+  '#009688',
+  '#536dfe',
+  '#ff5c93',
+  '#ee4f12',
+  '#0096c7',
+  '#9c27b0',
+  '#ff9800',
+  '#FF3D68',
+  '#00C1D4',
+  '#71EFA3',
+  '#171010',
+  '#78DEC7',
+  '#1768AC',
+  '#FB9300',
+  '#FC5404'
+]
 
 const animates = [
   { value: 'zoom-fade', label: '渐变' },
@@ -167,10 +190,10 @@ const animates = [
 ]
 
 watch(
-  () => designStore.darkTheme,
+  () => settingStore.darkTheme,
   (to) => {
     if (isDrawer.value) {
-      settingStore.navTheme = to ? 'light' : 'dark'
+      settingStore.setNavTheme(to ? 'light' : 'dark')
     }
   }
 )
@@ -184,11 +207,11 @@ function closeDrawer() {
 }
 
 function togNavTheme(theme) {
-  settingStore.navTheme = theme
+  settingStore.setNavTheme(theme)
 }
 
 function togTheme(color) {
-  designStore.appTheme = color
+  settingStore.setAppTheme(color)
 }
 
 defineExpose({ openDrawer, closeDrawer })

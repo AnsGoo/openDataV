@@ -50,35 +50,33 @@ import { PageHeader } from './components/Header'
 import { Logo } from './components/Logo'
 import { useLoadingBar } from 'naive-ui'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 import { NLayout, NLayoutSider, NLayoutHeader, NLayoutContent, NBackTop } from 'naive-ui'
 
-const designStore = useDesignSettingWithOut()
 const projectStore = useProjectSettingStoreWithOut()
 const collapsed = ref<boolean>(false)
 
-const darkTheme = computed<boolean>(() => designStore.getDarkTheme)
+const darkTheme = computed<boolean>(() => projectStore.darkTheme)
 const fixedHeader = computed(() => {
-  const { fixed } = unref(projectStore.getHeaderSetting)
+  const { fixed } = unref(projectStore.headerSetting)
   return fixed ? 'absolute' : 'static'
 })
 
 const fixedMenu = computed(() => {
-  const { fixed } = unref(projectStore.getHeaderSetting)
+  const { fixed } = unref(projectStore.headerSetting)
   return fixed ? 'absolute' : 'static'
 })
 
 const inverted = computed(() => {
-  return ['dark', 'header-dark'].includes(unref(projectStore.getNavTheme))
+  return ['dark', 'header-dark'].includes(unref(projectStore.navTheme))
 })
 
 const getHeaderInverted = computed(() => {
-  const navTheme = unref(projectStore.getNavTheme)
+  const navTheme = unref(projectStore.navTheme)
   return ['light', 'header-dark'].includes(navTheme) ? unref(inverted) : !unref(inverted)
 })
 
 const leftMenuWidth = computed(() => {
-  const { minMenuWidth, menuWidth } = unref(projectStore.getMenuSetting)
+  const { minMenuWidth, menuWidth } = unref(projectStore.menuSetting)
   return collapsed.value ? minMenuWidth : menuWidth
 })
 
