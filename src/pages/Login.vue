@@ -19,19 +19,19 @@
         :show-message="true"
       >
         <div class="tip">登陆</div>
-        <n-form-item prop="username">
+        <n-form-item path="username">
           <n-input
             placeholder="请输入用户名"
             style="width: 100%; min-width: 360px"
-            v-model="formData.username"
+            v-model:value="formData.username"
           />
         </n-form-item>
-        <n-form-item prop="password">
+        <n-form-item path="password">
           <n-input
             placeholder="请输入密码"
             style="width: 100%; min-width: 360px"
             type="password"
-            v-model="formData.password"
+            v-model:value="formData.password"
             @keydown.enter="loginAction"
           />
         </n-form-item>
@@ -121,7 +121,6 @@ const loginAction = async () => {
     background: radial-gradient(circle at 130% 40%, #80808024 30%, #2944b2 30%);
     align-items: center;
     .name {
-      color: #ffff;
       font-size: 40px;
       font-weight: bold;
       min-height: 80px;
@@ -139,7 +138,6 @@ const loginAction = async () => {
       margin-left: 10%;
     }
     .desc {
-      color: #ffff;
       font-size: 20px;
       align-self: self-start;
       margin-left: 10vh;
@@ -157,7 +155,6 @@ const loginAction = async () => {
       font-size: 30px;
       font-weight: bold;
       margin-bottom: 20px;
-      color: #ffff;
     }
   }
 }

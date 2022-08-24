@@ -53,7 +53,6 @@ const handleClick = (icon: string) => {
   width: 800px;
   z-index: 1000;
   transform: translate(-50%, -50%);
-  background-color: aliceblue;
   border-radius: 20px;
   padding: 20px;
 
@@ -84,14 +83,12 @@ const handleClick = (icon: string) => {
     transform: scale(1);
   }
 }
-
-.icon_lists .icon {
+.icon {
   display: block;
   height: 50px;
   line-height: 50px;
   font-size: 22px;
   margin: 10px auto;
-  color: #333;
   -webkit-transition: font-size 0.25s linear, width 0.25s linear;
   -moz-transition: font-size 0.25s linear, width 0.25s linear;
   transition: font-size 0.25s linear, width 0.25s linear;
