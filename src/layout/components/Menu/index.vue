@@ -72,8 +72,7 @@ function renderLink(name: string, title: string) {
 function renderIcon(icon: string) {
   return () =>
     h(IconPark, {
-      name: icon,
-      color: settingStore.navTheme === 'light' ? '#333' : '#eee'
+      name: icon
     })
 }
 

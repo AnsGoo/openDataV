@@ -128,11 +128,9 @@ import { CanvasStyleData } from '@/types/storeTypes'
 import { StoreComponentData } from '@/utils/db'
 import { ComponentDataType } from '@/types/component'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 // 状态管理
 const basicStore = useBasicStoreWithOut()
 const snapShotStore = useSnapShotStoreWithOut()
-const designStore = useDesignSettingWithOut()
 const projectStore = useProjectSettingStoreWithOut()
 // const userStore = useUserStoreWithOut()
 
@@ -140,7 +138,6 @@ const router = useRouter()
 const route = useRoute()
 const themeIcon = ref<string>('sun-one')
 const toggleTheme = () => {
-  designStore.setDarkTheme(!projectStore.darkTheme)
   projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
   projectStore.setDarkTheme(!projectStore.darkTheme)
   themeIcon.value = projectStore.darkTheme ? 'sun-one' : 'moon'

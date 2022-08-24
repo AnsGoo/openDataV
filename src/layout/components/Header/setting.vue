@@ -126,7 +126,6 @@
 <script lang="ts" setup>
 import { ref, watch, computed } from 'vue'
 import { ProjectSettingState, useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 import {
   NDrawer,
   NDrawerContent,
@@ -155,13 +154,31 @@ withDefaults(
 
 const settingStore = useProjectSettingStoreWithOut()
 const currentThemeSettings = computed<ProjectSettingState>(() => settingStore)
-const designStore = useDesignSettingWithOut()
 const isDrawer = ref<boolean>(false)
 const placement = ref<DrawerPlacement>('right')
 const alertText = ref<string>(
   '该功能主要实时预览各种布局效果，更多完整配置在 projectSetting.ts 中设置，建议在生产环境关闭该布局预览功能。'
 )
-const appThemeList = computed(() => designStore.appThemeList)
+const appThemeList = [
+  '#2d8cf0',
+  '#0960bd',
+  '#0084f4',
+  '#009688',
+  '#536dfe',
+  '#ff5c93',
+  '#ee4f12',
+  '#0096c7',
+  '#9c27b0',
+  '#ff9800',
+  '#FF3D68',
+  '#00C1D4',
+  '#71EFA3',
+  '#171010',
+  '#78DEC7',
+  '#1768AC',
+  '#FB9300',
+  '#FC5404'
+]
 
 const animates = [
   { value: 'zoom-fade', label: '渐变' },

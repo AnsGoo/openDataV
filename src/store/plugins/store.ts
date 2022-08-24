@@ -86,7 +86,6 @@ export function StoragePlugin(options?: Options): PiniaPlugin {
       (activeStores.length > 0 && activeStores.includes(store.$id)) ||
       activeStores.length === 0
     ) {
-      console.log(store.$id)
       const tempKey = `${key}-${store.$id}`
       const data = getState(tempKey, storage)
       data && store.$patch(data)

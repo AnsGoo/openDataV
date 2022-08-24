@@ -89,7 +89,6 @@ import { useRouter, useRoute } from 'vue-router'
 import { NTooltip, NDropdown, NAvatar, NBreadcrumb, NBreadcrumbItem } from 'naive-ui'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import ProjectSetting from './setting.vue'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message, dialog } from '@/utils/message'
 
@@ -102,7 +101,6 @@ const emits = defineEmits<{
 }>()
 
 const userStore = useUserStoreWithOut()
-const designStore = useDesignSettingWithOut()
 const projectStore = useProjectSettingStoreWithOut()
 
 const username = userStore?.userName || ''
@@ -179,7 +177,6 @@ const toggleFullscreenIcon = () => {
 
 // 切换主题
 const toggleTheme = () => {
-  designStore.setDarkTheme(!projectStore.darkTheme)
   projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
   projectStore.setDarkTheme(!projectStore.darkTheme)
   themeIcon.value = projectStore.darkTheme ? 'sun-one' : 'moon'

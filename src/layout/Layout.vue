@@ -50,14 +50,12 @@ import { PageHeader } from './components/Header'
 import { Logo } from './components/Logo'
 import { useLoadingBar } from 'naive-ui'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { useDesignSettingWithOut } from '@/store/modules/designSetting'
 import { NLayout, NLayoutSider, NLayoutHeader, NLayoutContent, NBackTop } from 'naive-ui'
 
-const designStore = useDesignSettingWithOut()
 const projectStore = useProjectSettingStoreWithOut()
 const collapsed = ref<boolean>(false)
 
-const darkTheme = computed<boolean>(() => designStore.getDarkTheme)
+const darkTheme = computed<boolean>(() => projectStore.darkTheme)
 const fixedHeader = computed(() => {
   const { fixed } = unref(projectStore.headerSetting)
   return fixed ? 'absolute' : 'static'
