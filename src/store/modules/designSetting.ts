@@ -50,7 +50,14 @@ const useDesignSettingStore = defineStore({
       return this.darkTheme ? '#eee' : '#333'
     }
   },
-  actions: {}
+  actions: {
+    setDarkTheme(value: boolean): void {
+      this.darkTheme = value
+    },
+    setAppTheme(color: string): void {
+      this.appTheme = color
+    }
+  }
 })
 
 // Need to be used outside the setup

@@ -87,7 +87,7 @@
       </n-tooltip>
       <n-tooltip placement="bottom">
         <template #trigger>
-          <icon-park :name="themeIcon" @click="toggleTheme" :color="designStore.getIconColor" />
+          <icon-park :name="themeIcon" @click="toggleTheme" :color="projectStore.iconColor" />
         </template>
         <span>主题</span>
       </n-tooltip>
@@ -140,14 +140,10 @@ const router = useRouter()
 const route = useRoute()
 const themeIcon = ref<string>('sun-one')
 const toggleTheme = () => {
-  if (projectStore.getNavTheme !== 'light') {
-    projectStore.navTheme = 'light'
-    designStore.darkTheme = false
-  } else {
-    projectStore.navTheme = 'dark'
-    designStore.darkTheme = true
-  }
-  themeIcon.value = projectStore.getNavTheme === 'light' ? 'sun-one' : 'moon'
+  designStore.setDarkTheme(!projectStore.darkTheme)
+  projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
+  projectStore.setDarkTheme(!projectStore.darkTheme)
+  themeIcon.value = projectStore.darkTheme ? 'sun-one' : 'moon'
 }
 
 // 计算属性

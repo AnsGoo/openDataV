@@ -32,7 +32,7 @@ const selectedKeys = ref<string>(currentRoute.name as string)
 const openKeys = reactive<string[]>([])
 
 const inverted = computed(() => {
-  return ['dark', 'header-dark'].includes(settingStore.getNavTheme)
+  return ['dark', 'header-dark'].includes(settingStore.navTheme)
 })
 
 // 跟随页面路由变化，切换菜单选中状态
@@ -73,7 +73,7 @@ function renderIcon(icon: string) {
   return () =>
     h(IconPark, {
       name: icon,
-      color: settingStore.getNavTheme === 'light' ? '#333' : '#eee'
+      color: settingStore.navTheme === 'light' ? '#333' : '#eee'
     })
 }
 

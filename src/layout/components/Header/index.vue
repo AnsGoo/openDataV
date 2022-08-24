@@ -12,13 +12,13 @@
       <!-- 刷新 -->
       <div
         class="mr-1 layout-header-trigger layout-header-trigger-min"
-        v-if="projectStore.getHeaderSetting.isReload"
+        v-if="projectStore.headerSetting.isReload"
         @click="reloadPage"
       >
         <icon-park name="refresh" :color="iconColor" />
       </div>
       <!-- 面包屑 -->
-      <n-breadcrumb v-if="projectStore.getCrumbsSetting.show">
+      <n-breadcrumb v-if="projectStore.crumbsSetting.show">
         <template v-for="routeItem in breadcrumbList" :key="routeItem.name">
           <n-breadcrumb-item>
             <n-dropdown
@@ -114,7 +114,7 @@ const themeIcon = ref<string>('sun-one')
 const router = useRouter()
 const route = useRoute()
 
-const iconColor = computed<string>(() => designStore.getIconColor)
+const iconColor = computed<string>(() => projectStore.iconColor)
 
 const generator: any = (routerMap) => {
   return routerMap.map((item) => {
@@ -179,14 +179,10 @@ const toggleFullscreenIcon = () => {
 
 // 切换主题
 const toggleTheme = () => {
-  if (projectStore.getNavTheme !== 'light') {
-    projectStore.navTheme = 'light'
-    designStore.darkTheme = false
-  } else {
-    projectStore.navTheme = 'dark'
-    designStore.darkTheme = true
-  }
-  themeIcon.value = projectStore.getNavTheme === 'light' ? 'sun-one' : 'moon'
+  designStore.setDarkTheme(!projectStore.darkTheme)
+  projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
+  projectStore.setDarkTheme(!projectStore.darkTheme)
+  themeIcon.value = projectStore.darkTheme ? 'sun-one' : 'moon'
 }
 
 // 监听全屏切换事件
