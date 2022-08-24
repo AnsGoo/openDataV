@@ -7,6 +7,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import {
   NConfigProvider,
   NLoadingBarProvider,
+  NGlobalStyle,
   zhCN,
   dateZhCN,
   darkTheme,
@@ -55,6 +56,7 @@ const getDarkTheme = computed(() => (projectSettingsStore.darkTheme ? darkTheme 
   >
     <n-loading-bar-provider>
       <RouterView :key="currentRoute.path" :style="{ overflow }" />
+      <n-global-style />
     </n-loading-bar-provider>
   </n-config-provider>
 </template>

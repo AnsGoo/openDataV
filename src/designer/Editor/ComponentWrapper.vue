@@ -3,7 +3,7 @@
     class="component"
     :is="component.component"
     :style="getComponentStyle(component)"
-    :propValue="component.propValue"
+    :component="component"
     :id="'component' + component.id"
   />
 </template>
