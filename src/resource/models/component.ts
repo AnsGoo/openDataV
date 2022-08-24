@@ -4,6 +4,7 @@ import { mod360, rotatePoint, uuid } from '@/utils/utils'
 import type {
   ComponentDataType,
   ComponentStyle,
+  ComponentType,
   DOMRectStyle,
   GroupStyle,
   PropsType
@@ -40,36 +41,28 @@ export abstract class BaseComponent {
     ...this.positionStyle
   }
 
-  constructor(
-    component: string,
-    group: ComponentGroup,
-    name: string,
-    id?: string,
-    width?: number,
-    height?: number,
-    icon?: string
-  ) {
-    if (id) {
-      this.id = id
+  constructor(detail: ComponentType) {
+    if (detail.id) {
+      this.id = detail.id
     } else {
       this.id = uuid()
     }
-    this.component = component
-    this.group = group
-    this.name = name
+    this.component = detail.component
+    this.group = detail.group
+    this.name = detail.name
 
-    if (icon) {
-      this.icon = icon
+    if (detail.icon) {
+      this.icon = detail.icon
     }
 
-    if (width) {
-      this.positionStyle.width = width
+    if (detail.width) {
+      this.positionStyle.width = detail.width
     } else {
       this.positionStyle.width = 100
     }
 
-    if (height) {
-      this.positionStyle.height = height
+    if (detail.height) {
+      this.positionStyle.height = detail.height
     } else {
       this.positionStyle.height = 100
     }

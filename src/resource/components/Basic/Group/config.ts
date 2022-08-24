@@ -5,7 +5,14 @@ export const componentName = 'Group'
 export class GroupComponent extends BaseComponent {
   show = false
   constructor(id?: string, name?: string) {
-    super(componentName, ComponentGroup.BASIC, name ? name : '分组', id, 200, 200)
+    super({
+      component: componentName,
+      group: ComponentGroup.BASIC,
+      name: name ? name : '分组',
+      id,
+      width: 200,
+      height: 200
+    })
   }
 }
 

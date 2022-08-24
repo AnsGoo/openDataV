@@ -5,7 +5,14 @@ import { BaseComponent } from '@/resource/models'
 export const componentName = 'Image'
 export class ImageComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
-    super(componentName, ComponentGroup.BASIC, name ? name : '图片', id, 200, 200)
+    super({
+      component: componentName,
+      group: ComponentGroup.BASIC,
+      name: name ? name : '图片',
+      id,
+      width: 200,
+      height: 200
+    })
   }
 
   _prop: PropsType[] = []

@@ -5,7 +5,14 @@ import { BaseComponent } from '@/resource/models'
 export const componentName = 'DateText'
 export class DateTextComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
-    super(componentName, ComponentGroup.TEXT, name ? name : '时间文本', id, 200, 50)
+    super({
+      component: componentName,
+      group: ComponentGroup.TEXT,
+      name: name ? name : '时间文本',
+      id,
+      width: 200,
+      height: 50
+    })
   }
 
   _prop: PropsType[] = [

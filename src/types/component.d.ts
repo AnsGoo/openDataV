@@ -1,4 +1,4 @@
-import { FormType } from '@/enum'
+import { FormType, ComponentGroup } from '@/enum'
 
 interface GroupStyle {
   gwidth: number
@@ -67,4 +67,19 @@ export interface ComponentDataType {
   subComponents: ComponentDataType[]
 }
 
-export type { ComponentStyle, PropsType, AttrType, DOMRectStyle, GroupStyle, CustomFormSchema }
+export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
+  group: ComponentGroup
+  id?: string
+  width?: number
+  height?: number
+}
+
+export type {
+  ComponentStyle,
+  ComponentType,
+  PropsType,
+  AttrType,
+  DOMRectStyle,
+  GroupStyle,
+  CustomFormSchema
+}
