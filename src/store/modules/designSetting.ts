@@ -45,6 +45,9 @@ const useDesignSettingStore = defineStore({
     },
     getAppThemeList(): string[] {
       return this.appThemeList
+    },
+    getIconColor(): string {
+      return this.darkTheme ? '#eee' : '#333'
     }
   },
   actions: {}

@@ -90,6 +90,5 @@ const calcDragIndex = (fromIndex: string, toIndex: string): string => {
 <style lang="less" scoped>
 .iconfont {
   @apply mr-1 text-xl;
-  color: rgba(30, 144, 255, 1);
 }
 </style>
