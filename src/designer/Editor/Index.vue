@@ -305,16 +305,6 @@ const getSelectArea = (
     }
   }
 }
-
-// watch(
-//   () => [width, height],
-//   () => {
-//     if (width.value > 0 || height.value > 0) {
-//       // 展示选中区域
-//       isShowArea.value = true
-//     }
-//   }
-// )
 </script>
 
 <style scoped lang="less">
@@ -323,7 +313,7 @@ const getSelectArea = (
 }
 
 .edit .component {
-  @apply outline-none w-full h-full;
+  @apply w-full h-full;
   position: static !important;
 }
 </style>

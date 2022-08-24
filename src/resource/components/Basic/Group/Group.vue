@@ -11,7 +11,7 @@
       />
     </template>
   </div>
-  <div class="group" v-else>
+  <div class="group" :class="{ dotted: isActive }" v-else>
     <template v-for="(item, i) in component.subComponents" :key="item.id">
       <Shape
         :id="'shape' + item.id"
@@ -43,7 +43,7 @@ import Shape from '@/designer/Editor/Shape.vue'
 import { computed } from 'vue'
 import { BaseComponent } from '@/resource/models'
 
-defineProps<{
+const props = defineProps<{
   component: BaseComponent
 }>()
 
@@ -51,6 +51,18 @@ const editMode = computed<boolean>(() => basicStore.isEditMode)
 const basicStore = useBasicStoreWithOut()
 
 const curComponent = computed(() => basicStore.curComponent)
+const isActive = computed(() => {
+  let curComponent = basicStore.curComponent
+  while (curComponent) {
+    if (curComponent.parent?.id === props.component.id) {
+      return true
+    }
+    curComponent = curComponent.parent
+  }
+
+  return false
+})
+
 const isShow = (display: boolean): boolean => {
   return !(basicStore.isEditMode && display === false)
 }
@@ -75,5 +87,9 @@ const getShapeStyle = (item: BaseComponent) => {
       position: absolute;
     }
   }
+}
+
+.dotted {
+  outline: 1px dotted #70c0ff;
 }
 </style>
