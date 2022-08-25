@@ -1,26 +1,27 @@
 <template>
-  <div>
-    <n-modal :show="visible">
-      <n-card
-        :title="`图标数量${iconList.length}`"
-        class="tab-container"
-        v-click-outside="clickOutsideHandler"
-      >
-        <ul class="icon_lists">
-          <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
-            <span :class="`icon iconfont ${icon}`"></span>
-          </li>
-        </ul>
-      </n-card>
-    </n-modal>
-  </div>
+  <n-modal
+    class="show-card"
+    :show="isShow"
+    preset="card"
+    @mask-click="close"
+    :title="`图标数量${iconList.length}`"
+    @close="close"
+    @update:show="() => (isShow = false)"
+    :style="{ width: '50%', maxWidth: '800px' }"
+  >
+    <ul class="icon-list">
+      <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
+        <span :class="`icon iconfont ${icon}`"></span>
+      </li>
+    </ul>
+  </n-modal>
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { copyText } from '@/utils/utils'
 import { message } from '@/utils/message'
-import { NModal, NCard } from 'naive-ui'
+import { NModal } from 'naive-ui'
 
 import iconfontList from '@/assets/directionFonts/iconfont.json'
 
@@ -28,16 +29,9 @@ const iconList = computed<string[]>(() => {
   return iconfontList.glyphs.map((item) => `icon-${item.font_class}`)
 })
 
-defineProps<{
-  visible: boolean
-}>()
-
-const emits = defineEmits<{
-  (e: 'update:visible', visible: boolean): void
-}>()
-
-const clickOutsideHandler = () => {
-  emits('update:visible', false)
+const isShow = ref<boolean>(true)
+const close = () => {
+  isShow.value = false
 }
 const handleClick = (icon: string) => {
   copyText(icon)
@@ -46,29 +40,17 @@ const handleClick = (icon: string) => {
 </script>
 
 <style lang="less" scoped>
-.tab-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 800px;
-  z-index: 1000;
-  transform: translate(-50%, -50%);
-  border-radius: 20px;
-  padding: 20px;
-
-  .total {
-    text-align: center;
-  }
+:deep(.show-card) {
+  width: 50%;
 }
-
-.icon_lists {
+.icon-list {
   width: 100% !important;
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
 }
 
-.icon_lists li {
+.icon-list li {
   width: 50px;
   text-align: center;
   list-style: none !important;
