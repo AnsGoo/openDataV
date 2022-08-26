@@ -1,311 +1,132 @@
 <template>
   <div class="tool-bar">
     <div class="tool-bar-item">
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="toHome" title="首页">
-            <icon-park name="home" size="24" />
-          </n-button>
-        </template>
-        <span>首页</span>
-      </n-tooltip>
-      <n-divider vertical />
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="save" title="保存" v-action="'add'">
-            <icon-park name="save-one" size="22" />
-          </n-button>
-        </template>
-        <span>保存</span>
-      </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="preview" title="预览">
-            <icon-park name="computer" size="22" />
-          </n-button>
-        </template>
-        <span>预览</span>
-      </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="undo" title="撤销">
-            <icon-park name="back" size="22" />
-          </n-button>
-        </template>
-        <span>撤销</span>
-      </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="recoveryDraft" title="恢复">
-            <icon-park name="next" size="22" />
-          </n-button>
-        </template>
-        <span>恢复</span>
-      </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="exportCanvas" title="导出">
-            <icon-park name="download-one" size="22" />
-          </n-button>
-        </template>
-        <span>导出</span>
-      </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="importCanvas" title="导入">
-            <icon-park name="upload-one" size="22" />
-          </n-button>
-        </template>
-        <span>导入</span>
-      </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="fullScreen" title="全屏">
-            <icon-park name="full-screen" size="22" />
-          </n-button>
-        </template>
-        <span>全屏</span>
-      </n-tooltip>
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary size="small" @click="setShowEm" title="坐标">
-            <icon-park name="cones" size="22" />
-          </n-button>
-        </template>
-        <span>坐标</span>
-      </n-tooltip>
+      <ToolBarItem
+        v-for="(item, index) in leftToolBars"
+        :key="index"
+        :action="item.action"
+        :label="item.label"
+        :divider="item.divider"
+        :icon="item.icon"
+      />
     </div>
-
     <div class="tool-bar-item">
-      <n-tooltip>
-        <template #trigger>
-          <n-button quaternary class="resource" size="small" @click="showIcon" title="图标">
-            <icon-park name="game-ps" size="22" />
-          </n-button>
-        </template>
-        <span>图标</span>
-      </n-tooltip>
-      <n-tooltip placement="bottom">
-        <template #trigger>
-          <icon-park :name="themeIcon" @click="toggleTheme" :color="projectStore.iconColor" />
-        </template>
-        <span>主题</span>
-      </n-tooltip>
+      <ToolBarItem
+        v-for="(item, index) in rightToolBars"
+        :key="index"
+        :action="item.action"
+        :label="item.label"
+        :divider="item.divider"
+        :icon="item.icon"
+      />
     </div>
   </div>
-  <n-modal v-model:show="saveDialogVisible" center>
-    <n-card title="保存当前布局" :style="{ width: '30%' }" size="medium">
-      <n-form :model="form" :rules="rules" @submit.prevent>
-        <n-form-item label="页面名称" prop="name">
-          <n-input v-model="form.name" placeholder="请输入页面名称" />
-        </n-form-item>
-      </n-form>
-      <template #footer>
-        <span class="dialog-footer">
-          <n-button @click="saveDialogVisible = false">取消</n-button>
-          <n-button type="primary" @click="handleSubmit('new')" v-if="isCreate">新增</n-button>
-          <n-button type="primary" @click="handleSubmit('update')" v-else>更新</n-button>
-        </span>
-      </template>
-    </n-card>
-  </n-modal>
-  <IconFont v-model:visible="showIconFont" />
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, onMounted, watch, onUnmounted } from 'vue'
-import type { WatchStopHandle } from 'vue'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
-import { message } from '@/utils/message'
+import { h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import type { LayoutData } from '@/types/apiTypes'
-import { saveUIComponents, updateUIComponents } from '@/api/pages'
-import { exportRaw, importRaw } from '@/utils/utils'
-import IconFont from './IconFont.vue'
-import { NForm, NInput, NFormItem, NButton, NModal, NCard, NTooltip, NDivider } from 'naive-ui'
-import { CanvasStyleData } from '@/types/storeTypes'
-import { StoreComponentData } from '@/utils/db'
-import { ComponentDataType } from '@/types/component'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-// 状态管理
-const basicStore = useBasicStoreWithOut()
-const snapShotStore = useSnapShotStoreWithOut()
-const projectStore = useProjectSettingStoreWithOut()
-// const userStore = useUserStoreWithOut()
+import { ToolBarItemType } from './modules/types'
+import {
+  undo,
+  recoveryDraft,
+  importCanvas,
+  exportCanvas,
+  setShowEm,
+  toggleTheme
+} from './modules/actions'
+import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
+import showIconCard from './modules/iconList'
+import showSaveCard from './modules/save'
+import ToolBarItem from './ToolBarItem.vue'
 
 const router = useRouter()
 const route = useRoute()
-const themeIcon = ref<string>('sun-one')
-const toggleTheme = () => {
-  projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
-  projectStore.setDarkTheme(!projectStore.darkTheme)
-  themeIcon.value = projectStore.darkTheme ? 'sun-one' : 'moon'
-}
 
-// 计算属性
-const componentData = computed(() => basicStore.componentData)
-const canvasStyleData = computed(() => basicStore.canvasStyleData)
-const isCreate = computed(() => route.name === 'Create')
-
-let index = ''
-
-// 自定义属性
-const saveDialogVisible = ref<boolean>(false)
-const showIconFont = ref<boolean>(false)
-const form = reactive<{
-  name: string
-  thumbnail: string
-}>({
-  name: '',
-  thumbnail: ''
-})
-
-interface Rules {
-  required: boolean
-  message: string
-  trigger: string
-}
-const rules = reactive<{
-  name: Rules[]
-}>({
-  name: [{ required: true, message: '请输入页面名称', trigger: 'blur' }]
-})
-
-onMounted(() => {
-  setTimeout(() => {
-    form.name = basicStore.name
-    form.thumbnail = basicStore.thumbnail
-  }, 500)
-})
-
-const undo = async () => {
-  const snapshot: StoreComponentData | undefined = await snapShotStore.lastRecord()
-  if (snapshot) {
-    basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
-  } else {
-    message.warning('没有快照了')
-  }
-}
-
-const preview = () => {
-  const { href } = router.resolve('/preview')
-  window.open(href, '_blank')
-}
-
-const toHome = () => {
-  router.push({
-    name: 'Pages'
-  })
-}
-
-const save = () => {
-  saveDialogVisible.value = true
-}
-
-const recoveryDraft = async () => {
-  const snapshot: StoreComponentData | undefined = await snapShotStore.nextRecord()
-  if (snapshot) {
-    basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
-  } else {
-    message.warning('没有快照了')
-  }
-}
-
-const setShowEm = () => {
-  basicStore.toggleShowEm()
-}
-
-const showIcon = () => {
-  showIconFont.value = !showIconFont.value
-}
-
-const fullScreen = () => {
-  const el: HTMLElement | null = document.querySelector('#editor')
-  if (document.fullscreenEnabled && el) {
-    el.requestFullscreen()
-  }
-}
-
-const handleSubmit = async (type: string) => {
-  const { name, thumbnail } = form
-  if (!name) {
-    message.error('请输入页面名称')
-    return
-  }
-
-  const layoutData: LayoutData = {
-    name: name,
-    thumbnail: thumbnail!,
-    canvasData: componentData.value,
-    canvasStyle: canvasStyleData.value
-  }
-  basicStore.setName(name)
-
-  if (type === 'update') {
-    try {
-      await updateUIComponents(index, layoutData)
-      message.success('修改成功')
-    } catch (e) {
-      message.error('保存失败，请导出到本地，并重新进入此页面')
-    } finally {
-      saveDialogVisible.value = false
-    }
-  } else {
-    try {
-      const result: LayoutData = await saveUIComponents(layoutData)
-      message.success('保存成功')
-      // // 新增页面成功，则跳转到编辑页面
+const toolBars: ToolBarItemType[] = [
+  {
+    label: '首页',
+    action: (_e: MouseEvent) => {
       router.push({
-        name: 'Editor',
-        params: {
-          index: result.id
-        }
+        name: 'Pages'
       })
-    } catch (e: any) {
-      message.error(`保存失败，失败信息:${e?.message || e}`)
-    } finally {
-      saveDialogVisible.value = false
-    }
-  }
-}
-
-const exportCanvas = () => {
-  const name: string = `${basicStore.name}` || 'layout'
-  exportRaw(
-    `${name}.json`,
-    JSON.stringify({
-      canvasData: basicStore.layoutData,
-      canvasStyle: canvasStyleData.value
-    })
-  )
-}
-
-const importCanvas = () => {
-  importRaw(fileHandler, '.json')
-}
-
-const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
-  if (loadEvent.target && loadEvent.target.result) {
-    const layoutComponents: { canvasData: ComponentDataType[]; canvasStyle: CanvasStyleData } =
-      JSON.parse(loadEvent.target.result as string)
-    if (layoutComponents) {
-      basicStore.setComponentData(layoutComponents.canvasData)
-      basicStore.setCanvasStyle(layoutComponents.canvasStyle)
-    }
-  }
-}
-const stopHandle: WatchStopHandle = watch(
-  () => route.params.index,
-  (toParams, _) => {
-    index = toParams as string
+    },
+    icon: 'home',
+    divider: true,
+    location: 'left'
   },
-  { immediate: true }
-)
+  {
+    label: '保存',
+    action: () => showSaveCard(route.params.index as string),
+    icon: 'save-one',
+    location: 'left'
+  },
+  {
+    label: '预览',
+    action: (_e: MouseEvent) => {
+      const { href } = router.resolve('/preview')
+      window.open(href, '_blank')
+    },
+    icon: 'computer',
+    location: 'left'
+  },
+  {
+    label: '撤销',
+    action: undo,
+    icon: 'back',
+    location: 'left'
+  },
+  {
+    label: '恢复',
+    action: recoveryDraft,
+    icon: 'next',
+    location: 'left'
+  },
+  {
+    label: '导出',
+    action: exportCanvas,
+    icon: 'download-one',
+    location: 'left'
+  },
+  {
+    label: '导入',
+    action: importCanvas,
+    icon: 'upload-one',
+    location: 'left'
+  },
+  {
+    label: '全屏',
+    action: () => {
+      const el: HTMLElement | null = document.querySelector('#editor')
+      if (document.fullscreenEnabled && el) {
+        el.requestFullscreen()
+      }
+    },
+    icon: 'full-screen',
+    location: 'left'
+  },
+  {
+    label: '坐标',
+    action: setShowEm,
+    icon: 'cones',
+    location: 'left'
+  },
+  {
+    label: '图标',
+    action: showIconCard,
+    icon: 'game-ps',
+    location: 'right'
+  },
+  {
+    label: '主题',
+    action: toggleTheme,
+    icon: () => h(ThemeIcon),
+    location: 'right'
+  }
+]
 
-onUnmounted(() => {
-  stopHandle()
-})
+const leftToolBars = toolBars.filter((el) => el.location === 'left')
+const rightToolBars = toolBars.filter((el) => el.location === 'right')
 </script>
 
 <style scoped lang="less">
@@ -316,7 +137,6 @@ onUnmounted(() => {
   flex-wrap: nowrap;
   justify-content: space-between;
   height: 100%;
-  border-bottom: 1px solid #c9cdd4;
 }
 
 button {

@@ -38,7 +38,6 @@ const bgStyle = computed<Recordable<string>>(() => {
 
 onMounted(async () => {
   const snapshot = await snapShotStore.latestRecord()
-  console.log(snapshot)
   if (snapshot) {
     basicStore.setLayoutData({
       canvasData: snapshot.canvasData,
@@ -47,8 +46,6 @@ onMounted(async () => {
   }
   canvasStyleData.value = basicStore.canvasStyleData
   setScale()
-  console.log(componentData.value)
-  console.log(canvasStyleData.value)
   window.addEventListener('resize', setScale)
 })
 
