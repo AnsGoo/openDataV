@@ -34,7 +34,22 @@ const props = defineProps<{
 }>()
 const basicStore = useBasicStoreWithOut()
 
-const formData = reactive<Recordable<any>>({})
+interface PropData {
+  common: {
+    name: string
+    component: string
+    id: string
+  }
+  [key: string]: any
+}
+
+const formData = reactive<PropData>({
+  common: {
+    name: props.curComponent.name,
+    component: props.curComponent.component,
+    id: props.curComponent.id
+  }
+})
 
 const attrKeys = computed(() => {
   if (props.curComponent) {
@@ -49,7 +64,11 @@ const changed = (form: string, key: string, val: any) => {
 }
 
 const resetFormData = () => {
-  cleanObjectProp(formData)
+  cleanObjectProp(formData, ['common'])
+  formData.common.name = props.curComponent.name
+  formData.common.component = props.curComponent.component
+  formData.common.id = props.curComponent.id
+
   if (props.curComponent && props.curComponent.propValue) {
     Object.keys(props.curComponent.propValue).forEach((key) => {
       formData[key] = props.curComponent.propValue[key]

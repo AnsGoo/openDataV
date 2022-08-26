@@ -36,7 +36,7 @@ const exportCanvas = () => {
   exportRaw(
     `${name}.json`,
     JSON.stringify({
-      canvasData: basicStore.canvasData,
+      canvasData: basicStore.layoutData,
       canvasStyle: basicStore.canvasStyleData
     })
   )

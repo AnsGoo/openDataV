@@ -159,12 +159,6 @@ export abstract class BaseComponent {
   }
 
   get propValue() {
-    this._propValue['common'] = {
-      name: this.name,
-      component: this.component,
-      id: this.id
-    }
-
     this._prop.forEach((item) => {
       if (!Reflect.has(this._propValue, item.prop)) {
         this._propValue[item.prop] = {}

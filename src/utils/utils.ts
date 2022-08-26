@@ -295,8 +295,14 @@ export const checkDiff = (obj1: Recordable<any>, obj2: Recordable<any>) => {
 }
 
 // 清除对象属性
-export const cleanObjectProp = (obj) => {
-  Object.keys(obj).forEach((key) => delete obj[key])
+export const cleanObjectProp = (obj: Recordable<any>, excludes: string[] = []) => {
+  Object.keys(obj).forEach((key) => {
+    if (excludes.includes(key)) {
+      return
+    }
+
+    delete obj[key]
+  })
 }
 
 // 生成随机字符串
