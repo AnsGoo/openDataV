@@ -1,0 +1,13 @@
+{
+  "name": "decoration1",
+  "version": "1.0.0",
+  "description": "1#装饰",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chenghaiwen",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {}
+}

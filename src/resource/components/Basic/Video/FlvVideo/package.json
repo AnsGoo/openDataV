@@ -1,0 +1,17 @@
+{
+  "name": "flvvideo",
+  "version": "1.0.0",
+  "description": "视频组件",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "OpenDataV"
+  ],
+  "author": "chenghaiwen",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "flv.js": "^1.6.2"
+  }
+}
