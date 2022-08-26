@@ -304,8 +304,8 @@ onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: str
   if (info === 'render function') {
     if (basicStore.isEditMode) {
       if (instance) {
-        const { id, label }: { id: string; label: string } = instance['info'] || {}
-        errorInfo.value = `组件[${label}][${id}]渲染异常`
+        const { name }: { name: string } = instance['component'] || {}
+        errorInfo.value = `组件[${name}]渲染异常`
       } else {
         errorInfo.value = `组件渲染异常`
       }

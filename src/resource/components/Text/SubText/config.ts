@@ -2,16 +2,17 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
-export const componentName = 'DateText'
-export class DateTextComponent extends BaseComponent {
-  constructor(id?: string, name?: string) {
+export const componentName = 'SubText'
+export class SubTextComponent extends BaseComponent {
+  constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,
       group: ComponentGroup.TEXT,
-      name: name ? name : '时间文本',
+      name: name ? name : '数据订阅文本',
       id,
-      width: 200,
-      height: 50
+      width: 100,
+      height: 30,
+      icon
     })
   }
 
@@ -21,11 +22,27 @@ export class DateTextComponent extends BaseComponent {
       prop: 'base',
       children: [
         {
-          prop: 'format',
-          label: '格式',
+          prop: 'tagName',
+          label: '数据标签',
           type: FormType.TEXT,
           componentOptions: {
-            defaultValue: 'YYYY-MM-DD HH:mm:ss'
+            defaultValue: ''
+          }
+        },
+        {
+          prop: 'url',
+          label: '获取数据API',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
+          }
+        },
+        {
+          prop: 'unit',
+          label: '单位',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
           }
         }
       ]
@@ -41,7 +58,7 @@ export class DateTextComponent extends BaseComponent {
           label: '颜色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: 'skyblue'
+            defaultValue: '#1E90FF'
           }
         },
         {
@@ -73,4 +90,4 @@ export class DateTextComponent extends BaseComponent {
   ]
 }
 
-export default DateTextComponent
+export default SubTextComponent
