@@ -8,16 +8,12 @@
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { filterStyle, pageScale } from '@/utils/utils'
 import { onUnmounted, onMounted, ref, computed } from 'vue'
-// import { channels, eventBus } from '@/bus/useEventBus'
-// import type { ChannelItem } from '@/bus/useEventBus'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { BaseComponent } from '@/resource/models'
 const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
-
-// const websockets: WebSocket[] = []
 
 const componentData = computed<BaseComponent[]>(() => basicStore.componentData)
 const canvasStyleData = ref<CanvasStyleData>({

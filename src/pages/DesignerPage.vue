@@ -25,12 +25,7 @@
         <!-- 中间画布 -->
         <n-layout-content class="content" v-resize="editorWindowResizeHandler">
           <n-scrollbar x-scrollable :style="scrobarStyle">
-            <Editor
-              @drop="handleDrop"
-              @dragover="handleDragOver"
-              @mousedown="handleMouseDown"
-              @mouseup="deselectCurComponent"
-            />
+            <Editor />
           </n-scrollbar>
         </n-layout-content>
         <n-layout-sider
@@ -62,13 +57,11 @@ import Editor from '@/designer/Editor/Index.vue'
 import ToolBar from '@/designer/Pane/Toolbar'
 import LeftSideBar from '@/designer/Pane/LeftSideBar'
 import RightSideBar from '@/designer/Pane/RightSideBar'
-import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
-import { BaseComponent } from '@/resource/models'
 
 const basicStore = useBasicStoreWithOut()
 const collapsedLeft = ref(false)
@@ -104,36 +97,6 @@ const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserv
   const { width, height } = entry.contentRect
   windowWidth.value = width
   windowHeight.value = height
-}
-
-const handleDrop = async (e) => {
-  e.preventDefault()
-  e.stopPropagation()
-  const componentName = e.dataTransfer.getData('componentName')
-  if (componentName) {
-    const component: BaseComponent = new componentList[componentName]()
-    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-    const y = e.pageY - editorRectInfo.top
-    const x = e.pageX - editorRectInfo.left
-    component.change('top', y)
-    component.change('left', x)
-    basicStore.appendComponent(component)
-  }
-}
-
-const handleDragOver = (e) => {
-  e.preventDefault()
-  e.dataTransfer.dropEffect = 'copy'
-}
-
-const handleMouseDown = () => {
-  basicStore.setClickComponentStatus(false)
-}
-
-const deselectCurComponent = () => {
-  if (!basicStore.isClickComponent) {
-    basicStore.setCurComponent(undefined)
-  }
 }
 
 onUnmounted(() => {

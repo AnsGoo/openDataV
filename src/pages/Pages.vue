@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="page-list">
     <n-card>
       <n-button type="primary" :loading="loading" @click="handleCreate"> 新建 </n-button>
     </n-card>
@@ -145,14 +145,13 @@ const previewIcon = (icon: string | undefined) => {
 </script>
 
 <style lang="less" scoped>
-.container {
+.page-list {
   @apply flex h-full mx-auto flex-wrap relative;
   align-content: flex-start;
 
   .card {
     @apply p-2;
-
-    width: 20%;
+    width: max(10vw, 160px);
     transition: all 0.3s ease;
     transform-origin: center;
   }
