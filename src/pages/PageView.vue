@@ -11,11 +11,8 @@ import { getUIComponents } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
 import { filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
-// import { eventBus } from '@/bus/useEventBus'
 import { LayoutData } from '@/types/apiTypes'
 import { BaseComponent } from '@/resource/models'
-
-// const websockets: WebSocket[] = []
 
 const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({

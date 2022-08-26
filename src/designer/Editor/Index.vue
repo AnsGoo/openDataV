@@ -6,6 +6,9 @@
     :style="bgStyle"
     @mousedown.left="handleMouseDown"
     v-contextmenu.stop="contextmenus"
+    @drop="handleDrop"
+    @dragover="handleDragOver"
+    @mouseup="deselectCurComponent"
   >
     <!-- 网格线 -->
     <Grid />
@@ -69,6 +72,7 @@ import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { BaseComponent } from '@/resource/models'
+import { componentList } from '../load'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -196,7 +200,7 @@ const editor = ref<ElRef>(null)
 const isShowReferLine = ref<boolean>(true)
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
-  basicStore.setCurComponent(undefined)
+  basicStore.setClickComponentStatus(false)
   e.preventDefault()
   e.stopPropagation()
   hideArea()
@@ -303,6 +307,32 @@ const getSelectArea = (
       components: selectedComponents,
       rect: { left, right, top, bottom }
     }
+  }
+}
+
+const handleDrop = async (e) => {
+  e.preventDefault()
+  e.stopPropagation()
+  const componentName = e.dataTransfer.getData('componentName')
+  if (componentName) {
+    const component: BaseComponent = new componentList[componentName]()
+    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+    const y = e.pageY - editorRectInfo.top
+    const x = e.pageX - editorRectInfo.left
+    component.change('top', y)
+    component.change('left', x)
+    basicStore.appendComponent(component)
+  }
+}
+
+const handleDragOver = (e) => {
+  e.preventDefault()
+  e.dataTransfer.dropEffect = 'copy'
+}
+
+const deselectCurComponent = () => {
+  if (!basicStore.isClickComponent) {
+    basicStore.setCurComponent(undefined)
   }
 }
 </script>
