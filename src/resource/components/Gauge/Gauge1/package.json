@@ -1,11 +1,12 @@
 {
-  "name": "decoration3",
+  "name": "gauge",
   "version": "1.0.0",
-  "description": "3#装饰",
+  "description": "1#仪表盘",
   "main": "index.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
+  "keywords": [
+    "OpenDataV"
+  ],
   "author": "chenghaiwen",
   "license": "Apache-2.0",
   "dependencies": {},

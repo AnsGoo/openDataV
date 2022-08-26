@@ -41,7 +41,7 @@ export class DecorationComponent extends BaseComponent {
           label: '点大小',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 2
+            defaultValue: 5
           }
         }
       ]

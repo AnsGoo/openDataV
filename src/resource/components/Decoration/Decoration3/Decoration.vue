@@ -49,7 +49,6 @@ const props = defineProps<{
   component: DecorationComponent
 }>()
 const propChange = (prop: string, key: string, value: any) => {
-  console.log(prop, key, value)
   if (prop === 'base' && key === 'rectWidth') rectWidth.value = value
   if (prop === 'base' && key === 'space') rectSpace.value = value
   if (prop === 'base' && key === 'color1') mergedColor.value[0] = value
@@ -70,7 +69,6 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
   calcPointsPosition()
 }
 
-const svgWH = ref<Array<number>>([300, 35])
 const rowNum = ref<number>(1)
 const rectWidth = ref<number>(propValue.base.rectWidth || 7)
 const rectSpace = ref<number>(propValue.base.space || 0)
@@ -82,24 +80,25 @@ const mergedColor = ref<string[]>([propValue.base.color1, propValue.base.color2]
 
 const calcPointsPosition = () => {
   const rowPoints = Math.round(width.value / (rectWidth.value + rectSpace.value))
-  const [w, h] = svgWH.value
-  const horizontalGap = w / (rowPoints + 1)
-  const verticalGap = h / (rowNum.value + 1)
+  const horizontalGap = width.value / (rowPoints + 1)
+  const verticalGap = height.value / (rowNum.value + 1)
 
   const result = new Array(rowNum.value)
     .fill(0)
     .map((_, i: number) =>
       new Array(rowPoints).fill(0).map((_, j) => [horizontalGap * (j + 1), verticalGap * (i + 1)])
     )
-  console.log(rowPoints)
-  console.log(result)
   points.value = result.reduce((all, item) => [...all, ...item], [])
   heights.value = heights.value = new Array(rowNum.value * rowPoints)
     .fill(0)
-    .map(() => (Math.random() > 0.8 ? randomExtend(0.7 * h, h) : randomExtend(0.2 * h, 0.5 * h)))
+    .map(() =>
+      Math.random() > 0.8
+        ? randomExtend(0.7 * height.value, height.value)
+        : randomExtend(0.2 * height.value, 0.5 * height.value)
+    )
   minHeights.value = new Array(rowNum.value * rowPoints)
     .fill(0)
-    .map((_, i) => heights[i] * Math.random())
+    .map((_, i) => heights.value[i] * Math.random())
   randoms.value = new Array(rowNum.value * rowPoints).fill(0).map(() => Math.random() + 1.5)
 }
 
