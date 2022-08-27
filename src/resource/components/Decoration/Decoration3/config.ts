@@ -2,13 +2,13 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
-export const componentName = 'Decoration1'
+export const componentName = 'Decoration3'
 export class DecorationComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,
       group: ComponentGroup.DECORATION,
-      name: name ? name : '1#装饰',
+      name: name ? name : '3#装饰',
       id,
       width: 200,
       height: 60
@@ -25,7 +25,7 @@ export class DecorationComponent extends BaseComponent {
           label: '颜色1',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: '#fff'
+            defaultValue: '#7acaec'
           }
         },
         {
@@ -33,15 +33,23 @@ export class DecorationComponent extends BaseComponent {
           label: '颜色2',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: '#0de7c2'
+            defaultValue: '#7acaec'
           }
         },
         {
-          prop: 'pointSideLength',
-          label: '点大小',
+          prop: 'rectWidth',
+          label: '单个矩形宽度',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 5
+            defaultValue: 7
+          }
+        },
+        {
+          prop: 'space',
+          label: '矩形间距',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 1
           }
         }
       ]
