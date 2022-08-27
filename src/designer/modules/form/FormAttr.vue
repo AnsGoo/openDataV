@@ -45,12 +45,12 @@
       />
       <FontStyle
         v-else-if="type === FormType.FONT_STYLE"
-        v-model="formData[prop]"
+        v-model:value="formData[prop]"
         @change="changed($event, prop)"
       />
       <FontWeight
         v-else-if="type === FormType.FONT_WEIGHT"
-        v-model="formData[prop]"
+        v-model:value="formData[prop]"
         @change="changed($event, prop)"
       />
       <LinearGradient

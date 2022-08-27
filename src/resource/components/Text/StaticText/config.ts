@@ -68,7 +68,7 @@ export class StaticTextComponent extends BaseComponent {
         {
           prop: 'fontWeight',
           label: '字体宽度',
-          type: FormType.NUMBER,
+          type: FormType.FONT_WEIGHT,
           componentOptions: {
             defaultValue: 200
           }
