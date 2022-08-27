@@ -41,7 +41,7 @@ export class BorderBoxComponent extends BaseComponent {
           label: '底色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: '#00000000'
+            defaultValue: 'transparent'
           }
         }
       ]

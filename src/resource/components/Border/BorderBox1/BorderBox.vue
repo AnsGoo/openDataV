@@ -79,9 +79,13 @@ import type { BorderBox } from './type'
 const props = defineProps<{
   component: BorderBoxComponent
 }>()
-console.log(props.component)
-const { propValue } = useProp<BorderBox>(props.component)
-console.log(propValue)
+
+const { propValue } = useProp<BorderBox>(
+  props.component,
+  (prop: string, key: string, value: any) => {
+    console.log(prop, key, value)
+  }
+)
 
 const width = ref<number>(150)
 const height = ref<number>(150)

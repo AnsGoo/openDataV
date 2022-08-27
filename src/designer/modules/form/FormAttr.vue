@@ -79,9 +79,9 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import FontStyle from './FontStyle.vue'
-import FontWeight from './FontWeight.vue'
-import LinearGradient from './LinearGradient.vue'
+import FontStyle from '../fontSytle'
+import FontWeight from '../fontWeight'
+import LinearGradient from '../linearGradient'
 import CustomRender from './utils/render'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType, CustomFormSchema } from '@/types/component'
