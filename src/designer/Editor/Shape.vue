@@ -585,13 +585,13 @@ const keyDown = (e: KeyboardEvent): void => {
           false
         )
         break
+      case 'Delete':
+        e.preventDefault()
+        deleteComponent()
+        break
       default:
         return
     }
-  }
-
-  if (props.info && e.key === 'Delete') {
-    deleteComponent()
   }
 }
 
