@@ -242,7 +242,7 @@ const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<Contextmen
     },
     {
       text: '删除',
-      subText: '',
+      subText: 'Ctr + Delete',
       handler: deleteComponent
     },
     { divider: true },

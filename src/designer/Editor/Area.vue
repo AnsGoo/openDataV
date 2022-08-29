@@ -75,7 +75,7 @@ const contextmenus = (): ContextmenuItem[] => {
     { divider: true },
     {
       text: '删除',
-      subText: '',
+      subText: 'Ctr + Delete',
       disable: composeStore.components.length <= 0,
       handler: batchDelete
     },
