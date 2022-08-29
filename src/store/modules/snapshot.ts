@@ -3,29 +3,61 @@ import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import type { CanvasStyleData, SnapData } from '@/types/storeTypes'
 import { snapshotDb, StoreComponentData } from '@/utils/db'
-import { ComponentInfo } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
+import { ComponentDataType } from '@/types/component'
 
 const useSnapShotStore = defineStore({
   id: 'snapshot',
   state: (): SnapData => ({
     latestSnapshot: undefined,
     snapshotMax: 10,
-    timeHandler: undefined
+    timeHandler: undefined,
+    cursor: 0
   }),
   actions: {
-    async undo(id?: number) {
+    async latestRecord() {
+      return await snapshotDb.snapshot.orderBy('id').last()
+    },
+    /**
+     * 上一次记录
+     * @returns 快照
+     */
+    async lastRecord() {
       let snapshot: StoreComponentData | undefined
-      if (id) {
-        snapshot = await snapshotDb.snapshot.get(id)
+      if (this.cursor) {
+        snapshot = await snapshotDb.snapshot.get(this.cursor - 1)
       } else {
         snapshot = await snapshotDb.snapshot.orderBy('id').last()
       }
       if (snapshot) {
+        this.cursor = snapshot.id!
         this.latestSnapshot = cloneDeep(snapshot)
         return snapshot
       }
     },
-    recordSnapshot(canvasData: Array<ComponentInfo>, canvasStyle: CanvasStyleData) {
+    /**
+     * 下一次快照
+     * @returns 快照
+     */
+    async nextRecord() {
+      let snapshot: StoreComponentData | undefined
+      if (this.cursor) {
+        snapshot = await snapshotDb.snapshot.get(this.cursor + 1)
+      } else {
+        snapshot = await snapshotDb.snapshot.orderBy('id').last()
+      }
+      if (snapshot) {
+        this.cursor = snapshot.id!
+        this.latestSnapshot = cloneDeep(snapshot)
+        return snapshot
+      }
+    },
+    /**
+     * 记录快照
+     * @param canvasData 组件数据
+     * @param canvasStyle 画布样式
+     */
+    recordSnapshot(canvasData: Array<BaseComponent>, canvasStyle: CanvasStyleData) {
       this.latestSnapshot = {
         canvasData: cloneDeep(canvasData),
         canvasStyle: cloneDeep(canvasStyle)
@@ -38,14 +70,26 @@ const useSnapShotStore = defineStore({
             .first()) as StoreComponentData
           await snapshotDb.snapshot.delete(snapshot!.id!)
         }
+        const snapshot = await snapshotDb.snapshot.orderBy('id').last()
+        if (snapshot) {
+          this.cursor = snapshot.id!
+        }
         this.timeHandler = undefined
       })
     },
+    /**
+     * 清空快照
+     */
     async clearSnapshot() {
       await snapshotDb.snapshot.clear()
       this.latestSnapshot = undefined
     },
-    saveSnapshot(canvasData: Array<ComponentInfo>, canvasStyle: CanvasStyleData) {
+    /**
+     * 保存记录
+     * @param canvasData 组件数据
+     * @param canvasStyle 组件样式
+     */
+    saveSnapshot(canvasData: ComponentDataType[], canvasStyle: CanvasStyleData) {
       if (this.timeHandler) {
         clearTimeout(this.timeHandler)
         this.timeHandler = undefined

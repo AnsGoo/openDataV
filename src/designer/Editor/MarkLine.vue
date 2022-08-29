@@ -16,7 +16,8 @@ import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useEventBus } from '@/bus/useEventBus'
 import { calcComponentAxis } from '@/utils/utils'
-import { ComponentInfo, Rect } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
+import { Position } from '@/types/common'
 
 const basicStore = useBasicStoreWithOut()
 
@@ -63,21 +64,21 @@ useEventBus('unmove', () => {
 })
 
 const showLine = (isDownward, isRightward) => {
-  const components = basicStore.componentData as Array<ComponentInfo>
+  const components = basicStore.componentData as Array<BaseComponent>
   if (basicStore.curComponent) {
     const {
       top: mytop,
       left: myleft,
       right: myright,
       bottom: mybottom
-    }: Rect = calcComponentAxis(basicStore.curComponent!.style)
+    }: Position = calcComponentAxis(basicStore.curComponent.positionStyle)
     const curComponentHalfwidth = (myright - myleft) / 2
     const curComponentHalfHeight = (mybottom - mytop) / 2
 
     hideLine()
     components.forEach((component) => {
       if (component == basicStore.curComponent) return
-      const componentStyle = calcComponentAxis(component.style)
+      const componentStyle = calcComponentAxis(component.positionStyle)
       const { top, left, bottom, right } = componentStyle
       const componentHalfwidth = (right - left) / 2
       const componentHalfHeight = (bottom - top) / 2
@@ -179,7 +180,7 @@ const showLine = (isDownward, isRightward) => {
                   height: mybottom - mytop
                 })
               : condition.dragShift
-          basicStore.setComponentSingleStyle({ key, value })
+          basicStore.setCurComponentStyle(key, value)
 
           condition.lineNode.style[key] = `${condition.lineShift}px`
           needToShow.push(condition.line)
@@ -252,21 +253,19 @@ const chooseTheTureLine = (needToShow, isDownward, isRightward) => {
 </script>
 
 <style scoped>
-@layer components {
-  .mark-line {
-    @apply h-full;
-  }
+.mark-line {
+  @apply h-full;
+}
 
-  .line {
-    @apply bg-blue-300 absolute z-50;
-  }
+.line {
+  @apply bg-blue-300 absolute z-50;
+}
 
-  .xline {
-    @apply w-full h-px;
-  }
+.xline {
+  @apply w-full h-px;
+}
 
-  .yline {
-    @apply w-px h-full;
-  }
+.yline {
+  @apply w-px h-full;
 }
 </style>

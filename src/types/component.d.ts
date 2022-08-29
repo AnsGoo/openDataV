@@ -1,4 +1,4 @@
-import { ComponentGroup, FormType } from '@/enum'
+import { FormType, ComponentGroup } from '@/enum'
 
 interface GroupStyle {
   gwidth: number
@@ -8,20 +8,6 @@ interface GroupStyle {
   grotate: number
 }
 
-interface ComponentCommon {
-  groupStyle?: GroupStyle // 当一个组件成为 Group 的子组件时使用
-  isLock?: boolean // 是否锁定组件
-  show?: boolean // 是否显示在控件列表
-  group?: ComponentGroup // 组件所属的组
-  display: boolean
-}
-
-interface Rect {
-  left: number
-  top: number
-  right: number
-  bottom: number
-}
 interface DOMRectStyle {
   width: number
   height: number
@@ -31,34 +17,15 @@ interface DOMRectStyle {
 }
 
 interface ComponentStyle extends DOMRectStyle {
-  [propName: string]: string | number
-}
-
-interface ComponentInfo<T = Recordable<string | number | any>> extends ComponentCommon {
-  id: string
-  component: string
-  label: string
-  propValue?: T
-  icon: string
-  style: ComponentStyle
-  subComponents?: Array<ComponentInfo>
-}
-
-interface ComponentConfig<T = Recordable<string | number | any>> {
-  component: string
-  label: string
-  propValue: T
-  icon: string
-  group: ComponentGroup
-  style: Recordable<any>
-  show?: boolean | undefined
+  [propName: string]: string | number | boolean
 }
 
 interface BaseFormSchema {
   editable?: boolean
-  disable?: boolean
+  disabled?: boolean
   required?: boolean
-  defaultValue?: any
+  defaultValue: string | number | boolean | any
+  options?: any
 }
 
 type InputFormSchema = BaseFormSchema
@@ -69,37 +36,50 @@ interface InputNumberFormSchema extends BaseFormSchema {
   step: number
 }
 
+interface CustomFormSchema extends BaseFormSchema {
+  componentType: string
+  args: any
+}
+
 interface AttrType {
-  key: string
+  prop: string
   label: string
   type?: FormType
-  componentOptions?: any
+  componentOptions: InputFormSchema | InputNumberFormSchema | CustomFormSchema | BaseFormSchema
   help?: string
 }
 
 // 分组类型
 interface PropsType {
-  name: string
-  uid: string
-  max?: number
+  label: string
+  prop: string
   children: AttrType[]
 }
 
-interface ComponentOptions {
-  component: ComponentConfig
-  style: Array<PropsType>
-  attrs: Array<PropsType>
+export interface ComponentDataType {
+  id: string
+  name: string
+  component: string
+  groupStyle?: GroupStyle
+  icon?: string
+  style: Record<string, string | number | boolean>
+  propValue: Record<string, any>
+  subComponents: ComponentDataType[]
+}
+
+export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
+  group: ComponentGroup
+  id?: string
+  width?: number
+  height?: number
 }
 
 export type {
-  ComponentInfo,
   ComponentStyle,
-  ComponentOptions,
+  ComponentType,
   PropsType,
   AttrType,
-  ComponentCommon,
   DOMRectStyle,
   GroupStyle,
-  Rect,
-  ComponentConfig
+  CustomFormSchema
 }

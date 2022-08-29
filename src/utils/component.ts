@@ -1,6 +1,5 @@
-import { Vector } from '@/types/common'
+import { Vector, Position } from '@/types/common'
 import { DOMRectStyle } from '@/types/component'
-import { Postion } from '@/types/storeTypes'
 import { rotatePoint } from './utils'
 
 const funcs = {
@@ -50,7 +49,7 @@ export function lineEquationX(k, p1: Vector, y: number): number {
  * @param toPoint 被拖拽点最终的坐标
  * @returns
  */
-export function calculateLeftTop(style: DOMRectStyle, toPoint: Vector): Postion {
+export function calculateLeftTop(style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, rotate, width, height } = style
   const center: Vector = getComponentCenter(style)
 
@@ -78,7 +77,7 @@ export function calculateLeftTop(style: DOMRectStyle, toPoint: Vector): Postion 
  * @param toPoint 被拖拽点最终的坐标
  * @returns
  */
-function calculateLeft(style: DOMRectStyle, toPoint: Vector): Postion {
+function calculateLeft(style: DOMRectStyle, toPoint: Vector): Position {
   const { left, rotate, width, height, top } = style
   const center: Vector = getComponentCenter(style)
   // 不动点旋转前的坐标
@@ -111,7 +110,7 @@ function calculateLeft(style: DOMRectStyle, toPoint: Vector): Postion {
  * @param toPoint 被拖拽点最终的坐标
  * @returns
  */
-function calculateLeftBottom(style: DOMRectStyle, toPoint: Vector): Postion {
+function calculateLeftBottom(style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, rotate, width } = style
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left + width, y: top }
@@ -132,7 +131,7 @@ function calculateLeftBottom(style: DOMRectStyle, toPoint: Vector): Postion {
   return { top: realPoint.y - realHeight, left: realPoint.x, width: realWidth, height: realHeight }
 }
 
-function calculateBottom(style: DOMRectStyle, toPoint: Vector): Postion {
+function calculateBottom(style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, rotate, width } = style
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left + width / 2, y: top }
@@ -159,7 +158,7 @@ function calculateBottom(style: DOMRectStyle, toPoint: Vector): Postion {
   return { top: realPoint.y - realHeight, left: newCenter.x - width / 2, width, height: realHeight }
 }
 
-function calculateTop(style: DOMRectStyle, toPoint: Vector): Postion {
+function calculateTop(style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, rotate, width, height } = style
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left + width / 2, y: top + height }
@@ -185,7 +184,7 @@ function calculateTop(style: DOMRectStyle, toPoint: Vector): Postion {
   return { top: realPoint.y, left: newCenter.x - width / 2, width, height: realHeight }
 }
 
-function calculateRightTop(style: DOMRectStyle, toPoint: Vector): Postion {
+function calculateRightTop(style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, rotate, height } = style
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left, y: top + height }
@@ -205,7 +204,7 @@ function calculateRightTop(style: DOMRectStyle, toPoint: Vector): Postion {
   return { top: realPoint.y, left: newfreezePoint.x, width: realWidth, height: realHeight }
 }
 
-function calculateRightBottom(style: DOMRectStyle, toPoint: Vector): Postion {
+function calculateRightBottom(style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, rotate } = style
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left, y: top }
@@ -225,7 +224,7 @@ function calculateRightBottom(style: DOMRectStyle, toPoint: Vector): Postion {
   return { top: newfreezePoint.y, left: newfreezePoint.x, width: realWidth, height: realHeight }
 }
 
-function calculateRight(style: DOMRectStyle, toPoint: Vector): Postion {
+function calculateRight(style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, rotate, height } = style
   const center: Vector = getComponentCenter(style)
   const freezePoint: Vector = { x: left, y: top + height / 2 }
@@ -250,7 +249,7 @@ function calculateRight(style: DOMRectStyle, toPoint: Vector): Postion {
   return { top: newfreezePoint.y - height / 2, left: newfreezePoint.x, width: realWidth, height }
 }
 
-export function stretchedComponents(point: string, style: DOMRectStyle, toPoint: Vector): Postion {
+export function stretchedComponents(point: string, style: DOMRectStyle, toPoint: Vector): Position {
   const { top, left, width, height } = funcs[point](style, toPoint)
   return {
     top: Math.round(top),

@@ -4,10 +4,13 @@ import ContextmenuComponent from './ContextMenu.vue'
 const CTX_CONTEXTMENU_HANDLER = 'CTX_CONTEXTMENU_HANDLER'
 
 const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: DirectiveBinding) => {
-  event.stopPropagation()
   event.preventDefault()
+  const { stop } = binding.modifiers
+  if (stop) {
+    event.stopPropagation()
+  }
 
-  const menus = binding.value(el)
+  const menus = binding.value(el, event)
   if (!menus) return
 
   let container: HTMLDivElement | null = null
@@ -45,8 +48,9 @@ const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: Direct
 
 const ContextmenuDirective: Directive = {
   mounted(el: HTMLElement, binding) {
+    const { capture } = binding.modifiers
     el[CTX_CONTEXTMENU_HANDLER] = (event: MouseEvent) => contextmenuListener(el, event, binding)
-    el.addEventListener('contextmenu', el[CTX_CONTEXTMENU_HANDLER])
+    el.addEventListener('contextmenu', el[CTX_CONTEXTMENU_HANDLER], capture)
   },
 
   unmounted(el: HTMLElement) {

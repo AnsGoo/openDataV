@@ -2,33 +2,18 @@
 <template>
   <div class="attr-list">
     <n-collapse accordion>
-      <n-collapse-item title="公共属性">
-        <CompAttr :curComponent="curComponent" />
-      </n-collapse-item>
       <n-collapse-item
-        v-for="{ name, uid, children, max } in attrKeys"
-        :key="`${curComponent.id}${uid}`"
-        :title="name"
-        :name="uid"
+        v-for="{ label, prop, children } in attrKeys"
+        :key="`${curComponent.id}${prop}`"
+        :title="label"
+        :name="prop"
       >
         <FormAttr
-          v-if="!max || max < 1"
           :children="children"
-          :data="formData"
-          @change="changed"
-          :name="name"
-          :uid="uid"
-          :ukey="curComponent.id"
-        />
-
-        <DynamicAttr
-          v-else
-          :children="children"
-          :data="formData[uid] || []"
-          @change="changed"
-          :name="name"
-          :uid="uid"
-          :max="max"
+          :data="formData[prop]"
+          @change="(key, value) => changed(prop, key, value)"
+          :name="label"
+          :uid="prop"
           :ukey="curComponent.id"
         />
       </n-collapse-item>
@@ -38,40 +23,55 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { componentList } from '@/designer/load'
 import { computed, reactive, watch } from 'vue'
-import CompAttr from './CompAttr.vue'
 import FormAttr from '@/designer/modules/form/FormAttr.vue'
-import DynamicAttr from '@/designer/modules/form/DynamicAttr.vue'
-import type { ComponentInfo } from '@/types/component'
 import { cleanObjectProp } from '@/utils/utils'
 import { NCollapse, NCollapseItem } from 'naive-ui'
+import { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
-  curComponent: ComponentInfo
+  curComponent: BaseComponent
 }>()
 const basicStore = useBasicStoreWithOut()
 
-const formData = reactive<Recordable<any>>({})
+interface PropData {
+  common: {
+    name: string
+    component: string
+    id: string
+  }
+  [key: string]: any
+}
+
+const formData = reactive<PropData>({
+  common: {
+    name: props.curComponent.name,
+    component: props.curComponent.component,
+    id: props.curComponent.id
+  }
+})
 
 const attrKeys = computed(() => {
-  if (props.curComponent && props.curComponent.component in componentList) {
-    return componentList[props.curComponent.component].attrs
+  if (props.curComponent) {
+    return props.curComponent.propFromValue
   }
   return []
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
-const changed = (key: string, val: any) => {
-  basicStore.setCurComponentPropValue(key, val)
+const changed = (form: string, key: string, val: any) => {
+  basicStore.setCurComponentPropValue(form, key, val)
 }
 
 const resetFormData = () => {
-  cleanObjectProp(formData)
+  cleanObjectProp(formData, ['common'])
+  formData.common.name = props.curComponent.name
+  formData.common.component = props.curComponent.component
+  formData.common.id = props.curComponent.id
+
   if (props.curComponent && props.curComponent.propValue) {
-    const propValue = props.curComponent.propValue!
-    Object.keys(propValue).forEach((key) => {
-      formData[key] = propValue[key]
+    Object.keys(props.curComponent.propValue).forEach((key) => {
+      formData[key] = props.curComponent.propValue[key]
     })
   }
 }
@@ -86,11 +86,9 @@ watch(
 </script>
 
 <style scoped>
-@layer components {
-  .attr-list {
-    @apply overflow-auto p-1 pt-0 h-full;
-    margin-right: 10px;
-    backdrop-filter: blur(50px);
-  }
+.attr-list {
+  @apply overflow-auto p-1 pt-0 h-full;
+  margin-right: 10px;
+  backdrop-filter: blur(50px);
 }
 </style>

@@ -4,16 +4,14 @@
 </template>
 
 <script setup lang="ts">
+import { BaseComponent } from '@/resource/models'
 defineProps<{
-  componentId: string
-  propValue: {}
+  component: BaseComponent
 }>()
 </script>
 
 <style lang="less" scoped>
-@layer components {
-  .bg {
-    @apply w-full h-full;
-  }
+.bg {
+  @apply w-full h-full;
 }
 </style>

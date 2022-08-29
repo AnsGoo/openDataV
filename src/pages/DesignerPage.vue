@@ -25,12 +25,7 @@
         <!-- 中间画布 -->
         <n-layout-content class="content" v-resize="editorWindowResizeHandler">
           <n-scrollbar x-scrollable :style="scrobarStyle">
-            <Editor
-              @drop="handleDrop"
-              @dragover="handleDragOver"
-              @mousedown="deselectCurComponent"
-              @click="deselectCurComponent"
-            />
+            <Editor />
           </n-scrollbar>
         </n-layout-content>
         <n-layout-sider
@@ -58,22 +53,17 @@
 </template>
 
 <script setup lang="ts">
-import { cloneDeep } from 'lodash-es'
 import Editor from '@/designer/Editor/Index.vue'
 import ToolBar from '@/designer/Pane/Toolbar'
 import LeftSideBar from '@/designer/Pane/LeftSideBar'
 import RightSideBar from '@/designer/Pane/RightSideBar'
-import { componentList } from '@/designer/load' // 左侧列表数据
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { ref, onMounted, onUnmounted, watch, computed } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
 import { useRoute } from 'vue-router'
-import { eventBus } from '@/bus/useEventBus'
-import { ComponentInfo } from '@/types/component'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
 
 const basicStore = useBasicStoreWithOut()
-const websk = ref<WebSocket | null>(null)
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
 
@@ -108,62 +98,7 @@ const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserv
   windowWidth.value = width
   windowHeight.value = height
 }
-
-const handleDrop = async (e) => {
-  e.preventDefault()
-  e.stopPropagation()
-  const componentName = e.dataTransfer.getData('componentName')
-  if (componentName) {
-    const component = cloneDeep(componentList[componentName].component)
-    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-    component.style.top = e.pageY - editorRectInfo.top
-    component.style.left = e.pageX - editorRectInfo.left
-    basicStore.appendComponent(component as ComponentInfo)
-  }
-}
-
-const handleDragOver = (e) => {
-  e.preventDefault()
-  e.dataTransfer.dropEffect = 'copy'
-}
-
-const deselectCurComponent = () => {
-  if (!basicStore.curComponent) {
-    basicStore.setCurComponent(undefined, undefined)
-  }
-}
-
-watch(
-  () => basicStore.canvasStyleData.dataWs,
-  (newValue) => {
-    websk.value?.close()
-    if (newValue) {
-      websk.value = initWebsocket('actual', newValue)
-    }
-  }
-)
-
-const initWebsocket = (key: string, url: string): WebSocket => {
-  const ws = new WebSocket(url)
-
-  ws.onopen = () => {
-    console.log('websocket连接成功')
-  }
-
-  ws.onclose = () => {
-    console.log('websocket连接被关闭')
-  }
-
-  ws.onmessage = (ev) => {
-    const data = JSON.parse(ev.data)
-    eventBus.emit(key, data)
-  }
-
-  return ws
-}
-
 onUnmounted(() => {
-  websk.value?.close()
   basicStore.clearCanvas()
 })
 </script>

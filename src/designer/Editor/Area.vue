@@ -1,6 +1,6 @@
 <template>
   <div
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
     :style="{
       left: start.x + 'px',
       top: start.y + 'px',
@@ -75,7 +75,7 @@ const contextmenus = (): ContextmenuItem[] => {
     { divider: true },
     {
       text: '删除',
-      subText: '',
+      subText: 'Ctrl + Delete',
       disable: composeStore.components.length <= 0,
       handler: batchDelete
     },
@@ -116,9 +116,7 @@ const contextmenus = (): ContextmenuItem[] => {
 </script>
 
 <style lang="less" scoped>
-@layer components {
-  .area {
-    @apply border border-solid border-blue-400 absolute;
-  }
+.area {
+  @apply border border-solid border-blue-400 absolute;
 }
 </style>

@@ -1,79 +1,93 @@
 import { ComponentGroup, FormType } from '@/enum'
-import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
-import type { SubText } from './type'
+import type { PropsType } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
-const component: ComponentConfig<SubText> = {
-  component: 'SubText',
-  group: ComponentGroup.TEXT,
-  label: '数据订阅文本',
-  propValue: {
-    tagName: 'ZJGD_2212#ZJGD',
-    history: '',
-    unit: ''
-  },
-  icon: 'wenben',
-  style: {
-    width: 100,
-    height: 120,
-    color: '#1E90FF',
-    fontSize: 80,
-    fontWeight: 900,
-    fontFamily: 'Arial'
+export const componentName = 'SubText'
+export class SubTextComponent extends BaseComponent {
+  constructor(id?: string, name?: string, icon?: string) {
+    super({
+      component: componentName,
+      group: ComponentGroup.TEXT,
+      name: name ? name : '数据订阅文本',
+      id,
+      width: 100,
+      height: 30,
+      icon
+    })
   }
+
+  _prop: PropsType[] = [
+    {
+      label: '基础配置',
+      prop: 'base',
+      children: [
+        {
+          prop: 'tagName',
+          label: '数据标签',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
+          }
+        },
+        {
+          prop: 'url',
+          label: '获取数据API',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
+          }
+        },
+        {
+          prop: 'unit',
+          label: '单位',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
+          }
+        }
+      ]
+    }
+  ]
+  _style: PropsType[] = [
+    {
+      label: '字体设置',
+      prop: 'font',
+      children: [
+        {
+          prop: 'color',
+          label: '颜色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#1E90FF'
+          }
+        },
+        {
+          prop: 'fontSize',
+          label: '字体大小',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 20
+          }
+        },
+        {
+          prop: 'fontWeight',
+          label: '字体宽度',
+          type: FormType.FONT_WEIGHT,
+          componentOptions: {
+            defaultValue: 200
+          }
+        },
+        {
+          prop: 'fontFamily',
+          label: '字体',
+          type: FormType.FONT_STYLE,
+          componentOptions: {
+            defaultValue: 'Arial'
+          }
+        }
+      ]
+    }
+  ]
 }
 
-const style: Array<PropsType> = [
-  {
-    name: '字体设置',
-    uid: 'background',
-    children: [
-      {
-        key: 'color',
-        label: '颜色',
-        type: FormType.COLOR
-      },
-      {
-        key: 'fontSize',
-        label: '字体大小',
-        type: FormType.NUMBER
-      },
-      {
-        key: 'fontWeight',
-        label: '字体宽度',
-        type: FormType.FONT_WEIGHT
-      },
-      {
-        key: 'fontFamily',
-        label: '字体',
-        type: FormType.FONT_STYLE
-      }
-    ]
-  }
-]
-
-const attrs: Array<PropsType> = [
-  {
-    name: '基础配置',
-    uid: 'base',
-    children: [
-      {
-        key: 'tagName',
-        label: '数据订阅Tag',
-        type: FormType.TEXT
-      },
-      {
-        key: 'history',
-        label: '最新数据',
-        type: FormType.TEXT
-      },
-      {
-        key: 'unit',
-        label: '单位',
-        type: FormType.TEXT
-      }
-    ]
-  }
-]
-
-const componentOptions: ComponentOptions = { component, style, attrs }
-export default componentOptions
+export default SubTextComponent

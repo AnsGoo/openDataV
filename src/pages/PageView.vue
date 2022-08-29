@@ -8,22 +8,18 @@
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, computed } from 'vue'
 import { getUIComponents } from '@/api/pages'
-import type { ComponentInfo } from '@/types/component'
 import { useRoute, useRouter } from 'vue-router'
 import { filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import { eventBus } from '@/bus/useEventBus'
 import { LayoutData } from '@/types/apiTypes'
+import { BaseComponent } from '@/resource/models'
 
-const websockets: WebSocket[] = []
-
-const componentData = ref<Array<ComponentInfo>>([])
+const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({
   width: 0,
   height: 0,
   scale: 0,
-  dataWs: '',
-  image: (import.meta.env.VITE_BACKGROUND as string) || '/images/bg.png'
+  image: import.meta.env.VITE_BACKGROUND as string
 })
 const bgStyle = computed<Recordable<string>>(() => {
   const style = {
@@ -55,9 +51,6 @@ const setPageData = (data: LayoutData): void => {
   if (data.canvasData) {
     componentData.value = data.canvasData
   }
-  if (canvasStyle.value.dataWs) {
-    websockets.push(initWebsocket('actual', canvasStyle.value.dataWs))
-  }
   setScale()
 }
 
@@ -68,29 +61,7 @@ onMounted(async () => {
   window.addEventListener('resize', setScale)
 })
 
-const initWebsocket = (key: string, url: string): WebSocket => {
-  const ws = new WebSocket(url)
-  ws.onopen = () => {
-    console.log('websocket连接成功')
-  }
-
-  ws.onclose = () => {
-    console.log('websocket连接被关闭')
-  }
-
-  ws.onmessage = (ev) => {
-    const data = JSON.parse(ev.data)
-    eventBus.emit(key, data)
-  }
-
-  return ws
-}
-
 onUnmounted(() => {
-  websockets.forEach((ws) => {
-    console.log('关闭websocket')
-    ws.close()
-  })
   window.removeEventListener('resize', setScale)
 })
 
@@ -105,9 +76,7 @@ const setScale = () => {
 </script>
 
 <style scoped lang="less">
-@layer components {
-  .bg {
-    @apply w-screen h-screen;
-  }
+.bg {
+  @apply w-screen h-screen;
 }
 </style>

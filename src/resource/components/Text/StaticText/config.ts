@@ -1,88 +1,89 @@
 import { ComponentGroup, FormType } from '@/enum'
-import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
-import type { StaticText } from './type'
-import { NDatePicker } from 'naive-ui'
+import type { PropsType } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
-const component: ComponentConfig<StaticText> = {
-  component: 'StaticText',
-  group: ComponentGroup.TEXT,
-  label: '静态文本',
-  propValue: {
-    type: FormType.TEXT,
-    text: '自定义文本'
-  },
-  icon: 'wenben',
-  style: {
-    width: 150,
-    height: 20,
-    color: '#1E90FF',
-    fontSize: 20,
-    fontWeight: 100,
-    fontFamily: 'Arial'
+export const componentName = 'StaticText'
+export class StaticTextComponent extends BaseComponent {
+  constructor(id?: string, name?: string, icon?: string) {
+    super({
+      component: componentName,
+      group: ComponentGroup.TEXT,
+      name: name ? name : '静态文本',
+      id,
+      width: 150,
+      height: 20,
+      icon
+    })
   }
+
+  _prop: PropsType[] = [
+    {
+      label: '基础配置',
+      prop: 'base',
+      children: [
+        {
+          prop: 'type',
+          label: '文本类型',
+          type: FormType.SELECT,
+          componentOptions: {
+            defaultValue: 'text',
+            options: [
+              { value: 'text', label: '文本' },
+              { value: 'symbol', label: '符号' }
+            ]
+          }
+        },
+        {
+          prop: 'text',
+          label: '自定义文本',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: 'OpenDataV'
+          }
+        }
+      ]
+    }
+  ]
+  _style: PropsType[] = [
+    {
+      label: '字体设置',
+      prop: 'font',
+      children: [
+        {
+          prop: 'color',
+          label: '颜色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#1E90FF'
+          }
+        },
+        {
+          prop: 'fontSize',
+          label: '字体大小',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 20
+          }
+        },
+        {
+          prop: 'fontWeight',
+          label: '字体宽度',
+          type: FormType.FONT_WEIGHT,
+          componentOptions: {
+            defaultValue: 200
+          }
+        },
+        {
+          prop: 'fontFamily',
+          label: '字体',
+          type: FormType.FONT_STYLE,
+          componentOptions: {
+            defaultValue: 'Arial'
+          }
+        }
+      ]
+    }
+  ]
 }
 
-const style: Array<PropsType> = [
-  {
-    name: '字体设置',
-    uid: 'background',
-    children: [
-      {
-        key: 'color',
-        label: '颜色',
-        type: FormType.COLOR
-      },
-      {
-        key: 'fontSize',
-        label: '字体大小',
-        type: FormType.NUMBER
-      },
-      {
-        key: 'fontWeight',
-        label: '字体宽度',
-        type: FormType.FONT_WEIGHT
-      },
-      {
-        key: 'fontFamily',
-        label: '字体',
-        type: FormType.FONT_STYLE
-      }
-    ]
-  }
-]
-
-const attrs: Array<PropsType> = [
-  {
-    name: '基础配置',
-    uid: 'base',
-    children: [
-      {
-        key: 'type',
-        label: '文本类型',
-        type: FormType.SELECT,
-        componentOptions: {
-          options: [
-            { value: 'text', label: '文本' },
-            { value: 'symbol', label: '符号' }
-          ]
-        }
-      },
-      {
-        key: 'text',
-        label: '自定义文本',
-        type: FormType.TEXT
-      },
-      {
-        key: 'date',
-        label: '测试组件',
-        type: FormType.CUSTOM,
-        componentOptions: {
-          componentType: NDatePicker
-        }
-      }
-    ]
-  }
-]
-
-const componentOptions: ComponentOptions = { component, style, attrs }
-export default componentOptions
+export default StaticTextComponent

@@ -1,4 +1,6 @@
-export interface StaticText {
-  text: string
-  type: 'text' | 'symbol'
+export interface StaticTextType {
+  base: {
+    text: string
+    type: 'text' | 'symbol'
+  }
 }

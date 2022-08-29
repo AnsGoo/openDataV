@@ -17,7 +17,8 @@ export interface IcrumbsSetting {
   show: boolean
 }
 
-interface ProjectSettingState {
+export interface ProjectSettingState {
+  appTheme: string
   navTheme: string //导航风格
   headerSetting: IheaderSetting //顶部设置
   showFooter: boolean //页脚
@@ -25,12 +26,15 @@ interface ProjectSettingState {
   crumbsSetting: IcrumbsSetting //面包屑
   isPageAnimate: boolean //是否开启路由动画
   pageAnimateType: string //路由动画类型
+  darkTheme: boolean
 }
 
 const useProjectSettingStore = defineStore({
   id: 'app-project-setting',
   state: (): ProjectSettingState => ({
+    appTheme: '#2d8cf0',
     navTheme: 'dark',
+    darkTheme: false,
     headerSetting: {
       //固定顶部
       fixed: true,
@@ -56,31 +60,19 @@ const useProjectSettingStore = defineStore({
     pageAnimateType: 'zoom-fade'
   }),
   getters: {
-    getNavTheme(): string {
-      return this.navTheme
-    },
-    getHeaderSetting(): IheaderSetting {
-      return this.headerSetting
-    },
-    getShowFooter(): boolean {
-      return this.showFooter
-    },
-    getMenuSetting(): ImenuSetting {
-      return this.menuSetting
-    },
-    getIsPageAnimate(): boolean {
-      return this.isPageAnimate
-    },
-    getPageAnimateType(): string {
-      return this.pageAnimateType
-    },
-    getCrumbsSetting(): IcrumbsSetting {
-      return this.crumbsSetting
+    iconColor(): string {
+      return this.darkTheme ? '#eee' : '#333'
     }
   },
   actions: {
     setNavTheme(value: string): void {
       this.navTheme = value
+    },
+    setAppTheme(value: string): void {
+      this.appTheme = value
+    },
+    setDarkTheme(isDark: boolean): void {
+      this.darkTheme = isDark
     }
   }
 })
