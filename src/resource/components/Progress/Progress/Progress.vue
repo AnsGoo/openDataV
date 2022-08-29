@@ -55,16 +55,17 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { http } from '@/utils/http'
-
-import type { TagType } from '@/types/wsTypes'
+import { useProp } from '@/resource/hooks'
 import { uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus/useEventBus'
 import type { Progress } from './type'
+import { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
-  componentId: string
-  propValue: Progress
+  component: BaseComponent
 }>()
+
+const { propValue } = useProp<Progress>(props.component)
 
 const width = ref<number>(150)
 const height = ref<number>(150)
@@ -80,11 +81,11 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const handler = (event) => {
-  const item: TagType = event as TagType
+  const item: Recordable<any> = event as Recordable<any>
 
-  if (props.propValue.datatag && item.TagName === props.propValue.datatag) {
+  if (propValue.data.datatag && item.TagName === propValue.data.datatag) {
     dataValue.value = Number(
-      ((Number(item.TagValue) * 100) / Number(props.propValue.maxValue)).toFixed(2)
+      ((Number(item.TagValue) * 100) / Number(propValue.data.maxValue)).toFixed(2)
     )
   }
 }
@@ -94,15 +95,15 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  if (props.propValue.history) {
+  if (propValue.data.history) {
     try {
       const resp = await http.post({
-        url: props.propValue.history,
-        data: [props.propValue.datatag]
+        url: propValue.data.history,
+        data: [propValue.data.datatag]
       })
       if (resp.ErrorCode === 200) {
         dataValue.value =
-          ((Number(resp.Results[0].TagValue) || 0) * 100) / Number(props.propValue.maxValue)
+          ((Number(resp.Results[0].TagValue) || 0) * 100) / Number(propValue.data.maxValue)
       }
     } catch (err: any) {
       console.log(err.message || err)
@@ -112,16 +113,16 @@ const initData = async () => {
 
 const mergedConfig = computed(() => {
   return {
-    colors: [props.propValue.color1, props.propValue.color1], //['#3DE7C9', '#00BAFF'],
-    borderWidth: Number(props.propValue.borderWidth),
-    borderGap: Number(props.propValue.borderGap),
-    lineDash: props.propValue.lineDash,
-    gapWeight: props.propValue.gapWeight,
-    textColor: props.propValue.textColor,
-    fontSize: Number(props.propValue.fontSize),
-    borderRadius: Number(props.propValue.borderRadius),
-    localGradient: Boolean(props.propValue.localGradient),
-    formatter: props.propValue.formatter
+    colors: [propValue.attr.color1, propValue.attr.color2], //['#3DE7C9', '#00BAFF'],
+    borderWidth: Number(propValue.attr.borderWidth),
+    borderGap: Number(propValue.attr.borderGap),
+    lineDash: propValue.attr.lineDash,
+    gapWeight: propValue.attr.gapWeight,
+    textColor: propValue.attr.textColor,
+    fontSize: Number(propValue.attr.fontSize),
+    borderRadius: Number(propValue.attr.borderRadius),
+    localGradient: Boolean(propValue.attr.localGradient),
+    formatter: propValue.attr.formatter
   }
 })
 
@@ -207,18 +208,9 @@ const details = computed(() => {
 })
 
 const textSize = computed(() => {
-  return { fontSize: (props.propValue.fontSize || 12) + 'px' }
+  return { fontSize: (propValue.attr.fontSize || 12) + 'px' }
 })
 
-const handerPropValue = (event: any) => {
-  if (event.key === 'maxValue') {
-    dataValue.value = Number(
-      ((Number(event.value) * 100) / Number(props.propValue.maxValue)).toFixed(2)
-    )
-  }
-}
-
-useEventBus(props.componentId, handerPropValue)
 useEventBus('actual', handler)
 </script>
 

@@ -4,21 +4,20 @@
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
     :name="name"
   />
 </template>
 
 <script lang="ts" setup>
-import type { ComponentInfo } from '@/types/component'
-
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { BaseComponent } from '@/resource/models'
 
 const props = withDefaults(
   defineProps<{
-    component: ComponentInfo
+    component: BaseComponent
     index: string
     activeKey?: string
     mode?: string
@@ -52,9 +51,16 @@ const handleDrop = (event: DragEvent, index: string) => {
   event.stopPropagation()
   const compomentIndex: string = event.dataTransfer?.getData('compomentIndex') as string
   const toIndex: string = calcDragIndex(compomentIndex, index)
-  const compoment: ComponentInfo | undefined = basicStore.cutComponent(compomentIndex)
+  const indexs: number[] = compomentIndex.split('-').map((i) => Number(i))
+  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  const compoment: Optional<BaseComponent> = basicStore.cutComponent(
+    indexs[indexs.length - 1],
+    cutComponent?.parent
+  )
   if (compoment && toIndex) {
-    basicStore.insertComponent(toIndex, compoment)
+    const toIndexs: number[] = compomentIndex.split('-').map((i) => Number(i))
+    const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
+    basicStore.insertComponent(toIndexs[toIndexs.length - 1], compoment, insertComponent)
     emits('select', index)
   }
 }
@@ -83,6 +89,5 @@ const calcDragIndex = (fromIndex: string, toIndex: string): string => {
 <style lang="less" scoped>
 .iconfont {
   @apply mr-1 text-xl;
-  color: rgba(30, 144, 255, 1);
 }
 </style>

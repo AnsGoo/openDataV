@@ -1,54 +1,53 @@
 import { ComponentGroup, FormType } from '@/enum'
-import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
-import type { BorderBox5 } from './type'
+import type { PropsType } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
-const component: ComponentConfig<BorderBox5> = {
-  component: 'BorderBox5',
-  group: ComponentGroup.BORDER,
-  label: '05号边框',
-  propValue: {
-    colorLeft: '#11eefd',
-    colorRight: '#0078d2',
-    backgroundColor: '#00000000',
-    reverse: false
-  },
-  icon: 'line',
-  style: {
-    width: 200,
-    height: 200
+export const componentName = 'BorderBox5'
+export class BorderBoxComponent extends BaseComponent {
+  constructor(id?: string, name?: string) {
+    super({
+      component: componentName,
+      group: ComponentGroup.BORDER,
+      name: name ? name : '5#边框',
+      id,
+      width: 200,
+      height: 200
+    })
   }
+
+  _prop: PropsType[] = [
+    {
+      label: '基础配置',
+      prop: 'base',
+      children: [
+        {
+          prop: 'colorLeft',
+          label: '边框颜色1',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#11eefd'
+          }
+        },
+        {
+          prop: 'colorRight',
+          label: '边框颜色2',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#0078d2'
+          }
+        },
+        {
+          prop: 'backgroundColor',
+          label: '底色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#00000000'
+          }
+        }
+      ]
+    }
+  ]
+  _style: PropsType[] = []
 }
 
-const style: Array<PropsType> = []
-
-const attrs: Array<PropsType> = [
-  {
-    name: '边框色彩',
-    uid: 'display',
-    children: [
-      {
-        key: 'colorLeft',
-        label: '边框颜色1',
-        type: FormType.COLOR
-      },
-      {
-        key: 'colorRight',
-        label: '边框颜色2',
-        type: FormType.COLOR
-      },
-      {
-        key: 'backgroundColor',
-        label: '底色',
-        type: FormType.COLOR
-      },
-      {
-        key: 'reverse',
-        label: '反转',
-        type: FormType.SWITCH
-      }
-    ]
-  }
-]
-
-const componentOptions: ComponentOptions = { component, style, attrs }
-export default componentOptions
+export default BorderBoxComponent

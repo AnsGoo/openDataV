@@ -7,33 +7,28 @@
 <script setup lang="ts">
 import { ComponentGroupList } from '@/enum'
 import { componentList } from '@/designer/load'
-import type { ComponentInfo } from '@/types/component'
 import { computed, h } from 'vue'
 import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import ComponentItem from './ComponentItem.vue'
 import type { GroupType } from '@/enum'
 import { IconPark } from '@/plugins/icon'
+import { BaseComponent } from '@/resource/models'
 
 const menuOptions = computed<MenuOption[]>(() => {
-  const groups: { group: string; component: ComponentInfo[] } | {} = {}
-  Object.keys(componentList)
-    .filter((key) => {
-      if (componentList[key].component.show !== false) {
-        return componentList[key]
-      }
-    })
-    .forEach((key) => {
-      const group = componentList[key].component.group
-      if (!group) {
-        return
-      }
+  const groups: { group: string; component: BaseComponent[] } | {} = {}
+  Object.keys(componentList).forEach((key) => {
+    const component: BaseComponent = new componentList[key]()
+    const group = component.group
+    if (!group || !component.show) {
+      return
+    }
 
-      if (!groups[group]) {
-        groups[group] = []
-      }
-      groups[group].push(componentList[key].component)
-    })
+    if (!groups[group]) {
+      groups[group] = []
+    }
+    groups[group].push(component)
+  })
   const menus: MenuOption[] = []
   ComponentGroupList.forEach((item: GroupType) => {
     menus.push({
@@ -48,7 +43,7 @@ const menuOptions = computed<MenuOption[]>(() => {
           label: () =>
             h(ComponentItem, {
               component: el.component,
-              name: el.label,
+              name: el.name,
               ondragstart: handleDragStart
             }),
           key: el.component

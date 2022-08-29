@@ -2,7 +2,7 @@
   <!-- 线的显示 -->
   <div
     v-show="showLine"
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
     class="line"
     :style="[offset, borderCursor]"
     @mousedown="handleDown"

@@ -1,15 +1,10 @@
-import type { ComponentInfo, DOMRectStyle } from '@/types/component'
 import { StoreComponentData } from '@/utils/db'
-
-export interface Component {
-  style: Recordable<string>
-}
+import { BaseComponent } from '@/resource/models'
 
 export interface CanvasStyleData {
   width: number
   height: number
   scale: number
-  dataWs: string
   image: string
 }
 
@@ -18,11 +13,13 @@ export interface EditData {
   thumbnail: string
   editMode: string
   canvasStyleData: CanvasStyleData
+  componentData: BaseComponent[]
   activeIndex?: string
-  componentData: Array<ComponentInfo>
-  curComponent: ComponentInfo | undefined
+  curComponent: Optional<BaseComponent>
+  isClickComponent: boolean
   isShowEm: boolean
   ids: Set<string>
+  benchmarkComponent: Optional<BaseComponent>
 }
 
 export interface MenuStatus {
@@ -32,7 +29,7 @@ export interface MenuStatus {
 }
 
 export interface CopyItem {
-  copyData: any | undefined
+  copyData: Optional<BaseComponent>
   isCut: boolean
 }
 
@@ -40,23 +37,16 @@ export interface SnapData {
   snapshotMax: number
   latestSnapshot?: StoreComponentData
   timeHandler?: TimeoutHandle
+  cursor: number
 }
 
 export interface AreaData {
-  style: DOMRectStyle
-  components: Array<ComponentInfo>
+  style: Postion
+  components: BaseComponent[]
 }
 
 export interface UserInfo {
   username: string
   token: string | undefined
   permissions: string[]
-}
-
-export interface Postion {
-  width?: number
-  height?: number
-  left?: number
-  top?: number
-  rotate?: number
 }

@@ -1,19 +1,21 @@
 <template>
-  <span v-resize="resizeHandler">{{ customeText }}{{ propValue.unit }}</span>
+  <span v-resize="resizeHandler">{{ customeText }}{{ propValue.base.unit }}</span>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useEventBus } from '@/bus/useEventBus'
-
-import type { TagType } from '@/types/wsTypes'
 import { http } from '@/utils/http'
-import type { SubText } from './type'
+import type { SubTextType } from './type'
+import { useProp } from '@/resource/hooks'
+import SubTextComponent from './config'
 
 const props = defineProps<{
   componentId: string
-  propValue: SubText
+  component: SubTextComponent
 }>()
+
+const { propValue } = useProp<SubTextType>(props.component)
 const customeText = ref<string>('0')
 
 const lineHeight = ref<string>('20px')
@@ -24,24 +26,25 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const dataHandler = (event) => {
-  const item: TagType = event as TagType
-  if (props.propValue.tagName && item.TagName === props.propValue.tagName) {
+  const item: Recordable = event as Recordable
+  if (propValue.base.tagName && item.TagName === propValue.base.tagName) {
     const value = item.TagValue
     customeText.value = value
   }
 }
 onMounted(async () => {
   try {
-    const res = await http.post({ url: props.propValue.history, data: [props.propValue.tagName] })
-    if (res.ErrorCode === 200) {
-      dataHandler(res.Results[0])
+    const queryParems = { tagName: propValue.base.tagName }
+    const res = await http.get({ url: propValue.base.url, params: queryParems })
+    if (Object.keys(res).includes(propValue.base.tagName)) {
+      dataHandler(res[propValue.base.tagName])
     }
   } catch (error: any) {
     console.log(error?.message)
   }
 })
 
-useEventBus('actual', dataHandler)
+useEventBus('globalData', dataHandler)
 </script>
 
 <style lang="less" scoped>

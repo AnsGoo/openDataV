@@ -1,48 +1,53 @@
 import { ComponentGroup, FormType } from '@/enum'
-import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
-import type { BorderBox6 } from './type'
+import type { PropsType } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
-const component: ComponentConfig<BorderBox6> = {
-  component: 'BorderBox6',
-  group: ComponentGroup.BORDER,
-  label: '06号边框',
-  propValue: {
-    colorLeft: '#11eefd',
-    colorRight: '#0078d2',
-    backgroundColor: '#00000000'
-  },
-  icon: 'line',
-  style: {
-    width: 200,
-    height: 200
+export const componentName = 'BorderBox6'
+export class BorderBoxComponent extends BaseComponent {
+  constructor(id?: string, name?: string) {
+    super({
+      component: componentName,
+      group: ComponentGroup.BORDER,
+      name: name ? name : '6#边框',
+      id,
+      width: 200,
+      height: 200
+    })
   }
+
+  _prop: PropsType[] = [
+    {
+      label: '基础配置',
+      prop: 'base',
+      children: [
+        {
+          prop: 'colorLeft',
+          label: '边框颜色1',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#1a98fc'
+          }
+        },
+        {
+          prop: 'colorRight',
+          label: '边框颜色2',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#2cf7fe'
+          }
+        },
+        {
+          prop: 'backgroundColor',
+          label: '底色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#00000000'
+          }
+        }
+      ]
+    }
+  ]
+  _style: PropsType[] = []
 }
 
-const style: Array<PropsType> = []
-
-const attrs: Array<PropsType> = [
-  {
-    name: '边框色彩',
-    uid: 'display',
-    children: [
-      {
-        key: 'colorLeft',
-        label: '边框颜色1',
-        type: FormType.COLOR
-      },
-      {
-        key: 'colorRight',
-        label: '边框颜色2',
-        type: FormType.COLOR
-      },
-      {
-        key: 'backgroundColor',
-        label: '底色',
-        type: FormType.COLOR
-      }
-    ]
-  }
-]
-
-const componentOptions: ComponentOptions = { component, style, attrs }
-export default componentOptions
+export default BorderBoxComponent

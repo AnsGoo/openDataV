@@ -1,5 +1,7 @@
-export interface SubText {
-  tagName: string
-  history: string
-  unit: string
+export interface SubTextType {
+  base: {
+    tagName: string
+    url: string
+    unit: string
+  }
 }

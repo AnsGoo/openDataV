@@ -1,13 +1,8 @@
-import type {
-  ComponentInfo,
-  ComponentStyle,
-  DOMRectStyle,
-  GroupStyle,
-  Rect
-} from '@/types/component'
+import type { DOMRectStyle, GroupStyle } from '@/types/component'
 import { message } from '@/utils/message'
-import type { Vector } from '@/types/common'
+import type { Vector, Position } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
+import { BaseComponent } from '@/resource/models'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))
@@ -67,7 +62,7 @@ export const getGroupStyle = (style: Recordable<any>) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getComponentStyle = (component: ComponentInfo) => {
+export const getComponentStyle = (component: BaseComponent) => {
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
@@ -85,7 +80,7 @@ export const getComponentStyle = (component: ComponentInfo) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getComponentShapeStyle = (component: ComponentInfo) => {
+export const getComponentShapeStyle = (component: BaseComponent) => {
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
@@ -103,7 +98,7 @@ export const getComponentShapeStyle = (component: ComponentInfo) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getInnerComponentShapeStyle = (component: ComponentInfo) => {
+export const getInnerComponentShapeStyle = (component: BaseComponent) => {
   const style = cloneDeep(component.style)
   return {
     ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
@@ -117,24 +112,13 @@ export const getInnerComponentShapeStyle = (component: ComponentInfo) => {
  * @param style 组件在画布中的位置
  * @returns 组件坐标
  */
-export function calcComponentAxis(style: DOMRectStyle): Rect {
-  // 这里很重要，切记不能删除，将属性复制一份，否则会影响原始的属性值
-  style = { ...style }
-
-  const {
-    width,
-    height,
-    left,
-    top,
-    rotate
-  }: { width: number; height: number; left: number; top: number; rotate: number } = style
-
-  const leftUpPoint: Vector = { x: left, y: top }
-  const rightUpPoint: Vector = { x: left + width, y: top }
-  const rightDownPoint: Vector = { x: left + width, y: top + height }
-  const leftDownPoint: Vector = { x: left, y: top + height }
-  const center: Vector = { x: left + width / 2, y: top + height / 2 }
-  const realRotate = mod360(rotate)
+export function calcComponentAxis(style: DOMRectStyle): Position {
+  const leftUpPoint: Vector = { x: style.left, y: style.top }
+  const rightUpPoint: Vector = { x: style.left + style.width, y: style.top }
+  const rightDownPoint: Vector = { x: style.left + style.width, y: style.top + style.height }
+  const leftDownPoint: Vector = { x: style.left, y: style.top + style.height }
+  const center: Vector = { x: style.left + style.width / 2, y: style.top + style.height / 2 }
+  const realRotate = mod360(style.rotate)
   if (realRotate != 0) {
     const alu: Vector = rotatePoint(leftUpPoint, center, realRotate)
     const aru: Vector = rotatePoint(rightUpPoint, center, realRotate)
@@ -146,7 +130,12 @@ export function calcComponentAxis(style: DOMRectStyle): Rect {
     const bottom = Math.max(alu.y, aru.y, ard.y, ald.y)
     return { left, right, top, bottom }
   } else {
-    return { top, left, right: left + width, bottom: top + height }
+    return {
+      top: style.top,
+      left: style.left,
+      right: style.left + style.width,
+      bottom: style.top + style.height
+    }
   }
 }
 
@@ -209,7 +198,7 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-export function decomposeComponent(component: ComponentInfo, parentStyle: ComponentStyle) {
+export function decomposeComponent(component: BaseComponent, parentStyle: DOMRectStyle) {
   // 获取元素的中心点坐标
   const groupStyle: GroupStyle = component.groupStyle!
   const center: Vector = {
@@ -231,30 +220,26 @@ export function decomposeComponent(component: ComponentInfo, parentStyle: Compon
     }
 
     const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-    component.style = {
-      ...component.style,
-      top: Math.round(afterPoint.y - height / 2),
-      left: Math.round(afterPoint.x - width / 2),
-      height: Math.round(height),
-      width: Math.round(width),
-      rotate
-    }
+    component.change('top', Math.round(afterPoint.y - height / 2))
+    component.change('left', Math.round(afterPoint.x - width / 2))
+    component.change('height', Math.round(height))
+    component.change('width', Math.round(width))
+    component.change('rotate', rotate)
     component.groupStyle = undefined
   }
 }
 
-export function createGroupStyle(groupComponent: ComponentInfo) {
-  const parentStyle: ComponentStyle = groupComponent.style
+export function createGroupStyle(groupComponent: BaseComponent) {
+  const parentStyle: DOMRectStyle = groupComponent.positionStyle
   groupComponent.subComponents!.forEach((component) => {
     // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
     // 如果已存在 component.groupStyle，说明已经计算过一次了。不需要再次计算
-    const style = { ...component.style } as DOMRectStyle
     component.groupStyle = {
-      gleft: toPercent((style.left - parentStyle.left) / parentStyle.width),
-      gtop: toPercent((style.top - parentStyle.top) / parentStyle.height),
-      gwidth: toPercent(style.width / parentStyle.width),
-      gheight: toPercent(style.height / parentStyle.height),
-      grotate: style.rotate
+      gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
+      gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),
+      gwidth: toPercent(component.positionStyle.width / parentStyle.width),
+      gheight: toPercent(component.positionStyle.height / parentStyle.height),
+      grotate: component.positionStyle.rotate
     }
   })
 }
@@ -262,15 +247,15 @@ export function createGroupStyle(groupComponent: ComponentInfo) {
 /**
  * 计算组合组件的位置信息
  */
-export function calcComponentsRect(components: ComponentInfo[]) {
+export function calcComponentsRect(components: BaseComponent[]) {
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
   const rightSet: Set<number> = new Set()
   const bottomSet: Set<number> = new Set()
   components.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const style: DOMRectStyle = component.style
-    const componentRect: Rect = calcComponentAxis(style)
+    const style: DOMRectStyle = component.positionStyle
+    const componentRect: Position = calcComponentAxis(style)
     leftSet.add(componentRect.left)
     topSet.add(componentRect.top)
     rightSet.add(componentRect.right)
@@ -310,8 +295,14 @@ export const checkDiff = (obj1: Recordable<any>, obj2: Recordable<any>) => {
 }
 
 // 清除对象属性
-export const cleanObjectProp = (obj) => {
-  Object.keys(obj).forEach((key) => delete obj[key])
+export const cleanObjectProp = (obj: Recordable<any>, excludes: string[] = []) => {
+  Object.keys(obj).forEach((key) => {
+    if (excludes.includes(key)) {
+      return
+    }
+
+    delete obj[key]
+  })
 }
 
 // 生成随机字符串
@@ -420,7 +411,7 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
     case 'scale':
       return { transform: `${key}(${(value[0], value[1])}deg)` }
     case 'backgroundImage':
-      return { backgroundImage: `url(${value})` }
+      return { backgroundImage: value ? `url(${value})` : null }
     case 'linearGradient':
       return { background: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})` }
     default:
@@ -446,24 +437,24 @@ export const pageScale = (rootEl: HTMLDivElement, width: number, height: number)
  * @param components
  * @returns
  */
-export const getComponentRealRect = (components: ComponentInfo[]) => {
+export const getComponentRealRect = (components: BaseComponent[]) => {
   const maxRect: {
     right: number
     left: number
     top: number
     bottom: number
     center: Vector
-    component: ComponentInfo
+    component: BaseComponent
   }[] = []
 
   const xAxisSet: Array<number> = []
   const yAxisSet: Array<number> = []
   components.forEach((ele) => {
-    const left: number = ele.style.left! as number
-    const width: number = ele.style.width! as number
-    const top: number = ele.style.top! as number
-    const height: number = ele.style.height! as number
-    const rotate: number = ele.style.rotate! as number
+    const left: number = ele.positionStyle.left
+    const width: number = ele.positionStyle.width
+    const top: number = ele.positionStyle.top
+    const height: number = ele.positionStyle.height
+    const rotate = Number(ele.positionStyle.rotate)
     const leftTop: Vector = { x: left, y: top }
     const rightTop: Vector = { x: left + width, y: top }
     const rightbottom: Vector = { x: left + width, y: top + height }

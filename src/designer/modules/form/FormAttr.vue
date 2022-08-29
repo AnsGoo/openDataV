@@ -1,14 +1,101 @@
 <template>
   <n-form size="small" @submit.prevent label-placement="left" label-align="left">
-    <FormItem :children="children" :data="formData" :ukey="ukey" @change="changed" />
+    <n-form-item
+      v-for="{ prop, label, type, componentOptions } in children"
+      :key="`${ukey}${prop}`"
+      :label="label"
+    >
+      <NColorPicker
+        v-if="type === FormType.COLOR"
+        v-model:value="formData[prop]"
+        :swatches="GlobalColorSwatches"
+        :modes="['hex', 'rgb', 'hsl']"
+        @update:value="changed($event, prop)"
+      />
+      <n-select
+        v-else-if="type === FormType.SELECT"
+        v-model="formData[prop]"
+        :placeholder="label"
+        @update:value="changed($event, prop)"
+        :options="componentOptions?.options || []"
+      />
+      <n-radio-group
+        v-else-if="type === FormType.RADIO"
+        v-model:value="formData[prop]"
+        :placeholder="label"
+        @update:value="changed($event, prop)"
+      >
+        <n-radio
+          v-for="item in componentOptions?.options || []"
+          :label="item.value"
+          :key="item.value"
+        >
+          {{ item.label }}
+        </n-radio>
+      </n-radio-group>
+      <n-input-number
+        v-else-if="type === FormType.NUMBER"
+        v-model:value="formData[prop]"
+        @update:value="changed($event, prop)"
+      />
+      <n-switch
+        v-else-if="type === FormType.SWITCH"
+        v-model:value="formData[prop]"
+        @update:value="changed($event, prop)"
+      />
+      <FontStyle
+        v-else-if="type === FormType.FONT_STYLE"
+        v-model:value="formData[prop]"
+        @change="changed($event, prop)"
+      />
+      <FontWeight
+        v-else-if="type === FormType.FONT_WEIGHT"
+        v-model:value="formData[prop]"
+        @change="changed($event, prop)"
+      />
+      <LinearGradient
+        v-else-if="type === FormType.LINEAR_GRADIENT"
+        v-model:value="formData[prop]"
+        @change="changed($event, prop)"
+      />
+      <CustomRender
+        v-else-if="type === FormType.CUSTOM"
+        v-model:value="formData[prop]"
+        @change="changed($event, prop)"
+        :component="(componentOptions as CustomFormSchema).componentType"
+        :args="(componentOptions as CustomFormSchema).args"
+      />
+      <n-input
+        v-else
+        clearable
+        v-model:value="formData[prop]"
+        @update:value="changed($event, prop)"
+        :readonly="componentOptions.editable === false ? true : false"
+        :disabled="componentOptions.disabled"
+      />
+    </n-form-item>
   </n-form>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import type { AttrType } from '@/types/component'
-import FormItem from './FormItem.vue'
-import { NForm } from 'naive-ui'
+import FontStyle from '../fontSytle'
+import FontWeight from '../fontWeight'
+import LinearGradient from '../linearGradient'
+import CustomRender from './utils/render'
+import { FormType, GlobalColorSwatches } from '@/enum'
+import type { AttrType, CustomFormSchema } from '@/types/component'
+import {
+  NForm,
+  NFormItem,
+  NInput,
+  NRadioGroup,
+  NRadio,
+  NSelect,
+  NSwitch,
+  NInputNumber,
+  NColorPicker
+} from 'naive-ui'
 
 const props = defineProps<{
   data: Recordable

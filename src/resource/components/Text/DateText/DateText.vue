@@ -5,12 +5,14 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import dayjs from 'dayjs'
-import type { DateText } from './type'
+import { DateTextComponent } from './config'
+import { useProp } from '@/resource/hooks'
+import { DateText } from './type'
 
 const props = defineProps<{
-  componentId: string
-  propValue: DateText
+  component: DateTextComponent
 }>()
+const { propValue } = useProp<DateText>(props.component)
 const lineHeight = ref<string>('20px')
 const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]
@@ -18,10 +20,10 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
   lineHeight.value = `${height}px`
 }
 let intervalId: IntervalHandle
-const customeText = ref<string>(dayjs().format(props.propValue.format || 'YYYY-MM-DD HH:mm:ss'))
+const customeText = ref<string>(dayjs().format(propValue.base.format || 'YYYY-MM-DD HH:mm:ss'))
 
 const updateData = () => {
-  const newformat: string = props.propValue.format
+  const newformat: string = propValue.base.format
   customeText.value = dayjs().format(newformat || 'YYYY-MM-DD HH:mm:ss')
 }
 onMounted(() => {

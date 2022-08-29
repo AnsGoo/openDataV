@@ -1,40 +1,35 @@
 <template>
   <div class="group" v-if="!editMode">
-    <template v-for="item in subComponents" :key="item.id">
+    <template v-for="item in component.subComponents" :key="item.id">
       <component
         class="component"
         :is="item.component"
         :style="getComponentStyle(item)"
-        :propValue="item.propValue"
+        :component="item"
         :id="'component' + item.id"
-        :componentId="item.id"
-        :subComponents="item.subComponents"
         v-if="isShow(item.display)"
       />
     </template>
   </div>
-  <div class="group" v-else>
-    <template v-for="(item, i) in subComponents" :key="item.id">
+  <div class="group" :class="{ dotted: isActive }" v-else>
+    <template v-for="(item, i) in component.subComponents" :key="item.id">
       <Shape
         :id="'shape' + item.id"
-        :defaultStyle="item.style"
+        :defaultStyle="(item.style as any)"
         :style="getShapeStyle(item)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
-        :index="`${index}-${i.toString()}`"
-        :class="{ lock: item.isLock }"
+        :class="{ lock: item.locked }"
         :isInner="true"
+        :index="i"
         v-if="isShow(item.display)"
       >
         <component
           class="component"
           :is="item.component"
           :style="getInnerComponentShapeStyle(item)"
-          :propValue="item.propValue"
-          :componentId="item.id"
+          :component="item"
           :id="'component' + item.id"
-          :subComponents="item.subComponents"
-          :index="`${index}-${i.toString()}`"
         />
       </Shape>
     </template>
@@ -42,29 +37,36 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentInfo } from '@/types/component'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
 import Shape from '@/designer/Editor/Shape.vue'
 import { computed } from 'vue'
+import { BaseComponent } from '@/resource/models'
+
+const props = defineProps<{
+  component: BaseComponent
+}>()
+
 const editMode = computed<boolean>(() => basicStore.isEditMode)
 const basicStore = useBasicStoreWithOut()
-withDefaults(
-  defineProps<{
-    componentId: string
-    subComponents: ComponentInfo[]
-    index: string
-  }>(),
-  {
-    subComponents: () => []
-  }
-)
 
 const curComponent = computed(() => basicStore.curComponent)
+const isActive = computed(() => {
+  let curComponent = basicStore.curComponent
+  while (curComponent) {
+    if (curComponent.parent?.id === props.component.id) {
+      return true
+    }
+    curComponent = curComponent.parent
+  }
+
+  return false
+})
+
 const isShow = (display: boolean): boolean => {
   return !(basicStore.isEditMode && display === false)
 }
-const getShapeStyle = (item: ComponentInfo) => {
+const getShapeStyle = (item: BaseComponent) => {
   if (item.groupStyle?.gheight) {
     return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {
@@ -85,5 +87,9 @@ const getShapeStyle = (item: ComponentInfo) => {
       position: absolute;
     }
   }
+}
+
+.dotted {
+  outline: 1px dotted #70c0ff;
 }
 </style>

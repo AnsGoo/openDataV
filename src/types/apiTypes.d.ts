@@ -1,9 +1,8 @@
 import type { CanvasStyleData } from '@/types/storeTypes'
-import type { ComponentInfo } from '@/types/component'
 
 export interface ComponentData {
   canvasStyle: CanvasStyleData
-  canvasData: ComponentInfo[]
+  canvasData: Record<string, any>[]
 }
 
 export interface LayoutData {
@@ -13,14 +12,9 @@ export interface LayoutData {
   author?: string
   createTime?: string
   isHome?: boolean
-  canvasData: ComponentInfo[]
+  canvasData: ComponentDataType[]
   canvasStyle: CanvasStyleData
   allowed?: string | null
 }
 
-export interface BasicFetchResult<T = any> {
-  ErrorCode?: number
-  Results: T
-  Message?: string
-  [key: string]: any
-}
+export type SimpleLayoutData = Omit<LayoutData, 'canvasStyle', 'canvasData'>
