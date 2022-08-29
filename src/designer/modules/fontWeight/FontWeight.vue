@@ -24,7 +24,7 @@ const props = withDefaults(
 
 const weight = ref<number>(props.value)
 const weights = reactive<{ label: string; value: number }[]>(SYS_FONT_WEIGHT)
-console.log(111, props.value)
+
 const emits = defineEmits<{
   (e: 'update:value', weight: number): void
   (e: 'change', weight: number): void
@@ -32,7 +32,6 @@ const emits = defineEmits<{
 
 const change = (val: number) => {
   weight.value = val
-  console.log(val)
   emits('update:value', weight.value)
   emits('change', weight.value)
 }

@@ -80,12 +80,7 @@ const props = defineProps<{
   component: BorderBoxComponent
 }>()
 
-const { propValue } = useProp<BorderBox>(
-  props.component,
-  (prop: string, key: string, value: any) => {
-    console.log(prop, key, value)
-  }
-)
+const { propValue } = useProp<BorderBox>(props.component)
 
 const width = ref<number>(150)
 const height = ref<number>(150)
