@@ -589,6 +589,10 @@ const keyDown = (e: KeyboardEvent): void => {
         return
     }
   }
+
+  if (props.info && e.key === 'Delete') {
+    deleteComponent()
+  }
 }
 
 const keyUp = (e: KeyboardEvent): void => {
