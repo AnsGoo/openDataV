@@ -36,7 +36,7 @@ const useComposeStore = defineStore({
     },
 
     /**
-     * 向画布中增加组件
+     * 向store 中增加组件
      * @param component 组件
      */
     appendComponent(component: BaseComponent): void {
