@@ -1,7 +1,7 @@
 <template>
   <n-select
     clearable
-    v-model="weight"
+    v-model:value="weight"
     placeholder="请选择字重"
     @update:value="change"
     :options="weights"
@@ -13,24 +13,24 @@ import { ref, reactive } from 'vue'
 import { SYS_FONT_WEIGHT } from '@/enum/font'
 import { NSelect } from 'naive-ui'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
-    value?: string
+    value?: number
   }>(),
   {
-    value: ''
+    value: 400
   }
 )
 
-const weight = ref<string>('')
+const weight = ref<number>(props.value)
 const weights = reactive<{ label: string; value: number }[]>(SYS_FONT_WEIGHT)
 
 const emits = defineEmits<{
-  (e: 'update:value', color: string): void
-  (e: 'change', color: string): void
+  (e: 'update:value', weight: number): void
+  (e: 'change', weight: number): void
 }>()
 
-const change = (val: string) => {
+const change = (val: number) => {
   weight.value = val
   emits('update:value', weight.value)
   emits('change', weight.value)
