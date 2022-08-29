@@ -26,7 +26,7 @@
     <n-tabs type="line" animated v-else justify-content="center">
       <n-tab-pane name="canvas" display-directive="show:lazy">
         <template #tab>
-          <IconPark name="canvas" />
+          <IconPark name="page" />
           <span v-show="!iscollapsed">画布</span>
         </template>
         <Canvas />
@@ -92,8 +92,7 @@ const menuOptions = computed<MenuOption[]>(() => {
         key: '1',
         icon: () =>
           h(IconPark, {
-            name: 'page',
-            onClick: () => collapsedTabPane('canvas')
+            name: 'page'
           })
       }
     ]

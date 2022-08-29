@@ -99,5 +99,10 @@ const calcDragIndex = (fromIndex: string, toIndex: string): string => {
 <style lang="less" scoped>
 .layer {
   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

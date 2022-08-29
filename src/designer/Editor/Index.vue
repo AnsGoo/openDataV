@@ -17,8 +17,7 @@
     <Ruler
       :width="canvasStyleData.width"
       :height="canvasStyleData.height"
-      :startY="0"
-      :startX="0"
+      :isShowReferLine="isShowReferLine"
     />
     <!--页面组件列表展示-->
     <template v-for="(item, index) in componentData" :key="item.id">
@@ -78,6 +77,7 @@ import { componentList } from '../load'
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
+const isShowReferLine = ref<boolean>(true)
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])

@@ -44,6 +44,7 @@ const useBasicStore = defineStore({
     componentData: [],
     activeIndex: undefined,
     curComponent: undefined,
+    isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined
@@ -84,6 +85,7 @@ const useBasicStore = defineStore({
     setClickComponentStatus(status: boolean): void {
       this.isClickComponent = status
     },
+
     setEditMode(mode: string): void {
       this.editMode = mode
     },
@@ -283,6 +285,7 @@ const useBasicStore = defineStore({
     clearCanvas(): void {
       this.componentData = []
       this.curComponent = undefined
+      this.isClickComponent = false
       this.isShowEm = false
       this.canvasStyleData = baseCanvasStyleData
     },
