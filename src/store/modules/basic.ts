@@ -1,24 +1,23 @@
 import { defineStore } from 'pinia'
 import store from '@/store'
-import type { EditData, CanvasStyleData, Postion } from '@/types/storeTypes'
+import type { EditData, CanvasStyleData } from '@/types/storeTypes'
 import type { LayoutData } from '@/types/apiTypes'
-import type { ComponentInfo, GroupStyle } from '@/types/component'
 import { EditMode } from '@/enum'
-import { eventBus } from '@/bus/useEventBus'
-import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
+import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
-import { cloneDeep } from 'lodash'
-import { Vector } from '@/types/common'
+import { BaseComponent, createComponent } from '@/resource/models'
+import { cloneDeep } from 'lodash-es'
+import { ComponentDataType, DOMRectStyle } from '@/types/component'
+import { Position } from '@/types/common'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
 const baseCanvasStyleData: CanvasStyleData = {
-  width: 1920,
-  height: 1080,
+  width: window.screen.width,
+  height: window.screen.height,
   scale: 100,
-  dataWs: '',
-  image: (import.meta.env.VITE_BACKGROUND as string) || '/images/bg.png'
+  image: import.meta.env.VITE_BACKGROUND as string
 }
 
 window.localStorage.setItem('canvasData', JSON.stringify([]))
@@ -46,7 +45,8 @@ const useBasicStore = defineStore({
     activeIndex: undefined,
     curComponent: undefined,
     isShowEm: false, // 是否显示控件坐标
-    ids: new Set()
+    ids: new Set(),
+    benchmarkComponent: undefined
   }),
   getters: {
     isEditMode(): boolean {
@@ -54,6 +54,13 @@ const useBasicStore = defineStore({
     },
     canvasData(): CanvasStyleData {
       return new Proxy(this.canvasStyleData, storeCanvasHandler)
+    },
+    layoutData(): ComponentDataType[] {
+      const result: ComponentDataType[] = []
+      this.componentData.forEach((item) => {
+        result.push(item.toJson())
+      })
+      return result
     }
   },
   actions: {
@@ -74,13 +81,8 @@ const useBasicStore = defineStore({
         this.thumbnail = data.thumbnail
       }
     },
-
-    setName(name: string) {
-      this.name = name
-    },
-
-    setThumbnail(thumbnail: string) {
-      this.thumbnail = thumbnail
+    setClickComponentStatus(status: boolean): void {
+      this.isClickComponent = status
     },
     setEditMode(mode: string): void {
       this.editMode = mode
@@ -89,7 +91,9 @@ const useBasicStore = defineStore({
     toggleShowEm(): void {
       this.isShowEm = !this.isShowEm
     },
-
+    setName(name: string): void {
+      this.name = name
+    },
     setCanvasStyle(style: CanvasStyleData): void {
       this.canvasStyleData = style
     },
@@ -99,9 +103,18 @@ const useBasicStore = defineStore({
      * @param component 当前组件
      * @param index
      */
-    setCurComponent(component: ComponentInfo | undefined, index: string | undefined): void {
+    setCurComponent(component: Optional<BaseComponent>, index?: string): void {
+      // 设置前清理当前
+      if (this.curComponent) {
+        this.curComponent.active = false
+      }
       this.curComponent = component
       this.activeIndex = index
+      if (this.curComponent) {
+        this.curComponent.active = true
+        this.isClickComponent = true
+        this.benchmarkComponent = this.curComponent.parent
+      }
     },
 
     /**
@@ -109,20 +122,20 @@ const useBasicStore = defineStore({
      * @param postion 位置
      * @returns
      */
-    syncComponentLoction(postion: Postion, parentComponent?: ComponentInfo): void {
+    syncComponentLoction(postion: Position, parentComponent?: BaseComponent, isSave = true): void {
       if (!this.curComponent) {
         return
       }
       const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
-      const ablePostion: Postion = {}
-      const style = this.curComponent!.style
+      const ablePostion: Position = {}
       styleKyes.forEach((el) => {
         if (postion[el] != undefined) {
           ablePostion[el] = postion[el]
         }
       })
+
       if (parentComponent) {
-        const parentStyle = parentComponent.style
+        const parentStyle = parentComponent.positionStyle
         const groupStyle = this.curComponent.groupStyle!
         const gStyle = {
           gleft:
@@ -144,137 +157,57 @@ const useBasicStore = defineStore({
           grotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : groupStyle.grotate
         }
         const newStyle = {
-          left: ablePostion.left !== undefined ? ablePostion.left : style.left,
-          top: ablePostion.top !== undefined ? ablePostion.top : style.top,
-          width: ablePostion.width !== undefined ? ablePostion.width : style.width,
-          height: ablePostion.height !== undefined ? ablePostion.height : style.height,
-          rotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : style.rotate
+          left:
+            ablePostion.left !== undefined
+              ? ablePostion.left
+              : this.curComponent.positionStyle.left,
+          top:
+            ablePostion.top !== undefined ? ablePostion.top : this.curComponent.positionStyle.top,
+          width:
+            ablePostion.width !== undefined
+              ? ablePostion.width
+              : this.curComponent.positionStyle.width,
+          height:
+            ablePostion.height !== undefined
+              ? ablePostion.height
+              : this.curComponent.positionStyle.height,
+          rotate:
+            ablePostion.rotate !== undefined
+              ? ablePostion.rotate!
+              : this.curComponent.positionStyle.rotate
         }
         this.curComponent.groupStyle = gStyle
-        this.curComponent!.style = { ...style, ...newStyle }
+        for (const key in newStyle) {
+          this.curComponent.change(key, newStyle[key])
+        }
       } else {
-        this.curComponent!.style = { ...style, ...ablePostion }
+        for (const key in ablePostion) {
+          this.curComponent.change(key, ablePostion[key])
+        }
       }
+
       if (this.curComponent.subComponents) {
-        this.resizeChildenComponent(this.curComponent.subComponents, this.curComponent)
+        this.curComponent.resizeSubComponents()
       }
-
-      this.saveComponentData()
-
-      eventBus.emit('changeStyle', {
-        id: this.curComponent!.id,
-        style: { ...postion }
-      })
-    },
-
-    /**
-     * 重新自动调整组件尺寸
-     * @param component
-     */
-    resizeAutoComponent(indexs: number[]): void {
-      const parentComponent = this.getComponentByIndex(indexs)
-      if (parentComponent && parentComponent.component === 'Group') {
-        const parentStyle = cloneDeep(parentComponent.style)
-        const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents!)
-        if (
-          top === parentStyle.top &&
-          left === parentStyle.left &&
-          height === parentStyle.height &&
-          width === parentStyle.width
-        ) {
-          return
-        } else {
-          const newGroupStyle = { ...parentStyle, top, left, height, width }
-          parentComponent.style = newGroupStyle
-          parentComponent.subComponents?.forEach((el: ComponentInfo) => {
-            const myStyle = el.style
-            const gStyle = {
-              gleft: toPercent((myStyle.left! - newGroupStyle.left) / newGroupStyle.width),
-              gtop: toPercent((myStyle.top! - newGroupStyle.top) / newGroupStyle.height),
-              gwidth: toPercent(myStyle.width! / newGroupStyle.width),
-              gheight: toPercent(myStyle.height! / newGroupStyle.height),
-              grotate: myStyle.rotate!
-            }
-            el.groupStyle = gStyle
-          })
-          this.saveComponentData()
-          eventBus.emit('changeStyle', {
-            id: parentComponent!.id,
-            style: { top, left, height, width }
-          })
-          indexs.pop()
-          if (indexs.length > 0) {
-            this.resizeAutoComponent(indexs)
-          }
-        }
+      if (isSave) {
+        this.saveComponentData()
       }
     },
-    resizeChildenComponent(components: ComponentInfo[], parentComponent: ComponentInfo): void {
-      const parentStyle = parentComponent.style
-      components.forEach((el: ComponentInfo) => {
-        const groupStyle: GroupStyle = el.groupStyle!
-        const center: Vector = {
-          y: parentStyle.top + parentStyle.height / 2,
-          x: parentStyle.left + parentStyle.width / 2
-        }
-        const { top, left, height, width, rotate } = {
-          top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
-          left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
-          height: (parentStyle.height * groupStyle.gheight) / 100,
-          width: (parentStyle.width * groupStyle.gwidth) / 100,
-          rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
-        }
-        const point: Vector = {
-          y: top + height / 2,
-          x: left + width / 2
-        }
 
-        const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-        el.style = {
-          ...el.style,
-          top: Math.round(afterPoint.y - height / 2),
-          left: Math.round(afterPoint.x - width / 2),
-          height: Math.round(height),
-          width: Math.round(width),
-          rotate
-        }
-      })
-    },
-    /**
-     * 设置单个组件的样式属性
-     * @param param0 样式
-     * @returns
-     */
-    setComponentSingleStyle({ key, value }): void {
-      if (!this.curComponent) {
-        return
-      }
-
-      this.curComponent.style[key] = value
-      this.saveComponentData()
-
-      eventBus.emit('changeStyle', {
-        id: this.curComponent.id,
-        style: { [key]: value }
-      })
-    },
     /**
      * 重置组件数据ID
      * @param componentData 需要被重置的组件数据
      * @param ids
      * @param isUpdate
      */
-    resetComponentData(componentData: Array<ComponentInfo>) {
-      componentData.forEach((item: ComponentInfo) => {
+    resetComponentData(components: Array<BaseComponent>) {
+      components.forEach((item: BaseComponent) => {
         // 重置组件 ID
 
         if (this.ids.has(item.id!)) {
           item.id = uuid()
         }
-        // 添加 rotate
-        if (item.style.rotate === undefined) {
-          item.style.rotate = 0
-        }
+
         this.ids.add(item.id!)
         if (item.subComponents) {
           this.resetComponentData(item.subComponents)
@@ -285,23 +218,22 @@ const useBasicStore = defineStore({
      * 设置画图的组件数据
      * @param componentData
      */
-    setComponentData(componentData: Array<ComponentInfo> = []): void {
-      this.resetComponentData(componentData)
-      this.componentData = componentData
+    setComponentData(componentData: ComponentDataType[] = []): void {
+      this.componentData = []
+      componentData.forEach((item) => {
+        return this.componentData.push(createComponent(item))
+      })
+      this.resetComponentData(this.componentData)
     },
     /**
      * 想画布中添加组件
      * @param component 组件
      */
-    appendComponent(component: ComponentInfo): void {
-      component.id = uuid()
-      // 如果没有 rotate 属性，就添加一个属性
-      if (component.style.rotate === undefined) {
-        component.style.rotate = 0
-      }
+    appendComponent(component: BaseComponent): void {
       if (component.subComponents) {
         this.resetComponentData(component.subComponents)
       }
+      component.parent = undefined
       this.componentData.push(component)
       this.saveComponentData()
     },
@@ -311,14 +243,13 @@ const useBasicStore = defineStore({
      * @param value 值
      * @returns
      */
-    setCurComponentPropValue(key: string, value: any): void {
+    setCurComponentPropValue(prop: string, key: string, value: any): void {
       const curComponent = this.curComponent
       if (!curComponent || !curComponent.propValue) {
         return
       }
-      curComponent.propValue[key] = value
+      curComponent.change(key, value, prop)
       this.saveComponentData()
-      eventBus.emit(curComponent.component + curComponent.id, { key: key, value: value })
     },
     /**
      * 设置当前组件的样式
@@ -328,42 +259,23 @@ const useBasicStore = defineStore({
      */
     setCurComponentStyle(key: string, value: any): void {
       const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
-      const curComponent = this.curComponent
-      if (!curComponent) {
+      if (!this.curComponent) {
         return
       }
 
-      if (curComponent.groupStyle && groupStyleKeys.includes(key)) {
-        curComponent.groupStyle[key] = value
-        this.saveComponentData()
-        return
+      if (this.curComponent.groupStyle && groupStyleKeys.includes(key)) {
+        this.curComponent.groupStyle[key] = value
+      } else {
+        this.curComponent.change(key, value)
       }
-      curComponent.style[key] = value
-      this.saveComponentData()
-    },
-    /**
-     * 设置组件的属性值
-     * @param key 属性
-     * @param value 值
-     * @returns
-     */
-    setCurComponentProps(key: string, value: any): void {
-      const curComponent = this.curComponent
-      if (!curComponent) {
-        return
-      }
-      curComponent[key] = value
       this.saveComponentData()
     },
 
-    getComponentIndexById(id: string): number {
-      for (let i = 0; i < this.componentData.length; ++i) {
-        const item: ComponentInfo = this.componentData[i]
-        if (item.id === id) {
-          return i
-        }
+    getComponentIndexById(id: string, parent: Optional<BaseComponent>): number {
+      if (parent) {
+        return parent.subComponents.findIndex((item) => item.id === id)
       }
-      return -1
+      return this.componentData.findIndex((item) => item.id === id)
     },
     /**
      * 清空画布
@@ -375,68 +287,37 @@ const useBasicStore = defineStore({
       this.canvasStyleData = baseCanvasStyleData
     },
     /**
-     * 根据组件索引获取该组件的父级组件
-     * @param indexs
-     * @returns
-     */
-    getParentComponentData(indexs: number[]): ComponentInfo[] | undefined {
-      let rootComponent: ComponentInfo = {
-        subComponents: this.componentData,
-        component: 'Root',
-        display: false,
-        style: {
-          width: 0,
-          height: 0,
-          left: 0,
-          top: 0,
-          rotate: 0
-        },
-        id: '',
-        label: '',
-        icon: ''
-      }
-      indexs.forEach((el: number) => {
-        rootComponent = rootComponent.subComponents
-          ? rootComponent.subComponents[el]
-          : rootComponent
-      })
-      return rootComponent.subComponents
-    },
-    /**
      * 组件图层下移
      * @param index 组件索引
      */
-    downComponent(index: string) {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        if (myindex > 0) {
-          swap(fatherComponentData, myindex, myindex - 1)
-          this.saveComponentData()
-        } else {
-          message.info('图层已经到底了')
-        }
+    downComponent(index: number, parent: Optional<BaseComponent>) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+      if (index > 0) {
+        swap(componentData, index, index - 1)
+        this.saveComponentData()
+      } else {
+        message.info('图层已经到底了')
       }
     },
     /**
      * 组件图层上移
      * @param index 组件索引
      */
-    upComponent(index: string) {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        const len: number = fatherComponentData.length
-        if (myindex < len - 1) {
-          swap(fatherComponentData, myindex, myindex + 1)
-          this.saveComponentData()
-        } else {
-          message.info('图层已经到顶了')
-        }
+    upComponent(index: number, parent: Optional<BaseComponent>) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      const len: number = componentData.length
+      if (index < len - 1 && index >= 0) {
+        swap(componentData, index, index + 1)
+        this.saveComponentData()
+      } else {
+        message.info('图层已经到顶了')
       }
     },
 
@@ -444,34 +325,33 @@ const useBasicStore = defineStore({
      * 组件图层置顶
      * @param index 组件索引
      */
-    topComponent(index: string) {
-      const indexs: Array<number> = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        const len: number = fatherComponentData.length
-        if (myindex < len - 1) {
-          const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
-          fatherComponentData.push(myComponments[0])
-          this.saveComponentData()
-        } else {
-          message.info('图层已经到顶了')
-        }
+    topComponent(index: number, parent: Optional<BaseComponent>) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+      const len: number = componentData.length
+      if (index < len - 1 && index >= 0) {
+        const myComponments: BaseComponent[] = componentData.splice(index, 1)
+        componentData.push(myComponments[0])
+        this.saveComponentData()
+      } else {
+        message.info('图层已经到顶了')
       }
     },
     /**
      * 组件图层置底
      * @param index 组件索引
      */
-    bottomComponent(index: string) {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData && myindex > 0) {
-        const myComponments: ComponentInfo[] = fatherComponentData.splice(myindex, 1)
-        fatherComponentData.unshift(myComponments[0])
+    bottomComponent(index: number, parent: Optional<BaseComponent>) {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      if (index > 0) {
+        const myComponments: BaseComponent[] = componentData.splice(index, 1)
+        componentData.unshift(myComponments[0])
         this.saveComponentData()
       } else {
         message.info('图层已经到底了')
@@ -482,54 +362,22 @@ const useBasicStore = defineStore({
      * @param index 索引
      * @returns 移除结果
      */
-    removeComponent(index: string): boolean {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponentData: Array<ComponentInfo> | undefined =
-        this.getParentComponentData(indexs)
-      if (fatherComponentData) {
-        fatherComponentData.splice(myindex, 1)
-        this.saveComponentData()
+    removeComponent(index: number, parent: Optional<BaseComponent>) {
+      if (parent && parent.subComponents) {
+        parent.subComponents.splice(index, 1)
+      } else {
+        this.componentData.splice(index, 1)
+      }
+      this.saveComponentData()
+    },
+    getComponentByIndex(indexs: readonly number[]): Optional<BaseComponent> {
+      const firstIndex = indexs[0]
+      if (firstIndex === undefined || firstIndex < 0 || firstIndex >= this.componentData.length) {
+        return undefined
+      }
 
-        return true
-      }
-      return false
-    },
-    /**
-     * 显示组件
-     * @param index  组件索引
-     */
-    showComponent(index: string): void {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const component: ComponentInfo = this.getComponentByIndex(indexs)
-      component.display = true
-    },
-    /**
-     * 隐藏组件
-     * @param index 组件索引
-     */
-    hiddenComponent(index: string): void {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const component: ComponentInfo = this.getComponentByIndex(indexs)
-      component.display = false
-    },
-    getComponentByIndex(indexs: number[]): ComponentInfo {
-      let rootComponent: ComponentInfo = {
-        subComponents: this.componentData,
-        display: false,
-        component: 'Root',
-        style: {
-          width: 0,
-          left: 0,
-          top: 0,
-          height: 0,
-          rotate: 0
-        },
-        id: '',
-        label: '',
-        icon: ''
-      }
-      indexs.forEach((el: number) => {
+      let rootComponent = this.componentData[firstIndex]
+      indexs.slice(1).forEach((el: number) => {
         rootComponent = rootComponent.subComponents
           ? rootComponent.subComponents[el]
           : rootComponent
@@ -537,40 +385,116 @@ const useBasicStore = defineStore({
       return rootComponent
     },
     saveComponentData() {
-      // storageComponentData.value = JSON.stringify(this.componentData)
-      window.localStorage.setItem('canvasData', JSON.stringify(this.componentData))
+      window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
       new Promise((resolve) => {
-        resolve(snapShotStore.saveSnapshot(this.componentData, this.canvasStyleData))
+        resolve(snapShotStore.saveSnapshot(this.layoutData, this.canvasStyleData))
       })
     },
-    cutComponent(index: string): ComponentInfo | undefined {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponent: ComponentInfo = this.getComponentByIndex(indexs)
-      if (fatherComponent && fatherComponent.subComponents) {
-        const components: ComponentInfo[] = fatherComponent.subComponents.splice(myindex, 1)
-        const component: ComponentInfo = components[0]
-        if (fatherComponent.component === 'Root') {
-          return component
-        } else if (fatherComponent.component === 'Group') {
-          component.groupStyle = undefined
-          this.resizeAutoComponent(indexs)
-          return component
+    cutComponent(index: number, parent: Optional<BaseComponent>): Optional<BaseComponent> {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      if (index < componentData.length && index >= 0) {
+        const components: BaseComponent[] = componentData.splice(index, 1)
+        if (parent) {
+          components[0].groupStyle = undefined
+          this.resizeAutoComponent(parent)
+        }
+        this.saveComponentData()
+        return components[0]
+      }
+    },
+    insertComponent(
+      index: number,
+      insertComponent: BaseComponent,
+      parent: Optional<BaseComponent>
+    ): void {
+      let componentData = this.componentData
+      if (parent && parent.subComponents) {
+        componentData = parent.subComponents
+      }
+
+      if (index < componentData.length && index >= 0) {
+        componentData.splice(index, 0, insertComponent)
+        if (parent) {
+          this.resizeAutoComponent(parent)
+        }
+      }
+      this.saveComponentData()
+    },
+    /**
+     * 重新自动调整组件尺寸
+     * @param component
+     */
+    resizeAutoComponent(parentComponent: Optional<BaseComponent>): void {
+      if (parentComponent && parentComponent.component === 'Group') {
+        const parentStyle = parentComponent.positionStyle
+        const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents)
+        if (
+          top === parentStyle.top &&
+          left === parentStyle.left &&
+          height === parentStyle.height &&
+          width === parentStyle.width
+        ) {
+          return
+        } else {
+          const newGroupStyle = { ...parentStyle, top, left, height, width }
+          for (const key in newGroupStyle) {
+            parentComponent.change(key, newGroupStyle[key])
+          }
+          parentComponent.subComponents?.forEach((el: BaseComponent) => {
+            const gStyle = {
+              gleft: toPercent((el.positionStyle.left - newGroupStyle.left) / newGroupStyle.width),
+              gtop: toPercent((el.positionStyle.top - newGroupStyle.top) / newGroupStyle.height),
+              gwidth: toPercent(el.positionStyle.width / newGroupStyle.width),
+              gheight: toPercent(el.positionStyle.height / newGroupStyle.height),
+              grotate: el.positionStyle.rotate
+            }
+            el.groupStyle = gStyle
+          })
+          if (parentComponent.parent) {
+            this.resizeAutoComponent(parentComponent.parent)
+          }
         }
       }
     },
-    insertComponent(index: string, component: ComponentInfo): void {
-      const indexs: number[] = index.split('-').map((i) => Number(i))
-      const myindex: number = indexs.pop() as number
-      const fatherComponent: ComponentInfo = this.getComponentByIndex(indexs)
-      if (fatherComponent && fatherComponent.subComponents) {
-        if (fatherComponent.component === 'Root') {
-          fatherComponent.subComponents.splice(myindex, 0, component)
-        } else if (fatherComponent.component === 'Group') {
-          fatherComponent.subComponents.splice(myindex, 0, component)
-          this.resizeAutoComponent(indexs)
+    /**
+     * 取消组件间的组合
+     * @returns
+     */
+    decompose() {
+      if (!(this.curComponent && this.curComponent.component === 'Group')) return
+      const components: BaseComponent[] = cloneDeep(this.curComponent.subComponents)
+      if (components.length > 0) {
+        const index: number = this.getComponentIndexById(
+          this.curComponent.id,
+          this.curComponent.parent
+        )
+        this.removeComponent(index, this.curComponent.parent)
+        const parentComponent = this.curComponent.parent
+        if (parentComponent) {
+          const parentStyle: DOMRectStyle = parentComponent.positionStyle
+          components.forEach((item: BaseComponent) => {
+            item.groupStyle = {
+              gleft: toPercent((item.positionStyle.left - parentStyle.left) / parentStyle.width),
+              gtop: toPercent((item.positionStyle.top - parentStyle.top) / parentStyle.height),
+              gwidth: toPercent(item.positionStyle.width / parentStyle.width),
+              gheight: toPercent(item.positionStyle.height / parentStyle.height),
+              grotate: item.positionStyle.rotate
+            }
+            parentComponent?.addComponent([item])
+          })
+        } else {
+          components.forEach((item) => {
+            item.groupStyle = undefined
+            item.parent = undefined
+            this.appendComponent(item)
+          })
         }
       }
+      this.saveComponentData()
     }
   }
 })

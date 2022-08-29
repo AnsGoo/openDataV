@@ -1,5 +1,7 @@
-export interface BorderBox2 {
-  color1: string
-  color2: string
-  backgroundColor: string
+export interface BorderBox {
+  base: {
+    color1: string
+    color2: string
+    backgroundColor: string
+  }
 }

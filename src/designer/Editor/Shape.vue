@@ -4,76 +4,7 @@
     ref="shape"
     class="shape"
     :class="{ active: isActive || active }"
-    @dblclick.exact="selectCurComponent"
-    @mousedown="handleDragendShape"
-    v-contextmenu="contextmenus"
-  >
-    <span class="error-info" v-show="isError">{{ errorInfo }}</span>
-    <icon-park
-      class="rotation"
-      name="one-third-rotation"
-      color="#fff"
-      v-show="isActive"
-      @mousedown="handleRotate"
-    />
-    <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
-    <div
-      :class="['shape-point', 'lt', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '0%', left: '0%' }"
-      @mousedown="handleStretchedShape('lt', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 't', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '0%', left: '50%' }"
-      @mousedown="handleStretchedShape('t', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'rt', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '0%', left: '100%' }"
-      @mousedown="handleStretchedShape('rt', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'r', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '50%', left: '100%' }"
-      @mousedown="handleStretchedShape('r', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'rb', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '100%', left: '100%' }"
-      @mousedown="handleStretchedShape('rb', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'b', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '100%', left: '50%' }"
-      @mousedown="handleStretchedShape('b', $event)"
-    ></div>
-    <div
-      class="shape-point"
-      v-show="isActive"
-      :class="['shape-point', 'lb', rotateClassName]"
-      :style="{ top: '100%', left: '0%' }"
-      @mousedown="handleStretchedShape('lb', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'l', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '50%', left: '0%' }"
-      @mousedown="handleStretchedShape('l', $event)"
-    ></div>
-    <slot></slot>
-  </div>
-  <div
-    v-else
-    ref="shape"
-    class="shape"
-    :class="{ active: isActive || active }"
-    @click.ctrl.exact="appendComponent"
+    @dblclick.exact="dbselectCurComponent"
     @click.exact="selectCurComponent"
     @mousedown="handleDragendShape"
     v-contextmenu="contextmenus"
@@ -84,57 +15,127 @@
       name="one-third-rotation"
       color="#fff"
       v-show="isActive"
-      @mousedown="handleRotate"
+      @mousedown.left="handleRotate"
     />
     <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
     <div
       :class="['shape-point', 'lt', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '0%' }"
-      @mousedown="handleStretchedShape('lt', $event)"
+      @mousedown.left="handleStretchedShape('lt', $event)"
     ></div>
     <div
       :class="['shape-point', 't', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '50%' }"
-      @mousedown="handleStretchedShape('t', $event)"
+      @mousedown.left="handleStretchedShape('t', $event)"
     ></div>
     <div
       :class="['shape-point', 'rt', rotateClassName]"
       v-show="isActive"
       :style="{ top: '0%', left: '100%' }"
-      @mousedown="handleStretchedShape('rt', $event)"
+      @mousedown.left="handleStretchedShape('rt', $event)"
     ></div>
     <div
       :class="['shape-point', 'r', rotateClassName]"
       v-show="isActive"
       :style="{ top: '50%', left: '100%' }"
-      @mousedown="handleStretchedShape('r', $event)"
+      @mousedown.left="handleStretchedShape('r', $event)"
     ></div>
     <div
       :class="['shape-point', 'rb', rotateClassName]"
       v-show="isActive"
       :style="{ top: '100%', left: '100%' }"
-      @mousedown="handleStretchedShape('rb', $event)"
+      @mousedown.left="handleStretchedShape('rb', $event)"
     ></div>
     <div
       :class="['shape-point', 'b', rotateClassName]"
       v-show="isActive"
       :style="{ top: '100%', left: '50%' }"
-      @mousedown="handleStretchedShape('b', $event)"
+      @mousedown.left="handleStretchedShape('b', $event)"
     ></div>
     <div
       class="shape-point"
       v-show="isActive"
       :class="['shape-point', 'lb', rotateClassName]"
       :style="{ top: '100%', left: '0%' }"
-      @mousedown="handleStretchedShape('lb', $event)"
+      @mousedown.left="handleStretchedShape('lb', $event)"
     ></div>
     <div
       :class="['shape-point', 'l', rotateClassName]"
       v-show="isActive"
       :style="{ top: '50%', left: '0%' }"
-      @mousedown="handleStretchedShape('l', $event)"
+      @mousedown.left="handleStretchedShape('l', $event)"
+    ></div>
+    <slot></slot>
+  </div>
+  <div
+    v-else
+    ref="shape"
+    class="shape"
+    :class="{ active: isActive || active }"
+    @click.ctrl.exact="appendComponent"
+    @click.exact="selectCurComponent"
+    @mousedown.left="handleDragendShape"
+    v-contextmenu="contextmenus"
+  >
+    <span class="error-info" v-show="isError">{{ errorInfo }}</span>
+    <icon-park
+      class="rotation"
+      name="one-third-rotation"
+      color="#fff"
+      v-show="isActive"
+      @mousedown.left="handleRotate"
+    />
+    <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
+    <div
+      :class="['shape-point', 'lt', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '0%', left: '0%' }"
+      @mousedown.left="handleStretchedShape('lt', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 't', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '0%', left: '50%' }"
+      @mousedown.left="handleStretchedShape('t', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'rt', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '0%', left: '100%' }"
+      @mousedown.left="handleStretchedShape('rt', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'r', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '50%', left: '100%' }"
+      @mousedown.left="handleStretchedShape('r', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'rb', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '100%', left: '100%' }"
+      @mousedown.left="handleStretchedShape('rb', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'b', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '100%', left: '50%' }"
+      @mousedown.left="handleStretchedShape('b', $event)"
+    ></div>
+    <div
+      class="shape-point"
+      v-show="isActive"
+      :class="['shape-point', 'lb', rotateClassName]"
+      :style="{ top: '100%', left: '0%' }"
+      @mousedown.left="handleStretchedShape('lb', $event)"
+    ></div>
+    <div
+      :class="['shape-point', 'l', rotateClassName]"
+      v-show="isActive"
+      :style="{ top: '50%', left: '0%' }"
+      @mousedown.left="handleStretchedShape('l', $event)"
     ></div>
     <slot></slot>
   </div>
@@ -150,8 +151,10 @@ import { eventBus } from '@/bus/useEventBus'
 import type { Vector } from '@/types/common'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-import { ComponentInfo, ComponentStyle } from '@/types/component'
+import { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
+import { BaseComponent } from '@/resource/models'
+
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
@@ -159,9 +162,9 @@ const copyStore = useCopyStoreWithOut()
 const props = withDefaults(
   defineProps<{
     active?: boolean
-    info: ComponentInfo
+    info: BaseComponent
     defaultStyle: ComponentStyle
-    index: string
+    index: number
     isInner?: boolean
   }>(),
   {
@@ -172,60 +175,58 @@ const props = withDefaults(
 
 const copy = () => {
   copyStore.copy()
-  copyText(JSON.stringify(basicStore.curComponent))
+  copyText(JSON.stringify(basicStore.curComponent?.toJson()))
 }
 
 const deleteComponent = () => {
-  if (props.index) {
-    basicStore.removeComponent(props.index)
-  }
+  basicStore.removeComponent(props.index, props.info.parent)
 }
 
 const upComponent = () => {
-  if (props.index) {
-    basicStore.upComponent(props.index)
-  }
+  basicStore.upComponent(props.index, props.info.parent)
 }
 
 const downComponent = () => {
-  if (props.index) {
-    basicStore.downComponent(props.index)
-  }
+  basicStore.downComponent(props.index, props.info.parent)
 }
 
 const topComponent = () => {
-  if (props.index) {
-    basicStore.topComponent(props.index)
-  }
+  basicStore.topComponent(props.index, props.info.parent)
 }
 
 /**
  * 复制组件ID
  */
 const copyComponentId = () => {
-  if (props.index) {
-    let id = basicStore.curComponent!.id
-    copyText(id as string)
-  }
+  let id = basicStore.curComponent!.id
+  copyText(id as string)
 }
 
 const bottomComponent = () => {
-  if (props.index) {
-    basicStore.bottomComponent(props.index)
-  }
+  basicStore.bottomComponent(props.index, props.info.parent)
 }
 
 const decompose = () => {
-  composeStore.decompose()
+  basicStore.decompose()
 }
 
-const contextmenus = (): ContextmenuItem[] => {
-  basicStore.setCurComponent(props.info, props.index)
+const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
+  // 如果当前有选中组件，并且接受到contextmenu事件的组件正是当前组件，就停止事件冒泡
+  if (basicStore.curComponent && basicStore.curComponent.id === props.info.id) {
+    event.stopPropagation()
+  } else if (!basicStore.curComponent && !props.info.parent) {
+    // 如果当前没有选中组件，就选中最底层的组件
+    basicStore.setCurComponent(props.info, props.index.toString())
+    event.stopPropagation()
+  } else {
+    return
+  }
+
   return [
     {
       text: '拆分',
       subText: '',
-      disable: composeStore.canDecompose,
+      disable: basicStore.curComponent?.component !== 'Group',
       handler: decompose
     },
     { divider: true },
@@ -241,7 +242,7 @@ const contextmenus = (): ContextmenuItem[] => {
     },
     {
       text: '删除',
-      subText: '',
+      subText: 'Ctr + Delete',
       handler: deleteComponent
     },
     { divider: true },
@@ -303,8 +304,8 @@ onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: str
   if (info === 'render function') {
     if (basicStore.isEditMode) {
       if (instance) {
-        const { id, label }: { id: string; label: string } = instance['info'] || {}
-        errorInfo.value = `组件[${label}][${id}]渲染异常`
+        const { name }: { name: string } = instance['component'] || {}
+        errorInfo.value = `组件[${name}]渲染异常`
       } else {
         errorInfo.value = `组件渲染异常`
       }
@@ -320,7 +321,7 @@ onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: str
 })
 
 const isActive = computed<boolean>(() => {
-  return (props.active && !props.info.isLock) || composeStore.isActived(props.info)
+  return (props.active && !props.info.locked) || composeStore.isActived(props.info)
 })
 
 const appendComponent = () => {
@@ -331,178 +332,172 @@ const appendComponent = () => {
  * 拖动组件
  */
 const handleDragendShape = (e: MouseEvent) => {
-  if (e.button === 0) {
-    e.preventDefault()
+  e.preventDefault()
+  // 如果当前组件的父组件为undefined，则阻止冒泡像画布传递
+  if (!props.info.parent) {
     e.stopPropagation()
-    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-    if (props.info.isLock) return
-    const indexs: number[] = props.index.split('-').map((i) => Number(i))
-    indexs.pop()
-    const parentComponent = basicStore.getComponentByIndex(indexs)
-    cursors.value = getCursor()
-
-    let { top, left } = props.defaultStyle
-    const startY = e.clientY
-    const startX = e.clientX
-    // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
-    const startTop = top
-    const startLeft = left
-
-    // 如果元素没有移动，则不保存快照
-    const move = (moveEvent) => {
-      const curX = moveEvent.clientX
-      const curY = moveEvent.clientY
-      top = curY - startY + startTop
-      left = curX - startX + startLeft
-
-      // // 修改当前组件样式
-      basicStore.syncComponentLoction(
-        { top, left },
-        parentComponent.component === 'Root' ? undefined : parentComponent
-      )
-      // 等更新完当前组件的样式并绘制到屏幕后再判断是否需要吸附
-      // 如果不使用 $nextTick，吸附后将无法移动
-      // nextTick(() => {
-      //   // 触发元素移动事件，用于显示标线、吸附功能
-      //   // 后面两个参数代表鼠标移动方向
-      //   // curY - startY > 0 true 表示向下移动 false 表示向上移动
-      //   // curX - startX > 0 true 表示向右移动 false 表示向左移动
-      //   eventBus.emit('move', { isDownward: curY - startY > 0, isRightward: curX - startX > 0 })
-      // })
-    }
-    const up = () => {
-      // 触发元素停止移动事件，用于隐藏标线
-      eventBus.emit('unmove')
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-      if (parentComponent) {
-        basicStore.resizeAutoComponent(indexs)
-      }
-    }
-
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
   }
+
+  // 如果没选择组件，或者选中的组件不是自己，就把事件向外冒泡
+  if (!basicStore.curComponent || props.info.id !== basicStore.curComponent.id) return
+
+  // 如果组件锁定了，就把事件向外冒泡
+  if (props.info.locked) return
+
+  e.stopPropagation()
+  cursors.value = getCursor()
+
+  let { top, left } = props.defaultStyle
+  const startY = e.clientY
+  const startX = e.clientX
+  // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
+  const startTop = top
+  const startLeft = left
+
+  // 如果元素没有移动，则不保存快照
+  const move = (moveEvent) => {
+    const curX = moveEvent.clientX
+    const curY = moveEvent.clientY
+    top = curY - startY + startTop
+    left = curX - startX + startLeft
+
+    // // 修改当前组件样式
+    basicStore.syncComponentLoction({ top, left }, props.info.parent, false)
+  }
+  const up = () => {
+    // 触发元素停止移动事件，用于隐藏标线
+    eventBus.emit('unmove')
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (props.info && props.info.parent) {
+      basicStore.resizeAutoComponent(props.info.parent)
+    }
+    basicStore.saveComponentData()
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 const selectCurComponent = (e: MouseEvent) => {
-  // 阻止向父组件冒泡
   e.preventDefault()
-  e.stopPropagation()
-  basicStore.setCurComponent(props.info, props.index)
+  if (!props.isInner) {
+    e.stopPropagation()
+    basicStore.setCurComponent(props.info, props.index.toString())
+  } else {
+    if (props.info.parent?.id === basicStore.benchmarkComponent?.id) {
+      e.stopPropagation()
+      basicStore.setCurComponent(props.info, props.index.toString())
+    }
+  }
+}
+
+const dbselectCurComponent = (e: MouseEvent) => {
+  e.preventDefault()
+  if (!props.info.parent || props.info.parent?.active) {
+    // 阻止向父组件冒泡
+    e.stopPropagation()
+    basicStore.setCurComponent(props.info, props.index.toString())
+  }
 }
 
 /**
  * 拉伸组件
  */
 const handleStretchedShape = (point: string, e: MouseEvent) => {
-  if (e.button === 0) {
-    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-    e.stopPropagation()
-    e.preventDefault()
-    const indexs: number[] = props.index.split('-').map((i) => Number(i))
-    indexs.pop()
-    const parentComponent = basicStore.getComponentByIndex(indexs)
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  e.stopPropagation()
+  e.preventDefault()
 
-    const position = {
-      top: props.defaultStyle.top,
-      left: props.defaultStyle.left,
-      height: props.defaultStyle.height,
-      width: props.defaultStyle.width,
-      rotate: props.defaultStyle.rotate
-    }
-    // 获取画布位移信息
-    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-
-    // 获取 point 与实际拖动基准点的差值 @justJokee
-    // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
-
-    const move = (moveEvent) => {
-      // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
-      // 因此第一次点击时不触发 move 事件
-      const curPositon: Vector = {
-        x: moveEvent.clientX - editorRectInfo.left,
-        y: moveEvent.clientY - editorRectInfo.top
-      }
-
-      const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-      basicStore.syncComponentLoction(
-        { top, left, width, height },
-        parentComponent.component === 'Root' ? undefined : parentComponent
-      )
-    }
-
-    const up = () => {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-      if (parentComponent) {
-        basicStore.resizeAutoComponent(indexs)
-      }
-    }
-
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
+  const position = {
+    top: props.defaultStyle.top,
+    left: props.defaultStyle.left,
+    height: props.defaultStyle.height,
+    width: props.defaultStyle.width,
+    rotate: props.defaultStyle.rotate
   }
+  // 获取画布位移信息
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+
+  // 获取 point 与实际拖动基准点的差值 @justJokee
+  // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
+
+  const move = (moveEvent) => {
+    // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
+    // 因此第一次点击时不触发 move 事件
+    const curPositon: Vector = {
+      x: moveEvent.clientX - editorRectInfo.left,
+      y: moveEvent.clientY - editorRectInfo.top
+    }
+
+    const { top, left, width, height } = stretchedComponents(point, position, curPositon)
+    basicStore.syncComponentLoction({ top, left, width, height }, props.info.parent, false)
+  }
+
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (props.info) {
+      basicStore.resizeAutoComponent(props.info.parent)
+    }
+    basicStore.saveComponentData()
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 /**
  * 旋转组件
  */
 const handleRotate = (e: MouseEvent) => {
-  if (e.button === 0) {
-    if (!shape.value) {
-      return
-    }
-    e.preventDefault()
-    e.stopPropagation()
-    if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-    if (props.info.isLock) return
-    const indexs: number[] = props.index.split('-').map((i) => Number(i))
-    indexs.pop()
-    const parentComponent = basicStore.getComponentByIndex(indexs)
-    // 初始坐标和初始角度
-    let { rotate } = { ...props.defaultStyle }
-    const startY: number = e.clientY
-    const startX: number = e.clientX
-    const startRotate: number = rotate
-
-    // 获取元素中心点位置
-    const rect: DOMRect = shape.value.getBoundingClientRect()
-    const centerX: number = rect.left + rect.width / 2
-    const centerY: number = rect.top + rect.height / 2
-
-    // 旋转前的角度
-    const rotateDegreeBefore = Math.atan2(startY - centerY, startX - centerX) / (Math.PI / 180)
-
-    // 如果元素没有移动，则不保存快照
-    // let hasMove = false
-    const move = (moveEvent) => {
-      // hasMove = true
-      const curX = moveEvent.clientX
-      const curY = moveEvent.clientY
-      // 旋转后的角度
-      const rotateDegreeAfter = Math.atan2(curY - centerY, curX - centerX) / (Math.PI / 180)
-      // 获取旋转的角度值
-      rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
-      // 修改当前组件样式
-      basicStore.syncComponentLoction(
-        { rotate },
-        parentComponent.component === 'Root' ? undefined : parentComponent
-      )
-    }
-
-    const up = () => {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-      if (parentComponent) {
-        basicStore.resizeAutoComponent(indexs)
-      }
-      // cursors.value = getCursor() // 根据旋转角度获取光标位置
-    }
-
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
+  if (!shape.value) {
+    return
   }
+  e.preventDefault()
+  e.stopPropagation()
+  if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
+  if (props.info.locked) return
+
+  // 初始坐标和初始角度
+  let { rotate } = { ...props.defaultStyle }
+  const startY: number = e.clientY
+  const startX: number = e.clientX
+  const startRotate: number = rotate
+
+  // 获取元素中心点位置
+  const rect: DOMRect = shape.value.getBoundingClientRect()
+  const centerX: number = rect.left + rect.width / 2
+  const centerY: number = rect.top + rect.height / 2
+
+  // 旋转前的角度
+  const rotateDegreeBefore = Math.atan2(startY - centerY, startX - centerX) / (Math.PI / 180)
+
+  // 如果元素没有移动，则不保存快照
+  // let hasMove = false
+  const move = (moveEvent) => {
+    // hasMove = true
+    const curX = moveEvent.clientX
+    const curY = moveEvent.clientY
+    // 旋转后的角度
+    const rotateDegreeAfter = Math.atan2(curY - centerY, curX - centerX) / (Math.PI / 180)
+    // 获取旋转的角度值
+    rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
+    // 修改当前组件样式
+    basicStore.syncComponentLoction({ rotate }, props.info.parent, false)
+  }
+
+  const up = () => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (props.info) {
+      basicStore.resizeAutoComponent(props.info.parent)
+    }
+    basicStore.saveComponentData()
+  }
+
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 const getCursor = () => {
@@ -554,39 +549,45 @@ const rotateClassName = computed(() => {
 const keyDown = (e: KeyboardEvent): void => {
   document.addEventListener('keyup', keyUp)
   if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-  const indexs: number[] = props.index.split('-').map((i) => Number(i))
-  indexs.pop()
+
   e.stopPropagation()
-  const parentComponent = basicStore.getComponentByIndex(indexs)
   if (props.info && e.ctrlKey) {
     switch (e.key) {
       case 'ArrowLeft':
         e.preventDefault()
         basicStore.syncComponentLoction(
-          { left: props.info.style.left - 1 },
-          parentComponent.component === 'Root' ? undefined : parentComponent
+          { left: props.info.positionStyle.left - 1 },
+          props.info.parent,
+          false
         )
         break
       case 'ArrowUp':
         e.preventDefault()
         basicStore.syncComponentLoction(
-          { top: props.info.style.top - 1 },
-          parentComponent.component === 'Root' ? undefined : parentComponent
+          { top: props.info.positionStyle.top - 1 },
+          props.info.parent,
+          false
         )
         break
       case 'ArrowRight':
         e.preventDefault()
         basicStore.syncComponentLoction(
-          { left: props.info.style.left + 1 },
-          parentComponent.component === 'Root' ? undefined : parentComponent
+          { left: props.info.positionStyle.left + 1 },
+          props.info.parent,
+          false
         )
         break
       case 'ArrowDown':
         e.preventDefault()
         basicStore.syncComponentLoction(
-          { top: props.info.style.top + 1 },
-          parentComponent.component === 'Root' ? undefined : parentComponent
+          { top: props.info.positionStyle.top + 1 },
+          props.info.parent,
+          false
         )
+        break
+      case 'Delete':
+        e.preventDefault()
+        deleteComponent()
         break
       default:
         return
@@ -596,23 +597,21 @@ const keyDown = (e: KeyboardEvent): void => {
 
 const keyUp = (e: KeyboardEvent): void => {
   if (!(basicStore.curComponent && props.info.id === basicStore.curComponent.id)) return
-  const indexs: number[] = props.index.split('-').map((i) => Number(i))
-  indexs.pop()
+
   e.stopPropagation()
-  const parentComponent = basicStore.getComponentByIndex(indexs)
-  if (props.info && parentComponent) {
-    basicStore.resizeAutoComponent(indexs)
+  if (props.info) {
+    basicStore.resizeAutoComponent(props.info.parent)
   }
+  basicStore.saveComponentData()
   document.removeEventListener('keyup', keyUp)
 }
-
 onMounted(() => {
   cursors.value = getCursor()
 })
 
 watch(
   () => basicStore.curComponent,
-  (newValue: ComponentInfo | undefined) => {
+  (newValue: BaseComponent | undefined) => {
     if (newValue && props.info.id === newValue.id) {
       document.addEventListener('keydown', keyDown)
     } else {
@@ -623,53 +622,51 @@ watch(
 </script>
 
 <style lang="less" scoped>
-@layer components {
-  .shape {
-    border-width: v-bind(borderWidth);
-    border-color: v-bind(borderColor);
-    border-style: v-bind(borderStyle);
-    position: absolute;
+.shape {
+  border-width: v-bind(borderWidth);
+  border-color: v-bind(borderColor);
+  border-style: v-bind(borderStyle);
+  position: absolute;
 
-    .error-info {
-      color: red;
-      font-size: 20px;
-      white-space: nowrap;
-    }
+  .error-info {
+    color: red;
+    font-size: 20px;
+    white-space: nowrap;
   }
+}
 
-  .active {
-    @apply select-none hover:cursor-move;
+.active {
+  @apply select-none hover:cursor-move;
 
-    outline: 1px solid #70c0ff;
+  outline: 1px solid #70c0ff;
+}
+
+.shape-point {
+  @apply absolute bg-white border border-solid border-blue-400 w-2 h-2 rounded-full z-10;
+  margin-left: -4px;
+  margin-top: -4px;
+}
+
+.rotation {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-weight: 600;
+  height: 20px;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
   }
+}
 
-  .shape-point {
-    @apply absolute bg-white border border-solid border-blue-400 w-2 h-2 rounded-full z-10;
-    margin-left: -4px;
-    margin-top: -4px;
-  }
+.icon-jiesuo {
+  @apply absolute top-0 right-0;
+}
 
-  .rotation {
-    position: absolute;
-    top: -24px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-weight: 600;
-    height: 20px;
-    cursor: grab;
-
-    &:active {
-      cursor: grabbing;
-    }
-  }
-
-  .icon-jiesuo {
-    @apply absolute top-0 right-0;
-  }
-
-  div em {
-    @apply absolute -top-6 left-0 text-red-600;
-  }
+div em {
+  @apply absolute -top-6 left-0 text-red-600;
 }
 
 .shape-point.lt.rotate-0,

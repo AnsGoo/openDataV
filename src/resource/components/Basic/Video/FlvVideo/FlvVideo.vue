@@ -2,9 +2,9 @@
   <div>
     <video
       ref="video"
-      :autoplay="propValue.autoplay"
-      :muted="propValue.muted"
-      :controls="propValue.controls"
+      :autoplay="propValue.basic.autoplay"
+      :muted="propValue.basic.muted"
+      :controls="propValue.basic.controls"
     ></video>
   </div>
 </template>
@@ -12,23 +12,23 @@
 <script lang="ts" setup>
 import flvjs from 'flv.js'
 import { onMounted, ref } from 'vue'
-import { useEventBus } from '@/bus/useEventBus'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { FlvVideo } from './type'
+import FlvVideoComponent from './config'
+import { useProp } from '@/resource/hooks'
 
 const props = defineProps<{
-  propValue: FlvVideo
-  componentId: string
+  component: FlvVideoComponent
 }>()
 
-const basicStore = useBasicStoreWithOut()
+const { propValue } = useProp<FlvVideo>(props.component, () => propChange())
+
 const video = ref<HTMLVideoElement | null>(null)
 
 const playVideo = () => {
   if (flvjs.isSupported()) {
     const flvPlayer = flvjs.createPlayer({
-      type: props.propValue.videoType,
-      url: props.propValue.url
+      type: propValue.basic.videoType,
+      url: propValue.basic.url
     })
     flvPlayer.attachMediaElement(video.value!)
     flvPlayer.load()
@@ -42,10 +42,6 @@ onMounted(() => {
 
 const propChange = () => {
   playVideo()
-}
-
-if (basicStore.isEditMode) {
-  useEventBus(props.componentId, propChange)
 }
 </script>
 

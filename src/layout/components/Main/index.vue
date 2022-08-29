@@ -26,10 +26,10 @@ withDefaults(
   }
 )
 
-const { getIsPageAnimate, getPageAnimateType } = useProjectSettingStoreWithOut()
+const { isPageAnimate, pageAnimateType } = useProjectSettingStoreWithOut()
 
 const getTransitionName = computed(() => {
-  return unref(getIsPageAnimate) ? unref(getPageAnimateType) : ''
+  return unref(isPageAnimate) ? unref(pageAnimateType) : ''
 })
 </script>
 

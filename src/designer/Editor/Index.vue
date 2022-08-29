@@ -4,8 +4,11 @@
     ref="editor"
     id="editor"
     :style="bgStyle"
-    @mousedown="handleMouseDown"
-    v-contextmenu="contextmenus"
+    @mousedown.left="handleMouseDown"
+    v-contextmenu.stop="contextmenus"
+    @drop="handleDrop"
+    @dragover="handleDragOver"
+    @mouseup="deselectCurComponent"
   >
     <!-- 网格线 -->
     <Grid />
@@ -21,29 +24,27 @@
     <template v-for="(item, index) in componentData" :key="item.id">
       <Shape
         :id="'shape' + item.id"
-        :defaultStyle="item.style"
+        :defaultStyle="(item.style as any)"
         :style="getShapeStyle(item.style)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
-        :index="index.toString()"
-        :class="{ lock: item.isLock }"
+        :class="{ lock: item.locked }"
+        :index="index"
         v-if="basicStore.isEditMode && item.display"
       >
         <component
           class="component"
           :is="item.component"
           :style="getComponentShapeStyle(item)"
-          :propValue="item.propValue"
-          :componentId="item.id"
+          :component="item"
           :id="'component' + item.id"
-          :index="index.toString()"
-          :subComponents="item.subComponents"
         />
       </Shape>
     </template>
 
     <!-- 标线 -->
     <MarkLine />
+
     <!-- 选中区域 -->
     <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
     <Area
@@ -67,11 +68,13 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
 import { useEventBus } from '@/bus/useEventBus'
-import { Vector } from '@/types/common'
-import { ComponentInfo, DOMRectStyle, Rect } from '@/types/component'
+import { Position, Vector } from '@/types/common'
 import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
+import { BaseComponent } from '@/resource/models'
+import { componentList } from '../load'
+
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
@@ -81,7 +84,7 @@ const getShapeStyle = (style) => {
 }
 
 const isShowAreas = computed<boolean>(() => {
-  return composeStore.style.width > 0 && !isShowArea.value
+  return composeStore.style.width > 0 && !isShowArea.value && !basicStore.isClickComponent
 })
 
 const appendStart = computed<Vector>(() => {
@@ -104,8 +107,7 @@ const hideArea = () => {
       left: 0,
       top: 0,
       width: 0,
-      height: 0,
-      rotate: 0
+      height: 0
     },
     []
   )
@@ -152,7 +154,10 @@ onUnmounted(() => {
   basicStore.clearCanvas()
 })
 
-const componentData = computed(() => basicStore.componentData)
+const componentData = computed(() => {
+  return basicStore.componentData
+})
+
 const canvasStyleData = computed(() => basicStore.canvasStyleData)
 const curComponent = computed(() => basicStore.curComponent)
 
@@ -169,10 +174,10 @@ const pasteComponent = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
-      const component: ComponentInfo = JSON.parse(textData)
+      const component: BaseComponent = JSON.parse(textData)
       if ('component' in component) {
-        component.style.top = component.style.top + 10
-        component.style.left = component.style.left + 10
+        component.change('top', component.positionStyle.top + 10)
+        component.change('left', component.positionStyle.left + 10)
         copyText(JSON.stringify(component))
         event.preventDefault()
         basicStore.appendComponent(component)
@@ -191,86 +196,79 @@ const start = reactive<Vector>({
 })
 const width = ref<number>(0)
 const height = ref<number>(0)
-const isShowArea = ref<boolean>(false)
+const isShowArea = ref<boolean>(true)
 const editor = ref<ElRef>(null)
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
-  if (e.button === 0) {
-    basicStore.setCurComponent(undefined, undefined)
-    e.preventDefault()
-    e.stopPropagation()
-    hideArea()
+  basicStore.setClickComponentStatus(false)
+  e.preventDefault()
+  e.stopPropagation()
+  hideArea()
+  // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
+  const rectInfo = editor.value?.getBoundingClientRect()
+  editorX.value = rectInfo!.x
+  editorY.value = rectInfo!.y
+  const startX = e.clientX
+  const startY = e.clientY
+  start.x = startX - editorX.value
+  start.y = startY - editorY.value
 
-    // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
-    const rectInfo = editor.value?.getBoundingClientRect()
-    editorX.value = rectInfo!.x
-    editorY.value = rectInfo!.y
-
-    const startX = e.clientX
-    const startY = e.clientY
-    start.x = startX - editorX.value
-    start.y = startY - editorY.value
-    // 展示选中区域
-    isShowArea.value = true
-
-    const move = (moveEvent: MouseEvent) => {
-      moveEvent.preventDefault()
-      moveEvent.stopPropagation()
-      width.value = Math.abs(moveEvent.clientX - startX)
-      height.value = Math.abs(moveEvent.clientY - startY)
-      if (moveEvent.clientX < startX) {
-        start.x = moveEvent.clientX - editorX.value
-      }
-
-      if (moveEvent.clientY < startY) {
-        start.y = moveEvent.clientY - editorY.value
-      }
+  // 展示选中区域
+  isShowArea.value = true
+  const move = (moveEvent: MouseEvent) => {
+    moveEvent.preventDefault()
+    moveEvent.stopPropagation()
+    width.value = Math.abs(moveEvent.clientX - startX)
+    height.value = Math.abs(moveEvent.clientY - startY)
+    if (moveEvent.clientX < startX) {
+      start.x = moveEvent.clientX - editorX.value
     }
-
-    const up = (UpMoveEvent: MouseEvent) => {
-      document.removeEventListener('mousemove', move)
-      document.removeEventListener('mouseup', up)
-
-      if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
-        hideArea()
-        return
-      }
-      const selectedRect: Rect = {
-        left: start.x,
-        top: start.y,
-        right: width.value + start.x,
-        bottom: start.y + height.value
-      }
-      const result = getSelectArea(selectedRect)
-      if (result) {
-        const rect = result.rect
-        composeStore.setAreaData(
-          {
-            top: rect.top,
-            left: rect.left,
-            width: rect.right - rect.left,
-            height: rect.bottom - rect.top,
-            rotate: 0
-          },
-          result.components
-        )
-        start.x = rect.left
-        start.y = rect.top
-        width.value = rect.right - rect.left
-        height.value = rect.bottom - rect.top
-      } else {
-        hideArea()
-      }
+    if (moveEvent.clientY < startY) {
+      start.y = moveEvent.clientY - editorY.value
     }
-    document.addEventListener('mousemove', move)
-    document.addEventListener('mouseup', up)
   }
+  const up = (UpMoveEvent: MouseEvent) => {
+    document.removeEventListener('mousemove', move)
+    document.removeEventListener('mouseup', up)
+    if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
+      hideArea()
+      return
+    }
+    const selectedRect: Position = {
+      left: start.x,
+      top: start.y,
+      right: width.value + start.x,
+      bottom: start.y + height.value
+    }
+    const result = getSelectArea(selectedRect)
+    if (result) {
+      const rect = result.rect
+      composeStore.setAreaData(
+        {
+          top: rect.top,
+          left: rect.left,
+          width: rect.right - rect.left,
+          height: rect.bottom - rect.top,
+          rotate: 0
+        },
+        result.components
+      )
+      start.x = rect.left
+      start.y = rect.top
+      width.value = rect.right - rect.left
+      height.value = rect.bottom - rect.top
+    } else {
+      hideArea()
+    }
+  }
+  document.addEventListener('mousemove', move)
+  document.addEventListener('mouseup', up)
 }
 
 const getSelectArea = (
-  rect: Rect
-): { components: Array<ComponentInfo>; rect: Rect } | undefined => {
-  const selectedComponents: Array<ComponentInfo> = []
+  rect: Position
+): { components: Array<BaseComponent>; rect: Position } | undefined => {
+  const selectedComponents: Array<BaseComponent> = []
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
   const rightSet: Set<number> = new Set()
@@ -279,8 +277,14 @@ const getSelectArea = (
   // 计算所有的组件数据，判断是否在选中区域内
   basicStore.componentData.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const style: DOMRectStyle = component.style
-    const componentRect: Rect = calcComponentAxis(style)
+    const { width, height, left, top, rotate } = component.style
+    const componentRect: Position = calcComponentAxis({
+      width,
+      height,
+      left,
+      top,
+      rotate
+    })
     if (
       componentRect.left >= rect.left &&
       componentRect.right <= rect.right &&
@@ -305,17 +309,41 @@ const getSelectArea = (
     }
   }
 }
+
+const handleDrop = async (e) => {
+  e.preventDefault()
+  e.stopPropagation()
+  const componentName = e.dataTransfer.getData('componentName')
+  if (componentName) {
+    const component: BaseComponent = new componentList[componentName]()
+    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+    const y = e.pageY - editorRectInfo.top
+    const x = e.pageX - editorRectInfo.left
+    component.change('top', y)
+    component.change('left', x)
+    basicStore.appendComponent(component)
+  }
+}
+
+const handleDragOver = (e) => {
+  e.preventDefault()
+  e.dataTransfer.dropEffect = 'copy'
+}
+
+const deselectCurComponent = () => {
+  if (!basicStore.isClickComponent) {
+    basicStore.setCurComponent(undefined)
+  }
+}
 </script>
 
 <style scoped lang="less">
-@layer components {
-  .editor {
-    @apply relative m-auto;
-  }
+.editor {
+  @apply relative m-auto;
+}
 
-  .edit .component {
-    @apply outline-none w-full h-full;
-    position: static !important;
-  }
+.edit .component {
+  @apply w-full h-full;
+  position: static !important;
 }
 </style>

@@ -19,6 +19,7 @@ interface ImportMetaEnv {
   readonly VITE_APP_PROXY: string
   readonly VITE_APP_NO_AUTH: string
   readonly VITE_ALERT_DELAY: string
+  readonly VITE_MOCK: boolean
 }
 
 interface ImportMeta {

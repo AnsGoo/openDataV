@@ -1,0 +1,13 @@
+lockfileVersion: 5.4
+
+specifiers:
+  dayjs: ^1.11.5
+
+dependencies:
+  dayjs: 1.11.5
+
+packages:
+
+  /dayjs/1.11.5:
+    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
+    dev: false

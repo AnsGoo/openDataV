@@ -1,67 +1,76 @@
 import { ComponentGroup, FormType } from '@/enum'
-import type { ComponentConfig, PropsType, ComponentOptions } from '@/types/component'
-import type { DateText } from './type'
+import type { PropsType } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
-const component: ComponentConfig<DateText> = {
-  component: 'DateText',
-  group: ComponentGroup.TEXT,
-  label: '时间文本',
-  propValue: {
-    format: 'YYYY-MM-DD HH:mm:ss'
-  },
-  icon: 'wenben',
-  style: {
-    width: 200,
-    height: 50,
-    color: '#1E90FF',
-    fontSize: 20,
-    fontWeight: 100,
-    fontFamily: 'Arial'
+export const componentName = 'DateText'
+export class DateTextComponent extends BaseComponent {
+  constructor(id?: string, name?: string) {
+    super({
+      component: componentName,
+      group: ComponentGroup.TEXT,
+      name: name ? name : '时间文本',
+      id,
+      width: 200,
+      height: 50
+    })
   }
+
+  _prop: PropsType[] = [
+    {
+      label: '基础配置',
+      prop: 'base',
+      children: [
+        {
+          prop: 'format',
+          label: '格式',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: 'YYYY-MM-DD HH:mm:ss'
+          }
+        }
+      ]
+    }
+  ]
+  _style: PropsType[] = [
+    {
+      label: '字体设置',
+      prop: 'font',
+      children: [
+        {
+          prop: 'color',
+          label: '颜色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: 'skyblue'
+          }
+        },
+        {
+          prop: 'fontSize',
+          label: '字体大小',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 20
+          }
+        },
+        {
+          prop: 'fontWeight',
+          label: '字体宽度',
+          type: FormType.FONT_WEIGHT,
+          componentOptions: {
+            defaultValue: 200
+          }
+        },
+        {
+          prop: 'fontFamily',
+          label: '字体',
+          type: FormType.FONT_STYLE,
+          componentOptions: {
+            defaultValue: 'Arial'
+          }
+        }
+      ]
+    }
+  ]
 }
 
-const style: Array<PropsType> = [
-  {
-    name: '字体设置',
-    uid: 'background',
-    children: [
-      {
-        key: 'color',
-        label: '颜色',
-        type: FormType.COLOR
-      },
-      {
-        key: 'fontSize',
-        label: '字体大小',
-        type: FormType.NUMBER
-      },
-      {
-        key: 'fontWeight',
-        label: '字体宽度',
-        type: FormType.FONT_WEIGHT
-      },
-      {
-        key: 'fontFamily',
-        label: '字体',
-        type: FormType.FONT_STYLE
-      }
-    ]
-  }
-]
-
-const attrs: Array<PropsType> = [
-  {
-    name: '基础配置',
-    uid: 'base',
-    children: [
-      {
-        key: 'format',
-        label: '格式',
-        type: FormType.TEXT
-      }
-    ]
-  }
-]
-
-const componentOptions: ComponentOptions = { component, style, attrs }
-export default componentOptions
+export default DateTextComponent

@@ -29,9 +29,7 @@
 </template>
 
 <style scoped>
-@layer components {
-  .grid {
-    @apply absolute top-0 left-0;
-  }
+.grid {
+  @apply absolute top-0 left-0;
 }
 </style>

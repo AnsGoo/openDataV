@@ -1,3 +1,5 @@
 export interface DateText {
-  format: string
+  base: {
+    format: string
+  }
 }

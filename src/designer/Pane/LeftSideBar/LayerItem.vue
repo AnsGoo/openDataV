@@ -4,31 +4,30 @@
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
-    v-contextmenu="contextmenus"
+    v-contextmenu.stop="contextmenus"
   >
     <div v-if="component.component === 'Group'" class="layer">
-      <span v-show="mode === 'expand'">{{ component.label || '分组' }}</span>
-      <icon-park name="preview-open" size="24" v-if="component.display" />
-      <icon-park name="preview-close-one" size="24" v-else />
+      <span v-show="mode === 'expand'">{{ component.name || '分组' }}</span>
+      <icon-park name="preview-open" size="15" v-if="component.display" />
+      <icon-park name="preview-close-one" size="15" v-else />
     </div>
     <div v-else class="layer">
-      <span v-show="mode === 'expand'">{{ component.label }}</span>
-      <icon-park size="24" name="preview-open" v-if="component.display" />
-      <icon-park size="24" name="preview-close-one" v-else />
+      <span v-show="mode === 'expand'">{{ component.name }}</span>
+      <icon-park size="15" name="preview-open" v-if="component.display" />
+      <icon-park size="15" name="preview-close-one" v-else />
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import type { ComponentInfo } from '@/types/component'
-
 import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { BaseComponent } from '@/resource/models'
 
 const props = withDefaults(
   defineProps<{
-    component: ComponentInfo
+    component: BaseComponent
     index: string
     activeKey?: string
     mode?: string
@@ -61,9 +60,17 @@ const handleDrop = (event: DragEvent, index: string) => {
   event.stopPropagation()
   const compomentIndex: string = event.dataTransfer?.getData('compomentIndex') as string
   const toIndex: string = calcDragIndex(compomentIndex, index)
-  const compoment: ComponentInfo | undefined = basicStore.cutComponent(compomentIndex)
+
+  const indexs: number[] = compomentIndex.split('-').map((i) => Number(i))
+  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  const compoment: Optional<BaseComponent> = basicStore.cutComponent(
+    indexs[indexs.length - 1],
+    cutComponent?.parent
+  )
   if (compoment && toIndex) {
-    basicStore.insertComponent(toIndex, compoment)
+    const toIndexs: number[] = compomentIndex.split('-').map((i) => Number(i))
+    const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
+    basicStore.insertComponent(toIndexs[toIndexs.length - 1], compoment, insertComponent)
     emits('select', index)
   }
 }

@@ -1,5 +1,5 @@
 <template>
-  <div id="mb-ruler" class="style-ruler mb-ruler" v-contextmenu="ruleContextmenus">
+  <div id="mb-ruler" class="style-ruler mb-ruler" v-contextmenu.stop="ruleContextmenus">
     <!-- 水平方向 -->
     <RulerWrapper
       :vertical="false"
@@ -65,7 +65,9 @@ const VRulerWrapperref = ref<InstanceType<typeof RulerWrapper> | null>(null)
 const HRulerWrapperref = ref<InstanceType<typeof RulerWrapper> | null>(null)
 const isShowReferLine = ref<boolean>(true)
 const clearLines = () => {
+  // @ts-ignore
   VRulerWrapperref.value?.clearLines()
+  // @ts-ignore
   HRulerWrapperref.value?.clearLines()
   isShowReferLine.value = true
 }
