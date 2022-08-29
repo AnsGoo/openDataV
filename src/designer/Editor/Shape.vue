@@ -242,7 +242,7 @@ const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<Contextmen
     },
     {
       text: '删除',
-      subText: '',
+      subText: 'Ctr + Delete',
       handler: deleteComponent
     },
     { divider: true },
@@ -584,6 +584,10 @@ const keyDown = (e: KeyboardEvent): void => {
           props.info.parent,
           false
         )
+        break
+      case 'Delete':
+        e.preventDefault()
+        deleteComponent()
         break
       default:
         return

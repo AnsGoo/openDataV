@@ -113,7 +113,7 @@ const initData = async () => {
 
 const mergedConfig = computed(() => {
   return {
-    colors: [propValue.attr.color1, propValue.attr.color1], //['#3DE7C9', '#00BAFF'],
+    colors: [propValue.attr.color1, propValue.attr.color2], //['#3DE7C9', '#00BAFF'],
     borderWidth: Number(propValue.attr.borderWidth),
     borderGap: Number(propValue.attr.borderGap),
     lineDash: propValue.attr.lineDash,
