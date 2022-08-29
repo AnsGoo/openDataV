@@ -28,7 +28,7 @@ OpenDavaV 是仿照阿里 DataV 开发的一款拖拽式低代码大屏应用，
 ```shell
 git clone git@github.com:AnsGoo/openDataV.git
 # 安装依赖
-pnpm install
+pnpm install -r
 pnpm dev
 ```
 
