@@ -1,1 +1,1 @@
-import{_ as e}from"./index.3086cced.js";import{g as _,o,v as t}from"./.pnpm.52e5ead5.js";const a={class:"bg"},s=_({__name:"Image",props:{component:null},setup(c){return(n,r)=>(o(),t("div",a))}});var l=e(s,[["__scopeId","data-v-fe45c0c4"]]);export{l as default};
+import { _ as e } from "./index.3086cced.js"; import { g as _, o, v as t } from "./pnpm.52e5ead5.js"; const a = { class: "bg" }, s = _({ __name: "Image", props: { component: null }, setup(c) { return (n, r) => (o(), t("div", a)) } }); var l = e(s, [["__scopeId", "data-v-fe45c0c4"]]); export { l as default };
