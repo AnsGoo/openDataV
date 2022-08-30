@@ -1,0 +1,1 @@
+import{_ as s,d as t,o as a,b as r,K as e,a1 as n}from"./index.6dd09c59.js";var c="./errors/404.png";const p={class:"notfound"},u=t({__name:"404",setup(d){const o=n(),_=()=>{o.push({name:"Home"})};return(m,i)=>(a(),r("div",p,[e("div",null,[e("img",{src:c,onClick:_})])]))}});var v=s(u,[["__scopeId","data-v-5b38b12f"]]);export{v as default};
