@@ -1,1 +1,0 @@
-import{g as s,o as t,v as r,aI as e,q as a}from"./.pnpm.ec28eaac.js";import{_ as n}from"./index.3aefe4c7.js";var c="./errors/403.png";const p={class:"notfound"},m=s({__name:"403",setup(u){const o=a(),_=()=>{o.push({name:"Home"})};return(d,i)=>(t(),r("div",p,[e("div",null,[e("img",{src:c,onClick:_})])]))}});var f=n(m,[["__scopeId","data-v-45d0378f"]]);export{f as default};
