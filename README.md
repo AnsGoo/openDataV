@@ -1,39 +1,58 @@
-# OpenDataV
+# 简介
+  OpenDataV 是一个高效的低代码拖拽式数据可视化开发平台，可自由组合各种组件拼接成炫酷的大屏展示页面，也可以开发自己的组件接入平台。
 
-OpenDavaV 是仿照阿里 DataV 开发的一款拖拽式低代码大屏应用，采用 `Vue3` + `vite` + `typescripts` 开发，目前项目在完善中,暂不接收需求...
+# 体验
+国外：http://datav.byteportrait.com/
 
+国内：http://small_bud_star.gitee.io/datav
 
-## 实现的功能
+目前仅开源前端部分，采用mock方式提供数据，目前项目正在完善中。
 
-- 页面布局的编辑、预览、快照、自定义页面大小、页面文件的导入导出
-- 图层的拖动、置顶、置底、上下移动、显示、隐藏
-- 组件的缩放、旋转、拖动、复制、粘贴、组合、拆分、自动对齐
-- 支持自定义组件的动态加载
-- 支持历史记录保存、撤销
+### 布局页
+![](screenshot/1.jpg)
 
-## 部分截图
+### 编辑页
+![](screenshot/2.jpg)
 
-![截图1](./screenshot/1.png)
+# 功能
+- [x] 编辑器页面基本功能完成，包括编辑、预览、导入导出、保存
+- [x] 图层的置顶、置底、上下移动、显示、隐藏、复制、剪切、粘贴
+- [x] 组件的缩放、旋转、拖动、复制、粘贴、组合、拆分、自动对齐
+- [x] 支持恢复、撤销编辑功能
 
-![截图2](./screenshot/2.png)
+# 技术点
+本项目采用`Vue3` + `vite` + `TypeScript`开发，界面库使用`NaiveUI`，使用面向对象方式封装了路由、请求、存储，组件采用自动扫描注册、异步加载，提升渲染速度；使用IndexDB存储快照数据，减少快照数据内存占用，加快访问速度；组件独立依赖，解耦了组件和基础框架的依赖库，方便后续独立开发组件。
 
-## 预览
+目前仅开发了部分组件，后续还会继续完善。
 
-【预览地址】：https://ansgoo.github.io/openDataV/#/page/create
+### 计划功能
+- [ ] 组件动态、静态数据请求
+- [ ] 数据过滤处理（JS、Python）
+- [ ] 项目发布
+- [ ] 接口管理
+- [ ] 算法管理
 
-本项目有个简单的后端项目，用于用户页面存储,采用`Koa`+`Typescripts`开发，地址：[https://github.com/AnsGoo/DataVStore](https://github.com/AnsGoo/DataVStore)
+# 开发环境
+| 名称 | 版本    |
+| ---- | ------- |
+| node | 16.14.x |
+| pnpm | 7.9.3   |
+| vue  | 3.2.20  |
 
-## 启动项目
+目前仅在`Chrome`和`Microsoft Edge`最新版浏览器测试过，其他浏览器未测试
+
+# 启动项目
 
 ```shell
-git clone git@github.com:AnsGoo/openDataV.git
 # 安装依赖
 pnpm install -r
+
+# 运行项目
 pnpm dev
-```
 
-## 打包
-
-```shell
+# 打包项目
 pnpm build
 ```
+
+**注：商业合作和技术交流，请添加我的微信**
+![](screenshot/微信图片_20220831173216.jpg)
