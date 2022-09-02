@@ -30,7 +30,7 @@ import type { FormItemRule } from 'naive-ui'
 import { message } from '@/utils/message'
 import type { LayoutData } from '@/types/apiTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { saveUIComponents, updateUIComponents } from '@/api/pages'
+import { savePage, updatePage } from '@/api/pages'
 import router from '@/router'
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string }>()
@@ -65,8 +65,10 @@ const handleSubmit = async (type: string) => {
 
   if (type === 'update') {
     try {
-      await updateUIComponents(props.index!, layoutData)
-      message.success('修改成功')
+      const resp = await updatePage(props.index!, layoutData)
+      if (resp.status === 200) {
+        message.success('修改成功')
+      }
     } catch (e) {
       message.error('保存失败，请导出到本地，并重新进入此页面')
     } finally {
@@ -74,15 +76,17 @@ const handleSubmit = async (type: string) => {
     }
   } else {
     try {
-      const result: LayoutData = await saveUIComponents(layoutData)
-      message.success('保存成功')
-      // // 新增页面成功，则跳转到编辑页
-      router.push({
-        name: 'Editor',
-        params: {
-          index: result.id
-        }
-      })
+      const result = await savePage(layoutData)
+      if (result.status === 201) {
+        message.success('保存成功')
+        // // 新增页面成功，则跳转到编辑页
+        router.push({
+          name: 'Editor',
+          params: {
+            index: result.data.id
+          }
+        })
+      }
     } catch (e: any) {
       message.error(`保存失败，失败信息:${e?.message || e}`)
     } finally {

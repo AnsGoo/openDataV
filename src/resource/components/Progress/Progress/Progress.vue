@@ -101,9 +101,9 @@ const initData = async () => {
         url: propValue.data.history,
         data: [propValue.data.datatag]
       })
-      if (resp.ErrorCode === 200) {
+      if (resp.status === 200) {
         dataValue.value =
-          ((Number(resp.Results[0].TagValue) || 0) * 100) / Number(propValue.data.maxValue)
+          ((Number(resp.data.TagValue) || 0) * 100) / Number(propValue.data.maxValue)
       }
     } catch (err: any) {
       console.log(err.message || err)

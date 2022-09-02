@@ -137,8 +137,8 @@ const initData = async () => {
         url: propValue.data.history,
         data: [propValue.data.datatag]
       })
-      if (resp.ErrorCode === 200) {
-        dataValue.value = Number(resp.Results[0].TagValue)
+      if (resp.status === 200) {
+        dataValue.value = Number(resp.data.TagValue)
       }
     } catch (err: any) {
       console.log(err.message || err)

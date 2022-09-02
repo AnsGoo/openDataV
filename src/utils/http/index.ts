@@ -39,7 +39,7 @@ class AxiosHttp {
   private httpHookResponse(): void {
     this.axiosInstance.interceptors.response.use(
       (response: AxiosResponse) => {
-        return response.data
+        return response
       },
       (error: AxiosError) => {
         const { response } = error
@@ -57,23 +57,23 @@ class AxiosHttp {
     console.log(status, message)
   }
 
-  public get<T = any>(config: AxiosRequestConfig): Promise<T> {
+  public get<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.request({ ...config, method: 'GET' })
   }
 
-  public post<T = any>(config: AxiosRequestConfig): Promise<T> {
+  public post<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.request({ ...config, method: 'POST' })
   }
 
-  public put<T = any>(config: AxiosRequestConfig): Promise<T> {
+  public put<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.request({ ...config, method: 'PUT' })
   }
 
-  public patch<T = any>(config: AxiosRequestConfig): Promise<T> {
+  public patch<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.request({ ...config, method: 'PATCH' })
   }
 
-  public delete<T = any>(config: AxiosRequestConfig): Promise<T> {
+  public delete<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.request({ ...config, method: 'DELETE' })
   }
 
