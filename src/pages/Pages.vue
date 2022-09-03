@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { getUIComponentsList, deleteUIComponents } from '@/api/pages'
+import { getPagesList, deletePage } from '@/api/pages'
 import type { SimpleLayoutData } from '@/types/apiTypes'
 import { onMounted, ref, h } from 'vue'
 import defaultImg from '@/assets/default.png'
@@ -77,9 +77,9 @@ function renderIcon(icon: string) {
 
 const initUI = async (): Promise<void> => {
   try {
-    const resp: SimpleLayoutData[] = await getUIComponentsList()
-    if (resp) {
-      layoutList.value = resp
+    const resp = await getPagesList()
+    if (resp.data) {
+      layoutList.value = resp.data
     }
   } catch (_) {
     message.error('页面数据请求异常')
@@ -96,7 +96,7 @@ const handleSelect = async (key: string | number, item: SimpleLayoutData) => {
     })
   } else if (key === 'delete') {
     try {
-      await deleteUIComponents(item.id as string)
+      await deletePage(item.id as string)
       await initUI()
     } catch (e: any) {
       console.log(e?.message || e)

@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, computed } from 'vue'
-import { getUIComponents } from '@/api/pages'
+import { getPage } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
 import { filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
@@ -35,8 +35,8 @@ const router = useRouter()
 const initComponents = async (index: string): Promise<void> => {
   console.log('加载通用组件')
   try {
-    const resp: LayoutData = await getUIComponents(index)
-    setPageData(resp)
+    const resp = await getPage(index)
+    setPageData(resp.data)
   } catch (e: any) {
     router.push({
       name: 'Error'

@@ -36,7 +36,8 @@ onMounted(async () => {
   try {
     const queryParems = { tagName: propValue.base.tagName }
     const res = await http.get({ url: propValue.base.url, params: queryParems })
-    if (Object.keys(res).includes(propValue.base.tagName)) {
+
+    if (res.status === 200 && Object.keys(res.data).includes(propValue.base.tagName)) {
       dataHandler(res[propValue.base.tagName])
     }
   } catch (error: any) {

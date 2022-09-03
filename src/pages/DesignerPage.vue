@@ -59,7 +59,7 @@ import LeftSideBar from '@/designer/Pane/LeftSideBar'
 import RightSideBar from '@/designer/Pane/RightSideBar'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { ref, onMounted, onUnmounted, computed } from 'vue'
-import { getUIComponents } from '@/api/pages'
+import { getPage } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
 
@@ -77,11 +77,11 @@ onMounted(async () => {
 })
 
 const restore = async (index: string) => {
-  const resp = await getUIComponents(index)
-  if (!resp) {
+  const resp = await getPage(index)
+  if (!resp.data) {
     return
   }
-  basicStore.setLayoutData(resp)
+  basicStore.setLayoutData(resp.data)
 }
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)

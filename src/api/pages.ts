@@ -1,23 +1,24 @@
 import { apiHttp as http } from '@/utils/http'
 import type { LayoutData, SimpleLayoutData } from '@/types/apiTypes'
 import { cloneDeep } from 'lodash-es'
+import { AxiosResponse } from 'axios'
 
 // 获取页面数据
-export const getUIComponents = async (index: string): Promise<LayoutData> => {
+export const getPage = async (index: string): Promise<AxiosResponse<LayoutData>> => {
   return http.get<LayoutData>({
     url: `/pages/${index}`
   })
 }
 
 // 获取页面数据列表
-export const getUIComponentsList = async (): Promise<SimpleLayoutData[]> => {
+export const getPagesList = async (): Promise<AxiosResponse<SimpleLayoutData[]>> => {
   return http.get<SimpleLayoutData[]>({
     url: '/pages'
   })
 }
 
 // 保存页面数据
-export const saveUIComponents = (componentData: LayoutData): Promise<LayoutData> => {
+export const savePage = (componentData: LayoutData): Promise<AxiosResponse<LayoutData>> => {
   const data: Recordable<any> = cloneDeep(componentData)
   data.canvasData = JSON.stringify(data.canvasData)
   data.canvasStyle = JSON.stringify(data.canvasStyle)
@@ -28,7 +29,10 @@ export const saveUIComponents = (componentData: LayoutData): Promise<LayoutData>
 }
 
 // 更新页面数据
-export const updateUIComponents = (id: string, componentData: LayoutData): Promise<LayoutData> => {
+export const updatePage = (
+  id: string,
+  componentData: LayoutData
+): Promise<AxiosResponse<LayoutData>> => {
   const data: Recordable<any> = cloneDeep(componentData)
   data.canvasData = JSON.stringify(data.canvasData)
   data.canvasStyle = JSON.stringify(data.canvasStyle)
@@ -39,16 +43,8 @@ export const updateUIComponents = (id: string, componentData: LayoutData): Promi
 }
 
 // 删除页面数据
-export const deleteUIComponents = (id: string): Promise<string> => {
+export const deletePage = (id: string): Promise<AxiosResponse<string>> => {
   return http.delete<string>({
     url: `/pages/${id}`
-  })
-}
-
-// 设置页面权限
-export const setPagePermission = (id: string, permissions: string[]) => {
-  return http.put<string>({
-    url: `/permission/${id}`,
-    data: { permissions }
   })
 }
