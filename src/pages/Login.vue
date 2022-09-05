@@ -18,7 +18,7 @@
         @submit.prevent
         :show-message="true"
       >
-        <div class="tip">登陆</div>
+        <div class="tip">登录</div>
         <n-form-item path="username">
           <n-input
             placeholder="请输入用户名"
@@ -36,7 +36,7 @@
           />
         </n-form-item>
         <n-button type="primary" style="min-width: 360px; width: 100%" @click="loginAction"
-          >登陆</n-button
+          >登录</n-button
         >
       </n-form>
     </div>
@@ -51,7 +51,6 @@ import { LoginData } from '@/types/user'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
-import { UserInfo } from '@/types/storeTypes'
 import { message } from '@/utils/message'
 
 const userStore = useUserStoreWithOut()
@@ -81,21 +80,25 @@ const loginAction = async () => {
     await ruleFormRef.value?.validate()
     const data: LoginData = { ...formData }
     try {
-      const resp: UserInfo = await login(data)
-      userStore.setUserInfo(resp)
-      message.success('登陆成功')
-      const redirect: string | undefined = route.query.redirect as string | undefined
-      if (redirect) {
-        router.push({
-          path: redirect
-        })
+      const resp = await login(data)
+      if (resp.status === 200) {
+        userStore.setUserInfo(resp.data)
+        message.success('登录成功')
+        const redirect: string | undefined = route.query.redirect as string | undefined
+        if (redirect) {
+          router.push({
+            path: redirect
+          })
+        } else {
+          router.push({
+            name: 'Pages'
+          })
+        }
       } else {
-        router.push({
-          name: 'Pages'
-        })
+        message.success('登录失败')
       }
     } catch (e: any) {
-      message.error(`登陆失败,请输入正确的账号密码`)
+      message.error(`登录失败,请输入正确的账号密码`)
     }
   } catch (e: unknown) {
     console.log(e)
