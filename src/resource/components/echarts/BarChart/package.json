@@ -1,0 +1,12 @@
+{
+  "name": "barcharts",
+  "version": "1.0.0",
+  "description": "barCharts组件",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "chenghaiwen",
+  "license": "Apache-2.0"
+}
