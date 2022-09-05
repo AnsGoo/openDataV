@@ -1,4 +1,4 @@
-![](./screenshot/logo.png)
+![](./public/logo.png)
 
 
 ![](https://img.shields.io/github/license/AnsGoo/openDataV)
