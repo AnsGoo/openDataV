@@ -1,20 +1,22 @@
 <template>
-  <n-modal
-    class="show-card"
-    :show="isShow"
-    preset="card"
-    @mask-click="close"
-    :title="`图标数量${iconList.length}`"
-    @close="close"
-    @update:show="() => (isShow = false)"
-    :style="{ width: '50%', maxWidth: '800px' }"
-  >
-    <ul class="icon-list">
-      <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
-        <span :class="`icon iconfont ${icon}`"></span>
-      </li>
-    </ul>
-  </n-modal>
+  <ConfigProvider>
+    <n-modal
+      class="show-card"
+      :show="isShow"
+      preset="card"
+      @mask-click="close"
+      :title="`图标数量${iconList.length}`"
+      @close="close"
+      @update:show="() => (isShow = false)"
+      :style="{ width: '50%', maxWidth: '800px' }"
+    >
+      <ul class="icon-list">
+        <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
+          <span :class="`icon iconfont ${icon}`"></span>
+        </li>
+      </ul>
+    </n-modal>
+  </ConfigProvider>
 </template>
 
 <script lang="ts" setup>
@@ -22,7 +24,7 @@ import { computed, ref } from 'vue'
 import { copyText } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { NModal } from 'naive-ui'
-
+import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import iconfontList from '@/assets/directionFonts/iconfont.json'
 
 const iconList = computed<string[]>(() => {

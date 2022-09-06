@@ -2,21 +2,12 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { useRouter, RouterView } from 'vue-router'
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import {
-  NConfigProvider,
-  NLoadingBarProvider,
-  NGlobalStyle,
-  zhCN,
-  dateZhCN,
-  darkTheme,
-  lightTheme
-} from 'naive-ui'
-import { useProjectSettingStoreWithOut } from './store/modules/projectSetting'
+import ConfigProvider from '@/components/provider/ConfigProvider.vue'
+import { NLoadingBarProvider, NGlobalStyle } from 'naive-ui'
 
 const basicStore = useBasicStoreWithOut()
-const projectSettingsStore = useProjectSettingStoreWithOut()
 
 const overflow = ref<string>(
   (() => {
@@ -28,37 +19,15 @@ const overflow = ref<string>(
   })()
 )
 const { currentRoute } = useRouter()
-
-const getThemeOverrides = computed(() => {
-  const appTheme = projectSettingsStore.appTheme
-  const lightenStr = appTheme //lighten(designStore.appTheme, 6)
-  return {
-    common: {
-      primaryColor: appTheme,
-      primaryColorHover: lightenStr,
-      primaryColorPressed: lightenStr
-    },
-    LoadingBar: {
-      colorLoading: appTheme
-    }
-  }
-})
-
-const getDarkTheme = computed(() => (projectSettingsStore.darkTheme ? darkTheme : lightTheme))
 </script>
 
 <template>
-  <n-config-provider
-    :locale="zhCN"
-    :theme="getDarkTheme"
-    :theme-overrides="getThemeOverrides"
-    :date-locale="dateZhCN"
-  >
+  <ConfigProvider>
     <n-loading-bar-provider>
       <RouterView :key="currentRoute.path" :style="{ overflow }" />
       <n-global-style />
     </n-loading-bar-provider>
-  </n-config-provider>
+  </ConfigProvider>
 </template>
 
 <style lang="less">
