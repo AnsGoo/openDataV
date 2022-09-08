@@ -6,15 +6,15 @@
 ![](https://img.shields.io/github/issues/AnsGoo/openDataV)
 ![](https://img.shields.io/github/forks/AnsGoo/openDataV)
 
-# 简介
+## 简介
   🎃OpenDataV 是一个纯前端的`拖拽式`、`可视化`、`低代码`数据可视化🌈开发平台，你可以用它自由的拼接成各种✨炫酷的大屏，同时支持用户方便的开发自己的组件并接入平台。
 
-# 体验
+## 体验
 🧙国外：[http://datav.byteportrait.com/](http://datav.byteportrait.com/)
 
 🧙国内：[http://small_bud_star.gitee.io/datav](http://small_bud_star.gitee.io/datav)
 
-# 源码地址：
+## 源码地址：
 
 🍨github:[https://github.com/AnsGoo/openDataV](https://github.com/AnsGoo/openDataV)
 
@@ -82,11 +82,11 @@ pnpm build
 
 ## ☎️联系方式
 
-**技术交流，请加群**
+**技术交流，请加钉钉群**
 
-![](./screenshot/dingtalk.jpg)
+![dingtalk](./screenshot/dingtalk.jpg)
 
 **更新动态请关注公众号**
 
-![](/screenshot/wechat.jpg)
+![wechat](/screenshot/wechat.jpg)
 
