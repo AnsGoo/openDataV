@@ -2,13 +2,13 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
-export const componentName = 'BasicLineChart'
-export class BasicLineChartComponent extends BaseComponent {
+export const componentName = 'BasicBarChart'
+export class BasicBarChartComponent extends BaseComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,
-      group: ComponentGroup.LINE,
-      name: name ? name : '基础线图',
+      group: ComponentGroup.BAR,
+      name: name ? name : '基础柱状图',
       id,
       width: 200,
       height: 50,
@@ -40,6 +40,38 @@ export class BasicLineChartComponent extends BaseComponent {
         {
           prop: 'lowerLimit',
           label: '下限',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 0
+          }
+        },
+        {
+          prop: 'max',
+          label: '最大值',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: 'dataMax'
+          }
+        },
+        {
+          prop: 'min',
+          label: '最小值',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: '0'
+          }
+        },
+        {
+          prop: 'maxOffset',
+          label: '最大偏移值',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 0
+          }
+        },
+        {
+          prop: 'minOffset',
+          label: '最小偏移值',
           type: FormType.NUMBER,
           componentOptions: {
             defaultValue: 0
@@ -149,55 +181,9 @@ export class BasicLineChartComponent extends BaseComponent {
           }
         }
       ]
-    },
-    {
-      label: '系列',
-      prop: 'series',
-      children: [
-        {
-          prop: 'lineArea',
-          label: '显示区域色',
-          type: FormType.SWITCH,
-          componentOptions: {
-            defaultValue: true
-          }
-        },
-        {
-          prop: 'lineWidth',
-          label: '折线宽度',
-          type: FormType.NUMBER,
-          componentOptions: {
-            defaultValue: 1
-          }
-        },
-        {
-          prop: 'lineColor',
-          label: '折线颜色',
-          type: FormType.COLOR,
-          componentOptions: {
-            defaultValue: '#3DE7C9'
-          }
-        },
-        {
-          prop: 'lineLinearStart',
-          label: '渐变起始色',
-          type: FormType.COLOR,
-          componentOptions: {
-            defaultValue: '#3491FA'
-          }
-        },
-        {
-          prop: 'lineLinearEnd',
-          label: '渐变结束色',
-          type: FormType.COLOR,
-          componentOptions: {
-            defaultValue: 'transparent'
-          }
-        }
-      ]
     }
   ]
   _style: PropsType[] = []
 }
 
-export default BasicLineChartComponent
+export default BasicBarChartComponent

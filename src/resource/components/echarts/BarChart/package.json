@@ -1,7 +1,7 @@
 {
-  "name": "barcharts",
+  "name": "basic-barchart",
   "version": "1.0.0",
-  "description": "barCharts组件",
+  "description": "基础柱状图组件",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

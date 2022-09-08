@@ -1,7 +1,7 @@
 {
-  "name": "linecharts",
+  "name": "basic-linechart",
   "version": "1.0.0",
-  "description": "LineCharts组件",
+  "description": "基础线状图组件",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
