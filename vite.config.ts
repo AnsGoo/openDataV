@@ -1,6 +1,7 @@
 import { UserConfigExport, ConfigEnv, loadEnv, ProxyOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { viteMockServe } from 'vite-plugin-mock'
+import vueJsx from "@vitejs/plugin-vue-jsx"
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
@@ -23,6 +24,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   return {
     plugins: [
       vue(),
+      vueJsx(),
       viteMockServe({
         mockPath: 'mock',
         supportTs: true, //如果使用 js发开，则需要配置 supportTs 为 false
