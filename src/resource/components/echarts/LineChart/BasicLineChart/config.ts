@@ -10,8 +10,8 @@ export class BasicLineChartComponent extends BaseComponent {
       group: ComponentGroup.LINE,
       name: name ? name : '基础线图',
       id,
-      width: 200,
-      height: 50,
+      width: 500,
+      height: 170,
       icon
     })
   }
@@ -22,7 +22,7 @@ export class BasicLineChartComponent extends BaseComponent {
       prop: 'data',
       children: [
         {
-          prop: 'history',
+          prop: 'url',
           label: '数据地址',
           type: FormType.TEXT,
           componentOptions: {
