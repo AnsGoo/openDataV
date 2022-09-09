@@ -1,4 +1,6 @@
 import { Random } from 'mockjs'
+import dataDict from './data'
+
 export default [
   {
     url: '/login',
@@ -18,40 +20,32 @@ export default [
     method: 'get',
     statusCode: 200,
     response: () => {
-      return [
-        {
-          id: '1b0acf36-d309-43fe-9e0a-7b6942e2f953',
-          name: '全国疫情分布图',
-          thumbnail: 'http://image.xingxingzaixian.fun/pages/1.png',
-          author: '成海文',
+      const result = []
+      Object.keys(dataDict).forEach((key: string) => {
+        const data = dataDict[key]
+        result.push({
+          id: key,
+          name: data.name,
+          thumbnail: data.thumbnail,
+          author: data.author,
           createTime: Random.date('yyyy-MM-dd mm:HH:ss'),
           isHome: true
-        },
-        {
-          id: '8c68b895-2408-4c43-b652-1aa7d0330870',
-          name: '全国人口实时迁移图',
-          thumbnail: 'http://image.xingxingzaixian.fun/pages/2.png',
-          author: '成海文',
-          createTime: Random.date('yyyy-MM-dd mm:HH:ss'),
-          isHome: false
-        },
-        {
-          id: '8c68b895-2408-4c43-b652-1aa7d0330870',
-          name: '全国人口实时迁移图',
-          thumbnail: 'http://image.xingxingzaixian.fun/pages/3.png',
-          author: '成海文',
-          createTime: Random.date('yyyy-MM-dd mm:HH:ss'),
-          isHome: false
-        },
-        {
-          id: '8c68b895-2408-4c43-b652-1aa7d0330870',
-          name: '全国人口实时迁移图',
-          thumbnail: 'http://image.xingxingzaixian.fun/pages/4.png',
-          author: '成海文',
-          createTime: Random.date('yyyy-MM-dd mm:HH:ss'),
-          isHome: false
-        }
-      ]
+        })
+      })
+      return result
+    }
+  },
+  {
+    url: '/pages/:index',
+    method: 'get',
+    statusCode: 200,
+    rawResponse: async (req, res) => {
+      const index: string = req.url.replace('/pages/', '')
+      const data = dataDict[index]
+      const reqbody = JSON.stringify(data)
+      res.setHeader('Content-Type', 'application/json')
+      res.statusCode = 200
+      res.end(reqbody)
     }
   }
 ]
