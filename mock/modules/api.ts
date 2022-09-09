@@ -20,9 +20,10 @@ export default [
     method: 'get',
     statusCode: 200,
     response: () => {
-      const result = []
+      const result: any[] = []
       Object.keys(dataDict).forEach((key: string) => {
         const data = dataDict[key]
+        // @ts-ignore
         result.push({
           id: key,
           name: data.name,
@@ -30,7 +31,7 @@ export default [
           author: data.author,
           createTime: Random.date('yyyy-MM-dd mm:HH:ss'),
           isHome: true
-        })
+        } as any)
       })
       return result
     }
