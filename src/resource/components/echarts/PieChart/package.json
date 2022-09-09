@@ -1,7 +1,7 @@
 {
-  "name": "basic-barchart",
+  "name": "basic-piechart",
   "version": "1.0.0",
-  "description": "基础柱状图组件",
+  "description": "基础饼状图组件",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

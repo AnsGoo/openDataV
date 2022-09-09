@@ -10,8 +10,8 @@ export class BasicBarChartComponent extends BaseComponent {
       group: ComponentGroup.BAR,
       name: name ? name : '基础柱状图',
       id,
-      width: 200,
-      height: 50,
+      width: 500,
+      height: 170,
       icon
     })
   }
@@ -22,7 +22,7 @@ export class BasicBarChartComponent extends BaseComponent {
       prop: 'data',
       children: [
         {
-          prop: 'history',
+          prop: 'url',
           label: '数据地址',
           type: FormType.TEXT,
           componentOptions: {
