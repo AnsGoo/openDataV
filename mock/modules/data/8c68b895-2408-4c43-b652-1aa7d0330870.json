@@ -1,0 +1,167 @@
+{
+  "id": "1b0acf36-d309-43fe-9e0a-7b6942e2f953",
+  "name": "全国疫情分布图",
+  "thumbnail": "http://image.xingxingzaixian.fun/pages/1.png",
+  "author": "OpenDataV",
+  "isHome": false,
+  "canvasData": [
+    {
+      "id": "3793cc31506441229d16c870b4865a35",
+      "component": "BasicLineChart",
+      "name": "基础线图",
+      "propValue": {
+        "data": {
+          "url": "",
+          "upperLimit": 150,
+          "lowerLimit": 0
+        },
+        "label": {
+          "axisLabelColor": "#3DE7C9",
+          "axisColor": "#3DE7C9"
+        },
+        "axis": {
+          "axisColor": "#00BAFF",
+          "axisLabelColor": "#00BAFF",
+          "xshow": true,
+          "yshow": true,
+          "xLineType": "dotted",
+          "yLineType": "dotted",
+          "xAxisLineColor": "#3391E4",
+          "yAxisLineColor": "#3391E4"
+        },
+        "series": {
+          "lineArea": true,
+          "lineWidth": 1,
+          "lineColor": "#3DE7C9",
+          "lineLinearStart": "#3491FA",
+          "lineLinearEnd": "transparent"
+        }
+      },
+      "style": {
+        "left": 472.99998474121094,
+        "top": 293.402774810791,
+        "width": 500,
+        "height": 170,
+        "rotate": 0
+      },
+      "subComponents": []
+    },
+    {
+      "id": "ac567788784640328af2237edaf8e724",
+      "component": "Decoration1",
+      "name": "1#装饰",
+      "propValue": {
+        "base": {
+          "color1": "#fff",
+          "color2": "#0de7c2",
+          "pointSideLength": 5
+        }
+      },
+      "style": {
+        "left": 705.9999847412109,
+        "top": 221.40277481079102,
+        "width": 200,
+        "height": 60,
+        "rotate": 0
+      },
+      "subComponents": []
+    },
+    {
+      "id": "0ecca6ca5ee04e93bdc6edfc9e8d4d5f",
+      "component": "BorderBox1",
+      "name": "1#边框",
+      "propValue": {
+        "base": {
+          "colorLeft": "#4fd2dd",
+          "colorRight": "#235fa7",
+          "backgroundColor": "transparent"
+        }
+      },
+      "style": {
+        "left": 1150.999984741211,
+        "top": 285.402774810791,
+        "width": 200,
+        "height": 200,
+        "rotate": 0
+      },
+      "subComponents": []
+    },
+    {
+      "id": "3610a7f3384847ffbfa360cf37133f42",
+      "component": "BasicBarChart",
+      "name": "基础柱状图",
+      "propValue": {
+        "data": {
+          "url": "",
+          "upperLimit": 150,
+          "lowerLimit": 0,
+          "max": "dataMax",
+          "min": "0",
+          "maxOffset": 0,
+          "minOffset": 0
+        },
+        "label": {
+          "axisLabelColor": "#3DE7C9",
+          "axisColor": "#3DE7C9"
+        },
+        "axis": {
+          "axisColor": "#00BAFF",
+          "axisLabelColor": "#00BAFF",
+          "xshow": true,
+          "yshow": true,
+          "xLineType": "dotted",
+          "yLineType": "dotted",
+          "xAxisLineColor": "#3391E4",
+          "yAxisLineColor": "#3391E4"
+        }
+      },
+      "style": {
+        "left": 534.9999847412109,
+        "top": 580.402774810791,
+        "width": 500,
+        "height": 170,
+        "rotate": 0
+      },
+      "subComponents": []
+    },
+    {
+      "id": "061542f3e49741c480828df97f602392",
+      "component": "BasicPieChart",
+      "name": "基础饼状图",
+      "propValue": {
+        "data": {
+          "url": "",
+          "upperLimit": 150,
+          "lowerLimit": 0
+        },
+        "legend": {
+          "isShow": true
+        },
+        "label": {
+          "isShow": true,
+          "labelColor": "#00BAFF",
+          "labelSize": 40,
+          "labelWeight": 400
+        },
+        "series": {
+          "radiusMin": 40,
+          "radiusMax": 70,
+          "borderRadius": 10
+        }
+      },
+      "style": {
+        "left": 1114.999984741211,
+        "top": 565.402774810791,
+        "width": 520,
+        "height": 260,
+        "rotate": 0
+      },
+      "subComponents": []
+    }
+  ],
+  "canvasStyle": {
+    "width": 1920,
+    "height": 1080,
+    "scale": 100
+  }
+}

@@ -31,11 +31,13 @@ const setShowEm = () => {
   basicStore.toggleShowEm()
 }
 
-const exportCanvas = () => {
-  const name: string = `${basicStore.name}` || 'layout'
+const exportCanvas = (id: string) => {
+  const name: string = `${basicStore.name}` || 'OpenDataV'
   exportRaw(
     `${name}.json`,
     JSON.stringify({
+      id: id,
+      name: name,
       canvasData: basicStore.layoutData,
       canvasStyle: basicStore.canvasStyleData
     })
