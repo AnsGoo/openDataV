@@ -6,10 +6,11 @@ const componentList: Record<string, any> = {}
 
 const AsyncComponent = {
   install: (app: App) => {
-    const moduleFilesTs = import.meta.globEager('../resource/components/**/index.ts')
+    const moduleFilesTs: any = import.meta.globEager('../resource/components/**/index.ts')
 
     Object.keys(moduleFilesTs).forEach((key: string) => {
       const componentOptions = moduleFilesTs[key]?.default
+
       if (componentOptions) {
         componentList[componentOptions.componentName] = componentOptions.config
 
