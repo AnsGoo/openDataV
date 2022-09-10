@@ -82,9 +82,11 @@ pnpm build
 
 ## ☎️联系方式
 
-**技术交流，请加钉钉群**
+**技术交流，请加钉钉、微信群**
 
 ![dingtalk](./screenshot/dingtalk.jpg)
+
+![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg)
 
 **更新动态请关注公众号**
 

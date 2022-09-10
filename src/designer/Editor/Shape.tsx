@@ -10,6 +10,8 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 import { BaseComponent } from '@/resource/models'
+import { IconPark } from "@/plugins/icon";
+import styles from '@/css/shape.module.less'
 
 export default defineComponent({
   props: {
@@ -25,7 +27,7 @@ export default defineComponent({
     defaultStyle: Object as PropType<ComponentStyle>,
     index: Number
   },
-  setup(props) {
+  setup(props, { slots }) {
     const basicStore = useBasicStoreWithOut()
     const composeStore = useComposeStoreWithOut()
     const copyStore = useCopyStoreWithOut()
@@ -237,6 +239,12 @@ export default defineComponent({
     }
     
     const selectCurComponent = (e: MouseEvent) => {
+      // 如果键盘 ctrl 键按下，则添加选中组件
+      if (e.ctrlKey) {
+        appendComponent()
+        return
+      }
+
       e.preventDefault()
       if (!props.isInner) {
         e.stopPropagation()
@@ -250,6 +258,10 @@ export default defineComponent({
     }
     
     const dbselectCurComponent = (e: MouseEvent) => {
+      if (!props.isInner) {
+        return
+      }
+
       e.preventDefault()
       if (props.info && (!props.info.parent || props.info.parent?.active)) {
         // 阻止向父组件冒泡
@@ -262,6 +274,10 @@ export default defineComponent({
      * 拉伸组件
      */
     const handleStretchedShape = (point: string, e: MouseEvent) => {
+      if (e.button !== 0) {
+        return
+      }
+
       if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
       e.stopPropagation()
       e.preventDefault()
@@ -308,6 +324,10 @@ export default defineComponent({
      * 旋转组件
      */
     const handleRotate = (e: MouseEvent) => {
+      if (e.button !== 0) {
+        return
+      }
+
       if (!shape.value) {
         return
       }
@@ -478,92 +498,93 @@ export default defineComponent({
       }
     )
 
-    const contentText = () => {
-      return () => (
-        <span class="error-info" v-show="isError">{{ errorInfo }}</span>
-    <icon-park
-      class="rotation"
-      name="one-third-rotation"
-      color="#fff"
-      v-show="isActive"
-      @mousedown.left="handleRotate"
-    />
-    <em v-show="showEm">({{ defaultStyle.left }},{{ defaultStyle.top }})</em>
-    <div
-      :class="['shape-point', 'lt', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '0%', left: '0%' }"
-      @mousedown.left="handleStretchedShape('lt', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 't', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '0%', left: '50%' }"
-      @mousedown.left="handleStretchedShape('t', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'rt', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '0%', left: '100%' }"
-      @mousedown.left="handleStretchedShape('rt', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'r', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '50%', left: '100%' }"
-      @mousedown.left="handleStretchedShape('r', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'rb', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '100%', left: '100%' }"
-      @mousedown.left="handleStretchedShape('rb', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'b', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '100%', left: '50%' }"
-      @mousedown.left="handleStretchedShape('b', $event)"
-    ></div>
-    <div
-      class="shape-point"
-      v-show="isActive"
-      :class="['shape-point', 'lb', rotateClassName]"
-      :style="{ top: '100%', left: '0%' }"
-      @mousedown.left="handleStretchedShape('lb', $event)"
-    ></div>
-    <div
-      :class="['shape-point', 'l', rotateClassName]"
-      v-show="isActive"
-      :style="{ top: '50%', left: '0%' }"
-      @mousedown.left="handleStretchedShape('l', $event)"
-    ></div>
-    <slot></slot>
+    interface PointRenderType {
+      top: string
+      left: string
+      direction: string
+    }
+
+    const pointRenderData: PointRenderType[] = [
+      {
+        top: '0%',
+        left: '0%',
+        direction: 'lt'
+      },
+      {
+        top: '0%',
+        left: '50%',
+        direction: 't'
+      },
+      {
+        top: '0%',
+        left: '100%',
+        direction: 'rt'
+      },
+      {
+        top: '50%',
+        left: '100%',
+        direction: 'r'
+      },
+      {
+        top: '100%',
+        left: '100%',
+        direction: 'rb'
+      },
+      {
+        top: '100%',
+        left: '50%',
+        direction: 'b'
+      },
+      {
+        top: '100%',
+        left: '0%',
+        direction: 'lb'
+      },
+      {
+        top: '50%',
+        left: '0%',
+        direction: 'l'
+      }
+    ]
+    
+    const contentRender = () => {
+      return (
+        <>
+        <span class={styles.errorInfo} v-show={isError.value}>{ errorInfo.value }</span>
+        <IconPark
+          class={styles.rotation}
+          name="one-third-rotation"
+          v-show={isActive.value}
+          onMousedown={handleRotate}
+        />
+        <em v-show={showEm.value}>({ props.defaultStyle!.left },{ props.defaultStyle!.top })</em>
+        {
+          pointRenderData.map((point) => (
+            <div
+              class={[styles.shapePoint, styles[point.direction], styles[rotateClassName.value]]}
+              v-show={isActive.value}
+              style={{ top: point.top, left: point.left }}
+              onMousedown={(event) => handleStretchedShape(point.direction, event)}
+            ></div>
+          ))
+        }
+        {slots.default && slots.default()}
+        </>
       )
     }
     return () => (
-      <>
-        {
-          props.isInner ? <div
+      <div
         ref={shape}
-    class="shape"
-    :class="{ active: isActive || active }"
-    @dblclick.exact="dbselectCurComponent"
-    @click.exact="selectCurComponent"
-    @mousedown="handleDragendShape"
-    v-contextmenu="contextmenus"
-  > </div>: <div
-  v-else
-  ref="shape"
-  class="shape"
-  :class="{ active: isActive || active }"
-  @click.ctrl.exact="appendComponent"
-  @click.exact="selectCurComponent"
-  @mousedown.left="handleDragendShape"
-  v-contextmenu="contextmenus"
->
-    }
-      </>
+        class={[styles.shape, (isActive.value || props.active) ? styles.active: '']}
+        onDblclick={(event) => dbselectCurComponent(event)}
+        onClick={(event) => selectCurComponent(event)}
+        onMousedown={(event) => handleDragendShape(event)}
+        v-contextmenu={(_, event) => contextmenus(_, event)}
+      >
+      {
+        contentRender()
+      }
+      </div>
     )
   }
 })

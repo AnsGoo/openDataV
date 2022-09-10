@@ -1,7 +1,7 @@
 import { UserConfigExport, ConfigEnv, loadEnv, ProxyOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { viteMockServe } from 'vite-plugin-mock'
-import vueJsx from "@vitejs/plugin-vue-jsx"
+import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
 
 // https://vitejs.dev/config/
@@ -77,6 +77,9 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
           },
           javascriptEnabled: true
         }
+      },
+      modules: {
+        localsConvention: 'camelCase'
       }
     }
   }
