@@ -10,7 +10,7 @@ const AsyncComponent = {
 
     Object.keys(moduleFilesTs).forEach((key: string) => {
       const componentOptions = moduleFilesTs[key]?.default
-      console.log('key', moduleFilesTs[key])
+
       if (componentOptions) {
         componentList[componentOptions.componentName] = componentOptions.config
 
