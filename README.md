@@ -63,7 +63,7 @@ gitee 仅做代码同步，issues或者RP请在github提交。
 | ---- | ------- |
 | node | 16.14.x |
 | pnpm | 7.9.3   |
-| vue  | 3.2.20  |
+| vue  | 3.2.37  |
 
 🚥目前仅在`Chrome`和`Microsoft Edge`最新版浏览器测试过，其他浏览器未测试
 
@@ -84,11 +84,11 @@ pnpm build
 
 **技术交流，请加钉钉、微信群**
 
-![dingtalk](./screenshot/dingtalk.jpg)
+![dingtalk](https://image.xingxingzaixian.fun/dingtalk.jpg)
 
 ![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg)
 
 **更新动态请关注公众号**
 
-![wechat](/screenshot/wechat.jpg)
+![wechat](https://image.xingxingzaixian.fun/uPic/gongzhonghao.jpg)
 
