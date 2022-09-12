@@ -2,7 +2,7 @@ import { ComponentGroup } from '@/enum'
 import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'Group'
-export class GroupComponent extends BaseComponent {
+class GroupComponent extends BaseComponent {
   show = false
   constructor(id?: string, name?: string) {
     super({

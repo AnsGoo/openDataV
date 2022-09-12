@@ -3,7 +3,7 @@ import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'Decoration3'
-export class DecorationComponent extends BaseComponent {
+class DecorationComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,
