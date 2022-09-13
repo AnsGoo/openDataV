@@ -1,4 +1,4 @@
-import { defineComponent, reactive, ref, computed, onMounted, onErrorCaptured, watch } from "vue";
+import { defineComponent, reactive, ref, computed, onMounted, onErrorCaptured, watch } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import type { ComponentPublicInstance, PropType } from 'vue'
@@ -10,7 +10,7 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 import { BaseComponent } from '@/resource/models'
-import { IconPark } from "@/plugins/icon";
+import { IconPark } from '@/plugins/icon'
 import styles from '@/css/shape.module.less'
 
 export default defineComponent({
@@ -57,7 +57,7 @@ export default defineComponent({
      * 复制组件ID
      */
     const copyComponentId = () => {
-      let id = basicStore.curComponent!.id
+      const id = basicStore.curComponent!.id
       copyText(id as string)
     }
 
@@ -127,8 +127,6 @@ export default defineComponent({
     const showEm = computed(() => basicStore.isShowEm)
 
     const shape = ref<ElRef>(null)
-
-
 
     const cursors = ref({})
 
@@ -376,7 +374,7 @@ export default defineComponent({
         { start: 248, end: 293, cursor: 'sw' },
         { start: 293, end: 338, cursor: 'w' }
       ]
-      const initialAngle: Recordable<number> = ({
+      const initialAngle: Recordable<number> = {
         // 每个点对应的初始角度
         lt: 0,
         t: 45,
@@ -386,8 +384,10 @@ export default defineComponent({
         b: 225,
         lb: 270,
         l: 315
-      })
-      ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l'].forEach((point: string) => {
+      }
+
+      const points = ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l']
+      points.forEach((point: string) => {
         const angle: number = mod360(initialAngle[point] + rotate)
         const len: number = angleToCursor.length
         while (true) {
@@ -551,24 +551,26 @@ export default defineComponent({
     const contentRender = () => {
       return (
         <>
-          <span class={styles.errorInfo} v-show={isError.value}>{errorInfo.value}</span>
+          <span class={styles.errorInfo} v-show={isError.value}>
+            {errorInfo.value}
+          </span>
           <IconPark
             class={styles.rotation}
             name="one-third-rotation"
             v-show={isActive.value}
             onMousedown={handleRotate}
           />
-          <em v-show={showEm.value}>({props.defaultStyle!.left},{props.defaultStyle!.top})</em>
-          {
-            pointRenderData.map((point) => (
-              <div
-                class={[styles.shapePoint, styles[point.direction], styles[rotateClassName.value]]}
-                v-show={isActive.value}
-                style={{ top: point.top, left: point.left }}
-                onMousedown={(event) => handleStretchedShape(point.direction, event)}
-              ></div>
-            ))
-          }
+          <em v-show={showEm.value}>
+            ({props.defaultStyle!.left},{props.defaultStyle!.top})
+          </em>
+          {pointRenderData.map((point) => (
+            <div
+              class={[styles.shapePoint, styles[point.direction], styles[rotateClassName.value]]}
+              v-show={isActive.value}
+              style={{ top: point.top, left: point.left }}
+              onMousedown={(event) => handleStretchedShape(point.direction, event)}
+            ></div>
+          ))}
           {slots.default && slots.default()}
         </>
       )
@@ -576,15 +578,13 @@ export default defineComponent({
     return () => (
       <div
         ref={shape}
-        class={[styles.shape, (isActive.value || props.active) ? styles.active : '']}
+        class={[styles.shape, isActive.value || props.active ? styles.active : '']}
         onDblclick={(event) => dbselectCurComponent(event)}
         onClick={(event) => selectCurComponent(event)}
         onMousedown={(event) => handleDragendShape(event)}
         v-contextmenu={(_, event) => contextmenus(_, event)}
       >
-        {
-          contentRender()
-        }
+        {contentRender()}
       </div>
     )
   }
