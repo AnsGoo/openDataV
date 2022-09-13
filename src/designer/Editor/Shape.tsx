@@ -36,23 +36,23 @@ export default defineComponent({
       copyStore.copy()
       copyText(JSON.stringify(basicStore.curComponent?.toJson()))
     }
-    
+
     const deleteComponent = () => {
       basicStore.removeComponent(props.index!, props.info!.parent)
     }
-    
+
     const upComponent = () => {
       basicStore.upComponent(props.index!, props.info!.parent)
     }
-    
+
     const downComponent = () => {
       basicStore.downComponent(props.index!, props.info!.parent)
     }
-    
+
     const topComponent = () => {
       basicStore.topComponent(props.index!, props.info!.parent)
     }
-    
+
     /**
      * 复制组件ID
      */
@@ -60,15 +60,15 @@ export default defineComponent({
       let id = basicStore.curComponent!.id
       copyText(id as string)
     }
-    
+
     const bottomComponent = () => {
       basicStore.bottomComponent(props.index!, props.info!.parent)
     }
-    
+
     const decompose = () => {
       basicStore.decompose()
     }
-    
+
     const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
       // 如果当前有选中组件，并且接受到contextmenu事件的组件正是当前组件，就停止事件冒泡
       if (basicStore.curComponent && basicStore.curComponent.id === props.info!.id) {
@@ -80,7 +80,7 @@ export default defineComponent({
       } else {
         return
       }
-    
+
       return [
         {
           text: '拆分',
@@ -123,41 +123,21 @@ export default defineComponent({
         }
       ]
     }
-    
+
     const showEm = computed(() => basicStore.isShowEm)
-    
+
     const shape = ref<ElRef>(null)
-    const pointList = reactive<Array<string>>(['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l'])
-    const initialAngle = reactive<Recordable<number>>({
-      // 每个点对应的初始角度
-      lt: 0,
-      t: 45,
-      rt: 90,
-      r: 135,
-      rb: 180,
-      b: 225,
-      lb: 270,
-      l: 315
-    })
-    const angleToCursor = reactive([
-      // 每个范围的角度对应的光标
-      { start: 338, end: 23, cursor: 'nw' },
-      { start: 23, end: 68, cursor: 'n' },
-      { start: 68, end: 113, cursor: 'ne' },
-      { start: 113, end: 158, cursor: 'e' },
-      { start: 158, end: 203, cursor: 'se' },
-      { start: 203, end: 248, cursor: 's' },
-      { start: 248, end: 293, cursor: 'sw' },
-      { start: 293, end: 338, cursor: 'w' }
-    ])
+
+
+
     const cursors = ref({})
-    
+
     const borderWidth = ref<string>('0px')
     const borderColor = ref<string>('#fff0')
     const borderStyle = ref<string>('none')
     const isError = ref<boolean>(false)
     const errorInfo = ref<string>('')
-    
+
     onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: string) => {
       console.log(err)
       if (info === 'render function') {
@@ -178,15 +158,15 @@ export default defineComponent({
         return true
       }
     })
-    
+
     const isActive = computed<boolean>(() => {
       return (props.active && !props.info!.locked) || composeStore.isActived(props.info!)
     })
-    
+
     const appendComponent = () => {
       composeStore.appendComponent(props.info!)
     }
-    
+
     /**
      * 拖动组件
      */
@@ -196,30 +176,30 @@ export default defineComponent({
       if (!props.info!.parent) {
         e.stopPropagation()
       }
-    
+
       // 如果没选择组件，或者选中的组件不是自己，就把事件向外冒泡
       if (!basicStore.curComponent || props.info!.id !== basicStore.curComponent.id) return
-    
+
       // 如果组件锁定了，就把事件向外冒泡
       if (props.info!.locked) return
-    
+
       e.stopPropagation()
       cursors.value = getCursor()
-    
+
       let { top, left } = props.defaultStyle!
       const startY = e.clientY
       const startX = e.clientX
       // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
       const startTop = top
       const startLeft = left
-    
+
       // 如果元素没有移动，则不保存快照
       const move = (moveEvent) => {
         const curX = moveEvent.clientX
         const curY = moveEvent.clientY
         top = curY - startY + startTop
         left = curX - startX + startLeft
-    
+
         // // 修改当前组件样式
         basicStore.syncComponentLoction({ top, left }, props.info!.parent, false)
       }
@@ -233,11 +213,11 @@ export default defineComponent({
         }
         basicStore.saveComponentData()
       }
-    
+
       document.addEventListener('mousemove', move)
       document.addEventListener('mouseup', up)
     }
-    
+
     const selectCurComponent = (e: MouseEvent) => {
       // 如果键盘 ctrl 键按下，则添加选中组件
       if (e.ctrlKey) {
@@ -256,7 +236,7 @@ export default defineComponent({
         }
       }
     }
-    
+
     const dbselectCurComponent = (e: MouseEvent) => {
       if (!props.isInner) {
         return
@@ -269,7 +249,7 @@ export default defineComponent({
         basicStore.setCurComponent(props.info, props.index!.toString())
       }
     }
-    
+
     /**
      * 拉伸组件
      */
@@ -281,7 +261,7 @@ export default defineComponent({
       if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
       e.stopPropagation()
       e.preventDefault()
-    
+
       const position = {
         top: props.defaultStyle!.top,
         left: props.defaultStyle!.left,
@@ -291,22 +271,22 @@ export default defineComponent({
       }
       // 获取画布位移信息
       const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-    
+
       // 获取 point 与实际拖动基准点的差值 @justJokee
       // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
-    
-      const move = (moveEvent) => {
+
+      const move = (moveEvent: MouseEvent) => {
         // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
         // 因此第一次点击时不触发 move 事件
         const curPositon: Vector = {
           x: moveEvent.clientX - editorRectInfo.left,
           y: moveEvent.clientY - editorRectInfo.top
         }
-    
+
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)
         basicStore.syncComponentLoction({ top, left, width, height }, props.info!.parent, false)
       }
-    
+
       const up = () => {
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
@@ -315,11 +295,11 @@ export default defineComponent({
         }
         basicStore.saveComponentData()
       }
-    
+
       document.addEventListener('mousemove', move)
       document.addEventListener('mouseup', up)
     }
-    
+
     /**
      * 旋转组件
      */
@@ -335,24 +315,24 @@ export default defineComponent({
       e.stopPropagation()
       if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
       if (props.info!.locked) return
-    
+
       // 初始坐标和初始角度
       let { rotate } = { ...props.defaultStyle! }
       const startY: number = e.clientY
       const startX: number = e.clientX
       const startRotate: number = rotate
-    
+
       // 获取元素中心点位置
       const rect: DOMRect = shape.value.getBoundingClientRect()
       const centerX: number = rect.left + rect.width / 2
       const centerY: number = rect.top + rect.height / 2
-    
+
       // 旋转前的角度
       const rotateDegreeBefore = Math.atan2(startY - centerY, startX - centerX) / (Math.PI / 180)
-    
+
       // 如果元素没有移动，则不保存快照
       // let hasMove = false
-      const move = (moveEvent) => {
+      const move = (moveEvent: MouseEvent) => {
         // hasMove = true
         const curX = moveEvent.clientX
         const curY = moveEvent.clientY
@@ -363,7 +343,7 @@ export default defineComponent({
         // 修改当前组件样式
         basicStore.syncComponentLoction({ rotate }, props.info!.parent, false)
       }
-    
+
       const up = () => {
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
@@ -372,21 +352,42 @@ export default defineComponent({
         }
         basicStore.saveComponentData()
       }
-    
+
       document.addEventListener('mousemove', move)
       document.addEventListener('mouseup', up)
     }
-    
+
     const getCursor = () => {
       if (!basicStore.curComponent) {
         return {}
       }
-    
+
       const rotate: number = mod360(basicStore.curComponent!.style.rotate) // 取余 360
       const result = {}
       let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
-    
-      pointList.forEach((point) => {
+      const angleToCursor = [
+        // 每个范围的角度对应的光标
+        { start: 338, end: 23, cursor: 'nw' },
+        { start: 23, end: 68, cursor: 'n' },
+        { start: 68, end: 113, cursor: 'ne' },
+        { start: 113, end: 158, cursor: 'e' },
+        { start: 158, end: 203, cursor: 'se' },
+        { start: 203, end: 248, cursor: 's' },
+        { start: 248, end: 293, cursor: 'sw' },
+        { start: 293, end: 338, cursor: 'w' }
+      ]
+      const initialAngle: Recordable<number> = ({
+        // 每个点对应的初始角度
+        lt: 0,
+        t: 45,
+        rt: 90,
+        r: 135,
+        rb: 180,
+        b: 225,
+        lb: 270,
+        l: 315
+      })
+      ['lt', 't', 'rt', 'r', 'rb', 'b', 'lb', 'l'].forEach((point: string) => {
         const angle: number = mod360(initialAngle[point] + rotate)
         const len: number = angleToCursor.length
         while (true) {
@@ -396,7 +397,7 @@ export default defineComponent({
             result[point] = 'nw-resize'
             return
           }
-    
+
           if (angleLimit.start <= angle && angle < angleLimit.end) {
             result[point] = angleLimit.cursor + '-resize'
             return
@@ -405,7 +406,7 @@ export default defineComponent({
       })
       return result
     }
-    
+
     const rotateClassName = computed(() => {
       const prefix = 'rotate-'
       const rotate = props.defaultStyle!.rotate
@@ -419,14 +420,14 @@ export default defineComponent({
       else if (rotate > -67.5 && rotate <= -22.5) return prefix + 135
       return prefix + 0
     })
-    
+
     /**
      * 方向键控制组件移动
      */
     const keyDown = (e: KeyboardEvent): void => {
       document.addEventListener('keyup', keyUp)
       if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
-    
+
       e.stopPropagation()
       if (props.info && e.ctrlKey) {
         switch (e.key) {
@@ -471,10 +472,10 @@ export default defineComponent({
         }
       }
     }
-    
+
     const keyUp = (e: KeyboardEvent): void => {
       if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
-    
+
       e.stopPropagation()
       if (props.info) {
         basicStore.resizeAutoComponent(props.info.parent)
@@ -486,7 +487,7 @@ export default defineComponent({
     onMounted(() => {
       cursors.value = getCursor()
     })
-    
+
     watch(
       () => basicStore.curComponent,
       (newValue: BaseComponent | undefined) => {
@@ -546,44 +547,44 @@ export default defineComponent({
         direction: 'l'
       }
     ]
-    
+
     const contentRender = () => {
       return (
         <>
-        <span class={styles.errorInfo} v-show={isError.value}>{ errorInfo.value }</span>
-        <IconPark
-          class={styles.rotation}
-          name="one-third-rotation"
-          v-show={isActive.value}
-          onMousedown={handleRotate}
-        />
-        <em v-show={showEm.value}>({ props.defaultStyle!.left },{ props.defaultStyle!.top })</em>
-        {
-          pointRenderData.map((point) => (
-            <div
-              class={[styles.shapePoint, styles[point.direction], styles[rotateClassName.value]]}
-              v-show={isActive.value}
-              style={{ top: point.top, left: point.left }}
-              onMousedown={(event) => handleStretchedShape(point.direction, event)}
-            ></div>
-          ))
-        }
-        {slots.default && slots.default()}
+          <span class={styles.errorInfo} v-show={isError.value}>{errorInfo.value}</span>
+          <IconPark
+            class={styles.rotation}
+            name="one-third-rotation"
+            v-show={isActive.value}
+            onMousedown={handleRotate}
+          />
+          <em v-show={showEm.value}>({props.defaultStyle!.left},{props.defaultStyle!.top})</em>
+          {
+            pointRenderData.map((point) => (
+              <div
+                class={[styles.shapePoint, styles[point.direction], styles[rotateClassName.value]]}
+                v-show={isActive.value}
+                style={{ top: point.top, left: point.left }}
+                onMousedown={(event) => handleStretchedShape(point.direction, event)}
+              ></div>
+            ))
+          }
+          {slots.default && slots.default()}
         </>
       )
     }
     return () => (
       <div
         ref={shape}
-        class={[styles.shape, (isActive.value || props.active) ? styles.active: '']}
+        class={[styles.shape, (isActive.value || props.active) ? styles.active : '']}
         onDblclick={(event) => dbselectCurComponent(event)}
         onClick={(event) => selectCurComponent(event)}
         onMousedown={(event) => handleDragendShape(event)}
         v-contextmenu={(_, event) => contextmenus(_, event)}
       >
-      {
-        contentRender()
-      }
+        {
+          contentRender()
+        }
       </div>
     )
   }
