@@ -55,7 +55,6 @@ const useBasicStore = defineStore({
       return this.editMode === EditMode.EDIT
     },
     canvasData(): CanvasStyleData {
-      console.log(this.canvasStyleData.color)
       return new Proxy(this.canvasStyleData, storeCanvasHandler)
     },
     layoutData(): ComponentDataType[] {
