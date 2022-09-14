@@ -81,5 +81,6 @@ export type {
   AttrType,
   DOMRectStyle,
   GroupStyle,
-  CustomFormSchema
+  CustomFormSchema,
+  InputNumberFormSchema
 }

@@ -10,6 +10,7 @@
         :icon="item.icon"
       />
     </div>
+    <div class="tool-bar-title">{{ basicStore.name }}</div>
     <div class="tool-bar-item">
       <ToolBarItem
         v-for="(item, index) in rightToolBars"
@@ -39,6 +40,8 @@ import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 import showIconCard from './modules/iconList'
 import showSaveCard from './modules/save'
 import ToolBarItem from './ToolBarItem.vue'
+import { useBasicStoreWithOut } from '@/store/modules/basic'
+const basicStore = useBasicStoreWithOut()
 
 const router = useRouter()
 const route = useRoute()
@@ -84,7 +87,7 @@ const toolBars: ToolBarItemType[] = [
   },
   {
     label: '导出',
-    action: exportCanvas,
+    action: () => exportCanvas((route.params.index as string) || ''),
     icon: 'download-one',
     location: 'left'
   },
@@ -143,5 +146,10 @@ button {
   border: none;
   padding: 5px 5px;
   margin: auto 3px;
+}
+
+.tool-bar-title {
+  font-size: 20px;
+  font-weight: 400;
 }
 </style>

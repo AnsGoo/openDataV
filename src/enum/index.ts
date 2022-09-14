@@ -104,19 +104,19 @@ export enum FormType {
   // 数值框
   NUMBER = 'number',
   // 下拉选择框，需要固定值的属性，防止人员填写错误
-  SELECT = 'select',
+  SELECT = 'NSelect',
   // 颜色选择框，颜色相关的属性使用
-  COLOR = 'color',
+  COLOR = 'NColorPicker',
   // 单选框
   RADIO = 'radio',
   // 开关，主要为 true、false 值使用
-  SWITCH = 'switch',
+  SWITCH = 'NSwitch',
   //  字体选择
-  FONT_STYLE = 'fontStyle',
+  FONT_STYLE = 'FontStyle',
   //  字重选择
-  FONT_WEIGHT = 'fontWeight',
+  FONT_WEIGHT = 'FontWeight',
   // 背景色渐变选择
-  LINEAR_GRADIENT = 'linearGradient',
+  LINEAR_GRADIENT = 'LinearGradient',
   // 自定义
   CUSTOM = 'custom'
 }

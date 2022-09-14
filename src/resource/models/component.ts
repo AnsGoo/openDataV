@@ -234,7 +234,7 @@ export abstract class BaseComponent {
     }
   }
 
-  change(prop: string, value: string | number | boolean, form?: string) {
+  change(prop: string, value: string | number | boolean | any, form?: string) {
     if (form) {
       this.changeProp(form, prop, value)
     } else {
@@ -242,7 +242,7 @@ export abstract class BaseComponent {
     }
   }
   // 修改属性
-  changeProp(form: string, prop: string, value: string | number | boolean) {
+  changeProp(form: string, prop: string, value: string | number | boolean | any) {
     if (form === 'common' && prop === 'name') {
       this.name = value as string
       return
@@ -265,7 +265,7 @@ export abstract class BaseComponent {
   }
 
   // 修改样式
-  changeStyle(prop: string, value: string | number | boolean) {
+  changeStyle(prop: string, value: string | number | boolean | any) {
     for (const item of this.styleFormValue) {
       const propObj = item.children.find((obj) => obj.prop === prop)
       if (!propObj) continue

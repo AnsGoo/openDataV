@@ -26,7 +26,7 @@ class ImageComponent extends BaseComponent {
           label: '背景色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: 'skyblue'
+            defaultValue: '#14C9C9'
           }
         },
         {

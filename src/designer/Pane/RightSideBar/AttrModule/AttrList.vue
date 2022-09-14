@@ -24,7 +24,7 @@
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, reactive, watch } from 'vue'
-import FormAttr from '@/designer/modules/form/FormAttr.vue'
+import FormAttr from '@/designer/modules/form/FormAttr'
 import { cleanObjectProp } from '@/utils/utils'
 import { NCollapse, NCollapseItem } from 'naive-ui'
 import { BaseComponent } from '@/resource/models'
