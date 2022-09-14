@@ -3,7 +3,7 @@ import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'BasicLineChart'
-export class BasicLineChartComponent extends BaseComponent {
+class BasicLineChartComponent extends BaseComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,

@@ -1,13 +1,18 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
+import Group from '@/components/Group'
 
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}
 
 const AsyncComponent = {
   install: (app: App) => {
-    const moduleFilesTs: any = import.meta.globEager('../resource/components/**/index.ts')
+    // 注册Group组件
+    componentList[Group.componentName] = Group.config
+    const AsyncComp = defineAsyncComponent(Group.component)
+    app.component(Group.componentName, AsyncComp)
 
+    const moduleFilesTs: any = import.meta.globEager('../resource/components/**/index.ts')
     Object.keys(moduleFilesTs).forEach((key: string) => {
       const componentOptions = moduleFilesTs[key]?.default
 

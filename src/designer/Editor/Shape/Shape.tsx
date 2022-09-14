@@ -11,7 +11,7 @@ import { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 import { BaseComponent } from '@/resource/models'
 import { IconPark } from '@/plugins/icon'
-import styles from '@/css/shape.module.less'
+import styles from './shape.module.less'
 
 export default defineComponent({
   props: {

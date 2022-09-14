@@ -53,12 +53,10 @@ const linearGradient = ref<LinearGradient>({
 
 const emits = defineEmits<{
   (e: 'update:value', value: LinearGradient): void
-  (e: 'change', value: LinearGradient): void
 }>()
 
 const changed = (key: string, value: string | number | null) => {
   linearGradient.value[key] = value
   emits('update:value', linearGradient.value)
-  emits('change', linearGradient.value)
 }
 </script>

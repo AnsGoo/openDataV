@@ -11,7 +11,6 @@ import { useProp } from '@/resource/hooks'
 import SubTextComponent from './config'
 
 const props = defineProps<{
-  componentId: string
   component: SubTextComponent
 }>()
 

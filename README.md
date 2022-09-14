@@ -63,7 +63,7 @@ gitee 仅做代码同步，issues或者RP请在github提交。
 | ---- | ------- |
 | node | 16.14.x |
 | pnpm | 7.9.3   |
-| vue  | 3.2.20  |
+| vue  | 3.2.37  |
 
 🚥目前仅在`Chrome`和`Microsoft Edge`最新版浏览器测试过，其他浏览器未测试
 

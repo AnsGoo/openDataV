@@ -3,7 +3,7 @@ import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'DateText'
-export class DateTextComponent extends BaseComponent {
+class DateTextComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,

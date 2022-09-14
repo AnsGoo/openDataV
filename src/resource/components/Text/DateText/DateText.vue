@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import dayjs from 'dayjs'
-import { DateTextComponent } from './config'
+import DateTextComponent from './config'
 import { useProp } from '@/resource/hooks'
 import { DateText } from './type'
 

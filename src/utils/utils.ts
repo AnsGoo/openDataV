@@ -26,6 +26,7 @@ export function excludeStyle(style: Recordable<any>, excludes: Array<string> = [
       result = { ...result, ...css }
     }
   })
+
   return result
 }
 
@@ -413,7 +414,10 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
     case 'backgroundImage':
       return { backgroundImage: value ? `url(${value})` : null }
     case 'linearGradient':
-      return { background: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})` }
+      return {
+        backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
+      }
+
     default:
       return { [key]: value }
   }

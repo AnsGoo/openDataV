@@ -3,7 +3,7 @@ import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'Image'
-export class ImageComponent extends BaseComponent {
+class ImageComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,
@@ -26,7 +26,7 @@ export class ImageComponent extends BaseComponent {
           label: '背景色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: 'skyblue'
+            defaultValue: '#14C9C9'
           }
         },
         {

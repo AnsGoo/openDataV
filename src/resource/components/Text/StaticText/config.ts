@@ -3,7 +3,7 @@ import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'StaticText'
-export class StaticTextComponent extends BaseComponent {
+class StaticTextComponent extends BaseComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,

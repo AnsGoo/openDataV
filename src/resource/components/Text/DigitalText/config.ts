@@ -2,13 +2,13 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 
-export const componentName = 'SubText'
-class SubTextComponent extends BaseComponent {
+export const componentName = 'Digital'
+class DigitalTextComponent extends BaseComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,
       group: ComponentGroup.TEXT,
-      name: name ? name : '数据订阅文本',
+      name: name ? name : '数字文本',
       id,
       width: 100,
       height: 30,
@@ -18,36 +18,21 @@ class SubTextComponent extends BaseComponent {
 
   _prop: PropsType[] = [
     {
-      label: '基础配置',
-      prop: 'base',
+      label: '数据配置',
+      prop: 'dataconfig',
       children: [
         {
-          prop: 'tagName',
-          label: '数据标签',
-          type: FormType.TEXT,
+          prop: 'data',
+          label: '数据',
+          type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: ''
-          }
-        },
-        {
-          prop: 'url',
-          label: '获取数据API',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: ''
-          }
-        },
-        {
-          prop: 'unit',
-          label: '单位',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: ''
+            defaultValue: 10
           }
         }
       ]
     }
   ]
+
   _style: PropsType[] = [
     {
       label: '字体设置',
@@ -58,7 +43,7 @@ class SubTextComponent extends BaseComponent {
           label: '颜色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: '#1E90FF'
+            defaultValue: 'skyblue'
           }
         },
         {
@@ -90,4 +75,4 @@ class SubTextComponent extends BaseComponent {
   ]
 }
 
-export default SubTextComponent
+export default DigitalTextComponent
