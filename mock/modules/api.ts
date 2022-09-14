@@ -37,16 +37,12 @@ export default [
     }
   },
   {
-    url: '/pages/:index',
+    url: '/page',
     method: 'get',
     statusCode: 200,
-    rawResponse: async (req, res) => {
-      const index: string = req.url.replace('/pages/', '')
-      const data = dataDict[index]
-      const reqbody = JSON.stringify(data)
-      res.setHeader('Content-Type', 'application/json')
-      res.statusCode = 200
-      res.end(reqbody)
+    response: ({ query }: any) => {
+      const index: string = query['index']
+      return dataDict[index]
     }
   }
 ]

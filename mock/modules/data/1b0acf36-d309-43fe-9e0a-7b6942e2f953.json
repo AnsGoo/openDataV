@@ -1,6 +1,6 @@
 {
   "id": "1b0acf36-d309-43fe-9e0a-7b6942e2f953",
-  "name": "全国疫情分布图",
+  "name": "大秦疫情分布图",
   "thumbnail": "http://image.xingxingzaixian.fun/pages/2.png",
   "author": "OpenDataV",
   "isHome": true,
@@ -162,6 +162,8 @@
   "canvasStyle": {
     "width": 1920,
     "height": 1080,
-    "scale": 100
+    "scale": 100,
+    "color": "#084860",
+    "image": ""
   }
 }
