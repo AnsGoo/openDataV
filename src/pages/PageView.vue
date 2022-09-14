@@ -12,22 +12,30 @@ import { useRoute, useRouter } from 'vue-router'
 import { filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { LayoutData } from '@/types/apiTypes'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent, createComponent } from '@/resource/models'
 
 const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({
   width: 0,
   height: 0,
   scale: 0,
-  image: import.meta.env.VITE_BACKGROUND as string
+  image: import.meta.env.VITE_BACKGROUND as string,
+  color: '#084860'
 })
 const bgStyle = computed<Recordable<string>>(() => {
   const style = {
     ...canvasStyle.value,
     backgroundImage: canvasStyle.value.image,
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    backgroundColor: canvasStyle.value.color || '#084860'
   }
-  return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
+  return filterStyle(style, [
+    'width',
+    'height',
+    'backgroundImage',
+    'backgroundSize',
+    'backgroundColor'
+  ])
 })
 const route = useRoute()
 const router = useRouter()
@@ -49,7 +57,9 @@ const setPageData = (data: LayoutData): void => {
     canvasStyle.value = data.canvasStyle
   }
   if (data.canvasData) {
-    componentData.value = data.canvasData
+    componentData.value = data.canvasData.map((ele) => {
+      return createComponent(ele)
+    })
   }
   setScale()
 }

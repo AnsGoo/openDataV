@@ -17,7 +17,8 @@ const baseCanvasStyleData: CanvasStyleData = {
   width: window.screen.width,
   height: window.screen.height,
   scale: 100,
-  image: import.meta.env.VITE_BACKGROUND as string
+  image: import.meta.env.VITE_BACKGROUND as string,
+  color: '#084860'
 }
 
 window.localStorage.setItem('canvasData', JSON.stringify([]))
@@ -54,6 +55,7 @@ const useBasicStore = defineStore({
       return this.editMode === EditMode.EDIT
     },
     canvasData(): CanvasStyleData {
+      console.log(this.canvasStyleData.color)
       return new Proxy(this.canvasStyleData, storeCanvasHandler)
     },
     layoutData(): ComponentDataType[] {
@@ -98,6 +100,7 @@ const useBasicStore = defineStore({
     },
     setCanvasStyle(style: CanvasStyleData): void {
       this.canvasStyleData = style
+      this.saveComponentData()
     },
 
     /**

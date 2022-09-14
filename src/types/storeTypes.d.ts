@@ -6,6 +6,7 @@ export interface CanvasStyleData {
   height: number
   scale: number
   image: string
+  color: string
 }
 
 export interface EditData {

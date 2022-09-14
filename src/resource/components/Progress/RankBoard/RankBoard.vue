@@ -113,7 +113,6 @@ const updateData = (results: Record[]) => {
   dataSource.value = results
 }
 const loadData = async () => {
-  console.log()
   if (propValue.data.url) {
     try {
       const resp = await http.post({

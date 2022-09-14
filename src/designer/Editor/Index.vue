@@ -164,9 +164,16 @@ const bgStyle = computed<Recordable<string>>(() => {
   const style = {
     ...canvasStyleData.value,
     backgroundImage: canvasStyleData.value.image,
-    backgroundSize: 'cover'
+    backgroundSize: 'cover',
+    backgroundColor: canvasStyleData.value.color || '#084860'
   }
-  return filterStyle(style, ['width', 'height', 'backgroundImage', 'backgroundSize'])
+  return filterStyle(style, [
+    'width',
+    'height',
+    'backgroundImage',
+    'backgroundSize',
+    'backgroundColor'
+  ])
 })
 
 const pasteComponent = (event: ClipboardEvent) => {
