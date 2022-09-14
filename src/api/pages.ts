@@ -6,7 +6,8 @@ import { AxiosResponse } from 'axios'
 // 获取页面数据
 export const getPage = async (index: string): Promise<AxiosResponse<LayoutData>> => {
   return http.get<LayoutData>({
-    url: `/pages/${index}`
+    url: `/page`,
+    params: { index }
   })
 }
 
