@@ -6,7 +6,6 @@ export const useProp = <T>(
   callbackStyle?: (key: string, value: any) => void
 ): { component: BaseComponent; propValue: T } => {
   if (callbackProp) {
-    console.log(component)
     component.changePropCallback(callbackProp)
   }
 
