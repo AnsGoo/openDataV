@@ -72,6 +72,9 @@ export enum ComponentGroup {
   TEXT = 'TEXT',
   BUTTON = 'BUTTON',
 
+  // 表格
+  TABLE = 'TABLE',
+
   // 其他组件
   NAVIFATION = 'NAVIFATION',
   PROGERSS = 'PROGERSS',
@@ -90,6 +93,7 @@ export const ComponentGroupList: GroupType[] = [
   new GroupType('仪表盘', ComponentGroup.GAUGE, 'Dashboard'),
   new GroupType('按钮', ComponentGroup.BUTTON, 'SwitchButton'),
   new GroupType('文本', ComponentGroup.TEXT, 'Text'),
+  new GroupType('表格', ComponentGroup.TABLE, 'TableFile'),
   new GroupType('温度计', ComponentGroup.THERMOMETER, 'Thermometer'),
   new GroupType('导航', ComponentGroup.NAVIFATION, 'HamburgerButton'),
   new GroupType('进度图', ComponentGroup.PROGERSS, 'LoadingThree'),
@@ -118,7 +122,9 @@ export enum FormType {
   // 背景色渐变选择
   LINEAR_GRADIENT = 'LinearGradient',
   // 自定义
-  CUSTOM = 'custom'
+  CUSTOM = 'custom',
+  // 数组框
+  ARRAY = 'array'
 }
 
 export enum EChartTypeEnum {

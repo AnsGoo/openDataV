@@ -62,7 +62,8 @@ import {
   Unlock,
   Code,
   Editor,
-  OneThirdRotation
+  OneThirdRotation,
+  TableFile
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -133,5 +134,6 @@ export default {
     app.component(Code.name, Code)
     app.component(Editor.name, Editor)
     app.component(OneThirdRotation.name, OneThirdRotation)
+    app.component(TableFile.name, TableFile)
   }
 }
