@@ -3,10 +3,9 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from '@/resource/hooks'
 import { BaseComponent } from '@/resource/models'
 
-const props = defineProps<{
+defineProps<{
   component: BaseComponent
 }>()
 </script>

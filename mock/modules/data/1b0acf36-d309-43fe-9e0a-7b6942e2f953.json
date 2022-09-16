@@ -203,7 +203,7 @@
           "name": "基础柱状图",
           "propValue": {
             "data": {
-              "url": "getRiskArea",
+              "url": "/getRiskArea",
               "upperLimit": 150,
               "lowerLimit": 0,
               "max": "dataMax",
