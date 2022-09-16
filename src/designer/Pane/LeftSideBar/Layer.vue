@@ -124,10 +124,8 @@ const copy = (index: string) => {
 }
 
 const remove = async (index: string) => {
-  console.log(index)
   handleSelect(index)
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  console.log(basicStore.curComponent?.parent)
   basicStore.removeComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
 }
 
