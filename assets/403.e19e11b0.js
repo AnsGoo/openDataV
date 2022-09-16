@@ -1,1 +1,0 @@
-import{d as t,Z as _,o as n,b as r,P as e,_ as c}from"./index.3fe0a683.js";const a=""+new URL("../errors/403.png",import.meta.url).href,d={class:"notfound"},p=t({__name:"403",setup(m){const o=_(),s=()=>{o.push({name:"Home"})};return(u,i)=>(n(),r("div",d,[e("div",null,[e("img",{src:a,onClick:s})])]))}});const f=c(p,[["__scopeId","data-v-0deb5d38"]]);export{f as default};
