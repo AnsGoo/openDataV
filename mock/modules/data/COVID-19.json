@@ -1,5 +1,19 @@
 [
   {
+    "New": 49660,
+    "NoSymptom": 0,
+    "total": 5804343,
+    "RiskArea": 0,
+    "province": "台湾"
+  },
+  {
+    "New": 986,
+    "NoSymptom": 0,
+    "total": 402928,
+    "RiskArea": 0,
+    "province": "香港"
+  },
+  {
     "New": 88,
     "NoSymptom": 163,
     "total": 5072,

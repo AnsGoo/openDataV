@@ -33,8 +33,7 @@ export default defineComponent({
     const copyStore = useCopyStoreWithOut()
 
     const copy = () => {
-      copyStore.copy()
-      copyText(JSON.stringify(basicStore.curComponent?.toJson()))
+      copyStore.copy(basicStore.curComponent!)
     }
 
     const deleteComponent = () => {
