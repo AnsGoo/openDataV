@@ -41,11 +41,21 @@ interface CustomFormSchema extends BaseFormSchema {
   args: any
 }
 
+interface ArrayFormSchema extends BaseFormSchema {
+  max: number
+  type: 'static' | 'dynamic'
+}
+
 interface AttrType {
   prop: string
   label: string
   type?: FormType
-  componentOptions: InputFormSchema | InputNumberFormSchema | CustomFormSchema | BaseFormSchema
+  componentOptions:
+    | InputFormSchema
+    | InputNumberFormSchema
+    | CustomFormSchema
+    | ArrayFormSchema
+    | BaseFormSchema
   help?: string
 }
 

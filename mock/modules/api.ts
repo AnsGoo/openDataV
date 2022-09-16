@@ -1,5 +1,6 @@
 import { Random } from 'mockjs'
 import dataDict from './data'
+import { Covid19Data } from './data'
 
 export default [
   {
@@ -43,6 +44,62 @@ export default [
     response: ({ query }: any) => {
       const index: string = query['index']
       return dataDict[index]
+    }
+  },
+  {
+    url: '/getNew',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      // console.log(Covid19Data)
+      return Covid19Data.filter((el) => el.New > 0).map((el) => {
+        return {
+          label: el.province,
+          value: el.New
+        }
+      })
+    }
+  },
+  {
+    url: '/getTotal',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      // console.log(Covid19Data)
+      return Covid19Data.map((el) => {
+        return {
+          label: el.province,
+          value: el.total
+        }
+      })
+    }
+  },
+  {
+    url: '/getNoSymptom',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      // console.log(Covid19Data)
+      return Covid19Data.filter((el) => el.NoSymptom > 0).map((el) => {
+        return {
+          label: el.province,
+          value: el.NoSymptom
+        }
+      })
+    }
+  },
+  {
+    url: '/getRiskArea',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      // console.log(Covid19Data)
+      return Covid19Data.filter((el) => el.RiskArea > 0).map((el) => {
+        return {
+          label: el.province,
+          value: el.RiskArea
+        }
+      })
     }
   }
 ]

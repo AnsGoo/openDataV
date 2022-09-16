@@ -519,3 +519,18 @@ export const loadScript = async (src: string) => {
     if (shouldAppend) document.head.appendChild(el)
   })
 }
+
+export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
+  if (fromIndex && toIndex) {
+    const fromLength = fromIndex.length
+    const toLength = toIndex.length
+    const length = toLength > fromLength ? fromLength : toLength
+    if (fromIndex.substring(0, length) === toIndex.substring(0, length)) {
+      return toLength > fromLength ? false : true
+    } else {
+      return true
+    }
+  } else {
+    return false
+  }
+}

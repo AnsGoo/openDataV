@@ -1,7 +1,7 @@
 {
-  "name": "digitaltext",
+  "name": "scrolltable",
   "version": "1.0.0",
-  "description": "OpenDataV数字展示组件",
+  "description": "OpenDataV滚动表格",
   "main": "index.ts",
   "scripts": {},
   "keywords": [

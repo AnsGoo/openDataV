@@ -6,136 +6,17 @@
   "isHome": false,
   "canvasData": [
     {
-      "id": "3793cc31506441229d16c870b4865a35",
-      "component": "BasicLineChart",
-      "name": "基础线图",
-      "propValue": {
-        "data": {
-          "url": "",
-          "upperLimit": 150,
-          "lowerLimit": 0
-        },
-        "label": {
-          "axisLabelColor": "#3DE7C9",
-          "axisColor": "#3DE7C9"
-        },
-        "axis": {
-          "axisColor": "#00BAFF",
-          "axisLabelColor": "#00BAFF",
-          "xshow": true,
-          "yshow": true,
-          "xLineType": "dotted",
-          "yLineType": "dotted",
-          "xAxisLineColor": "#3391E4",
-          "yAxisLineColor": "#3391E4"
-        },
-        "series": {
-          "lineArea": true,
-          "lineWidth": 1,
-          "lineColor": "#3DE7C9",
-          "lineLinearStart": "#3491FA",
-          "lineLinearEnd": "transparent"
-        }
-      },
-      "style": {
-        "left": 472.99998474121094,
-        "top": 293.402774810791,
-        "width": 500,
-        "height": 170,
-        "rotate": 0
-      },
-      "subComponents": []
-    },
-    {
-      "id": "ac567788784640328af2237edaf8e724",
-      "component": "Decoration1",
-      "name": "1#装饰",
-      "propValue": {
-        "base": {
-          "color1": "#fff",
-          "color2": "#0de7c2",
-          "pointSideLength": 5
-        }
-      },
-      "style": {
-        "left": 705.9999847412109,
-        "top": 221.40277481079102,
-        "width": 200,
-        "height": 60,
-        "rotate": 0
-      },
-      "subComponents": []
-    },
-    {
-      "id": "0ecca6ca5ee04e93bdc6edfc9e8d4d5f",
-      "component": "BorderBox1",
-      "name": "1#边框",
-      "propValue": {
-        "base": {
-          "colorLeft": "#4fd2dd",
-          "colorRight": "#235fa7",
-          "backgroundColor": "transparent"
-        }
-      },
-      "style": {
-        "left": 1150.999984741211,
-        "top": 285.402774810791,
-        "width": 200,
-        "height": 200,
-        "rotate": 0
-      },
-      "subComponents": []
-    },
-    {
-      "id": "3610a7f3384847ffbfa360cf37133f42",
-      "component": "BasicBarChart",
-      "name": "基础柱状图",
-      "propValue": {
-        "data": {
-          "url": "",
-          "upperLimit": 150,
-          "lowerLimit": 0,
-          "max": "dataMax",
-          "min": "0",
-          "maxOffset": 0,
-          "minOffset": 0
-        },
-        "label": {
-          "axisLabelColor": "#3DE7C9",
-          "axisColor": "#3DE7C9"
-        },
-        "axis": {
-          "axisColor": "#00BAFF",
-          "axisLabelColor": "#00BAFF",
-          "xshow": true,
-          "yshow": true,
-          "xLineType": "dotted",
-          "yLineType": "dotted",
-          "xAxisLineColor": "#3391E4",
-          "yAxisLineColor": "#3391E4"
-        }
-      },
-      "style": {
-        "left": 534.9999847412109,
-        "top": 580.402774810791,
-        "width": 500,
-        "height": 170,
-        "rotate": 0
-      },
-      "subComponents": []
-    },
-    {
       "id": "061542f3e49741c480828df97f602392",
       "component": "BasicPieChart",
       "name": "基础饼状图",
       "propValue": {
         "data": {
-          "url": "",
+          "url": "/getNoSymptom",
           "upperLimit": 150,
           "lowerLimit": 0
         },
         "legend": {
-          "isShow": true
+          "isShow": false
         },
         "label": {
           "isShow": true,
@@ -150,13 +31,250 @@
         }
       },
       "style": {
-        "left": 1114.999984741211,
-        "top": 565.402774810791,
-        "width": 520,
+        "left": 558,
+        "top": 633,
+        "width": 316,
         "height": 260,
         "rotate": 0
       },
       "subComponents": []
+    },
+    {
+      "id": "4d777689ddcf4f3dae13d487aff677e1",
+      "component": "Group",
+      "name": "每日新增曲线",
+      "propValue": {},
+      "style": {
+        "left": 98,
+        "top": 133,
+        "width": 1350,
+        "height": 205,
+        "rotate": 0
+      },
+      "subComponents": [
+        {
+          "id": "e0aa2d93dc5d4906abcf3a8443019b93",
+          "component": "BorderBox6",
+          "name": "6#边框",
+          "propValue": {
+            "base": {
+              "colorLeft": "#1a98fc",
+              "colorRight": "#2cf7fe",
+              "backgroundColor": "#00000000"
+            }
+          },
+          "style": {
+            "left": 105,
+            "top": 133,
+            "width": 1343,
+            "height": 200,
+            "rotate": 0
+          },
+          "subComponents": [],
+          "groupStyle": {
+            "gleft": 0.5185,
+            "gtop": 0,
+            "gwidth": 99.4815,
+            "gheight": 97.561,
+            "grotate": 0
+          }
+        },
+        {
+          "id": "34a4ddbf16da4e17873501228b81ec81",
+          "component": "BasicLineChart",
+          "name": "基础线图",
+          "propValue": {
+            "data": {
+              "url": "/getNew",
+              "upperLimit": 2000,
+              "lowerLimit": 0
+            },
+            "label": {
+              "axisLabelColor": "#3DE7C9",
+              "axisColor": "#3DE7C9"
+            },
+            "axis": {
+              "axisColor": "#00BAFF",
+              "axisLabelColor": "#00BAFF",
+              "xshow": true,
+              "yshow": true,
+              "xLineType": "dotted",
+              "yLineType": "dotted",
+              "xAxisLineColor": "#3391E4",
+              "yAxisLineColor": "#3391E4"
+            },
+            "series": {
+              "lineArea": true,
+              "lineWidth": 1,
+              "lineColor": "#3DE7C9",
+              "lineLinearStart": "#3491FA",
+              "lineLinearEnd": "transparent"
+            }
+          },
+          "style": {
+            "left": 98,
+            "top": 168,
+            "width": 1348,
+            "height": 170,
+            "rotate": 0
+          },
+          "subComponents": [],
+          "groupStyle": {
+            "gleft": 0,
+            "gtop": 17.0732,
+            "gwidth": 99.8519,
+            "gheight": 82.9268,
+            "grotate": 0
+          }
+        },
+        {
+          "id": "07b8f028762f45d1a9177053ca4c1891",
+          "component": "StaticText",
+          "name": "静态文本",
+          "propValue": {
+            "base": {
+              "type": "text",
+              "text": "全国疫情每日新增曲线图"
+            }
+          },
+          "style": {
+            "left": 610,
+            "top": 148,
+            "width": 344,
+            "height": 20,
+            "rotate": 0,
+            "color": "#1E90FF",
+            "fontSize": 20,
+            "fontWeight": 200,
+            "fontFamily": "Arial"
+          },
+          "subComponents": [],
+          "groupStyle": {
+            "gleft": 37.9259,
+            "gtop": 7.3171,
+            "gwidth": 25.4815,
+            "gheight": 9.7561,
+            "grotate": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "05fd6f8f871c4433ae13b75714b0f291",
+      "component": "Group",
+      "name": "无症状感染者",
+      "propValue": {},
+      "style": {
+        "left": 116,
+        "top": 389,
+        "width": 1348,
+        "height": 206,
+        "rotate": 0
+      },
+      "subComponents": [
+        {
+          "id": "88e277b1b666488bb2729f8bac2389c2",
+          "component": "BorderBox5",
+          "name": "5#边框",
+          "propValue": {
+            "base": {
+              "colorLeft": "#11eefd",
+              "colorRight": "#0078d2",
+              "backgroundColor": "#00000000"
+            }
+          },
+          "style": {
+            "left": 116,
+            "top": 389,
+            "width": 1330,
+            "height": 200,
+            "rotate": 0
+          },
+          "subComponents": [],
+          "groupStyle": {
+            "gleft": 0,
+            "gtop": 0,
+            "gwidth": 98.6647,
+            "gheight": 97.0874,
+            "grotate": 0
+          }
+        },
+        {
+          "id": "88b59babe778446aa923be5a6603db67",
+          "component": "BasicBarChart",
+          "name": "基础柱状图",
+          "propValue": {
+            "data": {
+              "url": "/getRiskArea",
+              "upperLimit": 150,
+              "lowerLimit": 0,
+              "max": "dataMax",
+              "min": "0",
+              "maxOffset": 0,
+              "minOffset": 0
+            },
+            "label": {
+              "axisLabelColor": "#3DE7C9",
+              "axisColor": "#3DE7C9"
+            },
+            "axis": {
+              "axisColor": "#D03050FF",
+              "axisLabelColor": "#00BAFF",
+              "xshow": true,
+              "yshow": true,
+              "xLineType": "dotted",
+              "yLineType": "dotted",
+              "xAxisLineColor": "#3391E4",
+              "yAxisLineColor": "#3391E4"
+            }
+          },
+          "style": {
+            "left": 116,
+            "top": 425,
+            "width": 1348,
+            "height": 170,
+            "rotate": 0
+          },
+          "subComponents": [],
+          "groupStyle": {
+            "gleft": 0,
+            "gtop": 17.4757,
+            "gwidth": 100,
+            "gheight": 82.5243,
+            "grotate": 0
+          }
+        },
+        {
+          "id": "381466db8cb54753890a390e050a927b",
+          "component": "StaticText",
+          "name": "静态文本",
+          "propValue": {
+            "base": {
+              "type": "text",
+              "text": "全国疫情每日无症状感染者"
+            }
+          },
+          "style": {
+            "left": 603.9999847412109,
+            "top": 402.402774810791,
+            "width": 344,
+            "height": 20,
+            "rotate": 0,
+            "color": "#1E90FF",
+            "fontSize": 20,
+            "fontWeight": 200,
+            "fontFamily": "Arial"
+          },
+          "subComponents": [],
+          "groupStyle": {
+            "gleft": 36.2018,
+            "gtop": 6.5062,
+            "gwidth": 25.5193,
+            "gheight": 9.7087,
+            "grotate": 0
+          }
+        }
+      ]
     }
   ],
   "canvasStyle": {

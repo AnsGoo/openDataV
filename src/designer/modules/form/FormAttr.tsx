@@ -1,8 +1,8 @@
-
 import { reactive, defineComponent, PropType, resolveComponent, h } from 'vue'
 import FontStyle from '../fontSytle'
 import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
+import ArrayItem from '../arrayItem'
 import CustomRender from './utils/render'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType, CustomFormSchema } from '@/types/component'
@@ -24,6 +24,7 @@ export default defineComponent({
     FontWeight,
     LinearGradient,
     NSwitch
+    // ArrayItem
   },
   props: {
     name: {
@@ -58,7 +59,7 @@ export default defineComponent({
     const renderItem = (item: AttrType) => {
       const options: Recordable[] = item.componentOptions?.options || []
 
-      switch(item.type) {
+      switch (item.type) {
         case FormType.COLOR:
           return (
             <NColorPicker
@@ -84,14 +85,18 @@ export default defineComponent({
               placeholder={item.label}
               onUpdateValue={(event) => changed(event, item.prop)}
             >
-              {
-                options.map((op) => <NRadio label={op.value} key={op.value}>{op.label}</NRadio>)
-              }
+              {options.map((op) => (
+                <NRadio label={op.value} key={op.value}>
+                  {op.label}
+                </NRadio>
+              ))}
             </NRadioGroup>
           )
         case FormType.NUMBER:
-          const numberMax: number = 'max' in item.componentOptions ? item.componentOptions.max : 9999999999
-          const numberMin: number = 'min' in item.componentOptions ? item.componentOptions.min : -9999999999
+          const numberMax: number =
+            'max' in item.componentOptions ? item.componentOptions.max : 9999999999
+          const numberMin: number =
+            'min' in item.componentOptions ? item.componentOptions.min : -9999999999
 
           return (
             <NInputNumber
@@ -105,17 +110,25 @@ export default defineComponent({
         case FormType.FONT_STYLE:
         case FormType.FONT_WEIGHT:
         case FormType.LINEAR_GRADIENT:
-          return (
-            h(resolveComponent(item.type),
-              {
-                value: formData[item.prop],
-                ['onUpdate:value']: (value) => {
-                  formData[item.prop] = value
-                  changed(value, item.prop)
-                }
-              }
-            )
-          )
+          return h(resolveComponent(item.type), {
+            value: formData[item.prop],
+            ['onUpdate:value']: (value) => {
+              formData[item.prop] = value
+              changed(value, item.prop)
+            }
+          })
+        case FormType.ARRAY:
+          const max = 'max' in item.componentOptions ? item.componentOptions.max : 1
+          const type = 'type' in item.componentOptions ? item.componentOptions.type : 'static'
+          return h(ArrayItem, {
+            value: formData[item.prop],
+            ['onUpdate:value']: (value) => {
+              formData[item.prop] = value
+              changed(value, item.prop)
+            },
+            max,
+            type
+          })
         case FormType.CUSTOM:
           return (
             <CustomRender
@@ -139,11 +152,12 @@ export default defineComponent({
     }
     return () => (
       <NForm size="small" labelPlacement="left" labelAlign="left">
-        {
-          props.children.map((item) => <NFormItem key={`${props.ukey}${item.prop}`} label={item.label}>{renderItem(item)}</NFormItem>)
-        }
-  </NForm>
+        {props.children.map((item) => (
+          <NFormItem key={`${props.ukey}${item.prop}`} label={item.label}>
+            {renderItem(item)}
+          </NFormItem>
+        ))}
+      </NForm>
     )
   }
 })
-

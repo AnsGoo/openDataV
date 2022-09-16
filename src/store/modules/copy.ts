@@ -1,10 +1,11 @@
-import { uuid } from '@/utils/utils'
+import { copyText, uuid } from '@/utils/utils'
 import { defineStore } from 'pinia'
 import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { message } from '@/utils/message'
 import type { CopyItem } from '@/types/storeTypes'
+import { BaseComponent } from '@/resource/models'
 
 const useCopyStore = defineStore({
   id: 'copy',
@@ -13,14 +14,11 @@ const useCopyStore = defineStore({
     isCut: false
   }),
   actions: {
-    copy() {
-      const basicStore = useBasicStoreWithOut()
-      const curComponent = basicStore.curComponent
-      if (!curComponent) {
-        return
-      }
-
-      this.copyData = cloneDeep(curComponent)
+    copy(data: BaseComponent) {
+      this.copyData = cloneDeep(data)
+      this.copyData.parent = undefined
+      this.copyData.groupStyle = undefined
+      copyText(JSON.stringify(this.copyData.toJson()))
     },
 
     paste(isMouse: boolean, x?: number, y?: number): void {

@@ -71,7 +71,7 @@ import { Position, Vector } from '@/types/common'
 import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent, createComponent } from '@/resource/models'
 import { componentList } from '../load'
 
 const basicStore = useBasicStoreWithOut()
@@ -180,7 +180,7 @@ const pasteComponent = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
-      const component: BaseComponent = JSON.parse(textData)
+      const component: BaseComponent = createComponent(JSON.parse(textData))
       if ('component' in component) {
         component.change('top', component.positionStyle.top + 10)
         component.change('left', component.positionStyle.left + 10)
