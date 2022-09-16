@@ -26,7 +26,9 @@ class ScrollTableComponent extends BaseComponent {
           label: '列标题',
           type: FormType.ARRAY,
           componentOptions: {
-            defaultValue: []
+            defaultValue: [],
+            max: 5,
+            type: 'dynamic'
           }
         }
       ]
