@@ -117,17 +117,18 @@ const calcIndex = (index: number, fatherIndex: string) => {
 
 const copy = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  console.log(indexs)
+  const component: Optional<BaseComponent> = cloneDeep(basicStore.getComponentByIndex(indexs))
   if (component) {
-    component.groupStyle = undefined
-    copyText(JSON.stringify(component.toJson()))
-    copyStore.copy()
+    copyStore.copy(component)
   }
 }
 
 const remove = async (index: string) => {
+  console.log(index)
   handleSelect(index)
   const indexs: number[] = index.split('-').map((i) => Number(i))
+  console.log(basicStore.curComponent?.parent)
   basicStore.removeComponent(indexs[indexs.length - 1], basicStore.curComponent?.parent)
 }
 
@@ -177,15 +178,14 @@ const cut = (index: string) => {
   )
   if (component) {
     copyText(JSON.stringify(component.toJson()))
-    copyStore.copy()
+    copyStore.copy(component)
   }
 }
 
 const paste = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<BaseComponent> = copyStore.copyData
   const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
-  if (component) {
+  if (copyStore.copyData) {
     const data = cloneDeep(copyStore.copyData) as BaseComponent
     data.id = uuid()
     basicStore.insertComponent(indexs[indexs.length - 1], data, insertComponent?.parent)

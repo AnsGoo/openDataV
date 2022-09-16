@@ -24,6 +24,8 @@ import { eventBus } from '@/bus/useEventBus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { BaseComponent } from '@/resource/models'
+import { cloneDeep } from 'lodash-es'
+import { diffIndex } from '@/utils/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -55,44 +57,27 @@ const handleDragOver = (event: DragEvent, index: string, isEmit = false) => {
   }
 }
 
-const handleDrop = (event: DragEvent, index: string) => {
+const handleDrop = (event: DragEvent, toIndex: string) => {
   event.preventDefault()
   event.stopPropagation()
-  const compomentIndex: string = event.dataTransfer?.getData('compomentIndex') as string
-  const toIndex: string = calcDragIndex(compomentIndex, index)
+  const fromIndex: string = event.dataTransfer?.getData('compomentIndex') as string
+  const isDragAble = diffIndex(fromIndex, toIndex)
+  if (!isDragAble) return
+  const indexs: number[] = fromIndex.split('-').map((i) => Number(i))
+  const cutCompoment: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  const inCompoment = cloneDeep(cutCompoment)
+  const toIndexs: number[] = toIndex.split('-').map((i) => Number(i))
+  const toComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
 
-  const indexs: number[] = compomentIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
-  const compoment: Optional<BaseComponent> = basicStore.cutComponent(
-    indexs[indexs.length - 1],
-    cutComponent?.parent
-  )
-  if (compoment && toIndex) {
-    const toIndexs: number[] = compomentIndex.split('-').map((i) => Number(i))
-    const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
-    basicStore.insertComponent(toIndexs[toIndexs.length - 1], compoment, insertComponent)
-    emits('select', index)
+  if (inCompoment && toComponent && toIndex) {
+    const toComponentid: string = toComponent.id
+    basicStore.cutComponent(indexs[indexs.length - 1], cutCompoment?.parent)
+    const parent = toComponent.parent || undefined
+    const data = parent ? parent.subComponents : basicStore.componentData
+    const newToIndex = data.findIndex((el) => el.id === toComponentid)
+    basicStore.insertComponent(newToIndex!, inCompoment!, parent)
+    emits('select', toIndex)
   }
-}
-const calcDragIndex = (fromIndex: string, toIndex: string): string => {
-  const fromIndexs: number[] = fromIndex.split('-').map((el: string) => parseInt(el))
-  const toIndexs: number[] = toIndex.split('-').map((el: string) => parseInt(el))
-  const fromLength: number = fromIndexs.length
-  for (let i = 0; i < fromLength; i++) {
-    if (fromIndexs[i] === toIndexs[i]) {
-      continue
-    } else if (fromIndexs[i] > toIndexs[i]) {
-      return toIndex
-    } else if (fromIndexs[i] < toIndexs[i]) {
-      if (i + 1 == fromLength) {
-        toIndexs[i] = toIndexs[i] - 1
-        return toIndexs.join('-')
-      } else {
-        return toIndex
-      }
-    }
-  }
-  return toIndex
 }
 </script>
 

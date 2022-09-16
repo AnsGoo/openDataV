@@ -12,6 +12,7 @@ export function createComponent(component: ComponentDataType): any {
 
     component.subComponents.forEach((item) => {
       const subObj = createComponent(item)
+      subObj.parent = obj
       obj.subComponents.push(subObj)
     })
     return obj
