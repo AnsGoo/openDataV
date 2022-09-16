@@ -432,7 +432,7 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
 export const pageScale = (rootEl: HTMLDivElement, width: number, height: number) => {
   const scaleX = document.documentElement.clientWidth / width
   const scaleY = document.documentElement.clientHeight / height
-  const scale = Math.min(scaleX, scaleY)
+  const scale = Math.max(scaleX, scaleY)
   rootEl.style.transform = `scale(${scale}) translate(-50%)`
 }
 
