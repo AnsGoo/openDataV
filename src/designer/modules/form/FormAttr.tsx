@@ -3,6 +3,7 @@ import { reactive, defineComponent, PropType, resolveComponent, h } from 'vue'
 import FontStyle from '../fontSytle'
 import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
+import ArrayItem from '../arrayItem'
 import CustomRender from './utils/render'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType, CustomFormSchema } from '@/types/component'
@@ -23,7 +24,8 @@ export default defineComponent({
     FontStyle,
     FontWeight,
     LinearGradient,
-    NSwitch
+    NSwitch,
+    // ArrayItem
   },
   props: {
     name: {
@@ -115,6 +117,17 @@ export default defineComponent({
                 }
               }
             )
+          )
+        case FormType.ARRAY:
+          const max = 'max' in item.componentOptions ? item.componentOptions.max : 1
+          const type = 'type' in item.componentOptions ? item.componentOptions.type : 'static'
+          return (
+            <ArrayItem
+              v-model:value={formData[item.prop]}
+              onUpdateValue={(event) => changed(event, item.prop)}
+              max={max}
+              type={type}
+            />
           )
         case FormType.CUSTOM:
           return (
