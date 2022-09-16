@@ -1,0 +1,240 @@
+[
+  {
+    "New": 49660,
+    "NoSymptom": 0,
+    "total": 5804343,
+    "RiskArea": 0,
+    "province": "台湾"
+  },
+  {
+    "New": 986,
+    "NoSymptom": 0,
+    "total": 402928,
+    "RiskArea": 0,
+    "province": "香港"
+  },
+  {
+    "New": 88,
+    "NoSymptom": 163,
+    "total": 5072,
+    "RiskArea": 444,
+    "province": "四川"
+  },
+  {
+    "New": 15,
+    "NoSymptom": 21,
+    "total": 9744,
+    "RiskArea": 46,
+    "province": "广东"
+  },
+  {
+    "New": 12,
+    "NoSymptom": 5,
+    "total": 63978,
+    "RiskArea": 5,
+    "province": "上海"
+  },
+  {
+    "New": 10,
+    "NoSymptom": 10,
+    "total": 3238,
+    "RiskArea": 254,
+    "province": "黑龙江"
+  },
+  {
+    "New": 9,
+    "NoSymptom": 101,
+    "total": 1228,
+    "RiskArea": 191,
+    "province": "西藏"
+  },
+  {
+    "New": 7,
+    "NoSymptom": 10,
+    "total": 2731,
+    "RiskArea": 125,
+    "province": "内蒙古"
+  },
+  {
+    "New": 6,
+    "NoSymptom": 0,
+    "total": 4212,
+    "RiskArea": 2,
+    "province": "福建"
+  },
+  {
+    "New": 5,
+    "NoSymptom": 3,
+    "total": 4146,
+    "RiskArea": 16,
+    "province": "北京"
+  },
+  {
+    "New": 5,
+    "NoSymptom": 302,
+    "total": 229,
+    "RiskArea": 291,
+    "province": "贵州"
+  },
+  {
+    "New": 4,
+    "NoSymptom": 60,
+    "total": 2321,
+    "RiskArea": 23,
+    "province": "广西"
+  },
+  {
+    "New": 4,
+    "NoSymptom": 28,
+    "total": 1165,
+    "RiskArea": 226,
+    "province": "新疆"
+  },
+  {
+    "New": 3,
+    "NoSymptom": 2,
+    "total": 1021,
+    "RiskArea": 6,
+    "province": "重庆"
+  },
+  {
+    "New": 2,
+    "NoSymptom": 20,
+    "total": 3068,
+    "RiskArea": 114,
+    "province": "山东"
+  },
+  {
+    "New": 2,
+    "NoSymptom": 5,
+    "total": 2371,
+    "RiskArea": 1,
+    "province": "江苏"
+  },
+  {
+    "New": 2,
+    "NoSymptom": 8,
+    "total": 2332,
+    "RiskArea": 5,
+    "province": "云南"
+  },
+  {
+    "New": 1,
+    "NoSymptom": 10,
+    "total": 3715,
+    "RiskArea": 124,
+    "province": "陕西"
+  },
+  {
+    "New": 1,
+    "NoSymptom": 19,
+    "total": 2270,
+    "RiskArea": 56,
+    "province": "天津"
+  },
+  {
+    "New": 1,
+    "NoSymptom": 3,
+    "total": 1880,
+    "RiskArea": 3,
+    "province": "辽宁"
+  },
+  {
+    "New": 1,
+    "NoSymptom": 52,
+    "total": 1494,
+    "RiskArea": 158,
+    "province": "江西"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 30,
+    "total": 68427,
+    "RiskArea": 18,
+    "province": "湖北"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 0,
+    "total": 40331,
+    "RiskArea": 5,
+    "province": "吉林"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 1,
+    "total": 8944,
+    "RiskArea": 20,
+    "province": "海南"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 23,
+    "total": 3394,
+    "RiskArea": 0,
+    "province": "浙江"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 5,
+    "total": 3317,
+    "RiskArea": 0,
+    "province": "河南"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 5,
+    "total": 2027,
+    "RiskArea": 34,
+    "province": "河北"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 1,
+    "total": 1506,
+    "RiskArea": 0,
+    "province": "安徽"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 0,
+    "total": 1447,
+    "RiskArea": 0,
+    "province": "湖南"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 15,
+    "total": 1350,
+    "RiskArea": 21,
+    "province": "甘肃"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 0,
+    "total": 793,
+    "RiskArea": 0,
+    "province": "澳门"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 0,
+    "total": 469,
+    "RiskArea": 0,
+    "province": "山西"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 0,
+    "total": 233,
+    "RiskArea": 44,
+    "province": "青海"
+  },
+  {
+    "New": 0,
+    "NoSymptom": 0,
+    "total": 122,
+    "RiskArea": 0,
+    "province": "宁夏"
+  }
+]

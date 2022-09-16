@@ -117,11 +117,9 @@ const calcIndex = (index: number, fatherIndex: string) => {
 
 const copy = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
+  const component: Optional<BaseComponent> = cloneDeep(basicStore.getComponentByIndex(indexs))
   if (component) {
-    component.groupStyle = undefined
-    copyText(JSON.stringify(component.toJson()))
-    copyStore.copy()
+    copyStore.copy(component)
   }
 }
 
@@ -177,15 +175,14 @@ const cut = (index: string) => {
   )
   if (component) {
     copyText(JSON.stringify(component.toJson()))
-    copyStore.copy()
+    copyStore.copy(component)
   }
 }
 
 const paste = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<BaseComponent> = copyStore.copyData
   const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
-  if (component) {
+  if (copyStore.copyData) {
     const data = cloneDeep(copyStore.copyData) as BaseComponent
     data.id = uuid()
     basicStore.insertComponent(indexs[indexs.length - 1], data, insertComponent?.parent)
