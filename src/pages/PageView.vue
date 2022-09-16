@@ -1,6 +1,8 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
+    <div :style="screenStyle" ref="screen" class="screen">
+      <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
+    </div>
   </div>
 </template>
 
@@ -24,18 +26,18 @@ const canvasStyle = ref<CanvasStyleData>({
 })
 const bgStyle = computed<Recordable<string>>(() => {
   const style = {
-    ...canvasStyle.value,
     backgroundImage: canvasStyle.value.image,
     backgroundSize: 'cover',
     backgroundColor: canvasStyle.value.color || '#084860'
   }
-  return filterStyle(style, [
-    'width',
-    'height',
-    'backgroundImage',
-    'backgroundSize',
-    'backgroundColor'
-  ])
+  return filterStyle(style, ['backgroundImage', 'backgroundSize', 'backgroundColor'])
+})
+
+const screenStyle = computed<Recordable<string>>(() => {
+  const style = {
+    ...canvasStyle.value
+  }
+  return filterStyle(style, ['width', 'height'])
 })
 const route = useRoute()
 const router = useRouter()
@@ -88,5 +90,12 @@ const setScale = () => {
 <style scoped lang="less">
 .bg {
   @apply w-screen h-screen;
+
+  .screen {
+    position: relative;
+    left: 50%;
+    transform-origin: 0 0;
+    transform: translateX(-50%);
+  }
 }
 </style>

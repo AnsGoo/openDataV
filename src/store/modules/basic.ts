@@ -400,7 +400,6 @@ const useBasicStore = defineStore({
       if (parent && parent.subComponents) {
         componentData = parent.subComponents
       }
-
       if (index < componentData.length && index >= 0) {
         const components: BaseComponent[] = componentData.splice(index, 1)
         if (parent) {
@@ -419,10 +418,13 @@ const useBasicStore = defineStore({
       let componentData = this.componentData
       if (parent && parent.subComponents) {
         componentData = parent.subComponents
+        insertComponent.parent = parent
+      } else {
+        insertComponent.parent = undefined
+        insertComponent.groupStyle = undefined
       }
-
       if (index < componentData.length && index >= 0) {
-        componentData.splice(index, 0, insertComponent)
+        componentData.splice(index + 1, 0, insertComponent)
         if (parent) {
           this.resizeAutoComponent(parent)
         }

@@ -13,12 +13,12 @@
         </n-form-item>
         <n-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
           <n-input-number
-            v-if="type === 'number'"
+            v-if="type === FormType.NUMBER"
             v-model:value="canvasStyleFrom[key]"
             @update:value="styleChange"
           />
           <n-color-picker
-            v-else-if="type === 'color'"
+            v-else-if="type === FormType.COLOR"
             v-model:value="canvasStyleFrom[key]"
             :modes="['hex', 'rgb', 'hsl']"
             @update:value="styleChange"

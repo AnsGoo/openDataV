@@ -7,7 +7,6 @@
         :style="getComponentStyle(item)"
         :component="item"
         :id="'component' + item.id"
-        v-if="isShow(item.display)"
       />
     </template>
   </div>
@@ -82,11 +81,10 @@ const getShapeStyle = (item: BaseComponent) => {
     width: 100%;
     height: 100%;
     // pointer-events: none;
-
-    .component {
-      position: absolute;
-    }
   }
+}
+.component {
+  position: absolute;
 }
 
 .dotted {

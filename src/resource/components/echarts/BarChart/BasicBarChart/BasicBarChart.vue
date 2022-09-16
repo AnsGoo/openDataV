@@ -48,9 +48,12 @@ const initData = async () => {
     if (resp.status === 200) {
       const upperLimit = propValue.data.upperLimit
       const lowerLimit = propValue.data.lowerLimit
-      const data = resp.data.map((ele) =>
-        compareResetValue(Number(ele.TagValue), upperLimit, lowerLimit)
-      )
+      const data = resp.data.map((ele) => {
+        return {
+          value: compareResetValue(Number(ele.value), upperLimit, lowerLimit),
+          label: ele.label
+        }
+      })
       updateData(data)
     }
   } catch (err: any) {
@@ -113,7 +116,6 @@ const getOption = () => {
     yAxis: {
       type: 'value',
       max: (value) => {
-        console.log(propValue.data.max)
         if (propValue.data.max === 'dataMax' || !propValue.data.max) {
           return value.max + Number(propValue.data.maxOffset || 0)
         } else {
