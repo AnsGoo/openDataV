@@ -116,7 +116,6 @@ const getOption = () => {
     yAxis: {
       type: 'value',
       max: (value) => {
-        console.log(propValue.data.max)
         if (propValue.data.max === 'dataMax' || !propValue.data.max) {
           return value.max + Number(propValue.data.maxOffset || 0)
         } else {

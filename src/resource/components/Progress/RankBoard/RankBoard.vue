@@ -135,13 +135,11 @@ const loadData = async () => {
       }
     }
   }
-  console.log('update Data')
 }
 onMounted(async () => {
   await loadData()
   if (timeHander) clearTimeout(timeHander)
   timeHander = setInterval(loadData, propValue.data.interval || 100000)
-  console.log(timeHander)
 })
 
 onUnmounted(() => {

@@ -1,6 +1,5 @@
 <template>
   <div class="group" v-if="!editMode">
-    {{ component.subComponents.length }}
     <template v-for="item in component.subComponents" :key="item.id">
       <component
         class="component"

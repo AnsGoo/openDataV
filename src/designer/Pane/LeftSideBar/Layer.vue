@@ -117,7 +117,6 @@ const calcIndex = (index: number, fatherIndex: string) => {
 
 const copy = (index: string) => {
   const indexs: number[] = index.split('-').map((i) => Number(i))
-  console.log(indexs)
   const component: Optional<BaseComponent> = cloneDeep(basicStore.getComponentByIndex(indexs))
   if (component) {
     copyStore.copy(component)

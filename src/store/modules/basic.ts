@@ -368,8 +368,6 @@ const useBasicStore = defineStore({
      * @returns 移除结果
      */
     removeComponent(index: number, parent: Optional<BaseComponent>) {
-      console.log(index)
-      console.log(parent)
       if (parent && parent.subComponents) {
         parent.subComponents.splice(index, 1)
       } else {
