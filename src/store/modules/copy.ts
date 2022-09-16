@@ -18,7 +18,7 @@ const useCopyStore = defineStore({
       this.copyData = cloneDeep(data)
       this.copyData.parent = undefined
       this.copyData.groupStyle = undefined
-      copyText(JSON.stringify(data.toJson()))
+      copyText(JSON.stringify(this.copyData.toJson()))
     },
 
     paste(isMouse: boolean, x?: number, y?: number): void {
