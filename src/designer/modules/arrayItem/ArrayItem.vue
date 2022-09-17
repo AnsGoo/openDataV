@@ -1,6 +1,6 @@
 <template>
   <n-space vertical>
-    <n-space v-for="(item, index) in arrayValue" :key="index" :wrap="false">
+    <n-space v-for="(_, index) in arrayValue" :key="index" :wrap="false">
       <n-input
         v-model:value="arrayValue[index]"
         type="text"
