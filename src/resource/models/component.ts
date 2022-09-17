@@ -255,9 +255,11 @@ export abstract class BaseComponent {
     if (!propObj) return
     propObj.componentOptions.defaultValue = value
 
-    if (this.callbackProp) {
-      this.callbackProp(form, prop, value)
-    }
+    setTimeout(() => {
+      if (this.callbackProp) {
+        this.callbackProp(form, prop, value)
+      }
+    }, 0)
   }
 
   changePropCallback(callback: (prop: string, key: string, value: any) => void) {
