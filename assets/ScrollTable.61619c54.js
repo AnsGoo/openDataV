@@ -1,0 +1,1 @@
+import{d as o,o as e,c}from"./index.f4fea15b.js";const n={class:"dv-scroll-board"},l=o({__name:"ScrollTable",props:{component:null},setup(s){return(t,r)=>(e(),c("div",n,"\u8868\u5934\uFF1A"))}});export{l as default};
