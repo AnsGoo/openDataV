@@ -26,9 +26,93 @@ class ScrollTableComponent extends BaseComponent {
           label: '列标题',
           type: FormType.ARRAY,
           componentOptions: {
-            defaultValue: [],
-            max: 5,
-            type: 'dynamic'
+            defaultValue: ['名称', '年龄'],
+            type: 'dynamic',
+            max: 10
+          }
+        },
+        {
+          prop: 'headerBGC',
+          label: '背景色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: ''
+          }
+        },
+        {
+          prop: 'headerHeight',
+          label: '高度',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 35
+          }
+        },
+        {
+          prop: 'index',
+          label: '是否显示索引',
+          type: FormType.SWITCH,
+          componentOptions: {
+            defaultValue: false
+          }
+        },
+        {
+          prop: 'indexHeader',
+          label: '索引显示',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: '#'
+          }
+        }
+      ]
+    },
+    {
+      label: '行设置',
+      prop: 'rows',
+      children: [
+        {
+          prop: 'rowNum',
+          label: '最大显示行',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 5
+          }
+        },
+        {
+          prop: 'oddRowBGC',
+          label: '奇数行背景色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#003B51'
+          }
+        },
+        {
+          prop: 'evenRowBGC',
+          label: '偶数行背景色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#0A2732'
+          }
+        }
+      ]
+    },
+    {
+      label: '列设置',
+      prop: 'columns',
+      children: [
+        {
+          prop: 'columnWidth',
+          label: '每列宽度',
+          type: FormType.ARRAY,
+          componentOptions: {
+            defaultValue: []
+          }
+        },
+        {
+          prop: 'align',
+          label: '对齐方式',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
           }
         }
       ]
