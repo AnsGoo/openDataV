@@ -194,7 +194,7 @@ export abstract class BaseComponent {
       name: this.name,
       propValue: this.propValue,
       style: this.style,
-      subComponents: subComponents.length > 0? subComponents : undefined
+      subComponents: subComponents.length > 0 ? subComponents : undefined
     }
 
     if (this.groupStyle) {

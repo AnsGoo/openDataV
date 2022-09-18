@@ -1,4 +1,3 @@
-import { forEach } from 'lodash'
 import { Random } from 'mockjs'
 import dataDict from './data'
 import { Covid19Data } from './data'
