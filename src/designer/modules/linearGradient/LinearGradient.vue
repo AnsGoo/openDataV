@@ -7,16 +7,19 @@
       :min="0"
       :max="360"
       :step="1"
+      clearable
     />
     <NColorPicker
       :value="value!.color1"
       @update:value="(value) => changed('color1', value)"
       :swatches="GlobalColorSwatches"
+      clearable
     />
     <NColorPicker
       :value="value!.color2"
       @update:value="(value) => changed('color2', value)"
       :swatches="GlobalColorSwatches"
+      clearable
     />
   </div>
 </template>
