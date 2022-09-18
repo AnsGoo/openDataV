@@ -1,3 +1,4 @@
+import { forEach } from 'lodash'
 import { Random } from 'mockjs'
 import dataDict from './data'
 import { Covid19Data } from './data'
@@ -51,7 +52,6 @@ export default [
     method: 'get',
     statusCode: 200,
     response: () => {
-      // console.log(Covid19Data)
       return Covid19Data.filter((el) => el.New > 0).map((el) => {
         return {
           label: el.province,
@@ -65,7 +65,6 @@ export default [
     method: 'get',
     statusCode: 200,
     response: () => {
-      // console.log(Covid19Data)
       return Covid19Data.map((el) => {
         return {
           label: el.province,
@@ -79,7 +78,6 @@ export default [
     method: 'get',
     statusCode: 200,
     response: () => {
-      // console.log(Covid19Data)
       return Covid19Data.filter((el) => el.NoSymptom > 0).map((el) => {
         return {
           label: el.province,
@@ -93,13 +91,32 @@ export default [
     method: 'get',
     statusCode: 200,
     response: () => {
-      // console.log(Covid19Data)
       return Covid19Data.filter((el) => el.RiskArea > 0).map((el) => {
         return {
           label: el.province,
           value: el.RiskArea
         }
       })
+    }
+  },
+  {
+    url: '/getMaxData',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      const maxData =  {
+        "maxNew": 0,
+        "maxNoSymptom": 0,
+        "maxTotal": 0,
+        "maxRiskArea": 0,
+      }
+      Covid19Data.forEach(el => {
+        maxData['maxNew'] = maxData['maxNew'] > el['New'] ? maxData['maxNew'] : el['New']
+        maxData['maxNoSymptom'] = maxData['maxNoSymptom'] > el['NoSymptom'] ? maxData['maxNoSymptom'] : el['NoSymptom']
+        maxData['maxTotal'] = maxData['maxTotal'] > el['total'] ? maxData['maxTotal'] : el['total']
+        maxData['maxRiskArea'] = maxData['maxRiskArea'] > el['RiskArea'] ? maxData['maxRiskArea'] : el['RiskArea']
+      })
+      return  maxData
     }
   }
 ]

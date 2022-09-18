@@ -9,8 +9,7 @@ export function createComponent(component: ComponentDataType): any {
     obj.groupStyle = component.groupStyle
     obj.setPropValue(component)
     obj.setStyleValue(component)
-
-    component.subComponents.forEach((item) => {
+    component.subComponents?.forEach((item) => {
       const subObj = createComponent(item)
       subObj.parent = obj
       obj.subComponents.push(subObj)

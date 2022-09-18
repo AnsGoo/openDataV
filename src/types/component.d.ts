@@ -74,7 +74,7 @@ export interface ComponentDataType {
   icon?: string
   style: Record<string, string | number | boolean>
   propValue: Record<string, any>
-  subComponents: ComponentDataType[]
+  subComponents?: ComponentDataType[]
 }
 
 export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
