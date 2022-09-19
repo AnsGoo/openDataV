@@ -1,7 +1,7 @@
 import type { DOMRectStyle, GroupStyle } from '@/types/component'
 import { message } from '@/utils/message'
 import type { Vector, Position } from '@/types/common'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isNumber } from 'lodash-es'
 import { BaseComponent } from '@/resource/models'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
@@ -414,9 +414,11 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
     case 'backgroundImage':
       return { backgroundImage: value ? `url(${value})` : null }
     case 'linearGradient':
-      return {
-        backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
-      }
+      return value.color1 && value.color2 && isNumber(value.angle)
+        ? {
+            backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
+          }
+        : {}
 
     default:
       return { [key]: value }

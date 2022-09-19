@@ -66,6 +66,7 @@ export default defineComponent({
               swatches={GlobalColorSwatches}
               modes={['hex', 'rgb', 'hsl']}
               onUpdateValue={(event) => changed(event, item.prop)}
+              clearable={true}
             />
           )
         case FormType.SELECT:
@@ -75,6 +76,7 @@ export default defineComponent({
               placeholder={item.label}
               onUpdateValue={(event) => changed(event, item.prop)}
               options={options}
+              clearable={true}
             />
           )
         case FormType.RADIO:
@@ -83,6 +85,7 @@ export default defineComponent({
               v-model:value={formData[item.prop]}
               placeholder={item.label}
               onUpdateValue={(event) => changed(event, item.prop)}
+              clearable={true}
             >
               {options.map((op) => (
                 <NRadio label={op.value} key={op.value}>
@@ -103,6 +106,7 @@ export default defineComponent({
               onUpdateValue={(event) => changed(event, item.prop)}
               max={numberMax}
               min={numberMin}
+              clearable={true}
             />
           )
         case FormType.SWITCH:
