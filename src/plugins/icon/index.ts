@@ -67,7 +67,9 @@ import {
   Api,
   Earth,
   Transform,
-  Down
+  Down,
+  CheckOne,
+  CloseOne
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -143,5 +145,7 @@ export default {
     app.component(Earth.name, Earth)
     app.component(Transform.name, Transform)
     app.component(Down.name, Down)
+    app.component(CheckOne.name, CheckOne)
+    app.component(CloseOne.name, CloseOne)
   }
 }

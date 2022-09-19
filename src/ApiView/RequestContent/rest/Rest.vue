@@ -37,34 +37,19 @@
       <n-tabs type="line" animated>
         <n-tab-pane name="query" tab="请求参数">
           <div class="params">
-            <div v-for="(param, index) in formData['params']" :key="index">
-              <n-input-group class="param-item">
-                <n-input
-                  :style="{ width: '50%' }"
-                  size="small"
-                  v-model:value="formData['params'][index]['key']"
-                />
-                <n-input
-                  :style="{ width: '50%' }"
-                  size="small"
-                  v-model:value="formData['params'][index]['value']"
-                />
-                <n-button size="small" @click="addParams(index)">
-                  <template #icon>
-                    <icon-park name="add-three" color="#4CD263" />
-                  </template>
-                </n-button>
-                <n-button size="small" @click="removeParams(index)">
-                  <template #icon>
-                    <icon-park name="delete-one" color="#F76560" />
-                  </template>
-                </n-button>
-              </n-input-group>
-            </div>
+            <DynamicKVForm v-model:value="formData['params']" title="请求参数" />
           </div>
         </n-tab-pane>
-        <n-tab-pane name="body" tab="请求体" />
-        <n-tab-pane name="headers" tab="请求头" />
+        <n-tab-pane name="data" tab="请求体">
+          <div class="headers">
+            <DynamicKVForm v-model:value="formData['data']" title="请求体" />
+          </div>
+        </n-tab-pane>
+        <n-tab-pane name="headers" tab="请求头">
+          <div class="headers">
+            <DynamicKVForm v-model:value="formData['headers']" title="请求头" />
+          </div>
+        </n-tab-pane>
       </n-tabs>
     </div>
     <div class="response"></div>
@@ -80,10 +65,11 @@ import {
   NDropdown,
   NSpace,
   NTabs,
-  NTabPane,
-  NInputGroup
+  NTabPane
 } from 'naive-ui'
+import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { reactive } from 'vue'
+import { KV } from '../modules/type'
 
 const options = [
   {
@@ -131,31 +117,17 @@ const sendOptions = [
 interface RequestOption {
   method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH' | 'OPTIONS' | 'HEAD'
   url: string
-  headers: Array<{ key: string; value: any }>
-  params: Array<{ key: string; value: any }>
+  headers: Array<KV>
+  params: Array<KV>
+  data: Array<KV>
 }
 const formData = reactive<RequestOption>({
   method: 'GET',
   url: 'http://datav.byteportrait.com',
-  headers: [
-    {
-      key: '',
-      value: ''
-    }
-  ],
-  params: [
-    {
-      key: '',
-      value: ''
-    }
-  ]
+  headers: [{ key: '', value: '', disable: false }],
+  params: [{ key: '', value: '', disable: false }],
+  data: [{ key: '', value: '', disable: false }]
 })
-const addParams = (index: number) => {
-  formData.params.splice(index + 1, 0, { key: '', value: '' })
-}
-const removeParams = (index: number) => {
-  formData.params.splice(index, 1)
-}
 </script>
 
 <style scoped lang="less">
