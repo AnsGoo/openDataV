@@ -22,7 +22,7 @@ class SubTextComponent extends BaseComponent {
       prop: 'base',
       children: [
         {
-          prop: 'tagName',
+          prop: 'tag',
           label: '数据标签',
           type: FormType.TEXT,
           componentOptions: {
@@ -32,6 +32,14 @@ class SubTextComponent extends BaseComponent {
         {
           prop: 'url',
           label: '获取数据API',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
+          }
+        },
+        {
+          prop: 'label',
+          label: 'Label',
           type: FormType.TEXT,
           componentOptions: {
             defaultValue: ''

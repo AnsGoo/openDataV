@@ -62,7 +62,7 @@ import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape'
-import { filterStyle, calcComponentAxis, copyText } from '@/utils/utils'
+import { filterStyle, calcComponentAxis, uuid } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
@@ -181,11 +181,13 @@ const pasteComponent = (event: ClipboardEvent) => {
     const textData = event.clipboardData.getData('text')
     try {
       const component: BaseComponent = createComponent(JSON.parse(textData))
-      if ('component' in component) {
+      if (component) {
         component.change('top', component.positionStyle.top + 10)
         component.change('left', component.positionStyle.left + 10)
-        copyText(JSON.stringify(component))
+        component.id = uuid()
+        copyStore.copy(component)
         event.preventDefault()
+        event.stopPropagation()
         basicStore.appendComponent(component)
       }
     } catch (e) {

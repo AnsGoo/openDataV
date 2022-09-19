@@ -1,7 +1,8 @@
 export interface SubTextType {
   base: {
-    tagName: string
+    tag: string
     url: string
     unit: string
+    label: string
   }
 }

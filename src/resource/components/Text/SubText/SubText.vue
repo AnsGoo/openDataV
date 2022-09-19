@@ -1,5 +1,9 @@
 <template>
-  <span v-resize="resizeHandler">{{ customeText }}{{ propValue.base.unit }}</span>
+  <span v-resize="resizeHandler">
+    {{ propValue.base.label ? `${propValue.base.label}:` : '' }}
+    {{ customeText }}
+    {{ propValue.base.unit }}
+  </span>
 </template>
 
 <script setup lang="ts">
@@ -26,18 +30,17 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 
 const dataHandler = (event) => {
   const item: Recordable = event as Recordable
-  if (propValue.base.tagName && item.TagName === propValue.base.tagName) {
-    const value = item.TagValue
-    customeText.value = value
+  if (propValue.base.tag && item[propValue.base.tag] !== undefined) {
+    customeText.value = item[propValue.base.tag]
   }
 }
 onMounted(async () => {
   try {
-    const queryParems = { tagName: propValue.base.tagName }
+    const queryParems = { tag: propValue.base.tag }
     const res = await http.get({ url: propValue.base.url, params: queryParems })
 
-    if (res.status === 200 && Object.keys(res.data).includes(propValue.base.tagName)) {
-      dataHandler(res[propValue.base.tagName])
+    if (res.status === 200 && Object.keys(res.data).includes(propValue.base.tag)) {
+      dataHandler(res.data)
     }
   } catch (error: any) {
     console.log(error?.message)
