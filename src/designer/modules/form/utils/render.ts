@@ -14,12 +14,12 @@ export default defineComponent({
       type: Object as PropType<any>
     }
   },
-  emits: ['update:value', 'change'],
+  emits: ['update:value'],
   setup(props, { emit }) {
     const change = (value: any) => {
       emit('update:value', value)
-      emit('change', value)
     }
+    console.log(props.component)
     return () => [h(props.component, { ...props.args, value: props.value, onChange: change })]
   }
 })

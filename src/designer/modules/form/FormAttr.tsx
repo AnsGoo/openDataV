@@ -4,6 +4,7 @@ import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
 import ArrayItem from '../arrayItem'
 import CustomRender from './utils/render'
+import CustomItem from '../customItem'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType, CustomFormSchema } from '@/types/component'
 import {
@@ -133,14 +134,22 @@ export default defineComponent({
             type
           })
         case FormType.CUSTOM:
-          return (
-            <CustomRender
-              v-model:value={formData[item.prop]}
-              onUpdateValue={(event) => changed(event, item.prop)}
-              component={(item.componentOptions as CustomFormSchema).componentType}
-              args={(item.componentOptions as CustomFormSchema).args}
-            />
-          )
+          return h(CustomItem, {
+            value: formData[item.prop],
+            component: (item.componentOptions as CustomFormSchema).componentType,
+            ['onUpdate:value']: (value) => {
+              formData[item.prop] = value
+              changed(value, item.prop)
+            },
+          })
+          // return (
+          //   <CustomRender
+          //     v-model:value={formData[item.prop]}
+          //     onUpdateValue={(event) => changed(event, item.prop)}
+          //     component={(item.componentOptions as CustomFormSchema).componentType}
+          //     args={(item.componentOptions as CustomFormSchema).args}
+          //   />
+          // )
         default:
           return (
             <NInput

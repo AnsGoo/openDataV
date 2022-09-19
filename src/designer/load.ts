@@ -19,8 +19,15 @@ const AsyncComponent = {
       if (componentOptions) {
         componentList[componentOptions.componentName] = componentOptions.config
 
-        const AsyncComp = defineAsyncComponent(componentOptions.component)
-        app.component(componentOptions.componentName, AsyncComp)
+        // 注册异步组件
+        const asyncComp = defineAsyncComponent(componentOptions.component)
+        app.component(componentOptions.componentName, asyncComp)
+
+        // 注册异步表单组件
+        if (componentOptions.form) {
+          const asyncForm = defineAsyncComponent(componentOptions.form)
+          app.component(componentOptions.formName, asyncForm)
+        }
       } else {
         console.error(`${key} is not a valid component`)
       }

@@ -116,6 +116,21 @@ class ScrollTableComponent extends BaseComponent {
           }
         }
       ]
+    },
+    {
+      label: '自定义',
+      prop: 'custom',
+      children: [
+        {
+          prop: 'column',
+          label: '列数据',
+          type: FormType.CUSTOM,
+          componentOptions: {
+            componentType: 'ScrollTableForm',
+            defaultValue: [{ name: '姓名', width: '10' }]
+          }
+        }
+      ]
     }
   ]
 }
