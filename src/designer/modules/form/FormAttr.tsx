@@ -24,7 +24,6 @@ export default defineComponent({
     FontWeight,
     LinearGradient,
     NSwitch
-    // ArrayItem
   },
   props: {
     name: {

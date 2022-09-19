@@ -110,9 +110,9 @@ class ScrollTableComponent extends BaseComponent {
         {
           prop: 'align',
           label: '对齐方式',
-          type: FormType.TEXT,
+          type: FormType.ARRAY,
           componentOptions: {
-            defaultValue: ''
+            defaultValue: []
           }
         }
       ]
