@@ -2,7 +2,7 @@
   <NCard>
     <div class="api">
       <n-select
-        :options="options"
+        :options="requestMethodOptions"
         class="method"
         v-model:value="formData['method']"
         :show-arrow="false"
@@ -47,12 +47,27 @@
         </n-tab-pane>
         <n-tab-pane name="headers" tab="请求头">
           <div class="headers">
-            <DynamicKVForm v-model:value="formData['headers']" title="请求头" />
+            <DynamicKVForm
+              v-model:value="formData['headers']"
+              title="请求头"
+              :options="requestHeaderOptions"
+            />
           </div>
         </n-tab-pane>
       </n-tabs>
     </div>
-    <div class="response"></div>
+    <div class="response">
+      <n-divider
+        title-placement="left"
+        style="
+           {
+            width: '50%';
+          }
+        "
+        >请求响应</n-divider
+      >
+      <ReponseContentView />
+    </div>
   </NCard>
 </template>
 <script setup lang="ts">
@@ -65,42 +80,23 @@ import {
   NDropdown,
   NSpace,
   NTabs,
-  NTabPane
+  NTabPane,
+  NDivider
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { reactive } from 'vue'
 import { KV } from '../modules/type'
-
-const options = [
-  {
-    label: 'GET',
-    value: 'GET'
-  },
-  {
-    label: 'POST',
-    value: 'POST'
-  },
-  {
-    label: 'PUT',
-    value: 'PUT'
-  },
-  {
-    label: 'DELETE',
-    value: 'DELETE'
-  },
-  {
-    label: 'PATCH',
-    value: 'PATCH'
-  },
-  {
-    label: 'HEAD',
-    value: 'HEAD'
-  },
-  {
-    label: 'OPTIONS',
-    value: 'OPTIONS'
+import { uuid } from '@/utils/utils'
+import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
+import ReponseContentView from './modules/ReponseContentView.vue'
+const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
+  return {
+    label: el,
+    value: el
   }
-]
+})
+
+const requestHeaderOptions = Object.keys(RequestHeaderEnum)
 const saveOptions = [
   {
     label: '复制衔接',
@@ -115,18 +111,18 @@ const sendOptions = [
   }
 ]
 interface RequestOption {
-  method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH' | 'OPTIONS' | 'HEAD'
+  method: RequestMethod
   url: string
   headers: Array<KV>
   params: Array<KV>
   data: Array<KV>
 }
 const formData = reactive<RequestOption>({
-  method: 'GET',
+  method: RequestMethod.GET,
   url: 'http://datav.byteportrait.com',
-  headers: [{ key: '', value: '', disable: false }],
-  params: [{ key: '', value: '', disable: false }],
-  data: [{ key: '', value: '', disable: false }]
+  headers: [{ key: '', value: '', disable: false, id: uuid() }],
+  params: [{ key: '', value: '', disable: false, id: uuid() }],
+  data: [{ key: '', value: '', disable: false, id: uuid() }]
 })
 </script>
 
