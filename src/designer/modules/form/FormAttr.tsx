@@ -3,7 +3,6 @@ import FontStyle from '../fontSytle'
 import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
 import ArrayItem from '../arrayItem'
-import CustomRender from './utils/render'
 import CustomItem from '../customItem'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType, CustomFormSchema } from '@/types/component'
@@ -56,6 +55,7 @@ export default defineComponent({
       emit('change', key, val)
     }
 
+    const isShowLabel = (showLabel?: boolean) => showLabel === false ? false : true
     const renderItem = (item: AttrType) => {
       const options: Recordable[] = item.componentOptions?.options || []
 
@@ -141,15 +141,8 @@ export default defineComponent({
               formData[item.prop] = value
               changed(value, item.prop)
             },
+            args: (item.componentOptions as CustomFormSchema).args,
           })
-          // return (
-          //   <CustomRender
-          //     v-model:value={formData[item.prop]}
-          //     onUpdateValue={(event) => changed(event, item.prop)}
-          //     component={(item.componentOptions as CustomFormSchema).componentType}
-          //     args={(item.componentOptions as CustomFormSchema).args}
-          //   />
-          // )
         default:
           return (
             <NInput
@@ -165,7 +158,7 @@ export default defineComponent({
     return () => (
       <NForm size="small" labelPlacement="left" labelAlign="left">
         {props.children.map((item) => (
-          <NFormItem key={`${props.ukey}${item.prop}`} label={item.label}>
+          <NFormItem key={`${props.ukey}${item.prop}`} label={item.label} showLabel={isShowLabel(item.showLabel)}>
             {renderItem(item)}
           </NFormItem>
         ))}

@@ -50,6 +50,7 @@ interface AttrType {
   prop: string
   label: string
   type?: FormType
+  showLabel?: boolean
   componentOptions:
     | InputFormSchema
     | InputNumberFormSchema

@@ -22,13 +22,17 @@ class ScrollTableComponent extends BaseComponent {
       prop: 'header',
       children: [
         {
-          prop: 'header',
-          label: '列标题',
-          type: FormType.ARRAY,
+          prop: 'column',
+          label: '列数据',
+          type: FormType.CUSTOM,
+          showLabel: false,
           componentOptions: {
-            defaultValue: ['名称', '年龄'],
-            type: 'dynamic',
-            max: 10
+            componentType: 'ScrollTableForm',
+            defaultValue: [
+              { name: '列1', width: '100', align: 'center' },
+              { name: '列2', width: '100', align: 'center' },
+              { name: '列3', width: '100', align: 'center' }
+            ]
           }
         },
         {
@@ -36,7 +40,7 @@ class ScrollTableComponent extends BaseComponent {
           label: '背景色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: ''
+            defaultValue: '#00BAFF'
           }
         },
         {
@@ -92,6 +96,14 @@ class ScrollTableComponent extends BaseComponent {
           componentOptions: {
             defaultValue: '#0A2732'
           }
+        },
+        {
+          prop: 'height',
+          label: '行高度',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 20
+          }
         }
       ]
     },
@@ -113,21 +125,6 @@ class ScrollTableComponent extends BaseComponent {
           type: FormType.ARRAY,
           componentOptions: {
             defaultValue: []
-          }
-        }
-      ]
-    },
-    {
-      label: '自定义',
-      prop: 'custom',
-      children: [
-        {
-          prop: 'column',
-          label: '列数据',
-          type: FormType.CUSTOM,
-          componentOptions: {
-            componentType: 'ScrollTableForm',
-            defaultValue: [{ name: '姓名', width: '10' }]
           }
         }
       ]

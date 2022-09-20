@@ -1,6 +1,6 @@
 export interface ScrollTableType {
   header: {
-    header: string[]
+    column: TableColumnData[]
     headerBGC: string
     headerHeight: number
     index: boolean
@@ -10,6 +10,7 @@ export interface ScrollTableType {
     rowNum: number
     oddRowBGC: string
     evenRowBGC: string
+    height: number
   }
   columns: {
     columnWidth: string[]
@@ -19,6 +20,6 @@ export interface ScrollTableType {
 
 export interface TableColumnData {
   name: string
-  width: number
+  width: string
   align: 'left' | 'right' | 'center'
 }

@@ -1,20 +1,15 @@
 <template>
-  <component :is="component" :vlaue="data" :change="handleChange"></component>
+  <component :is="component" v-bind="$attrs" :value="value" @change="handleChange" />
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-const props = defineProps<{
+defineProps<{
   value: any
   component: string
 }>()
 
-const data = computed(() => {
-  return props.value
-})
-
 const emits = defineEmits<{
-  (e: 'update:value', value: any)
+  (e: 'update:value', value: any): void
 }>()
 
 const handleChange = (value: any) => {

@@ -4,6 +4,6 @@ export default {
   componentName,
   component: () => import('./ScrollTable.vue'),
   config: ScrollTableComponent,
-  form: () => import('./form.vue'),
+  form: () => import('./Form.vue'),
   formName: 'ScrollTableForm'
 }
