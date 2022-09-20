@@ -4,7 +4,7 @@
       <n-button quaternary size="small" @click="action" :title="label" v-if="isButton">
         <IconComponent
       /></n-button>
-      <IconComponent v-else class="bar" />
+      <IconComponent v-else class="bar" @click="action" />
     </template>
     <span>{{ label }}</span>
   </n-tooltip>

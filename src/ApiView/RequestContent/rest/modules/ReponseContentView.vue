@@ -15,7 +15,7 @@ import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
 const projectStore = useProjectSettingStoreWithOut()
 const config = ref<CodemirrorOption>({
-  height: '600px',
+  height: 'fit-content',
   tabSize: 4,
   indentWithTab: true,
   autofocus: true,
