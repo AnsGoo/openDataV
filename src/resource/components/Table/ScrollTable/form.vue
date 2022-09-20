@@ -1,130 +1,53 @@
 <template>
-  <n-data-table size="small" :bordered="false" :columns="columns" :data="showData" />
+  <n-form :model="formData" size="small" label-align="right" :show-label="false">
+    <n-form-item label="行高度">
+      <n-space vertical>
+        <n-input-number v-model:value="formData.height" @keypress.enter.prevent="changeData" />
+        <span class="title">行高度</span>
+      </n-space>
+    </n-form-item>
+    <n-form-item label="奇数行背景色">
+      <n-space justify="space-between">
+        <n-space vertical>
+          <n-color-picker v-model:value="formData.oddRowBGC" @complete="changeData" />
+          <span class="title">奇数行背景色</span>
+        </n-space>
+        <n-space vertical>
+          <n-color-picker v-model:value="formData.evenRowBGC" @complete="changeData" />
+          <span class="title">偶数行背景色</span>
+        </n-space>
+      </n-space>
+    </n-form-item>
+  </n-form>
 </template>
 
 <script lang="ts" setup>
-import { reactive, h, computed } from 'vue'
-import { NDataTable, DataTableColumns } from 'naive-ui'
-import { TableColumnData } from './type'
-import { NInput, NSelect, SelectOption } from 'naive-ui'
-import { IconPark } from '@/plugins/icon'
+import { reactive } from 'vue'
+import { NForm, NFormItem, NInputNumber, NColorPicker, NSpace } from 'naive-ui'
+import { RowType } from './type'
 
 const props = defineProps<{
-  value: TableColumnData[]
+  value: RowType
   args: any
 }>()
 
 const emits = defineEmits<{
-  (e: 'change', value: TableColumnData[])
+  (e: 'change', value: RowType)
 }>()
 
-const data = reactive<TableColumnData[]>(props.value)
-const empty: TableColumnData = {
-  name: '',
-  width: '',
-  align: 'center'
-}
-
-const showData = computed<TableColumnData[]>(() => {
-  return [...props.value, empty]
+const formData = reactive<RowType>({
+  height: props.value.height || 30,
+  oddRowBGC: props.value.oddRowBGC || '#003B51',
+  evenRowBGC: props.value.evenRowBGC || '#0A2732'
 })
 
-const showIcon = (row) => {
-  if (row.width || row.name) {
-    return 'delete-one'
-  }
-  return 'add-three'
+const changeData = () => {
+  emits('change', formData)
 }
-
-const options: SelectOption[] = [
-  {
-    label: '左',
-    value: 'left'
-  },
-  {
-    label: '右',
-    value: 'right'
-  },
-  {
-    label: '中',
-    value: 'center'
-  }
-]
-
-// 修改数据
-const changeData = (index: number, key: string, value: string) => {
-  if (index === data.length) {
-    data.push({
-      name: '',
-      width: '',
-      align: 'center'
-    })
-  }
-  data[index][key] = value
-
-  emits('change', data)
-}
-
-const columns = reactive<DataTableColumns>([
-  {
-    title: '列名',
-    key: 'name',
-    render(row, index: number) {
-      return h(NInput, {
-        value: row.name,
-        onUpdateValue(v) {
-          changeData(index, 'name', v)
-        }
-      })
-    }
-  },
-  {
-    title: '宽度',
-    key: 'width',
-    render(row, index: number) {
-      return h(NInput, {
-        value: row.width,
-        onUpdateValue(v) {
-          changeData(index, 'width', v)
-        }
-      })
-    }
-  },
-  {
-    title: '对齐',
-    key: 'align',
-    render(row, index) {
-      return h(NSelect, {
-        value: row.align,
-        options: options,
-        onUpdateValue(v) {
-          changeData(index, 'align', v)
-        }
-      })
-    }
-  },
-  {
-    key: 'actions',
-    width: '10',
-    render(row, index) {
-      return h(IconPark, {
-        name: showIcon(row),
-        color: 'red',
-        onClick() {
-          if (data.length !== index) {
-            data.splice(index, 1)
-          } else {
-            data.push({
-              name: '',
-              width: '',
-              align: 'center'
-            })
-          }
-        }
-      })
-    }
-  }
-])
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.title {
+  color: gray;
+}
+</style>

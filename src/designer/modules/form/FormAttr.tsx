@@ -122,7 +122,7 @@ export default defineComponent({
             }
           })
         case FormType.ARRAY:
-          const max = 'max' in item.componentOptions ? item.componentOptions.max : 1
+          const count = 'count' in item.componentOptions ? item.componentOptions.count : 1
           const type = 'type' in item.componentOptions ? item.componentOptions.type : 'static'
           return h(ArrayItem, {
             value: formData[item.prop],
@@ -130,7 +130,7 @@ export default defineComponent({
               formData[item.prop] = value
               changed(value, item.prop)
             },
-            max,
+            count,
             type
           })
         case FormType.CUSTOM:

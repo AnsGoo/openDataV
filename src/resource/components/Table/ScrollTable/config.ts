@@ -22,17 +22,12 @@ class ScrollTableComponent extends BaseComponent {
       prop: 'header',
       children: [
         {
-          prop: 'column',
-          label: '列数据',
-          type: FormType.CUSTOM,
-          showLabel: false,
+          prop: 'header',
+          label: '表头数据',
+          type: FormType.ARRAY,
           componentOptions: {
-            componentType: 'ScrollTableForm',
-            defaultValue: [
-              { name: '列1', width: '100', align: 'center' },
-              { name: '列2', width: '100', align: 'center' },
-              { name: '列3', width: '100', align: 'center' }
-            ]
+            type: 'dynamic',
+            defaultValue: ['姓名', '年龄', '性别']
           }
         },
         {
@@ -74,59 +69,43 @@ class ScrollTableComponent extends BaseComponent {
       prop: 'rows',
       children: [
         {
-          prop: 'rowNum',
-          label: '最大显示行',
-          type: FormType.NUMBER,
+          prop: 'data',
+          label: '行配置',
+          type: FormType.CUSTOM,
+          showLabel: false,
           componentOptions: {
-            defaultValue: 5
-          }
-        },
-        {
-          prop: 'oddRowBGC',
-          label: '奇数行背景色',
-          type: FormType.COLOR,
-          componentOptions: {
-            defaultValue: '#003B51'
-          }
-        },
-        {
-          prop: 'evenRowBGC',
-          label: '偶数行背景色',
-          type: FormType.COLOR,
-          componentOptions: {
-            defaultValue: '#0A2732'
-          }
-        },
-        {
-          prop: 'height',
-          label: '行高度',
-          type: FormType.NUMBER,
-          componentOptions: {
-            defaultValue: 20
+            componentType: 'ScrollTableForm',
+            defaultValue: {
+              height: 30,
+              oddRowBGC: '#003B51',
+              evenRowBGC: '#0A2732'
+            }
           }
         }
-      ]
-    },
-    {
-      label: '列设置',
-      prop: 'columns',
-      children: [
-        {
-          prop: 'columnWidth',
-          label: '每列宽度',
-          type: FormType.ARRAY,
-          componentOptions: {
-            defaultValue: []
-          }
-        },
-        {
-          prop: 'align',
-          label: '对齐方式',
-          type: FormType.ARRAY,
-          componentOptions: {
-            defaultValue: []
-          }
-        }
+        // {
+        //   prop: 'oddRowBGC',
+        //   label: '奇数行背景色',
+        //   type: FormType.COLOR,
+        //   componentOptions: {
+        //     defaultValue: '#003B51'
+        //   }
+        // },
+        // {
+        //   prop: 'evenRowBGC',
+        //   label: '偶数行背景色',
+        //   type: FormType.COLOR,
+        //   componentOptions: {
+        //     defaultValue: '#0A2732'
+        //   }
+        // },
+        // {
+        //   prop: 'height',
+        //   label: '行高度',
+        //   type: FormType.NUMBER,
+        //   componentOptions: {
+        //     defaultValue: 30
+        //   }
+        // }
       ]
     }
   ]

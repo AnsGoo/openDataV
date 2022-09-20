@@ -14,7 +14,7 @@
         v-if="type === 'dynamic'"
       />
     </n-space>
-    <n-space :wrap="false" v-if="type === 'dynamic' && arrayValue.length < max">
+    <n-space :wrap="false" v-if="type === 'dynamic'">
       <n-input
         ref="addInputEl"
         v-model:value="newValue"
@@ -22,7 +22,7 @@
         @keypress.enter="handleAdd"
         placeholder="请输入数据"
       />
-      <IconPark name="add-three" color="#4CD263" @click="handleAdd" v-if="type === 'dynamic'" />
+      <IconPark name="add-three" color="#4CD263" @click="handleAdd" />
     </n-space>
   </n-space>
 </template>
@@ -35,23 +35,25 @@ import { message } from '@/utils/message'
 const props = withDefaults(
   defineProps<{
     value: string[]
-    max?: number
+    count?: number
     type?: 'static' | 'dynamic'
   }>(),
   {
-    max: 1,
+    count: 1,
     type: 'static'
   }
 )
 
 const emits = defineEmits<{
-  (e: 'update:value', value: string[])
-  (e: 'updateValue', value: string[])
+  (e: 'update:value', value: string[]): void
+  (e: 'updateValue', value: string[]): void
 }>()
 
 const addInputEl = ref<HTMLInputElement>()
 const newValue = ref<string>('')
-const arrayValue = reactive<string[]>(props.type === 'static' ? new Array(props.max).fill('') : [])
+const arrayValue = reactive<string[]>(
+  props.type === 'static' ? new Array(props.count).fill('') : []
+)
 arrayValue.splice(0, props.value.length, ...props.value)
 
 const handleAdd = () => {

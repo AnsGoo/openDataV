@@ -42,7 +42,7 @@ interface CustomFormSchema extends BaseFormSchema {
 }
 
 interface ArrayFormSchema extends BaseFormSchema {
-  max: number
+  count: number
   type: 'static' | 'dynamic'
 }
 

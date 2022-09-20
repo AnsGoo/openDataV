@@ -1,25 +1,22 @@
 export interface ScrollTableType {
   header: {
-    column: TableColumnData[]
+    header: string[]
     headerBGC: string
     headerHeight: number
     index: boolean
     indexHeader: string
   }
   rows: {
-    rowNum: number
-    oddRowBGC: string
-    evenRowBGC: string
-    height: number
-  }
-  columns: {
-    columnWidth: string[]
-    align: string[]
+    data: {
+      oddRowBGC: string
+      evenRowBGC: string
+      height: number
+    }
   }
 }
 
-export interface TableColumnData {
-  name: string
-  width: string
-  align: 'left' | 'right' | 'center'
+export interface RowType {
+  oddRowBGC: string
+  evenRowBGC: string
+  height: number
 }
