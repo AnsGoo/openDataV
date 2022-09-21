@@ -50,7 +50,6 @@ const basicStore = useBasicStoreWithOut()
 const canvasStyleFrom = ref<CanvasStyleData>({
   width: basicStore.canvasData.width,
   height: basicStore.canvasData.height,
-  scale: basicStore.canvasData.scale,
   image: basicStore.canvasData.image,
   color: basicStore.canvasData.color || '#084860'
 })

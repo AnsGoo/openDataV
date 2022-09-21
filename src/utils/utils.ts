@@ -8,10 +8,6 @@ export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))
 }
 
-export function changeStyleWithScale(value: number, scale: number): number {
-  return (value * scale) / 100
-}
-
 /**
  * 剔除指定样式，并转化为css
  * @param style  原始样式
