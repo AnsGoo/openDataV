@@ -22,10 +22,9 @@ module.exports = defineConfig({
     'plugin:@typescript-eslint/recommended',
     'prettier',
     'plugin:prettier/recommended',
-    'plugin:sonarjs/recommended'
     // 'plugin:jest/recommended'
   ],
-  plugins: ['sonarjs', 'prettier', 'import', '@typescript-eslint'],
+  plugins: ['prettier', 'import', '@typescript-eslint'],
   rules: {
     'vue/script-setup-uses-vars': 'error',
     '@typescript-eslint/ban-ts-ignore': 'off',
@@ -35,6 +34,7 @@ module.exports = defineConfig({
     '@typescript-eslint/no-empty-function': 'off',
     'vue/custom-event-name-casing': 'off',
     'no-use-before-define': 'off',
+    'vue/no-v-html': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/ban-types': 'off',

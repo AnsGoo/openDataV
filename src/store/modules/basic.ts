@@ -18,7 +18,7 @@ const baseCanvasStyleData: CanvasStyleData = {
   height: window.screen.height,
   scale: 100,
   image: import.meta.env.VITE_BACKGROUND as string,
-  color: '#084860'
+  color: '#272e3b'
 }
 
 window.localStorage.setItem('canvasData', JSON.stringify([]))

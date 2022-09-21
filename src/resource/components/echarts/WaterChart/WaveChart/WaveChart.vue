@@ -15,7 +15,7 @@ const props = defineProps<{
 }>()
 
 const chartEl = ref<ElRef>(null)
-let data: number = 0.8
+let data = 0.8
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 const { propValue } = useProp<WaveChartType>(props.component, async () => {
   updateEchart(getOption())
