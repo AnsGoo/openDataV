@@ -42,7 +42,7 @@
           v-for="(ceil, ci) in row.ceils"
           :key="`${ceil}${ri}${ci}`"
           v-html="ceil"
-        />
+        ></div>
       </div>
     </div>
   </div>
@@ -66,8 +66,6 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
   const { height } = entry.contentRect
   comHeight.value = height
 }
-
-const handleHover = () => {}
 
 const demoData = [
   {

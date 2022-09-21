@@ -34,6 +34,7 @@ module.exports = defineConfig({
     '@typescript-eslint/no-empty-function': 'off',
     'vue/custom-event-name-casing': 'off',
     'no-use-before-define': 'off',
+    'vue/no-v-html': 'off',
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/ban-ts-comment': 'off',
     '@typescript-eslint/ban-types': 'off',

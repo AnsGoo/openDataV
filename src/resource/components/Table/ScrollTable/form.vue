@@ -18,7 +18,7 @@
 
 <script lang="ts" setup>
 import { reactive } from 'vue'
-import { NForm, NFormItem, NInputNumber, NColorPicker, NSpace } from 'naive-ui'
+import { NForm, NFormItem, NInputNumber, NColorPicker } from 'naive-ui'
 import { RowType } from './type'
 
 const props = defineProps<{
