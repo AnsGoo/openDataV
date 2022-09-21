@@ -3,7 +3,7 @@
     <!-- 中间画布 -->
     <n-layout-content class="content">
       <n-scrollbar x-scrollable :style="scrobarStyle">
-        <Editor :scale="sliderScale" />
+        <Editor />
       </n-scrollbar>
     </n-layout-content>
     <n-layout-footer position="absolute" class="footer">
@@ -36,13 +36,14 @@ import {
   SelectOption
 } from 'naive-ui'
 import { debounce } from 'lodash-es'
+import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)
 const toolBarHeight = ref<number>(35)
 
-const value = ref<number>(80)
-const sliderScale = ref<number>(80)
+const value = ref<number>(100)
+const basicStore = useBasicStoreWithOut()
 const options: SelectOption[] = [
   {
     value: 200,
@@ -81,7 +82,7 @@ const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserv
 }
 
 const changeScale = debounce((value: number) => {
-  sliderScale.value = value
+  basicStore.setScale(value)
 }, 300)
 
 const stopWatch: WatchStopHandle = watch(

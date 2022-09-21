@@ -194,8 +194,8 @@ export default defineComponent({
       const move = (moveEvent) => {
         const curX = moveEvent.clientX
         const curY = moveEvent.clientY
-        top = curY - startY + startTop
-        left = curX - startX + startLeft
+        top = (curY - startY) / basicStore.scale + startTop
+        left = (curX - startX) / basicStore.scale + startLeft
 
         // // 修改当前组件样式
         basicStore.syncComponentLoction({ top, left }, props.info!.parent, false)
@@ -276,8 +276,8 @@ export default defineComponent({
         // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
         // 因此第一次点击时不触发 move 事件
         const curPositon: Vector = {
-          x: moveEvent.clientX - editorRectInfo.left,
-          y: moveEvent.clientY - editorRectInfo.top
+          x: (moveEvent.clientX - editorRectInfo.left) / basicStore.scale,
+          y: (moveEvent.clientY - editorRectInfo.top) / basicStore.scale
         }
 
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)

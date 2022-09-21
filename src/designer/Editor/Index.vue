@@ -74,18 +74,11 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { BaseComponent, createComponent } from '@/resource/models'
 import { componentList } from '../load'
 
-withDefaults(
-  defineProps<{
-    scale?: number
-  }>(),
-  {
-    scale: 100
-  }
-)
-
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
+
+const scale = computed<number>(() => basicStore.scale)
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
@@ -359,7 +352,7 @@ const deselectCurComponent = () => {
 .editor {
   @apply relative m-auto;
   transform-origin: left top;
-  transform: scale(v-bind(scale / 100));
+  transform: scale(v-bind(scale));
   transition: all 0.3s;
 }
 
