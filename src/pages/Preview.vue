@@ -21,7 +21,6 @@ const componentData = computed<BaseComponent[]>(() => basicStore.componentData)
 const canvasStyleData = ref<CanvasStyleData>({
   width: 0,
   height: 0,
-  scale: 0,
   image: '',
   color: '#084860'
 })
