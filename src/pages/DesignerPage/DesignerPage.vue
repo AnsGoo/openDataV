@@ -22,12 +22,7 @@
         />
       </n-layout-sider>
       <n-layout has-sider sider-placement="right">
-        <!-- 中间画布 -->
-        <n-layout-content class="content" v-resize="editorWindowResizeHandler">
-          <n-scrollbar x-scrollable :style="scrobarStyle">
-            <Editor />
-          </n-scrollbar>
-        </n-layout-content>
+        <Canvas />
         <n-layout-sider
           class="right"
           width="240"
@@ -53,15 +48,15 @@
 </template>
 
 <script setup lang="ts">
-import Editor from '@/designer/Editor/Index.vue'
 import ToolBar from '@/designer/Pane/Toolbar'
 import LeftSideBar from '@/designer/Pane/LeftSideBar'
 import RightSideBar from '@/designer/Pane/RightSideBar'
+import Canvas from './Canvas.vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { getPage } from '@/api/pages'
 import { useRoute } from 'vue-router'
-import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
+import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
 
 const basicStore = useBasicStoreWithOut()
 const collapsedLeft = ref(false)
@@ -83,36 +78,22 @@ const restore = async (index: string) => {
   }
   basicStore.setLayoutData(resp.data)
 }
-const windowWidth = ref<number>(0)
-const windowHeight = ref<number>(0)
-const scrobarStyle = computed(() => {
-  return {
-    width: windowWidth.value + 'px',
-    height: windowHeight.value + 'px'
-  }
-})
 
-const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
-  const { width, height } = entry.contentRect
-  windowWidth.value = width
-  windowHeight.value = height
-}
 onUnmounted(() => {
   basicStore.clearCanvas()
 })
 </script>
 
 <style scoped lang="less">
-.header {
-  height: 5vh;
-}
+.home > :deep(.n-layout-scroll-container:first-child) {
+  @apply flex flex-col h-screen;
 
-.main {
-  height: 94vh;
-}
+  .header {
+    height: 5vh;
+  }
 
-.content {
-  box-shadow: inset 0px 0px 3px black;
+  .main {
+    flex: 1;
+  }
 }
 </style>
