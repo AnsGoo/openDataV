@@ -78,8 +78,6 @@ const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
 
-const scale = computed<number>(() => basicStore.scale)
-
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
@@ -351,9 +349,6 @@ const deselectCurComponent = () => {
 <style scoped lang="less">
 .editor {
   @apply relative m-auto;
-  transform-origin: left top;
-  transform: scale(v-bind(scale));
-  transition: all 0.3s;
 }
 
 .edit .component {

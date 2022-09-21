@@ -33,7 +33,8 @@ import {
   NSlider,
   NSpace,
   NSelect,
-  SelectOption
+  SelectOption,
+  NEl
 } from 'naive-ui'
 import { debounce } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
@@ -43,6 +44,7 @@ const windowHeight = ref<number>(0)
 const toolBarHeight = ref<number>(35)
 
 const value = ref<number>(100)
+const scaleValue = ref<number>(1)
 const basicStore = useBasicStoreWithOut()
 const options: SelectOption[] = [
   {
@@ -83,6 +85,7 @@ const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserv
 
 const changeScale = debounce((value: number) => {
   basicStore.setScale(value)
+  scaleValue.value = value / 100
 }, 300)
 
 const stopWatch: WatchStopHandle = watch(
@@ -102,6 +105,12 @@ onUnmounted(() => {
 <style lang="less" scoped>
 .content {
   box-shadow: inset 0px 0px 3px black;
+
+  :deep(.n-scrollbar-content) {
+    transform-origin: left top;
+    transform: scale(v-bind(scaleValue));
+    transition: all 0.3s;
+  }
 }
 
 .footer {
