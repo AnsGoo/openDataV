@@ -74,6 +74,15 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { BaseComponent, createComponent } from '@/resource/models'
 import { componentList } from '../load'
 
+withDefaults(
+  defineProps<{
+    scale?: number
+  }>(),
+  {
+    scale: 100
+  }
+)
+
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
@@ -349,6 +358,9 @@ const deselectCurComponent = () => {
 <style scoped lang="less">
 .editor {
   @apply relative m-auto;
+  transform-origin: left top;
+  transform: scale(v-bind(scale / 100));
+  transition: all 0.3s;
 }
 
 .edit .component {
