@@ -37,12 +37,12 @@ interface InputNumberFormSchema extends BaseFormSchema {
 }
 
 interface CustomFormSchema extends BaseFormSchema {
-  componentType: string
+  componentType: string | ConcreteComponent
   args: any
 }
 
 interface ArrayFormSchema extends BaseFormSchema {
-  max: number
+  count: number
   type: 'static' | 'dynamic'
 }
 
@@ -50,6 +50,7 @@ interface AttrType {
   prop: string
   label: string
   type?: FormType
+  showLabel?: boolean
   componentOptions:
     | InputFormSchema
     | InputNumberFormSchema
