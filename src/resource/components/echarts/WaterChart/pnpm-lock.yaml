@@ -1,0 +1,17 @@
+lockfileVersion: 5.4
+
+specifiers:
+  echarts-liquidfill: ^3.1.0
+
+dependencies:
+  echarts-liquidfill: mirrors.tencent.com/echarts-liquidfill/3.1.0
+
+packages:
+
+  mirrors.tencent.com/echarts-liquidfill/3.1.0:
+    resolution: {integrity: sha512-5Dlqs/jTsdTUAsd+K5LPLLTgrbbNORUSBQyk8PSy1Mg2zgHDWm83FmvA4s0ooNepCJojFYRITTQ4GU1UUSKYLw==, registry: https://mirrors.cloud.tencent.com/npm/, tarball: https://mirrors.tencent.com/npm/echarts-liquidfill/-/echarts-liquidfill-3.1.0.tgz}
+    name: echarts-liquidfill
+    version: 3.1.0
+    peerDependencies:
+      echarts: ^5.0.1
+    dev: false

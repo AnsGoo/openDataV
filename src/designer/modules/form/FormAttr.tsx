@@ -3,7 +3,7 @@ import FontStyle from '../fontSytle'
 import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
 import ArrayItem from '../arrayItem'
-import CustomRender from './utils/render'
+import CustomItem from '../customItem'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType, CustomFormSchema } from '@/types/component'
 import {
@@ -24,7 +24,6 @@ export default defineComponent({
     FontWeight,
     LinearGradient,
     NSwitch
-    // ArrayItem
   },
   props: {
     name: {
@@ -56,6 +55,7 @@ export default defineComponent({
       emit('change', key, val)
     }
 
+    const isShowLabel = (showLabel?: boolean) => showLabel === false ? false : true
     const renderItem = (item: AttrType) => {
       const options: Recordable[] = item.componentOptions?.options || []
 
@@ -122,7 +122,7 @@ export default defineComponent({
             }
           })
         case FormType.ARRAY:
-          const max = 'max' in item.componentOptions ? item.componentOptions.max : 1
+          const count = 'count' in item.componentOptions ? item.componentOptions.count : 1
           const type = 'type' in item.componentOptions ? item.componentOptions.type : 'static'
           return h(ArrayItem, {
             value: formData[item.prop],
@@ -130,12 +130,12 @@ export default defineComponent({
               formData[item.prop] = value
               changed(value, item.prop)
             },
-            max,
+            count,
             type
           })
         case FormType.CUSTOM:
           return (
-            <CustomRender
+            <CustomItem
               v-model:value={formData[item.prop]}
               onUpdateValue={(event) => changed(event, item.prop)}
               component={(item.componentOptions as CustomFormSchema).componentType}
@@ -157,7 +157,7 @@ export default defineComponent({
     return () => (
       <NForm size="small" labelPlacement="left" labelAlign="left">
         {props.children.map((item) => (
-          <NFormItem key={`${props.ukey}${item.prop}`} label={item.label}>
+          <NFormItem key={`${props.ukey}${item.prop}`} label={item.label} showLabel={isShowLabel(item.showLabel)}>
             {renderItem(item)}
           </NFormItem>
         ))}

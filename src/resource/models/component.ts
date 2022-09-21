@@ -187,20 +187,19 @@ export abstract class BaseComponent {
 
   // 生成后端存储需要的Json
   toJson(): ComponentDataType {
+    const subComponents = this.subComponents.map((item) => item.toJson())
     const component: ComponentDataType = {
       id: this.id,
       component: this.component,
       name: this.name,
       propValue: this.propValue,
       style: this.style,
-      subComponents: []
+      subComponents: subComponents.length > 0 ? subComponents : undefined
     }
 
     if (this.groupStyle) {
       component.groupStyle = this.groupStyle
     }
-
-    this.subComponents.forEach((item) => component.subComponents.push(item.toJson()))
     return component
   }
 
@@ -255,9 +254,11 @@ export abstract class BaseComponent {
     if (!propObj) return
     propObj.componentOptions.defaultValue = value
 
-    if (this.callbackProp) {
-      this.callbackProp(form, prop, value)
-    }
+    setTimeout(() => {
+      if (this.callbackProp) {
+        this.callbackProp(form, prop, value)
+      }
+    }, 0)
   }
 
   changePropCallback(callback: (prop: string, key: string, value: any) => void) {
