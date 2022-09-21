@@ -34,7 +34,7 @@ const useProjectSettingStore = defineStore({
   state: (): ProjectSettingState => ({
     appTheme: '#2d8cf0',
     navTheme: 'dark',
-    darkTheme: false,
+    darkTheme: true,
     headerSetting: {
       //固定顶部
       fixed: true,

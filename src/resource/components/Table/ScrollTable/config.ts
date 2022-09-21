@@ -82,30 +82,6 @@ class ScrollTableComponent extends BaseComponent {
             }
           }
         }
-        // {
-        //   prop: 'oddRowBGC',
-        //   label: '奇数行背景色',
-        //   type: FormType.COLOR,
-        //   componentOptions: {
-        //     defaultValue: '#003B51'
-        //   }
-        // },
-        // {
-        //   prop: 'evenRowBGC',
-        //   label: '偶数行背景色',
-        //   type: FormType.COLOR,
-        //   componentOptions: {
-        //     defaultValue: '#0A2732'
-        //   }
-        // },
-        // {
-        //   prop: 'height',
-        //   label: '行高度',
-        //   type: FormType.NUMBER,
-        //   componentOptions: {
-        //     defaultValue: 30
-        //   }
-        // }
       ]
     }
   ]
