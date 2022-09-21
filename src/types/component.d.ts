@@ -37,7 +37,7 @@ interface InputNumberFormSchema extends BaseFormSchema {
 }
 
 interface CustomFormSchema extends BaseFormSchema {
-  componentType: string
+  componentType: string | ConcreteComponent
   args: any
 }
 

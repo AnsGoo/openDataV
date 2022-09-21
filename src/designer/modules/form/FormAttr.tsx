@@ -134,15 +134,14 @@ export default defineComponent({
             type
           })
         case FormType.CUSTOM:
-          return h(CustomItem, {
-            value: formData[item.prop],
-            component: (item.componentOptions as CustomFormSchema).componentType,
-            ['onUpdate:value']: (value) => {
-              formData[item.prop] = value
-              changed(value, item.prop)
-            },
-            args: (item.componentOptions as CustomFormSchema).args,
-          })
+          return (
+            <CustomItem
+              v-model:value={formData[item.prop]}
+              onUpdateValue={(event) => changed(event, item.prop)}
+              component={(item.componentOptions as CustomFormSchema).componentType}
+              args={(item.componentOptions as CustomFormSchema).args}
+            />
+          )
         default:
           return (
             <NInput

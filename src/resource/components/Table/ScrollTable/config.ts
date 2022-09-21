@@ -1,6 +1,8 @@
+import { shallowRef } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import ScrollTableForm from './Form.vue'
 
 export const componentName = 'ScrollTable'
 class ScrollTableComponent extends BaseComponent {
@@ -74,7 +76,7 @@ class ScrollTableComponent extends BaseComponent {
           type: FormType.CUSTOM,
           showLabel: false,
           componentOptions: {
-            componentType: 'ScrollTableForm',
+            componentType: shallowRef(ScrollTableForm), //'ScrollTableForm',
             defaultValue: {
               height: 30,
               oddRowBGC: '#003B51',

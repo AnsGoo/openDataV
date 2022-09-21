@@ -1,3 +1,3 @@
-import CustomItem from './CustomItem.vue'
+import CustomItem from './CustomItem'
 
 export default CustomItem
