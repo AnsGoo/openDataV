@@ -3,35 +3,31 @@
 </template>
 
 <script setup lang="ts">
-import * as echarts from 'echarts'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { http } from '@/utils/http'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import mydark from '../../theme'
 import { useProp } from '@/resource/hooks'
 import BasicLineChartComponent from './config'
 import { BasicLineChart } from './type'
 import type { PieSeriesOption, EChartsOption } from 'echarts'
 import { compareResetValue } from '../../utils'
-echarts.registerTheme('mydark', mydark)
+import { useEchart } from '../../hooks'
 
 const chartEl = ref<ElRef>(null)
-let chart: echarts.EChartsType | null = null
+
 let gloabalOption: EChartsOption
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{
   component: BasicLineChartComponent
 }>()
 
+const { updateEchart, resizeHandler } = useEchart(chartEl)
 interface Record {
   label: string
   value: number
 }
 const propValueChange = () => {
-  if (chart) {
-    chart.clear()
-    initData()
-  }
+  initData()
 }
 
 const { propValue } = useProp<BasicLineChart>(props.component, propValueChange)
@@ -69,12 +65,6 @@ const initData = async () => {
       updateData(demoData)
     }
   }
-}
-
-const resizeHandler = (entries) => {
-  const entry = entries[0]
-  const { width, height } = entry.contentRect
-  chart?.resize({ width, height })
 }
 
 const getOption = () => {
@@ -141,19 +131,9 @@ const updateData = (data: Record[]) => {
       name: el.label
     }
   })
-  if (chart) {
-    chart.setOption(gloabalOption)
-  }
+  updateEchart(gloabalOption)
 }
 const initChart = () => {
-  chart = echarts.init(chartEl.value!, 'mydark')
-  chart.clear()
-  chart.setOption(gloabalOption)
+  updateEchart(gloabalOption)
 }
-onUnmounted(() => {
-  if (chart) {
-    chart.clear()
-    chart.dispose()
-  }
-})
 </script>
