@@ -2,4 +2,3 @@ node_modules
 package-lock.json
 components.d.ts
 .DS_Store
-dist
