@@ -54,6 +54,11 @@
             />
           </div>
         </n-tab-pane>
+        <n-tab-pane name="scripts" tab="后置脚本">
+          <div class="headers">
+            <DynamicKVForm v-model:value="formData['options']" title="后置脚本" />
+          </div>
+        </n-tab-pane>
       </n-tabs>
     </div>
     <div class="response">
@@ -64,7 +69,7 @@
             width: '50%';
           }
         "
-        >请求响应 {{ response.code ? response.code : '' }}</n-divider
+        >请求响应 <span :class="['resp-code', response.code >=400 ? 'resp-fail': 'resp-success']">{{ response.code ? response.code : '' }}</span></n-divider
       >
       <ReponseContentView :data="response.data" class="content" />
     </div>
@@ -88,9 +93,9 @@ import { reactive, ref } from 'vue'
 import { KV } from '../modules/type'
 import { uuid } from '@/utils/utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
-import Axios, { Method } from 'axios'
+import type { AxiosResponse, Method } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
-import { httpConfig } from '@/utils/http/config'
+import useRestRequest from '@/ApiView/hooks/http'
 const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   return {
     label: el,
@@ -120,17 +125,52 @@ interface RequestOption {
   data: Array<KV>
 }
 
+interface AfterScripts {
+  options:Array<KV>
+  code: string
+}
+
 interface RequestResponse {
   code: number
   data: string
   headers: Recordable<string>
 }
-const formData = reactive<RequestOption>({
+
+
+interface ErrorResponse extends Error {
+  config: Recordable
+  code?: number| undefined
+  response: AxiosResponse
+  isAxiosError: boolean
+
+  toJSON: () =>  {
+    message: string,
+    name: string,
+    // Microsoft
+    description?: string ,
+    number?: string,
+    // Mozilla
+    fileName?: string,
+    lineNumber?: string,
+    columnNumber?: string,
+    stack?: string,
+    // Axios
+    config: Recordable,
+    code?:  number,
+    status?: number
+  }
+  
+}
+
+
+const formData = reactive<RequestOption & AfterScripts>({
   method: RequestMethod.GET,
   url: 'http://datav.byteportrait.com',
   headers: [{ key: '', value: '', disable: false, id: uuid() }],
   params: [{ key: '', value: '', disable: false, id: uuid() }],
-  data: [{ key: '', value: '', disable: false, id: uuid() }]
+  data: [{ key: '', value: '', disable: false, id: uuid() }],
+  options:[{ key: '', value: '', disable: false, id: uuid() }],
+  code:''
 })
 const response = ref<RequestResponse>({
   code: 0,
@@ -141,7 +181,6 @@ const send = async () => {
   const headers = {}
   const params = {}
   const data = {}
-  console.log(formData)
   for (let i of formData.headers) {
     if (i.key) {
       headers[i.key] = i.value
@@ -159,13 +198,21 @@ const send = async () => {
   }
   const method = formData.method as Method
   const url = formData.url
-  const config = httpConfig({ url, params, data, method })
-  const axiosInstance = Axios.create(config)
-  const resp = await axiosInstance.request(config)
-  response.value.code = resp.status
-  response.value.data = JSON.stringify(resp.data, null, '\t')
-  response.value.headers = resp.headers
-  console.log(response.value)
+  const restRequest = useRestRequest(method, headers, url, params, data)
+  
+  try {
+    const resp = await restRequest.request()
+    response.value.code = resp.status
+    response.value.data = JSON.stringify(resp.data, null, '\t')
+    response.value.headers = resp.headers
+  } catch(err: any) {
+    err as ErrorResponse
+    const result  = err.response || err.toJSON()
+    response.value.code = result.status
+    response.value.data = JSON.stringify(result.statusText || result.message, null, '\t') || ''
+    response.value.headers = result.headers || result?.config?.headers || {}
+  }
+ 
 }
 </script>
 
@@ -181,6 +228,15 @@ const send = async () => {
   }
 }
 .response {
-  width: 80vw;
+  width: max-wdith;
+  .resp-fail {
+    color:#F76560;
+    margin-left: 10px;
+  }
+  .resp-code.resp-success {
+    color: #18A058;
+    margin-left: 10px;
+  }
+  
 }
 </style>

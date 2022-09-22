@@ -27,8 +27,7 @@
         >{{ code }}</pre
       >
     </div>
-    <div class="divider"></div>
-    <div class="footer">
+    <!-- <div class="footer">
       <div class="buttons">
         <icon-park
           class="item"
@@ -47,7 +46,7 @@
         >
         <span class="item">总行数: {{ state.lines }}</span>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -148,13 +147,9 @@ const codeChange = (value: string, viewUpdate: ViewUpdate) => {
 
 <style lang="less" scoped>
 .editor {
-  .divider {
-    height: 1px;
-  }
-
   .main {
     display: flex;
-    width: 100%;
+    width: max-width;
     overflow: hidden;
     ::-webkit-scrollbar {
       /*滚动条整体样式*/
@@ -180,32 +175,32 @@ const codeChange = (value: string, viewUpdate: ViewUpdate) => {
     }
   }
 
-  .footer {
-    height: 3rem;
-    padding: 0 1em;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 90%;
+  // .footer {
+  //   height: 3rem;
+  //   padding: 0 1em;
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   font-size: 90%;
 
-    .buttons {
-      .item {
-        margin-right: 1em;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
-        background-color: transparent;
-        cursor: pointer;
-      }
-    }
+  //   .buttons {
+  //     .item {
+  //       margin-right: 1em;
+  //       display: inline-flex;
+  //       justify-content: center;
+  //       align-items: center;
+  //       background-color: transparent;
+  //       cursor: pointer;
+  //     }
+  //   }
 
-    .infos {
-      .item {
-        margin-left: 2em;
-        display: inline-block;
-        font-feature-settings: 'tnum';
-      }
-    }
-  }
+  //   .infos {
+  //     .item {
+  //       margin-left: 2em;
+  //       display: inline-block;
+  //       font-feature-settings: 'tnum';
+  //     }
+  //   }
+  // }
 }
 </style>

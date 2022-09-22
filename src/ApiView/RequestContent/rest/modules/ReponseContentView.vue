@@ -19,7 +19,7 @@ const props = defineProps<{
   data: string
 }>()
 const config = ref<CodemirrorOption>({
-  height: 'fit-content',
+  height: '300px',
   tabSize: 4,
   indentWithTab: true,
   autofocus: true,
