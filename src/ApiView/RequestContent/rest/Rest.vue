@@ -10,7 +10,7 @@
       <n-input class="url" v-model:value="formData['url']" />
       <n-space>
         <n-button-group class="send">
-          <n-button type="primary">发送</n-button>
+          <n-button type="primary" @click="send">发送</n-button>
           <n-dropdown :options="sendOptions" trigger="hover" :show-arrow="true">
             <n-button type="primary">
               <template #icon>
@@ -64,9 +64,9 @@
             width: '50%';
           }
         "
-        >请求响应</n-divider
+        >请求响应 {{ response.code ? response.code : '' }}</n-divider
       >
-      <ReponseContentView />
+      <ReponseContentView :data="response.data" class="content" />
     </div>
   </NCard>
 </template>
@@ -84,11 +84,13 @@ import {
   NDivider
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { KV } from '../modules/type'
 import { uuid } from '@/utils/utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
+import Axios, { Method } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
+import { httpConfig } from '@/utils/http/config'
 const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   return {
     label: el,
@@ -117,6 +119,12 @@ interface RequestOption {
   params: Array<KV>
   data: Array<KV>
 }
+
+interface RequestResponse {
+  code: number
+  data: string
+  headers: Recordable<string>
+}
 const formData = reactive<RequestOption>({
   method: RequestMethod.GET,
   url: 'http://datav.byteportrait.com',
@@ -124,6 +132,41 @@ const formData = reactive<RequestOption>({
   params: [{ key: '', value: '', disable: false, id: uuid() }],
   data: [{ key: '', value: '', disable: false, id: uuid() }]
 })
+const response = ref<RequestResponse>({
+  code: 0,
+  data: '',
+  headers: {}
+})
+const send = async () => {
+  const headers = {}
+  const params = {}
+  const data = {}
+  console.log(formData)
+  for (let i of formData.headers) {
+    if (i.key) {
+      headers[i.key] = i.value
+    }
+  }
+  for (let i of formData.params) {
+    if (i.key) {
+      params[i.key] = i.value
+    }
+  }
+  for (let i of formData.data) {
+    if (i.key) {
+      data[i.key] = i.value
+    }
+  }
+  const method = formData.method as Method
+  const url = formData.url
+  const config = httpConfig({ url, params, data, method })
+  const axiosInstance = Axios.create(config)
+  const resp = await axiosInstance.request(config)
+  response.value.code = resp.status
+  response.value.data = JSON.stringify(resp.data, null, '\t')
+  response.value.headers = resp.headers
+  console.log(response.value)
+}
 </script>
 
 <style scoped lang="less">
@@ -136,5 +179,8 @@ const formData = reactive<RequestOption>({
   .url {
     flex: 90;
   }
+}
+.response {
+  width: 80vw;
 }
 </style>

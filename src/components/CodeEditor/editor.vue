@@ -2,7 +2,7 @@
   <div class="editor">
     <div class="main" :style="{ maxHeight: config.height }">
       <codemirror
-        v-model="codeRef"
+        :model-value="code"
         :style="{
           width: previewAction ? '50%' : '100%',
           height: config.height,
@@ -15,10 +15,10 @@
         :disabled="config.disabled"
         :indent-with-tab="config.indentWithTab"
         :tab-size="config.tabSize"
-        @update="handleStateUpdate"
         @ready="handleReady"
         @focus="log('focus', $event)"
         @blur="log('blur', $event)"
+        @update:model-value="codeChange"
       />
       <pre
         v-if="previewAction"
@@ -87,7 +87,6 @@ const emits = defineEmits<{
   (e: 'update:code', value: string): void
 }>()
 
-const codeRef = ref(props.code || '')
 const extensions = computed(() => {
   const result: Extension[] = []
   if (props.language) {
@@ -136,16 +135,14 @@ const state = reactive({
   length: null as null | number
 })
 
-const handleStateUpdate = (viewUpdate: ViewUpdate) => {
-  // selected
+const codeChange = (value: string, viewUpdate: ViewUpdate) => {
   const ranges = viewUpdate.state.selection.ranges
   state.selected = ranges.reduce((plus, range) => plus + range.to - range.from, 0)
   state.cursor = ranges[0].anchor
   // length
   state.length = viewUpdate.state.doc.length
   state.lines = viewUpdate.state.doc.lines
-  emits('update:code', codeRef.value)
-  // log('viewUpdate', viewUpdate)
+  emits('update:code', value)
 }
 </script>
 
