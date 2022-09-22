@@ -29,7 +29,6 @@ export const useEchart = (chartEl: Ref<ElRef>) => {
   })
 
   const updateEchart = (option: EchartOption) => {
-    chart?.clear()
     chart?.setOption(option)
   }
 
