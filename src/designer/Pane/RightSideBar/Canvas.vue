@@ -71,6 +71,8 @@ const setScreenSize = (piexl: string) => {
   const height = parseInt(piexls[1])
   canvasStyleFrom.value.width = width
   canvasStyleFrom.value.height = height
+
+  styleChange()
 }
 </script>
 
