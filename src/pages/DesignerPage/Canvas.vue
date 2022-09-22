@@ -14,10 +14,16 @@
         >
           画布缩放:
         </n-el>
-        <n-slider v-model:value="sliderValue" :min="10" :max="200" style="width: 120px" />
+        <n-slider
+          :value="sliderValue"
+          @update:value="handleScale"
+          :min="10"
+          :max="200"
+          style="width: 120px"
+        />
         <n-select
           :value="selectValue"
-          @update:value="handleSelect"
+          @update:value="handleScale"
           :options="options"
           size="tiny"
           style="width: 90px"
@@ -28,8 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, watch, onUnmounted } from 'vue'
-import type { WatchStopHandle } from 'vue'
+import { ref, computed } from 'vue'
 import Editor from '@/designer/Editor/Index.vue'
 import {
   NLayout,
@@ -90,29 +95,16 @@ const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserv
   windowHeight.value = height - toolBarHeight.value
 }
 
-const handleSelect = (value: number) => {
+const handleScale = (value: number) => {
   selectValue.value = `${value}%`
   sliderValue.value = value
+  changeScale(sliderValue.value)
 }
 
 const changeScale = debounce((value: number) => {
   basicStore.setScale(value)
   scaleValue.value = value / 100
 }, 300)
-
-const stopWatch: WatchStopHandle = watch(
-  () => sliderValue.value,
-  () => {
-    changeScale(sliderValue.value)
-    selectValue.value = `${sliderValue.value}%`
-  }
-)
-
-onUnmounted(() => {
-  if (stopWatch) {
-    stopWatch()
-  }
-})
 </script>
 
 <style lang="less" scoped>
