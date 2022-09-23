@@ -69,7 +69,9 @@ import {
   Transform,
   Down,
   CheckOne,
-  CloseOne
+  CloseOne,
+  Success,
+  Attention
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -147,5 +149,7 @@ export default {
     app.component(Down.name, Down)
     app.component(CheckOne.name, CheckOne)
     app.component(CloseOne.name, CloseOne)
+    app.component(Success.name, Success)
+    app.component(Attention.name, Attention)
   }
 }

@@ -56,7 +56,7 @@
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="后置脚本">
           <div class="headers">
-            <DynamicKVForm v-model:value="formData['options']" title="后置脚本" />
+            <DynamicKVForm v-model:value="formData['options']" title="脚本参数" />
           </div>
         </n-tab-pane>
       </n-tabs>
@@ -69,9 +69,19 @@
             width: '50%';
           }
         "
-        >请求响应 <span :class="['resp-code', response.code >=400 ? 'resp-fail': 'resp-success']">{{ response.code ? response.code : '' }}</span></n-divider
+        >请求响应
+        <span :class="['resp-code', response.code >= 400 ? 'resp-fail' : 'resp-success']">{{
+          response.code ? response.code : ''
+        }}</span></n-divider
       >
-      <ReponseContentView :data="response.data" class="content" />
+      <n-tabs>
+        <n-tab-pane name="data" tab="脚本处理结果">
+          <ReponseContentView :data="response.data" class="content" />
+        </n-tab-pane>
+        <n-tab-pane name="origin" tab="原始请求结果">
+          <ReponseContentView :data="response.data" class="content" />
+        </n-tab-pane>
+      </n-tabs>
     </div>
   </NCard>
 </template>
@@ -126,7 +136,7 @@ interface RequestOption {
 }
 
 interface AfterScripts {
-  options:Array<KV>
+  options: Array<KV>
   code: string
 }
 
@@ -136,32 +146,29 @@ interface RequestResponse {
   headers: Recordable<string>
 }
 
-
 interface ErrorResponse extends Error {
   config: Recordable
-  code?: number| undefined
+  code?: number | undefined
   response: AxiosResponse
   isAxiosError: boolean
 
-  toJSON: () =>  {
-    message: string,
-    name: string,
+  toJSON: () => {
+    message: string
+    name: string
     // Microsoft
-    description?: string ,
-    number?: string,
-    // Mozilla
-    fileName?: string,
-    lineNumber?: string,
-    columnNumber?: string,
-    stack?: string,
+    description?: string
+    number?: string
+    // Mozill
+    fileName?: string
+    lineNumber?: string
+    columnNumber?: string
+    stack?: string
     // Axios
-    config: Recordable,
-    code?:  number,
+    config: Recordable
+    code?: number
     status?: number
   }
-  
 }
-
 
 const formData = reactive<RequestOption & AfterScripts>({
   method: RequestMethod.GET,
@@ -169,8 +176,8 @@ const formData = reactive<RequestOption & AfterScripts>({
   headers: [{ key: '', value: '', disable: false, id: uuid() }],
   params: [{ key: '', value: '', disable: false, id: uuid() }],
   data: [{ key: '', value: '', disable: false, id: uuid() }],
-  options:[{ key: '', value: '', disable: false, id: uuid() }],
-  code:''
+  options: [{ key: '', value: '', disable: false, id: uuid() }],
+  code: ''
 })
 const response = ref<RequestResponse>({
   code: 0,
@@ -199,20 +206,19 @@ const send = async () => {
   const method = formData.method as Method
   const url = formData.url
   const restRequest = useRestRequest(method, headers, url, params, data)
-  
+
   try {
     const resp = await restRequest.request()
     response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
     response.value.headers = resp.headers
-  } catch(err: any) {
+  } catch (err: any) {
     err as ErrorResponse
-    const result  = err.response || err.toJSON()
+    const result = err.response || err.toJSON()
     response.value.code = result.status
     response.value.data = JSON.stringify(result.statusText || result.message, null, '\t') || ''
     response.value.headers = result.headers || result?.config?.headers || {}
   }
- 
 }
 </script>
 
@@ -230,13 +236,12 @@ const send = async () => {
 .response {
   width: max-wdith;
   .resp-fail {
-    color:#F76560;
+    color: #f76560;
     margin-left: 10px;
   }
   .resp-code.resp-success {
-    color: #18A058;
+    color: #18a058;
     margin-left: 10px;
   }
-  
 }
 </style>
