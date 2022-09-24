@@ -1,6 +1,6 @@
 <template>
   <n-space>
-    <n-select :options="options"></n-select>
+    <n-select :options="options" />
 
     <n-space v-if="selectOption === 'backgroundColor'">
       <n-color-picker
@@ -8,7 +8,7 @@
         :swatches="GlobalColorSwatches"
         @update:value="changeBackgroundColor"
         :modes="['hex', 'rgb', 'hsl']"
-      ></n-color-picker>
+      />
     </n-space>
     <n-space v-else-if="selectOption === 'backgroundImage'">
       <back-image v-model:value="backgroundImage" @update:value="changeBackgroundImage" />
