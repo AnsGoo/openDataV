@@ -118,12 +118,6 @@ class WaveChartComponent extends BaseComponent {
       ]
     }
   ]
-  get exampleData(): any {
-    if (!this._data) {
-      this._data = Math.random().toFixed(2)
-    }
-    return this._data
-  }
 }
 
 export default WaveChartComponent

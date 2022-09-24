@@ -22,13 +22,6 @@
         </template>
         <AttrList :curComponent="curComponent" />
       </n-tab-pane>
-      <n-tab-pane name="data" display-directive="show:lazy">
-        <template #tab>
-          <IconPark name="data" />
-          <span v-show="!iscollapsed">数据</span>
-        </template>
-        <DataList :curComponent="curComponent" />
-      </n-tab-pane>
     </n-tabs>
     <n-tabs type="line" animated v-else justify-content="center">
       <n-tab-pane name="canvas" display-directive="show:lazy">
@@ -53,7 +46,6 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import Canvas from './Canvas.vue'
 import StyleList from './StyleModule' // 右侧属性列表
 import AttrList from './AttrModule'
-import DataList from './DataModule'
 import { IconPark } from '@/plugins/icon'
 
 const activeKey = ref<string>('attr')
@@ -90,15 +82,6 @@ const menuOptions = computed<MenuOption[]>(() => {
           h(IconPark, {
             name: 'internal-data',
             onClick: () => collapsedTabPane('attr')
-          })
-      },
-      {
-        label: '数据',
-        key: '3',
-        icon: () =>
-          h(IconPark, {
-            name: 'data',
-            onClick: () => collapsedTabPane('data')
           })
       }
     ]

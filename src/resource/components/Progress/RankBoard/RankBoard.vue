@@ -124,7 +124,14 @@ const loadData = async () => {
     } catch (err: any) {
       console.log(err.message || err)
       if (basicStore.isEditMode) {
-        updateData(props.component.exampleData)
+        const labels = ['秦', '齐', '楚', '赵', '燕', '韩', '魏']
+        const demoData: Record[] = labels.map((el) => {
+          return {
+            label: el,
+            value: Math.round(Math.random() * (propValue.data.maxValue || 100))
+          }
+        })
+        updateData(demoData)
       }
     }
   }
