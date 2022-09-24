@@ -76,7 +76,7 @@ class ScrollTableComponent extends BaseComponent {
           type: FormType.CUSTOM,
           showLabel: false,
           componentOptions: {
-            componentType: shallowRef(ScrollTableForm), //'ScrollTableForm',
+            componentType: shallowRef(ScrollTableForm),
             defaultValue: {
               height: 30,
               oddRowBGC: '#003B51',

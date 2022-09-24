@@ -379,6 +379,11 @@ export const pasteText = (): string => {
 }
 
 export const stylePropToCss = (key: string, value: any): Recordable<any> => {
+  // 自定义编辑框
+  if (key.includes('custom')) {
+    return { ...value }
+  }
+
   switch (key) {
     case 'gwidth':
     case 'gheight':
@@ -415,7 +420,6 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
             backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
           }
         : {}
-
     default:
       return { [key]: value }
   }

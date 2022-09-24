@@ -114,6 +114,7 @@ export default defineComponent({
         case FormType.FONT_STYLE:
         case FormType.FONT_WEIGHT:
         case FormType.LINEAR_GRADIENT:
+        case FormType.BACKGROUND:
           return h(resolveComponent(item.type), {
             value: formData[item.prop],
             ['onUpdate:value']: (value) => {
