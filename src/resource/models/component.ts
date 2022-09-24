@@ -190,10 +190,6 @@ export abstract class BaseComponent {
     return this._data ? this._data : ''
   }
 
-  set exampleData(value) {
-    this._data = value
-  }
-
   // 生成后端存储需要的Json
   toJson(): ComponentDataType {
     const subComponents = this.subComponents.map((item) => item.toJson())

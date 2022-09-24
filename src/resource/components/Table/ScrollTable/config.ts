@@ -3,7 +3,6 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import ScrollTableForm from './Form.vue'
-import { ScrollTableType } from './type'
 
 export const componentName = 'ScrollTable'
 class ScrollTableComponent extends BaseComponent {

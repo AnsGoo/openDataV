@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useEchart } from '../../hooks'
 import WaveChartComponent from './config'
 import { useProp } from '@/resource/hooks'
@@ -15,7 +15,7 @@ const props = defineProps<{
 }>()
 
 const chartEl = ref<ElRef>(null)
-let data = props.component.exampleData
+let data = computed(() => props.component.exampleData)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 const { propValue } = useProp<WaveChartType>(props.component, async () => {
   updateEchart(getOption())
