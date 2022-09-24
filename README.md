@@ -84,7 +84,7 @@ pnpm build
 
 **技术交流，请加微信群**
 
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20220919)
+![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20220924)
 
 **更新动态请关注公众号**
 

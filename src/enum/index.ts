@@ -124,7 +124,9 @@ export enum FormType {
   // 自定义
   CUSTOM = 'custom',
   // 数组框
-  ARRAY = 'array'
+  ARRAY = 'array',
+  // 背景
+  BACKGROUND = 'background'
 }
 
 export enum EChartTypeEnum {
