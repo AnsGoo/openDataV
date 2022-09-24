@@ -28,7 +28,6 @@ export abstract class BaseComponent {
   // form表单中使用
   _prop: PropsType[] = []
   _style: PropsType[] = []
-  _data: any = undefined
 
   extraStyle: Record<string, string | number | boolean> = {} as never
   groupStyle: GroupStyle | undefined = undefined
@@ -184,10 +183,6 @@ export abstract class BaseComponent {
       this._styleValue[key] = value
     }
     return this._styleValue
-  }
-
-  get exampleData(): any {
-    return this._data ? this._data : ''
   }
 
   // 生成后端存储需要的Json

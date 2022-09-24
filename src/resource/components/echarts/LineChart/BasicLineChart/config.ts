@@ -198,20 +198,6 @@ class BasicLineChartComponent extends BaseComponent {
     }
   ]
   _style: PropsType[] = []
-  get exampleData() {
-    if (!this._data) {
-      this._data = [
-        { label: '秦', value: Math.round(Math.random() * 100) },
-        { label: '齐', value: Math.round(Math.random() * 100) },
-        { label: '楚', value: Math.round(Math.random() * 100) },
-        { label: '赵', value: Math.round(Math.random() * 100) },
-        { label: '燕', value: Math.round(Math.random() * 100) },
-        { label: '韩', value: Math.round(Math.random() * 100) },
-        { label: '魏', value: Math.round(Math.random() * 100) }
-      ]
-    }
-    return this._data
-  }
 }
 
 export default BasicLineChartComponent

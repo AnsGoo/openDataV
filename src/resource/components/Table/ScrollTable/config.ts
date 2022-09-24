@@ -76,7 +76,7 @@ class ScrollTableComponent extends BaseComponent {
           type: FormType.CUSTOM,
           showLabel: false,
           componentOptions: {
-            componentType: shallowRef(ScrollTableForm),
+            componentType: shallowRef(ScrollTableForm), //'ScrollTableForm',
             defaultValue: {
               height: 30,
               oddRowBGC: '#003B51',
@@ -87,40 +87,6 @@ class ScrollTableComponent extends BaseComponent {
       ]
     }
   ]
-
-  get exampleData() {
-    if (!this._data) {
-      this._data = [
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        }
-      ]
-    }
-
-    return this._data
-  }
 }
 
 export default ScrollTableComponent
