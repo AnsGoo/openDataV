@@ -126,7 +126,7 @@ export enum FormType {
   // 数组框
   ARRAY = 'array',
   // 背景
-  BACKGROUND = 'background'
+  BACKGROUND = 'BackItem'
 }
 
 export enum EChartTypeEnum {

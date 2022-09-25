@@ -40,7 +40,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import { NForm, NFormItem, NInput, NSelect, SelectOption } from 'naive-ui'
-import { BackgroundImage } from './type'
+import { BackgroundImage } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
 
 const props = defineProps<{
@@ -51,7 +51,15 @@ const emits = defineEmits<{
   (e: 'update:value', value: BackgroundImage)
 }>()
 
-const data = computed<BackgroundImage>(() => props.value)
+const data = computed<BackgroundImage>(() => {
+  return {
+    backgroundImage: props.value.backgroundImage,
+    backgroundRepeat: props.value.backgroundRepeat || 'round',
+    backgroundAttachment: props.value.backgroundAttachment || 'local',
+    backgroundPosition: props.value.backgroundPosition || 'center',
+    backgroundSize: props.value.backgroundSize || 'cover'
+  }
+})
 
 const repeatOptions: SelectOption[] = [
   {
@@ -133,7 +141,7 @@ const sizeOptions: SelectOption[] = [
   }
 ]
 const handleChange = (value: string, type: string) => {
-  const background: BackgroundImage = cloneDeep(props.value)
+  const background: BackgroundImage = cloneDeep(data.value)
   switch (type) {
     case 'backgroundImage':
       background.backgroundImage = value
@@ -151,6 +159,7 @@ const handleChange = (value: string, type: string) => {
       background.backgroundSize = value
       break
   }
+
   emits('update:value', background)
 }
 </script>

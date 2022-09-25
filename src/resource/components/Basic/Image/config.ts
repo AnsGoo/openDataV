@@ -26,7 +26,7 @@ class ImageComponent extends BaseComponent {
           label: '背景',
           type: FormType.BACKGROUND,
           componentOptions: {
-            defaultValue: '#14c9c9'
+            defaultValue: { backgroundColor: '#14c9c9' }
           }
         }
         // {
@@ -36,7 +36,7 @@ class ImageComponent extends BaseComponent {
         //   componentOptions: {
         //     defaultValue: '#14C9C9'
         //   }
-        // },
+        // }
         // {
         //   prop: 'backgroundImage',
         //   label: '背景图片',

@@ -28,6 +28,7 @@
 import { ref } from 'vue'
 import { NColorPicker, NInputNumber } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
+import { Gradient } from './type';
 
 const props = withDefaults(
   defineProps<{
