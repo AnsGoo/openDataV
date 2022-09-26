@@ -379,6 +379,11 @@ export const pasteText = (): string => {
 }
 
 export const stylePropToCss = (key: string, value: any): Recordable<any> => {
+  // 自定义编辑框
+  if (key.includes('custom')) {
+    return customStylePropToCss(key, value)
+  }
+
   switch (key) {
     case 'gwidth':
     case 'gheight':
@@ -415,12 +420,25 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
             backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
           }
         : {}
-
     default:
       return { [key]: value }
   }
 }
 
+/**
+ * 自定义样式组件渲染
+ */
+const customStylePropToCss = (_: string, value: any): Recordable<any> => {
+  if ('backgroundImage' in value && value.backgroundImage) {
+    if (typeof value.backgroundImage === 'string') {
+      value.backgroundImage = `url(${value.backgroundImage})`
+    } else {
+      value.backgroundImage = `linear-gradient(${value.backgroundImage.angle}deg, ${value.backgroundImage.color1}, ${value.backgroundImage.color2})`
+    }
+  }
+
+  return { ...value }
+}
 /**
  * 页面等比缩放
  * @param el 页面根
