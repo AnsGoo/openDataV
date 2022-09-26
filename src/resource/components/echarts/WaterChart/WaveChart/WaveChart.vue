@@ -9,13 +9,14 @@ import WaveChartComponent from './config'
 import { useProp } from '@/resource/hooks'
 import 'echarts-liquidfill'
 import { WaveChartType } from './type'
+import { http } from '@/utils/http'
 
 const props = defineProps<{
   component: WaveChartComponent
 }>()
 
 const chartEl = ref<ElRef>(null)
-let data = 0.8
+let data = 0
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 const { propValue } = useProp<WaveChartType>(props.component, async () => {
   updateEchart(getOption())
@@ -51,7 +52,16 @@ const getOption = () => {
   return option
 }
 
-onMounted(() => {
+onMounted(async () => {
+  try {
+    const resp = await http.get({ url: propValue.data.url })
+    if (resp.status === 200) {
+      data = resp.data['data']
+    }
+  } catch (_) {
+    data = props.component.exampleData['data']
+  }
+
   updateEchart(getOption())
 })
 </script>

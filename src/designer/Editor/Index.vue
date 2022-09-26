@@ -190,9 +190,7 @@ const pasteComponent = (event: ClipboardEvent) => {
         event.stopPropagation()
         basicStore.appendComponent(component)
       }
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (_) {}
   }
 }
 
