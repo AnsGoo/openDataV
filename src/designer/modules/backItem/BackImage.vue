@@ -1,9 +1,10 @@
 <template>
-  <n-form :model="data" size="small">
+  <n-form :model="data" size="small" label-placement="left" :show-label="false">
     <n-form-item label="图片">
       <n-input
         :value="data.backgroundImage"
         @update:value="(value) => handleChange(value, 'backgroundImage')"
+        placeholder="请输入图片地址"
       />
     </n-form-item>
     <n-form-item label="填充">

@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { reactive, computed } from 'vue'
 import { NForm, NFormItem, NInput } from 'naive-ui'
 import { BaseComponent } from '@/resource/models'
 
@@ -16,7 +16,7 @@ const props = defineProps<{
 }>()
 
 const formData = reactive({})
-const exampleData = ref<string>(JSON.stringify(props.curComponent.exampleData))
+const exampleData = computed<string>(() => JSON.stringify(props.curComponent.exampleData))
 </script>
 
 <style lang="less" scoped></style>

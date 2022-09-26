@@ -28,7 +28,7 @@
 import { ref } from 'vue'
 import { NColorPicker, NInputNumber } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
-import { Gradient } from './type';
+import { Gradient } from './type'
 
 const props = withDefaults(
   defineProps<{
@@ -42,12 +42,6 @@ const props = withDefaults(
     })
   }
 )
-
-interface Gradient {
-  angle: number
-  color1: string
-  color2: string
-}
 
 const linearGradient = ref<Gradient>({
   angle: props.value.angle || 0,

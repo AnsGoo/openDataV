@@ -18,6 +18,20 @@ class WaveChartComponent extends BaseComponent {
 
   _prop: PropsType[] = [
     {
+      label: '数据配置',
+      prop: 'data',
+      children: [
+        {
+          prop: 'url',
+          label: '地址',
+          type: FormType.TEXT,
+          componentOptions: {
+            defaultValue: ''
+          }
+        }
+      ]
+    },
+    {
       label: '图表配置',
       prop: 'options',
       children: [
@@ -120,7 +134,7 @@ class WaveChartComponent extends BaseComponent {
   ]
   get exampleData(): any {
     if (!this._data) {
-      this._data = Math.random().toFixed(2)
+      this._data = { data: Math.random().toFixed(2) }
     }
     return this._data
   }
