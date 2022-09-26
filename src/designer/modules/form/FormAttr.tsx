@@ -57,7 +57,7 @@ export default defineComponent({
       emit('change', key, val)
     }
 
-    const isShowLabel = (showLabel?: boolean) => showLabel === false ? false : true
+    const isShowLabel = (showLabel?: boolean) => (showLabel === false ? false : true)
     const renderItem = (item: AttrType) => {
       const options: Recordable[] = item.componentOptions?.options || []
 
@@ -160,7 +160,11 @@ export default defineComponent({
     return () => (
       <NForm size="small" labelPlacement="left" labelAlign="left">
         {props.children.map((item) => (
-          <NFormItem key={`${props.ukey}${item.prop}`} label={item.label} showLabel={isShowLabel(item.showLabel)}>
+          <NFormItem
+            key={`${props.ukey}${item.prop}`}
+            label={item.label}
+            showLabel={isShowLabel(item.showLabel)}
+          >
             {renderItem(item)}
           </NFormItem>
         ))}

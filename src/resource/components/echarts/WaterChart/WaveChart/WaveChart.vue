@@ -54,14 +54,14 @@ const getOption = () => {
 
 onMounted(async () => {
   try {
-    const resp = await http.get({url: propValue.data.url})
+    const resp = await http.get({ url: propValue.data.url })
     if (resp.status === 200) {
       data = resp.data['data']
     }
-  } catch(_) {
+  } catch (_) {
     data = props.component.exampleData['data']
   }
-  
+
   updateEchart(getOption())
 })
 </script>
