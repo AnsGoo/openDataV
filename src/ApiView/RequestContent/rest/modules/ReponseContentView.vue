@@ -23,8 +23,7 @@ const config = ref<CodemirrorOption>({
   tabSize: 4,
   indentWithTab: true,
   autofocus: true,
-  disabled: false,
-  preview: false
+  disabled: true
 })
 const code = ref<string>(props.data)
 watch(

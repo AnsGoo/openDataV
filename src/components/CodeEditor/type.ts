@@ -4,5 +4,4 @@ export interface CodemirrorOption {
   indentWithTab: boolean
   autofocus: boolean
   disabled: boolean
-  preview: boolean
 }

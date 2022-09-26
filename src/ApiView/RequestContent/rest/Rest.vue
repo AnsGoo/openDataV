@@ -5,31 +5,17 @@
         :options="requestMethodOptions"
         class="method"
         v-model:value="formData['method']"
-        :show-arrow="false"
+        :show-arrow="true"
       />
       <n-input class="url" v-model:value="formData['url']" />
       <n-space>
         <n-button-group class="send">
           <n-button type="primary" @click="send">发送</n-button>
-          <n-dropdown :options="sendOptions" trigger="hover" :show-arrow="true">
-            <n-button type="primary">
-              <template #icon>
-                <icon-park name="down" />
-              </template>
-            </n-button>
-          </n-dropdown>
         </n-button-group>
       </n-space>
       <n-space>
         <n-button-group class="save">
           <n-button>保存</n-button>
-          <n-dropdown :options="saveOptions" trigger="hover" :show-arrow="true">
-            <n-button>
-              <template #icon>
-                <icon-park name="down" />
-              </template>
-            </n-button>
-          </n-dropdown>
         </n-button-group>
       </n-space>
     </div>
@@ -76,10 +62,13 @@
       >
       <n-tabs>
         <n-tab-pane name="data" tab="脚本处理结果">
-          <ReponseContentView :data="response.data" class="content" />
+          <ReponseContentView :data="response.afterData" class="content" />
         </n-tab-pane>
         <n-tab-pane name="origin" tab="原始请求结果">
           <ReponseContentView :data="response.data" class="content" />
+        </n-tab-pane>
+        <n-tab-pane name="scripts" tab="脚本">
+          <ScriptsEdtor v-model:data="formData.code" class="content" />
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -92,7 +81,6 @@ import {
   NSelect,
   NButton,
   NButtonGroup,
-  NDropdown,
   NSpace,
   NTabs,
   NTabPane,
@@ -106,27 +94,17 @@ import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import type { AxiosResponse, Method } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/ApiView/hooks/http'
+import ScriptsEdtor from '@/components/ScriptsEdtor'
+import { ScriptType } from '@/components/ScriptsEdtor/eunm'
+
 const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   return {
     label: el,
     value: el
   }
 })
-
 const requestHeaderOptions = Object.keys(RequestHeaderEnum)
-const saveOptions = [
-  {
-    label: '复制衔接',
-    key: 'copyLink'
-  }
-]
 
-const sendOptions = [
-  {
-    label: '导入衔接',
-    key: 'importURL'
-  }
-]
 interface RequestOption {
   method: RequestMethod
   url: string
@@ -135,15 +113,17 @@ interface RequestOption {
   data: Array<KV>
 }
 
-interface AfterScripts {
-  options: Array<KV>
-  code: string
-}
-
 interface RequestResponse {
   code: number
   data: string
+  afterData: string
   headers: Recordable<string>
+}
+
+interface AfterScripts {
+  type: ScriptType
+  code: string
+  options: Array<KV>
 }
 
 interface ErrorResponse extends Error {
@@ -152,7 +132,7 @@ interface ErrorResponse extends Error {
   response: AxiosResponse
   isAxiosError: boolean
 
-  toJSON: () => {
+  toJSON?: () => {
     message: string
     name: string
     // Microsoft
@@ -177,48 +157,53 @@ const formData = reactive<RequestOption & AfterScripts>({
   params: [{ key: '', value: '', disable: false, id: uuid() }],
   data: [{ key: '', value: '', disable: false, id: uuid() }],
   options: [{ key: '', value: '', disable: false, id: uuid() }],
-  code: ''
+  code: 'return resp.map(el => {return {id: el.id, name:el.name}})',
+  type: ScriptType.Javascript
 })
 const response = ref<RequestResponse>({
   code: 0,
   data: '',
+  afterData: '',
   headers: {}
 })
 const send = async () => {
-  const headers = {}
-  const params = {}
-  const data = {}
-  for (let i of formData.headers) {
-    if (i.key) {
-      headers[i.key] = i.value
-    }
-  }
-  for (let i of formData.params) {
-    if (i.key) {
-      params[i.key] = i.value
-    }
-  }
-  for (let i of formData.data) {
-    if (i.key) {
-      data[i.key] = i.value
-    }
-  }
+  const headers = KVToRecordable(formData.headers)
+  const params = KVToRecordable(formData.params)
+  const data = KVToRecordable(formData.data)
+
   const method = formData.method as Method
   const url = formData.url
-  const restRequest = useRestRequest(method, headers, url, params, data)
+  const script = {
+    code: formData.code,
+    type: formData.type,
+    pramas: KVToRecordable(formData.options)
+  }
+  const restRequest = useRestRequest(method, headers, url, params, data, script)
 
   try {
     const resp = await restRequest.request()
     response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
+    response.value.afterData = JSON.stringify(resp.afterData, null, '\t')
     response.value.headers = resp.headers
   } catch (err: any) {
     err as ErrorResponse
-    const result = err.response || err.toJSON()
+    const result = err.response || (err.toJSON ? err.toJSON() : {})
     response.value.code = result.status
-    response.value.data = JSON.stringify(result.statusText || result.message, null, '\t') || ''
+    response.value.data = err.stack || err.message
+    response.value.afterData = err.stack || err.message
     response.value.headers = result.headers || result?.config?.headers || {}
   }
+}
+
+const KVToRecordable = (values: Array<KV>) => {
+  const data = {}
+  for (let i of values) {
+    if (i.key) {
+      data[i.key] = i.value
+    }
+  }
+  return data
 }
 </script>
 

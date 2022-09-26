@@ -1,10 +1,13 @@
 <template>
   <div class="editor">
+    <div class="tool-bar">
+      <slot name="tool-bar"> </slot>
+    </div>
     <div class="main" :style="{ maxHeight: config.height }">
       <codemirror
         :model-value="code"
         :style="{
-          width: previewAction ? '50%' : '100%',
+          width: '100%',
           height: config.height,
           backgroundColor: '#fff',
           color: '#333'
@@ -20,45 +23,20 @@
         @blur="log('blur', $event)"
         @update:model-value="codeChange"
       />
-      <pre
-        v-if="previewAction"
-        class="code"
-        :style="{ height: config.height, width: previewAction ? '50%' : '0px' }"
-        >{{ code }}</pre
-      >
     </div>
-    <!-- <div class="footer">
-      <div class="buttons">
-        <icon-park
-          class="item"
-          :name="previewAction ? 'preview-open' : 'preview-close-one'"
-          v-if="config.preview"
-          @click="togglePreview"
-        />
-        <icon-park class="item" name="back" @click="handleUndo" />
-        <icon-park class="item" name="next" @click="handleRedo" />
-      </div>
-      <div class="infos">
-        <span class="item">空格: {{ config.tabSize }}</span>
-        <span class="item"
-          >当前/累计 {{ state.selected ? '(已选择)' : '' }}: {{ state.cursor }}/{{ state.length }}
-          {{ state.selected ? `(${state.selected})` : '' }}</span
-        >
-        <span class="item">总行数: {{ state.lines }}</span>
-      </div>
-    </div> -->
+    <div class="footer"><slot name="footer"></slot></div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive, shallowRef, computed, ref } from 'vue'
-import { EditorView, ViewUpdate } from '@codemirror/view'
-import { redo, undo } from '@codemirror/commands'
+import { computed } from 'vue'
+import type { EditorView, ViewUpdate } from '@codemirror/view'
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { CodemirrorOption } from './type'
 import { Extension } from '@codemirror/state'
+import { redo, undo } from '@codemirror/commands'
 
 const props = withDefaults(
   defineProps<{
@@ -74,7 +52,7 @@ const props = withDefaults(
       indentWithTab: true,
       autofocus: true,
       disabled: false,
-      preview: false
+      line: false
     }),
     code: '',
     language: json,
@@ -84,12 +62,14 @@ const props = withDefaults(
 
 const emits = defineEmits<{
   (e: 'update:code', value: string): void
+  (e: 'change', value: string, viewUpdate: ViewUpdate): void
 }>()
+
+let cmView: EditorView
 
 const extensions = computed(() => {
   const result: Extension[] = []
   if (props.language) {
-    console.log(props.language())
     result.push(props.language())
   }
   if (props.theme === 'dark') {
@@ -98,51 +78,32 @@ const extensions = computed(() => {
   return result
 })
 
-const previewAction = ref<boolean>(false)
-
-const togglePreview = () => {
-  previewAction.value = !previewAction.value
-}
-
-const cmView = shallowRef<EditorView>()
 const handleReady = ({ view }: any) => {
-  cmView.value = view
+  cmView = view
 }
-
 const log = console.log
-// https://github.com/codemirror/commands/blob/main/test/test-history.ts
-const handleUndo = () => {
-  console.log(cmView.value?.state)
-  undo({
-    state: cmView.value!.state,
-    dispatch: cmView.value!.dispatch
-  })
+const codeChange = (value: string, viewUpdate: ViewUpdate) => {
+  emits('update:code', value)
+  emits('change', value, viewUpdate)
 }
 
 const handleRedo = () => {
-  console.log(cmView.value?.state)
-  redo({
-    state: cmView.value!.state,
-    dispatch: cmView.value!.dispatch
-  })
+  if (cmView) {
+    redo({
+      state: cmView.state,
+      dispatch: cmView.dispatch
+    })
+  }
 }
-
-const state = reactive({
-  lines: null as null | number,
-  cursor: null as null | number,
-  selected: null as null | number,
-  length: null as null | number
-})
-
-const codeChange = (value: string, viewUpdate: ViewUpdate) => {
-  const ranges = viewUpdate.state.selection.ranges
-  state.selected = ranges.reduce((plus, range) => plus + range.to - range.from, 0)
-  state.cursor = ranges[0].anchor
-  // length
-  state.length = viewUpdate.state.doc.length
-  state.lines = viewUpdate.state.doc.lines
-  emits('update:code', value)
+const handleUndo = () => {
+  if (cmView) {
+    undo({
+      state: cmView.state,
+      dispatch: cmView.dispatch
+    })
+  }
 }
+defineExpose({ handleRedo, handleUndo })
 </script>
 
 <style lang="less" scoped>
@@ -174,33 +135,5 @@ const codeChange = (value: string, viewUpdate: ViewUpdate) => {
       font-family: monospace;
     }
   }
-
-  // .footer {
-  //   height: 3rem;
-  //   padding: 0 1em;
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   font-size: 90%;
-
-  //   .buttons {
-  //     .item {
-  //       margin-right: 1em;
-  //       display: inline-flex;
-  //       justify-content: center;
-  //       align-items: center;
-  //       background-color: transparent;
-  //       cursor: pointer;
-  //     }
-  //   }
-
-  //   .infos {
-  //     .item {
-  //       margin-left: 2em;
-  //       display: inline-block;
-  //       font-feature-settings: 'tnum';
-  //     }
-  //   }
-  // }
 }
 </style>
