@@ -45,7 +45,6 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<{
-  (e: 'update:value', value: string[]): void
   (e: 'updateValue', value: string[]): void
 }>()
 
@@ -63,7 +62,6 @@ const handleAdd = () => {
   }
 
   arrayValue.push(newValue.value)
-  emits('update:value', arrayValue)
   emits('updateValue', arrayValue)
   newValue.value = ''
   nextTick(() => {
@@ -73,7 +71,6 @@ const handleAdd = () => {
 
 const handleDelete = (index: number) => {
   arrayValue.splice(index, 1)
-  emits('update:value', arrayValue)
   emits('updateValue', arrayValue)
 }
 
@@ -82,7 +79,6 @@ const handleChange = (index: number) => {
     return
   }
 
-  emits('update:value', arrayValue)
   emits('updateValue', arrayValue)
 }
 </script>

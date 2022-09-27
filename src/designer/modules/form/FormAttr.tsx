@@ -119,7 +119,7 @@ export default defineComponent({
         case FormType.BACKGROUND:
           return h(resolveComponent(item.type), {
             value: formData[item.prop],
-            ['onUpdate:value']: (value) => {
+            onUpdateValue: (value) => {
               formData[item.prop] = value
               changed(value, item.prop)
             }
@@ -129,7 +129,7 @@ export default defineComponent({
           const type = 'type' in item.componentOptions ? item.componentOptions.type : 'static'
           return h(ArrayItem, {
             value: formData[item.prop],
-            ['onUpdate:value']: (value) => {
+            onUpdateValue: (value) => {
               formData[item.prop] = value
               changed(value, item.prop)
             },

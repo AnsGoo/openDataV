@@ -27,7 +27,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-  (e: 'change', value: RowType)
+  (e: 'updateValue', value: RowType)
 }>()
 
 const formData = reactive<RowType>({
@@ -37,7 +37,7 @@ const formData = reactive<RowType>({
 })
 
 const changeData = () => {
-  emits('change', formData)
+  emits('updateValue', formData)
 }
 </script>
 
