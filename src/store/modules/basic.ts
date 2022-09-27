@@ -230,6 +230,7 @@ const useBasicStore = defineStore({
         return this.componentData.push(createComponent(item))
       })
       this.resetComponentData(this.componentData)
+      this.saveComponentData()
     },
     /**
      * 想画布中添加组件

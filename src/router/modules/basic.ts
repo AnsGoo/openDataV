@@ -66,7 +66,7 @@ const basicRoutes = [
         name: 'Pages',
         component: () => import('@/pages/Pages.vue'),
         meta: {
-          title: '布局界面',
+          title: '页面管理',
           icon: 'page'
         }
       }
