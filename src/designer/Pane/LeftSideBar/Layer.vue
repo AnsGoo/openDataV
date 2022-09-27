@@ -13,7 +13,7 @@
 import { computed, ref, h, watch } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-import { copyText, uuid } from '@/utils/utils'
+import { uuid } from '@/utils/utils'
 import { NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
 import { useEventBus } from '@/bus/useEventBus'
 import LayerItem from './LayerItem.vue'
@@ -174,7 +174,6 @@ const cut = (index: string) => {
     cutComponent?.parent
   )
   if (component) {
-    copyText(JSON.stringify(component.toJson()))
     copyStore.copy(component)
   }
 }

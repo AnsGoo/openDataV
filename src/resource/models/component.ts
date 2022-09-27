@@ -10,6 +10,7 @@ import type {
   PropsType
 } from '@/types/component'
 import { Vector } from '@/types/common'
+import { cssTransfer } from './styleToCss'
 
 export abstract class BaseComponent {
   id: string
@@ -24,6 +25,10 @@ export abstract class BaseComponent {
   active = false
   callbackProp: Function | undefined = undefined
   callbackStyle: Function | undefined = undefined
+
+  // 检测变化
+  propIsChange = true
+  styleIsChange = true
 
   // form表单中使用
   _prop: PropsType[] = []
@@ -160,34 +165,59 @@ export abstract class BaseComponent {
   }
 
   get propValue() {
-    this._prop.forEach((item) => {
-      if (!Reflect.has(this._propValue, item.prop)) {
-        this._propValue[item.prop] = {}
-      }
+    if (this.propIsChange) {
+      this._prop.forEach((item) => {
+        if (!Reflect.has(this._propValue, item.prop)) {
+          this._propValue[item.prop] = {}
+        }
 
-      item.children.forEach((obj) => {
-        this._propValue[item.prop][obj.prop] = obj.componentOptions.defaultValue
+        item.children.forEach((obj) => {
+          this._propValue[item.prop][obj.prop] = obj.componentOptions.defaultValue
+        })
       })
-    })
+      this.propIsChange = false
+    }
 
     return this._propValue
   }
 
   get style(): ComponentStyle {
-    this.styleFormValue.forEach((item) => {
-      item.children.forEach((obj) => {
-        this._styleValue[obj.prop] = obj.componentOptions.defaultValue
+    if (this.styleIsChange) {
+      const customStyle: Recordable<any>[] = []
+      let transferStyle: Recordable<any> = {}
+      this.styleFormValue.forEach((item) => {
+        item.children.forEach((obj) => {
+          if (obj.type === FormType.CUSTOM) {
+            customStyle[obj.prop] = obj.componentOptions.defaultValue
+          } else {
+            const css = cssTransfer(obj.type!, obj.prop, obj.componentOptions.defaultValue)
+            if (css) {
+              transferStyle = { ...transferStyle, ...css }
+            }
+          }
+          this._styleValue[obj.prop] = obj.componentOptions.defaultValue
+        })
       })
-    })
 
-    for (const [key, value] of Object.entries(this.extraStyle)) {
-      this._styleValue[key] = value
+      Object.assign(this._styleValue, this.extraStyle)
+      Object.assign(this._styleValue, transferStyle)
+      const res = this.styleToCss(customStyle)
+      if (res) {
+        Object.assign(this._styleValue, res)
+      }
+      this.styleIsChange = false
     }
+
     return this._styleValue
   }
 
   get exampleData(): any {
     return this._data ? this._data : ''
+  }
+
+  // 自定义样式编辑框数据处理
+  styleToCss(_: Recordable<any>[]): Nullable<Recordable<any>> {
+    return null
   }
 
   // 生成后端存储需要的Json
@@ -210,6 +240,7 @@ export abstract class BaseComponent {
 
   // 后端数据回填propValue
   setPropValue(component: Record<string, any>) {
+    this.propIsChange = true
     for (const prop in component.propValue) {
       const form = this._prop.find((obj) => obj.prop === prop)
       if (!form) continue
@@ -224,6 +255,7 @@ export abstract class BaseComponent {
 
   // 后端数据回填style
   setStyleValue(component: Record<string, any>) {
+    this.styleIsChange = true
     for (const prop in component.style) {
       this.styleFormValue.forEach((item) => {
         const propObj = item.children.find((obj) => obj.prop === prop)
@@ -247,6 +279,7 @@ export abstract class BaseComponent {
   }
   // 修改属性
   changeProp(form: string, prop: string, value: string | number | boolean | any) {
+    this.propIsChange = true
     if (form === 'common' && prop === 'name') {
       this.name = value as string
       return
@@ -272,6 +305,7 @@ export abstract class BaseComponent {
 
   // 修改样式
   changeStyle(prop: string, value: string | number | boolean | any) {
+    this.styleIsChange = true
     for (const item of this.styleFormValue) {
       const propObj = item.children.find((obj) => obj.prop === prop)
       if (!propObj) continue

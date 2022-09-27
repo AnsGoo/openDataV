@@ -63,7 +63,15 @@ import {
   Code,
   Editor,
   OneThirdRotation,
-  TableFile
+  TableFile,
+  Api,
+  Earth,
+  Transform,
+  Down,
+  CheckOne,
+  CloseOne,
+  Success,
+  Attention
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -135,5 +143,13 @@ export default {
     app.component(Editor.name, Editor)
     app.component(OneThirdRotation.name, OneThirdRotation)
     app.component(TableFile.name, TableFile)
+    app.component(Api.name, Api)
+    app.component(Earth.name, Earth)
+    app.component(Transform.name, Transform)
+    app.component(Down.name, Down)
+    app.component(CheckOne.name, CheckOne)
+    app.component(CloseOne.name, CloseOne)
+    app.component(Success.name, Success)
+    app.component(Attention.name, Attention)
   }
 }

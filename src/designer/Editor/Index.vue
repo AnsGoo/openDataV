@@ -144,12 +144,14 @@ onMounted(() => {
   console.log('进入编辑模式')
   basicStore.setEditMode(EditMode.EDIT)
   document.addEventListener('paste', pasteComponent)
+  document.addEventListener('copy', copyComponent)
 })
 
 onUnmounted(() => {
   console.log('进入预览模式')
   basicStore.setEditMode(EditMode.PREVIEW)
   document.removeEventListener('paste', pasteComponent)
+  document.removeEventListener('copy', copyComponent)
   basicStore.clearCanvas()
 })
 
@@ -175,6 +177,12 @@ const bgStyle = computed<Recordable<string>>(() => {
     'backgroundColor'
   ])
 })
+
+const copyComponent = () => {
+  if (basicStore.curComponent) {
+    copyStore.copy(basicStore.curComponent)
+  }
+}
 
 const pasteComponent = (event: ClipboardEvent) => {
   if (event.clipboardData) {
