@@ -92,10 +92,8 @@ const useSnapShotStore = defineStore({
     saveSnapshot(canvasData: ComponentDataType[], canvasStyle: CanvasStyleData) {
       if (this.timeHandler) {
         clearTimeout(this.timeHandler)
-        this.timeHandler = undefined
-      } else {
-        this.timeHandler = setTimeout(this.recordSnapshot, 300, canvasData, canvasStyle)
       }
+      this.timeHandler = setTimeout(this.recordSnapshot, 300, canvasData, canvasStyle)
     }
   }
 })
