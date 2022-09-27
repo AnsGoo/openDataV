@@ -48,7 +48,7 @@ class RestRequest {
               try {
                 const afterData = this.callback.handler(result.data, this.callback.options)
                 if (afterData) {
-                  result.afterData = this.callback.handler(result.data, this.callback.options)
+                  result.afterData = afterData
                 } else {
                   message.warning('请检查后置脚本是否有返回值')
                   result.afterData = resp.data

@@ -1,23 +1,9 @@
 <template>
   <div class="header">
-    <n-divider
-      title-placement="left"
-      style="
-         {
-          width: '50%';
-        }
-      "
-    >
+    <n-divider title-placement="left" style="width: 50%">
       {{ title }}
     </n-divider>
-    <n-divider
-      title-placement="right"
-      style="
-         {
-          width: '50%';
-        }
-      "
-    >
+    <n-divider title-placement="right" style="width: 50%">
       <icon-park name="add-three" color="#18A058" @click="addParams()" class="action" />
       <icon-park name="clear" color="#F76560" @click="clearParams()" class="action" />
       <icon-park name="editor" color="#2080F0" @click="editParams()" class="action" />
@@ -27,7 +13,7 @@
     <n-input-group class="param-item">
       <n-select
         v-if="options && options.length > 0"
-        :style="{ width: '50%' }"
+        style="width: 50%"
         size="small"
         filterable
         tag
@@ -43,7 +29,7 @@
       />
       <n-input
         v-else
-        :style="{ width: '50%' }"
+        style="width: 50%"
         size="small"
         :input-props="{
           autocomplete: 'disabled'
@@ -54,7 +40,7 @@
         :placeholder="`参数${index + 1}`"
       />
       <n-input
-        :style="{ width: '50%' }"
+        style="width: 50%"
         size="small"
         :modelValue="formData[index]['value']"
         @update:value="(value) => changed(index, 'value', value)"
