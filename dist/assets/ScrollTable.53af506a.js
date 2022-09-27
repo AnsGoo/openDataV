@@ -1,8 +1,0 @@
-import{u as $}from"./useProp.afe31ed3.js";import{d as w,r as f,i as H,w as b,o as a,c as r,u as e,l as c,F as i,e as u,m as k,b as F,f as T,_ as B}from"./index.b272d73b.js";const E={class:"dv-scroll-board"},C=["innerHTML"],L=["innerHTML"],z=w({__name:"ScrollTable",props:{component:null},setup(p){const m=p,{propValue:t}=$(m.component),h=f(0),g=n=>{const o=n[0],{height:l}=o.contentRect;h.value=l},v=[{name:"\u5F20\u4E09",age:23,sex:"\u7537"},{name:"\u5F20\u4E09",age:23,sex:"\u7537"},{name:"\u5F20\u4E09",age:23,sex:"\u7537"},{name:"\u5F20\u4E09",age:23,sex:"\u7537"},{name:"\u5F20\u4E09",age:23,sex:"\u7537"}],x=H(()=>v.map((n,o)=>({rowIndex:o,ceils:Object.values(n)})));return(n,o)=>{const l=T("resize");return b((a(),r("div",E,[e(t).header.header.length?(a(),r("div",{key:0,class:"header",style:c(`background-color: ${e(t).header.headerBGC};`)},[(a(!0),r(i,null,u(e(t).header.header,(s,d)=>(a(),r("div",{class:"header-item",key:`${s}${d}`,style:c(`
-          height: ${e(t).header.headerHeight}px;
-          line-height: ${e(t).header.headerHeight}px;
-        `),innerHTML:s},null,12,C))),128))],4)):k("",!0),F("div",{class:"rows",style:c({height:`${h.value-(e(t).header.header.length?e(t).header.headerHeight:0)}px`})},[(a(!0),r(i,null,u(e(x),(s,d)=>(a(),r("div",{class:"row-item",key:s.rowIndex,style:c(`
-          height: ${e(t).rows.data.height}px;
-          line-height: ${e(t).rows.data.height}px;
-          background-color: ${e(t).rows.data[s.rowIndex%2===0?"evenRowBGC":"oddRowBGC"]};
-        `)},[(a(!0),r(i,null,u(s.ceils,(_,y)=>(a(),r("div",{class:"ceil",key:`${_}${d}${y}`,innerHTML:_},null,8,L))),128))],4))),128))],4)])),[[l,g]])}}});const M=B(z,[["__scopeId","data-v-968c42e9"]]);export{M as default};
