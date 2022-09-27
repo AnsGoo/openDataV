@@ -34,7 +34,7 @@ const props = defineProps<{
 }>()
 
 const emits = defineEmits<{
-  (e: 'update:value', value: any): void
+  (e: 'updateValue', value: any): void
 }>()
 
 const selectOption = ref<string>('backgroundColor')
@@ -66,7 +66,7 @@ const options: SelectOption[] = [
 
 // 修改背景色的时候就清楚背景图和渐变色
 const changeBackgroundColor = () => {
-  emits('update:value', {
+  emits('updateValue', {
     ...backgroundColor.value,
     backgroundImage: null
   })
@@ -74,7 +74,7 @@ const changeBackgroundColor = () => {
 
 const changeBackgroundImage = () => {
   if (selectOption.value === 'backgroundImage') {
-    emits('update:value', {
+    emits('updateValue', {
       backgroundImage: backgroundImage.value.backgroundImage,
       backgroundRepeat: backgroundImage.value.backgroundRepeat,
       backgroundAttachment: backgroundImage.value.backgroundAttachment,
@@ -87,9 +87,7 @@ const changeBackgroundImage = () => {
       backgroundGradient.value.color2 &&
       isNumber(backgroundGradient.value.angle)
     ) {
-      emits('update:value', {
-        backgroundImage: backgroundGradient.value
-      })
+      emits('updateValue', backgroundGradient.value)
     }
   }
 }

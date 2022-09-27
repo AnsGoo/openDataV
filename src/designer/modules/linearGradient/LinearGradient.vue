@@ -50,11 +50,13 @@ const linearGradient = ref<Gradient>({
 })
 
 const emits = defineEmits<{
+  (e: 'updateValue', value: Gradient): void
   (e: 'update:value', value: Gradient): void
 }>()
 
 const changed = (key: string, value: string | number | null) => {
   linearGradient.value[key] = value
+  emits('updateValue', linearGradient.value)
   emits('update:value', linearGradient.value)
 }
 </script>

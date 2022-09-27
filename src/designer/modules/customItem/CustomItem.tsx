@@ -19,6 +19,8 @@ export default defineComponent({
     const change = (value: any) => {
       emit('updateValue', value)
     }
-    return () => [h(props.component, { args: props.args, value: props.value, onChange: change })]
+    return () => [
+      h(props.component, { args: props.args, value: props.value, onUpdateValue: change })
+    ]
   }
 })
