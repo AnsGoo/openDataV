@@ -1,13 +1,13 @@
 import Axios from 'axios'
-import type { AxiosInstance, AxiosRequestHeaders, AxiosResponse, Method } from 'axios'
-import { AfterScript, FinallyResponse } from './type'
+import type { AxiosInstance, AxiosResponse, Method } from 'axios'
+import { AfterScript, FinallyResponse, RequestOption } from './type'
 import { ScriptType } from '@/components/ScriptsEdtor/eunm'
 import { cloneDeep } from 'lodash-es'
 import { message, notification } from '@/utils/message'
+import { KVToRecordable } from './utils'
 
 interface CallbackType {
   handler?: Function
-  options: Recordable<any>
   error?: Error
 }
 
@@ -18,18 +18,18 @@ class RestRequest {
   public data: any
   private callback: CallbackType | undefined
 
-  constructor(
-    method: Method,
-    headers: AxiosRequestHeaders,
-    url: string,
-    params?: Recordable<string | number>,
-    data?: any,
-    script?: AfterScript
-  ) {
+  constructor(requestOption: RequestOption) {
+    const headers = KVToRecordable(requestOption.headers)
+    const method = requestOption.method as Method
+    this.url = requestOption.url
+    this.params = KVToRecordable(requestOption.params)
+    this.data = KVToRecordable(requestOption.data)
+    const script = {
+      code: requestOption.afterScript.code,
+      type: requestOption.afterScript.type
+    }
     this.axiosInstance = Axios.create({ method, headers })
-    this.url = url
-    this.params = params
-    this.data = data
+
     if (script) {
       this.callback = this.makeDataHandler(script)
     } else {
@@ -37,7 +37,7 @@ class RestRequest {
     }
     // const resp = await axiosInstance.request({url,params,data})
   }
-  public request<T = any>(): Promise<FinallyResponse<T>> {
+  public request<T = any>(args?: Recordable<any>): Promise<FinallyResponse<T>> {
     return new Promise<FinallyResponse<T>>((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse>({ url: this.url, params: this.params, data: this.data })
@@ -46,7 +46,7 @@ class RestRequest {
           if (this.callback) {
             if (this.callback.handler) {
               try {
-                const afterData = this.callback.handler(result.data, this.callback.options)
+                const afterData = this.callback.handler(result.data, args || {})
                 if (afterData) {
                   result.afterData = afterData
                 } else {
@@ -58,7 +58,6 @@ class RestRequest {
               }
             } else {
               reject(this.callback.error)
-              // result.afterData = this.callback.error
             }
           } else {
             result.afterData = resp.data
@@ -78,10 +77,9 @@ class RestRequest {
     }
   }
   private createJsFunction(script: AfterScript): CallbackType {
-    const options = script.pramas || {}
     try {
       const handler = new Function('resp', 'options', script.code)
-      return { handler, options }
+      return { handler }
     } catch (err: any) {
       notification.error({
         title: '脚本语法错误',
@@ -89,18 +87,11 @@ class RestRequest {
         duration: 10000,
         closable: false
       })
-      return { options, error: err }
+      return { error: err }
     }
   }
 }
 
-export default function useRestRequest(
-  method: Method,
-  headers: AxiosRequestHeaders,
-  url: string,
-  params?: Recordable<string | number>,
-  data?: Recordable<any>,
-  script?: AfterScript
-) {
-  return new RestRequest(method, headers, url, params, data, script)
+export default function useRestRequest(requestOption: RequestOption) {
+  return new RestRequest(requestOption)
 }

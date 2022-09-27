@@ -3,17 +3,18 @@
     :language="languageType"
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    :code="data"
+    v-model:code="form.code"
     ref="cm"
-    @change="codeChange"
+    @change="formChange"
   >
     <template #tool-bar>
       <div class="buttons">
         <n-select
           :options="languageOptions"
-          v-model:value="language"
+          v-model:value="form.type"
           class="item language"
           size="small"
+          @update-value="formChange"
         />
         <icon-park class="item button" name="back" @click="handleUndo" />
         <icon-park class="item button" name="next" @click="handleRedo" />
@@ -23,7 +24,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { NSelect } from 'naive-ui'
@@ -32,11 +33,22 @@ import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { ScriptType } from './eunm'
+import { ScriptEditorType } from './type'
 
 const projectStore = useProjectSettingStoreWithOut()
-defineProps<{
-  data: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    data: ScriptEditorType
+  }>(),
+  {
+    data: () => {
+      return {
+        code: '',
+        type: ScriptType.Javascript
+      }
+    }
+  }
+)
 const config = ref<CodemirrorOption>({
   height: '300px',
   tabSize: 4,
@@ -46,15 +58,16 @@ const config = ref<CodemirrorOption>({
 })
 
 const emits = defineEmits<{
-  (e: 'update:data', value: string): void
-  (e: 'change', value: string): void
+  (e: 'update:data', value: ScriptEditorType): void
+  (e: 'change', value: ScriptEditorType): void
 }>()
-
-const codeChange = (value: string) => {
-  emits('change', value)
-  emits('update:data', value)
-}
 const languageMap = { Javascript: javascript, Python: python }
+
+const form = reactive(props.data)
+const formChange = () => {
+  emits('change', form)
+  emits('update:data', form)
+}
 
 const languageOptions = computed<SelectOption[]>(() => {
   return Object.keys(ScriptType).map((el) => {
