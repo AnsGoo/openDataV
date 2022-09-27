@@ -6,6 +6,7 @@
         class="method"
         v-model:value="formData['method']"
         :show-arrow="true"
+        @change="formChange"
       />
       <n-input class="url" v-model:value="formData['url']" />
       <n-space>
@@ -23,12 +24,16 @@
       <n-tabs type="line" animated>
         <n-tab-pane name="query" tab="请求参数">
           <div class="params">
-            <DynamicKVForm v-model:value="formData['params']" title="请求参数" />
+            <DynamicKVForm
+              v-model:value="formData['params']"
+              title="请求参数"
+              @change="formChange"
+            />
           </div>
         </n-tab-pane>
         <n-tab-pane name="data" tab="请求体">
           <div class="headers">
-            <DynamicKVForm v-model:value="formData['data']" title="请求体" />
+            <DynamicKVForm v-model:value="formData['data']" title="请求体" @change="formChange" />
           </div>
         </n-tab-pane>
         <n-tab-pane name="headers" tab="请求头">
@@ -37,12 +42,13 @@
               v-model:value="formData['headers']"
               title="请求头"
               :options="requestHeaderOptions"
+              @change="formChange"
             />
           </div>
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="后置脚本">
           <div class="headers">
-            <DynamicKVForm v-model:value="formData['options']" title="脚本参数" />
+            <DynamicKVForm v-model:value="scriptArgs" title="脚本参数" @change="formChange" />
           </div>
         </n-tab-pane>
       </n-tabs>
@@ -68,7 +74,7 @@
           <ReponseContentView :data="response.data" class="content" />
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本">
-          <ScriptsEdtor v-model:data="formData.code" class="content" />
+          <ScriptsEdtor v-model:data="formData.afterScript" class="content" @change="formChange" />
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -88,14 +94,36 @@ import {
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { reactive, ref } from 'vue'
-import { KV } from '../modules/type'
 import { uuid } from '@/utils/utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
-import type { AxiosResponse, Method } from 'axios'
+import type { AxiosResponse } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/ApiView/hooks/http'
 import ScriptsEdtor from '@/components/ScriptsEdtor'
 import { ScriptType } from '@/components/ScriptsEdtor/eunm'
+import { KV, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
+import { KVToRecordable } from '@/ApiView/hooks/http/utils'
+
+const props = withDefaults(
+  defineProps<{
+    restOptions: RequestOption
+  }>(),
+  {
+    restOptions: () => {
+      return {
+        method: RequestMethod.GET,
+        url: 'http://datav.byteportrait.com',
+        headers: [{ key: '', value: '', disable: false, id: uuid() }],
+        params: [{ key: '', value: '', disable: false, id: uuid() }],
+        data: [{ key: '', value: '', disable: false, id: uuid() }],
+        afterScript: {
+          code: 'return resp.map(el => {return {id: el.id, name:el.name}})',
+          type: ScriptType.Javascript
+        }
+      }
+    }
+  }
+)
 
 const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   return {
@@ -104,27 +132,7 @@ const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   }
 })
 const requestHeaderOptions = Object.keys(RequestHeaderEnum)
-
-interface RequestOption {
-  method: RequestMethod
-  url: string
-  headers: Array<KV>
-  params: Array<KV>
-  data: Array<KV>
-}
-
-interface RequestResponse {
-  code: number
-  data: string
-  afterData: string
-  headers: Recordable<string>
-}
-
-interface AfterScripts {
-  type: ScriptType
-  code: string
-  options: Array<KV>
-}
+const scriptArgs = ref<KV[]>([{ key: '', value: '', disable: false, id: uuid() }])
 
 interface ErrorResponse extends Error {
   config: Recordable
@@ -150,16 +158,12 @@ interface ErrorResponse extends Error {
   }
 }
 
-const formData = reactive<RequestOption & AfterScripts>({
-  method: RequestMethod.GET,
-  url: 'http://datav.byteportrait.com',
-  headers: [{ key: '', value: '', disable: false, id: uuid() }],
-  params: [{ key: '', value: '', disable: false, id: uuid() }],
-  data: [{ key: '', value: '', disable: false, id: uuid() }],
-  options: [{ key: '', value: '', disable: false, id: uuid() }],
-  code: 'return resp.map(el => {return {id: el.id, name:el.name}})',
-  type: ScriptType.Javascript
-})
+const emits = defineEmits<{
+  (e: 'update:restOptions', value: RequestOption): void
+  (e: 'change', value: RequestOption): void
+}>()
+
+const formData = reactive<RequestOption>(props.restOptions)
 const response = ref<RequestResponse>({
   code: 0,
   data: '',
@@ -167,21 +171,10 @@ const response = ref<RequestResponse>({
   headers: {}
 })
 const send = async () => {
-  const headers = KVToRecordable(formData.headers)
-  const params = KVToRecordable(formData.params)
-  const data = KVToRecordable(formData.data)
-
-  const method = formData.method as Method
-  const url = formData.url
-  const script = {
-    code: formData.code,
-    type: formData.type,
-    pramas: KVToRecordable(formData.options)
-  }
-  const restRequest = useRestRequest(method, headers, url, params, data, script)
-
+  const restRequest = useRestRequest(formData)
   try {
-    const resp = await restRequest.request()
+    const args = KVToRecordable(scriptArgs.value)
+    const resp = await restRequest.request(args)
     response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
     response.value.afterData = JSON.stringify(resp.afterData, null, '\t')
@@ -195,15 +188,9 @@ const send = async () => {
     response.value.headers = result.headers || result?.config?.headers || {}
   }
 }
-
-const KVToRecordable = (values: Array<KV>) => {
-  const data = {}
-  for (let i of values) {
-    if (i.key) {
-      data[i.key] = i.value
-    }
-  }
-  return data
+const formChange = () => {
+  emits('change', formData)
+  emits('update:restOptions', formData)
 }
 </script>
 
