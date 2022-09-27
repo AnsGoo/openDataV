@@ -6,9 +6,9 @@
         class="method"
         v-model:value="formData['method']"
         :show-arrow="true"
-        @change="formChange"
+        @update-value="formChange"
       />
-      <n-input class="url" v-model:value="formData['url']" />
+      <n-input class="url" v-model:value="formData['url']" @update-value="formChange" />
       <n-space>
         <n-button-group class="send">
           <n-button type="primary" @click="send">发送</n-button>

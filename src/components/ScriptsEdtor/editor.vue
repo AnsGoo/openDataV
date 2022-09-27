@@ -14,7 +14,7 @@
           v-model:value="form.type"
           class="item language"
           size="small"
-          @change="formChange"
+          @update-value="formChange"
         />
         <icon-park class="item button" name="back" @click="handleUndo" />
         <icon-park class="item button" name="next" @click="handleRedo" />
