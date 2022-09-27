@@ -28,6 +28,7 @@ export abstract class BaseComponent {
   // form表单中使用
   _prop: PropsType[] = []
   _style: PropsType[] = []
+  _data: any = undefined
 
   extraStyle: Record<string, string | number | boolean> = {} as never
   groupStyle: GroupStyle | undefined = undefined
@@ -185,6 +186,10 @@ export abstract class BaseComponent {
     return this._styleValue
   }
 
+  get exampleData(): any {
+    return this._data ? this._data : ''
+  }
+
   // 生成后端存储需要的Json
   toJson(): ComponentDataType {
     const subComponents = this.subComponents.map((item) => item.toJson())
@@ -254,9 +259,11 @@ export abstract class BaseComponent {
     if (!propObj) return
     propObj.componentOptions.defaultValue = value
 
-    if (this.callbackProp) {
-      this.callbackProp(form, prop, value)
-    }
+    setTimeout(() => {
+      if (this.callbackProp) {
+        this.callbackProp(form, prop, value)
+      }
+    }, 0)
   }
 
   changePropCallback(callback: (prop: string, key: string, value: any) => void) {

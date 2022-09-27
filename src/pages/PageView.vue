@@ -20,7 +20,6 @@ const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({
   width: 0,
   height: 0,
-  scale: 0,
   image: import.meta.env.VITE_BACKGROUND as string,
   color: '#084860'
 })

@@ -190,9 +190,7 @@ const pasteComponent = (event: ClipboardEvent) => {
         event.stopPropagation()
         basicStore.appendComponent(component)
       }
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (_) {}
   }
 }
 
@@ -219,21 +217,21 @@ const handleMouseDown = (e: MouseEvent) => {
   editorY.value = rectInfo!.y
   const startX = e.clientX
   const startY = e.clientY
-  start.x = startX - editorX.value
-  start.y = startY - editorY.value
+  start.x = (startX - editorX.value) / basicStore.scale
+  start.y = (startY - editorY.value) / basicStore.scale
 
   // 展示选中区域
   isShowArea.value = true
   const move = (moveEvent: MouseEvent) => {
     moveEvent.preventDefault()
     moveEvent.stopPropagation()
-    width.value = Math.abs(moveEvent.clientX - startX)
-    height.value = Math.abs(moveEvent.clientY - startY)
+    width.value = Math.abs(moveEvent.clientX - startX) / basicStore.scale
+    height.value = Math.abs(moveEvent.clientY - startY) / basicStore.scale
     if (moveEvent.clientX < startX) {
-      start.x = moveEvent.clientX - editorX.value
+      start.x = (moveEvent.clientX - editorX.value) / basicStore.scale
     }
     if (moveEvent.clientY < startY) {
-      start.y = moveEvent.clientY - editorY.value
+      start.y = (moveEvent.clientY - editorY.value) / basicStore.scale
     }
   }
   const up = (UpMoveEvent: MouseEvent) => {
@@ -326,8 +324,8 @@ const handleDrop = async (e) => {
   if (componentName) {
     const component: BaseComponent = new componentList[componentName]()
     const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-    const y = e.pageY - editorRectInfo.top
-    const x = e.pageX - editorRectInfo.left
+    const y = (e.pageY - editorRectInfo.top) / basicStore.scale
+    const x = (e.pageX - editorRectInfo.left) / basicStore.scale
     component.change('top', y)
     component.change('left', x)
     basicStore.appendComponent(component)

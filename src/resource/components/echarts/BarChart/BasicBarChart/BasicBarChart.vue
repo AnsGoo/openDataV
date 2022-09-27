@@ -3,20 +3,17 @@
 </template>
 
 <script setup lang="ts">
-import * as echarts from 'echarts'
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { http } from '@/utils/http'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import mydark from '../../theme'
 import { useProp } from '@/resource/hooks'
 import BasicLineChartComponent from './config'
 import { BasicLineChart } from './type'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
-echarts.registerTheme('mydark', mydark)
+import { useEchart } from '../../hooks'
 
 const chartEl = ref<ElRef>(null)
-let chart: echarts.EChartsType | null = null
 let gloabalOption: EChartsOption
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{
@@ -28,17 +25,15 @@ interface Record {
   value: number
 }
 const propValueChange = () => {
-  if (chart) {
-    chart.clear()
-    initData()
-  }
+  initData()
 }
 
+const { updateEchart, resizeHandler } = useEchart(chartEl)
 const { propValue } = useProp<BasicLineChart>(props.component, propValueChange)
 
 onMounted(async () => {
   gloabalOption = getOption()
-  initChart()
+  updateEchart(gloabalOption)
   await initData()
 })
 const initData = async () => {
@@ -59,22 +54,9 @@ const initData = async () => {
   } catch (err: any) {
     console.log(err?.message || err)
     if (basicStore.isEditMode) {
-      const labels = ['秦', '齐', '楚', '赵', '燕', '韩', '魏']
-      const demoData: Record[] = labels.map((el) => {
-        return {
-          label: el,
-          value: Math.round(Math.random() * (propValue.data.upperLimit || 100))
-        }
-      })
-      updateData(demoData)
+      updateData(props.component.exampleData)
     }
   }
-}
-
-const resizeHandler = (entries) => {
-  const entry = entries[0]
-  const { width, height } = entry.contentRect
-  chart?.resize({ width, height })
 }
 
 const getOption = () => {
@@ -175,19 +157,6 @@ const updateData = (data: Record[]) => {
     ...gloabalOption.xAxis,
     data: data.map((el) => el.label)
   } as XAXisComponentOption
-  if (chart) {
-    chart.setOption(gloabalOption)
-  }
+  updateEchart(gloabalOption)
 }
-const initChart = () => {
-  chart = echarts.init(chartEl.value!, 'mydark')
-  chart.clear()
-  chart.setOption(gloabalOption)
-}
-onUnmounted(() => {
-  if (chart) {
-    chart.clear()
-    chart.dispose()
-  }
-})
 </script>

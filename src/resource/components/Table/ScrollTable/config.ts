@@ -1,6 +1,8 @@
+import { shallowRef } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import ScrollTableForm from './Form.vue'
 
 export const componentName = 'ScrollTable'
 class ScrollTableComponent extends BaseComponent {
@@ -23,12 +25,11 @@ class ScrollTableComponent extends BaseComponent {
       children: [
         {
           prop: 'header',
-          label: '列标题',
+          label: '表头数据',
           type: FormType.ARRAY,
           componentOptions: {
-            defaultValue: ['名称', '年龄'],
             type: 'dynamic',
-            max: 10
+            defaultValue: ['姓名', '年龄', '性别']
           }
         },
         {
@@ -36,7 +37,7 @@ class ScrollTableComponent extends BaseComponent {
           label: '背景色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: ''
+            defaultValue: '#00BAFF'
           }
         },
         {
@@ -70,54 +71,56 @@ class ScrollTableComponent extends BaseComponent {
       prop: 'rows',
       children: [
         {
-          prop: 'rowNum',
-          label: '最大显示行',
-          type: FormType.NUMBER,
+          prop: 'data',
+          label: '行配置',
+          type: FormType.CUSTOM,
+          showLabel: false,
           componentOptions: {
-            defaultValue: 5
-          }
-        },
-        {
-          prop: 'oddRowBGC',
-          label: '奇数行背景色',
-          type: FormType.COLOR,
-          componentOptions: {
-            defaultValue: '#003B51'
-          }
-        },
-        {
-          prop: 'evenRowBGC',
-          label: '偶数行背景色',
-          type: FormType.COLOR,
-          componentOptions: {
-            defaultValue: '#0A2732'
-          }
-        }
-      ]
-    },
-    {
-      label: '列设置',
-      prop: 'columns',
-      children: [
-        {
-          prop: 'columnWidth',
-          label: '每列宽度',
-          type: FormType.ARRAY,
-          componentOptions: {
-            defaultValue: []
-          }
-        },
-        {
-          prop: 'align',
-          label: '对齐方式',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: ''
+            componentType: shallowRef(ScrollTableForm),
+            defaultValue: {
+              height: 30,
+              oddRowBGC: '#003B51',
+              evenRowBGC: '#0A2732'
+            }
           }
         }
       ]
     }
   ]
+
+  get exampleData() {
+    if (!this._data) {
+      this._data = [
+        {
+          name: '张三',
+          age: 23,
+          sex: '男'
+        },
+        {
+          name: '张三',
+          age: 23,
+          sex: '男'
+        },
+        {
+          name: '张三',
+          age: 23,
+          sex: '男'
+        },
+        {
+          name: '张三',
+          age: 23,
+          sex: '男'
+        },
+        {
+          name: '张三',
+          age: 23,
+          sex: '男'
+        }
+      ]
+    }
+
+    return this._data
+  }
 }
 
 export default ScrollTableComponent

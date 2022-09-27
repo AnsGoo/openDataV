@@ -5,8 +5,9 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "pnpm build && vite preview",
-    "lint": "eslint --ext .js,.ts,.vue src/",
+    "lint": "eslint --ext .js,.ts,.vue,.tsx src/",
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
+    "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -47,8 +48,7 @@
     "eslint-define-config": "^1.2.4",
     "eslint-plugin-import": "^2.24.2",
     "eslint-plugin-prettier": "^4.0.0",
-    "eslint-plugin-sonarjs": "^0.11.0",
-    "eslint-plugin-vue": "^7.19.1",
+    "eslint-plugin-vue": "^9.5.1",
     "husky": "^7.0.4",
     "less": "^4.1.2",
     "mockjs": "^1.1.0",

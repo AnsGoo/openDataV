@@ -4,7 +4,6 @@ import { BaseComponent } from '@/resource/models'
 export interface CanvasStyleData {
   width: number
   height: number
-  scale: number
   image: string
   color: string
 }
@@ -21,6 +20,7 @@ export interface EditData {
   isShowEm: boolean
   ids: Set<string>
   benchmarkComponent: Optional<BaseComponent>
+  scale: number
 }
 
 export interface MenuStatus {

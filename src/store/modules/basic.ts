@@ -16,9 +16,8 @@ const snapShotStore = useSnapShotStoreWithOut()
 const baseCanvasStyleData: CanvasStyleData = {
   width: window.screen.width,
   height: window.screen.height,
-  scale: 100,
   image: import.meta.env.VITE_BACKGROUND as string,
-  color: '#084860'
+  color: '#272e3b'
 }
 
 window.localStorage.setItem('canvasData', JSON.stringify([]))
@@ -48,7 +47,8 @@ const useBasicStore = defineStore({
     isClickComponent: false,
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
-    benchmarkComponent: undefined
+    benchmarkComponent: undefined,
+    scale: 1
   }),
   getters: {
     isEditMode(): boolean {
@@ -90,7 +90,9 @@ const useBasicStore = defineStore({
     setEditMode(mode: string): void {
       this.editMode = mode
     },
-
+    setScale(value: number) {
+      this.scale = value / 100
+    },
     toggleShowEm(): void {
       this.isShowEm = !this.isShowEm
     },
