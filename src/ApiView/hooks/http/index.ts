@@ -3,11 +3,12 @@ import type { AxiosInstance, AxiosRequestHeaders, AxiosResponse, Method } from '
 import { AfterScript, FinallyResponse } from './type'
 import { ScriptType } from '@/components/ScriptsEdtor/eunm'
 import { cloneDeep } from 'lodash-es'
-import { message } from '@/utils/message'
+import { message, notification } from '@/utils/message'
 
 interface CallbackType {
-  handler: Function
+  handler?: Function
   options: Recordable<any>
+  error?: Error
 }
 
 class RestRequest {
@@ -43,16 +44,21 @@ class RestRequest {
         .then((resp: AxiosResponse) => {
           const result = cloneDeep(resp) as FinallyResponse<T>
           if (this.callback) {
-            try {
-              const afterData = this.callback.handler(result.data, this.callback.options)
-              if (afterData) {
-                result.afterData = this.callback.handler(result.data, this.callback.options)
-              } else {
-                message.warning('请检查后置脚本是否有返回值')
-                result.afterData = resp.data
+            if (this.callback.handler) {
+              try {
+                const afterData = this.callback.handler(result.data, this.callback.options)
+                if (afterData) {
+                  result.afterData = this.callback.handler(result.data, this.callback.options)
+                } else {
+                  message.warning('请检查后置脚本是否有返回值')
+                  result.afterData = resp.data
+                }
+              } catch (err) {
+                reject(err)
               }
-            } catch (err) {
-              reject(err)
+            } else {
+              reject(this.callback.error)
+              // result.afterData = this.callback.error
             }
           } else {
             result.afterData = resp.data
@@ -66,17 +72,24 @@ class RestRequest {
   }
   public makeDataHandler(script: AfterScript): CallbackType | undefined {
     if (script.code && script.type === ScriptType.Javascript) {
-      let handler
-      try {
-        handler = new Function('resp', 'options', script.code)
-      } catch (err) {
-        message.error('语法异常')
-      }
-
-      const options = script.pramas
-      return { handler, options }
+      return this.createJsFunction(script)
     } else {
       return undefined
+    }
+  }
+  private createJsFunction(script: AfterScript): CallbackType {
+    const options = script.pramas || {}
+    try {
+      const handler = new Function('resp', 'options', script.code)
+      return { handler, options }
+    } catch (err: any) {
+      notification.error({
+        title: '脚本语法错误',
+        content: err.message,
+        duration: 10000,
+        closable: false
+      })
+      return { options, error: err }
     }
   }
 }
