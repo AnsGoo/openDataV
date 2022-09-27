@@ -33,7 +33,7 @@ import { importCanvas, exportCanvas, toggleTheme } from './modules/actions'
 import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 import ToolBarItem from './ToolBarItem.vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import LogoView from './modules/LogoView'
+import LogoView from './modules/logoView'
 const basicStore = useBasicStoreWithOut()
 
 const router = useRouter()

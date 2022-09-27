@@ -13,10 +13,12 @@ import Logo from '@/assets/logo.png'
   @apply flex items-center justify-center overflow-hidden whitespace-nowrap;
   height: 100%;
   line-height: 100%;
+  padding-top: 1px;
+  padding-bottom: 1px;
 
   img {
     @apply w-auto;
-    height: 40px;
+    height: inherit;
   }
 }
 </style>

@@ -5,7 +5,7 @@ const basicRoutes = [
     component: () => import('@/pages/OpenApi.vue'),
     meta: {
       title: '接口管理',
-      icon: 'page'
+      icon: 'api'
     }
   }
 ]

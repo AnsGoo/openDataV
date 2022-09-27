@@ -28,16 +28,11 @@
 import { ref } from 'vue'
 import { NColorPicker, NInputNumber } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
-
-interface LinearGradient {
-  angle: number
-  color1: string
-  color2: string
-}
+import { Gradient } from './type'
 
 const props = withDefaults(
   defineProps<{
-    value: LinearGradient
+    value: Gradient
   }>(),
   {
     value: () => ({
@@ -48,14 +43,14 @@ const props = withDefaults(
   }
 )
 
-const linearGradient = ref<LinearGradient>({
+const linearGradient = ref<Gradient>({
   angle: props.value.angle || 0,
   color1: props.value.color1 || '',
   color2: props.value.color2 || ''
 })
 
 const emits = defineEmits<{
-  (e: 'update:value', value: LinearGradient): void
+  (e: 'update:value', value: Gradient): void
 }>()
 
 const changed = (key: string, value: string | number | null) => {

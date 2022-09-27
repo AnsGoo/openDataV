@@ -4,6 +4,7 @@ import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
 import ArrayItem from '../arrayItem'
 import CustomItem from '../customItem'
+import BackItem from '../backItem'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type { AttrType, CustomFormSchema } from '@/types/component'
 import {
@@ -23,7 +24,8 @@ export default defineComponent({
     FontStyle,
     FontWeight,
     LinearGradient,
-    NSwitch
+    NSwitch,
+    BackItem
   },
   props: {
     name: {
@@ -55,7 +57,7 @@ export default defineComponent({
       emit('change', key, val)
     }
 
-    const isShowLabel = (showLabel?: boolean) => showLabel === false ? false : true
+    const isShowLabel = (showLabel?: boolean) => (showLabel === false ? false : true)
     const renderItem = (item: AttrType) => {
       const options: Recordable[] = item.componentOptions?.options || []
 
@@ -114,6 +116,7 @@ export default defineComponent({
         case FormType.FONT_STYLE:
         case FormType.FONT_WEIGHT:
         case FormType.LINEAR_GRADIENT:
+        case FormType.BACKGROUND:
           return h(resolveComponent(item.type), {
             value: formData[item.prop],
             ['onUpdate:value']: (value) => {
@@ -157,7 +160,11 @@ export default defineComponent({
     return () => (
       <NForm size="small" labelPlacement="left" labelAlign="left">
         {props.children.map((item) => (
-          <NFormItem key={`${props.ukey}${item.prop}`} label={item.label} showLabel={isShowLabel(item.showLabel)}>
+          <NFormItem
+            key={`${props.ukey}${item.prop}`}
+            label={item.label}
+            showLabel={isShowLabel(item.showLabel)}
+          >
             {renderItem(item)}
           </NFormItem>
         ))}
