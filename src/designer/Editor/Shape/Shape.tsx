@@ -2,7 +2,7 @@ import { defineComponent, ref, computed, onMounted, onErrorCaptured, watch } fro
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import type { ComponentPublicInstance, PropType } from 'vue'
-import { mod360, copyText } from '@/utils/utils'
+import { mod360, copyText, throttleFrame } from '@/utils/utils'
 import { eventBus } from '@/bus/useEventBus'
 import type { Vector } from '@/types/common'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
@@ -191,7 +191,7 @@ export default defineComponent({
       const startLeft = left
 
       // 如果元素没有移动，则不保存快照
-      const move = (moveEvent) => {
+      const move = throttleFrame((moveEvent) => {
         const curX = moveEvent.clientX
         const curY = moveEvent.clientY
         top = (curY - startY) / basicStore.scale + startTop
@@ -199,7 +199,7 @@ export default defineComponent({
 
         // // 修改当前组件样式
         basicStore.syncComponentLoction({ top, left }, props.info!.parent, false)
-      }
+      })
       const up = () => {
         // 触发元素停止移动事件，用于隐藏标线
         eventBus.emit('unmove')
@@ -272,7 +272,7 @@ export default defineComponent({
       // 获取 point 与实际拖动基准点的差值 @justJokee
       // fix https://github.com/woai3c/visual-drag-demo/issues/26#issue-937686285
 
-      const move = (moveEvent: MouseEvent) => {
+      const move = throttleFrame((moveEvent: MouseEvent) => {
         // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
         // 因此第一次点击时不触发 move 事件
         const curPositon: Vector = {
@@ -282,7 +282,7 @@ export default defineComponent({
 
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)
         basicStore.syncComponentLoction({ top, left, width, height }, props.info!.parent, false)
-      }
+      })
 
       const up = () => {
         document.removeEventListener('mousemove', move)
@@ -329,7 +329,7 @@ export default defineComponent({
 
       // 如果元素没有移动，则不保存快照
       // let hasMove = false
-      const move = (moveEvent: MouseEvent) => {
+      const move = throttleFrame((moveEvent: MouseEvent) => {
         // hasMove = true
         const curX = moveEvent.clientX
         const curY = moveEvent.clientY
@@ -339,7 +339,7 @@ export default defineComponent({
         rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
         // 修改当前组件样式
         basicStore.syncComponentLoction({ rotate }, props.info!.parent, false)
-      }
+      })
 
       const up = () => {
         document.removeEventListener('mousemove', move)
