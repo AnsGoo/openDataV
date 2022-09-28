@@ -85,6 +85,19 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   height?: number
 }
 
+export interface RequestData<T> {
+  type: 'STATIC' | 'REST' | 'REALTIME'
+  options: T
+}
+
+export interface StaticRequestData extends RequestData<T> {
+  type: 'STATIC'
+  options: {
+    data: any
+    type: 'Number' | 'String' | 'JSON'
+  }
+}
+
 export type {
   ComponentStyle,
   ComponentType,

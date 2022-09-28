@@ -11,6 +11,7 @@ import type {
 } from '@/types/component'
 import { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
+import { DataType, RestRequestData, StaticRequestData } from './data'
 
 export abstract class BaseComponent {
   id: string
@@ -23,8 +24,9 @@ export abstract class BaseComponent {
   display = true
   show = true
   active = false
-  callbackProp: Function | undefined = undefined
-  callbackStyle: Function | undefined = undefined
+  callbackProp?: Function | undefined
+  callbackStyle?: Function | undefined
+  callbackData?: Function | undefined
 
   // 检测变化
   propIsChange = true
@@ -34,6 +36,7 @@ export abstract class BaseComponent {
   _prop: PropsType[] = []
   _style: PropsType[] = []
   _data: any = undefined
+  requestConfig?: StaticRequestData | RestRequestData = undefined
 
   extraStyle: Record<string, string | number | boolean> = {} as never
   groupStyle: GroupStyle | undefined = undefined
@@ -45,6 +48,11 @@ export abstract class BaseComponent {
   _propValue: Record<string, any> = {}
   _styleValue: ComponentStyle = {
     ...this.positionStyle
+  }
+  dataConfig?: {
+    type: DataType
+    requestConfig: StaticRequestData | RestRequestData
+    otherConfig: Recordable
   }
 
   constructor(detail: ComponentType) {
@@ -394,5 +402,35 @@ export abstract class BaseComponent {
       el.change('width', Math.round(width))
       el.change('rotate', rotate)
     })
+  }
+  async changeRequestDataConfig(type: DataType, config: Recordable<any>) {
+    switch (type) {
+      case DataType.STATIC:
+        const { data, protocol, otherConfig } = config
+        this.requestConfig = new StaticRequestData(data, protocol)
+        this.dataConfig = {
+          type: DataType.STATIC,
+          requestConfig: this.requestConfig,
+          otherConfig: otherConfig || {}
+        }
+        break
+      case DataType.REST:
+        const { options } = config
+        this.requestConfig = new RestRequestData(options, { propvalue: this.propValue })
+        this.dataConfig = {
+          type: DataType.REST,
+          requestConfig: this.requestConfig,
+          otherConfig: otherConfig || {}
+        }
+        break
+    }
+
+    if (this.callbackData) {
+      const result = await this.requestConfig?.getRespData()
+      this.callbackData(result)
+    }
+  }
+  changeDataCallback(callback: Function) {
+    this.callbackData = callback
   }
 }

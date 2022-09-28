@@ -11,7 +11,7 @@ interface CallbackType {
   error?: Error
 }
 
-class RestRequest {
+export class RestRequest {
   private axiosInstance: AxiosInstance
   public url: string
   public params: Recordable<string | number> | undefined
