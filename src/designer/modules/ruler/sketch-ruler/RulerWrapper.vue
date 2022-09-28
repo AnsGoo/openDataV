@@ -50,6 +50,8 @@ const props = withDefaults(
     selectLength: number
     isShowReferLine: boolean
     palette: PaletteType
+    canvasHeight?: number
+    canvasWidth?: number
     vertical?: boolean
     width?: number
     height?: number
@@ -89,6 +91,21 @@ const rwStyle = computed(() => {
   return props.vertical ? vContainer : hContainer
 })
 
+const realHeight = computed(() => {
+  if (!props.vertical) {
+    return `${props.canvasHeight}px`
+  } else {
+    return `100vh`
+  }
+})
+
+const realWidth = computed<string>(() => {
+  if (!props.vertical) {
+    return '100vw'
+  } else {
+    return `${props.canvasWidth}px`
+  }
+})
 const indicatorStyle = computed(() => {
   const indicatorOffset = (valueNum.value - (props.start || 0)) * props.scale!
   let positionKey = 'top'
@@ -137,7 +154,7 @@ const handleLineRemove = (index: any) => {
   top: 0;
   .line {
     top: 0;
-    height: 100vh;
+    height: v-bind(realHeight);
     padding-left: 5px;
     .action {
       transform: translateX(-24px);
@@ -162,7 +179,7 @@ const handleLineRemove = (index: any) => {
   left: 0;
   .line {
     left: 0;
-    width: 100vw;
+    width: v-bind(realWidth);
     padding-top: 5px;
     .action {
       transform: translateY(-24px);

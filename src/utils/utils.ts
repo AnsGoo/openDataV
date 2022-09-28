@@ -531,3 +531,23 @@ export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
     return false
   }
 }
+
+/**
+ * 请求动画帧的节流工具
+ * @param fn 被执行的函数
+ * @returns
+ */
+export function throttleFrame(fn) {
+  let timer = 0
+  return function (this: any, ...args: any[]) {
+    const self = this
+    if (timer) {
+      cancelAnimationFrame(timer)
+      timer = 0
+    }
+    timer = requestAnimationFrame(() => {
+      timer = 0
+      fn.apply(self, args)
+    })
+  }
+}

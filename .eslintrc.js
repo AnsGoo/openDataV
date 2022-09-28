@@ -80,6 +80,13 @@ module.exports = defineConfig({
     'vue/multi-word-component-names': 'off',
     'sonarjs/no-duplicate-string': 'off',
     'sonarjs/cognitive-complexity': 'off',
-    'sonarjs/no-identical-functions': 'off'
+    'sonarjs/no-identical-functions': 'off',
+    "@typescript-eslint/no-this-alias": [
+      "error",
+      {
+        "allowDestructuring": false, // Disallow `const { props, state } = this`; true by default
+        "allowedNames": ["self"] // Allow `const self = this`; `[]` by default
+      }
+    ]
   }
 })
