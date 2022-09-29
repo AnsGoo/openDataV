@@ -1,15 +1,10 @@
 import Axios from 'axios'
 import type { AxiosInstance, AxiosResponse, Method } from 'axios'
 import { AfterScript, FinallyResponse, RequestOption } from './type'
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
 import { cloneDeep } from 'lodash-es'
-import { message, notification } from '@/utils/message'
+import { message } from '@/utils/message'
 import { KVToRecordable } from './utils'
-
-interface CallbackType {
-  handler?: Function
-  error?: Error
-}
+import { CallbackType, makeFunction } from '@/utils/data'
 
 export class RestRequest {
   private axiosInstance: AxiosInstance
@@ -69,26 +64,9 @@ export class RestRequest {
         })
     })
   }
+
   public makeDataHandler(script: AfterScript): CallbackType | undefined {
-    if (script.code && script.type === ScriptType.Javascript) {
-      return this.createJsFunction(script)
-    } else {
-      return undefined
-    }
-  }
-  private createJsFunction(script: AfterScript): CallbackType {
-    try {
-      const handler = new Function('resp', 'options', script.code)
-      return { handler }
-    } catch (err: any) {
-      notification.error({
-        title: '脚本语法错误',
-        content: err.message,
-        duration: 10000,
-        closable: false
-      })
-      return { error: err }
-    }
+    return makeFunction(script.type, script.code, ['resp', 'options'])
   }
 }
 
