@@ -17,7 +17,12 @@ export enum DataType {
   REALTIME = 'REALTIME'
 }
 
-class StaticRequestData {
+interface RequestData {
+  toJSON: () => Recordable<any>
+  getRespData: () => Promise<RequestResponse>
+}
+
+class StaticRequestData implements RequestData {
   public dataProtocol: DataProtocol = DataProtocol.JSON
   public data: any = null
 
@@ -65,7 +70,7 @@ class StaticRequestData {
   }
 }
 
-class RestRequestData {
+class RestRequestData implements RequestData {
   public requestInstance: RestRequest
   public requestOPtions: RequestOption
   public args: Recordable<any>
@@ -102,4 +107,4 @@ class RestRequestData {
   }
 }
 
-export { StaticRequestData, RestRequestData }
+export { StaticRequestData, RestRequestData, RequestData }

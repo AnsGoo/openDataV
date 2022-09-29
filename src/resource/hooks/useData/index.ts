@@ -2,6 +2,7 @@ import { BaseComponent, DataType } from '@/resource/models'
 import { onMounted, onUnmounted } from 'vue'
 
 export const useData = (component: BaseComponent, callbackData?: (data: any) => void) => {
+  component.changeDataCallback(callbackData!)
   if (callbackData && component.dataConfig) {
     component.changeDataCallback(callbackData)
     let timer: IntervalHandle = 0

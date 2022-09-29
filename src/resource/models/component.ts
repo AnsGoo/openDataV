@@ -11,7 +11,13 @@ import type {
 } from '@/types/component'
 import { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
-import { DataType, RestRequestData, StaticRequestData } from './data'
+import { DataType, RequestData, RestRequestData, StaticRequestData } from './data'
+
+interface DataConfig {
+  type: DataType
+  requestConfig: RequestData
+  otherConfig: Recordable
+}
 
 export abstract class BaseComponent {
   id: string
@@ -47,11 +53,7 @@ export abstract class BaseComponent {
   _styleValue: ComponentStyle = {
     ...this.positionStyle
   }
-  dataConfig?: {
-    type: DataType
-    // requestConfig: StaticRequestData | RestRequestData
-    otherConfig: Recordable
-  }
+  dataConfig?: DataConfig
 
   constructor(detail: ComponentType) {
     if (detail.id) {
@@ -402,23 +404,20 @@ export abstract class BaseComponent {
     })
   }
   async changeRequestDataConfig(type: DataType, config: Recordable<any>) {
-    let requestConfig
     switch (type) {
       case DataType.STATIC:
         const { data, protocol, otherConfig } = config
-        requestConfig = new StaticRequestData(data, protocol)
         this.dataConfig = {
           type: DataType.STATIC,
-          requestConfig: requestConfig,
+          requestConfig: new StaticRequestData(data, protocol),
           otherConfig: otherConfig || {}
         }
         break
       case DataType.REST:
         const { options } = config
-        requestConfig = new RestRequestData(options, { propvalue: this.propValue })
         this.dataConfig = {
           type: DataType.REST,
-          requestConfig: requestConfig,
+          requestConfig: new RestRequestData(options, { propvalue: this.propValue }),
           otherConfig: otherConfig || {}
         }
         break
