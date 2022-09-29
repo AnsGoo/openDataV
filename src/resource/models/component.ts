@@ -42,7 +42,7 @@ export abstract class BaseComponent {
   _prop: PropsType[] = []
   _style: PropsType[] = []
   _data: any = undefined
-  extraStyle: Recordable<string | number | boolean> = {} as never
+  extraStyle: Recordable<string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
