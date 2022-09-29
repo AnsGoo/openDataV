@@ -3,7 +3,7 @@ import { RequestOption } from '@/ApiView/hooks/http/type'
 import { cloneDeep, isBoolean } from 'lodash-es'
 import { RequestResponse } from './type'
 
-enum DataProtocol {
+export enum DataProtocol {
   String = 'String',
   Number = 'Number',
   Boolean = 'Boolean',

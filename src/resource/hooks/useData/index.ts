@@ -14,10 +14,10 @@ export const useData = (component: BaseComponent, callbackData?: (data: any) => 
     })
 
     if (component.dataConfig?.type === DataType.REST && component.dataConfig.otherConfig.isRepeat) {
-      if (timer ) {
+      if (timer) {
         clearInterval(timer)
       }
-      
+
       const dataConfig = component.dataConfig
       timer = setInterval(pullData, dataConfig.otherConfig.interval || 300)
       onUnmounted(() => {

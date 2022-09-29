@@ -24,9 +24,9 @@ export abstract class BaseComponent {
   display = true
   show = true
   active = false
-  callbackProp?: Function | undefined
-  callbackStyle?: Function | undefined
-  callbackData?: Function | undefined
+  callbackProp?: (prop: string, key: string, value: any) => void
+  callbackStyle?: (prop: string, value: any) => void
+  callbackData?: (result: any) => void
 
   // 检测变化
   propIsChange = true
@@ -36,22 +36,20 @@ export abstract class BaseComponent {
   _prop: PropsType[] = []
   _style: PropsType[] = []
   _data: any = undefined
-  requestConfig?: StaticRequestData | RestRequestData = undefined
-
-  extraStyle: Record<string, string | number | boolean> = {} as never
-  groupStyle: GroupStyle | undefined = undefined
+  extraStyle: Recordable<string | number | boolean> = {} as never
+  groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
-  parent: BaseComponent | undefined = undefined
+  parent?: BaseComponent
   subComponents: BaseComponent[] = []
 
-  _propValue: Record<string, any> = {}
+  _propValue: Recordable = {}
   _styleValue: ComponentStyle = {
     ...this.positionStyle
   }
   dataConfig?: {
     type: DataType
-    requestConfig: StaticRequestData | RestRequestData
+    // requestConfig: StaticRequestData | RestRequestData
     otherConfig: Recordable
   }
 
@@ -312,7 +310,7 @@ export abstract class BaseComponent {
   }
 
   // 修改样式
-  changeStyle(prop: string, value: string | number | boolean | any) {
+  changeStyle(prop: string, value: any) {
     this.styleIsChange = true
     for (const item of this.styleFormValue) {
       const propObj = item.children.find((obj) => obj.prop === prop)
@@ -404,33 +402,34 @@ export abstract class BaseComponent {
     })
   }
   async changeRequestDataConfig(type: DataType, config: Recordable<any>) {
+    let requestConfig
     switch (type) {
       case DataType.STATIC:
         const { data, protocol, otherConfig } = config
-        this.requestConfig = new StaticRequestData(data, protocol)
+        requestConfig = new StaticRequestData(data, protocol)
         this.dataConfig = {
           type: DataType.STATIC,
-          requestConfig: this.requestConfig,
+          requestConfig: requestConfig,
           otherConfig: otherConfig || {}
         }
         break
       case DataType.REST:
         const { options } = config
-        this.requestConfig = new RestRequestData(options, { propvalue: this.propValue })
+        requestConfig = new RestRequestData(options, { propvalue: this.propValue })
         this.dataConfig = {
           type: DataType.REST,
-          requestConfig: this.requestConfig,
+          requestConfig: requestConfig,
           otherConfig: otherConfig || {}
         }
         break
     }
 
     if (this.callbackData) {
-      const result = await this.requestConfig?.getRespData()
+      const result = await this.dataConfig?.requestConfig?.getRespData()
       this.callbackData(result)
     }
   }
-  changeDataCallback(callback: Function) {
+  changeDataCallback(callback: (result: any) => void) {
     this.callbackData = callback
   }
 }
