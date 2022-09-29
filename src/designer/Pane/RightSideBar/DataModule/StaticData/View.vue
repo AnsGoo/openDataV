@@ -1,9 +1,14 @@
 <template>
   <n-form :model="formData">
-    <n-input-group>
-      <n-input :style="{ flex: 1 }" />
-      <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
-    </n-input-group>
+    <n-form-item key="protocol" label="数据类型">
+      <n-select :option="dataProtocolOptions" :value="formData.protocol" />
+    </n-form-item>
+    <n-form-item key="data" label="静态数据">
+      <n-input-group>
+        <n-input :style="{ flex: 1 }" />
+        <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
+      </n-input-group>
+    </n-form-item>
   </n-form>
   <n-modal v-model:show="isShow">
     <n-card
@@ -39,8 +44,19 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref } from 'vue'
-import { NForm, NInput, NTabs, NTabPane, NInputGroup, NButton, NModal, NCard } from 'naive-ui'
-import { BaseComponent } from '@/resource/models'
+import {
+  NForm,
+  NInput,
+  NTabs,
+  NTabPane,
+  NInputGroup,
+  NButton,
+  NModal,
+  NCard,
+  NSelect,
+  NFormItem
+} from 'naive-ui'
+import { BaseComponent, DataProtocol } from '@/resource/models'
 import { ScriptType } from '@/components/ScriptsEdtor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEdtor'
 import DataView from '@/components/DataView'
@@ -50,9 +66,18 @@ const props = defineProps<{
   curComponent: BaseComponent
 }>()
 const isShow = ref<boolean>(false)
+
+const dataProtocolOptions = Object.keys(DataProtocol).map((el) => {
+  return {
+    label: el,
+    value: el
+  }
+})
+console.log(dataProtocolOptions)
 const formData = reactive({
   originData: JSON.stringify(props.curComponent.exampleData, null, '\t'),
   afterData: '',
+  protocol: DataProtocol.JSON,
   script: {
     code: 'return resp.filter(el => el.value > 50)',
     type: ScriptType.Javascript
@@ -65,7 +90,6 @@ onMounted(() => {
 const changeHandler = () => {
   const callback = makeFunction(formData.script.type, formData.script.code, ['resp', 'options'])
   if (callback?.handler) {
-    console.log(callback.handler)
     const originData = JSON.parse(formData.originData)
     formData.afterData = JSON.stringify(
       callback.handler(originData, {
@@ -75,6 +99,7 @@ const changeHandler = () => {
       '\t'
     )
   }
+  // props.curComponent.changeRequestDataConfig(DataType.Static)
 }
 </script>
 
