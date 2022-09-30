@@ -203,12 +203,12 @@ const contextmenus = (index: string): ContextmenuItem[] => {
     },
     {
       text: '剪切',
-      subText: 'Ctrl + V',
+      subText: 'Ctrl + X',
       handler: () => cut(index)
     },
     {
       text: '拆分',
-      subText: 'Ctrl + V',
+      subText: '',
       disable:
         basicStore.getComponentByIndex(index.split('-').map((i) => Number(i)))?.component !==
         'Group',

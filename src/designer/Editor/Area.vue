@@ -1,9 +1,10 @@
 <template>
   <div
+    v-if="hidden"
     v-contextmenu.stop="contextmenus"
     :style="{
-      left: start.x + 'px',
-      top: start.y + 'px',
+      left: left + 'px',
+      top: top + 'px',
       width: width + 'px',
       height: height + 'px'
     }"
@@ -12,56 +13,68 @@
 </template>
 
 <script setup lang="ts">
+import { watch, computed, onUnmounted } from 'vue'
+import type { WatchStopHandle } from 'vue'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { eventBus } from '@/bus/useEventBus'
-import { Vector } from '@/types/common'
-
-defineProps<{
-  start: Vector
-  width: number
-  height: number
-}>()
+import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { Position } from '@/types/common'
 
 const composeStore = useComposeStoreWithOut()
+const basicStore = useBasicStoreWithOut()
+
+const hidden = computed<boolean>(() => composeStore.hidden)
+const left = computed<Position>(() => composeStore.style.left)
+const top = computed<Position>(() => composeStore.style.top)
+const width = computed<Position>(() => composeStore.style.width)
+const height = computed<Position>(() => composeStore.style.height)
+
+const stopWatch: WatchStopHandle = watch(
+  () => basicStore.curComponent,
+  () => {
+    if (composeStore.components.length > 0) {
+      composeStore.setHidden()
+    }
+  }
+)
 
 const compose = () => {
   composeStore.compose()
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 
 const handleFlushLeft = () => {
   composeStore.flushLeft()
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 
 const handleFlushRight = () => {
   composeStore.flushRight()
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 
 const handleFlushTop = () => {
   composeStore.flushTop()
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 const handleFlushBottom = () => {
   composeStore.flushBottom()
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 
 const handleFlushRow = () => {
   composeStore.flushRow()
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 
 const handleFlushColumn = () => {
   composeStore.flushColumn()
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 
 const batchDelete = () => {
   composeStore.batchDeleteComponent(composeStore.components)
-  eventBus.emit('hideArea')
+  composeStore.setHidden()
 }
 
 const contextmenus = (): ContextmenuItem[] => {
@@ -113,6 +126,12 @@ const contextmenus = (): ContextmenuItem[] => {
     }
   ]
 }
+
+onUnmounted(() => {
+  if (stopWatch) {
+    stopWatch()
+  }
+})
 </script>
 
 <style lang="less" scoped>
