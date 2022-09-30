@@ -1,6 +1,6 @@
 import useRestRequest, { RestRequest } from '@/ApiView/hooks/http'
-import { RequestOption } from '@/ApiView/hooks/http/type'
-import { CallbackType } from '@/utils/data'
+import { RequestAfterScript, RequestOption } from '@/ApiView/hooks/http/type'
+import { CallbackType, makeFunction } from '@/utils/data'
 import { cloneDeep, isBoolean } from 'lodash-es'
 import { RequestResponse } from './type'
 
@@ -28,16 +28,20 @@ class StaticRequestData implements RequestData {
   public data: any = null
   public afterCallback?: CallbackType
   public options?: Recordable
+  public afterScript?: RequestAfterScript
 
   constructor(
     data: string,
     protocol: DataProtocol,
-    afterCallback?: CallbackType,
+    afterScript?: RequestAfterScript,
     options?: Recordable
   ) {
     this.dataProtocol = protocol
     this.data = this.loads(data)
-    this.afterCallback = afterCallback
+    this.afterScript = afterScript
+    this.afterCallback = afterScript
+      ? makeFunction(afterScript.type, afterScript.code, ['resp', 'options'])
+      : undefined
     this.options = options
   }
 

@@ -36,7 +36,6 @@ import StaticData from './StaticData'
 import DynamicData from './DynamicData'
 import { reactive, ref } from 'vue'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { makeFunction } from '@/utils/data'
 import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 
@@ -71,11 +70,10 @@ const typeChanged = (type: string) => {
         type: ScriptType.Javascript
       }
     }
-    const callback = makeFunction(data.script.type, data.script.code, ['resp', 'options'])
     props.curComponent.changeRequestDataConfig(DataType.STATIC, {
       data: data.originData,
       protocol: DataProtocol.JSON,
-      callback: callback
+      script: data.script
     })
   } else if (type === DataType.REST) {
     const restOptions = {

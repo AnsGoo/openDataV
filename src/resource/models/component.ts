@@ -244,7 +244,13 @@ export abstract class BaseComponent {
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined
     }
-
+    if (this.dataConfig) {
+      component.data = {
+        type: this.dataConfig?.type,
+        otherConfig: this.dataConfig?.otherConfig,
+        requestOptions: this.dataConfig?.requestConfig.toJSON()
+      }
+    }
     if (this.groupStyle) {
       component.groupStyle = this.groupStyle
     }
@@ -413,7 +419,7 @@ export abstract class BaseComponent {
       case DataType.STATIC:
         this.dataConfig = {
           type: DataType.STATIC,
-          requestConfig: new StaticRequestData(config.data, config.protocol, config.callback, {
+          requestConfig: new StaticRequestData(config.data, config.protocol, config.script, {
             propvalue: this.propValue
           }),
           otherConfig: config.otherConfig || {}

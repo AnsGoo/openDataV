@@ -60,7 +60,6 @@ import { BaseComponent, DataProtocol, DataType, StaticRequestData } from '@/reso
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
-import { makeFunction } from '@/utils/data'
 
 const props = defineProps<{
   curComponent: BaseComponent
@@ -82,8 +81,9 @@ const formData = reactive({
     type: ScriptType.Javascript
   }
 })
-const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+
 onMounted(() => {
+  const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
   if (props.curComponent.dataConfig) {
     const { data } = staticRequest.toJSON()
     let instanceData = props.curComponent.exampleData
@@ -96,21 +96,14 @@ onMounted(() => {
   changeHandler()
 })
 const changeHandler = () => {
-  const callback = makeFunction(formData.script.type, formData.script.code, ['resp', 'options'])
-  if (callback?.handler) {
-    const data = staticRequest.loads(formData.originData)
-    formData.afterData = staticRequest.dumps(
-      callback.handler(data, {
-        propValue: props.curComponent.propValue
-      }),
-      true
-    )!
-  }
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
     data: formData.originData,
     protocol: formData.protocol,
-    callback: callback
+    script: formData.script
   })
+  const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+  const data = staticRequest.getRespData()
+  formData.afterData = staticRequest.dumps(data, true)!
 }
 </script>
 

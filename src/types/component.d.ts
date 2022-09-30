@@ -67,6 +67,11 @@ interface PropsType {
   children: AttrType[]
 }
 
+export interface ComponentRequestDataType {
+  type: DataType
+  otherConfig: Recordable
+  requestOptions: Recordable
+}
 export interface ComponentDataType {
   id: string
   name: string
@@ -76,6 +81,7 @@ export interface ComponentDataType {
   style: Record<string, string | number | boolean>
   propValue: Record<string, any>
   subComponents?: ComponentDataType[]
+  data?: ComponentRequestDataType
 }
 
 export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
