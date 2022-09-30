@@ -1,4 +1,4 @@
 export interface CallbackType {
-  handler?: Function
+  handler?: (resp: any, options: Recordable) => any
   error?: Error
 }

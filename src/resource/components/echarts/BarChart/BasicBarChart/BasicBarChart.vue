@@ -4,28 +4,39 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { http } from '@/utils/http'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useProp } from '@/resource/hooks'
 import BasicLineChartComponent from './config'
 import { BasicLineChart } from './type'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
+import { useData } from '@/resource/hooks/useData'
+import { useProp } from '@/resource/hooks'
+import { DataType } from '@/resource/models'
+import { RequestResponse } from '@/resource/models/type'
 
 const chartEl = ref<ElRef>(null)
 let gloabalOption: EChartsOption
-const basicStore = useBasicStoreWithOut()
 const props = defineProps<{
   component: BasicLineChartComponent
 }>()
 
-interface Record {
-  label: string
-  value: number
+let chartData: Array<{ label: string; value: number }> = []
+const dataChange = (resp: any, type: DataType) => {
+  console.log(resp)
+  if (type === DataType.STATIC) {
+    resp as Array<{ label: string; value: number }>
+    chartData = resp
+  } else if (type === DataType.REST) {
+    resp as RequestResponse
+    chartData = resp.afterData
+  }
+
+  updateData(chartData)
 }
+useData(props.component, dataChange)
+
 const propValueChange = () => {
-  initData()
+  updateData(chartData)
 }
 
 const { updateEchart, resizeHandler } = useEchart(chartEl)
@@ -34,30 +45,7 @@ const { propValue } = useProp<BasicLineChart>(props.component, propValueChange)
 onMounted(async () => {
   gloabalOption = getOption()
   updateEchart(gloabalOption)
-  await initData()
 })
-const initData = async () => {
-  try {
-    const resp = await http.get({ url: propValue.data.url })
-
-    if (resp.status === 200) {
-      const upperLimit = propValue.data.upperLimit
-      const lowerLimit = propValue.data.lowerLimit
-      const data = resp.data.map((ele) => {
-        return {
-          value: compareResetValue(Number(ele.value), upperLimit, lowerLimit),
-          label: ele.label
-        }
-      })
-      updateData(data)
-    }
-  } catch (err: any) {
-    console.log(err?.message || err)
-    if (basicStore.isEditMode) {
-      updateData(props.component.exampleData)
-    }
-  }
-}
 
 const getOption = () => {
   const option: EChartsOption = {
@@ -150,7 +138,15 @@ const getOption = () => {
   return option as EChartsOption
 }
 
-const updateData = (data: Record[]) => {
+const updateData = (resp: Array<{ label: string; value: number }>) => {
+  const upperLimit = propValue.data.upperLimit
+  const lowerLimit = propValue.data.lowerLimit
+  const data = resp.map((ele) => {
+    return {
+      value: compareResetValue(Number(ele.value), upperLimit, lowerLimit),
+      label: ele.label
+    }
+  })
   gloabalOption = getOption()
   gloabalOption.series![0].data = data.map((el) => el.value)
   gloabalOption.xAxis = {

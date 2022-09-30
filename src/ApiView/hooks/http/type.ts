@@ -1,4 +1,4 @@
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import type { AxiosResponse, Method } from 'axios'
 
 export interface KV {

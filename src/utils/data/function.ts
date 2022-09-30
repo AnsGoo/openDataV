@@ -1,4 +1,4 @@
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { notification } from '../message'
 import { CallbackType } from './type'
 
@@ -20,7 +20,7 @@ export function makeFunction(
 
 function makeJavaScriptsFunction(code: string, args: string[]): CallbackType {
   try {
-    const handler = new Function(...args, code)
+    const handler = new Function(...args, code) as (resp: any, options: Recordable) => any
     return { handler }
   } catch (err: any) {
     notification.error({

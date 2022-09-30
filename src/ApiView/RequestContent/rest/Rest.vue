@@ -27,13 +27,17 @@
             <DynamicKVForm
               v-model:value="formData['params']"
               title="请求参数"
-              @change="formChange"
+              @update:value="formChange"
             />
           </div>
         </n-tab-pane>
         <n-tab-pane name="data" tab="请求体">
           <div class="headers">
-            <DynamicKVForm v-model:value="formData['data']" title="请求体" @change="formChange" />
+            <DynamicKVForm
+              v-model:value="formData['data']"
+              title="请求体"
+              @update:value="formChange"
+            />
           </div>
         </n-tab-pane>
         <n-tab-pane name="headers" tab="请求头">
@@ -42,13 +46,13 @@
               v-model:value="formData['headers']"
               title="请求头"
               :options="requestHeaderOptions"
-              @change="formChange"
+              @update:value="formChange"
             />
           </div>
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="后置脚本">
           <div class="headers">
-            <DynamicKVForm v-model:value="scriptArgs" title="脚本参数" @change="formChange" />
+            <DynamicKVForm v-model:value="scriptArgs" title="脚本参数" @update:value="formChange" />
           </div>
         </n-tab-pane>
       </n-tabs>
@@ -74,7 +78,11 @@
           <ReponseContentView :data="response.data" class="content" />
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本">
-          <ScriptsEdtor v-model:data="formData.afterScript" class="content" @change="formChange" />
+          <ScriptsEditor
+            v-model:data="formData.afterScript"
+            class="content"
+            @update:data="formChange"
+          />
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -99,14 +107,14 @@ import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import type { AxiosResponse } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/ApiView/hooks/http'
-import ScriptsEdtor from '@/components/ScriptsEdtor'
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
+import ScriptsEditor from '@/components/ScriptsEditor'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { KV, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
 import { KVToRecordable } from '@/ApiView/hooks/http/utils'
 
 const props = withDefaults(
   defineProps<{
-    restOptions: RequestOption
+    restOptions?: RequestOption
   }>(),
   {
     restOptions: () => {

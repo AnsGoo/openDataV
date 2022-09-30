@@ -11,7 +11,7 @@ import type {
 } from '@/types/component'
 import { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
-import { DataType, RequestData, RestRequestData, StaticRequestData } from './data'
+import { DataProtocol, DataType, RequestData, RestRequestData, StaticRequestData } from './data'
 
 interface DataConfig {
   type: DataType
@@ -32,7 +32,7 @@ export abstract class BaseComponent {
   active = false
   callbackProp?: (prop: string, key: string, value: any) => void
   callbackStyle?: (prop: string, value: any) => void
-  callbackData?: (result: any) => void
+  callbackData?: (result: any, type: DataType) => void
 
   // 检测变化
   propIsChange = true
@@ -79,6 +79,11 @@ export abstract class BaseComponent {
       this.positionStyle.height = detail.height
     } else {
       this.positionStyle.height = 100
+    }
+    this.dataConfig = {
+      type: DataType.STATIC,
+      requestConfig: new StaticRequestData(JSON.stringify(this.exampleData), DataProtocol.JSON),
+      otherConfig: {}
     }
   }
 
@@ -406,29 +411,28 @@ export abstract class BaseComponent {
   async changeRequestDataConfig(type: DataType, config: Recordable<any>) {
     switch (type) {
       case DataType.STATIC:
-        const { data, protocol, otherConfig } = config
         this.dataConfig = {
           type: DataType.STATIC,
-          requestConfig: new StaticRequestData(data, protocol),
-          otherConfig: otherConfig || {}
+          requestConfig: new StaticRequestData(config.data, config.protocol, config.callback, {
+            propvalue: this.propValue
+          }),
+          otherConfig: config.otherConfig || {}
         }
         break
       case DataType.REST:
-        const { options } = config
         this.dataConfig = {
           type: DataType.REST,
-          requestConfig: new RestRequestData(options, { propvalue: this.propValue }),
-          otherConfig: otherConfig || {}
+          requestConfig: new RestRequestData(config.options, { propvalue: this.propValue }),
+          otherConfig: config.otherConfig || {}
         }
         break
     }
-
     if (this.callbackData) {
       const result = await this.dataConfig?.requestConfig?.getRespData()
-      this.callbackData(result)
+      this.callbackData(result, this.dataConfig!.type)
     }
   }
-  changeDataCallback(callback: (result: any) => void) {
+  changeDataCallback(callback: (result: any, type: DataType) => void) {
     this.callbackData = callback
   }
 }

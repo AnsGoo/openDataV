@@ -56,9 +56,9 @@ import {
   NSelect,
   NFormItem
 } from 'naive-ui'
-import { BaseComponent, DataProtocol } from '@/resource/models'
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
-import ScriptsEdtor from '@/components/ScriptsEdtor'
+import { BaseComponent, DataProtocol, DataType, StaticRequestData } from '@/resource/models'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
 import { makeFunction } from '@/utils/data'
 
@@ -73,7 +73,6 @@ const dataProtocolOptions = Object.keys(DataProtocol).map((el) => {
     value: el
   }
 })
-console.log(dataProtocolOptions)
 const formData = reactive({
   originData: JSON.stringify(props.curComponent.exampleData, null, '\t'),
   afterData: '',
@@ -83,23 +82,35 @@ const formData = reactive({
     type: ScriptType.Javascript
   }
 })
+const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
 onMounted(() => {
-  formData.originData = JSON.stringify(props.curComponent.exampleData, null, '\t')
+  if (props.curComponent.dataConfig) {
+    const requetsData = staticRequest.toJSON()
+    let instanceData = props.curComponent.exampleData
+    if (requetsData) {
+      instanceData = requetsData.data
+    }
+    formData.originData = staticRequest.dumps(instanceData, true)!
+  }
+
   changeHandler()
 })
 const changeHandler = () => {
   const callback = makeFunction(formData.script.type, formData.script.code, ['resp', 'options'])
   if (callback?.handler) {
-    const originData = JSON.parse(formData.originData)
-    formData.afterData = JSON.stringify(
-      callback.handler(originData, {
+    const data = staticRequest.loads(formData.originData)
+    formData.afterData = staticRequest.dumps(
+      callback.handler(data, {
         propValue: props.curComponent.propValue
       }),
-      null,
-      '\t'
-    )
+      true
+    )!
   }
-  // props.curComponent.changeRequestDataConfig(DataType.Static)
+  props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+    data: formData.originData,
+    protocol: formData.protocol,
+    callback: callback
+  })
 }
 </script>
 

@@ -1,5 +1,6 @@
 import useRestRequest, { RestRequest } from '@/ApiView/hooks/http'
 import { RequestOption } from '@/ApiView/hooks/http/type'
+import { CallbackType } from '@/utils/data'
 import { cloneDeep, isBoolean } from 'lodash-es'
 import { RequestResponse } from './type'
 
@@ -25,48 +26,64 @@ interface RequestData {
 class StaticRequestData implements RequestData {
   public dataProtocol: DataProtocol = DataProtocol.JSON
   public data: any = null
+  public afterCallback?: CallbackType
+  public options?: Recordable
 
-  constructor(data: any, protocol: DataProtocol) {
+  constructor(
+    data: string,
+    protocol: DataProtocol,
+    afterCallback?: CallbackType,
+    options?: Recordable
+  ) {
     this.dataProtocol = protocol
-    this.data = this.loads(data, protocol)
+    this.data = this.loads(data)
+    this.afterCallback = afterCallback
+    this.options = options
   }
 
   public toJSON() {
     return {
       protocol: this.dataProtocol,
-      data: this.dumps(),
+      data: cloneDeep(this.data),
       type: DataType.STATIC
     }
   }
 
-  private dumps(): string | undefined {
+  public dumps(data: string, isFormat = false): string | undefined {
     switch (this.dataProtocol) {
-      case DataProtocol.String:
-        return String(this.data)
-      case DataProtocol.Number:
-        return String(this.data)
-      case DataProtocol.JSON:
-        return JSON.stringify(this.data)
-      case DataProtocol.Boolean:
-        return String(isBoolean(this.data))
-    }
-  }
-  private loads(data: any, protocol: DataProtocol): any | undefined {
-    switch (protocol) {
       case DataProtocol.String:
         return String(data)
       case DataProtocol.Number:
-        return Number(data)
+        return String(data)
       case DataProtocol.JSON:
-        return JSON.parse(data)
+        return isFormat ? JSON.stringify(data, null, '\t') : JSON.stringify(data)
       case DataProtocol.Boolean:
-        return isBoolean(data)
-      default:
-        return data
+        return String(isBoolean(data))
     }
   }
-  public getRespData() {
+  public loads(data: string): any | undefined {
+    switch (this.dataProtocol) {
+      case DataProtocol.String:
+        this.data = String(data)
+        break
+      case DataProtocol.Number:
+        this.data = Number(data)
+        break
+      case DataProtocol.JSON:
+        this.data = JSON.parse(data)
+        break
+      case DataProtocol.Boolean:
+        this.data = isBoolean(data)
+        break
+    }
     return this.data
+  }
+  public getRespData() {
+    if (this.afterCallback && this.afterCallback.handler) {
+      return this.afterCallback.handler(this.data, this.options || {})
+    } else {
+      return this.data
+    }
   }
 }
 

@@ -10,8 +10,8 @@
         />
       </n-form-item>
       <StaticData v-if="dataType === 'Static'" :curComponent="curComponent" />
-      <!-- <RealTimeData v-else-if="dataType === 'RealTime'" />
-      <DynamicData v-else-if="dataType === 'Dynamic'" /> -->
+      <!-- <RealTimeData v-else-if="dataType === 'RealTime'" /> -->
+      <DynamicData v-else-if="dataType === 'Dynamic'" :curComponent="curComponent" />
       <!-- <n-form-item key="algorithm" label="算法">
         <n-select
           v-model="algorithm"
@@ -33,11 +33,12 @@
 import { BaseComponent } from '@/resource/models'
 import { NForm, NFormItem, NSelect } from 'naive-ui'
 import StaticData from './StaticData'
+import DynamicData from './DynamicData'
 import { reactive, ref } from 'vue'
 defineProps<{
   curComponent: BaseComponent
 }>()
-// import DynamicData from './DynamicData.vue'
+
 // import RealTimeData from './RealTimeData.vue'
 
 const dataType = ref<string>('Static')
@@ -48,12 +49,12 @@ const dataTypeOptions = reactive([
     value: 'Static'
   },
   {
-    label: '实时数据',
-    value: 'RealTime'
-  },
-  {
     label: '动态数据',
     value: 'Dynamic'
+  },
+  {
+    label: '实时数据',
+    value: 'RealTime'
   }
 ])
 // const algorithmOptions = ref<{ label: string; id: number }[]>([])
