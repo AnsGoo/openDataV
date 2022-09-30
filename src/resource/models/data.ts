@@ -41,7 +41,7 @@ class StaticRequestData implements RequestData {
     this.options = options
   }
 
-  public toJSON() {
+  public toJSON(): { protocol: DataProtocol; data: any; type: DataType } {
     return {
       protocol: this.dataProtocol,
       data: cloneDeep(this.data),
@@ -116,9 +116,9 @@ class RestRequestData implements RequestData {
     }
   }
 
-  public toJSON(): Recordable<any> {
+  public toJSON(): { restOptions: RequestOption; type: DataType } {
     return {
-      requestOPtions: cloneDeep(this.requestOPtions),
+      restOptions: cloneDeep(this.requestOPtions),
       type: DataType.REST
     }
   }

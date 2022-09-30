@@ -4,14 +4,14 @@
       <n-form-item key="dataType" label="数据类型">
         <n-select
           v-model:value="dataType"
-          placeholder="请选择数据处理算法"
-          @update:value="typeChanged($event)"
+          placeholder="请选择数据类型"
+          @update:value="typeChanged"
           :options="dataTypeOptions"
         />
       </n-form-item>
-      <StaticData v-if="dataType === 'Static'" :curComponent="curComponent" />
+      <StaticData v-if="dataType === DataType.STATIC" :curComponent="curComponent" />
       <!-- <RealTimeData v-else-if="dataType === 'RealTime'" /> -->
-      <DynamicData v-else-if="dataType === 'Dynamic'" :curComponent="curComponent" />
+      <DynamicData v-else-if="dataType === DataType.REST" :curComponent="curComponent" />
       <!-- <n-form-item key="algorithm" label="算法">
         <n-select
           v-model="algorithm"
@@ -30,40 +30,73 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent, DataProtocol, DataType } from '@/resource/models'
 import { NForm, NFormItem, NSelect } from 'naive-ui'
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'
 import { reactive, ref } from 'vue'
-defineProps<{
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { makeFunction } from '@/utils/data'
+import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
+import { uuid } from '@/utils/utils'
+
+const props = defineProps<{
   curComponent: BaseComponent
 }>()
 
-// import RealTimeData from './RealTimeData.vue'
-
 const dataType = ref<string>('Static')
-// const algorithm = ref<number>()
 const dataTypeOptions = reactive([
   {
     label: '静态数据',
-    value: 'Static'
+    value: DataType.STATIC
   },
   {
     label: '动态数据',
-    value: 'Dynamic'
+    value: DataType.REST
   },
   {
     label: '实时数据',
-    value: 'RealTime'
+    value: DataType.REALTIME
   }
 ])
-// const algorithmOptions = ref<{ label: string; id: number }[]>([])
 
-// const algorithmChanged = (algorithm: number) => {
-//   console.log(algorithm)
-// }
 const typeChanged = (type: string) => {
-  console.log(type)
+  if (type === DataType.STATIC) {
+    const data = {
+      originData: JSON.stringify(props.curComponent.exampleData, null, '\t'),
+      afterData: '',
+      protocol: DataProtocol.JSON,
+      script: {
+        code: 'return resp.filter(el => el.value > 50)',
+        type: ScriptType.Javascript
+      }
+    }
+    const callback = makeFunction(data.script.type, data.script.code, ['resp', 'options'])
+    props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+      data: data.originData,
+      protocol: DataProtocol.JSON,
+      callback: callback
+    })
+  } else if (type === DataType.REST) {
+    const restOptions = {
+      method: RequestMethod.GET,
+      url: '/getNoSymptom',
+      headers: [{ key: '', value: '', disable: false, id: uuid() }],
+      params: [{ key: '', value: '', disable: false, id: uuid() }],
+      data: [{ key: '', value: '', disable: false, id: uuid() }],
+      afterScript: {
+        code: 'return resp.filter(el => el.value > 50)',
+        type: ScriptType.Javascript
+      }
+    }
+    props.curComponent.changeRequestDataConfig(DataType.REST, {
+      options: restOptions,
+      otherConfig: {
+        isRepeat: true,
+        interval: 200
+      }
+    })
+  }
 }
 </script>
 <style lang="less">

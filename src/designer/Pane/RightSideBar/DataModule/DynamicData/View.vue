@@ -54,7 +54,7 @@ import {
   NFormItem,
   NGradientText
 } from 'naive-ui'
-import { BaseComponent, DataType } from '@/resource/models'
+import { BaseComponent, DataType, RestRequestData } from '@/resource/models'
 import Rest from '@/ApiView/RequestContent/rest'
 import { RequestOption } from '@/ApiView/hooks/http/type'
 import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
@@ -81,7 +81,6 @@ const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: Re
     }
   }
 })
-// const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
 const changeHandler = () => {
   props.curComponent.changeRequestDataConfig(DataType.REST, {
     options: formData.restOptions,
@@ -93,6 +92,12 @@ const changeHandler = () => {
 }
 
 onMounted(() => {
+  const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
+  const otherConfig = props.curComponent.dataConfig?.otherConfig || {}
+  const { restOptions } = restRequest.toJSON()
+  formData.restOptions = restOptions
+  formData.interval = otherConfig.interval || 300
+  formData.isRepeat = otherConfig.isRepeat || true
   changeHandler()
 })
 </script>

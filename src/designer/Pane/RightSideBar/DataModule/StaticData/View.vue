@@ -85,10 +85,10 @@ const formData = reactive({
 const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
 onMounted(() => {
   if (props.curComponent.dataConfig) {
-    const requetsData = staticRequest.toJSON()
+    const { data } = staticRequest.toJSON()
     let instanceData = props.curComponent.exampleData
-    if (requetsData) {
-      instanceData = requetsData.data
+    if (data) {
+      instanceData = data
     }
     formData.originData = staticRequest.dumps(instanceData, true)!
   }
