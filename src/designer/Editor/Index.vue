@@ -45,13 +45,7 @@
     <MarkLine />
 
     <!-- 选中区域 -->
-    <Area :start="start" :width="width" :height="height" v-if="isShowArea" />
-    <Area
-      :start="appendStart"
-      :width="appendWidth"
-      :height="appendHeight"
-      v-else-if="isShowAreas"
-    />
+    <Area />
   </div>
 </template>
 
@@ -62,11 +56,10 @@ import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape'
-import { filterStyle, calcComponentAxis, uuid } from '@/utils/utils'
+import { filterStyle, uuid } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
-import { useEventBus } from '@/bus/useEventBus'
 import { Position, Vector } from '@/types/common'
 import { getComponentShapeStyle } from '@/utils/utils'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
@@ -80,36 +73,6 @@ const copyStore = useCopyStoreWithOut()
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
-}
-
-const isShowAreas = computed<boolean>(() => {
-  return composeStore.style.width > 0 && !isShowArea.value && !basicStore.isClickComponent
-})
-
-const appendStart = computed<Vector>(() => {
-  return { x: composeStore.style.left, y: composeStore.style.top }
-})
-
-const appendWidth = computed<number>(() => {
-  return composeStore.style.width
-})
-
-const appendHeight = computed<number>(() => {
-  return composeStore.style.height
-})
-const hideArea = () => {
-  isShowArea.value = false
-  width.value = 0
-  height.value = 0
-  composeStore.setAreaData(
-    {
-      left: 0,
-      top: 0,
-      width: 0,
-      height: 0
-    },
-    []
-  )
 }
 
 const clearCanvas = () => {
@@ -137,8 +100,6 @@ const contextmenus = (): ContextmenuItem[] => {
     }
   ]
 }
-
-useEventBus('hideArea', hideArea)
 
 onMounted(() => {
   console.log('进入编辑模式')
@@ -208,9 +169,7 @@ const start = reactive<Vector>({
   x: 0,
   y: 0
 })
-const width = ref<number>(0)
-const height = ref<number>(0)
-const isShowArea = ref<boolean>(true)
+
 const editor = ref<ElRef>(null)
 const isShowReferLine = ref<boolean>(true)
 const handleMouseDown = (e: MouseEvent) => {
@@ -218,7 +177,7 @@ const handleMouseDown = (e: MouseEvent) => {
   basicStore.setClickComponentStatus(false)
   e.preventDefault()
   e.stopPropagation()
-  hideArea()
+  composeStore.setHidden()
   // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
   const rectInfo = editor.value?.getBoundingClientRect()
   editorX.value = rectInfo!.x
@@ -228,101 +187,39 @@ const handleMouseDown = (e: MouseEvent) => {
   start.x = (startX - editorX.value) / basicStore.scale
   start.y = (startY - editorY.value) / basicStore.scale
 
-  // 展示选中区域
-  isShowArea.value = true
   const move = (moveEvent: MouseEvent) => {
     moveEvent.preventDefault()
     moveEvent.stopPropagation()
-    width.value = Math.abs(moveEvent.clientX - startX) / basicStore.scale
-    height.value = Math.abs(moveEvent.clientY - startY) / basicStore.scale
+
     if (moveEvent.clientX < startX) {
       start.x = (moveEvent.clientX - editorX.value) / basicStore.scale
     }
     if (moveEvent.clientY < startY) {
       start.y = (moveEvent.clientY - editorY.value) / basicStore.scale
     }
+    const width = Math.abs(moveEvent.clientX - startX) / basicStore.scale
+    const height = Math.abs(moveEvent.clientY - startY) / basicStore.scale
+    composeStore.setPostion({ left: start.x, top: start.y, width, height })
   }
   const up = (UpMoveEvent: MouseEvent) => {
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
     if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
-      hideArea()
+      composeStore.setHidden()
       return
     }
+
     const selectedRect: Position = {
-      left: start.x,
-      top: start.y,
-      right: width.value + start.x,
-      bottom: start.y + height.value
+      left: composeStore.style.left,
+      top: composeStore.style.top,
+      right: composeStore.style.left + composeStore.style.width,
+      bottom: composeStore.style.top + composeStore.style.height
     }
-    const result = getSelectArea(selectedRect)
-    if (result) {
-      const rect = result.rect
-      composeStore.setAreaData(
-        {
-          top: rect.top,
-          left: rect.left,
-          width: rect.right - rect.left,
-          height: rect.bottom - rect.top,
-          rotate: 0
-        },
-        result.components
-      )
-      start.x = rect.left
-      start.y = rect.top
-      width.value = rect.right - rect.left
-      height.value = rect.bottom - rect.top
-    } else {
-      hideArea()
-    }
+
+    composeStore.setSelectComponents(selectedRect)
   }
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
-}
-
-const getSelectArea = (
-  rect: Position
-): { components: Array<BaseComponent>; rect: Position } | undefined => {
-  const selectedComponents: Array<BaseComponent> = []
-  const leftSet: Set<number> = new Set()
-  const topSet: Set<number> = new Set()
-  const rightSet: Set<number> = new Set()
-  const bottomSet: Set<number> = new Set()
-
-  // 计算所有的组件数据，判断是否在选中区域内
-  basicStore.componentData.forEach((component) => {
-    // 获取位置大小信息：left, top, width, height
-    const { width, height, left, top, rotate } = component.style
-    const componentRect: Position = calcComponentAxis({
-      width,
-      height,
-      left,
-      top,
-      rotate
-    })
-    if (
-      componentRect.left >= rect.left &&
-      componentRect.right <= rect.right &&
-      componentRect.top >= rect.top &&
-      componentRect.bottom <= rect.bottom
-    ) {
-      selectedComponents.push(component)
-      leftSet.add(componentRect.left)
-      topSet.add(componentRect.top)
-      rightSet.add(componentRect.right)
-      bottomSet.add(componentRect.bottom)
-    }
-  })
-  if (selectedComponents.length > 0) {
-    const left = Math.min(...leftSet)
-    const right = Math.max(...rightSet)
-    const top = Math.min(...topSet)
-    const bottom = Math.max(...bottomSet)
-    return {
-      components: selectedComponents,
-      rect: { left, right, top, bottom }
-    }
-  }
 }
 
 const handleDrop = async (e) => {

@@ -59,4 +59,8 @@ const handleDragStart = (e) => {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.components {
+  user-select: none;
+}
+</style>

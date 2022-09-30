@@ -161,6 +161,7 @@ export default defineComponent({
     })
 
     const appendComponent = () => {
+      composeStore.appendComponent(basicStore.curComponent)
       composeStore.appendComponent(props.info!)
     }
 

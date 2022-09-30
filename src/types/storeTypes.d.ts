@@ -44,6 +44,7 @@ export interface SnapData {
 export interface AreaData {
   style: Postion
   components: BaseComponent[]
+  ids: Set
 }
 
 export interface UserInfo {
