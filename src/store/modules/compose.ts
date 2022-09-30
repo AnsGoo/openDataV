@@ -130,6 +130,7 @@ const useComposeStore = defineStore({
           }
         }
       })
+      this.ids.clear()
     },
     /**
      * 右对齐
