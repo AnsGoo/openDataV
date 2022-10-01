@@ -6,6 +6,7 @@ import { createGroupStyle, calcComponentsRect, getComponentRealRect } from '@/ut
 import { BaseComponent } from '@/resource/models'
 import { componentList } from '@/designer/load'
 import { Position } from '@/types/common'
+import { getSelectComponents } from '../utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 
@@ -18,11 +19,15 @@ const useComposeStore = defineStore({
       width: 0,
       height: 0
     },
-    components: []
+    components: [],
+    ids: new Set()
   }),
   getters: {
     canCompose(): boolean {
       return this.components.length > 1
+    },
+    hidden(): boolean {
+      return this.style.width > 0
     }
   },
   actions: {
@@ -30,21 +35,64 @@ const useComposeStore = defineStore({
       return this.components.findIndex((el: BaseComponent) => el.id === component.id) !== -1
     },
 
-    setAreaData(style: Position, components: BaseComponent[]) {
-      this.style = style || {}
-      this.components = components || []
+    setSelectComponents(style: Position) {
+      const res = getSelectComponents(style, basicStore.componentData)
+      if (res) {
+        const { components, rect } = res
+        this.style.left = rect.left
+        this.style.top = rect.top
+        this.style.width = rect.right - rect.left
+        this.style.height = rect.bottom - rect.top
+        this.components = components || []
+        this.ids.clear()
+        this.components.forEach((item) => this.ids.add(item.id))
+      } else {
+        this.setHidden()
+      }
     },
 
     /**
      * 向store 中增加组件
      * @param component 组件
      */
-    appendComponent(component: BaseComponent): void {
-      if (this.components.findIndex((ele) => ele.id === component.id) === -1) {
+    appendComponent(component: Optional<BaseComponent>): void {
+      if (!component) {
+        return
+      }
+
+      if (!this.ids.has(component.id)) {
         this.components.push(component)
+        this.ids.add(component.id)
         if (this.components.length > 1) {
           this.style = { ...this.style, ...calcComponentsRect(this.components) }
         }
+      }
+    },
+    setHidden() {
+      this.style = {
+        left: 0,
+        top: 0,
+        width: 0,
+        height: 0
+      }
+      this.components = []
+      this.ids.clear()
+    },
+    setPostion(position: Partial<Position>) {
+      if (position.left) {
+        this.style.left = position.left
+      }
+
+      if (position.top) {
+        this.style.top = position.top
+      }
+
+      if (position.width) {
+        this.style.width = position.width
+      }
+
+      if (position.height) {
+        this.style.height = position.height
       }
     },
     /**
@@ -82,6 +130,7 @@ const useComposeStore = defineStore({
           }
         }
       })
+      this.ids.clear()
     },
     /**
      * 右对齐
