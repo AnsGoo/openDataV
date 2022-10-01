@@ -66,6 +66,7 @@ import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { BaseComponent, createComponent } from '@/resource/models'
 import { componentList } from '../load'
+import { backgroundToCss } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -124,11 +125,10 @@ const canvasStyleData = computed(() => basicStore.canvasStyleData)
 const curComponent = computed(() => basicStore.curComponent)
 
 const bgStyle = computed<Recordable<string>>(() => {
+  const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,
-    backgroundImage: canvasStyleData.value.image,
-    backgroundSize: 'cover',
-    backgroundColor: canvasStyleData.value.color || '#084860'
+    ...backgroundStyle
   }
   return filterStyle(style, [
     'width',
