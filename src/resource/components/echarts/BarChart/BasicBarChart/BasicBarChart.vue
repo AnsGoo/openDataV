@@ -22,7 +22,6 @@ const props = defineProps<{
 
 let chartData: Array<{ label: string; value: number }> = []
 const dataChange = (resp: any, type: DataType) => {
-  console.log(resp)
   if (type === DataType.STATIC) {
     resp as Array<{ label: string; value: number }>
     chartData = resp

@@ -70,7 +70,7 @@ interface PropsType {
 export interface ComponentRequestDataType {
   type: DataType
   otherConfig: Recordable
-  requestOptions: Recordable
+  requestOptions: StaticRequestOptions | RestRequestOptions
 }
 export interface ComponentDataType {
   id: string
@@ -89,6 +89,7 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   id?: string
   width?: number
   height?: number
+  dataIntegrationMode?: DataIntegrationMode
 }
 
 export type {

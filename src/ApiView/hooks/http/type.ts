@@ -17,6 +17,15 @@ export interface RequestOption {
   afterScript: RequestAfterScript
 }
 
+export interface StoreRequestOption {
+  method: Method
+  url: string
+  headers: Recordable
+  params: Recordable
+  data: Recordable
+  afterScript: RequestAfterScript
+}
+
 export interface RequestResponse {
   code: number
   data: string

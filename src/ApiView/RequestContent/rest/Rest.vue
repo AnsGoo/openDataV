@@ -79,9 +79,9 @@
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本">
           <ScriptsEditor
-            v-model:data="formData.afterScript"
+            :data="formData.afterScript"
             class="content"
-            @update:data="formChange"
+            @update:data="afterScriptChange"
           />
         </n-tab-pane>
       </n-tabs>
@@ -101,7 +101,7 @@ import {
   NDivider
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { uuid } from '@/utils/utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import type { AxiosResponse } from 'axios'
@@ -109,8 +109,8 @@ import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/ApiView/hooks/http'
 import ScriptsEditor from '@/components/ScriptsEditor'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { KV, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
-import { KVToRecordable } from '@/ApiView/hooks/http/utils'
+import { KV, RequestAfterScript, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
+import { KVToRecordable, requestOptionsToStore } from '@/ApiView/hooks/http/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -179,7 +179,7 @@ const response = ref<RequestResponse>({
   headers: {}
 })
 const send = async () => {
-  const restRequest = useRestRequest(formData)
+  const restRequest = useRestRequest(requestOptionsToStore(formData))
   try {
     const args = KVToRecordable(scriptArgs.value)
     const resp = await restRequest.request(args)
@@ -200,6 +200,15 @@ const formChange = () => {
   emits('change', formData)
   emits('update:restOptions', formData)
 }
+
+const afterScriptChange = (data: RequestAfterScript) => {
+  formData.afterScript = data
+  formChange()
+}
+
+onMounted(async () => {
+  await send()
+})
 </script>
 
 <style scoped lang="less">

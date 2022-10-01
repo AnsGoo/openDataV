@@ -3,6 +3,7 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import ScrollTableForm from './Form.vue'
+import { DataIntegrationMode, DataProtocol, DemoData } from '@/resource/models/data'
 
 export const componentName = 'ScrollTable'
 class ScrollTableComponent extends BaseComponent {
@@ -14,7 +15,8 @@ class ScrollTableComponent extends BaseComponent {
       id,
       width: 400,
       height: 100,
-      icon
+      icon,
+      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
     })
   }
 
@@ -88,38 +90,39 @@ class ScrollTableComponent extends BaseComponent {
     }
   ]
 
-  get exampleData() {
-    if (!this._data) {
-      this._data = [
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        },
-        {
-          name: '张三',
-          age: 23,
-          sex: '男'
-        }
-      ]
-    }
+  get exampleData(): DemoData {
+    const data = [
+      {
+        name: '张三',
+        age: 23,
+        sex: '男'
+      },
+      {
+        name: '张三',
+        age: 23,
+        sex: '男'
+      },
+      {
+        name: '张三',
+        age: 23,
+        sex: '男'
+      },
+      {
+        name: '张三',
+        age: 23,
+        sex: '男'
+      },
+      {
+        name: '张三',
+        age: 23,
+        sex: '男'
+      }
+    ]
 
-    return this._data
+    return {
+      data,
+      protocol: DataProtocol.JSON
+    }
   }
 }
 

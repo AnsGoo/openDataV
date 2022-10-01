@@ -51,8 +51,10 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { useProp } from '@/resource/hooks'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent, DataType } from '@/resource/models'
 import { ScrollTableType } from './type'
+import { useData } from '@/resource/hooks/useData'
+import { RequestResponse } from '@/resource/models/type'
 
 const props = defineProps<{
   component: BaseComponent
@@ -67,36 +69,20 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
   comHeight.value = height
 }
 
-const demoData = [
-  {
-    name: '张三',
-    age: 23,
-    sex: '男'
-  },
-  {
-    name: '张三',
-    age: 23,
-    sex: '男'
-  },
-  {
-    name: '张三',
-    age: 23,
-    sex: '男'
-  },
-  {
-    name: '张三',
-    age: 23,
-    sex: '男'
-  },
-  {
-    name: '张三',
-    age: 23,
-    sex: '男'
+const tableData = ref<Array<{ label: string; value: number }>>([])
+const dataChange = (resp: any, type: DataType) => {
+  if (type === DataType.STATIC) {
+    resp as Array<{ name: string; age: number; sex: string }>
+    tableData.value = resp
+  } else if (type === DataType.REST) {
+    resp as RequestResponse
+    tableData.value = resp.afterData
   }
-]
+}
+useData(props.component, dataChange)
 
 const rowData = computed(() => {
-  return demoData.map((item, index) => {
+  return tableData.value.map((item, index) => {
     return {
       rowIndex: index,
       ceils: Object.values(item)

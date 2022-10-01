@@ -1,9 +1,8 @@
 import Axios from 'axios'
-import type { AxiosInstance, AxiosResponse, Method } from 'axios'
-import { AfterScript, FinallyResponse, RequestOption } from './type'
+import type { AxiosInstance, AxiosResponse } from 'axios'
+import { AfterScript, FinallyResponse, StoreRequestOption } from './type'
 import { cloneDeep } from 'lodash-es'
 import { message } from '@/utils/message'
-import { KVToRecordable } from './utils'
 import { CallbackType, makeFunction } from '@/utils/data'
 
 export class RestRequest {
@@ -13,20 +12,15 @@ export class RestRequest {
   public data: any
   private callback: CallbackType | undefined
 
-  constructor(requestOption: RequestOption) {
-    const headers = KVToRecordable(requestOption.headers)
-    const method = requestOption.method as Method
-    this.url = requestOption.url
-    this.params = KVToRecordable(requestOption.params)
-    this.data = KVToRecordable(requestOption.data)
-    const script = {
-      code: requestOption.afterScript.code,
-      type: requestOption.afterScript.type
-    }
+  constructor(requestOption: StoreRequestOption) {
+    const { headers, method, url, params, data, afterScript } = requestOption
+    this.url = url
+    this.params = params
+    this.data = data
     this.axiosInstance = Axios.create({ method, headers })
 
-    if (script) {
-      this.callback = this.makeDataHandler(script)
+    if (afterScript) {
+      this.callback = this.makeDataHandler(afterScript)
     } else {
       this.callback = undefined
     }
@@ -70,6 +64,6 @@ export class RestRequest {
   }
 }
 
-export default function useRestRequest(requestOption: RequestOption) {
+export default function useRestRequest(requestOption: StoreRequestOption) {
   return new RestRequest(requestOption)
 }

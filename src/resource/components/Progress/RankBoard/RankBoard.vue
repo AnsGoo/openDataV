@@ -20,18 +20,29 @@
 </template>
 <script setup lang="ts">
 import { useProp } from '@/resource/hooks'
-import { BaseComponent } from '@/resource/models'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { http } from '@/utils/http'
+import { useData } from '@/resource/hooks/useData'
+import { BaseComponent, DataType } from '@/resource/models'
+import { RequestResponse } from '@/resource/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { RankBoard } from './type'
 const props = defineProps<{
   component: BaseComponent
 }>()
-interface Record {
-  label: string
-  value: number
+
+const dataSource = ref<Array<{ label: string; value: number }>>([])
+const dataChange = (resp: any, type: DataType) => {
+  if (type === DataType.STATIC) {
+    resp as Array<{ label: string; value: number }>
+    dataSource.value = resp
+  } else if (type === DataType.REST) {
+    resp as RequestResponse
+    dataSource.value = resp.afterData
+  }
+
+  updateData(dataSource.value)
 }
+useData(props.component, dataChange)
+
 const propValueChange = (prop: string, key: string, value: any) => {
   if (prop === 'bar') {
     switch (key) {
@@ -97,9 +108,7 @@ const lineColor = ref<string>(propValue.line.lineColor || '#3DE7C9')
 const linearGradient = computed<string>(
   () => `linear-gradient(to right, ${color1.value}, ${color2.value})`
 )
-let timeHander: TimeoutHandle
-const basicStore = useBasicStoreWithOut()
-const dataSource = ref<Record[]>([])
+
 const maxValue = computed<number>(() => {
   if (propValue.data.maxValue) {
     return propValue.data.maxValue
@@ -108,36 +117,13 @@ const maxValue = computed<number>(() => {
   }
 })
 
-const updateData = (results: Record[]) => {
+const updateData = (results: Array<{ label: string; value: number }>) => {
   results.sort((a, b) => b.value - a.value)
   dataSource.value = results
 }
-const loadData = async () => {
-  if (propValue.data.url) {
-    try {
-      const resp = await http.post({
-        url: propValue.data.url
-      })
-      if (resp.status === 200) {
-        updateData(resp.data)
-      }
-    } catch (err: any) {
-      console.log(err.message || err)
-      if (basicStore.isEditMode) {
-        updateData(props.component.exampleData)
-      }
-    }
-  }
-}
-onMounted(async () => {
-  await loadData()
-  if (timeHander) clearTimeout(timeHander)
-  timeHander = setInterval(loadData, propValue.data.interval || 100000)
-})
+onMounted(async () => {})
 
-onUnmounted(() => {
-  if (timeHander) clearTimeout(timeHander)
-})
+onUnmounted(() => {})
 </script>
 <style lang="less" scoped>
 .dv-scroll-ranking-board {

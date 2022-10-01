@@ -11,7 +11,16 @@ import type {
 } from '@/types/component'
 import { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
-import { DataProtocol, DataType, RequestData, RestRequestData, StaticRequestData } from './data'
+import {
+  DataIntegrationMode,
+  DataProtocol,
+  DataType,
+  DemoData,
+  RequestData,
+  RestRequestData,
+  StaticRequestData
+} from './data'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
 
 interface DataConfig {
   type: DataType
@@ -30,6 +39,7 @@ export abstract class BaseComponent {
   display = true
   show = true
   active = false
+  dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
   callbackProp?: (prop: string, key: string, value: any) => void
   callbackStyle?: (prop: string, value: any) => void
   callbackData?: (result: any, type: DataType) => void
@@ -41,7 +51,6 @@ export abstract class BaseComponent {
   // form表单中使用
   _prop: PropsType[] = []
   _style: PropsType[] = []
-  _data: any = undefined
   extraStyle: Recordable<string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
@@ -68,23 +77,9 @@ export abstract class BaseComponent {
     if (detail.icon) {
       this.icon = detail.icon
     }
-
-    if (detail.width) {
-      this.positionStyle.width = detail.width
-    } else {
-      this.positionStyle.width = 100
-    }
-
-    if (detail.height) {
-      this.positionStyle.height = detail.height
-    } else {
-      this.positionStyle.height = 100
-    }
-    this.dataConfig = {
-      type: DataType.STATIC,
-      requestConfig: new StaticRequestData(JSON.stringify(this.exampleData), DataProtocol.JSON),
-      otherConfig: {}
-    }
+    this.positionStyle.width = detail.width || 100
+    this.positionStyle.height = detail.height || 100
+    this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
   }
 
   get propFromValue(): PropsType[] {
@@ -224,8 +219,17 @@ export abstract class BaseComponent {
     return this._styleValue
   }
 
-  get exampleData(): any {
-    return this._data ? this._data : ''
+  get exampleData(): DemoData {
+    const data = []
+
+    return {
+      data,
+      protocol: DataProtocol.JSON,
+      script: {
+        code: 'return resp.filter(el => el.value > 50)',
+        type: ScriptType.Javascript
+      }
+    }
   }
 
   // 自定义样式编辑框数据处理
@@ -419,26 +423,34 @@ export abstract class BaseComponent {
       case DataType.STATIC:
         this.dataConfig = {
           type: DataType.STATIC,
-          requestConfig: new StaticRequestData(config.data, config.protocol, config.script, {
-            propvalue: this.propValue
-          }),
+          requestConfig: new StaticRequestData(config.data, config.protocol, config.script),
           otherConfig: config.otherConfig || {}
         }
         break
       case DataType.REST:
         this.dataConfig = {
           type: DataType.REST,
-          requestConfig: new RestRequestData(config.options, { propvalue: this.propValue }),
+          requestConfig: new RestRequestData(config.options),
           otherConfig: config.otherConfig || {}
         }
         break
     }
     if (this.callbackData) {
-      const result = await this.dataConfig?.requestConfig?.getRespData()
+      const result = await this.dataConfig?.requestConfig?.getRespData({
+        propvalue: this.propValue
+      })
       this.callbackData(result, this.dataConfig!.type)
     }
   }
   changeDataCallback(callback: (result: any, type: DataType) => void) {
     this.callbackData = callback
+  }
+  loadDemoData() {
+    const exampleData = this.exampleData
+    this.changeRequestDataConfig(DataType.STATIC, {
+      data: cloneDeep(exampleData.data),
+      protocol: exampleData.protocol,
+      script: exampleData.script
+    })
   }
 }

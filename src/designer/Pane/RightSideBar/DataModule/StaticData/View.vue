@@ -31,11 +31,7 @@
           />
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本">
-          <ScriptsEdtor
-            v-model:data="formData.script"
-            class="content"
-            @update:data="changeHandler"
-          />
+          <ScriptsEdtor :data="formData.script" class="content" @update:data="afterScriptChange" />
         </n-tab-pane>
       </n-tabs>
     </n-card>
@@ -43,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import {
   NForm,
   NInput,
@@ -60,7 +56,7 @@ import { BaseComponent, DataProtocol, DataType, StaticRequestData } from '@/reso
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
-
+import { RequestAfterScript } from '@/ApiView/hooks/http/type'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
@@ -72,8 +68,13 @@ const dataProtocolOptions = Object.keys(DataProtocol).map((el) => {
     value: el
   }
 })
-const formData = reactive({
-  originData: JSON.stringify(props.curComponent.exampleData, null, '\t'),
+const formData = reactive<{
+  originData: string
+  afterData: string
+  protocol: DataProtocol
+  script?: RequestAfterScript
+}>({
+  originData: '',
   afterData: '',
   protocol: DataProtocol.JSON,
   script: {
@@ -83,28 +84,48 @@ const formData = reactive({
 })
 
 onMounted(() => {
+  initData()
+})
+
+const initData = () => {
   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
   if (props.curComponent.dataConfig) {
     const { data } = staticRequest.toJSON()
-    let instanceData = props.curComponent.exampleData
-    if (data) {
-      instanceData = data
-    }
-    formData.originData = staticRequest.dumps(instanceData, true)!
+    formData.protocol = staticRequest.dataProtocol
+    formData.script = staticRequest.afterScript
+    formData.originData = StaticRequestData.dumps(data, staticRequest.dataProtocol, true)!
+    formData.afterData = StaticRequestData.dumps(
+      staticRequest.getRespData({ propValue: props.curComponent.propValue }),
+      staticRequest.dataProtocol,
+      true
+    )!
   }
-
-  changeHandler()
-})
+}
 const changeHandler = () => {
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    data: formData.originData,
+    data: StaticRequestData.loads(formData.originData, formData.protocol),
     protocol: formData.protocol,
     script: formData.script
   })
   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-  const data = staticRequest.getRespData()
-  formData.afterData = staticRequest.dumps(data, true)!
+  const data = staticRequest.getRespData({ propvalue: props.curComponent.propValue })
+  formData.afterData = StaticRequestData.dumps(data, staticRequest.dataProtocol, true)!
 }
+
+const afterScriptChange = (data: RequestAfterScript) => {
+  formData.script = data
+  changeHandler()
+}
+
+watch(
+  () => props.curComponent,
+  (value: BaseComponent) => {
+    if (value) {
+      initData()
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="less" scoped></style>

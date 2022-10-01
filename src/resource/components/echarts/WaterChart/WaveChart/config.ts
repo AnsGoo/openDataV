@@ -1,6 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import { DataIntegrationMode, DataProtocol, DemoData } from '@/resource/models/data'
 
 export const componentName = 'WaveChart'
 class WaveChartComponent extends BaseComponent {
@@ -12,7 +13,8 @@ class WaveChartComponent extends BaseComponent {
       id,
       width: 200,
       height: 300,
-      icon
+      icon,
+      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
     })
   }
 
@@ -132,11 +134,12 @@ class WaveChartComponent extends BaseComponent {
       ]
     }
   ]
-  get exampleData(): any {
-    if (!this._data) {
-      this._data = { data: Math.random().toFixed(2) }
+  get exampleData(): DemoData {
+    const data = Number(Math.random().toFixed(2))
+    return {
+      data,
+      protocol: DataProtocol.Number
     }
-    return this._data
   }
 }
 

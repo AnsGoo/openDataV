@@ -8,9 +8,14 @@ export const useData = (
   component.changeDataCallback(callbackData!)
   let timer: IntervalHandle = 0
   const pullData = async () => {
-    const result = await component.dataConfig?.requestConfig.getRespData()
-    if (callbackData) {
-      callbackData(result, component.dataConfig!.type)
+    const requestConfig = component.dataConfig?.requestConfig
+    if (requestConfig && callbackData) {
+      const result = await component.dataConfig?.requestConfig.getRespData({
+        propvalue: component.propValue
+      })
+      if (callbackData) {
+        callbackData(result, component.dataConfig!.type)
+      }
     }
   }
 

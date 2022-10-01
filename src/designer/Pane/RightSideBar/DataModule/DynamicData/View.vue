@@ -41,7 +41,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import {
   NForm,
   NInput,
@@ -60,6 +60,7 @@ import { RequestOption } from '@/ApiView/hooks/http/type'
 import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { storeOptionToRequestOptions } from '@/ApiView/hooks/http/utils'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
@@ -67,7 +68,7 @@ const props = defineProps<{
 const isShow = ref<boolean>(false)
 
 const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: RequestOption }>({
-  isRepeat: true,
+  isRepeat: false,
   interval: 300,
   restOptions: {
     method: RequestMethod.GET,
@@ -91,15 +92,28 @@ const changeHandler = () => {
   })
 }
 
-onMounted(() => {
+onMounted(async () => {
+  initData()
+})
+
+const initData = () => {
   const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
   const otherConfig = props.curComponent.dataConfig?.otherConfig || {}
   const { restOptions } = restRequest.toJSON()
-  formData.restOptions = restOptions
+  formData.restOptions = storeOptionToRequestOptions(restOptions)
   formData.interval = otherConfig.interval || 300
-  formData.isRepeat = otherConfig.isRepeat || true
-  changeHandler()
-})
+  formData.isRepeat = otherConfig.isRepeat || false
+}
+
+watch(
+  () => props.curComponent,
+  (value: BaseComponent) => {
+    if (value) {
+      initData()
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="less" scoped></style>
