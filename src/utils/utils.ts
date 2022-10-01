@@ -551,3 +551,18 @@ export function throttleFrame(fn) {
     })
   }
 }
+
+export const backgroundToCss = (value: any) => {
+  if ('angle' in value) {
+    return {
+      backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
+    }
+  } else if (
+    'backgroundImage' in value &&
+    value['backgroundImage'] &&
+    !value['backgroundImage'].startsWith('url')
+  ) {
+    value['backgroundImage'] = `url(${value['backgroundImage']})`
+  }
+  return value
+}

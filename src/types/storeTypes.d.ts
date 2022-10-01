@@ -4,8 +4,7 @@ import { BaseComponent } from '@/resource/models'
 export interface CanvasStyleData {
   width: number
   height: number
-  image: string
-  color: string
+  background: any
 }
 
 export interface EditData {
