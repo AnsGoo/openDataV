@@ -10,12 +10,12 @@
       :modes="['hex', 'rgb', 'hsl']"
     />
 
-    <n-space v-else-if="selectOption === 'backgroundImage'">
+    <div v-else-if="selectOption === 'backgroundImage'">
       <back-image v-model:value="backgroundImage" @update:value="changeBackgroundImage" />
-    </n-space>
-    <n-space v-else-if="selectOption === 'backgroundGradient'">
+    </div>
+    <div v-else-if="selectOption === 'backgroundGradient'">
       <linear-gradient v-model:value="backgroundGradient" @update:value="changeBackgroundImage" />
-    </n-space>
+    </div>
   </n-space>
 </template>
 

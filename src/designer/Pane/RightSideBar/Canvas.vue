@@ -52,7 +52,7 @@ const piexls = computed<Recordable<string>[]>(() => {
 })
 
 const basicStore = useBasicStoreWithOut()
-console.log(basicStore.canvasStyleData)
+
 const canvasStyleFrom = ref<CanvasStyleData>({
   width: basicStore.canvasData.width,
   height: basicStore.canvasData.height,
