@@ -23,6 +23,11 @@
             :modes="['hex', 'rgb', 'hsl']"
             @update:value="styleChange"
           />
+          <back-item
+            v-else-if="type === FormType.BACKGROUND"
+            v-model:value="canvasStyleFrom[key]"
+            @update:value="styleChange"
+          />
           <n-input v-else v-model:value="canvasStyleFrom[key]" @update:value="styleChange" />
         </n-form-item>
       </n-form>
@@ -37,6 +42,7 @@ import { NForm, NFormItem, NInput, NSelect, NInputNumber, NScrollbar, NColorPick
 import PixelEnum from '@/enum/pixel'
 import { FormType } from '@/enum'
 import { CanvasStyleData } from '@/types/storeTypes'
+import BackItem from '../../modules/backItem'
 
 const piexls = computed<Recordable<string>[]>(() => {
   return [
@@ -50,19 +56,18 @@ const basicStore = useBasicStoreWithOut()
 const canvasStyleFrom = ref<CanvasStyleData>({
   width: basicStore.canvasData.width,
   height: basicStore.canvasData.height,
-  image: basicStore.canvasData.image,
-  color: basicStore.canvasData.color || '#084860'
+  background: basicStore.canvasStyleData.background
 })
 
 const styleChange = () => {
+  console.log(canvasStyleFrom.value)
   basicStore.setCanvasStyle(canvasStyleFrom.value)
 }
 const myPixel = ref<string>('本设备')
 const styleKeys = [
   { key: 'width', label: '宽度', type: FormType.NUMBER },
   { key: 'height', label: '高度', type: FormType.NUMBER },
-  { key: 'image', label: '背景图', type: FormType.TEXT },
-  { key: 'color', label: '背景色', type: FormType.COLOR }
+  { key: 'background', label: '背景', type: FormType.BACKGROUND }
 ]
 
 const setScreenSize = (piexl: string) => {

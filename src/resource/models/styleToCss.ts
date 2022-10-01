@@ -1,4 +1,5 @@
 import { FormType } from '@/enum'
+import { backgroundToCss } from '@/utils/utils'
 
 export const cssTransfer = (
   type: FormType,
@@ -7,23 +8,8 @@ export const cssTransfer = (
 ): Optional<Recordable<any>> => {
   switch (type) {
     case FormType.BACKGROUND:
-      return backgroundToCss(prop, value)
+      return backgroundToCss(value)
     default:
       return undefined
   }
-}
-
-const backgroundToCss = (_: string, value: any) => {
-  if ('angle' in value) {
-    return {
-      backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
-    }
-  } else if (
-    'backgroundImage' in value &&
-    value['backgroundImage'] &&
-    !value['backgroundImage'].startsWith('url')
-  ) {
-    value['backgroundImage'] = `url(${value['backgroundImage']})`
-  }
-  return value
 }
