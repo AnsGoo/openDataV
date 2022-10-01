@@ -10,6 +10,7 @@ export const cssTransfer = (
     case FormType.BACKGROUND:
       return backgroundToCss(value)
     default:
+      console.log(prop)
       return undefined
   }
 }

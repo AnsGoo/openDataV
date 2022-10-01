@@ -11,7 +11,7 @@ import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, computed } from 'vue'
 import { getPage } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
-import { filterStyle, pageScale } from '@/utils/utils'
+import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { LayoutData } from '@/types/apiTypes'
 import { BaseComponent, createComponent } from '@/resource/models'
@@ -20,16 +20,10 @@ const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({
   width: 0,
   height: 0,
-  image: import.meta.env.VITE_BACKGROUND as string,
-  color: '#084860'
+  background: { backgroundColor: '#272e3b' }
 })
 const bgStyle = computed<Recordable<string>>(() => {
-  const style = {
-    backgroundImage: canvasStyle.value.image,
-    backgroundSize: 'cover',
-    backgroundColor: canvasStyle.value.color || '#084860'
-  }
-  return filterStyle(style, ['backgroundImage', 'backgroundSize', 'backgroundColor'])
+  return backgroundToCss(canvasStyle.value.background)
 })
 
 const screenStyle = computed<Recordable<string>>(() => {
