@@ -25,14 +25,6 @@ class RankBoardComponent extends BaseComponent {
       prop: 'data',
       children: [
         {
-          prop: 'url',
-          label: '历史数据地址',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: '/getData'
-          }
-        },
-        {
           prop: 'maxValue',
           label: '最大值',
           type: FormType.NUMBER,
@@ -46,14 +38,6 @@ class RankBoardComponent extends BaseComponent {
           type: FormType.TEXT,
           componentOptions: {
             defaultValue: ''
-          }
-        },
-        {
-          prop: 'interval',
-          label: '数据间隔(ms)',
-          type: FormType.NUMBER,
-          componentOptions: {
-            defaultValue: 10000
           }
         }
       ]

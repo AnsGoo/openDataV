@@ -81,7 +81,7 @@ export interface ComponentDataType {
   style: Record<string, string | number | boolean>
   propValue: Record<string, any>
   subComponents?: ComponentDataType[]
-  data?: ComponentRequestDataType,
+  data?: ComponentRequestDataType
   dataIntegrationMode: DataIntegrationMode
 }
 

@@ -20,20 +20,6 @@ class WaveChartComponent extends BaseComponent {
 
   _prop: PropsType[] = [
     {
-      label: '数据配置',
-      prop: 'data',
-      children: [
-        {
-          prop: 'url',
-          label: '地址',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: ''
-          }
-        }
-      ]
-    },
-    {
       label: '图表配置',
       prop: 'options',
       children: [

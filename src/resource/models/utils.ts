@@ -10,7 +10,7 @@ export function createComponent(component: ComponentDataType): any {
     obj.groupStyle = component.groupStyle
     obj.setPropValue(component)
     obj.setStyleValue(component)
-    obj.dataIntegrationMode = component.dataIntegrationMode ||  DataIntegrationMode.SELF
+    obj.dataIntegrationMode = component.dataIntegrationMode || DataIntegrationMode.SELF
     const data = component.data
     if (data && obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
       if (data.type === DataType.STATIC) {

@@ -1,9 +1,7 @@
 export interface RankBoard {
   data: {
-    url: string
     maxValue: number
     unit: string
-    interval: number
   }
   bar: {
     color1: string

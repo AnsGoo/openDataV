@@ -25,14 +25,6 @@ class BasicPieChartComponent extends BaseComponent {
       prop: 'data',
       children: [
         {
-          prop: 'url',
-          label: '数据地址',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: ''
-          }
-        },
-        {
           prop: 'upperLimit',
           label: '上限',
           type: FormType.NUMBER,
