@@ -120,12 +120,12 @@ const props = withDefaults(
     restOptions: () => {
       return {
         method: RequestMethod.GET,
-        url: 'http://datav.byteportrait.com',
+        url: '/getRiskArea',
         headers: [{ key: '', value: '', disable: false, id: uuid() }],
         params: [{ key: '', value: '', disable: false, id: uuid() }],
         data: [{ key: '', value: '', disable: false, id: uuid() }],
         afterScript: {
-          code: 'return resp.map(el => {return {id: el.id, name:el.name}})',
+          code: 'return resp.filter(el => el.value > 4)',
           type: ScriptType.Javascript
         }
       }
