@@ -10,8 +10,9 @@ export function createComponent(component: ComponentDataType): any {
     obj.groupStyle = component.groupStyle
     obj.setPropValue(component)
     obj.setStyleValue(component)
+    obj.dataIntegrationMode = component.dataIntegrationMode ||  DataIntegrationMode.SELF
     const data = component.data
-    if (data) {
+    if (data && obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
       if (data.type === DataType.STATIC) {
         const options = data.requestOptions as StaticRequestOptions
         obj.changeRequestDataConfig(DataType.STATIC, {

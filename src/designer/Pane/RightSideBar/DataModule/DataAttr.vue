@@ -34,6 +34,8 @@ import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 import { cloneDeep } from 'lodash-es'
 import { DataIntegrationMode } from '@/resource/models/data'
+import { requestOptionsToStore } from '@/ApiView/hooks/http/utils'
+import { RequestOption } from '@/ApiView/hooks/http/type'
 
 const props = defineProps<{
   curComponent: BaseComponent
@@ -64,7 +66,7 @@ const typeChanged = (type: string) => {
       script: exampleData.script
     })
   } else if (type === DataType.REST) {
-    const restOptions = {
+    const restOptions: RequestOption = {
       method: RequestMethod.GET,
       url: '/getNoSymptom',
       headers: [{ key: '', value: '', disable: false, id: uuid() }],
@@ -76,7 +78,7 @@ const typeChanged = (type: string) => {
       }
     }
     props.curComponent.changeRequestDataConfig(DataType.REST, {
-      options: restOptions,
+      options: requestOptionsToStore(restOptions),
       otherConfig: {
         isRepeat: true,
         interval: 300
