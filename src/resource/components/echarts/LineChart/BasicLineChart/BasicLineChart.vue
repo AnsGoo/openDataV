@@ -26,7 +26,6 @@ const dataChange = (resp: any, type: DataType) => {
     chartData = resp
   } else if (type === DataType.REST) {
     resp as RequestResponse
-    console.log(resp)
     chartData = resp.afterData
   }
 

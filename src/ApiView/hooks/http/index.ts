@@ -11,8 +11,10 @@ export class RestRequest {
   public params: Recordable<string | number> | undefined
   public data: any
   private callback: CallbackType | undefined
+  private isNotify = false
+  private isDebugMode? = false
 
-  constructor(requestOption: StoreRequestOption) {
+  constructor(requestOption: StoreRequestOption, isDebug?: boolean) {
     const { headers, method, url, params, data, afterScript } = requestOption
     this.url = url
     this.params = params
@@ -24,6 +26,8 @@ export class RestRequest {
     } else {
       this.callback = undefined
     }
+    this.isDebugMode = isDebug
+
     // const resp = await axiosInstance.request({url,params,data})
   }
   public request<T = any>(args?: Recordable<any>): Promise<FinallyResponse<T>> {
@@ -39,7 +43,9 @@ export class RestRequest {
                 if (afterData) {
                   result.afterData = afterData
                 } else {
-                  message.warning('请检查后置脚本是否有返回值')
+                  if (this.isDebugMode && !this.isNotify) {
+                    message.warning('请检查后置脚本是否有返回值')
+                  }
                   result.afterData = resp.data
                 }
               } catch (err) {
@@ -60,10 +66,10 @@ export class RestRequest {
   }
 
   public makeDataHandler(script: AfterScript): CallbackType | undefined {
-    return makeFunction(script.type, script.code, ['resp', 'options'])
+    return makeFunction(script.type, script.code, ['resp', 'options'], this.isDebugMode)
   }
 }
 
-export default function useRestRequest(requestOption: StoreRequestOption) {
-  return new RestRequest(requestOption)
+export default function useRestRequest(requestOption: StoreRequestOption, isDebug?: boolean) {
+  return new RestRequest(requestOption, isDebug)
 }

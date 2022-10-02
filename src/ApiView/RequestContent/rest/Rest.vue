@@ -179,7 +179,7 @@ const response = ref<RequestResponse>({
   headers: {}
 })
 const send = async () => {
-  const restRequest = useRestRequest(requestOptionsToStore(formData))
+  const restRequest = useRestRequest(requestOptionsToStore(formData), true)
   try {
     const args = KVToRecordable(scriptArgs.value)
     const resp = await restRequest.request(args)

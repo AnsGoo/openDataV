@@ -91,7 +91,7 @@ class StaticRequestData implements RequestData {
   }
   public getRespData(options?: Recordable) {
     const afterCallback = this.afterScript
-      ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'])
+      ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
       : undefined
     if (afterCallback && afterCallback.handler) {
       try {
@@ -111,7 +111,7 @@ class RestRequestData implements RequestData {
 
   constructor(options: StoreRequestOption) {
     this.requestOptions = options
-    this.requestInstance = useRestRequest(options)
+    this.requestInstance = useRestRequest(options, false)
   }
 
   public async getRespData(options?: Recordable): Promise<RequestResponse> {
