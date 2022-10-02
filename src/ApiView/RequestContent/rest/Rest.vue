@@ -27,13 +27,17 @@
             <DynamicKVForm
               v-model:value="formData['params']"
               title="请求参数"
-              @change="formChange"
+              @update:value="formChange"
             />
           </div>
         </n-tab-pane>
         <n-tab-pane name="data" tab="请求体">
           <div class="headers">
-            <DynamicKVForm v-model:value="formData['data']" title="请求体" @change="formChange" />
+            <DynamicKVForm
+              v-model:value="formData['data']"
+              title="请求体"
+              @update:value="formChange"
+            />
           </div>
         </n-tab-pane>
         <n-tab-pane name="headers" tab="请求头">
@@ -42,13 +46,13 @@
               v-model:value="formData['headers']"
               title="请求头"
               :options="requestHeaderOptions"
-              @change="formChange"
+              @update:value="formChange"
             />
           </div>
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="后置脚本">
           <div class="headers">
-            <DynamicKVForm v-model:value="scriptArgs" title="脚本参数" @change="formChange" />
+            <DynamicKVForm v-model:value="scriptArgs" title="脚本参数" @update:value="formChange" />
           </div>
         </n-tab-pane>
       </n-tabs>
@@ -74,7 +78,11 @@
           <ReponseContentView :data="response.data" class="content" />
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本">
-          <ScriptsEdtor v-model:data="formData.afterScript" class="content" @change="formChange" />
+          <ScriptsEditor
+            :data="formData.afterScript"
+            class="content"
+            @update:data="afterScriptChange"
+          />
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -93,31 +101,31 @@ import {
   NDivider
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
-import { reactive, ref } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { uuid } from '@/utils/utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import type { AxiosResponse } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/ApiView/hooks/http'
-import ScriptsEdtor from '@/components/ScriptsEdtor'
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
-import { KV, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
-import { KVToRecordable } from '@/ApiView/hooks/http/utils'
+import ScriptsEditor from '@/components/ScriptsEditor'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { KV, RequestAfterScript, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
+import { KVToRecordable, requestOptionsToStore } from '@/ApiView/hooks/http/utils'
 
 const props = withDefaults(
   defineProps<{
-    restOptions: RequestOption
+    restOptions?: RequestOption
   }>(),
   {
     restOptions: () => {
       return {
         method: RequestMethod.GET,
-        url: 'http://datav.byteportrait.com',
+        url: '/getRiskArea',
         headers: [{ key: '', value: '', disable: false, id: uuid() }],
         params: [{ key: '', value: '', disable: false, id: uuid() }],
         data: [{ key: '', value: '', disable: false, id: uuid() }],
         afterScript: {
-          code: 'return resp.map(el => {return {id: el.id, name:el.name}})',
+          code: 'return resp.filter(el => el.value > 4)',
           type: ScriptType.Javascript
         }
       }
@@ -171,7 +179,7 @@ const response = ref<RequestResponse>({
   headers: {}
 })
 const send = async () => {
-  const restRequest = useRestRequest(formData)
+  const restRequest = useRestRequest(requestOptionsToStore(formData), true)
   try {
     const args = KVToRecordable(scriptArgs.value)
     const resp = await restRequest.request(args)
@@ -192,6 +200,15 @@ const formChange = () => {
   emits('change', formData)
   emits('update:restOptions', formData)
 }
+
+const afterScriptChange = (data: RequestAfterScript) => {
+  formData.afterScript = data
+  formChange()
+}
+
+onMounted(async () => {
+  await send()
+})
 </script>
 
 <style scoped lang="less">

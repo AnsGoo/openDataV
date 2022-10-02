@@ -21,7 +21,7 @@ module.exports = defineConfig({
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
     // 'plugin:jest/recommended'
   ],
   plugins: ['prettier', 'import', '@typescript-eslint'],
@@ -81,11 +81,11 @@ module.exports = defineConfig({
     'sonarjs/no-duplicate-string': 'off',
     'sonarjs/cognitive-complexity': 'off',
     'sonarjs/no-identical-functions': 'off',
-    "@typescript-eslint/no-this-alias": [
-      "error",
+    '@typescript-eslint/no-this-alias': [
+      'error',
       {
-        "allowDestructuring": false, // Disallow `const { props, state } = this`; true by default
-        "allowedNames": ["self"] // Allow `const self = this`; `[]` by default
+        allowDestructuring: false, // Disallow `const { props, state } = this`; true by default
+        allowedNames: ['self'] // Allow `const self = this`; `[]` by default
       }
     ]
   }

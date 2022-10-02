@@ -11,6 +11,22 @@ import type {
 } from '@/types/component'
 import { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
+import {
+  DataIntegrationMode,
+  DataProtocol,
+  DataType,
+  DemoData,
+  RequestData,
+  RestRequestData,
+  StaticRequestData
+} from './data'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
+
+interface DataConfig {
+  type: DataType
+  requestConfig: RequestData
+  otherConfig: Recordable
+}
 
 export abstract class BaseComponent {
   id: string
@@ -23,8 +39,10 @@ export abstract class BaseComponent {
   display = true
   show = true
   active = false
-  callbackProp: Function | undefined = undefined
-  callbackStyle: Function | undefined = undefined
+  dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
+  callbackProp?: (prop: string, key: string, value: any) => void
+  callbackStyle?: (prop: string, value: any) => void
+  callbackData?: (result: any, type: DataType) => void
 
   // 检测变化
   propIsChange = true
@@ -33,19 +51,18 @@ export abstract class BaseComponent {
   // form表单中使用
   _prop: PropsType[] = []
   _style: PropsType[] = []
-  _data: any = undefined
-
-  extraStyle: Record<string, string | number | boolean> = {} as never
-  groupStyle: GroupStyle | undefined = undefined
+  extraStyle: Recordable<string | number | boolean> = {}
+  groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
-  parent: BaseComponent | undefined = undefined
+  parent?: BaseComponent
   subComponents: BaseComponent[] = []
 
-  _propValue: Record<string, any> = {}
+  _propValue: Recordable = {}
   _styleValue: ComponentStyle = {
     ...this.positionStyle
   }
+  dataConfig?: DataConfig
 
   constructor(detail: ComponentType) {
     if (detail.id) {
@@ -60,18 +77,9 @@ export abstract class BaseComponent {
     if (detail.icon) {
       this.icon = detail.icon
     }
-
-    if (detail.width) {
-      this.positionStyle.width = detail.width
-    } else {
-      this.positionStyle.width = 100
-    }
-
-    if (detail.height) {
-      this.positionStyle.height = detail.height
-    } else {
-      this.positionStyle.height = 100
-    }
+    this.positionStyle.width = detail.width || 100
+    this.positionStyle.height = detail.height || 100
+    this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
   }
 
   get propFromValue(): PropsType[] {
@@ -211,8 +219,17 @@ export abstract class BaseComponent {
     return this._styleValue
   }
 
-  get exampleData(): any {
-    return this._data ? this._data : ''
+  get exampleData(): DemoData {
+    const data = []
+
+    return {
+      data,
+      protocol: DataProtocol.JSON,
+      script: {
+        code: 'return resp.filter(el => el.value > 50)',
+        type: ScriptType.Javascript
+      }
+    }
   }
 
   // 自定义样式编辑框数据处理
@@ -229,9 +246,16 @@ export abstract class BaseComponent {
       name: this.name,
       propValue: this.propValue,
       style: this.style,
-      subComponents: subComponents.length > 0 ? subComponents : undefined
+      subComponents: subComponents.length > 0 ? subComponents : undefined,
+      dataIntegrationMode: this.dataIntegrationMode
     }
-
+    if (this.dataConfig) {
+      component.data = {
+        type: this.dataConfig?.type,
+        otherConfig: this.dataConfig?.otherConfig,
+        requestOptions: this.dataConfig?.requestConfig.toJSON()
+      }
+    }
     if (this.groupStyle) {
       component.groupStyle = this.groupStyle
     }
@@ -304,7 +328,7 @@ export abstract class BaseComponent {
   }
 
   // 修改样式
-  changeStyle(prop: string, value: string | number | boolean | any) {
+  changeStyle(prop: string, value: any) {
     this.styleIsChange = true
     for (const item of this.styleFormValue) {
       const propObj = item.children.find((obj) => obj.prop === prop)
@@ -393,6 +417,41 @@ export abstract class BaseComponent {
       el.change('height', Math.round(height))
       el.change('width', Math.round(width))
       el.change('rotate', rotate)
+    })
+  }
+  async changeRequestDataConfig(type: DataType, config: Recordable<any>) {
+    switch (type) {
+      case DataType.STATIC:
+        this.dataConfig = {
+          type: DataType.STATIC,
+          requestConfig: new StaticRequestData(config.data, config.protocol, config.script),
+          otherConfig: config.otherConfig || {}
+        }
+        break
+      case DataType.REST:
+        this.dataConfig = {
+          type: DataType.REST,
+          requestConfig: new RestRequestData(config.options),
+          otherConfig: config.otherConfig || {}
+        }
+        break
+    }
+    if (this.callbackData) {
+      const result = await this.dataConfig?.requestConfig?.getRespData({
+        propvalue: this.propValue
+      })
+      this.callbackData(result, this.dataConfig!.type)
+    }
+  }
+  changeDataCallback(callback: (result: any, type: DataType) => void) {
+    this.callbackData = callback
+  }
+  loadDemoData() {
+    const exampleData = this.exampleData
+    this.changeRequestDataConfig(DataType.STATIC, {
+      data: cloneDeep(exampleData.data),
+      protocol: exampleData.protocol,
+      script: exampleData.script
     })
   }
 }

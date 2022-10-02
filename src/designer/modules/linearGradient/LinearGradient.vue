@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NColorPicker, NInputNumber, NSlider } from 'naive-ui'
+import { NColorPicker, NSlider } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
 import { Gradient } from './type'
 

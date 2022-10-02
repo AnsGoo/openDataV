@@ -60,7 +60,6 @@ const canvasStyleFrom = ref<CanvasStyleData>({
 })
 
 const styleChange = () => {
-  console.log(canvasStyleFrom.value)
   basicStore.setCanvasStyle(canvasStyleFrom.value)
 }
 const myPixel = ref<string>('本设备')

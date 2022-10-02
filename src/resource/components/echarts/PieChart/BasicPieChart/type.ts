@@ -1,6 +1,5 @@
 export interface BasicLineChart {
   data: {
-    url: string
     upperLimit: number
     lowerLimit: number
   }

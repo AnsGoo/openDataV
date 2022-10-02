@@ -9,15 +9,30 @@ import WaveChartComponent from './config'
 import { useProp } from '@/resource/hooks'
 import 'echarts-liquidfill'
 import { WaveChartType } from './type'
-import { http } from '@/utils/http'
+import { useData } from '@/resource/hooks/useData'
+import { DataType } from '@/resource/models'
+import { RequestResponse } from '@/resource/models/type'
 
 const props = defineProps<{
   component: WaveChartComponent
 }>()
 
 const chartEl = ref<ElRef>(null)
-let data = 0
 const { updateEchart, resizeHandler } = useEchart(chartEl)
+const chartData = ref<number>(0)
+const dataChange = (resp: any, type: DataType) => {
+  if (type === DataType.STATIC) {
+    resp as { data: number }
+    chartData.value = resp
+  } else if (type === DataType.REST) {
+    resp as RequestResponse
+    chartData.value = resp.afterData
+  }
+
+  updateEchart(getOption())
+}
+useData(props.component, dataChange)
+
 const { propValue } = useProp<WaveChartType>(props.component, async () => {
   updateEchart(getOption())
 })
@@ -28,7 +43,7 @@ const getOption = () => {
       {
         type: 'liquidFill',
         amplitude: propValue.options.amplitude,
-        data: [data],
+        data: [chartData.value],
         outline: {
           show: propValue.options.outlineShow,
           itemStyle: {
@@ -53,15 +68,6 @@ const getOption = () => {
 }
 
 onMounted(async () => {
-  try {
-    const resp = await http.get({ url: propValue.data.url })
-    if (resp.status === 200) {
-      data = resp.data['data']
-    }
-  } catch (_) {
-    data = props.component.exampleData['data']
-  }
-
   updateEchart(getOption())
 })
 </script>
