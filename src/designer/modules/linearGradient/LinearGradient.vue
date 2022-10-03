@@ -1,15 +1,21 @@
 <template>
   <div class="linear-gradient">
-    <n-slider v-model:value="linearGradient.angle" @update:value="(value) => changed('angle', value)" :step="5" size="small" :max="360"/>
+    <n-slider
+      v-model:value="linearGradient.angle"
+      @update:value="changed"
+      :step="5"
+      size="small"
+      :max="360"
+    />
     <NColorPicker
       v-model:value="linearGradient.color1"
-      @update:value="(value) => changed('color1', value)"
+      @update:value="changed"
       :swatches="GlobalColorSwatches"
       clearable
     />
     <NColorPicker
       v-model:value="linearGradient.color2"
-      @update:value="(value) => changed('color2', value)"
+      @update:value="changed"
       :swatches="GlobalColorSwatches"
       clearable
     />
@@ -18,7 +24,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { NColorPicker, NInputNumber, NSlider } from 'naive-ui'
+import { NColorPicker, NSlider } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
 import { Gradient } from './type'
 
@@ -46,8 +52,7 @@ const emits = defineEmits<{
   (e: 'update:value', value: Gradient): void
 }>()
 
-const changed = (key: string, value: string | number | null) => {
-  // linearGradient.value[key] = value
+const changed = () => {
   emits('updateValue', linearGradient.value)
   emits('update:value', linearGradient.value)
 }

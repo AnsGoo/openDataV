@@ -1,7 +1,4 @@
 export interface WaveChartType {
-  data: {
-    url: string
-  }
   options: {
     amplitude: number // 振幅
     outlineShow: boolean // 是否显示边框

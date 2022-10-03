@@ -4,14 +4,14 @@
   "thumbnail": "http://image.xingxingzaixian.fun/pages/4.png",
   "author": "OpenDataV",
   "isHome": false,
+  "dataIntegrationMode": "UNIVERSAL",
   "canvasData": [
     {
-      "id": "061542f3e49741c480828df97f602392",
+      "id": "0691843182eb42d09964726ef50ad0a7",
       "component": "BasicPieChart",
       "name": "基础饼状图",
       "propValue": {
         "data": {
-          "url": "/getNoSymptom",
           "upperLimit": 150,
           "lowerLimit": 0
         },
@@ -31,29 +31,498 @@
         }
       },
       "style": {
-        "left": 558,
-        "top": 633,
+        "left": 40.978723404255305,
+        "top": 592.5744680851063,
         "width": 316,
         "height": 260,
         "rotate": 0
       },
-      "subComponents": []
+      "dataIntegrationMode": "UNIVERSAL",
+      "data": {
+        "type": "REST",
+        "otherConfig": {
+          "isRepeat": false,
+          "interval": 300
+        },
+        "requestOptions": {
+          "restOptions": {
+            "headers": {},
+            "params": {},
+            "data": {},
+            "method": "GET",
+            "url": "/getNoSymptom",
+            "afterScript": {
+              "code": "",
+              "type": "Javascript"
+            }
+          },
+          "type": "REST"
+        }
+      }
     },
     {
-      "id": "4d777689ddcf4f3dae13d487aff677e1",
+      "id": "9d926c11592b416f8f9a861a30c770d2",
+      "component": "SubText",
+      "name": "数据订阅文本",
+      "propValue": {
+        "base": {
+          "tag": "maxNew",
+          "url": "/getMaxData",
+          "label": "最大新增确诊人数",
+          "unit": ""
+        }
+      },
+      "style": {
+        "left": 74,
+        "top": 72,
+        "width": 275,
+        "height": 30,
+        "rotate": 0,
+        "color": "#F0A020",
+        "fontSize": 20,
+        "fontWeight": 200,
+        "fontFamily": "Arial"
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "e48d2d2f6e134471b466a197a2ae9bbb",
+      "component": "SubText",
+      "name": "数据订阅文本",
+      "propValue": {
+        "base": {
+          "tag": "maxNoSymptom",
+          "url": "/getMaxData",
+          "label": "最大新增无症状人数",
+          "unit": ""
+        }
+      },
+      "style": {
+        "left": 323,
+        "top": 72,
+        "width": 250,
+        "height": 30,
+        "rotate": 0,
+        "color": "#F0A020",
+        "fontSize": 20,
+        "fontWeight": 200,
+        "fontFamily": "Arial"
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "17185eaa07d747eb813c17ce594d5b42",
+      "component": "SubText",
+      "name": "数据订阅文本",
+      "propValue": {
+        "base": {
+          "tag": "maxTotal",
+          "url": "/getMaxData",
+          "label": "最大累计确诊人数",
+          "unit": ""
+        }
+      },
+      "style": {
+        "left": 561,
+        "top": 72,
+        "width": 266,
+        "height": 30,
+        "rotate": 0,
+        "color": "#F0A020",
+        "fontSize": 20,
+        "fontWeight": 200,
+        "fontFamily": "Arial"
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "2e1bbab7e0dd4060a6501651b3282cda",
+      "component": "FlvVideo",
+      "name": "视频",
+      "propValue": {
+        "basic": {
+          "url": "https://mazwai.com/videvo_files/video/free/2019-01/small_watermarked/181004_04_Dolphins-Whale_06_preview.webm",
+          "videoType": "webm",
+          "controls": true,
+          "autoplay": true,
+          "muted": true
+        }
+      },
+      "style": {
+        "left": 1479,
+        "top": 112.9375,
+        "width": 400,
+        "height": 225,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "05c213fd3fd64ec0ba5b6812d9f127db",
+      "component": "BasicLineChart",
+      "name": "基础线图",
+      "propValue": {
+        "data": {
+          "upperLimit": 150,
+          "lowerLimit": 0
+        },
+        "label": {
+          "axisLabelColor": "#3DE7C9",
+          "axisColor": "#3DE7C9"
+        },
+        "axis": {
+          "axisColor": "#00BAFF",
+          "axisLabelColor": "#00BAFF",
+          "xshow": true,
+          "yshow": true,
+          "xLineType": "dotted",
+          "yLineType": "dotted",
+          "xAxisLineColor": "#3391E4",
+          "yAxisLineColor": "#3391E4"
+        },
+        "series": {
+          "lineArea": true,
+          "lineWidth": 1,
+          "lineColor": "#3DE7C9",
+          "lineLinearStart": "#3491FA",
+          "lineLinearEnd": "transparent"
+        }
+      },
+      "style": {
+        "left": 111,
+        "top": 176,
+        "width": 1327,
+        "height": 170,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "UNIVERSAL",
+      "data": {
+        "type": "REST",
+        "otherConfig": {
+          "isRepeat": false,
+          "interval": 300
+        },
+        "requestOptions": {
+          "restOptions": {
+            "headers": {},
+            "params": {},
+            "data": {},
+            "method": "GET",
+            "url": "/getNoSymptom",
+            "afterScript": {
+              "code": "",
+              "type": "Javascript"
+            }
+          },
+          "type": "REST"
+        }
+      }
+    },
+    {
+      "id": "a43b913aa24c4416924dfadd6fc9c8d0",
+      "component": "Gauge1",
+      "name": "1#仪表盘",
+      "propValue": {
+        "data": {
+          "history": "",
+          "datatag": "",
+          "maxValue": 150
+        },
+        "attr": {
+          "color1": "#03A6E0CC",
+          "color2": "#03A6E04D",
+          "unit": ""
+        }
+      },
+      "style": {
+        "left": 534.0425531914894,
+        "top": 606.25,
+        "width": 200,
+        "height": 200,
+        "rotate": 0,
+        "color": "#03A6E0CC",
+        "fontSize": 40,
+        "fontWeight": 800,
+        "fontFamily": "Arial"
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "b2aa02971182498fabae03e52cf0f6d3",
+      "component": "ScrollTable",
+      "name": "滚动表格",
+      "propValue": {
+        "header": {
+          "header": [
+            "姓名",
+            "年龄",
+            "性别"
+          ],
+          "headerBGC": "#00BAFF",
+          "headerHeight": 35,
+          "index": false,
+          "indexHeader": "#"
+        },
+        "rows": {
+          "data": {
+            "height": 30,
+            "oddRowBGC": "#003B51",
+            "evenRowBGC": "#0A2732"
+          }
+        }
+      },
+      "style": {
+        "left": 1467.9148936170213,
+        "top": 360,
+        "width": 438,
+        "height": 155,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "UNIVERSAL",
+      "data": {
+        "type": "STATIC",
+        "otherConfig": {},
+        "requestOptions": {
+          "protocol": "JSON",
+          "data": [
+            {
+              "name": "张三",
+              "age": 23,
+              "sex": "男"
+            },
+            {
+              "name": "张三",
+              "age": 23,
+              "sex": "男"
+            },
+            {
+              "name": "张三",
+              "age": 23,
+              "sex": "男"
+            },
+            {
+              "name": "张三",
+              "age": 23,
+              "sex": "男"
+            },
+            {
+              "name": "张三",
+              "age": 23,
+              "sex": "男"
+            }
+          ],
+          "type": "STATIC"
+        }
+      }
+    },
+    {
+      "id": "59b0e4fc73d74d80b1dc09c60de7bdad",
+      "component": "Progress",
+      "name": "进度条",
+      "propValue": {
+        "data": {
+          "history": "",
+          "datatag": "",
+          "maxValue": 150
+        },
+        "attr": {
+          "color1": "#3DE7C9",
+          "color2": "#00BAFF",
+          "borderWidth": 3,
+          "borderGap": 3,
+          "lineDash": 5,
+          "gapWeight": 1,
+          "fontSize": 15,
+          "textColor": "#fff",
+          "borderRadius": 5,
+          "localGradient": false,
+          "formatter": "{value}%"
+        }
+      },
+      "style": {
+        "left": 106.38297872340428,
+        "top": 891.3563829787234,
+        "width": 200,
+        "height": 50,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "263e3e821183424ab7b9818529fc40a4",
+      "component": "ScrollRankingBoard",
+      "name": "排名板",
+      "propValue": {
+        "data": {
+          "maxValue": 150,
+          "unit": ""
+        },
+        "bar": {
+          "color1": "#3DE7C9",
+          "color2": "#00BAFF",
+          "barHeight": 20,
+          "borderRadius": 10
+        },
+        "line": {
+          "lineColor": "#3DE7C9",
+          "borderGap": 3,
+          "lineHeight": 5
+        },
+        "text": {
+          "fontSize": 15,
+          "labelColor": "#3DE7C9",
+          "rankColor": "#3DE7C9",
+          "valueColor": "#3DE7C9"
+        }
+      },
+      "style": {
+        "left": 753.1914893617021,
+        "top": 619.0159574468086,
+        "width": 800,
+        "height": 400,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "UNIVERSAL",
+      "data": {
+        "type": "REST",
+        "otherConfig": {
+          "isRepeat": false,
+          "interval": 300
+        },
+        "requestOptions": {
+          "restOptions": {
+            "headers": {},
+            "params": {},
+            "data": {},
+            "method": "GET",
+            "url": "/getNoSymptom",
+            "afterScript": {
+              "code": "",
+              "type": "Javascript"
+            }
+          },
+          "type": "REST"
+        }
+      }
+    },
+    {
+      "id": "5597c2980c4e4e75a733b7985ccfee21",
+      "component": "WaveChart",
+      "name": "水波图",
+      "propValue": {
+        "options": {
+          "amplitude": 20,
+          "outlineShow": false,
+          "outlineColor": "#3491FA",
+          "radius": "100%",
+          "shape": "circle",
+          "direction": "left",
+          "waveAnimation": true,
+          "color": "#3491FA",
+          "labelShow": true,
+          "backgroundColor": "#FFFFFF"
+        }
+      },
+      "style": {
+        "left": 319.25531914893617,
+        "top": 622.8085106382979,
+        "width": 200,
+        "height": 223,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "UNIVERSAL",
+      "data": {
+        "type": "STATIC",
+        "otherConfig": {},
+        "requestOptions": {
+          "protocol": "Number",
+          "data": 0.44,
+          "type": "STATIC"
+        }
+      }
+    },
+    {
+      "id": "7a89e04420534295957d62df6843af5e",
+      "component": "Image",
+      "name": "图片",
+      "propValue": {},
+      "style": {
+        "left": 527.6595744680852,
+        "top": 829.654255319149,
+        "width": 200,
+        "height": 200,
+        "rotate": 0,
+        "background": {
+          "backgroundImage": "url(http://image.xingxingzaixian.fun/pages/1.png)",
+          "backgroundRepeat": "round",
+          "backgroundAttachment": "local",
+          "backgroundPosition": "center",
+          "backgroundSize": "cover"
+        },
+        "backgroundColor": "#14c9c9",
+        "backgroundImage": "url(http://image.xingxingzaixian.fun/pages/1.png)",
+        "backgroundRepeat": "round",
+        "backgroundAttachment": "local",
+        "backgroundPosition": "center",
+        "backgroundSize": "cover"
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "aa0a87b5a6344fa89beb2daa315f1bda",
+      "component": "Decoration3",
+      "name": "3#装饰",
+      "propValue": {
+        "base": {
+          "color1": "#7acaec",
+          "color2": "#7acaec",
+          "rectWidth": 7,
+          "space": 1
+        }
+      },
+      "style": {
+        "left": 1612.7659574468087,
+        "top": 557.3138297872341,
+        "width": 200,
+        "height": 60,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "0f5178428c77476fa8b129418fea181c",
+      "component": "Decoration4",
+      "name": "4#装饰",
+      "propValue": {
+        "base": {
+          "color1": "#00c2ff",
+          "color2": "#00C2FF42"
+        }
+      },
+      "style": {
+        "left": 128,
+        "top": 357,
+        "width": 1300,
+        "height": 10,
+        "rotate": 0
+      },
+      "dataIntegrationMode": "SELF"
+    },
+    {
+      "id": "f5567188ecee45249b5378b09ca2afdc",
       "component": "Group",
-      "name": "每日新增曲线",
+      "name": "分组",
       "propValue": {},
       "style": {
         "left": 98,
-        "top": 133,
-        "width": 1350,
-        "height": 205,
+        "top": 129,
+        "width": 1343,
+        "height": 200,
         "rotate": 0
       },
       "subComponents": [
         {
-          "id": "e0aa2d93dc5d4906abcf3a8443019b93",
+          "id": "d81f0e0662dd4d4d854798d14f6cc413",
           "component": "BorderBox6",
           "name": "6#边框",
           "propValue": {
@@ -64,71 +533,23 @@
             }
           },
           "style": {
-            "left": 105,
-            "top": 133,
+            "left": 98,
+            "top": 129,
             "width": 1343,
             "height": 200,
             "rotate": 0
           },
-          "subComponents": [],
-          "groupStyle": {
-            "gleft": 0.5185,
-            "gtop": 0,
-            "gwidth": 99.4815,
-            "gheight": 97.561,
-            "grotate": 0
-          }
-        },
-        {
-          "id": "34a4ddbf16da4e17873501228b81ec81",
-          "component": "BasicLineChart",
-          "name": "基础线图",
-          "propValue": {
-            "data": {
-              "url": "/getNew",
-              "upperLimit": 2000,
-              "lowerLimit": 0
-            },
-            "label": {
-              "axisLabelColor": "#3DE7C9",
-              "axisColor": "#3DE7C9"
-            },
-            "axis": {
-              "axisColor": "#00BAFF",
-              "axisLabelColor": "#00BAFF",
-              "xshow": true,
-              "yshow": true,
-              "xLineType": "dotted",
-              "yLineType": "dotted",
-              "xAxisLineColor": "#3391E4",
-              "yAxisLineColor": "#3391E4"
-            },
-            "series": {
-              "lineArea": true,
-              "lineWidth": 1,
-              "lineColor": "#3DE7C9",
-              "lineLinearStart": "#3491FA",
-              "lineLinearEnd": "transparent"
-            }
-          },
-          "style": {
-            "left": 98,
-            "top": 168,
-            "width": 1348,
-            "height": 170,
-            "rotate": 0
-          },
-          "subComponents": [],
+          "dataIntegrationMode": "SELF",
           "groupStyle": {
             "gleft": 0,
-            "gtop": 17.0732,
-            "gwidth": 99.8519,
-            "gheight": 82.9268,
+            "gtop": 0,
+            "gwidth": 100,
+            "gheight": 100,
             "grotate": 0
           }
         },
         {
-          "id": "07b8f028762f45d1a9177053ca4c1891",
+          "id": "e19f37f7fe944043894fe2769556ad93",
           "component": "StaticText",
           "name": "静态文本",
           "propValue": {
@@ -138,8 +559,8 @@
             }
           },
           "style": {
-            "left": 610,
-            "top": 148,
+            "left": 603,
+            "top": 144,
             "width": 344,
             "height": 20,
             "rotate": 0,
@@ -148,32 +569,33 @@
             "fontWeight": 200,
             "fontFamily": "Arial"
           },
-          "subComponents": [],
+          "dataIntegrationMode": "SELF",
           "groupStyle": {
-            "gleft": 37.9259,
-            "gtop": 7.3171,
-            "gwidth": 25.4815,
-            "gheight": 9.7561,
+            "gleft": 37.6024,
+            "gtop": 7.5,
+            "gwidth": 25.6143,
+            "gheight": 10,
             "grotate": 0
           }
         }
-      ]
+      ],
+      "dataIntegrationMode": "SELF"
     },
     {
-      "id": "05fd6f8f871c4433ae13b75714b0f291",
+      "id": "8e63d183cdfa432eb742f6d0c380166d",
       "component": "Group",
-      "name": "无症状感染者",
+      "name": "分组",
       "propValue": {},
       "style": {
         "left": 116,
         "top": 389,
-        "width": 1348,
-        "height": 206,
+        "width": 1331,
+        "height": 204,
         "rotate": 0
       },
       "subComponents": [
         {
-          "id": "88e277b1b666488bb2729f8bac2389c2",
+          "id": "e999c4fd9e1740de8af1519cc9c32bc1",
           "component": "BorderBox5",
           "name": "5#边框",
           "propValue": {
@@ -190,62 +612,17 @@
             "height": 200,
             "rotate": 0
           },
-          "subComponents": [],
+          "dataIntegrationMode": "SELF",
           "groupStyle": {
             "gleft": 0,
             "gtop": 0,
-            "gwidth": 98.6647,
-            "gheight": 97.0874,
+            "gwidth": 99.9249,
+            "gheight": 98.0392,
             "grotate": 0
           }
         },
         {
-          "id": "88b59babe778446aa923be5a6603db67",
-          "component": "BasicBarChart",
-          "name": "基础柱状图",
-          "propValue": {
-            "data": {
-              "url": "/getRiskArea",
-              "upperLimit": 150,
-              "lowerLimit": 0,
-              "max": "dataMax",
-              "min": "0",
-              "maxOffset": 0,
-              "minOffset": 0
-            },
-            "label": {
-              "axisLabelColor": "#3DE7C9",
-              "axisColor": "#3DE7C9"
-            },
-            "axis": {
-              "axisColor": "#D03050FF",
-              "axisLabelColor": "#00BAFF",
-              "xshow": true,
-              "yshow": true,
-              "xLineType": "dotted",
-              "yLineType": "dotted",
-              "xAxisLineColor": "#3391E4",
-              "yAxisLineColor": "#3391E4"
-            }
-          },
-          "style": {
-            "left": 116,
-            "top": 425,
-            "width": 1348,
-            "height": 170,
-            "rotate": 0
-          },
-          "subComponents": [],
-          "groupStyle": {
-            "gleft": 0,
-            "gtop": 17.4757,
-            "gwidth": 100,
-            "gheight": 82.5243,
-            "grotate": 0
-          }
-        },
-        {
-          "id": "381466db8cb54753890a390e050a927b",
+          "id": "af24955722394822a8c618f9b42957a6",
           "component": "StaticText",
           "name": "静态文本",
           "propValue": {
@@ -265,21 +642,89 @@
             "fontWeight": 200,
             "fontFamily": "Arial"
           },
-          "subComponents": [],
+          "dataIntegrationMode": "SELF",
           "groupStyle": {
-            "gleft": 36.2018,
-            "gtop": 6.5062,
-            "gwidth": 25.5193,
-            "gheight": 9.7087,
+            "gleft": 36.6642,
+            "gtop": 6.57,
+            "gwidth": 25.8452,
+            "gheight": 9.8039,
+            "grotate": 0
+          }
+        },
+        {
+          "id": "21cb6ff9b3e048e59ec1cf36a7c6df61",
+          "component": "BasicBarChart",
+          "name": "基础柱状图",
+          "propValue": {
+            "data": {
+              "upperLimit": 150,
+              "lowerLimit": 0,
+              "max": "dataMax",
+              "min": "0",
+              "maxOffset": 0,
+              "minOffset": 0
+            },
+            "label": {
+              "axisLabelColor": "#3DE7C9",
+              "axisColor": "#3DE7C9"
+            },
+            "axis": {
+              "axisColor": "#00BAFF",
+              "axisLabelColor": "#00BAFF",
+              "xshow": true,
+              "yshow": true,
+              "xLineType": "dotted",
+              "yLineType": "dotted",
+              "xAxisLineColor": "#3391E4",
+              "yAxisLineColor": "#3391E4"
+            }
+          },
+          "style": {
+            "left": 120,
+            "top": 423,
+            "width": 1327,
+            "height": 170,
+            "rotate": 0
+          },
+          "dataIntegrationMode": "UNIVERSAL",
+          "data": {
+            "type": "REST",
+            "otherConfig": {
+              "isRepeat": false,
+              "interval": 300
+            },
+            "requestOptions": {
+              "restOptions": {
+                "headers": [],
+                "params": [],
+                "data": [],
+                "method": "GET",
+                "url": "/getNoSymptom",
+                "afterScript": {
+                  "code": "",
+                  "type": "Javascript"
+                }
+              },
+              "type": "REST"
+            }
+          },
+          "groupStyle": {
+            "gleft": 0.3005,
+            "gtop": 16.6667,
+            "gwidth": 99.6995,
+            "gheight": 83.3333,
             "grotate": 0
           }
         }
-      ]
+      ],
+      "dataIntegrationMode": "SELF"
     }
   ],
   "canvasStyle": {
     "width": 1920,
     "height": 1080,
-    "background": { "backgroundColor": "#272e3b" }
+    "background": {
+      "backgroundColor": "#272e3b"
+    }
   }
 }

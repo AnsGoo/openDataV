@@ -1,6 +1,8 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent, DataProtocol } from '@/resource/models'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { DataIntegrationMode, DemoData } from '@/resource/models/data'
 
 export const componentName = 'BasicLineChart'
 class BasicLineChartComponent extends BaseComponent {
@@ -12,7 +14,8 @@ class BasicLineChartComponent extends BaseComponent {
       id,
       width: 500,
       height: 170,
-      icon
+      icon,
+      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
     })
   }
 
@@ -21,14 +24,6 @@ class BasicLineChartComponent extends BaseComponent {
       label: '数据配置',
       prop: 'data',
       children: [
-        {
-          prop: 'url',
-          label: '数据地址',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: ''
-          }
-        },
         {
           prop: 'upperLimit',
           label: '上限',
@@ -198,19 +193,25 @@ class BasicLineChartComponent extends BaseComponent {
     }
   ]
   _style: PropsType[] = []
-  get exampleData() {
-    if (!this._data) {
-      this._data = [
-        { label: '秦', value: Math.round(Math.random() * 100) },
-        { label: '齐', value: Math.round(Math.random() * 100) },
-        { label: '楚', value: Math.round(Math.random() * 100) },
-        { label: '赵', value: Math.round(Math.random() * 100) },
-        { label: '燕', value: Math.round(Math.random() * 100) },
-        { label: '韩', value: Math.round(Math.random() * 100) },
-        { label: '魏', value: Math.round(Math.random() * 100) }
-      ]
+  get exampleData(): DemoData {
+    const data = [
+      { label: '秦', value: Math.round(Math.random() * 100) },
+      { label: '齐', value: Math.round(Math.random() * 100) },
+      { label: '楚', value: Math.round(Math.random() * 100) },
+      { label: '赵', value: Math.round(Math.random() * 100) },
+      { label: '燕', value: Math.round(Math.random() * 100) },
+      { label: '韩', value: Math.round(Math.random() * 100) },
+      { label: '魏', value: Math.round(Math.random() * 100) }
+    ]
+
+    return {
+      data,
+      protocol: DataProtocol.JSON,
+      script: {
+        code: 'return resp.filter(el => el.value > 50)',
+        type: ScriptType.Javascript
+      }
     }
-    return this._data
   }
 }
 

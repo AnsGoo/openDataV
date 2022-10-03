@@ -5,7 +5,7 @@
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
     v-model:code="form.code"
     ref="cm"
-    @change="formChange"
+    @update:code="formChange"
   >
     <template #tool-bar>
       <div class="buttons">
@@ -14,10 +14,19 @@
           v-model:value="form.type"
           class="item language"
           size="small"
-          @update-value="formChange"
+          @update:code="formChange"
         />
+        <icon-park class="item button" name="save-one" @click="handleSave" />
         <icon-park class="item button" name="back" @click="handleUndo" />
         <icon-park class="item button" name="next" @click="handleRedo" />
+      </div>
+    </template>
+    <template #footer>
+      <div class="footer">
+        <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
+          {{ savedStatus ? '已保存' : '未保存' }}
+        </div>
+        <div class="lang">{{ form.type || 'JSON' }}</div>
       </div>
     </template>
   </CodeEditor>
@@ -34,6 +43,9 @@ import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { ScriptType } from './eunm'
 import { ScriptEditorType } from './type'
+import { message } from '@/utils/message'
+
+const savedStatus = ref<boolean>(true)
 
 const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
@@ -65,8 +77,7 @@ const languageMap = { Javascript: javascript, Python: python }
 
 const form = reactive(props.data)
 const formChange = () => {
-  emits('change', form)
-  emits('update:data', form)
+  savedStatus.value = false
 }
 
 const languageOptions = computed<SelectOption[]>(() => {
@@ -96,6 +107,13 @@ const handleUndo = () => {
     handler()
   }
 }
+
+const handleSave = () => {
+  emits('change', form)
+  emits('update:data', form)
+  savedStatus.value = true
+  message.success('保存成功')
+}
 </script>
 <style lang="less" scoped>
 .buttons {
@@ -111,6 +129,33 @@ const handleUndo = () => {
       &:hover {
         transform: scale(1.5);
       }
+    }
+  }
+}
+.footer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  div {
+    margin-left: 5px;
+    color: #ffff;
+    font-weight: 800;
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+
+  .lang {
+    background-color: #2080f0;
+  }
+  .saved-status {
+    &.save {
+      background-color: #18a058;
+    }
+    &.unsave {
+      background-color: #d03050;
     }
   }
 }

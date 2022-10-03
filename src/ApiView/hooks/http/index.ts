@@ -1,40 +1,33 @@
 import Axios from 'axios'
-import type { AxiosInstance, AxiosResponse, Method } from 'axios'
-import { AfterScript, FinallyResponse, RequestOption } from './type'
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
+import type { AxiosInstance, AxiosResponse } from 'axios'
+import { AfterScript, FinallyResponse, StoreRequestOption } from './type'
 import { cloneDeep } from 'lodash-es'
-import { message, notification } from '@/utils/message'
-import { KVToRecordable } from './utils'
+import { message } from '@/utils/message'
+import { CallbackType, makeFunction } from '@/utils/data'
 
-interface CallbackType {
-  handler?: Function
-  error?: Error
-}
-
-class RestRequest {
+export class RestRequest {
   private axiosInstance: AxiosInstance
   public url: string
   public params: Recordable<string | number> | undefined
   public data: any
   private callback: CallbackType | undefined
+  private isNotify = false
+  private isDebugMode? = false
 
-  constructor(requestOption: RequestOption) {
-    const headers = KVToRecordable(requestOption.headers)
-    const method = requestOption.method as Method
-    this.url = requestOption.url
-    this.params = KVToRecordable(requestOption.params)
-    this.data = KVToRecordable(requestOption.data)
-    const script = {
-      code: requestOption.afterScript.code,
-      type: requestOption.afterScript.type
-    }
+  constructor(requestOption: StoreRequestOption, isDebug?: boolean) {
+    const { headers, method, url, params, data, afterScript } = requestOption
+    this.url = url
+    this.params = params
+    this.data = data
     this.axiosInstance = Axios.create({ method, headers })
 
-    if (script) {
-      this.callback = this.makeDataHandler(script)
+    if (afterScript) {
+      this.callback = this.makeDataHandler(afterScript)
     } else {
       this.callback = undefined
     }
+    this.isDebugMode = isDebug
+
     // const resp = await axiosInstance.request({url,params,data})
   }
   public request<T = any>(args?: Recordable<any>): Promise<FinallyResponse<T>> {
@@ -50,7 +43,9 @@ class RestRequest {
                 if (afterData) {
                   result.afterData = afterData
                 } else {
-                  message.warning('请检查后置脚本是否有返回值')
+                  if (this.isDebugMode && !this.isNotify) {
+                    message.warning('请检查后置脚本是否有返回值')
+                  }
                   result.afterData = resp.data
                 }
               } catch (err) {
@@ -69,29 +64,12 @@ class RestRequest {
         })
     })
   }
+
   public makeDataHandler(script: AfterScript): CallbackType | undefined {
-    if (script.code && script.type === ScriptType.Javascript) {
-      return this.createJsFunction(script)
-    } else {
-      return undefined
-    }
-  }
-  private createJsFunction(script: AfterScript): CallbackType {
-    try {
-      const handler = new Function('resp', 'options', script.code)
-      return { handler }
-    } catch (err: any) {
-      notification.error({
-        title: '脚本语法错误',
-        content: err.message,
-        duration: 10000,
-        closable: false
-      })
-      return { error: err }
-    }
+    return makeFunction(script.type, script.code, ['resp', 'options'], this.isDebugMode)
   }
 }
 
-export default function useRestRequest(requestOption: RequestOption) {
-  return new RestRequest(requestOption)
+export default function useRestRequest(requestOption: StoreRequestOption, isDebug?: boolean) {
+  return new RestRequest(requestOption, isDebug)
 }
