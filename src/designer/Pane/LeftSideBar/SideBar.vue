@@ -48,8 +48,8 @@
 </template>
 
 <script lang="ts" setup>
-import ComponentList from './ComponentList.vue'
-import Layer from './Layer.vue'
+import ComponentList from './Component/ComponentList.vue'
+import Layer from './Layer/Layer.vue'
 import { ref } from 'vue'
 import { NTabs, NTabPane } from 'naive-ui'
 
