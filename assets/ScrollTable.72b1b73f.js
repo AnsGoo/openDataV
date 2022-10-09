@@ -1,8 +1,0 @@
-import{u as T}from"./useProp.afe31ed3.js";import{d as b,r as v,i as H,w as k,o as a,c as r,u as e,l,F as h,e as u,m as D,b as C,D as g,f as B,_ as S}from"./index.785a8cd0.js";import{u as I}from"./index.91353d8b.js";const L={class:"dv-scroll-board"},z=["innerHTML"],M=["innerHTML"],R=b({__name:"ScrollTable",props:{component:null},setup(f){const _=f,{propValue:t}=T(_.component),p=v(0),x=s=>{const o=s[0],{height:d}=o.contentRect;p.value=d},c=v([]),y=(s,o)=>{o===g.STATIC?c.value=s:o===g.REST&&(c.value=s.afterData)};I(_.component,y);const $=H(()=>c.value.map((s,o)=>({rowIndex:o,ceils:Object.values(s)})));return(s,o)=>{const d=B("resize");return k((a(),r("div",L,[e(t).header.header.length?(a(),r("div",{key:0,class:"header",style:l(`background-color: ${e(t).header.headerBGC};`)},[(a(!0),r(h,null,u(e(t).header.header,(n,i)=>(a(),r("div",{class:"header-item",key:`${n}${i}`,style:l(`
-          height: ${e(t).header.headerHeight}px;
-          line-height: ${e(t).header.headerHeight}px;
-        `),innerHTML:n},null,12,z))),128))],4)):D("",!0),C("div",{class:"rows",style:l({height:`${p.value-(e(t).header.header.length?e(t).header.headerHeight:0)}px`})},[(a(!0),r(h,null,u(e($),(n,i)=>(a(),r("div",{class:"row-item",key:n.rowIndex,style:l(`
-          height: ${e(t).rows.data.height}px;
-          line-height: ${e(t).rows.data.height}px;
-          background-color: ${e(t).rows.data[n.rowIndex%2===0?"evenRowBGC":"oddRowBGC"]};
-        `)},[(a(!0),r(h,null,u(n.ceils,(m,w)=>(a(),r("div",{class:"ceil",key:`${m}${i}${w}`,innerHTML:m},null,8,M))),128))],4))),128))],4)])),[[d,x]])}}});const F=S(R,[["__scopeId","data-v-a0819e49"]]);export{F as default};
