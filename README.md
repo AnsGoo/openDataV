@@ -26,11 +26,25 @@ gitee 仅做代码同步，issues或者RP请在github提交。
 
 ## 👁️预览
 
-### 🎛️ 布局页
-![](screenshot/1.jpg)
+### 🤿 页面编辑
 
-### 🤿 编辑页
- ![](screenshot/2.jpg)
+1. 组件添加
+
+![组件添加](screenshot/screenshots2.gif)
+
+2. 组件操作
+
+![组件操作](screenshot/screenshots1.gif)
+
+3. 组件数据配置
+
+![组件数据配置](screenshot/screenshots.gif)
+
+
+### 🖇️ 接口管理
+
+![](screenshot/API.png)
+
 
 ## 💒功能
 - 🎊 编辑器页面基本功能完成，包括编辑、预览、导入、导出、保存
@@ -41,6 +55,9 @@ gitee 仅做代码同步，issues或者RP请在github提交。
 - 📔 支持组件的用户自定组件配置项
 - 🏪 支持明暗主题切换
 - 🧬 使用Monorepo模式进行组件和依赖管理
+- 🧶 组件动态、静态数据加载
+- 🔌 数据动态处理（JS、Python）
+- 🖇️ 接口管理
 
 ## 🎢技术点
 本项目采用`Vue3` + `vite` + `TypeScript`开发，界面库使用`NaiveUI`，使用面向对象方式封装了路由、请求、存储，组件采用自动扫描注册、异步加载，提升渲染速度；使用IndexDB存储快照数据，减少快照数据内存占用，加快访问速度；组件独立依赖，解耦了组件和基础框架的依赖库，方便后续独立开发组件。
@@ -48,10 +65,7 @@ gitee 仅做代码同步，issues或者RP请在github提交。
 目前仅开发了部分组件，后续还会继续完善。
 
 ## ⌛计划功能
-- [ ] 组件动态、静态数据加载
-- [ ] 数据动态处理（JS、Python）
 - [ ] 项目发布
-- [ ] 接口管理
 - [ ] 算法管理
 - [ ] HTTP、 WebScoket、MQTT、SocketIO多种数据接口适配
 - [ ] 代码生成
@@ -84,7 +98,7 @@ pnpm build
 
 **技术交流，请加微信群**
 
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20220927)
+![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221009)
 
 **更新动态请关注公众号**
 

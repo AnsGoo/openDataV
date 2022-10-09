@@ -1,7 +1,6 @@
 type ZRLineType = 'solid' | 'dotted' | 'dashed' | number | number[]
 export interface BasicLineChart {
   data: {
-    url: string
     upperLimit: number
     lowerLimit: number
     min: string | undefined

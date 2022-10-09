@@ -1,3 +1,3 @@
-import DataList from './DataList.vue'
+import DataAttr from './DataAttr.vue'
 
-export default DataList
+export default DataAttr

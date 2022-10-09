@@ -13,21 +13,21 @@
           <IconPark name="text-style" />
           <span v-show="!iscollapsed">样式</span>
         </template>
-        <StyleList :curComponent="curComponent" />
+        <StyleList :curComponent="curComponent!" />
       </n-tab-pane>
       <n-tab-pane name="attr" display-directive="show:lazy">
         <template #tab>
           <IconPark name="internal-data" />
           <span v-show="!iscollapsed">属性</span>
         </template>
-        <AttrList :curComponent="curComponent" />
+        <AttrList :curComponent="curComponent!" />
       </n-tab-pane>
       <n-tab-pane name="data" display-directive="show:lazy">
         <template #tab>
           <IconPark name="data" />
           <span v-show="!iscollapsed">数据</span>
         </template>
-        <DataList :curComponent="curComponent" />
+        <DataList :curComponent="curComponent!" />
       </n-tab-pane>
     </n-tabs>
     <n-tabs type="line" animated v-else justify-content="center">

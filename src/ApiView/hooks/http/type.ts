@@ -1,4 +1,4 @@
-import { ScriptType } from '@/components/ScriptsEdtor/eunm'
+import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import type { AxiosResponse, Method } from 'axios'
 
 export interface KV {
@@ -14,6 +14,15 @@ export interface RequestOption {
   headers: Array<KV>
   params: Array<KV>
   data: Array<KV>
+  afterScript: RequestAfterScript
+}
+
+export interface StoreRequestOption {
+  method: Method
+  url: string
+  headers: Recordable
+  params: Recordable
+  data: Recordable
   afterScript: RequestAfterScript
 }
 

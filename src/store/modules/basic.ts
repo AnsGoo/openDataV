@@ -16,8 +16,7 @@ const snapShotStore = useSnapShotStoreWithOut()
 const baseCanvasStyleData: CanvasStyleData = {
   width: window.screen.width,
   height: window.screen.height,
-  image: import.meta.env.VITE_BACKGROUND as string,
-  color: '#272e3b'
+  background: { backgroundColor: '#272e3b' }
 }
 
 window.localStorage.setItem('canvasData', JSON.stringify([]))

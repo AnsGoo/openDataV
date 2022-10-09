@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
-import { filterStyle, pageScale } from '@/utils/utils'
+import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
 import { onUnmounted, onMounted, ref, computed } from 'vue'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
@@ -21,18 +21,16 @@ const componentData = computed<BaseComponent[]>(() => basicStore.componentData)
 const canvasStyleData = ref<CanvasStyleData>({
   width: 0,
   height: 0,
-  image: '',
-  color: '#084860'
+  background: { backgroundColor: '#272e3b' }
 })
 
 const screen = ref<HTMLDivElement | null>(null)
 
 const bgStyle = computed<Recordable<string>>(() => {
+  const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,
-    backgroundImage: canvasStyleData.value.image,
-    backgroundSize: 'cover',
-    backgroundColor: canvasStyleData.value.color || '#084860'
+    ...backgroundStyle
   }
   return filterStyle(style, ['backgroundImage', 'backgroundSize', 'backgroundColor'])
 })

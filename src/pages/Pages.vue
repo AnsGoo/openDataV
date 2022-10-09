@@ -7,11 +7,13 @@
     <div class="card" v-for="item in layoutList" :key="item.id">
       <n-card :key="item.id" hoverable>
         <template #header>
-          <n-ellipsis style="max-width: 8rem">
+          <n-ellipsis style="max-width: 8rem; font-size: 1rem">
             {{ item.name }}
           </n-ellipsis>
         </template>
-        <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" alt="" />
+        <template #cover>
+          <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" alt="" />
+        </template>
         <template #action>
           <div class="options">
             <n-tooltip trigger="hover">
@@ -28,8 +30,13 @@
               trigger="hover"
               @select="(key) => handleSelect(key, item)"
               :options="options"
+              :show-arrow="true"
             >
-              <icon-park name="setting" />
+              <n-button quaternary>
+                <template #icon>
+                  <icon-park name="setting" />
+                </template>
+              </n-button>
             </n-dropdown>
           </div>
         </template>
@@ -158,7 +165,17 @@ const previewIcon = (icon: string | undefined) => {
 }
 
 .options {
-  padding: 5px 14px 14px 14px;
+  padding: 5px 5px 5px 5px;
   @apply flex justify-between items-center;
+}
+:deep(.n-card__action) {
+  padding: 0px;
+}
+
+:deep(.n-card) {
+  .n-card-header {
+    padding: 5px 0px;
+    transform: translate(15%, 0);
+  }
 }
 </style>

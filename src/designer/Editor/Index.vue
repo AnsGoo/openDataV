@@ -66,6 +66,8 @@ import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { BaseComponent, createComponent } from '@/resource/models'
 import { componentList } from '../load'
+import { DataIntegrationMode } from '@/resource/models/data'
+import { backgroundToCss } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -124,11 +126,10 @@ const canvasStyleData = computed(() => basicStore.canvasStyleData)
 const curComponent = computed(() => basicStore.curComponent)
 
 const bgStyle = computed<Recordable<string>>(() => {
+  const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,
-    backgroundImage: canvasStyleData.value.image,
-    backgroundSize: 'cover',
-    backgroundColor: canvasStyleData.value.color || '#084860'
+    ...backgroundStyle
   }
   return filterStyle(style, [
     'width',
@@ -228,6 +229,10 @@ const handleDrop = async (e) => {
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
     const component: BaseComponent = new componentList[componentName]()
+    if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+      component.loadDemoData()
+    }
+
     const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
     const y = (e.pageY - editorRectInfo.top) / basicStore.scale
     const x = (e.pageX - editorRectInfo.left) / basicStore.scale
