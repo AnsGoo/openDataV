@@ -518,10 +518,10 @@ export const loadScript = async (src: string) => {
 }
 
 export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
-  if (fromIndex && toIndex) {
+  if (fromIndex && toIndex && fromIndex !== toIndex) {
     const fromLength = fromIndex.length
     const toLength = toIndex.length
-    const length = toLength > fromLength ? fromLength : toLength
+    const length = Math.min(toLength, fromLength)
     if (fromIndex.substring(0, length) === toIndex.substring(0, length)) {
       return toLength > fromLength ? false : true
     } else {
