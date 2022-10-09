@@ -32,11 +32,11 @@
               :options="options"
               :show-arrow="true"
             >
-              <template #icon>
-                <n-button quaternary>
+              <n-button quaternary>
+                <template #icon>
                   <icon-park name="setting" />
-                </n-button>
-              </template>
+                </template>
+              </n-button>
             </n-dropdown>
           </div>
         </template>
