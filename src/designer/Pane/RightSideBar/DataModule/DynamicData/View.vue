@@ -29,7 +29,7 @@
   <n-modal v-model:show="isShow">
     <n-card
       style="width: 600px"
-      title="静态数据"
+      title="动态数据"
       :bordered="false"
       size="small"
       role="dialog"
