@@ -1,17 +1,28 @@
 <template>
   <div class="main">
-    <n-menu :options="menuOptions" class="sider-bar-item" :collapsed="false" :icon-size="30" />
+    <n-menu
+      :options="menuOptions"
+      class="sider-bar-item"
+      :collapsed="false"
+      :icon-size="30"
+      v-model:value="activeItem"
+      @update:value="menuChange"
+    />
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, h } from 'vue'
+import { computed, h, ref } from 'vue'
 import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 
 import TypeItem from './modules/TypeItem.vue'
-
 const apiTypes = [
+  {
+    label: 'STATIC',
+    icon: 'data',
+    key: 'STATIC'
+  },
   {
     label: 'REST',
     icon: 'api',
@@ -20,14 +31,23 @@ const apiTypes = [
   {
     label: 'GraphQL',
     icon: 'earth',
-    key: 'GraphQL'
+    key: 'GRAPHQL'
   },
   {
     label: '实时',
     icon: 'transform',
-    key: 'RealTime'
+    key: 'REALTIME'
   }
 ]
+
+const activeItem = ref<string>('REST')
+const emits = defineEmits<{
+  (e: 'change', value: string): void
+}>()
+const menuChange = (value: string) => {
+  activeItem.value = value
+  emits('change', value)
+}
 
 const menuOptions = computed<MenuOption[]>(() => {
   const menus: MenuOption[] = []

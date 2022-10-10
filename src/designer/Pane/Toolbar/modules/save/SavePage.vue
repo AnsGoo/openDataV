@@ -12,7 +12,7 @@
     >
       <n-form :model="form" :rules="rules" @submit.prevent>
         <n-form-item label="页面名称" prop="name">
-          <n-input v-model="form.name" placeholder="请输入页面名称" />
+          <n-input v-model:value="form.name" placeholder="请输入页面名称" />
         </n-form-item>
       </n-form>
       <template #footer>
@@ -54,6 +54,7 @@ const rules = reactive<{
 
 const handleSubmit = async (type: string) => {
   const { name, thumbnail } = form
+  console.log(form)
   if (!name) {
     message.error('请输入页面名称')
     return

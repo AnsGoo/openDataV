@@ -14,7 +14,7 @@ export interface RequestOption {
   headers: Array<KV>
   params: Array<KV>
   data: Array<KV>
-  afterScript: RequestAfterScript
+  afterScript: AfterScript
 }
 
 export interface StoreRequestOption {
@@ -23,7 +23,7 @@ export interface StoreRequestOption {
   headers: Recordable
   params: Recordable
   data: Recordable
-  afterScript: RequestAfterScript
+  afterScript: AfterScript
 }
 
 export interface RequestResponse {
@@ -31,11 +31,6 @@ export interface RequestResponse {
   data: string
   afterData: string
   headers: Recordable<string>
-}
-
-export interface RequestAfterScript {
-  type: ScriptType
-  code: string
 }
 
 export interface AfterScript {

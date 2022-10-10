@@ -17,12 +17,14 @@
         @collapse="() => (collapsedLeft = true)"
         @expand="() => (collapsedLeft = false)"
       >
-        <ApiType />
+        <ApiType @change="menuChange" />
       </n-layout-sider>
       <n-layout has-sider sider-placement="right">
         <!-- 中间画布 -->
         <n-layout-content class="content" v-resize="editorWindowResizeHandler">
-          <n-scrollbar x-scrollable :style="scrobarStyle"> <RequestContent /> </n-scrollbar>
+          <n-scrollbar x-scrollable :style="scrobarStyle">
+            <RequestContent :active="activeKey" />
+          </n-scrollbar>
         </n-layout-content>
         <n-layout-sider
           class="right"
@@ -60,6 +62,12 @@ const scrobarStyle = computed(() => {
     height: windowHeight.value + 'px'
   }
 })
+
+const activeKey = ref<string>('REST')
+const menuChange = (value: string) => {
+  activeKey.value = value
+  console.log(value)
+}
 
 const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
   const entry = entries[0]

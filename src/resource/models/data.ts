@@ -1,5 +1,5 @@
 import useRestRequest, { RestRequest } from '@/ApiView/hooks/http'
-import { RequestAfterScript, StoreRequestOption } from '@/ApiView/hooks/http/type'
+import { AfterScript, StoreRequestOption } from '@/ApiView/hooks/http/type'
 import { makeFunction } from '@/utils/data'
 import { cloneDeep, isBoolean } from 'lodash-es'
 import { RequestResponse } from './type'
@@ -28,7 +28,7 @@ export interface StaticRequestOptions {
   protocol: DataProtocol
   data: any
   type: DataType
-  script?: RequestAfterScript
+  script?: AfterScript
 }
 
 export type DemoData = Omit<StaticRequestOptions, 'type'>
@@ -46,9 +46,9 @@ interface RequestData {
 class StaticRequestData implements RequestData {
   public dataProtocol: DataProtocol = DataProtocol.JSON
   public data: any = null
-  public afterScript?: RequestAfterScript
+  public afterScript?: AfterScript
 
-  constructor(data: string, protocol: DataProtocol, afterScript?: RequestAfterScript) {
+  constructor(data: string, protocol: DataProtocol, afterScript?: AfterScript) {
     this.dataProtocol = protocol
     this.data = cloneDeep(data)
     this.afterScript = afterScript

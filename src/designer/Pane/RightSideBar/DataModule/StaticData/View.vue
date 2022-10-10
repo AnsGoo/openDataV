@@ -56,7 +56,7 @@ import { BaseComponent, DataProtocol, DataType, StaticRequestData } from '@/reso
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
-import { RequestAfterScript } from '@/ApiView/hooks/http/type'
+import { AfterScript } from '@/ApiView/hooks/http/type'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
@@ -72,7 +72,7 @@ const formData = reactive<{
   originData: string
   afterData: string
   protocol: DataProtocol
-  script?: RequestAfterScript
+  script?: AfterScript
 }>({
   originData: '',
   afterData: '',
@@ -112,7 +112,7 @@ const changeHandler = () => {
   formData.afterData = StaticRequestData.dumps(data, staticRequest.dataProtocol, true)!
 }
 
-const afterScriptChange = (data: RequestAfterScript) => {
+const afterScriptChange = (data: AfterScript) => {
   formData.script = data
   changeHandler()
 }

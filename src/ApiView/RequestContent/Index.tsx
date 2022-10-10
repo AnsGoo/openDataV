@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 import GraphQL from './graphQL'
 import Rest from './rest'
+import Static from './static'
 export default defineComponent({
   props: {
     active: {
@@ -9,6 +10,14 @@ export default defineComponent({
     }
   },
   setup(props) {
-    return () => <>{props.active == 'REST' ? <Rest /> : <GraphQL />}</>
+    return () => {
+      if (props.active == 'REST') {
+        return <Rest />
+      } else if (props.active == 'STATIC') {
+        return <Static />
+      } else if (props.active == 'GRAPHQL') {
+        return <GraphQL />
+      }
+    }
   }
 })

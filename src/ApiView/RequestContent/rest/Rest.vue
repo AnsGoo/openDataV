@@ -109,7 +109,7 @@ import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/ApiView/hooks/http'
 import ScriptsEditor from '@/components/ScriptsEditor'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { KV, RequestAfterScript, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
+import { KV, AfterScript, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
 import { KVToRecordable, requestOptionsToStore } from '@/ApiView/hooks/http/utils'
 
 const props = withDefaults(
@@ -201,7 +201,7 @@ const formChange = () => {
   emits('update:restOptions', formData)
 }
 
-const afterScriptChange = (data: RequestAfterScript) => {
+const afterScriptChange = (data: AfterScript) => {
   formData.afterScript = data
   formChange()
 }
