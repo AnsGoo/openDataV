@@ -164,19 +164,19 @@ export default [
     response: () => {
       return [
         {
-          id: 1,
+          id: '1',
           name: '新增人数'
         },
         {
-          id: 2,
+          id: '2',
           name: '新增无症状人数'
         },
         {
-          id: 3,
+          id:'3',
           name: '新增确认人数'
         },
         {
-          id: 4,
+          id: '4',
           name: '风险地区'
         }
       ]
