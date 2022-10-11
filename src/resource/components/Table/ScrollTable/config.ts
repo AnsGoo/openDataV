@@ -3,7 +3,7 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import ScrollTableForm from './Form.vue'
-import { DataIntegrationMode, DataProtocol, DemoData } from '@/resource/models/data'
+import { DataIntegrationMode, DemoData } from '@/resource/models/data'
 
 export const componentName = 'ScrollTable'
 class ScrollTableComponent extends BaseComponent {
@@ -120,8 +120,7 @@ class ScrollTableComponent extends BaseComponent {
     ]
 
     return {
-      data,
-      protocol: DataProtocol.JSON
+      data
     }
   }
 }

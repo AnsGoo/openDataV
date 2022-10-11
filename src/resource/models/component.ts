@@ -13,9 +13,9 @@ import { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
 import {
   DataIntegrationMode,
-  DataProtocol,
   DataType,
   DemoData,
+  DemoRequestData,
   RequestData,
   RestRequestData,
   StaticRequestData
@@ -220,11 +220,8 @@ export abstract class BaseComponent {
   }
 
   get exampleData(): DemoData {
-    const data = []
-
     return {
-      data,
-      protocol: DataProtocol.JSON,
+      data: [],
       script: {
         code: 'return resp.filter(el => el.value > 50)',
         type: ScriptType.Javascript
@@ -424,7 +421,7 @@ export abstract class BaseComponent {
       case DataType.STATIC:
         this.dataConfig = {
           type: DataType.STATIC,
-          requestConfig: new StaticRequestData(config.data, config.protocol, config.script),
+          requestConfig: new StaticRequestData(config.id, config.script),
           otherConfig: config.otherConfig || {}
         }
         break
@@ -433,6 +430,13 @@ export abstract class BaseComponent {
           type: DataType.REST,
           requestConfig: new RestRequestData(config.options),
           otherConfig: config.otherConfig || {}
+        }
+        break
+      case DataType.DEMO:
+        this.dataConfig = {
+          type: DataType.DEMO,
+          requestConfig: new DemoRequestData(config.data, config.script),
+          otherConfig: {}
         }
         break
     }
@@ -448,9 +452,8 @@ export abstract class BaseComponent {
   }
   loadDemoData() {
     const exampleData = this.exampleData
-    this.changeRequestDataConfig(DataType.STATIC, {
-      data: cloneDeep(exampleData.data),
-      protocol: exampleData.protocol,
+    this.changeRequestDataConfig(DataType.DEMO, {
+      data: exampleData.data,
       script: exampleData.script
     })
   }

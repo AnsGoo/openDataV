@@ -21,15 +21,10 @@ const props = defineProps<{
 }>()
 
 let chartData: Array<{ label: string; value: number }> = []
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as Array<{ label: string; value: number }>
-    chartData = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
-    chartData = resp.afterData
-  }
-
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  console.log(resp)
+  chartData = resp.afterData
   updateData(chartData)
 }
 useData(props.component, dataChange)

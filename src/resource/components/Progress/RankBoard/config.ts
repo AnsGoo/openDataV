@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent, DataProtocol } from '@/resource/models'
+import { BaseComponent } from '@/resource/models'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { DataIntegrationMode, DemoData } from '@/resource/models/data'
 
@@ -163,7 +163,6 @@ class RankBoardComponent extends BaseComponent {
 
     return {
       data,
-      protocol: DataProtocol.JSON,
       script: {
         code: 'return resp.filter(el => el.value > 50)',
         type: ScriptType.Javascript

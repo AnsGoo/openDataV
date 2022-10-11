@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent, DataProtocol } from '@/resource/models'
+import { BaseComponent } from '@/resource/models'
 import { DataIntegrationMode, DemoData } from '@/resource/models/data'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 
@@ -192,7 +192,6 @@ class BasicBarChartComponent extends BaseComponent {
 
     return {
       data,
-      protocol: DataProtocol.JSON,
       script: {
         code: 'return resp.filter(el => el.value > 50)',
         type: ScriptType.Javascript

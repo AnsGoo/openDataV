@@ -58,12 +58,19 @@ const dataTypeOptions = reactive([
 ])
 
 const typeChanged = (type: string) => {
-  if (type === DataType.STATIC) {
+  if (type === DataType.DEMO) {
     const exampleData = props.curComponent.exampleData
-    props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+    props.curComponent.changeRequestDataConfig(DataType.DEMO, {
       data: cloneDeep(exampleData.data),
-      protocol: exampleData.protocol,
       script: exampleData.script
+    })
+  } else if (type === DataType.STATIC) {
+    props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+      id: undefined,
+      script: {
+        code: '',
+        type: ScriptType.Javascript
+      }
     })
   } else if (type === DataType.REST) {
     const restOptions: RequestOption = {
@@ -81,7 +88,7 @@ const typeChanged = (type: string) => {
       options: requestOptionsToStore(restOptions),
       otherConfig: {
         isRepeat: true,
-        interval: 300
+        interval: 1000
       }
     })
   }

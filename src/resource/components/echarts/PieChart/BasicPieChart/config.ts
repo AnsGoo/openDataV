@@ -1,7 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
-import { DataIntegrationMode, DataProtocol, DemoData } from '@/resource/models/data'
+import { DataIntegrationMode, DemoData } from '@/resource/models/data'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 
 export const componentName = 'BasicPieChart'
@@ -141,7 +141,6 @@ class BasicPieChartComponent extends BaseComponent {
 
     return {
       data,
-      protocol: DataProtocol.JSON,
       script: {
         code: 'return resp.filter(el => el.value > 50)',
         type: ScriptType.Javascript

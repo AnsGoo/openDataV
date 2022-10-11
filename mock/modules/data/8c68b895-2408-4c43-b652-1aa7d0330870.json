@@ -283,7 +283,6 @@
         "type": "STATIC",
         "otherConfig": {},
         "requestOptions": {
-          "protocol": "JSON",
           "data": [
             {
               "name": "张三",
@@ -435,7 +434,6 @@
         "type": "STATIC",
         "otherConfig": {},
         "requestOptions": {
-          "protocol": "Number",
           "data": 0.44,
           "type": "STATIC"
         }

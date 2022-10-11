@@ -1,8 +1,5 @@
 <template>
   <n-form :model="formData">
-    <n-form-item key="protocol" label="数据类型">
-      <n-select :option="dataProtocolOptions" :value="formData.protocol" />
-    </n-form-item>
     <n-form-item key="data" label="静态数据">
       <n-input-group>
         <n-input :style="{ flex: 1 }" />
@@ -49,10 +46,9 @@ import {
   NButton,
   NModal,
   NCard,
-  NSelect,
   NFormItem
 } from 'naive-ui'
-import { BaseComponent, DataProtocol, DataType, StaticRequestData } from '@/resource/models'
+import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
@@ -62,54 +58,40 @@ const props = defineProps<{
 }>()
 const isShow = ref<boolean>(false)
 
-const dataProtocolOptions = Object.keys(DataProtocol).map((el) => {
-  return {
-    label: el,
-    value: el
-  }
-})
 const formData = reactive<{
   originData: string
   afterData: string
-  protocol: DataProtocol
   script?: AfterScript
 }>({
   originData: '',
   afterData: '',
-  protocol: DataProtocol.JSON,
   script: {
     code: 'return resp.filter(el => el.value > 50)',
     type: ScriptType.Javascript
   }
 })
 
-onMounted(() => {
-  initData()
+onMounted(async () => {
+  await initData()
 })
 
-const initData = () => {
+const initData = async () => {
   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
   if (props.curComponent.dataConfig) {
-    const { data } = staticRequest.toJSON()
-    formData.protocol = staticRequest.dataProtocol
+    const resp = await staticRequest.getRespData({ propValue: props.curComponent.propValue })
     formData.script = staticRequest.afterScript
-    formData.originData = StaticRequestData.dumps(data, staticRequest.dataProtocol, true)!
-    formData.afterData = StaticRequestData.dumps(
-      staticRequest.getRespData({ propValue: props.curComponent.propValue }),
-      staticRequest.dataProtocol,
-      true
-    )!
+    formData.originData = StaticRequestData.dumps(resp.data, true)!
+    formData.afterData = StaticRequestData.dumps(resp.afterData, true)!
   }
 }
-const changeHandler = () => {
+const changeHandler = async () => {
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    data: StaticRequestData.loads(formData.originData, formData.protocol),
-    protocol: formData.protocol,
+    data: StaticRequestData.loads(formData.originData),
     script: formData.script
   })
   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-  const data = staticRequest.getRespData({ propvalue: props.curComponent.propValue })
-  formData.afterData = StaticRequestData.dumps(data, staticRequest.dataProtocol, true)!
+  const resp = await staticRequest.getRespData({ propValue: props.curComponent.propValue })
+  formData.afterData = StaticRequestData.dumps(resp.afterData, true)!
 }
 
 const afterScriptChange = (data: AfterScript) => {

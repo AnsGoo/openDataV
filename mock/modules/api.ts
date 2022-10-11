@@ -119,5 +119,88 @@ export default [
       })
       return maxData
     }
+  },
+  {
+    url: '/staticData',
+    method: 'get',
+    statusCode: 200,
+    response: ({ query }: any) => {
+      const id: string = query['id']
+      if (id === '1') {
+        return Covid19Data.map((el) => {
+          return {
+            label: el.province,
+            value: el.New
+          }
+        })
+      } else if (id === '2') {
+        return Covid19Data.map((el) => {
+          return {
+            label: el.province,
+            value: el.NoSymptom
+          }
+        })
+      } else if (id === '3') {
+        return Covid19Data.map((el) => {
+          return {
+            label: el.province,
+            value: el.total
+          }
+        })
+      } else {
+        return Covid19Data.map((el) => {
+          return {
+            label: el.province,
+            value: el.RiskArea
+          }
+        })
+      }
+    }
+  },
+  {
+    url: '/staticDataList',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      return [
+        {
+          id: 1,
+          name: '新增人数'
+        },
+        {
+          id: 2,
+          name: '新增无症状人数'
+        },
+        {
+          id: 3,
+          name: '新增确认人数'
+        },
+        {
+          id: 4,
+          name: '风险地区'
+        }
+      ]
+    }
+  },
+  {
+    url: '/staticData',
+    method: 'put',
+    statusCode: 202,
+    response: ({ body }) => {
+      return body
+    }
+  },
+  {
+    url: '/staticData',
+    method: 'post',
+    statusCode: 201,
+    response: ({ body }) => {
+      return {
+        ...body,
+        id: Random.integer(5, 100),
+        createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+        updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+      }
+    }
   }
 ]
