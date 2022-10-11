@@ -3,7 +3,7 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import ScrollTableForm from './Form.vue'
-import { DataIntegrationMode, DemoData } from '@/resource/models/data'
+import { DataIntegrationMode } from '@/resource/models/data'
 
 export const componentName = 'ScrollTable'
 class ScrollTableComponent extends BaseComponent {
@@ -90,8 +90,8 @@ class ScrollTableComponent extends BaseComponent {
     }
   ]
 
-  get exampleData(): DemoData {
-    const data = [
+  get exampleData() {
+    return [
       {
         name: '张三',
         age: 23,
@@ -118,10 +118,6 @@ class ScrollTableComponent extends BaseComponent {
         sex: '男'
       }
     ]
-
-    return {
-      data
-    }
   }
 }
 

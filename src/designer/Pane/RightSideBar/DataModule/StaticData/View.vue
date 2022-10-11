@@ -2,7 +2,12 @@
   <n-form :model="formData">
     <n-form-item key="data" label="静态数据">
       <n-input-group>
-        <n-input :style="{ flex: 1 }" />
+        <n-input
+          :style="{ flex: 1 }"
+          @click="() => (isShow = true)"
+          :readonly="true"
+          placeholder="编辑请点击"
+        />
         <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
       </n-input-group>
     </n-form-item>
@@ -16,43 +21,18 @@
       role="dialog"
       aria-modal="true"
     >
-      <n-tabs>
-        <n-tab-pane name="data" tab="处理数据">
-          <DataView v-model:content="formData.afterData" class="content" :disable="true" />
-        </n-tab-pane>
-        <n-tab-pane name="origin" tab="原始数据">
-          <DataView
-            v-model:content="formData.originData"
-            class="content"
-            @update:content="changeHandler"
-          />
-        </n-tab-pane>
-        <n-tab-pane name="scripts" tab="脚本">
-          <ScriptsEdtor :data="formData.script" class="content" @update:data="afterScriptChange" />
-        </n-tab-pane>
-      </n-tabs>
+      <Static />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
-import {
-  NForm,
-  NInput,
-  NTabs,
-  NTabPane,
-  NInputGroup,
-  NButton,
-  NModal,
-  NCard,
-  NFormItem
-} from 'naive-ui'
-import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
+import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
+import { BaseComponent, StaticRequestData } from '@/resource/models'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import ScriptsEdtor from '@/components/ScriptsEditor'
-import DataView from '@/components/DataView'
 import { AfterScript } from '@/ApiView/hooks/http/type'
+import Static from '@/ApiView/RequestContent/static'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
@@ -84,20 +64,20 @@ const initData = async () => {
     formData.afterData = StaticRequestData.dumps(resp.afterData, true)!
   }
 }
-const changeHandler = async () => {
-  props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    data: StaticRequestData.loads(formData.originData),
-    script: formData.script
-  })
-  const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-  const resp = await staticRequest.getRespData({ propValue: props.curComponent.propValue })
-  formData.afterData = StaticRequestData.dumps(resp.afterData, true)!
-}
+// const changeHandler = async () => {
+//   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+//     data: StaticRequestData.loads(formData.originData),
+//     script: formData.script
+//   })
+//   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+//   const resp = await staticRequest.getRespData({ propValue: props.curComponent.propValue })
+//   formData.afterData = StaticRequestData.dumps(resp.afterData, true)!
+// }
 
-const afterScriptChange = (data: AfterScript) => {
-  formData.script = data
-  changeHandler()
-}
+// const afterScriptChange = (data: AfterScript) => {
+//   formData.script = data
+//   changeHandler()
+// }
 
 watch(
   () => props.curComponent,

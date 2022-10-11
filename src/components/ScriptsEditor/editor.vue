@@ -62,7 +62,7 @@ const props = withDefaults(
   }
 )
 const config = ref<CodemirrorOption>({
-  height: '300px',
+  height: '600px',
   tabSize: 4,
   indentWithTab: true,
   autofocus: true,

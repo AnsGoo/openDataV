@@ -14,13 +14,11 @@ import { cssTransfer } from './styleToCss'
 import {
   DataIntegrationMode,
   DataType,
-  DemoData,
   DemoRequestData,
   RequestData,
   RestRequestData,
   StaticRequestData
 } from './data'
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
 
 interface DataConfig {
   type: DataType
@@ -219,14 +217,8 @@ export abstract class BaseComponent {
     return this._styleValue
   }
 
-  get exampleData(): DemoData {
-    return {
-      data: [],
-      script: {
-        code: 'return resp.filter(el => el.value > 50)',
-        type: ScriptType.Javascript
-      }
-    }
+  get exampleData(): any {
+    return undefined
   }
 
   // 自定义样式编辑框数据处理
@@ -435,7 +427,7 @@ export abstract class BaseComponent {
       case DataType.DEMO:
         this.dataConfig = {
           type: DataType.DEMO,
-          requestConfig: new DemoRequestData(config.data, config.script),
+          requestConfig: new DemoRequestData(config.data),
           otherConfig: {}
         }
         break
@@ -453,8 +445,7 @@ export abstract class BaseComponent {
   loadDemoData() {
     const exampleData = this.exampleData
     this.changeRequestDataConfig(DataType.DEMO, {
-      data: exampleData.data,
-      script: exampleData.script
+      data: exampleData
     })
   }
 }

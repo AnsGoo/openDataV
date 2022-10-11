@@ -26,7 +26,6 @@ export interface StaticRequestOptions {
 
 export interface DemoData {
   data: any
-  script?: AfterScript
 }
 export interface RestRequestOptions {
   restOptions: StoreRequestOption
@@ -40,31 +39,19 @@ interface RequestData {
 
 class DemoRequestData implements RequestData {
   public data: any
-  public afterScript?: AfterScript
 
-  constructor(data: any, afterScript?: AfterScript) {
+  constructor(data: any) {
     this.data = data
-    this.afterScript = afterScript
   }
   public toJSON() {
     return undefined
   }
 
-  public async getRespData(options?: Recordable): Promise<RequestResponse<any>> {
+  public async getRespData(_?: Recordable): Promise<RequestResponse<any>> {
     const response = {
       status: 0,
       data: this.data,
       afterData: this.data
-    }
-    const afterCallback = this.afterScript
-      ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
-      : undefined
-    if (afterCallback && afterCallback.handler) {
-      try {
-        response.afterData = afterCallback.handler(this.data, options || {})
-      } catch (err: any) {
-        response.afterData = err.message || err
-      }
     }
     return response
   }
@@ -97,7 +84,7 @@ class StaticRequestData implements RequestData {
   }
   public async getRespData(options?: Recordable): Promise<RequestResponse<any>> {
     const response: RequestResponse<any> = {
-      status: 0,
+      status: -1,
       data: '',
       afterData: '',
       headers: {}
@@ -110,7 +97,7 @@ class StaticRequestData implements RequestData {
       : undefined
     try {
       const resp = await getStaticData(this.dataId!)
-      response.status = resp.status
+      response.status = resp.status || -1
       if (resp.status < 400) {
         response.data = resp.data
         response.afterData = resp.data

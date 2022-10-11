@@ -15,6 +15,7 @@
       <StaticData v-if="dataType === DataType.STATIC" :curComponent="curComponent" />
       <!-- <RealTimeData v-else-if="dataType === 'RealTime'" /> -->
       <DynamicData v-else-if="dataType === DataType.REST" :curComponent="curComponent" />
+      <DemoData v-else-if="dataType === DataType.DEMO" :curComponent="curComponent" />
     </n-form>
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item>
@@ -28,6 +29,7 @@ import { BaseComponent, DataType } from '@/resource/models'
 import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } from 'naive-ui'
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'
+import DemoData from './DemoData'
 import { onMounted, reactive, ref, watch } from 'vue'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
@@ -54,6 +56,10 @@ const dataTypeOptions = reactive([
   {
     label: '实时数据',
     value: DataType.REALTIME
+  },
+  {
+    label: '示例数据',
+    value: DataType.DEMO
   }
 ])
 
@@ -61,8 +67,7 @@ const typeChanged = (type: string) => {
   if (type === DataType.DEMO) {
     const exampleData = props.curComponent.exampleData
     props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      data: cloneDeep(exampleData.data),
-      script: exampleData.script
+      data: cloneDeep(exampleData.data)
     })
   } else if (type === DataType.STATIC) {
     props.curComponent.changeRequestDataConfig(DataType.STATIC, {
