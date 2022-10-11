@@ -43,13 +43,7 @@ import { computed, onMounted, reactive, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import {
-  createStaticData,
-  getStaticData,
-  getStaticDataList,
-  StaticDataDetail,
-  updateStaticData
-} from '@/api/data'
+import { createStaticData, getStaticDataList, StaticDataDetail, updateStaticData } from '@/api/data'
 import { NSelect } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { message } from '@/utils/message'
@@ -61,12 +55,14 @@ const savedStatus = ref<boolean>(true)
 const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
-    content?: string
+    id?: string
     disable?: boolean
+    content?: any
   }>(),
   {
-    content: '',
-    disabled: false
+    id: '',
+    disabled: false,
+    content: ''
   }
 )
 const config = computed<CodemirrorOption>(() => {
@@ -78,36 +74,36 @@ const config = computed<CodemirrorOption>(() => {
     disabled: props.disable || false
   }
 })
+const selectdata = reactive<{
+  id?: string
+  title?: string
+}>({})
 
 const emits = defineEmits<{
-  (e: 'update:content', value: string): void
+  (e: 'update:id', value: string): void
   (e: 'change', value: string): void
 }>()
 
-const contentRef = ref<string>(props.content)
+const contentRef = computed<string>(() => {
+  return JSON.stringify(props.content, null, '\t')
+})
 const formChange = () => {
   savedStatus.value = false
-  emits('change', contentRef.value)
-  emits('update:content', contentRef.value)
+  emits('change', selectdata.id!)
+  emits('update:id', selectdata.id!)
 }
 
-const dataChange = async (value: number, option) => {
+const dataChange = async (value: string, option) => {
   selectdata.id = value
   selectdata.title = option.label
-  const newData = await loadStaicData(value)
-  contentRef.value = JSON.stringify(newData, null, '\t')
+  emits('change', selectdata.id!)
+  emits('update:id', selectdata.id!)
 }
-
-const selectdata = reactive<{
-  id?: number
-  title?: string
-}>({})
 
 const clearSelect = () => {
   selectdata.id = undefined
   selectdata.title = undefined
   savedStatus.value = true
-  contentRef.value = ''
 }
 const loadStaticList = async () => {
   const resp = await getStaticDataList()
@@ -120,21 +116,13 @@ const loadStaticList = async () => {
     })
   }
 }
-const loadStaicData = async (id: number) => {
-  try {
-    const resp = await getStaticData(id)
-    if (resp.status === 200) {
-      return resp.data
-    }
-  } catch (err) {
-    return ''
-  }
-}
 
 const handleSave = async () => {
   try {
-    const resp = await createStaticData({})
+    const resp = await createStaticData(JSON.parse(contentRef.value))
     if (resp.status === 202) {
+      selectdata.id = resp.data.id
+      await loadStaticList()
       message.success('数据保存成功')
     } else {
       message.warning('数据保存失败')
@@ -145,7 +133,7 @@ const handleSave = async () => {
 }
 const handleUpdate = async () => {
   try {
-    const resp = await updateStaticData(selectdata.id!, {})
+    const resp = await updateStaticData(selectdata.id!, JSON.parse(contentRef.value))
     if (resp.status === 202) {
       message.success('数据更新失败')
     } else {

@@ -12,7 +12,7 @@
       </n-input-group>
     </n-form-item>
   </n-form>
-  <n-modal v-model:show="isShow">
+  <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 600px"
       title="静态数据"
@@ -21,7 +21,7 @@
       role="dialog"
       aria-modal="true"
     >
-      <Static />
+      <Static v-model:options="formData" @change="changeHandler" />
     </n-card>
   </n-modal>
 </template>
@@ -29,22 +29,21 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
-import { BaseComponent, StaticRequestData } from '@/resource/models'
+import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { AfterScript } from '@/ApiView/hooks/http/type'
 import Static from '@/ApiView/RequestContent/static'
+import { StaticRequestOptions } from '@/ApiView/RequestContent/static/type'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
 const isShow = ref<boolean>(false)
 
 const formData = reactive<{
-  originData: string
-  afterData: string
+  dataId: string
   script?: AfterScript
 }>({
-  originData: '',
-  afterData: '',
+  dataId: '',
   script: {
     code: 'return resp.filter(el => el.value > 50)',
     type: ScriptType.Javascript
@@ -57,33 +56,24 @@ onMounted(async () => {
 
 const initData = async () => {
   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-  if (props.curComponent.dataConfig) {
-    const resp = await staticRequest.getRespData({ propValue: props.curComponent.propValue })
-    formData.script = staticRequest.afterScript
-    formData.originData = StaticRequestData.dumps(resp.data, true)!
-    formData.afterData = StaticRequestData.dumps(resp.afterData, true)!
+  if (staticRequest) {
+    const result = staticRequest.toJSON()
+    formData.dataId = result.dataId
+    formData.script = result.script
   }
 }
-// const changeHandler = async () => {
-//   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-//     data: StaticRequestData.loads(formData.originData),
-//     script: formData.script
-//   })
-//   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-//   const resp = await staticRequest.getRespData({ propValue: props.curComponent.propValue })
-//   formData.afterData = StaticRequestData.dumps(resp.afterData, true)!
-// }
-
-// const afterScriptChange = (data: AfterScript) => {
-//   formData.script = data
-//   changeHandler()
-// }
+const changeHandler = async (options: StaticRequestOptions) => {
+  props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+    id: options.dataId,
+    script: options.script
+  })
+}
 
 watch(
   () => props.curComponent,
-  (value: BaseComponent) => {
+  async (value: BaseComponent) => {
     if (value) {
-      initData()
+      await initData()
     }
   },
   { immediate: true }

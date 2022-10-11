@@ -2,7 +2,7 @@ import { apiHttp as http } from '@/utils/http'
 import { AxiosResponse } from 'axios'
 
 export interface StaticDataDetail {
-  id?: number
+  id?: string
   name: string
   author?: string
   createDate?: string
@@ -14,7 +14,7 @@ export interface StaticDataDetail {
  * 根据id 加载静态数据
  * @param id
  */
-export const getStaticData = async (id: number): Promise<AxiosResponse<any>> => {
+export const getStaticData = async (id: string): Promise<AxiosResponse<any>> => {
   return http.get<any>({
     url: '/staticData',
     params: {
@@ -38,7 +38,7 @@ export const getStaticDataList = async (): Promise<AxiosResponse<StaticDataDetai
  * @param data 静态数据
  */
 export const updateStaticData = async (
-  id: number,
+  id: string,
   data: StaticDataDetail
 ): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.put<StaticDataDetail>({

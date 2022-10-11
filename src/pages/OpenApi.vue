@@ -66,7 +66,6 @@ const scrobarStyle = computed(() => {
 const activeKey = ref<string>('REST')
 const menuChange = (value: string) => {
   activeKey.value = value
-  console.log(value)
 }
 
 const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {

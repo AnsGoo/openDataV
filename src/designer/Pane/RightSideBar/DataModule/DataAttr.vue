@@ -30,7 +30,7 @@ import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } f
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'
 import DemoData from './DemoData'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref } from 'vue'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
@@ -38,13 +38,18 @@ import { cloneDeep } from 'lodash-es'
 import { DataIntegrationMode } from '@/resource/models/data'
 import { requestOptionsToStore } from '@/ApiView/hooks/http/utils'
 import { RequestOption } from '@/ApiView/hooks/http/type'
+import { message } from '@/utils/message'
 
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
 
-const dataType = ref<string>(DataType.STATIC)
+const dataType = ref<string>(DataType.DEMO)
 const dataTypeOptions = reactive([
+  {
+    label: '示例数据',
+    value: DataType.DEMO
+  },
   {
     label: '静态数据',
     value: DataType.STATIC
@@ -56,10 +61,6 @@ const dataTypeOptions = reactive([
   {
     label: '实时数据',
     value: DataType.REALTIME
-  },
-  {
-    label: '示例数据',
-    value: DataType.DEMO
   }
 ])
 
@@ -69,14 +70,18 @@ const typeChanged = (type: string) => {
     props.curComponent.changeRequestDataConfig(DataType.DEMO, {
       data: cloneDeep(exampleData.data)
     })
+    dataType.value = DataType.DEMO
+    message.info('正在使用示例数据')
   } else if (type === DataType.STATIC) {
     props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-      id: undefined,
+      id: '',
       script: {
         code: '',
         type: ScriptType.Javascript
       }
     })
+    dataType.value = DataType.STATIC
+    message.info('请配置静态数据')
   } else if (type === DataType.REST) {
     const restOptions: RequestOption = {
       method: RequestMethod.GET,
@@ -96,6 +101,8 @@ const typeChanged = (type: string) => {
         interval: 1000
       }
     })
+    dataType.value = DataType.REST
+    message.info('请配置动态数据')
   }
 }
 
@@ -105,18 +112,6 @@ onMounted(() => {
     dataType.value = dataConfig.type
   }
 })
-
-watch(
-  () => props.curComponent,
-  (value: BaseComponent) => {
-    if (value) {
-      const dataConfig = props.curComponent.dataConfig
-      if (dataConfig) {
-        dataType.value = dataConfig.type
-      }
-    }
-  }
-)
 </script>
 <style lang="less">
 .data-list {

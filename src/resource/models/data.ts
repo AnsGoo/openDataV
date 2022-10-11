@@ -19,7 +19,7 @@ export enum DataIntegrationMode {
 }
 
 export interface StaticRequestOptions {
-  dataId: number
+  dataId: string
   type: DataType
   script?: AfterScript
 }
@@ -58,21 +58,19 @@ class DemoRequestData implements RequestData {
 }
 
 class StaticRequestData implements RequestData {
-  public dataId?: number
+  public dataId?: string
   public afterScript?: AfterScript
 
-  constructor(id: number | undefined, afterScript?: AfterScript) {
+  constructor(id: string | undefined, afterScript?: AfterScript) {
     this.dataId = id
     this.afterScript = afterScript
   }
 
-  public toJSON(): StaticRequestOptions | undefined {
-    if (this.dataId) {
-      return {
-        dataId: this.dataId,
-        type: DataType.STATIC,
-        script: this.afterScript
-      }
+  public toJSON(): StaticRequestOptions {
+    return {
+      dataId: this.dataId || '',
+      type: DataType.STATIC,
+      script: this.afterScript
     }
   }
 

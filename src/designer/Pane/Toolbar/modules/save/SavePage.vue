@@ -54,7 +54,6 @@ const rules = reactive<{
 
 const handleSubmit = async (type: string) => {
   const { name, thumbnail } = form
-  console.log(form)
   if (!name) {
     message.error('请输入页面名称')
     return
