@@ -6,6 +6,7 @@
           :style="{ flex: 1 }"
           @click="() => (isShow = true)"
           :readonly="true"
+          v-model:value="formData.dataName"
           placeholder="编辑请点击"
         />
         <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
@@ -42,12 +43,14 @@ const isShow = ref<boolean>(false)
 const formData = reactive<{
   dataId: string
   script?: AfterScript
+  dataName?: string
 }>({
   dataId: '',
   script: {
     code: 'return resp.filter(el => el.value > 50)',
     type: ScriptType.Javascript
-  }
+  },
+  dataName: undefined
 })
 
 onMounted(async () => {
@@ -62,7 +65,9 @@ const initData = async () => {
     formData.script = result.script
   }
 }
-const changeHandler = async (options: StaticRequestOptions) => {
+const changeHandler = async (options: StaticRequestOptions, title?: string) => {
+  console.log(title)
+  formData.dataName = title
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
     id: options.dataId,
     script: options.script

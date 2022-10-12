@@ -31,7 +31,7 @@
           <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
             {{ savedStatus ? '已保存' : '未保存' }}
           </div>
-          <div class="lang">'JSON'</div>
+          <div class="lang">JSON</div>
         </div>
       </div>
     </template>
@@ -39,14 +39,14 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { createStaticData, getStaticDataList, StaticDataDetail, updateStaticData } from '@/api/data'
 import { NSelect } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
-import { message } from '@/utils/message'
+import { message, dialog } from '@/utils/message'
 
 const staticDataList = ref<Array<SelectOption>>([])
 
@@ -80,8 +80,8 @@ const selectdata = reactive<{
 }>({})
 
 const emits = defineEmits<{
-  (e: 'update:id', value: string): void
-  (e: 'change', value: string): void
+  (e: 'update:id', id?: string): void
+  (e: 'change', id?: string, title?: string): void
 }>()
 
 const contentRef = computed<string>(() => {
@@ -89,21 +89,22 @@ const contentRef = computed<string>(() => {
 })
 const formChange = () => {
   savedStatus.value = false
-  emits('change', selectdata.id!)
-  emits('update:id', selectdata.id!)
 }
 
 const dataChange = async (value: string, option) => {
   selectdata.id = value
-  selectdata.title = option.label
-  emits('change', selectdata.id!)
+  selectdata.title = option ? option.label : ''
+  emits('change', selectdata.id!, selectdata.title!)
   emits('update:id', selectdata.id!)
+  savedStatus.value = true
 }
 
 const clearSelect = () => {
   selectdata.id = undefined
   selectdata.title = undefined
   savedStatus.value = true
+  emits('update:id', undefined)
+  emits('change', undefined, undefined)
 }
 const loadStaticList = async () => {
   const resp = await getStaticDataList()
@@ -118,11 +119,13 @@ const loadStaticList = async () => {
 }
 
 const handleSave = async () => {
+  console.log('save')
   try {
     const resp = await createStaticData(JSON.parse(contentRef.value))
-    if (resp.status === 202) {
+    if (resp.status === 201) {
       selectdata.id = resp.data.id
       await loadStaticList()
+      savedStatus.value = false
       message.success('数据保存成功')
     } else {
       message.warning('数据保存失败')
@@ -132,20 +135,43 @@ const handleSave = async () => {
   }
 }
 const handleUpdate = async () => {
+  console.log('update')
   try {
     const resp = await updateStaticData(selectdata.id!, JSON.parse(contentRef.value))
-    if (resp.status === 202) {
-      message.success('数据更新失败')
+    if (resp.status === 200) {
+      message.success('数据更新成功')
+      savedStatus.value = false
     } else {
       message.warning('数据更新失败')
     }
   } catch (err) {
-    message.warning('数据更新成功')
+    message.warning('数据更新失败')
   }
 }
 
 onMounted(async () => {
   await loadStaticList()
+})
+
+onUnmounted(async () => {
+  if (!savedStatus.value) {
+    dialog.warning({
+      title: '警告',
+      content: '静态数据尚未保存，是否立刻保存？',
+      positiveText: '确定',
+      negativeText: '不确定',
+      onPositiveClick: async () => {
+        if (selectdata.id) {
+          await handleUpdate()
+        } else {
+          await handleSave()
+        }
+      },
+      onNegativeClick: () => {
+        message.warning('静态数据未保存')
+      }
+    })
+  }
 })
 </script>
 <style lang="less" scoped>

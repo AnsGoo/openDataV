@@ -1,25 +1,32 @@
 <template>
-  <n-tabs>
-    <n-tab-pane name="data" tab="处理数据">
-      <DataView v-model:content="formData.afterData" class="content" :disable="true" />
-    </n-tab-pane>
-    <n-tab-pane name="origin" tab="原始数据">
-      <StaticDataView
-        v-model:id="formData.dataId"
-        :content="formData.originData"
-        class="content"
-        @update:id="changeHandler"
-      />
-    </n-tab-pane>
-    <n-tab-pane name="scripts" tab="脚本">
-      <ScriptsEdtor :data="formData.script" class="content" @update:data="afterScriptChange" />
-    </n-tab-pane>
-  </n-tabs>
+  <NCard>
+    <n-tabs>
+      <n-tab-pane name="data" tab="处理数据">
+        <DataView
+          v-model:content="formData.afterData"
+          class="content"
+          :disable="true"
+          display-directive="show"
+        />
+      </n-tab-pane>
+      <n-tab-pane name="origin" tab="原始数据" display-directive="show">
+        <StaticDataView
+          v-model:id="formData.dataId"
+          :content="formData.originData"
+          class="content"
+          @change="changeHandler"
+        />
+      </n-tab-pane>
+      <n-tab-pane name="scripts" tab="脚本" display-directive="show">
+        <ScriptsEdtor :data="formData.script" class="content" @update:data="afterScriptChange" />
+      </n-tab-pane>
+    </n-tabs>
+  </NCard>
 </template>
 
 <script lang="ts" setup>
 import { onMounted, reactive } from 'vue'
-import { NTabs, NTabPane } from 'naive-ui'
+import { NTabs, NTabPane, NCard } from 'naive-ui'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
@@ -46,10 +53,11 @@ const props = withDefaults(
 )
 
 const formData = reactive<{
-  dataId: string
+  dataId?: string
   originData: any
   afterData: string
   script?: AfterScript
+  title?: string
 }>({
   dataId: (props.staticOptions && props.staticOptions.dataId) || '',
   afterData: '',
@@ -57,18 +65,25 @@ const formData = reactive<{
   script: {
     code: 'return resp.filter(el => el.value > 50)',
     type: ScriptType.Javascript
-  }
+  },
+  title: undefined
 })
 
 const emits = defineEmits<{
   (e: 'update:options', options: StaticRequestOptions): void
-  (e: 'change', options: StaticRequestOptions): void
+  (e: 'change', options: StaticRequestOptions, title?: string): void
 }>()
 
-const changeHandler = async (id: string) => {
+const changeHandler = async (id?: string, title?: string) => {
   formData.dataId = id
-  formData.originData = await loadStaicData(id)
-  getAfterData()
+  formData.title = title
+  if (id) {
+    formData.originData = await loadStaicData(id)
+    getAfterData()
+  } else {
+    formData.originData = ''
+    formData.afterData = ''
+  }
 }
 
 const afterScriptChange = (script: AfterScript) => {
@@ -97,10 +112,14 @@ const getAfterData = () => {
     dataId: formData.dataId!,
     script: formData.script!
   })
-  emits('change', {
-    dataId: formData.dataId,
-    script: formData.script!
-  })
+  emits(
+    'change',
+    {
+      dataId: formData.dataId!,
+      script: formData.script!
+    },
+    formData.title
+  )
 }
 
 const loadStaicData = async (id: string) => {
@@ -118,10 +137,6 @@ onMounted(async () => {
   if (props.staticOptions && props.staticOptions.dataId) {
     formData.originData = await loadStaicData(props.staticOptions.dataId)
     getAfterData()
-    emits('update:options', {
-      dataId: props.staticOptions.dataId!,
-      script: props.staticOptions.script!
-    })
   }
 })
 </script>

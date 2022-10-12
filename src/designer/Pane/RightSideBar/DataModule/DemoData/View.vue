@@ -22,7 +22,7 @@
       aria-modal="true"
     >
       <n-tabs>
-        <n-tab-pane name="data" tab="示例数据">
+        <n-tab-pane name="data" tab="示例数据" display-directive="show">
           <DataView v-model:content="formData.afterData" class="content" :disable="true" />
         </n-tab-pane>
       </n-tabs>

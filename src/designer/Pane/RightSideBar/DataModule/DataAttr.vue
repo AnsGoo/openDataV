@@ -30,7 +30,7 @@ import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } f
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'
 import DemoData from './DemoData'
-import { onMounted, reactive, ref } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
@@ -112,6 +112,19 @@ onMounted(() => {
     dataType.value = dataConfig.type
   }
 })
+
+watch(
+  () => props.curComponent,
+  async (value: BaseComponent) => {
+    if (value) {
+      const dataConfig = props.curComponent.dataConfig
+      if (dataConfig) {
+        dataType.value = dataConfig.type
+      }
+    }
+  },
+  { immediate: true }
+)
 </script>
 <style lang="less">
 .data-list {
