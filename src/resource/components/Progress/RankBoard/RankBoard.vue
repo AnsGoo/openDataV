@@ -19,8 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useProp } from '@/resource/hooks'
-import { useData } from '@/resource/hooks/useData'
+import { useProp, useData } from '@/resource/hooks'
 import { BaseComponent, DataType } from '@/resource/models'
 import { RequestResponse } from '@/resource/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'

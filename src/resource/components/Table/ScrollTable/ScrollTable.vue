@@ -50,10 +50,9 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { useProp } from '@/resource/hooks'
+import { useProp, useData } from '@/resource/hooks'
 import { BaseComponent, DataType } from '@/resource/models'
 import { ScrollTableType } from './type'
-import { useData } from '@/resource/hooks/useData'
 import { RequestResponse } from '@/resource/models/type'
 
 const props = defineProps<{

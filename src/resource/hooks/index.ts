@@ -1,3 +1,4 @@
 import { useProp } from './useProp'
+import { useData } from './useData'
 
-export { useProp }
+export { useProp, useData }
