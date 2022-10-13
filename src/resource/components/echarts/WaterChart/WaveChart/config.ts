@@ -1,7 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
-import { DataIntegrationMode, DataProtocol, DemoData } from '@/resource/models/data'
+import { DataIntegrationMode } from '@/resource/models/data'
 
 export const componentName = 'WaveChart'
 class WaveChartComponent extends BaseComponent {
@@ -120,12 +120,8 @@ class WaveChartComponent extends BaseComponent {
       ]
     }
   ]
-  get exampleData(): DemoData {
-    const data = Number(Math.random().toFixed(2))
-    return {
-      data,
-      protocol: DataProtocol.Number
-    }
+  get exampleData() {
+    return Number(Math.random().toFixed(2))
   }
 }
 

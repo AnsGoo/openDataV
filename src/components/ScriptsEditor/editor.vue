@@ -14,7 +14,7 @@
           v-model:value="form.type"
           class="item language"
           size="small"
-          @update:code="formChange"
+          @update:value="formChange"
         />
         <icon-park class="item button" name="save-one" @click="handleSave" />
         <icon-park class="item button" name="back" @click="handleUndo" />
@@ -62,7 +62,7 @@ const props = withDefaults(
   }
 )
 const config = ref<CodemirrorOption>({
-  height: '300px',
+  height: '600px',
   tabSize: 4,
   indentWithTab: true,
   autofocus: true,

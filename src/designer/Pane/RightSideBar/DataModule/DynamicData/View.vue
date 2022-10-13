@@ -26,7 +26,7 @@
       </n-input-number>
     </n-form-item>
   </n-form>
-  <n-modal v-model:show="isShow">
+  <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 600px"
       title="动态数据"

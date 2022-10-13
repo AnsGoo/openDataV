@@ -1,6 +1,6 @@
-export interface RequestResponse {
+export interface RequestResponse<T> {
   status: number
   data: any
-  afterData: any
-  headers: Recordable<string>
+  afterData: T
+  headers?: Recordable<string>
 }

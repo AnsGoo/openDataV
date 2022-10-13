@@ -22,7 +22,7 @@
     </div>
     <div class="config">
       <n-tabs type="line" animated>
-        <n-tab-pane name="query" tab="请求参数">
+        <n-tab-pane name="query" tab="请求参数" display-directive="show">
           <div class="params">
             <DynamicKVForm
               v-model:value="formData['params']"
@@ -31,7 +31,7 @@
             />
           </div>
         </n-tab-pane>
-        <n-tab-pane name="data" tab="请求体">
+        <n-tab-pane name="data" tab="请求体" display-directive="show">
           <div class="headers">
             <DynamicKVForm
               v-model:value="formData['data']"
@@ -40,7 +40,7 @@
             />
           </div>
         </n-tab-pane>
-        <n-tab-pane name="headers" tab="请求头">
+        <n-tab-pane name="headers" tab="请求头" display-directive="show">
           <div class="headers">
             <DynamicKVForm
               v-model:value="formData['headers']"
@@ -50,7 +50,7 @@
             />
           </div>
         </n-tab-pane>
-        <n-tab-pane name="scripts" tab="后置脚本">
+        <n-tab-pane name="scripts" tab="后置脚本" display-directive="show">
           <div class="headers">
             <DynamicKVForm v-model:value="scriptArgs" title="脚本参数" @update:value="formChange" />
           </div>
@@ -71,13 +71,13 @@
         }}</span></n-divider
       >
       <n-tabs>
-        <n-tab-pane name="data" tab="脚本处理结果">
+        <n-tab-pane name="data" tab="脚本处理结果" display-directive="show">
           <ReponseContentView :data="response.afterData" class="content" />
         </n-tab-pane>
-        <n-tab-pane name="origin" tab="原始请求结果">
+        <n-tab-pane name="origin" tab="原始请求结果" display-directive="show">
           <ReponseContentView :data="response.data" class="content" />
         </n-tab-pane>
-        <n-tab-pane name="scripts" tab="脚本">
+        <n-tab-pane name="scripts" tab="脚本" display-directive="show">
           <ScriptsEditor
             :data="formData.afterScript"
             class="content"
@@ -109,7 +109,7 @@ import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/ApiView/hooks/http'
 import ScriptsEditor from '@/components/ScriptsEditor'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { KV, RequestAfterScript, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
+import { KV, AfterScript, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
 import { KVToRecordable, requestOptionsToStore } from '@/ApiView/hooks/http/utils'
 
 const props = withDefaults(
@@ -125,7 +125,7 @@ const props = withDefaults(
         params: [{ key: '', value: '', disable: false, id: uuid() }],
         data: [{ key: '', value: '', disable: false, id: uuid() }],
         afterScript: {
-          code: 'return resp.filter(el => el.value > 4)',
+          code: '',
           type: ScriptType.Javascript
         }
       }
@@ -201,7 +201,7 @@ const formChange = () => {
   emits('update:restOptions', formData)
 }
 
-const afterScriptChange = (data: RequestAfterScript) => {
+const afterScriptChange = (data: AfterScript) => {
   formData.afterScript = data
   formChange()
 }

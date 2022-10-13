@@ -254,9 +254,8 @@
       "propValue": {
         "header": {
           "header": [
-            "姓名",
-            "年龄",
-            "性别"
+            "地区",
+            "数量"
           ],
           "headerBGC": "#00BAFF",
           "headerHeight": 35,
@@ -283,35 +282,12 @@
         "type": "STATIC",
         "otherConfig": {},
         "requestOptions": {
-          "protocol": "JSON",
-          "data": [
-            {
-              "name": "张三",
-              "age": 23,
-              "sex": "男"
-            },
-            {
-              "name": "张三",
-              "age": 23,
-              "sex": "男"
-            },
-            {
-              "name": "张三",
-              "age": 23,
-              "sex": "男"
-            },
-            {
-              "name": "张三",
-              "age": 23,
-              "sex": "男"
-            },
-            {
-              "name": "张三",
-              "age": 23,
-              "sex": "男"
-            }
-          ],
-          "type": "STATIC"
+          "dataId": "2",
+          "type": "STATIC",
+          "script": {
+            "code": "",
+            "type": "Javascript"
+          }
         }
       }
     },
@@ -435,9 +411,12 @@
         "type": "STATIC",
         "otherConfig": {},
         "requestOptions": {
-          "protocol": "Number",
-          "data": 0.44,
-          "type": "STATIC"
+          "dataId": "2",
+          "type": "STATIC",
+          "script": {
+            "code": "return Math.max(...resp.map(el => el.value)) / 1000",
+            "type": "Javascript"
+          }
         }
       }
     },
