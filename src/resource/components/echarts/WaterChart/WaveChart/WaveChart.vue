@@ -19,12 +19,9 @@ const props = defineProps<{
 const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 const chartData = ref<number>(0)
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as { data: number }
-    chartData.value = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  if (resp.status >= 0) {
     chartData.value = resp.afterData
   }
 

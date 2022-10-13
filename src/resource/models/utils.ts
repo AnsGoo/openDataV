@@ -16,8 +16,7 @@ export function createComponent(component: ComponentDataType): any {
       if (data.type === DataType.STATIC) {
         const options = data.requestOptions as StaticRequestOptions
         obj.changeRequestDataConfig(DataType.STATIC, {
-          data: options.data,
-          protocol: options.protocol,
+          id: options.dataId,
           script: options.script
         })
       } else if (data.type === DataType.REST) {

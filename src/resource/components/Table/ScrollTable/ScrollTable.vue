@@ -69,12 +69,9 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const tableData = ref<Array<{ label: string; value: number }>>([])
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as Array<{ name: string; age: number; sex: string }>
-    tableData.value = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  if (resp.status >= 0) {
     tableData.value = resp.afterData
   }
 }

@@ -22,13 +22,11 @@ const props = defineProps<{
 
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 let chartData: Array<{ label: string; value: number }> = []
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as Array<{ label: string; value: number }>
-    chartData = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  if (resp.status >= 0) {
     chartData = resp.afterData
+    updateData(chartData)
   }
 
   updateData(chartData)
