@@ -10,23 +10,19 @@
       <div class="buttons">
         <n-select
           :options="staticDataList"
-          v-model:value="selectdata.id"
+          :value="id"
           class="item data"
           size="small"
           @update:value="dataChange"
           clearable
           @clear="clearSelect"
         />
-        <icon-park
-          class="item button"
-          name="save-one"
-          @click="selectdata.id ? handleSave : handleUpdate"
-        />
+        <icon-park class="item button" name="save-one" @click="id ? handleSave : handleUpdate" />
       </div>
     </template>
     <template #footer>
       <div class="footer">
-        <div class="left">{{ selectdata.title ? `数据名称：${selectdata.title}` : '' }}</div>
+        <div class="left">{{ title ? `数据名称：${title}` : '' }}</div>
         <div class="right">
           <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
             {{ savedStatus ? '已保存' : '未保存' }}
@@ -39,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
@@ -58,11 +54,13 @@ const props = withDefaults(
     id?: string
     disable?: boolean
     content?: any
+    title?: string
   }>(),
   {
     id: '',
     disabled: false,
-    content: ''
+    content: '',
+    title: ''
   }
 )
 const config = computed<CodemirrorOption>(() => {
@@ -74,14 +72,10 @@ const config = computed<CodemirrorOption>(() => {
     disabled: props.disable || false
   }
 })
-const selectdata = reactive<{
-  id?: string
-  title?: string
-}>({})
 
 const emits = defineEmits<{
   (e: 'update:id', id?: string): void
-  (e: 'change', id?: string, title?: string): void
+  (e: 'change', id: string, title: string): void
 }>()
 
 const contentRef = computed<string>(() => {
@@ -92,19 +86,16 @@ const formChange = () => {
 }
 
 const dataChange = async (value: string, option) => {
-  selectdata.id = value
-  selectdata.title = option ? option.label : ''
-  emits('change', selectdata.id!, selectdata.title!)
-  emits('update:id', selectdata.id!)
+  let title = option ? option.label : ''
+  emits('change', value, title!)
+  emits('update:id', value)
   savedStatus.value = true
 }
 
 const clearSelect = () => {
-  selectdata.id = undefined
-  selectdata.title = undefined
   savedStatus.value = true
-  emits('update:id', undefined)
-  emits('change', undefined, undefined)
+  emits('update:id', '')
+  emits('change', '', '')
 }
 const loadStaticList = async () => {
   const resp = await getStaticDataList()
@@ -119,12 +110,14 @@ const loadStaticList = async () => {
 }
 
 const handleSave = async () => {
-  console.log('save')
   try {
     const resp = await createStaticData(JSON.parse(contentRef.value))
     if (resp.status === 201) {
-      selectdata.id = resp.data.id
       await loadStaticList()
+      const data = resp.data as StaticDataDetail
+      emits('update:id', undefined)
+      emits('change', data.id!, data.name)
+      emits('update:id', data.id)
       savedStatus.value = false
       message.success('数据保存成功')
     } else {
@@ -135,9 +128,8 @@ const handleSave = async () => {
   }
 }
 const handleUpdate = async () => {
-  console.log('update')
   try {
-    const resp = await updateStaticData(selectdata.id!, JSON.parse(contentRef.value))
+    const resp = await updateStaticData(props.id!, JSON.parse(contentRef.value))
     if (resp.status === 200) {
       message.success('数据更新成功')
       savedStatus.value = false
@@ -161,7 +153,7 @@ onUnmounted(async () => {
       positiveText: '确定',
       negativeText: '不确定',
       onPositiveClick: async () => {
-        if (selectdata.id) {
+        if (props.id) {
           await handleUpdate()
         } else {
           await handleSave()

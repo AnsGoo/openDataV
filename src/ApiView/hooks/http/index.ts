@@ -21,7 +21,7 @@ export class RestRequest {
     this.data = data
     this.axiosInstance = Axios.create({ method, headers })
 
-    if (afterScript) {
+    if (afterScript && afterScript.code) {
       this.callback = this.makeDataHandler(afterScript)
     } else {
       this.callback = undefined

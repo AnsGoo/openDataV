@@ -1,13 +1,13 @@
 <template>
-  <n-form :model="formData">
-    <n-form-item key="data" label="静态数据">
+  <n-form>
+    <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
           :style="{ flex: 1 }"
           @click="() => (isShow = true)"
           :readonly="true"
-          v-model:value="formData.dataName"
           placeholder="编辑请点击"
+          v-model:value="formData.title"
         />
         <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
       </n-input-group>
@@ -21,36 +21,38 @@
       size="small"
       role="dialog"
       aria-modal="true"
+      closable
+      @close="() => (isShow = false)"
     >
-      <Static v-model:options="formData" @change="changeHandler" />
+      <Static
+        v-model:options="formData"
+        @data-change="dataChangeHandler"
+        @script-change="scriptChangeHandler"
+      />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { nextTick, onMounted, reactive, ref, watch } from 'vue'
 import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
 import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { AfterScript } from '@/ApiView/hooks/http/type'
 import Static from '@/ApiView/RequestContent/static'
 import { StaticRequestOptions } from '@/ApiView/RequestContent/static/type'
+import { AfterScript } from '@/ApiView/hooks/http/type'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
 const isShow = ref<boolean>(false)
 
-const formData = reactive<{
-  dataId: string
-  script?: AfterScript
-  dataName?: string
-}>({
+const formData = reactive<StaticRequestOptions>({
   dataId: '',
+  title: '',
   script: {
     code: 'return resp.filter(el => el.value > 50)',
     type: ScriptType.Javascript
-  },
-  dataName: undefined
+  }
 })
 
 onMounted(async () => {
@@ -60,18 +62,30 @@ onMounted(async () => {
 const initData = async () => {
   const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
   if (staticRequest) {
-    const result = staticRequest.toJSON()
-    formData.dataId = result.dataId
-    formData.script = result.script
+    await nextTick(() => {
+      const result = staticRequest.toJSON()
+      formData.dataId = result.dataId
+      formData.script = result.script!
+      formData.title = result.title!
+    })
   }
 }
-const changeHandler = async (options: StaticRequestOptions, title?: string) => {
-  console.log(title)
-  formData.dataName = title
+const changeHandler = () => {
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    id: options.dataId,
-    script: options.script
+    id: formData.dataId,
+    script: formData.script
   })
+}
+
+const dataChangeHandler = (id: string, title: string) => {
+  formData.title = title
+  formData.dataId = id
+  changeHandler()
+}
+
+const scriptChangeHandler = (script: AfterScript) => {
+  formData.script = script
+  changeHandler()
 }
 
 watch(

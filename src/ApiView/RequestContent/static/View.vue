@@ -1,24 +1,20 @@
 <template>
   <NCard>
     <n-tabs>
-      <n-tab-pane name="data" tab="处理数据">
-        <DataView
-          v-model:content="formData.afterData"
-          class="content"
-          :disable="true"
-          display-directive="show"
-        />
+      <n-tab-pane name="data" tab="处理数据" display-directive="show">
+        <DataView v-model:content="formData.afterData" class="content" :disable="true" />
       </n-tab-pane>
       <n-tab-pane name="origin" tab="原始数据" display-directive="show">
         <StaticDataView
-          v-model:id="formData.dataId"
+          :id="options.dataId"
           :content="formData.originData"
+          :title="options.title"
           class="content"
-          @change="changeHandler"
+          @change="dataChangeHandler"
         />
       </n-tab-pane>
       <n-tab-pane name="scripts" tab="脚本" display-directive="show">
-        <ScriptsEdtor :data="formData.script" class="content" @update:data="afterScriptChange" />
+        <ScriptsEdtor :data="options.script" class="content" @update:data="scriptChangeHandler" />
       </n-tab-pane>
     </n-tabs>
   </NCard>
@@ -33,18 +29,19 @@ import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
 import { AfterScript } from '@/ApiView/hooks/http/type'
 import type { StaticRequestOptions } from './type'
-import { getStaticData } from '@/api/data'
+import { getStaticData, StaticDataDetail } from '@/api/data'
 import { makeFunction } from '@/utils/data'
 const props = withDefaults(
   defineProps<{
-    staticOptions?: StaticRequestOptions
+    options?: StaticRequestOptions
   }>(),
   {
-    staticOptions: () => {
+    options: () => {
       return {
         dataId: '',
+        title: '',
         script: {
-          code: 'return resp.filter(el => el.value > 4)',
+          code: '',
           type: ScriptType.Javascript
         }
       }
@@ -53,49 +50,42 @@ const props = withDefaults(
 )
 
 const formData = reactive<{
-  dataId?: string
   originData: any
   afterData: string
-  script?: AfterScript
-  title?: string
 }>({
-  dataId: (props.staticOptions && props.staticOptions.dataId) || '',
   afterData: '',
-  originData: '',
-  script: {
-    code: 'return resp.filter(el => el.value > 50)',
-    type: ScriptType.Javascript
-  },
-  title: undefined
+  originData: ''
 })
 
 const emits = defineEmits<{
-  (e: 'update:options', options: StaticRequestOptions): void
-  (e: 'change', options: StaticRequestOptions, title?: string): void
+  (e: 'dataChange', id: string, title: string): void
+  (e: 'scriptChange', script: AfterScript): void
 }>()
 
-const changeHandler = async (id?: string, title?: string) => {
-  formData.dataId = id
-  formData.title = title
+const dataChangeHandler = async (id: string, title: string) => {
   if (id) {
-    formData.originData = await loadStaicData(id)
-    getAfterData()
+    const resp: StaticDataDetail | undefined = await loadStaicData(props.options.dataId)
+    if (resp) {
+      formData.originData = resp.data
+      getAfterData(props.options.script)
+    }
   } else {
     formData.originData = ''
     formData.afterData = ''
   }
+  emits('dataChange', id, title)
 }
 
-const afterScriptChange = (script: AfterScript) => {
-  formData.script = script
-  getAfterData()
+const scriptChangeHandler = async (script: AfterScript) => {
+  getAfterData(script)
+  emits('scriptChange', script)
 }
 
-const getAfterData = () => {
-  const afterCallback = formData.script
-    ? makeFunction(formData.script.type, formData.script.code, ['resp', 'options'], false)
-    : undefined
-
+const getAfterData = (script: AfterScript) => {
+  const afterCallback =
+    script && script.code
+      ? makeFunction(script.type, script.code, ['resp', 'options'], false)
+      : undefined
   if (afterCallback && afterCallback.handler) {
     try {
       formData.afterData = JSON.stringify(
@@ -106,37 +96,30 @@ const getAfterData = () => {
     } catch (err: any) {
       formData.afterData = err.message || err
     }
+  } else {
+    formData.afterData = JSON.stringify(formData.originData, null, '\t')
   }
-
-  emits('update:options', {
-    dataId: formData.dataId!,
-    script: formData.script!
-  })
-  emits(
-    'change',
-    {
-      dataId: formData.dataId!,
-      script: formData.script!
-    },
-    formData.title
-  )
 }
 
-const loadStaicData = async (id: string) => {
+const loadStaicData = async (id: string): Promise<StaticDataDetail | undefined> => {
   try {
     const resp = await getStaticData(id)
     if (resp.status === 200) {
       return resp.data
     }
   } catch (err) {
-    return ''
+    return undefined
   }
 }
 
 onMounted(async () => {
-  if (props.staticOptions && props.staticOptions.dataId) {
-    formData.originData = await loadStaicData(props.staticOptions.dataId)
-    getAfterData()
+  if (props.options && props.options.dataId) {
+    const resp: StaticDataDetail | undefined = await loadStaicData(props.options.dataId)
+    if (resp) {
+      formData.originData = resp.data
+      getAfterData(props.options.script)
+      emits('dataChange', props.options.dataId, resp.name)
+    }
   }
 })
 </script>

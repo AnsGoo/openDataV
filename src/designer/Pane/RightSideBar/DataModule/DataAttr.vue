@@ -68,7 +68,7 @@ const typeChanged = (type: string) => {
   if (type === DataType.DEMO) {
     const exampleData = props.curComponent.exampleData
     props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      data: cloneDeep(exampleData.data)
+      data: cloneDeep(exampleData)
     })
     dataType.value = DataType.DEMO
     message.info('正在使用示例数据')

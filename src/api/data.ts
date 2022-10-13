@@ -14,8 +14,8 @@ export interface StaticDataDetail {
  * 根据id 加载静态数据
  * @param id
  */
-export const getStaticData = async (id: string): Promise<AxiosResponse<any>> => {
-  return http.get<any>({
+export const getStaticData = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
+  return http.get<StaticDataDetail>({
     url: '/staticData',
     params: {
       id

@@ -2,14 +2,14 @@
   <CodeEditor
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    v-model:code="contentRef"
+    :code="content"
     ref="cm"
     @change="formChange"
   />
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
@@ -40,10 +40,9 @@ const emits = defineEmits<{
   (e: 'change', value: string): void
 }>()
 
-const contentRef = ref<string>(props.content)
-const formChange = () => {
-  emits('change', contentRef.value)
-  emits('update:content', contentRef.value)
+const formChange = (value: string) => {
+  emits('change', value)
+  emits('update:content', value)
 }
 </script>
 <style lang="less" scoped>

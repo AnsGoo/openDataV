@@ -127,33 +127,61 @@ export default [
     response: ({ query }: any) => {
       const id: string = query['id']
       if (id === '1') {
-        return Covid19Data.map((el) => {
-          return {
-            label: el.province,
-            value: el.New
-          }
-        })
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.New
+            }
+          }),
+          id: '1',
+          name: '新增人数',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
       } else if (id === '2') {
-        return Covid19Data.map((el) => {
-          return {
-            label: el.province,
-            value: el.NoSymptom
-          }
-        })
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.NoSymptom
+            }
+          }),
+          id: '2',
+          name: '新增无症状人数',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
       } else if (id === '3') {
-        return Covid19Data.map((el) => {
-          return {
-            label: el.province,
-            value: el.total
-          }
-        })
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.total
+            }
+          }),
+          id: '3',
+          name: '累计确诊人数',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
       } else {
-        return Covid19Data.map((el) => {
-          return {
-            label: el.province,
-            value: el.RiskArea
-          }
-        })
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.RiskArea
+            }
+          }),
+          id: '4',
+          name: '现存风险地区',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
       }
     }
   },
@@ -172,12 +200,12 @@ export default [
           name: '新增无症状人数'
         },
         {
-          id:'3',
-          name: '新增确认人数'
+          id: '3',
+          name: '累计确诊人数'
         },
         {
           id: '4',
-          name: '风险地区'
+          name: '现存风险地区'
         }
       ]
     }

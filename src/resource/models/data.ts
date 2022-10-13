@@ -1,4 +1,4 @@
-import { getStaticData } from '@/api/data'
+import { getStaticData, StaticDataDetail } from '@/api/data'
 import useRestRequest, { RestRequest } from '@/ApiView/hooks/http'
 import { AfterScript, StoreRequestOption } from '@/ApiView/hooks/http/type'
 import { makeFunction } from '@/utils/data'
@@ -20,6 +20,7 @@ export enum DataIntegrationMode {
 
 export interface StaticRequestOptions {
   dataId: string
+  title?: string
   type: DataType
   script?: AfterScript
 }
@@ -60,6 +61,7 @@ class DemoRequestData implements RequestData {
 class StaticRequestData implements RequestData {
   public dataId?: string
   public afterScript?: AfterScript
+  public title?: string
 
   constructor(id: string | undefined, afterScript?: AfterScript) {
     this.dataId = id
@@ -70,7 +72,8 @@ class StaticRequestData implements RequestData {
     return {
       dataId: this.dataId || '',
       type: DataType.STATIC,
-      script: this.afterScript
+      script: this.afterScript,
+      title: this.title
     }
   }
 
@@ -90,15 +93,18 @@ class StaticRequestData implements RequestData {
     if (!this.dataId) {
       return response
     }
-    const afterCallback = this.afterScript
-      ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
-      : undefined
+    const afterCallback =
+      this.afterScript && this.afterScript.code
+        ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
+        : undefined
     try {
       const resp = await getStaticData(this.dataId!)
       response.status = resp.status || -1
       if (resp.status < 400) {
-        response.data = resp.data
-        response.afterData = resp.data
+        const data: StaticDataDetail = resp.data
+        this.title = data.name
+        response.data = data.data
+        response.afterData = data.data
       }
     } catch (err: any) {
       const result = err.response || (err.toJSON ? err.toJSON() : {})
