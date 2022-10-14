@@ -67,6 +67,11 @@ interface PropsType {
   children: AttrType[]
 }
 
+export interface ComponentData {
+  canvasStyle: CanvasStyleData
+  canvasData: Record<string, any>[]
+}
+
 export interface ComponentRequestDataType {
   type: DataType
   otherConfig: Recordable

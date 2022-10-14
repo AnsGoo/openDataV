@@ -2,7 +2,7 @@
   <n-form :model="formData">
     <n-form-item label="动态数据" label-placement="top">
       <n-input-group>
-        <n-input :style="{ flex: 1 }" v-model:value="formData.restOptions.url" readonly>
+        <n-input style="flex: 1" v-model:value="formData.restOptions.url" readonly>
           <template #prefix>
             <n-gradient-text type="success" style="font-weight: 800">
               {{ formData.restOptions.method }}

@@ -6,7 +6,7 @@
       preset="card"
       center
       title="保存当前布局"
-      :style="{ width: '30%', minWidth: '600px' }"
+      style="width: 30%; min-width: 600px"
       @update:show="() => (saveDialogVisible = false)"
       size="medium"
     >
@@ -14,27 +14,31 @@
         <n-form-item label="页面名称" prop="name">
           <n-input v-model:value="form.name" placeholder="请输入页面名称" />
         </n-form-item>
+        <n-form-item label="页面缩略图" prop="thumbnail">
+          <n-input v-model:value="form.thumbnail" placeholder="请输入缩略图地址" />
+        </n-form-item>
       </n-form>
       <template #footer>
-        <span class="dialog-footer">
+        <n-space>
           <n-button @click="saveDialogVisible = false">取消</n-button>
           <n-button type="primary" @click="handleSubmit('new')" v-if="!index">新增</n-button>
           <n-button type="primary" @click="handleSubmit('update')" v-else>更新</n-button>
-        </span>
+        </n-space>
       </template>
     </n-modal>
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { NForm, NInput, NFormItem, NButton, NModal } from 'naive-ui'
+import { NForm, NInput, NFormItem, NButton, NModal, NSpace } from 'naive-ui'
 import type { FormItemRule } from 'naive-ui'
 import { message } from '@/utils/message'
-import type { LayoutData } from '@/types/apiTypes'
+import type { LayoutData } from '@/api/pages'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { savePage, updatePage } from '@/api/pages'
+import { savePageApi, updatePageApi } from '@/api/pages'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
+
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string }>()
 
@@ -43,8 +47,8 @@ const form = reactive<{
   name: string
   thumbnail: string
 }>({
-  name: '',
-  thumbnail: ''
+  name: basicStore.name,
+  thumbnail: basicStore.thumbnail
 })
 const rules = reactive<{
   name: FormItemRule[]
@@ -68,7 +72,7 @@ const handleSubmit = async (type: string) => {
 
   if (type === 'update') {
     try {
-      const resp = await updatePage(props.index!, layoutData)
+      const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
         message.success('修改成功')
       }
@@ -79,7 +83,7 @@ const handleSubmit = async (type: string) => {
     }
   } else {
     try {
-      const result = await savePage(layoutData)
+      const result = await savePageApi(layoutData)
       if (result.status === 201) {
         message.success('保存成功')
         // // 新增页面成功，则跳转到编辑页
