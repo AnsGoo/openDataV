@@ -1,0 +1,8 @@
+import{u as w}from"./index.f9a5bc2d.js";import{u as b}from"./index.cbe97bab.js";import{d as H,r as v,i as k,w as T,o as a,c as r,u as e,l,F as i,e as h,m as B,b as C,f as D,_ as L}from"./index.68969163.js";const z={class:"dv-scroll-board"},I=["innerHTML"],M=["innerHTML"],S=H({__name:"ScrollTable",props:{component:null},setup(g){const u=g,{propValue:t}=w(u.component),_=v(0),f=s=>{const n=s[0],{height:c}=n.contentRect;_.value=c},p=v([]),x=(s,n)=>{s.status>=0&&(p.value=s.afterData)};b(u.component,x);const y=k(()=>p.value.map((s,n)=>({rowIndex:n,ceils:Object.values(s)})));return(s,n)=>{const c=D("resize");return T((a(),r("div",z,[e(t).header.header.length?(a(),r("div",{key:0,class:"header",style:l(`background-color: ${e(t).header.headerBGC};`)},[(a(!0),r(i,null,h(e(t).header.header,(o,d)=>(a(),r("div",{class:"header-item",key:`${o}${d}`,style:l(`
+          height: ${e(t).header.headerHeight}px;
+          line-height: ${e(t).header.headerHeight}px;
+        `),innerHTML:o},null,12,I))),128))],4)):B("",!0),C("div",{class:"rows",style:l({height:`${_.value-(e(t).header.header.length?e(t).header.headerHeight:0)}px`})},[(a(!0),r(i,null,h(e(y),(o,d)=>(a(),r("div",{class:"row-item",key:o.rowIndex,style:l(`
+          height: ${e(t).rows.data.height}px;
+          line-height: ${e(t).rows.data.height}px;
+          background-color: ${e(t).rows.data[o.rowIndex%2===0?"evenRowBGC":"oddRowBGC"]};
+        `)},[(a(!0),r(i,null,h(o.ceils,(m,$)=>(a(),r("div",{class:"ceil",key:`${m}${d}${$}`,innerHTML:m},null,8,M))),128))],4))),128))],4)])),[[c,f]])}}});const F=L(S,[["__scopeId","data-v-9f326577"]]);export{F as default};
