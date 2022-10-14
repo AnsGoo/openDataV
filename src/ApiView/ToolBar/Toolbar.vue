@@ -52,27 +52,6 @@ const toolBars: ToolBarItemType[] = [
 </script>
 
 <style scoped lang="less">
-.tool-bar {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  height: 100%;
-  border-bottom: 1px var(--n-text-color) solid;
-}
-.tool-bar-item {
-  height: 100%;
-  display: flex;
-  align-items: center;
-}
-
-button {
-  border: none;
-  // padding: 5px 5px;
-  margin: auto 3px;
-}
-
 .tool-bar-title {
   font-size: 20px;
   font-weight: 400;
