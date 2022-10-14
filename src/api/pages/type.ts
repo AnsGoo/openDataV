@@ -10,7 +10,7 @@ export interface LayoutData {
   isHome?: boolean
   canvasData: ComponentDataType[]
   canvasStyle: CanvasStyleData
-  allowed?: string | null
+  isPublish?: boolean
 }
 
 export type SimpleLayoutData = Omit<LayoutData, 'canvasStyle' | 'canvasData'>

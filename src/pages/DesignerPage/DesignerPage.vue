@@ -73,10 +73,10 @@ onMounted(async () => {
 
 const restore = async (index: string) => {
   const resp = await getPageApi(index)
-  if (!resp) {
+  if (!resp.data) {
     return
   }
-  basicStore.setLayoutData(resp)
+  basicStore.setLayoutData(resp.data)
 }
 
 onUnmounted(() => {

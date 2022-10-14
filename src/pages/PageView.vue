@@ -39,8 +39,8 @@ const initComponents = async (index: string): Promise<void> => {
   console.log('加载通用组件')
   try {
     const resp = await getPageApi(index)
-    if (resp) {
-      setPageData(resp)
+    if (resp.data) {
+      setPageData(resp.data)
     }
   } catch (e: any) {
     router.push({

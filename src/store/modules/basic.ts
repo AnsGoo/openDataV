@@ -285,6 +285,8 @@ const useBasicStore = defineStore({
       this.curComponent = undefined
       this.isClickComponent = false
       this.isShowEm = false
+      this.name = ''
+      this.thumbnail = ''
       this.canvasStyleData = baseCanvasStyleData
     },
     /**

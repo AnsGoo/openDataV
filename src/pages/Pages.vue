@@ -90,8 +90,8 @@ function renderIcon(icon: string) {
 const initUI = async (): Promise<void> => {
   try {
     const resp = await getPageListApi()
-    if (resp) {
-      layoutList.value = resp
+    if (resp.data) {
+      layoutList.value = resp.data
     }
   } catch (_) {
     message.error('页面数据请求异常')
