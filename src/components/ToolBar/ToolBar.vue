@@ -8,7 +8,6 @@
         :label="item.label"
         :divider="item.divider"
         :icon="item.icon"
-        :is-button="item.isButton === undefined ? true : false"
       />
     </div>
     <div class="tool-bar-midle"><slot></slot></div>

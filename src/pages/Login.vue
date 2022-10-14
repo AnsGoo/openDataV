@@ -46,12 +46,12 @@
 import { NForm, NFormItem, NInput, NButton } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import { loginApi } from '@/api/user/user/user'
 import { LoginData } from '@/types/user'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
 import { message } from '@/utils/message'
+import { loginApi } from '@/api/user'
 
 const userStore = useUserStoreWithOut()
 const router: Router = useRouter()

@@ -27,8 +27,7 @@ const toolBars: ToolBarItemType[] = [
         width: '40px'
       }),
     divider: true,
-    location: 'left',
-    isButton: false
+    location: 'left'
   },
   {
     label: '导入',
