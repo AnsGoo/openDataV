@@ -149,6 +149,9 @@ button {
 }
 
 .tool-bar-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 20px;
   font-weight: 400;
 }
