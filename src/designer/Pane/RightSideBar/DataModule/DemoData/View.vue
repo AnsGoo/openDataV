@@ -3,7 +3,7 @@
     <n-form-item key="data" label="示例数据">
       <n-input-group>
         <n-input
-          :style="{ flex: 1 }"
+          style="flex: 1"
           placeholder="点击预览"
           @click="() => (isShow = true)"
           :readonly="true"

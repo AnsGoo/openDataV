@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import store from '@/store'
 import type { EditData, CanvasStyleData } from '@/types/storeTypes'
-import type { LayoutData } from '@/types/apiTypes'
+import type { LayoutData } from '@/api/pages'
 import { EditMode } from '@/enum'
 import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
@@ -66,20 +66,14 @@ const useBasicStore = defineStore({
   },
   actions: {
     setLayoutData(data: LayoutData) {
+      this.name = data.name || ''
+      this.thumbnail = data.thumbnail || ''
       if (data.canvasData) {
         this.setComponentData(data.canvasData)
       }
 
       if (data.canvasStyle) {
         this.canvasStyleData = data.canvasStyle
-      }
-
-      if (data.name) {
-        this.name = data.name
-      }
-
-      if (data.thumbnail) {
-        this.thumbnail = data.thumbnail
       }
     },
     setClickComponentStatus(status: boolean): void {

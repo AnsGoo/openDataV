@@ -46,7 +46,7 @@
 import { NForm, NFormItem, NInput, NButton } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import { login } from '@/api/user'
+import { login } from '@/api/user/user/user'
 import { LoginData } from '@/types/user'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'

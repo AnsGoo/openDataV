@@ -1,9 +1,5 @@
+import { ComponentDataType } from '@/types/component'
 import type { CanvasStyleData } from '@/types/storeTypes'
-
-export interface ComponentData {
-  canvasStyle: CanvasStyleData
-  canvasData: Record<string, any>[]
-}
 
 export interface LayoutData {
   id?: string
@@ -17,4 +13,4 @@ export interface LayoutData {
   allowed?: string | null
 }
 
-export type SimpleLayoutData = Omit<LayoutData, 'canvasStyle', 'canvasData'>
+export type SimpleLayoutData = Omit<LayoutData, 'canvasStyle' | 'canvasData'>

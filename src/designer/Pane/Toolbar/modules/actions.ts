@@ -13,7 +13,10 @@ const projectStore = useProjectSettingStoreWithOut()
 const undo = async () => {
   const snapshot: StoreComponentData | undefined = await snapShotStore.lastRecord()
   if (snapshot) {
-    basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
+    basicStore.setLayoutData({
+      canvasData: snapshot.canvasData as ComponentDataType[],
+      canvasStyle: snapshot.canvasStyle
+    })
   } else {
     message.warning('没有快照了')
   }
@@ -22,7 +25,10 @@ const undo = async () => {
 const recoveryDraft = async () => {
   const snapshot: StoreComponentData | undefined = await snapShotStore.nextRecord()
   if (snapshot) {
-    basicStore.setLayoutData({ canvasData: snapshot.canvasData, canvasStyle: snapshot.canvasStyle })
+    basicStore.setLayoutData({
+      canvasData: snapshot.canvasData as ComponentDataType[],
+      canvasStyle: snapshot.canvasStyle
+    })
   } else {
     message.warning('没有快照了')
   }

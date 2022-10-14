@@ -12,7 +12,12 @@
           </n-ellipsis>
         </template>
         <template #cover>
-          <img :src="previewIcon(item.thumbnail)" class="image" @click="handleView(item)" alt="" />
+          <img
+            :src="previewIcon(item.thumbnail)"
+            class="thumbnail-image"
+            @click="handleView(item)"
+            alt=""
+          />
         </template>
         <template #action>
           <div class="options">
@@ -46,8 +51,8 @@
 </template>
 
 <script setup lang="ts">
-import { getPagesList, deletePage } from '@/api/pages'
-import type { SimpleLayoutData } from '@/types/apiTypes'
+import { getPageListApi, deletePageApi } from '@/api/pages'
+import type { SimpleLayoutData } from '@/api/pages'
 import { onMounted, ref, h } from 'vue'
 import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
@@ -84,9 +89,9 @@ function renderIcon(icon: string) {
 
 const initUI = async (): Promise<void> => {
   try {
-    const resp = await getPagesList()
-    if (resp.data) {
-      layoutList.value = resp.data
+    const resp = await getPageListApi()
+    if (resp) {
+      layoutList.value = resp
     }
   } catch (_) {
     message.error('页面数据请求异常')
@@ -103,7 +108,7 @@ const handleSelect = async (key: string | number, item: SimpleLayoutData) => {
     })
   } else if (key === 'delete') {
     try {
-      await deletePage(item.id as string)
+      await deletePageApi(item.id as string)
       await initUI()
     } catch (e: any) {
       console.log(e?.message || e)
@@ -177,5 +182,10 @@ const previewIcon = (icon: string | undefined) => {
     padding: 5px 0px;
     transform: translate(15%, 0);
   }
+}
+
+.thumbnail-image {
+  width: 15vw;
+  height: 16vh;
 }
 </style>
