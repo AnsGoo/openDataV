@@ -17,7 +17,7 @@ export default [
     }
   },
   {
-    url: '/pages',
+    url: '/page/page',
     method: 'get',
     statusCode: 200,
     response: () => {
@@ -38,12 +38,12 @@ export default [
     }
   },
   {
-    url: '/page',
+    url: '/page/page/:id',
     method: 'get',
     statusCode: 200,
-    response: ({ query }: any) => {
-      const index: string = query['index']
-      return dataDict[index]
+    response: ({ url }: any) => {
+      const index = url.split('/')[3]
+      return dataDict[index] || dataDict['1b0acf36-d309-43fe-9e0a-7b6942e2f953']
     }
   },
   {

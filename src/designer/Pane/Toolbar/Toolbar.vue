@@ -1,33 +1,13 @@
 <template>
-  <div class="tool-bar">
-    <div class="tool-bar-item">
-      <ToolBarItem
-        v-for="(item, index) in leftToolBars"
-        :key="index"
-        :action="item.action"
-        :label="item.label"
-        :divider="item.divider"
-        :icon="item.icon"
-      />
-    </div>
-    <div class="tool-bar-title">{{ basicStore.name }}</div>
-    <div class="tool-bar-item">
-      <ToolBarItem
-        v-for="(item, index) in rightToolBars"
-        :key="index"
-        :action="item.action"
-        :label="item.label"
-        :divider="item.divider"
-        :icon="item.icon"
-      />
-    </div>
-  </div>
+  <ToolBar :bars="toolBars">
+    <div class=".tool-bar-title">{{ basicStore.name }}</div>
+  </ToolBar>
 </template>
 
 <script setup lang="ts">
 import { h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ToolBarItemType } from './modules/types'
+import type { ToolBarItemType } from '@/components/ToolBar'
 import {
   undo,
   recoveryDraft,
@@ -39,7 +19,9 @@ import {
 import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 import showIconCard from './modules/iconList'
 import showSaveCard from './modules/save'
-import ToolBarItem from './ToolBarItem.vue'
+
+import LogoView from '@/components/LogoView'
+import { ToolBar } from '@/components/ToolBar'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 const basicStore = useBasicStoreWithOut()
 
@@ -54,7 +36,10 @@ const toolBars: ToolBarItemType[] = [
         name: 'Pages'
       })
     },
-    icon: 'home',
+    icon: () =>
+      h(LogoView, {
+        width: '40px'
+      }),
     divider: true,
     location: 'left'
   },
@@ -127,27 +112,9 @@ const toolBars: ToolBarItemType[] = [
     location: 'right'
   }
 ]
-
-const leftToolBars = toolBars.filter((el) => el.location === 'left')
-const rightToolBars = toolBars.filter((el) => el.location === 'right')
 </script>
 
 <style scoped lang="less">
-.tool-bar {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  height: 100%;
-}
-
-button {
-  border: none;
-  padding: 5px 5px;
-  margin: auto 3px;
-}
-
 .tool-bar-title {
   position: absolute;
   left: 50%;

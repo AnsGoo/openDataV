@@ -1,10 +1,7 @@
 <template>
   <n-tooltip>
     <template #trigger>
-      <n-button quaternary size="small" @click="action" :title="label" v-if="isButton">
-        <IconComponent
-      /></n-button>
-      <IconComponent v-else class="bar" @click="action" />
+      <n-button quaternary size="small" @click="action" :title="label"> <IconComponent /></n-button>
     </template>
     <span>{{ label }}</span>
   </n-tooltip>
@@ -13,7 +10,7 @@
 <script lang="ts" setup>
 import { NButton, NTooltip, NDivider } from 'naive-ui'
 import { computed, h, VNode } from 'vue'
-import { iconNode, ToolBarItemType } from './modules/types'
+import { iconNode, ToolBarItemType } from './type'
 import { IconPark } from '@/plugins/icon'
 const props = withDefaults(
   defineProps<{

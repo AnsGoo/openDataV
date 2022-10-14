@@ -55,12 +55,12 @@ import {
   NGradientText
 } from 'naive-ui'
 import { BaseComponent, DataType, RestRequestData } from '@/resource/models'
-import Rest from '@/ApiView/RequestContent/rest'
-import { RequestOption } from '@/ApiView/hooks/http/type'
-import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
+import Rest from '@/apiView/RequestContent/rest'
+import { RequestOption } from '@/apiView/hooks/http/type'
+import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { storeOptionToRequestOptions } from '@/ApiView/hooks/http/utils'
+import { storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()

@@ -9,13 +9,6 @@
   >
     <template #tool-bar>
       <div class="buttons">
-        <n-select
-          :options="languageOptions"
-          v-model:value="form.type"
-          class="item language"
-          size="small"
-          @update:value="formChange"
-        />
         <icon-park class="item button" name="save-one" @click="handleSave" />
         <icon-park class="item button" name="back" @click="handleUndo" />
         <icon-park class="item button" name="next" @click="handleRedo" />
@@ -26,7 +19,16 @@
         <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
           {{ savedStatus ? '已保存' : '未保存' }}
         </div>
-        <div class="lang">{{ form.type || 'JSON' }}</div>
+        <div class="lang" @click="() => (isShow = true)">
+          <n-select
+            :options="languageOptions"
+            v-model:value="form.type"
+            class="item language"
+            size="tiny"
+            @update:value="formChange"
+            style="width: 110px"
+          />
+        </div>
       </div>
     </template>
   </CodeEditor>
@@ -46,6 +48,8 @@ import { ScriptEditorType } from './type'
 import { message } from '@/utils/message'
 
 const savedStatus = ref<boolean>(true)
+
+const isShow = ref<boolean>(false)
 
 const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
@@ -147,9 +151,9 @@ const handleSave = () => {
     border-radius: 2px;
   }
 
-  .lang {
-    background-color: #2080f0;
-  }
+  // .lang {
+  //   background-color: #2080f0;
+  // }
   .saved-status {
     &.save {
       background-color: #18a058;
