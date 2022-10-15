@@ -6,7 +6,7 @@
       </n-tab-pane>
       <n-tab-pane name="origin" tab="原始数据" display-directive="show">
         <StaticDataView
-          :id="options.dataId"
+          :id="formData.id"
           :content="formData.originData"
           :title="options.title"
           class="content"
@@ -21,13 +21,13 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive } from 'vue'
+import { onMounted, reactive, watch } from 'vue'
 import { NTabs, NTabPane, NCard } from 'naive-ui'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
-import { AfterScript } from '@/ApiView/hooks/http/type'
+import { AfterScript } from '@/apiView/hooks/http/type'
 import type { StaticRequestOptions } from './type'
 import { getStaticData, StaticDataDetail } from '@/api/data'
 import { makeFunction } from '@/utils/data'
@@ -50,9 +50,13 @@ const props = withDefaults(
 )
 
 const formData = reactive<{
+  id: string
+  title: string
   originData: any
   afterData: string
 }>({
+  id: props.options.dataId,
+  title: props.options.title || '',
   afterData: '',
   originData: ''
 })
@@ -64,7 +68,7 @@ const emits = defineEmits<{
 
 const dataChangeHandler = async (id: string, title: string) => {
   if (id) {
-    const resp: StaticDataDetail | undefined = await loadStaicData(props.options.dataId)
+    const resp: StaticDataDetail | undefined = await loadStaicData(id)
     if (resp) {
       formData.originData = resp.data
       getAfterData(props.options.script)
@@ -73,6 +77,8 @@ const dataChangeHandler = async (id: string, title: string) => {
     formData.originData = ''
     formData.afterData = ''
   }
+  formData.id = id
+  formData.title = title
   emits('dataChange', id, title)
 }
 
@@ -116,12 +122,24 @@ onMounted(async () => {
   if (props.options && props.options.dataId) {
     const resp: StaticDataDetail | undefined = await loadStaicData(props.options.dataId)
     if (resp) {
+      formData.id = resp.id!
+      formData.title = resp.name
       formData.originData = resp.data
       getAfterData(props.options.script)
       emits('dataChange', props.options.dataId, resp.name)
     }
   }
 })
+
+watch(
+  () => props.options,
+  () => {
+    if (props.options && props.options.dataId) {
+      formData.id = props.options.dataId
+      formData.title = props.options.title || ''
+    }
+  }
+)
 </script>
 
 <style lang="less" scoped></style>

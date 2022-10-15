@@ -98,14 +98,18 @@ const clearSelect = () => {
   emits('change', '', '')
 }
 const loadStaticList = async () => {
-  const resp = await getStaticDataList()
-  if (resp.status === 200) {
-    staticDataList.value = resp.data.map((el: StaticDataDetail) => {
-      return {
-        label: el.name,
-        value: el.id
-      }
-    })
+  try {
+    const resp = await getStaticDataList()
+    if (resp.status === 200) {
+      staticDataList.value = resp.data.map((el: StaticDataDetail) => {
+        return {
+          label: el.name,
+          value: el.id
+        }
+      })
+    }
+  } catch (err: any) {
+    console.log(err || err.message)
   }
 }
 

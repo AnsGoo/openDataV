@@ -38,9 +38,9 @@ import { nextTick, onMounted, reactive, ref, watch } from 'vue'
 import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
 import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import Static from '@/ApiView/RequestContent/static'
-import { StaticRequestOptions } from '@/ApiView/RequestContent/static/type'
-import { AfterScript } from '@/ApiView/hooks/http/type'
+import Static from '@/apiView/RequestContent/static'
+import { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
+import { AfterScript } from '@/apiView/hooks/http/type'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()

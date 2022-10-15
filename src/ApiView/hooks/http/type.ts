@@ -22,7 +22,7 @@ export interface StoreRequestOption {
   url: string
   headers: Recordable
   params: Recordable
-  data: Recordable
+  data: any
   afterScript: AfterScript
 }
 

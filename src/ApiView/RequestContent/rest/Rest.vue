@@ -50,11 +50,6 @@
             />
           </div>
         </n-tab-pane>
-        <n-tab-pane name="scripts" tab="后置脚本" display-directive="show">
-          <div class="headers">
-            <DynamicKVForm v-model:value="scriptArgs" title="脚本参数" @update:value="formChange" />
-          </div>
-        </n-tab-pane>
       </n-tabs>
     </div>
     <div class="response">
@@ -106,11 +101,11 @@ import { uuid } from '@/utils/utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import type { AxiosResponse } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
-import useRestRequest from '@/ApiView/hooks/http'
+import useRestRequest from '@/apiView/hooks/http'
 import ScriptsEditor from '@/components/ScriptsEditor'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { KV, AfterScript, RequestOption, RequestResponse } from '@/ApiView/hooks/http/type'
-import { KVToRecordable, requestOptionsToStore } from '@/ApiView/hooks/http/utils'
+import { AfterScript, RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
+import { requestOptionsToStore } from '@/apiView/hooks/http/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -140,7 +135,6 @@ const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   }
 })
 const requestHeaderOptions = Object.keys(RequestHeaderEnum)
-const scriptArgs = ref<KV[]>([{ key: '', value: '', disable: false, id: uuid() }])
 
 interface ErrorResponse extends Error {
   config: Recordable
@@ -181,8 +175,7 @@ const response = ref<RequestResponse>({
 const send = async () => {
   const restRequest = useRestRequest(requestOptionsToStore(formData), true)
   try {
-    const args = KVToRecordable(scriptArgs.value)
-    const resp = await restRequest.request(args)
+    const resp = await restRequest.request()
     response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
     response.value.afterData = JSON.stringify(resp.afterData, null, '\t')

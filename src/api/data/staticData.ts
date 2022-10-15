@@ -1,14 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
 import { AxiosResponse } from 'axios'
-
-export interface StaticDataDetail {
-  id?: string
-  name: string
-  author?: string
-  createDate?: string
-  updateDate?: string
-  data?: any
-}
+import { StaticDataDetail } from './type'
 
 /**
  * 根据id 加载静态数据
