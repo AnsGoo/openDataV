@@ -11,7 +11,7 @@
   </div>
   <div v-for="(item, index) in formData" :key="item.id">
     <n-input-group class="param-item">
-      <n-select
+      <!-- <n-select
         v-if="options && options.length > 0"
         style="width: 50%"
         size="small"
@@ -26,15 +26,14 @@
             return { label: el, value: el }
           }) || []
         "
-      />
+      /> -->
       <n-input
-        v-else
         style="width: 50%"
         size="small"
         :input-props="{
           autocomplete: 'disabled'
         }"
-        :modelValue="formData[index]['key']"
+        :value="formData[index]['key']"
         @update:value="(value) => changed(index, 'key', value)"
         :allow-input="noSideSpace"
         :placeholder="`参数${index + 1}`"
@@ -42,7 +41,7 @@
       <n-input
         style="width: 50%"
         size="small"
-        :modelValue="formData[index]['value']"
+        :value="formData[index]['value']"
         @update:value="(value) => changed(index, 'value', value)"
         :allow-input="noSideSpace"
         :placeholder="`值${index + 1}`"
@@ -65,8 +64,8 @@
 </template>
 <script lang="ts" setup>
 import { uuid } from '@/utils/utils'
-import { NInput, NButton, NInputGroup, NDivider, NSelect } from 'naive-ui'
-import { ref } from 'vue'
+import { NInput, NButton, NInputGroup, NDivider } from 'naive-ui'
+import { ref, watch } from 'vue'
 import { KV } from './type'
 
 const props = withDefaults(defineProps<{ value: Array<KV>; title: string; options?: string[] }>(), {
@@ -121,6 +120,16 @@ const disableParams = (index: number) => {
 const noSideSpace = (value: string) => {
   return !value.startsWith(' ') && !value.endsWith(' ')
 }
+
+watch(
+  () => props.value,
+  () => {
+    if (props.value) {
+      console.log(props.value)
+      formData.value = props.value
+    }
+  }
+)
 </script>
 <style lang="less" scoped>
 :deep(.n-divider:not(.n-divider--vertical)) {

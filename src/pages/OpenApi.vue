@@ -8,14 +8,11 @@
       <n-layout-sider
         class="left"
         :width="400"
-        :collapsed="collapsedLeft"
+        :collapsed="true"
         :native-scrollbar="false"
         :collapsed-width="80"
         bordered
         collapse-mode="width"
-        show-trigger
-        @collapse="() => (collapsedLeft = true)"
-        @expand="() => (collapsedLeft = false)"
       >
         <ApiType @change="menuChange" />
       </n-layout-sider>
@@ -37,7 +34,9 @@
           show-trigger="arrow-circle"
           @collapse="() => (collapsedRight = true)"
           @expand="() => (collapsedRight = false)"
-        />
+        >
+          <DataHistory :active="activeKey" />
+        </n-layout-sider>
       </n-layout>
 
       <!-- 右侧属性列表 -->
@@ -48,10 +47,10 @@
 <script setup lang="ts">
 import ApiType from '@/apiView/siderBar/indext'
 import ToolBar from '@/apiView/ToolBar'
-import RequestContent from '@/apiView/RequestContent'
+import RequestContent from '@/apiView/RequestContent/Index'
+import DataHistory from '@/apiView/DataHistory'
 import { ref, computed } from 'vue'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
-const collapsedLeft = ref(true)
 const collapsedRight = ref(false)
 
 const windowWidth = ref<number>(0)
