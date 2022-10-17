@@ -1,41 +1,71 @@
 <template>
-  <NCard>
+  <n-card>
+    <div class="static-data">
+      <n-select
+        :options="staticDataList"
+        :value="formData.id"
+        class="selected"
+        @update:value="dataChangeHandler"
+        clearable
+        @clear="clear"
+      />
+      <n-input v-model:value="formData.title" class="title">
+        <template #prefix>
+          <IconPark name="data" />
+        </template>
+      </n-input>
+      <n-space>
+        <n-button-group class="save">
+          <n-button @click="formData.id ? handleUpdate : handleSave" type="primary">保存</n-button>
+        </n-button-group>
+      </n-space>
+    </div>
     <n-tabs>
       <n-tab-pane name="data" tab="处理数据" display-directive="show">
         <DataView v-model:content="formData.afterData" class="content" :disable="true" />
       </n-tab-pane>
       <n-tab-pane name="origin" tab="原始数据" display-directive="show">
         <StaticDataView
-          :id="formData.id"
           :content="formData.originData"
-          :title="options.title"
+          :title="formData.title"
           class="content"
-          @change="dataChangeHandler"
+          @update:content="originDataChange"
         />
       </n-tab-pane>
       <n-tab-pane name="scripts" tab="脚本" display-directive="show">
         <ScriptsEdtor :data="options.script" class="content" @update:data="scriptChangeHandler" />
       </n-tab-pane>
     </n-tabs>
-  </NCard>
+  </n-card>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, watch } from 'vue'
-import { NTabs, NTabPane, NCard } from 'naive-ui'
+import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { NTabs, NTabPane, NCard, NSelect, NSpace, NButtonGroup, NButton, NInput } from 'naive-ui'
+import type { SelectOption } from 'naive-ui'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
 import { AfterScript } from '@/apiView/hooks/http/type'
+import { message, dialog } from '@/utils/message'
 import type { StaticRequestOptions } from './type'
-import { getStaticData, StaticDataDetail } from '@/api/data'
+import {
+  createStaticData,
+  getStaticData,
+  getStaticDataList,
+  StaticDataDetail,
+  updateStaticData
+} from '@/api/data'
 import { makeFunction } from '@/utils/data'
 import { useEventBus, StaticKey } from '@/bus'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
+
+const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(
   defineProps<{
     options?: StaticRequestOptions
+    mode?: 'debug' | 'use'
   }>(),
   {
     options: () => {
@@ -47,18 +77,37 @@ const props = withDefaults(
           type: ScriptType.Javascript
         }
       }
-    }
+    },
+    mode: 'use'
   }
 )
+let snapShot
+if (props.mode === 'debug') {
+  useEventBus(StaticKey.STATIC_KEY, async (id: any) => {
+    id as unknown as string
+    await dataChangeHandler(id)
+  })
+  snapShot = useDataSnapShot('STATIC', true)
+}
 
-useEventBus(StaticKey.STATIC_KEY, async (id: any) => {
-  id as unknown as string
-  await dataChangeHandler(id)
-})
-const snapShot = useDataSnapShot('STATIC', true)
+const loadStaticList = async () => {
+  try {
+    const resp = await getStaticDataList()
+    if (resp.status === 200) {
+      staticDataList.value = resp.data.map((el: StaticDataDetail) => {
+        return {
+          label: el.name,
+          value: el.id
+        }
+      })
+    }
+  } catch (err: any) {
+    console.log(err || err.message)
+  }
+}
 
 const formData = reactive<{
-  id: string
+  id?: string
   title: string
   originData: any
   afterData: string
@@ -74,22 +123,29 @@ const emits = defineEmits<{
   (e: 'scriptChange', script: AfterScript): void
 }>()
 
-const dataChangeHandler = async (id: string, title?: string) => {
+const clear = () => {
+  formData.id = undefined
+}
+
+const originDataChange = (value: any) => {
+  formData.originData = value
+  getAfterData(props.options.script)
+}
+const dataChangeHandler = async (id: string) => {
   if (id) {
     const resp: StaticDataDetail | undefined = await loadStaicData(id)
     if (resp) {
       formData.originData = resp.data
       getAfterData(props.options.script)
       formData.id = id
-      formData.title = title || resp.name
-      snapShot.save({ id: id, name: title || resp.name })
+      formData.title = resp.name
+      snapShot && snapShot.save({ id: id, name: resp.name })
     }
   } else {
     formData.originData = ''
     formData.afterData = ''
   }
-
-  emits('dataChange', formData.id, formData.title)
+  emits('dataChange', formData.id!, formData.title)
 }
 
 const scriptChangeHandler = async (script: AfterScript) => {
@@ -128,7 +184,45 @@ const loadStaicData = async (id: string): Promise<StaticDataDetail | undefined> 
   }
 }
 
+const handleSave = async () => {
+  try {
+    const resp = await createStaticData({
+      data: formData.originData,
+      name: formData.title || '未命名'
+    })
+    if (resp.status === 201) {
+      const data = resp.data as StaticDataDetail
+      formData.id = data.id
+      formData.title = data.name
+      formData.originData = data.data
+      message.success('数据保存成功')
+      await loadStaticList()
+    } else {
+      message.warning('数据保存失败')
+    }
+  } catch (err) {
+    message.warning('数据保存失败')
+  }
+}
+const handleUpdate = async () => {
+  try {
+    const resp = await updateStaticData(formData.id!, {
+      data: formData.originData,
+      name: formData.title || '未命名'
+    })
+    if (resp.status === 200) {
+      message.success('数据更新成功')
+      await loadStaticList()
+    } else {
+      message.warning('数据更新失败')
+    }
+  } catch (err) {
+    message.warning('数据更新失败')
+  }
+}
+
 onMounted(async () => {
+  await loadStaticList()
   if (props.options && props.options.dataId) {
     const resp: StaticDataDetail | undefined = await loadStaicData(props.options.dataId)
     if (resp) {
@@ -139,6 +233,24 @@ onMounted(async () => {
       emits('dataChange', props.options.dataId, resp.name)
     }
   }
+})
+onUnmounted(async () => {
+  dialog.warning({
+    title: '警告',
+    content: '静态数据尚未保存，是否立刻保存？',
+    positiveText: '确定',
+    negativeText: '不确定',
+    onPositiveClick: async () => {
+      if (formData.id) {
+        await handleUpdate()
+      } else {
+        await handleSave()
+      }
+    },
+    onNegativeClick: () => {
+      message.warning('静态数据未保存')
+    }
+  })
 })
 
 watch(
@@ -152,4 +264,11 @@ watch(
 )
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.static-data {
+  display: flex;
+  .selected {
+    width: 300px;
+  }
+}
+</style>
