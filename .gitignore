@@ -3,3 +3,4 @@ package-lock.json
 components.d.ts
 .DS_Store
 dist
+.idea
