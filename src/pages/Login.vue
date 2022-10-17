@@ -82,7 +82,7 @@ const loginAction = async () => {
     try {
       const resp = await loginApi(data)
       if (resp.status === 200) {
-        userStore.setUserInfo(resp.data)
+        userStore.setToken(resp.data)
         message.success('登录成功')
         const redirect: string | undefined = route.query.redirect as string | undefined
         if (redirect) {

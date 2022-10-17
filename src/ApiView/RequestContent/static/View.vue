@@ -29,7 +29,7 @@ import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
 import { AfterScript } from '@/apiView/hooks/http/type'
 import type { StaticRequestOptions } from './type'
-import { getStaticData, StaticDataDetail } from '@/api/data'
+import { getStaticDataApi, StaticDataDetail } from '@/api/data'
 import { makeFunction } from '@/utils/data'
 const props = withDefaults(
   defineProps<{
@@ -109,7 +109,7 @@ const getAfterData = (script: AfterScript) => {
 
 const loadStaicData = async (id: string): Promise<StaticDataDetail | undefined> => {
   try {
-    const resp = await getStaticData(id)
+    const resp = await getStaticDataApi(id)
     if (resp.status === 200) {
       return resp.data
     }
