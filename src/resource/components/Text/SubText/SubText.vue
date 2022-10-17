@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useEventBus } from '@/bus/useEventBus'
+import { useEventBus } from '@/bus'
 import { http } from '@/utils/http'
 import type { SubTextType } from './type'
 import { useProp } from '@/resource/hooks'

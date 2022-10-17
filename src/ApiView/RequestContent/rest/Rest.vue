@@ -1,5 +1,5 @@
 <template>
-  <NCard>
+  <n-card>
     <div class="api">
       <n-select
         :options="requestMethodOptions"
@@ -81,7 +81,7 @@
         </n-tab-pane>
       </n-tabs>
     </div>
-  </NCard>
+  </n-card>
 </template>
 <script setup lang="ts">
 import {
@@ -105,7 +105,14 @@ import useRestRequest from '@/apiView/hooks/http'
 import ScriptsEditor from '@/components/ScriptsEditor'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { AfterScript, RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
-import { requestOptionsToStore } from '@/apiView/hooks/http/utils'
+import { recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
+import { useEventBus, StaticKey } from '@/bus'
+import { getRestData } from '@/api/data'
+import { RestDataDetail } from '@/api/data/type'
+import useDataSnapShot from '@/apiView/hooks/snapshot'
+const getEmptyParams = () => {
+  return [{ key: '', value: '', disable: false, id: uuid() }]
+}
 
 const props = withDefaults(
   defineProps<{
@@ -160,6 +167,31 @@ interface ErrorResponse extends Error {
   }
 }
 
+useEventBus(StaticKey.REST_KEY, async (id: any) => {
+  id as string, await loadRestData(id)
+  await send()
+})
+const snapShot = useDataSnapShot('REST', true)
+
+const loadRestData = async (id: string) => {
+  try {
+    const resp = await getRestData(id)
+    if (resp.status === 200) {
+      const data: RestDataDetail = resp.data
+      formData.method = data.method
+      formData.url = data.url
+      const body = recordabletoKV(data.data || {})
+      formData.data = body.length > 0 ? body : getEmptyParams()
+      const params = recordabletoKV(data.params || {})
+      formData.params = params.length > 0 ? params : getEmptyParams()
+
+      const headers = recordabletoKV(data.headers || {})
+      formData.headers = headers.length > 0 ? headers : getEmptyParams()
+    }
+  } catch (err) {
+    return undefined
+  }
+}
 const emits = defineEmits<{
   (e: 'update:restOptions', value: RequestOption): void
   (e: 'change', value: RequestOption): void
@@ -180,6 +212,7 @@ const send = async () => {
     response.value.data = JSON.stringify(resp.data, null, '\t')
     response.value.afterData = JSON.stringify(resp.afterData, null, '\t')
     response.value.headers = resp.headers
+    snapShot.save(formData)
   } catch (err: any) {
     err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})

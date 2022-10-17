@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useEventBus } from '@/bus/useEventBus'
+import { useEventBus, StaticKey } from '@/bus'
 import { calcComponentAxis } from '@/utils/utils'
 import { BaseComponent } from '@/resource/models'
 import { Position } from '@/types/common'
@@ -59,7 +59,7 @@ interface EventParams {
 useEventBus('move', (event) => {
   showLine((event as EventParams).isDownward, (event as EventParams).isRightward)
 })
-useEventBus('unmove', () => {
+useEventBus(StaticKey.DRAG_STOP, () => {
   hideLine()
 })
 

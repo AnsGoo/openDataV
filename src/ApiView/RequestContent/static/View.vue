@@ -31,6 +31,8 @@ import { AfterScript } from '@/apiView/hooks/http/type'
 import type { StaticRequestOptions } from './type'
 import { getStaticData, StaticDataDetail } from '@/api/data'
 import { makeFunction } from '@/utils/data'
+import { useEventBus, StaticKey } from '@/bus'
+import useDataSnapShot from '@/apiView/hooks/snapshot'
 const props = withDefaults(
   defineProps<{
     options?: StaticRequestOptions
@@ -49,6 +51,12 @@ const props = withDefaults(
   }
 )
 
+useEventBus(StaticKey.STATIC_KEY, async (id: any) => {
+  id as unknown as string
+  await dataChangeHandler(id)
+})
+const snapShot = useDataSnapShot('STATIC', true)
+
 const formData = reactive<{
   id: string
   title: string
@@ -66,20 +74,22 @@ const emits = defineEmits<{
   (e: 'scriptChange', script: AfterScript): void
 }>()
 
-const dataChangeHandler = async (id: string, title: string) => {
+const dataChangeHandler = async (id: string, title?: string) => {
   if (id) {
     const resp: StaticDataDetail | undefined = await loadStaicData(id)
     if (resp) {
       formData.originData = resp.data
       getAfterData(props.options.script)
+      formData.id = id
+      formData.title = title || resp.name
+      snapShot.save({ id: id, name: title || resp.name })
     }
   } else {
     formData.originData = ''
     formData.afterData = ''
   }
-  formData.id = id
-  formData.title = title
-  emits('dataChange', id, title)
+
+  emits('dataChange', formData.id, formData.title)
 }
 
 const scriptChangeHandler = async (script: AfterScript) => {
