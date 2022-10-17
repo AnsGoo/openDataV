@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { NTabs, NTabPane, NCard, NSelect, NSpace, NButtonGroup, NButton, NInput } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
@@ -48,7 +48,7 @@ import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
 import { AfterScript } from '@/apiView/hooks/http/type'
-import { message, dialog } from '@/utils/message'
+import { message } from '@/utils/message'
 import type { StaticRequestOptions } from './type'
 import {
   createStaticData,
@@ -233,24 +233,6 @@ onMounted(async () => {
       emits('dataChange', props.options.dataId, resp.name)
     }
   }
-})
-onUnmounted(async () => {
-  dialog.warning({
-    title: '警告',
-    content: '静态数据尚未保存，是否立刻保存？',
-    positiveText: '确定',
-    negativeText: '不确定',
-    onPositiveClick: async () => {
-      if (formData.id) {
-        await handleUpdate()
-      } else {
-        await handleSave()
-      }
-    },
-    onNegativeClick: () => {
-      message.warning('静态数据未保存')
-    }
-  })
 })
 
 watch(

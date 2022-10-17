@@ -2,6 +2,48 @@ import { Random } from 'mockjs'
 import dataDict from './data'
 import { Covid19Data } from './data'
 
+const restData = [{
+  id: '1',
+  name: '新增确诊人数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getNew',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+{
+  id: '2',
+  name: '累计确诊人数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getTotal',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+{
+  id: '3',
+  name: '无症状感染人数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getNoSymptom',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+{
+  id: '4',
+  name: '风险地区个数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getRiskArea',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+]
+
 export default [
   {
     url: '/login',
@@ -229,6 +271,23 @@ export default [
         createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
         updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
       }
+    }
+  },
+  {
+    url: '/restDataList',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      return restData
+    }
+  },
+  {
+    url: '/restData',
+    method: 'get',
+    statusCode: 200,
+    response: ({ query }: any) => {
+      const id: string = query['id']
+      return restData.filter(ele => ele.id === id )[0]
     }
   }
 ]

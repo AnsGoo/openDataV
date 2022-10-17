@@ -68,7 +68,6 @@ const loadStaticList = async () => {
 }
 
 const selectDataItem = (id: string) => {
-  console.log(id)
   eventBus.emit(StaticKey.REST_KEY, id)
 }
 const getHistory = async () => {

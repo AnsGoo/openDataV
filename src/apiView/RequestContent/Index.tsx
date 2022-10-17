@@ -12,9 +12,9 @@ export default defineComponent({
   setup(props) {
     return () => {
       if (props.active == 'REST') {
-        return <Rest />
+        return <Rest mode="debug" />
       } else if (props.active == 'STATIC') {
-        return <Static />
+        return <Static mode="debug" />
       } else if (props.active == 'GRAPHQL') {
         return <GraphQL />
       }

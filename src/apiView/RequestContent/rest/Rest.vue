@@ -149,7 +149,8 @@ const props = withDefaults(
           type: ScriptType.Javascript
         }
       }
-    }
+    },
+    mode: 'use'
   }
 )
 
@@ -348,6 +349,7 @@ onMounted(async () => {
 <style scoped lang="less">
 .rest-data {
   display: flex;
+  margin-bottom: 5px;
   .selected {
     width: 300px;
   }
