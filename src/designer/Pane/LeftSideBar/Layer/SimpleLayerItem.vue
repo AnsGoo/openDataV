@@ -34,7 +34,7 @@ const basicStore = useBasicStoreWithOut()
 
 const handleDragStart = (event: DragEvent, index: string) => {
   // event.preventDefault()
-  event.dataTransfer?.setData('compomentIndex', index)
+  event.dataTransfer?.setData('componentIndex', index)
   event.stopPropagation()
 }
 
@@ -49,18 +49,18 @@ const handleDragOver = (event: DragEvent, index: string, isEmit = false) => {
 const handleDrop = (event: DragEvent, index: string) => {
   event.preventDefault()
   event.stopPropagation()
-  const compomentIndex: string = event.dataTransfer?.getData('compomentIndex') as string
-  const toIndex: string = calcDragIndex(compomentIndex, index)
-  const indexs: number[] = compomentIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
-  const compoment: Optional<BaseComponent> = basicStore.cutComponent(
-    indexs[indexs.length - 1],
+  const componentIndex: string = event.dataTransfer?.getData('componentIndex') as string
+  const toIndex: string = calcDragIndex(componentIndex, index)
+  const indexes: number[] = componentIndex.split('-').map((i) => Number(i))
+  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
+  const component: Optional<BaseComponent> = basicStore.cutComponent(
+    indexes[indexes.length - 1],
     cutComponent?.parent
   )
-  if (compoment && toIndex) {
-    const toIndexs: number[] = compomentIndex.split('-').map((i) => Number(i))
+  if (component && toIndex) {
+    const toIndexs: number[] = componentIndex.split('-').map((i) => Number(i))
     const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
-    basicStore.insertComponent(toIndexs[toIndexs.length - 1], compoment, insertComponent)
+    basicStore.insertComponent(toIndexs[toIndexs.length - 1], component, insertComponent)
     emits('select', index)
   }
 }

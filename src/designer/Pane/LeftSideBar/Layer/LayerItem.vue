@@ -45,7 +45,7 @@ const basicStore = useBasicStoreWithOut()
 
 const handleDragStart = (event: DragEvent, index: string) => {
   // event.preventDefault()
-  event.dataTransfer?.setData('compomentIndex', index)
+  event.dataTransfer?.setData('componentIndex', index)
   event.stopPropagation()
 }
 
@@ -60,22 +60,22 @@ const handleDragOver = (event: DragEvent, index: string, isEmit = false) => {
 const handleDrop = (event: DragEvent, toIndex: string) => {
   event.preventDefault()
   event.stopPropagation()
-  const fromIndex: string = event.dataTransfer?.getData('compomentIndex') as string
+  const fromIndex: string = event.dataTransfer?.getData('componentIndex') as string
   const isDragAble = diffIndex(fromIndex, toIndex)
   if (!isDragAble) return
-  const indexs: number[] = fromIndex.split('-').map((i) => Number(i))
-  const cutCompoment: Optional<BaseComponent> = basicStore.getComponentByIndex(indexs)
-  const inCompoment = cloneDeep(cutCompoment)
+  const indexes: number[] = fromIndex.split('-').map((i) => Number(i))
+  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
+  const inComponent = cloneDeep(cutComponent)
   const toIndexs: number[] = toIndex.split('-').map((i) => Number(i))
   const toComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
 
-  if (inCompoment && toComponent && toIndex) {
-    const toComponentid: string = toComponent.id
-    basicStore.cutComponent(indexs[indexs.length - 1], cutCompoment?.parent)
+  if (inComponent && toComponent && toIndex) {
+    const toComponentId: string = toComponent.id
+    basicStore.cutComponent(indexes[indexes.length - 1], cutComponent?.parent)
     const parent = toComponent.parent || undefined
     const data = parent ? parent.subComponents : basicStore.componentData
-    const newToIndex = data.findIndex((el) => el.id === toComponentid)
-    basicStore.insertComponent(newToIndex!, inCompoment!, parent)
+    const newToIndex = data.findIndex((el) => el.id === toComponentId)
+    basicStore.insertComponent(newToIndex!, inComponent!, parent)
     emits('select', toIndex)
   }
 }
