@@ -1,14 +1,24 @@
-import { getStaticData, getStaticDataList, updateStaticData, createStaticData } from './staticData'
-import { getRestData, getRestDataList, updateRestData, createRestData } from './restData'
+import {
+  getStaticDataApi,
+  getStaticDataListApi,
+  updateStaticDataApi,
+  createStaticDataApi
+} from './staticData'
+import {
+  getRestDataApi,
+  getRestDataListApi,
+  updateRestDataApi,
+  createRestDataApi
+} from './restData'
 import type { StaticDataDetail } from './type'
 export {
-  getStaticData,
-  getStaticDataList,
-  updateStaticData,
-  createStaticData,
-  getRestData,
-  getRestDataList,
-  updateRestData,
-  createRestData
+  getStaticDataApi,
+  getStaticDataListApi,
+  updateStaticDataApi,
+  createStaticDataApi,
+  getRestDataApi,
+  getRestDataListApi,
+  updateRestDataApi,
+  createRestDataApi
 }
 export type { StaticDataDetail }

@@ -6,9 +6,9 @@ import { StaticDataDetail } from './type'
  * 根据id 加载静态数据
  * @param id
  */
-export const getStaticData = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
+export const getStaticDataApi = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.get<StaticDataDetail>({
-    url: '/staticData',
+    url: '/dataset/static/',
     params: {
       id
     }
@@ -18,9 +18,9 @@ export const getStaticData = async (id: string): Promise<AxiosResponse<StaticDat
 /**
  * 获取静态数据列表
  */
-export const getStaticDataList = async (): Promise<AxiosResponse<StaticDataDetail[]>> => {
+export const getStaticDataListApi = async (): Promise<AxiosResponse<StaticDataDetail[]>> => {
   return http.get<StaticDataDetail[]>({
-    url: '/staticDataList'
+    url: '/dataset/static/'
   })
 }
 
@@ -29,13 +29,13 @@ export const getStaticDataList = async (): Promise<AxiosResponse<StaticDataDetai
  * @param id 静态数据id
  * @param data 静态数据
  */
-export const updateStaticData = async (
+export const updateStaticDataApi = async (
   id: string,
   data: StaticDataDetail
 ): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.put<StaticDataDetail>({
-    url: `/staticData`,
-    data: { ...data, id }
+    url: `/dataset/static/${id}`,
+    data: { ...data }
   })
 }
 
@@ -43,11 +43,11 @@ export const updateStaticData = async (
  * 创建静态数据
  * @param data 静态数据
  */
-export const createStaticData = async (
+export const createStaticDataApi = async (
   data: StaticDataDetail
 ): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.post<StaticDataDetail>({
-    url: '/staticData',
+    url: '/dataset/static/',
     data: data
   })
 }

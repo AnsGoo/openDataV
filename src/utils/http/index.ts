@@ -2,6 +2,7 @@ import Axios, { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } f
 import { httpConfig, ResultType } from '@/utils/http/config'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { message } from '@/utils/message'
 
 class AxiosHttp {
   private axiosInstance: AxiosInstance
@@ -53,8 +54,13 @@ class AxiosHttp {
   }
 
   // 异常请求处理
-  private errorHandler(status: number, message?: string): void {
-    console.log(status, message)
+  private errorHandler(status: number, msg?: string): void {
+    switch (status) {
+      case 401:
+        message.info('请登录后使用')
+        break
+    }
+    console.log(status, msg)
   }
 
   public get<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {

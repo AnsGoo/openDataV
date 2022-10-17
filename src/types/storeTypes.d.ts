@@ -49,5 +49,4 @@ export interface AreaData {
 export interface UserInfo {
   username: string
   token: string | undefined
-  permissions: string[]
 }

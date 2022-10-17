@@ -39,7 +39,12 @@ import { computed, onMounted, onUnmounted, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { createStaticData, getStaticDataList, StaticDataDetail, updateStaticData } from '@/api/data'
+import {
+  createStaticDataApi,
+  getStaticDataListApi,
+  StaticDataDetail,
+  updateStaticDataApi
+} from '@/api/data'
 import { NSelect } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { message, dialog } from '@/utils/message'
@@ -99,7 +104,7 @@ const clearSelect = () => {
 }
 const loadStaticList = async () => {
   try {
-    const resp = await getStaticDataList()
+    const resp = await getStaticDataListApi()
     if (resp.status === 200) {
       staticDataList.value = resp.data.map((el: StaticDataDetail) => {
         return {
@@ -115,7 +120,7 @@ const loadStaticList = async () => {
 
 const handleSave = async () => {
   try {
-    const resp = await createStaticData(JSON.parse(contentRef.value))
+    const resp = await createStaticDataApi(JSON.parse(contentRef.value))
     if (resp.status === 201) {
       await loadStaticList()
       const data = resp.data as StaticDataDetail
@@ -133,7 +138,7 @@ const handleSave = async () => {
 }
 const handleUpdate = async () => {
   try {
-    const resp = await updateStaticData(props.id!, JSON.parse(contentRef.value))
+    const resp = await updateStaticDataApi(props.id!, JSON.parse(contentRef.value))
     if (resp.status === 200) {
       message.success('数据更新成功')
       savedStatus.value = false

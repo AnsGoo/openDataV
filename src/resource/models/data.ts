@@ -1,4 +1,4 @@
-import { getStaticData, StaticDataDetail } from '@/api/data'
+import { getStaticDataApi, StaticDataDetail } from '@/api/data'
 import useRestRequest, { RestRequest } from '@/apiView/hooks/http'
 import { AfterScript, StoreRequestOption } from '@/apiView/hooks/http/type'
 import { makeFunction } from '@/utils/data'
@@ -98,7 +98,7 @@ class StaticRequestData implements RequestData {
         ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
         : undefined
     try {
-      const resp = await getStaticData(this.dataId!)
+      const resp = await getStaticDataApi(this.dataId!)
       response.status = resp.status || -1
       if (resp.status < 400) {
         const data: StaticDataDetail = resp.data

@@ -105,15 +105,8 @@ class RouteView {
    * @param to 需要跳转的路由
    * @returns 检查结果
    */
-  private checkPermission(to: RouteLocationNormalized): boolean {
-    const permissions: string[] = userStore.userPermissions
-    const permission: string | undefined = to.meta.permission as string | undefined
-
-    if (permission && permissions.findIndex((el: string) => el === permission) > -1) {
-      return true
-    }
-
-    return false
+  private checkPermission(_to: RouteLocationNormalized): boolean {
+    return true
   }
 
   private toLogin(to: RouteLocationNormalized, next: NavigationGuardNext): void {
