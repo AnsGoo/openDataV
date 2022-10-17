@@ -6,20 +6,6 @@
     ref="cm"
     @change="formChange"
   >
-    <template #tool-bar>
-      <div class="buttons">
-        <n-select
-          :options="staticDataList"
-          :value="id"
-          class="item data"
-          size="small"
-          @update:value="dataChange"
-          clearable
-          @clear="clearSelect"
-        />
-        <icon-park class="item button" name="save-one" @click="id ? handleSave : handleUpdate" />
-      </div>
-    </template>
     <template #footer>
       <div class="footer">
         <div class="left">{{ title ? `数据名称：${title}` : '' }}</div>
@@ -35,34 +21,21 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import {
-  createStaticDataApi,
-  getStaticDataListApi,
-  StaticDataDetail,
-  updateStaticDataApi
-} from '@/api/data'
-import { NSelect } from 'naive-ui'
-import type { SelectOption } from 'naive-ui'
-import { message, dialog } from '@/utils/message'
-
-const staticDataList = ref<Array<SelectOption>>([])
 
 const savedStatus = ref<boolean>(true)
 
 const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
-    id?: string
     disable?: boolean
     content?: any
     title?: string
   }>(),
   {
-    id: '',
     disabled: false,
     content: '',
     title: ''
@@ -79,101 +52,16 @@ const config = computed<CodemirrorOption>(() => {
 })
 
 const emits = defineEmits<{
-  (e: 'update:id', id?: string): void
-  (e: 'change', id: string, title: string): void
+  (e: 'update:content', content?: string): void
 }>()
 
 const contentRef = computed<string>(() => {
   return JSON.stringify(props.content, null, '\t')
 })
-const formChange = () => {
+const formChange = (value: string) => {
+  emits('update:content', JSON.parse(value))
   savedStatus.value = false
 }
-
-const dataChange = async (value: string, option) => {
-  let title = option ? option.label : ''
-  emits('change', value, title!)
-  emits('update:id', value)
-  savedStatus.value = true
-}
-
-const clearSelect = () => {
-  savedStatus.value = true
-  emits('update:id', '')
-  emits('change', '', '')
-}
-const loadStaticList = async () => {
-  try {
-    const resp = await getStaticDataListApi()
-    if (resp.status === 200) {
-      staticDataList.value = resp.data.map((el: StaticDataDetail) => {
-        return {
-          label: el.name,
-          value: el.id
-        }
-      })
-    }
-  } catch (err: any) {
-    console.log(err || err.message)
-  }
-}
-
-const handleSave = async () => {
-  try {
-    const resp = await createStaticDataApi(JSON.parse(contentRef.value))
-    if (resp.status === 201) {
-      await loadStaticList()
-      const data = resp.data as StaticDataDetail
-      emits('update:id', undefined)
-      emits('change', data.id!, data.name)
-      emits('update:id', data.id)
-      savedStatus.value = false
-      message.success('数据保存成功')
-    } else {
-      message.warning('数据保存失败')
-    }
-  } catch (err) {
-    message.warning('数据保存失败')
-  }
-}
-const handleUpdate = async () => {
-  try {
-    const resp = await updateStaticDataApi(props.id!, JSON.parse(contentRef.value))
-    if (resp.status === 200) {
-      message.success('数据更新成功')
-      savedStatus.value = false
-    } else {
-      message.warning('数据更新失败')
-    }
-  } catch (err) {
-    message.warning('数据更新失败')
-  }
-}
-
-onMounted(async () => {
-  await loadStaticList()
-})
-
-onUnmounted(async () => {
-  if (!savedStatus.value) {
-    dialog.warning({
-      title: '警告',
-      content: '静态数据尚未保存，是否立刻保存？',
-      positiveText: '确定',
-      negativeText: '不确定',
-      onPositiveClick: async () => {
-        if (props.id) {
-          await handleUpdate()
-        } else {
-          await handleSave()
-        }
-      },
-      onNegativeClick: () => {
-        message.warning('静态数据未保存')
-      }
-    })
-  }
-})
 </script>
 <style lang="less" scoped>
 .buttons {

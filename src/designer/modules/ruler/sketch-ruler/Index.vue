@@ -1,9 +1,9 @@
 <template>
-  <div id="mb-ruler" class="style-ruler mb-ruler" v-contextmenu.stop="ruleContextmenus">
+  <div id="mb-ruler" class="style-ruler mb-ruler" v-contextmenu.stop="ruleContextMenus">
     <!-- 水平方向 -->
     <RulerWrapper
       :vertical="false"
-      ref="HRulerWrapperref"
+      ref="HRulerWrapperRef"
       :width="width"
       :height="16"
       :canvas-height="height"
@@ -20,7 +20,7 @@
     <!-- 竖直方向 -->
     <RulerWrapper
       :vertical="true"
-      ref="VRulerWrapperref"
+      ref="VRulerWrapperRef"
       :width="16"
       :height="height"
       :canvas-height="height"
@@ -65,18 +65,18 @@ const props = withDefaults(
   }
 )
 
-const VRulerWrapperref = ref<InstanceType<typeof RulerWrapper> | null>(null)
-const HRulerWrapperref = ref<InstanceType<typeof RulerWrapper> | null>(null)
+const VRulerWrapperRef = ref<InstanceType<typeof RulerWrapper> | null>(null)
+const HRulerWrapperRef = ref<InstanceType<typeof RulerWrapper> | null>(null)
 const isShowReferLine = ref<boolean>(true)
 const clearLines = () => {
   // @ts-ignore
-  VRulerWrapperref.value?.clearLines()
+  VRulerWrapperRef.value?.clearLines()
   // @ts-ignore
-  HRulerWrapperref.value?.clearLines()
+  HRulerWrapperRef.value?.clearLines()
   isShowReferLine.value = true
 }
 
-const ruleContextmenus = (): ContextmenuItem[] => {
+const ruleContextMenus = (): ContextmenuItem[] => {
   return [
     {
       text: '显示辅助线',

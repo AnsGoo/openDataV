@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { eventBus } from '@/bus/useEventBus'
+import { eventBus, StaticKey } from '@/bus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { BaseComponent } from '@/resource/models'
@@ -53,7 +53,7 @@ const handleDragOver = (event: DragEvent, index: string, isEmit = false) => {
   event.preventDefault()
   event.stopPropagation()
   if (isEmit && index !== props.activeKey) {
-    eventBus.emit('ActiveMenu', index)
+    eventBus.emit(StaticKey.ACTIVE_MENU, index)
   }
 }
 

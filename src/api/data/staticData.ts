@@ -8,10 +8,7 @@ import { StaticDataDetail } from './type'
  */
 export const getStaticDataApi = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.get<StaticDataDetail>({
-    url: '/dataset/static/',
-    params: {
-      id
-    }
+    url: `/dataset/static/${id}`
   })
 }
 

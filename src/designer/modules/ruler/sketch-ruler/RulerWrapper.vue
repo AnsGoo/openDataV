@@ -108,13 +108,11 @@ const realWidth = computed<string>(() => {
 })
 const indicatorStyle = computed(() => {
   const indicatorOffset = (valueNum.value - (props.start || 0)) * props.scale!
-  let positionKey = 'top'
-  let boderKey = 'borderLeft'
-  positionKey = props.vertical ? 'top' : 'left'
-  boderKey = props.vertical ? 'borderBottom' : 'borderLeft'
+  const positionKey = props.vertical ? 'top' : 'left'
+  const borderKey = props.vertical ? 'borderBottom' : 'borderLeft'
   return {
     [positionKey]: indicatorOffset + 'px',
-    [boderKey]: `1px ${props.palette?.lineBoardStyle || 'dashed'} ${props.palette?.lineColor}`
+    [borderKey]: `1px ${props.palette?.lineBoardStyle || 'dashed'} ${props.palette?.lineColor}`
   }
 })
 
