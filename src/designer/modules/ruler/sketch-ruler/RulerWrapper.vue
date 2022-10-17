@@ -39,8 +39,10 @@
 <script lang="ts" setup>
 import RulerLine from './RulerLine.vue'
 import CanvasRuler from '../canvas-ruler/index.vue'
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { PaletteType } from '../index-types'
+import { useHandleKey } from '@/utils/handleKey'
+import { isMac } from '@/utils/is'
 const props = withDefaults(
   defineProps<{
     scale: number
@@ -132,6 +134,22 @@ const handleLineRelease = (value: number, index: number) => {
 const handleLineRemove = (index: any) => {
   lines.value.splice(index, 1)
 }
+
+const handleKey = useHandleKey()
+onMounted(() => {
+  // 拦截 Ctrl + A 事件
+  if (isMac) {
+    handleKey('command+a', (e: KeyboardEvent) => {
+      e.preventDefault()
+      // TODO 添加全选组件方法
+    })
+  } else {
+    handleKey('ctrl+a', (e: KeyboardEvent) => {
+      e.preventDefault()
+      // TODO 添加全选组件方法
+    })
+  }
+})
 </script>
 
 <style lang="less" scoped>
