@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import { viteMockServe } from 'vite-plugin-mock'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
+import AutoImport from 'unplugin-auto-import/vite'
 
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
@@ -35,6 +36,9 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         import { setupProdMockServer } from '../mock/mockProdServer';
         setupProdMockServer();
       `
+      }),
+      AutoImport({
+        imports: ['vue', 'pinia', 'vue-router']
       })
     ],
     base: './',
