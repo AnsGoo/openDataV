@@ -1,0 +1,19 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "OpenDataV docs",
+  "private": true,
+  "scripts": {
+    "dev": "vitepress --port 3333 --open",
+    "build": "vitepress build",
+    "serve": "vitepress serve",
+    "clean:lib": "rimraf node_modules"
+  },
+  "keywords": [],
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "vite": "^3.0.7",
+    "vitepress": "1.0.0-alpha.21",
+    "vue": "^3.2.37"
+  }
+}
