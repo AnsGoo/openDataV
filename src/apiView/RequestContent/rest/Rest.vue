@@ -11,7 +11,7 @@
       />
       <n-input v-model:value="formData.title" class="title">
         <template #prefix>
-          <IconPark name="data" />
+          <IconPark name="api" />
         </template>
       </n-input>
       <n-space>
@@ -223,6 +223,7 @@ interface ErrorResponse extends Error {
 let snapShot
 if (props.mode === 'debug') {
   useEventBus(StaticKey.REST_KEY, async (id: any) => {
+    console.log(id)
     id as string, await loadRestData(id)
     await send()
   })
@@ -274,7 +275,7 @@ const send = async () => {
     response.value.data = JSON.stringify(resp.data, null, '\t')
     response.value.afterData = JSON.stringify(resp.afterData, null, '\t')
     response.value.headers = resp.headers
-    snapShot && snapShot.save(formData)
+    formData.id && snapShot && snapShot.save(formData)
   } catch (err: any) {
     err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})

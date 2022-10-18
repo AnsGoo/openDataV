@@ -17,7 +17,6 @@ const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 
 const dataChange = (resp: any, _: DataType) => {
-  console.log(resp)
   if (!resp || !resp.afterData) {
     return
   }
