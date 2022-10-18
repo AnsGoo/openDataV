@@ -2,7 +2,7 @@
   "name": "open-data-v",
   "version": "0.0.0",
   "scripts": {
-    "bootstrap": "pnpm install -r",
+    "bootstrap": "pnpm install",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "pnpm build && vite preview",
@@ -58,6 +58,7 @@
     "postcss": "^8.4.16",
     "postcss-html": "^1.2.0",
     "prettier": "^2.4.1",
+    "rimraf": "^3.0.2",
     "stylelint": "^14.0.1",
     "stylelint-config-recommended-vue": "^1.0.0",
     "tailwindcss": "^3.1.8",
