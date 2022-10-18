@@ -20,24 +20,21 @@
 
 🍨gitee:[https://gitee.com/small_bud_star/DataV](https://gitee.com/small_bud_star/DataV)
 
-gitee 仅做代码同步，issues或者RP请在github提交。
+gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
 
-目前该项目在不断的完善中，🎉欢迎issuer,🌹欢迎start, 🎨欢迎commit, 🚀欢迎use...，💪欢迎一切技术交流活动
+目前该项目在不断的完善中，🎉欢迎 issuer,🌹欢迎 start, 🎨欢迎 commit, 🚀欢迎 use...，💪欢迎一切技术交流活动
 
 ## 👁️预览
 
 ### 🤿 页面编辑
 
 1. 组件添加
-
 ![组件添加](screenshot/screenshots2.gif)
 
 2. 组件操作
-
 ![组件操作](screenshot/screenshots1.gif)
 
 3. 组件数据配置
-
 ![组件数据配置](screenshot/screenshots.gif)
 
 
@@ -73,8 +70,8 @@ gitee 仅做代码同步，issues或者RP请在github提交。
 ## 💂开发
 
 ### 🧊开发环境
-| 名称 | 版本    |
-| ---- | ------- |
+| 名称   | 版本      |
+|------|---------|
 | node | 16.14.x |
 | pnpm | 7.9.3   |
 | vue  | 3.2.37  |
@@ -84,8 +81,14 @@ gitee 仅做代码同步，issues或者RP请在github提交。
 ### 🎮启动项目
 
 ```shell
+
+#  安装全局依赖
+npm install -g pnpm rimraf
+
 # 安装依赖
 pnpm install -r
+或
+pnpm bootstrap
 
 # 运行项目
 pnpm dev
@@ -98,7 +101,7 @@ pnpm build
 
 **技术交流，请加微信群**
 
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221009)
+![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221015)
 
 **更新动态请关注公众号**
 

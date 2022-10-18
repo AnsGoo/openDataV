@@ -2,7 +2,7 @@
   <n-form :model="formData">
     <n-form-item label="动态数据" label-placement="top">
       <n-input-group>
-        <n-input :style="{ flex: 1 }" v-model:value="formData.restOptions.url" readonly>
+        <n-input style="flex: 1" v-model:value="formData.restOptions.url" readonly>
           <template #prefix>
             <n-gradient-text type="success" style="font-weight: 800">
               {{ formData.restOptions.method }}
@@ -26,7 +26,7 @@
       </n-input-number>
     </n-form-item>
   </n-form>
-  <n-modal v-model:show="isShow">
+  <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 600px"
       title="动态数据"
@@ -55,12 +55,12 @@ import {
   NGradientText
 } from 'naive-ui'
 import { BaseComponent, DataType, RestRequestData } from '@/resource/models'
-import Rest from '@/ApiView/RequestContent/rest'
-import { RequestOption } from '@/ApiView/hooks/http/type'
-import { RequestMethod } from '@/ApiView/RequestContent/requestEnums'
+import Rest from '@/apiView/RequestContent/rest'
+import { RequestOption } from '@/apiView/hooks/http/type'
+import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { storeOptionToRequestOptions } from '@/ApiView/hooks/http/utils'
+import { storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()

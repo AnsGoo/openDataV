@@ -29,7 +29,11 @@ export const useEchart = (chartEl: Ref<ElRef>) => {
   })
 
   const updateEchart = (option: EchartOption) => {
-    chart?.setOption(option)
+    try {
+      chart?.setOption(option)
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return { updateEchart, resizeHandler }

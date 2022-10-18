@@ -6,10 +6,9 @@
 import { ref, onMounted } from 'vue'
 import { useEchart } from '../../hooks'
 import WaveChartComponent from './config'
-import { useProp } from '@/resource/hooks'
+import { useProp, useData } from '@/resource/hooks'
 import 'echarts-liquidfill'
 import { WaveChartType } from './type'
-import { useData } from '@/resource/hooks/useData'
 import { DataType } from '@/resource/models'
 import { RequestResponse } from '@/resource/models/type'
 
@@ -20,12 +19,9 @@ const props = defineProps<{
 const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 const chartData = ref<number>(0)
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as { data: number }
-    chartData.value = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  if (resp.status >= 0) {
     chartData.value = resp.afterData
   }
 

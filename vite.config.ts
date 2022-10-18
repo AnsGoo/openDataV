@@ -56,7 +56,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       fs: {
         allow: ['..'],
         strict: false
-      }
+      },
+      cors: true
     },
     build: {
       target: 'es2015',

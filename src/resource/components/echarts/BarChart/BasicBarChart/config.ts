@@ -1,8 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent, DataProtocol } from '@/resource/models'
-import { DataIntegrationMode, DemoData } from '@/resource/models/data'
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { BaseComponent } from '@/resource/models'
+import { DataIntegrationMode } from '@/resource/models/data'
 
 export const componentName = 'BasicBarChart'
 class BasicBarChartComponent extends BaseComponent {
@@ -179,8 +178,8 @@ class BasicBarChartComponent extends BaseComponent {
     }
   ]
   _style: PropsType[] = []
-  get exampleData(): DemoData {
-    const data = [
+  get exampleData(): any {
+    return [
       { label: '秦', value: Math.round(Math.random() * 100) },
       { label: '齐', value: Math.round(Math.random() * 100) },
       { label: '楚', value: Math.round(Math.random() * 100) },
@@ -189,15 +188,6 @@ class BasicBarChartComponent extends BaseComponent {
       { label: '韩', value: Math.round(Math.random() * 100) },
       { label: '魏', value: Math.round(Math.random() * 100) }
     ]
-
-    return {
-      data,
-      protocol: DataProtocol.JSON,
-      script: {
-        code: 'return resp.filter(el => el.value > 50)',
-        type: ScriptType.Javascript
-      }
-    }
   }
 }
 

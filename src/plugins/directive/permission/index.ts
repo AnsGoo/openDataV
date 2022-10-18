@@ -1,10 +1,8 @@
 import type { Directive, DirectiveBinding } from 'vue'
-import { useUserStoreWithOut } from '@/store/modules/user'
-const userStore = useUserStoreWithOut()
 
 const checkAction = (el: HTMLElement, binding: DirectiveBinding) => {
   const action: string = binding.value
-  const permissions: string[] = userStore.permissions || []
+  const permissions: string[] = [] // todo: 去掉权限相关处理
   if (action) {
     if (permissions.includes(action)) {
       return

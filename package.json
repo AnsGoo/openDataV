@@ -1,14 +1,16 @@
 {
-  "name": "OpenDataV",
+  "name": "open-data-v",
   "version": "0.0.0",
   "scripts": {
+    "bootstrap": "pnpm install -r",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "pnpm build && vite preview",
     "lint": "eslint --ext .js,.ts,.vue,.tsx src/",
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
     "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "reinstall": "rimraf **/pnpm-lock.yaml && rimraf **/node_modules && pnpm run bootstrap"
   },
   "dependencies": {
     "@codemirror/commands": "^6.1.0",

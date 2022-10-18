@@ -8,7 +8,7 @@
       :title="`图标数量${iconList.length}`"
       @close="close"
       @update:show="() => (isShow = false)"
-      :style="{ width: '50%', maxWidth: '800px' }"
+      style="width: 50%; maxwidth: 800px"
     >
       <ul class="icon-list">
         <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">

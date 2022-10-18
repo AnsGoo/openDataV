@@ -14,6 +14,7 @@ import type { CanvasStyleData } from '@/types/storeTypes'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { BaseComponent } from '@/resource/models'
+import { ComponentDataType } from '@/types/component'
 const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 
@@ -46,7 +47,7 @@ onMounted(async () => {
   const snapshot = await snapShotStore.latestRecord()
   if (snapshot) {
     basicStore.setLayoutData({
-      canvasData: snapshot.canvasData,
+      canvasData: snapshot.canvasData as ComponentDataType[],
       canvasStyle: snapshot.canvasStyle
     })
   }

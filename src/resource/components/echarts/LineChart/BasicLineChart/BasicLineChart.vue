@@ -4,13 +4,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useProp } from '@/resource/hooks'
+import { useProp, useData } from '@/resource/hooks'
 import BasicLineChartComponent from './config'
 import { BasicLineChart } from './type'
 import type { EChartsOption, LineSeriesOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
-import { useData } from '@/resource/hooks/useData'
 import { DataType } from '@/resource/models'
 import { RequestResponse } from '@/resource/models/type'
 
@@ -20,16 +19,12 @@ const props = defineProps<{
   component: BasicLineChartComponent
 }>()
 let chartData: Array<{ label: string; value: number }> = []
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as Array<{ label: string; value: number }>
-    chartData = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  if (resp.status >= 0) {
     chartData = resp.afterData
+    updateData(chartData)
   }
-
-  updateData(chartData)
 }
 
 useData(props.component, dataChange)

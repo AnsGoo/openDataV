@@ -50,10 +50,9 @@
 
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
-import { useProp } from '@/resource/hooks'
+import { useProp, useData } from '@/resource/hooks'
 import { BaseComponent, DataType } from '@/resource/models'
 import { ScrollTableType } from './type'
-import { useData } from '@/resource/hooks/useData'
 import { RequestResponse } from '@/resource/models/type'
 
 const props = defineProps<{
@@ -70,12 +69,9 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const tableData = ref<Array<{ label: string; value: number }>>([])
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as Array<{ name: string; age: number; sex: string }>
-    tableData.value = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  if (resp.status >= 0) {
     tableData.value = resp.afterData
   }
 }

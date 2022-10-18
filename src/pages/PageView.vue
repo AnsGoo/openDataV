@@ -9,11 +9,11 @@
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, computed } from 'vue'
-import { getPage } from '@/api/pages'
+import { getPageApi } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
 import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import { LayoutData } from '@/types/apiTypes'
+import type { LayoutData } from '@/api/pages'
 import { BaseComponent, createComponent } from '@/resource/models'
 
 const componentData = ref<Array<BaseComponent>>([])
@@ -38,8 +38,10 @@ const router = useRouter()
 const initComponents = async (index: string): Promise<void> => {
   console.log('加载通用组件')
   try {
-    const resp = await getPage(index)
-    setPageData(resp.data)
+    const resp = await getPageApi(index)
+    if (resp.data) {
+      setPageData(resp.data)
+    }
   } catch (e: any) {
     router.push({
       name: 'Error'

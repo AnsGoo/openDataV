@@ -1,4 +1,4 @@
-import { ComponentData } from '@/types/apiTypes'
+import { ComponentData } from '@/types/component'
 import Dexie, { Table } from 'dexie'
 
 export interface StoreComponentData extends ComponentData {

@@ -2,6 +2,48 @@ import { Random } from 'mockjs'
 import dataDict from './data'
 import { Covid19Data } from './data'
 
+const restData = [{
+  id: '1',
+  name: '新增确诊人数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getNew',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+{
+  id: '2',
+  name: '累计确诊人数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getTotal',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+{
+  id: '3',
+  name: '无症状感染人数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getNoSymptom',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+{
+  id: '4',
+  name: '风险地区个数',
+  author: Random.name(),
+  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+  method:'GET',
+  url:'/getRiskArea',
+  headers: {'accept': '*/*', 'content-type':'application/json'}
+},
+]
+
 export default [
   {
     url: '/login',
@@ -17,7 +59,7 @@ export default [
     }
   },
   {
-    url: '/pages',
+    url: '/page/page',
     method: 'get',
     statusCode: 200,
     response: () => {
@@ -38,12 +80,12 @@ export default [
     }
   },
   {
-    url: '/page',
+    url: '/page/page/:id',
     method: 'get',
     statusCode: 200,
-    response: ({ query }: any) => {
-      const index: string = query['index']
-      return dataDict[index]
+    response: ({ url }: any) => {
+      const index = url.split('/')[3]
+      return dataDict[index] || dataDict['1b0acf36-d309-43fe-9e0a-7b6942e2f953']
     }
   },
   {
@@ -118,6 +160,134 @@ export default [
           maxData['maxRiskArea'] > el['RiskArea'] ? maxData['maxRiskArea'] : el['RiskArea']
       })
       return maxData
+    }
+  },
+  {
+    url: '/dataset/static/:id',
+    method: 'get',
+    statusCode: 200,
+    response: ({ url }: any) => {
+      const id = url.split('/')[3]
+      if (id === '1') {
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.New
+            }
+          }),
+          id: '1',
+          name: '新增人数',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
+      } else if (id === '2') {
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.NoSymptom
+            }
+          }),
+          id: '2',
+          name: '新增无症状人数',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
+      } else if (id === '3') {
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.total
+            }
+          }),
+          id: '3',
+          name: '累计确诊人数',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
+      } else {
+        return {
+          data: Covid19Data.map((el) => {
+            return {
+              label: el.province,
+              value: el.RiskArea
+            }
+          }),
+          id: '4',
+          name: '现存风险地区',
+          author: Random.name(),
+          createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+          updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+        }
+      }
+    }
+  },
+  {
+    url: '/dataset/static/',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      return [
+        {
+          id: '1',
+          name: '新增人数'
+        },
+        {
+          id: '2',
+          name: '新增无症状人数'
+        },
+        {
+          id: '3',
+          name: '累计确诊人数'
+        },
+        {
+          id: '4',
+          name: '现存风险地区'
+        }
+      ]
+    }
+  },
+  {
+    url: '/dataset/static/:id',
+    method: 'put',
+    statusCode: 202,
+    response: ({ body }) => {
+      return body
+    }
+  },
+  {
+    url: '/dataset/static/',
+    method: 'post',
+    statusCode: 201,
+    response: ({ body }) => {
+      return {
+        ...body,
+        id: Random.integer(5, 100),
+        createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+        updateDate: Random.date('yyyy-MM-dd mm:HH:ss')
+      }
+    }
+  },
+  {
+    url: '/restDataList',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      return restData
+    }
+  },
+  {
+    url: '/restData',
+    method: 'get',
+    statusCode: 200,
+    response: ({ query }: any) => {
+      const id: string = query['id']
+      return restData.filter(ele => ele.id === id )[0]
     }
   }
 ]

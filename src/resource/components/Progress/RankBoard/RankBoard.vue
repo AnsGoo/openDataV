@@ -19,8 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useProp } from '@/resource/hooks'
-import { useData } from '@/resource/hooks/useData'
+import { useProp, useData } from '@/resource/hooks'
 import { BaseComponent, DataType } from '@/resource/models'
 import { RequestResponse } from '@/resource/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
@@ -30,12 +29,9 @@ const props = defineProps<{
 }>()
 
 const dataSource = ref<Array<{ label: string; value: number }>>([])
-const dataChange = (resp: any, type: DataType) => {
-  if (type === DataType.STATIC) {
-    resp as Array<{ label: string; value: number }>
-    dataSource.value = resp
-  } else if (type === DataType.REST) {
-    resp as RequestResponse
+const dataChange = (resp: any, _: DataType) => {
+  resp as RequestResponse<Array<{ label: string; value: number }>>
+  if (resp.status >= 0) {
     dataSource.value = resp.afterData
   }
 

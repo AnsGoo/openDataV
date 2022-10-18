@@ -46,12 +46,12 @@
 import { NForm, NFormItem, NInput, NButton } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import { login } from '@/api/user'
 import { LoginData } from '@/types/user'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
 import { message } from '@/utils/message'
+import { loginApi } from '@/api/user'
 
 const userStore = useUserStoreWithOut()
 const router: Router = useRouter()
@@ -80,9 +80,9 @@ const loginAction = async () => {
     await ruleFormRef.value?.validate()
     const data: LoginData = { ...formData }
     try {
-      const resp = await login(data)
+      const resp = await loginApi(data)
       if (resp.status === 200) {
-        userStore.setUserInfo(resp.data)
+        userStore.setToken(resp.data)
         message.success('登录成功')
         const redirect: string | undefined = route.query.redirect as string | undefined
         if (redirect) {
