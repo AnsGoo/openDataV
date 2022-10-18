@@ -10,7 +10,7 @@
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
     "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/",
     "prepare": "husky install",
-    "reinstall": "rimraf **/pnpm-lock.yaml && rimraf **/node_modules && pnpm run bootstrap"
+    "reinstall": "rimraf pnpm-lock.yaml && rimraf src/**/node_modules && rimraf node_modules && pnpm bootstrap"
   },
   "license": "Apache-2.0",
   "dependencies": {
