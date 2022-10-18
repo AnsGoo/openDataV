@@ -34,9 +34,9 @@ class RouteView {
 
   // 动态获取 modules 目录下的所有 .ts 文件生成基础路由
   private createBasicRoutes = (): AppRouteRecordRaw[] => {
-    const moduleFiles: Recordable<{ [key: string]: any }> = import.meta.globEager(
-      './modules/**/*.ts'
-    )
+    const moduleFiles: Recordable<{ [key: string]: any }> = import.meta.glob('./modules/**/*.ts', {
+      eager: true
+    })
     const routeModuleList: AppRouteRecordRaw[] = []
     Object.keys(moduleFiles).forEach((key) => {
       const mod: { [key: string]: any } = moduleFiles[key].default || {}
@@ -173,9 +173,9 @@ class RouteView {
     }) as unknown as AppRouteRecordRaw[]
   }
 
-  private formatRouteToMenu(routes: Optional<AppRouteRecordRaw[]>): MenuType[] {
+  private formatRouteToMenu(routes: Optional<AppRouteRecordRaw[]>, menus: MenuType[]): void {
     if (!routes) {
-      return []
+      return
     }
 
     const menuRoutes = routes.filter((route) => {
@@ -185,9 +185,9 @@ class RouteView {
       return true
     })
 
-    const menus: MenuType[] = []
     for (const item of menuRoutes) {
-      const children = this.formatRouteToMenu(item.children)
+      const children: MenuType[] = []
+      item.children && this.formatRouteToMenu(item.children, children)
       menus.push({
         name: item.name,
         title: item.meta.title,
@@ -195,14 +195,15 @@ class RouteView {
         children: children.length ? children : undefined
       })
     }
-
-    return menus
   }
 
   // 生成路由菜单
   public generatorMenu() {
     const routes = this.getNormalRoutes()
-    return this.formatRouteToMenu(routes)
+    const menus: MenuType[] = []
+    console.log(routes)
+    this.formatRouteToMenu(routes, menus)
+    return menus
   }
 
   // 获取路由对象

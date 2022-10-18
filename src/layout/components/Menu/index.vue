@@ -27,7 +27,7 @@ defineProps<{
 // 当前路由
 const currentRoute = useRoute()
 const settingStore = useProjectSettingStoreWithOut()
-const menuOptions = reactive<MenuOption[]>([])
+const menuOptions = ref<MenuOption[]>([])
 const selectedKeys = ref<string>(currentRoute.name as string)
 const openKeys = reactive<string[]>([])
 
@@ -89,13 +89,15 @@ function updateMenu() {
         label: route.title,
         key: route.name,
         icon: renderIcon(route.icon),
-        children: children
+        children: children,
+        show: true
       }
     } else {
       return {
         label: renderLink(route.name, route.title),
         key: route.name,
-        icon: renderIcon(route.icon)
+        icon: renderIcon(route.icon),
+        show: true
       }
     }
   }
@@ -106,12 +108,13 @@ function updateMenu() {
   })
 
   // @ts-ignore
-  menuOptions.splice(0, menuOptions.length, ...temp)
+  menuOptions.value = temp
+  console.log(menuOptions.value)
 
   updateSelectedKeys()
 }
 
 onMounted(() => {
-  updateMenu()
+  // updateMenu()
 })
 </script>
