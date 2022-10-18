@@ -1,6 +1,6 @@
 import { getStaticDataApi, StaticDataDetail } from '@/api/data'
-import useRestRequest, { RestRequest } from '@/ApiView/hooks/http'
-import { AfterScript, StoreRequestOption } from '@/ApiView/hooks/http/type'
+import useRestRequest, { RestRequest } from '@/apiView/hooks/http'
+import { AfterScript, StoreRequestOption } from '@/apiView/hooks/http/type'
 import { makeFunction } from '@/utils/data'
 import { cloneDeep } from 'lodash-es'
 import { RequestResponse } from './type'

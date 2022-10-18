@@ -1,4 +1,4 @@
-import { StoreRequestOption } from '@/ApiView/hooks/http/type'
+import { StoreRequestOption } from '@/apiView/hooks/http/type'
 
 export interface StaticDataDetail {
   id?: string

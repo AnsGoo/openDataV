@@ -47,7 +47,7 @@ import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
-import { AfterScript } from '@/ApiView/hooks/http/type'
+import { AfterScript } from '@/apiView/hooks/http/type'
 import { message } from '@/utils/message'
 import type { StaticRequestOptions } from './type'
 import {
@@ -59,7 +59,7 @@ import {
 } from '@/api/data'
 import { makeFunction } from '@/utils/data'
 import { useEventBus, StaticKey } from '@/bus'
-import useDataSnapShot from '@/ApiView/hooks/snapshot'
+import useDataSnapShot from '@/apiView/hooks/snapshot'
 
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(
