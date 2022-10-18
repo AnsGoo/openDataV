@@ -45,10 +45,10 @@
 </template>
 
 <script setup lang="ts">
-import ApiType from '@/ApiView/siderBar/indext'
-import ToolBar from '@/ApiView/ToolBar'
-import RequestContent from '@/ApiView/RequestContent/Index'
-import DataHistory from '@/ApiView/DataHistory'
+import ApiType from '@/apiView/siderBar/indext'
+import ToolBar from '@/apiView/ToolBar'
+import RequestContent from '@/apiView/RequestContent'
+import DataHistory from '@/apiView/DataHistory'
 import { ref, computed } from 'vue'
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
 const collapsedRight = ref(false)

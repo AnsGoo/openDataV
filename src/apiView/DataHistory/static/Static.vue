@@ -32,7 +32,7 @@ import { getStaticDataListApi } from '@/api/data'
 import { NInput, NSpace, NCard, NTabs, NTabPane, NOl, NLi } from 'naive-ui'
 import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
-import useDataSnapShot from '@/ApiView/hooks/snapshot'
+import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { StaticDataDetail } from '@/api/data'
 
 const snapShot = useDataSnapShot('STATIC', true)

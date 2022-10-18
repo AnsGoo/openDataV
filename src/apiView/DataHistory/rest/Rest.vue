@@ -51,7 +51,7 @@ import { NInput, NCard, NTabs, NTabPane, NOl, NLi, NGradientText } from 'naive-u
 import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
 import { RestDataDetail } from '@/api/data/type'
-import useDataSnapShot from '@/ApiView/hooks/snapshot'
+import useDataSnapShot from '@/apiView/hooks/snapshot'
 
 const dataList = ref<RestDataDetail[]>([])
 const snapShot = useDataSnapShot('REST', true)
