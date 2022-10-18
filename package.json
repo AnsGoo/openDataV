@@ -12,6 +12,7 @@
     "prepare": "husky install",
     "reinstall": "rimraf **/pnpm-lock.yaml && rimraf **/node_modules && pnpm run bootstrap"
   },
+  "license": "Apache-2.0",
   "dependencies": {
     "@codemirror/commands": "^6.1.0",
     "@codemirror/lang-javascript": "^6.0.2",
