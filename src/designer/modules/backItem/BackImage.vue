@@ -6,6 +6,9 @@
         @update:value="(value) => handleChange(value, 'backgroundImage')"
         placeholder="请输入图片地址"
       />
+      <n-upload :custom-request="customRequest" :show-file-list="false">
+        <n-button size="small">上传</n-button>
+      </n-upload>
     </n-form-item>
     <n-form-item label="填充">
       <n-select
@@ -40,9 +43,19 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import { NForm, NFormItem, NInput, NSelect, SelectOption } from 'naive-ui'
+import {
+  NForm,
+  NFormItem,
+  NInput,
+  NSelect,
+  SelectOption,
+  NUpload,
+  NButton,
+  UploadCustomRequestOptions
+} from 'naive-ui'
 import { BackgroundImage } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
+import { uploadImageFileApi } from '@/api/images'
 
 const props = defineProps<{
   value: BackgroundImage
@@ -61,6 +74,20 @@ const data = computed<BackgroundImage>(() => {
     backgroundSize: props.value.backgroundSize || 'cover'
   }
 })
+
+const customRequest = async ({ file, onFinish, onError }: UploadCustomRequestOptions) => {
+  try {
+    const formData = new FormData()
+    formData.append('file', file.file as File)
+    const resp = await uploadImageFileApi(formData)
+    if (resp.status === 200) {
+      handleChange(resp.data.url, 'backgroundImage')
+    }
+    onFinish()
+  } catch (e) {
+    onError()
+  }
+}
 
 const repeatOptions: SelectOption[] = [
   {
@@ -165,4 +192,12 @@ const handleChange = (value: string, type: string) => {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+:deep(.n-upload) {
+  width: auto;
+}
+
+:deep(.n-form-item .n-form-item-feedback-wrapper) {
+  --n-feedback-height: 10px;
+}
+</style>

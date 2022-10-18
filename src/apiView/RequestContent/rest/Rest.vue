@@ -1,5 +1,25 @@
 <template>
-  <NCard>
+  <n-card>
+    <div class="rest-data">
+      <n-select
+        :options="restDataList"
+        :value="formData.id"
+        class="selected"
+        @update:value="selectdChange"
+        clearable
+        @clear="clear"
+      />
+      <n-input v-model:value="formData.title" class="title">
+        <template #prefix>
+          <IconPark name="data" />
+        </template>
+      </n-input>
+      <n-space>
+        <n-button-group class="save">
+          <n-button @click="formData.id ? handleUpdate : handleSave">保存</n-button>
+        </n-button-group>
+      </n-space>
+    </div>
     <div class="api">
       <n-select
         :options="requestMethodOptions"
@@ -11,12 +31,7 @@
       <n-input class="url" v-model:value="formData['url']" @update-value="formChange" />
       <n-space>
         <n-button-group class="send">
-          <n-button type="primary" @click="send">发送</n-button>
-        </n-button-group>
-      </n-space>
-      <n-space>
-        <n-button-group class="save">
-          <n-button>保存</n-button>
+          <n-button type="primary" @click="send">调试</n-button>
         </n-button-group>
       </n-space>
     </div>
@@ -81,7 +96,7 @@
         </n-tab-pane>
       </n-tabs>
     </div>
-  </NCard>
+  </n-card>
 </template>
 <script setup lang="ts">
 import {
@@ -93,7 +108,8 @@ import {
   NSpace,
   NTabs,
   NTabPane,
-  NDivider
+  NDivider,
+  SelectOption
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { onMounted, reactive, ref } from 'vue'
@@ -105,11 +121,25 @@ import useRestRequest from '@/apiView/hooks/http'
 import ScriptsEditor from '@/components/ScriptsEditor'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import { AfterScript, RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
-import { requestOptionsToStore } from '@/apiView/hooks/http/utils'
+import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
+import { useEventBus, StaticKey } from '@/bus'
+import {
+  createRestDataApi,
+  getRestDataApi,
+  getRestDataListApi,
+  updateRestDataApi
+} from '@/api/data'
+import { RestDataDetail } from '@/api/data/type'
+import useDataSnapShot from '@/apiView/hooks/snapshot'
+import { message } from '@/utils/message'
+const getEmptyParams = () => {
+  return [{ key: '', value: '', disable: false, id: uuid() }]
+}
 
 const props = withDefaults(
   defineProps<{
     restOptions?: RequestOption
+    mode?: 'debug' | 'use'
   }>(),
   {
     restOptions: () => {
@@ -124,9 +154,27 @@ const props = withDefaults(
           type: ScriptType.Javascript
         }
       }
-    }
+    },
+    mode: 'use'
   }
 )
+
+const restDataList = ref<Array<SelectOption>>([])
+const loadRestList = async () => {
+  try {
+    const resp = await getRestDataListApi()
+    if (resp.status === 200) {
+      restDataList.value = resp.data.map((el: RestDataDetail) => {
+        return {
+          label: el.name,
+          value: el.id
+        }
+      })
+    }
+  } catch (err: any) {
+    console.log(err || err.message)
+  }
+}
 
 const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   return {
@@ -136,6 +184,19 @@ const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
 })
 const requestHeaderOptions = Object.keys(RequestHeaderEnum)
 
+const clear = () => {
+  formData.id = undefined
+  formData.title = undefined
+  formData.headers = [{ key: '', value: '', disable: false, id: uuid() }]
+  formData.data = [{ key: '', value: '', disable: false, id: uuid() }]
+  formData.params = [{ key: '', value: '', disable: false, id: uuid() }]
+  formData.method = RequestMethod.GET
+  formData.url = ''
+  formData.afterScript = {
+    code: '',
+    type: ScriptType.Javascript
+  }
+}
 interface ErrorResponse extends Error {
   config: Recordable
   code?: number | undefined
@@ -159,13 +220,46 @@ interface ErrorResponse extends Error {
     status?: number
   }
 }
+let snapShot
+if (props.mode === 'debug') {
+  useEventBus(StaticKey.REST_KEY, async (id: any) => {
+    id as string, await loadRestData(id)
+    await send()
+  })
+  snapShot = useDataSnapShot('REST', true)
+}
 
+const loadRestData = async (id: string) => {
+  try {
+    const resp = await getRestDataApi(id)
+    if (resp.status === 200) {
+      const data: RestDataDetail = resp.data
+      formData.method = data.method
+      formData.url = data.url
+      const body = recordabletoKV(data.data || {})
+      formData.data = body.length > 0 ? body : getEmptyParams()
+      const params = recordabletoKV(data.params || {})
+      formData.params = params.length > 0 ? params : getEmptyParams()
+      formData.title = data.name
+      formData.id = data.id!
+
+      const headers = recordabletoKV(data.headers || {})
+      formData.headers = headers.length > 0 ? headers : getEmptyParams()
+    }
+  } catch (err) {
+    return undefined
+  }
+}
 const emits = defineEmits<{
   (e: 'update:restOptions', value: RequestOption): void
   (e: 'change', value: RequestOption): void
 }>()
 
-const formData = reactive<RequestOption>(props.restOptions)
+interface RequestDataOption extends RequestOption {
+  title?: string
+  id?: string
+}
+const formData = reactive<RequestDataOption>(props.restOptions)
 const response = ref<RequestResponse>({
   code: 0,
   data: '',
@@ -180,6 +274,7 @@ const send = async () => {
     response.value.data = JSON.stringify(resp.data, null, '\t')
     response.value.afterData = JSON.stringify(resp.afterData, null, '\t')
     response.value.headers = resp.headers
+    snapShot && snapShot.save(formData)
   } catch (err: any) {
     err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})
@@ -198,13 +293,72 @@ const afterScriptChange = (data: AfterScript) => {
   formData.afterScript = data
   formChange()
 }
+const selectdChange = async (id: string) => {
+  await loadRestData(id)
+  await send()
+}
+const handleSave = async () => {
+  try {
+    const headers = KVToRecordable(formData.headers)
+    const params = KVToRecordable(formData.headers)
+    const data = KVToRecordable(formData.data)
+    const resp = await createRestDataApi({
+      data: data,
+      name: formData.title || '未命名',
+      url: formData.url,
+      method: formData.method,
+      headers: headers,
+      params: params
+    })
+    if (resp.status === 201) {
+      const data: RestDataDetail = resp.data
+      formData.id = data.id!
+      formData.title = data.name
+      message.success('数据保存成功')
+    } else {
+      message.warning('数据保存失败')
+    }
+  } catch (err) {
+    message.warning('数据保存失败')
+  }
+}
+const handleUpdate = async () => {
+  try {
+    const headers = KVToRecordable(formData.headers)
+    const params = KVToRecordable(formData.headers)
+    const data = KVToRecordable(formData.data)
+    const resp = await updateRestDataApi(formData.id!, {
+      data: data,
+      name: formData.title || '未命名',
+      url: formData.url,
+      method: formData.method,
+      headers: headers,
+      params: params
+    })
+    if (resp.status === 200) {
+      message.success('数据更新成功')
+    } else {
+      message.warning('数据更新失败')
+    }
+  } catch (err) {
+    message.warning('数据更新失败')
+  }
+}
 
 onMounted(async () => {
   await send()
+  await loadRestList()
 })
 </script>
 
 <style scoped lang="less">
+.rest-data {
+  display: flex;
+  margin-bottom: 5px;
+  .selected {
+    width: 300px;
+  }
+}
 .api {
   display: flex;
   .method {

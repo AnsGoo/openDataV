@@ -17,7 +17,7 @@ export const recordabletoKV = (data: Recordable): Array<KV> => {
     return {
       key: el,
       value: data[el],
-      disable: true,
+      disable: false,
       id: uuid()
     }
   })

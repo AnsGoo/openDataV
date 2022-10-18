@@ -86,7 +86,7 @@
 import { ref, onMounted } from 'vue'
 import { http } from '@/utils/http'
 import { useProp } from '@/resource/hooks'
-import { useEventBus } from '@/bus/useEventBus'
+import { useEventBus } from '@/bus'
 import type { Gauge } from './type'
 import { BaseComponent } from '@/resource/models'
 import { useBasicStoreWithOut } from '@/store/modules/basic'

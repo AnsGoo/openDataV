@@ -57,7 +57,7 @@ import { ref, computed, onMounted } from 'vue'
 import { http } from '@/utils/http'
 import { useProp } from '@/resource/hooks'
 import { uuid } from '@/utils/utils'
-import { useEventBus } from '@/bus/useEventBus'
+import { useEventBus } from '@/bus'
 import type { Progress } from './type'
 import { BaseComponent } from '@/resource/models'
 

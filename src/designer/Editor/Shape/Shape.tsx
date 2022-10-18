@@ -3,7 +3,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { mod360, copyText, throttleFrame } from '@/utils/utils'
-import { eventBus } from '@/bus/useEventBus'
+import { eventBus, StaticKey } from '@/bus'
 import type { Vector } from '@/types/common'
 import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
@@ -203,7 +203,7 @@ export default defineComponent({
       })
       const up = () => {
         // 触发元素停止移动事件，用于隐藏标线
-        eventBus.emit('unmove')
+        eventBus.emit(StaticKey.DRAG_STOP)
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
         if (props.info && props.info.parent) {
