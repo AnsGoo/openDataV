@@ -6,9 +6,9 @@ import { AfterScriptDetail } from './type'
  * 根据id 加载后置脚本
  * @param id
  */
-export const getAfterScriptApi = async (id: string): Promise<AxiosResponse<AfterScriptDetail>> => {
+export const getAfterScriptApi = async (id: number): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.get<AfterScriptDetail>({
-    url: `/scripts/${id}`
+    url: `/dataset/script/${id}/`
   })
 }
 
@@ -17,7 +17,7 @@ export const getAfterScriptApi = async (id: string): Promise<AxiosResponse<After
  */
 export const getAfterScriptListApi = async (): Promise<AxiosResponse<AfterScriptDetail[]>> => {
   return http.get<AfterScriptDetail[]>({
-    url: '/scripts'
+    url: '/dataset/script/'
   })
 }
 
@@ -27,11 +27,11 @@ export const getAfterScriptListApi = async (): Promise<AxiosResponse<AfterScript
  * @param data 后置脚本
  */
 export const updateAfterScriptApi = async (
-  id: string,
+  id: number,
   data: AfterScriptDetail
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.put<AfterScriptDetail>({
-    url: `/scripts`,
+    url: `/dataset/script/${id}/`,
     data: { ...data, id }
   })
 }
@@ -44,7 +44,19 @@ export const createAfterScriptApi = async (
   data: AfterScriptDetail
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.post<AfterScriptDetail>({
-    url: '/scripts',
+    url: '/dataset/script/',
     data: data
+  })
+}
+
+/**
+ * 删除后置脚本
+ * @param data 后置脚本
+ */
+export const deleteAfterScriptApi = async (
+  id: number
+): Promise<AxiosResponse<AfterScriptDetail>> => {
+  return http.post<AfterScriptDetail>({
+    url: `/dataset/script/${id}/`
   })
 }
