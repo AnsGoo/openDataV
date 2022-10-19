@@ -82,11 +82,8 @@ gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
 
 ```shell
 
-#  安装全局依赖
-npm install -g pnpm rimraf
-
 # 安装依赖
-pnpm install -r
+pnpm install
 或
 pnpm bootstrap
 

@@ -14,7 +14,7 @@ import { DataType } from '@/resource/models'
 import { RequestResponse } from '@/resource/models/type'
 
 const chartEl = ref<ElRef>(null)
-let gloabalOption: EChartsOption
+let globalOption: EChartsOption
 const props = defineProps<{
   component: BasicLineChartComponent
 }>()
@@ -37,8 +37,8 @@ const { updateEchart, resizeHandler } = useEchart(chartEl)
 const { propValue } = useProp<BasicLineChart>(props.component, propValueChange)
 
 onMounted(async () => {
-  gloabalOption = getOption()
-  updateEchart(gloabalOption)
+  globalOption = getOption()
+  updateEchart(globalOption)
 })
 
 const getOption = () => {
@@ -141,12 +141,12 @@ const updateData = (resp: Array<{ label: string; value: number }>) => {
       label: ele.label
     }
   })
-  gloabalOption = getOption()
-  gloabalOption.series![0].data = data.map((el) => el.value)
-  gloabalOption.xAxis = {
-    ...gloabalOption.xAxis,
+  globalOption = getOption()
+  globalOption.series![0].data = data.map((el) => el.value)
+  globalOption.xAxis = {
+    ...globalOption.xAxis,
     data: data.map((el) => el.label)
   } as XAXisComponentOption
-  updateEchart(gloabalOption)
+  updateEchart(globalOption)
 }
 </script>
