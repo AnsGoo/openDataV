@@ -1,2 +1,2 @@
-import view from './view.vue'
+import view from './View.vue'
 export default view

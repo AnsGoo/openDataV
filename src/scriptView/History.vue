@@ -52,7 +52,7 @@ onMounted(async () => {
   await loadStaticList()
 })
 </script>
-<style lang="less">
+<style lang="less" scoped>
 .data-item {
   &:hover {
     transform: scale(1.01);

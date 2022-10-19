@@ -16,7 +16,9 @@
       </n-input>
       <n-space v-if="mode === 'debug'">
         <n-button-group class="save">
-          <n-button @click="formData.id ? handleUpdate : handleSave" type="primary">保存</n-button>
+          <n-button @click="formData.id ? handleUpdate() : handleSave()" type="primary"
+            >保存</n-button
+          >
         </n-button-group>
       </n-space>
     </div>

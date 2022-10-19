@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { NCard, NSpace, NButtonGroup, NButton, NInput, NDivider, NTabs, NTabPane } from 'naive-ui'
 import { ScriptType } from '@/components/ScriptsEditor/eunm'
 import ScriptsEdtor from '@/components/ScriptsEditor'
@@ -169,8 +169,6 @@ const handleUpdate = async () => {
     message.warning('数据更新失败')
   }
 }
-
-onMounted(async () => {})
 </script>
 
 <style lang="less" scoped>

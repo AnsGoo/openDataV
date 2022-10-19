@@ -108,7 +108,6 @@ function updateMenu() {
 
   // @ts-ignore
   menuOptions.value = temp
-  console.log(menuOptions.value)
 
   updateSelectedKeys()
 }
