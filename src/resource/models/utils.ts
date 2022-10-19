@@ -12,22 +12,22 @@ export function createComponent(component: ComponentDataType): any {
     obj.setStyleValue(component)
     obj.dataIntegrationMode = component.dataIntegrationMode || DataIntegrationMode.SELF
     const data = component.data
-    if (data && obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
-      if (data.type === DataType.STATIC) {
-        const options = data.requestOptions as StaticRequestOptions
-        obj.changeRequestDataConfig(DataType.STATIC, {
-          id: options.dataId,
-          script: options.script
-        })
-      } else if (data.type === DataType.REST) {
-        const options = data.requestOptions as RestRequestOptions
-        obj.changeRequestDataConfig(DataType.REST, {
-          options: options.restOptions,
-          otherConfig: data.otherConfig
-        })
-      }
-    } else {
-      if (obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+    if (obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+      if (data) {
+        if (data.type === DataType.STATIC) {
+          const options = data.requestOptions as StaticRequestOptions
+          obj.changeRequestDataConfig(DataType.STATIC, {
+            id: options.dataId,
+            script: options.script
+          })
+        } else if (data.type === DataType.REST) {
+          const options = data.requestOptions as RestRequestOptions
+          obj.changeRequestDataConfig(DataType.REST, {
+            options: options.restOptions,
+            otherConfig: data.otherConfig
+          })
+        }
+      } else {
         obj.loadDemoData()
       }
     }
