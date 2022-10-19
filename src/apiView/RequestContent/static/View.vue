@@ -14,7 +14,7 @@
           <IconPark name="data" />
         </template>
       </n-input>
-      <n-space>
+      <n-space v-if="mode === 'debug'">
         <n-button-group class="save">
           <n-button @click="formData.id ? handleUpdate : handleSave" type="primary">保存</n-button>
         </n-button-group>
@@ -30,6 +30,7 @@
           :title="formData.title"
           class="content"
           @update:content="originDataChange"
+          :mode="mode"
         />
       </n-tab-pane>
       <n-tab-pane name="scripts" tab="脚本" display-directive="show">

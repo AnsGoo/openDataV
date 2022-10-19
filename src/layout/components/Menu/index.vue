@@ -7,12 +7,11 @@
     :collapsed-icon-size="20"
     :indent="24"
     :value="selectedKeys"
-    :expanded-keys="openKeys"
   />
 </template>
 
 <script lang="ts" setup>
-import { ref, reactive, onMounted, computed, watch, h } from 'vue'
+import { ref, onMounted, computed, watch, h } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { routeView, MenuType } from '@/router'
@@ -29,7 +28,7 @@ const currentRoute = useRoute()
 const settingStore = useProjectSettingStoreWithOut()
 const menuOptions = ref<MenuOption[]>([])
 const selectedKeys = ref<string>(currentRoute.name as string)
-const openKeys = reactive<string[]>([])
+// const openKeys = reactive<string[]>([])
 
 const inverted = computed(() => {
   return ['dark', 'header-dark'].includes(settingStore.navTheme)
@@ -41,12 +40,12 @@ watch(
   () => {
     updateMenu()
 
-    if (currentRoute.matched && currentRoute.matched.length) {
-      openKeys.splice(0, openKeys.length)
-      currentRoute.matched.forEach((item) => {
-        openKeys.push(item.name as string)
-      })
-    }
+    // if (currentRoute.matched && currentRoute.matched.length) {
+    //   openKeys.splice(0, openKeys.length)
+    //   currentRoute.matched.forEach((item) => {
+    //     openKeys.push(item.name as string)
+    //   })
+    // }
   },
   {
     immediate: true

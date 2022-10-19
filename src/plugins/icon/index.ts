@@ -71,7 +71,8 @@ import {
   CheckOne,
   CloseOne,
   Success,
-  Attention
+  Attention,
+  CodeOne
 } from '@icon-park/vue-next'
 import IconPark from './index.vue'
 
@@ -151,5 +152,6 @@ export default {
     app.component(CloseOne.name, CloseOne)
     app.component(Success.name, Success)
     app.component(Attention.name, Attention)
+    app.component(CodeOne.name, CodeOne)
   }
 }

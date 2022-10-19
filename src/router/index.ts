@@ -201,7 +201,6 @@ class RouteView {
   public generatorMenu() {
     const routes = this.getNormalRoutes()
     const menus: MenuType[] = []
-    console.log(routes)
     this.formatRouteToMenu(routes, menus)
     return menus
   }

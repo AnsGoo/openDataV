@@ -4,7 +4,7 @@ const basicRoutes = [
   {
     path: '/data',
     name: 'Data',
-    component: () => EmptyLayout,
+    component: EmptyLayout,
     redirect: 'API',
     meta: {
       title: '数据管理',
@@ -23,10 +23,10 @@ const basicRoutes = [
       {
         path: '/data/script',
         name: 'Script',
-        component: () => import('@/pages/OpenApi.vue'),
+        component: () => import('@/pages/Scripts.vue'),
         meta: {
           title: '脚本管理',
-          icon: 'api'
+          icon: 'code-one'
         }
       }
     ]
