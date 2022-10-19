@@ -223,7 +223,6 @@ interface ErrorResponse extends Error {
 let snapShot
 if (props.mode === 'debug') {
   useEventBus(StaticKey.REST_KEY, async (id: any) => {
-    console.log(id)
     id as string, await loadRestData(id)
     await send()
   })
