@@ -3,7 +3,6 @@
     <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
-          style="flex: 1"
           @click="() => (isShow = true)"
           :readonly="true"
           placeholder="编辑请点击"

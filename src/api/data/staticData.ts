@@ -8,7 +8,7 @@ import { StaticDataDetail } from './type'
  */
 export const getStaticDataApi = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.get<StaticDataDetail>({
-    url: `/dataset/static/${id}`
+    url: `/dataset/static/${id}/`
   })
 }
 
@@ -31,7 +31,7 @@ export const updateStaticDataApi = async (
   data: StaticDataDetail
 ): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.put<StaticDataDetail>({
-    url: `/dataset/static/${id}`,
+    url: `/dataset/static/${id}/`,
     data: { ...data }
   })
 }
