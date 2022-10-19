@@ -2,46 +2,68 @@ import { Random } from 'mockjs'
 import dataDict from './data'
 import { Covid19Data } from './data'
 
-const restData = [{
-  id: '1',
-  name: '新增确诊人数',
-  author: Random.name(),
-  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  method:'GET',
-  url:'/getNew',
-  headers: {'accept': '*/*', 'content-type':'application/json'}
-},
-{
-  id: '2',
-  name: '累计确诊人数',
-  author: Random.name(),
-  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  method:'GET',
-  url:'/getTotal',
-  headers: {'accept': '*/*', 'content-type':'application/json'}
-},
-{
-  id: '3',
-  name: '无症状感染人数',
-  author: Random.name(),
-  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  method:'GET',
-  url:'/getNoSymptom',
-  headers: {'accept': '*/*', 'content-type':'application/json'}
-},
-{
-  id: '4',
-  name: '风险地区个数',
-  author: Random.name(),
-  createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-  method:'GET',
-  url:'/getRiskArea',
-  headers: {'accept': '*/*', 'content-type':'application/json'}
-},
+const restData = [
+  {
+    id: '1',
+    name: '新增确诊人数',
+    author: Random.name(),
+    createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    method: 'GET',
+    url: '/getNew',
+    headers: { accept: '*/*', 'content-type': 'application/json' }
+  },
+  {
+    id: '2',
+    name: '累计确诊人数',
+    author: Random.name(),
+    createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    method: 'GET',
+    url: '/getTotal',
+    headers: { accept: '*/*', 'content-type': 'application/json' }
+  },
+  {
+    id: '3',
+    name: '无症状感染人数',
+    author: Random.name(),
+    createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    method: 'GET',
+    url: '/getNoSymptom',
+    headers: { accept: '*/*', 'content-type': 'application/json' }
+  },
+  {
+    id: '4',
+    name: '风险地区个数',
+    author: Random.name(),
+    createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    method: 'GET',
+    url: '/getRiskArea',
+    headers: { accept: '*/*', 'content-type': 'application/json' }
+  }
+]
+
+const scriptList = [
+  {
+    id: '1',
+    name: '过滤函数',
+    author: Random.name(),
+    createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    code: 'return resp.filter(el => el.value > 10)',
+    type: 'Javascript'
+  },
+  {
+    id: '2',
+    name: '转化函数',
+    author: Random.name(),
+    createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
+    code: 'return resp.map(el => {return { value: el.value, lable: el.name}})',
+    type: 'Javascript'
+  }
 ]
 
 export default [
@@ -287,7 +309,24 @@ export default [
     statusCode: 200,
     response: ({ query }: any) => {
       const id: string = query['id']
-      return restData.filter(ele => ele.id === id )[0]
+      return restData.filter((ele) => ele.id === id)[0]
+    }
+  },
+  {
+    url: '/scripts',
+    method: 'get',
+    statusCode: 200,
+    response: () => {
+      return scriptList
+    }
+  },
+  {
+    url: '/scripts/:id',
+    method: 'get',
+    statusCode: 200,
+    response: ({ url }) => {
+      const id = url.split('/')[2]
+      return scriptList.filter((el) => el.id === id)[0]
     }
   }
 ]
