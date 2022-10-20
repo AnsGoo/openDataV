@@ -37,21 +37,19 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, watch } from 'vue'
-import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { NSelect } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import CodeEditor from '@/components/CodeEditor'
+import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 
-const savedStatus = ref<boolean>(true)
-
-const isShow = ref<boolean>(false)
-
 const projectStore = useProjectSettingStoreWithOut()
+const savedStatus = ref<boolean>(true)
+const isShow = ref<boolean>(false)
 const props = withDefaults(
   defineProps<{
     data: AfterScript
@@ -128,6 +126,7 @@ watch(
   }
 )
 </script>
+
 <style lang="less" scoped>
 .buttons {
   display: flex;
@@ -170,4 +169,5 @@ watch(
       background-color: #d03050;
     }
   }
+}
 </style>
