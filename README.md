@@ -70,8 +70,8 @@ gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
 ## 💂开发
 
 ### 🧊开发环境
-| 名称   | 版本      |
-|------|---------|
+| 名称 | 版本    |
+| ---- | ------- |
 | node | 16.14.x |
 | pnpm | 7.9.3   |
 | vue  | 3.2.37  |
@@ -82,11 +82,8 @@ gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
 
 ```shell
 
-#  安装全局依赖
-npm install -g pnpm rimraf
-
 # 安装依赖
-pnpm install -r
+pnpm install
 或
 pnpm bootstrap
 
@@ -97,11 +94,24 @@ pnpm dev
 pnpm build
 ```
 
+## 🧑‍💻代码提交
+- feat: 新功能
+- fix: 修复 Bug
+- docs: 文档修改
+- perf: 性能优化
+- revert: 版本回退
+- ci: CICD 集成相关
+- test: 添加测试代码
+- refactor: 代码重构
+- build: 影响项目构建或依赖修改
+- style: 不影响程序逻辑的代码修改
+- other: 不属于以上类型的其他类型(日常事务)
+
 ## ☎️联系方式
 
 **技术交流，请加微信群**
 
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221015)
+![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221019)
 
 **更新动态请关注公众号**
 

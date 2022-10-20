@@ -35,7 +35,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { NSelect } from 'naive-ui'
@@ -55,6 +55,7 @@ const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
     data: ScriptEditorType
+    config?: CodemirrorOption
   }>(),
   {
     data: () => {
@@ -62,16 +63,18 @@ const props = withDefaults(
         code: '',
         type: ScriptType.Javascript
       }
+    },
+    config: () => {
+      return {
+        height: '600px',
+        tabSize: 4,
+        indentWithTab: true,
+        autofocus: true,
+        disabled: false
+      }
     }
   }
 )
-const config = ref<CodemirrorOption>({
-  height: '600px',
-  tabSize: 4,
-  indentWithTab: true,
-  autofocus: true,
-  disabled: false
-})
 
 const emits = defineEmits<{
   (e: 'update:data', value: ScriptEditorType): void
@@ -118,6 +121,16 @@ const handleSave = () => {
   savedStatus.value = true
   message.success('保存成功')
 }
+
+watch(
+  () => props.data,
+  () => {
+    if (props.data) {
+      form.code = props.data.code
+      form.type = props.data.type
+    }
+  }
+)
 </script>
 <style lang="less" scoped>
 .buttons {

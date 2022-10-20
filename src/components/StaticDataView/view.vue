@@ -2,10 +2,17 @@
   <CodeEditor
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    v-model:code="contentRef"
+    :code="contentRef"
+    @change="codeChange"
     ref="cm"
-    @change="formChange"
   >
+    <template #tool-bar v-if="mode === 'debug'">
+      <div class="buttons">
+        <icon-park class="item button" name="save-one" @click="handleSave" />
+        <icon-park class="item button" name="back" @click="handleUndo" />
+        <icon-park class="item button" name="next" @click="handleRedo" />
+      </div>
+    </template>
     <template #footer>
       <div class="footer">
         <div class="left">{{ title ? `数据名称：${title}` : '' }}</div>
@@ -25,20 +32,21 @@ import { computed, ref } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import { message } from '@/utils/message'
 
 const savedStatus = ref<boolean>(true)
 
 const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
-    disable?: boolean
     content?: any
     title?: string
+    mode?: string
   }>(),
   {
-    disabled: false,
     content: '',
-    title: ''
+    title: '',
+    mode: 'use'
   }
 )
 const config = computed<CodemirrorOption>(() => {
@@ -47,9 +55,22 @@ const config = computed<CodemirrorOption>(() => {
     tabSize: 4,
     indentWithTab: true,
     autofocus: true,
-    disabled: props.disable || false
+    disabled: props.mode === 'debug' ? false : true
   }
 })
+const cm = ref<InstanceType<typeof CodeEditor> | null>(null)
+const handleRedo = () => {
+  const handler = cm.value!.handleRedo
+  if (handler) {
+    handler()
+  }
+}
+const handleUndo = () => {
+  const handler = cm.value!.handleUndo
+  if (handler) {
+    handler()
+  }
+}
 
 const emits = defineEmits<{
   (e: 'update:content', content?: string): void
@@ -58,9 +79,19 @@ const emits = defineEmits<{
 const contentRef = computed<string>(() => {
   return JSON.stringify(props.content, null, '\t')
 })
-const formChange = (value: string) => {
-  emits('update:content', JSON.parse(value))
+
+const codeChange = () => {
   savedStatus.value = false
+}
+
+const handleSave = (value: string) => {
+  try {
+    emits('update:content', JSON.parse(value))
+    savedStatus.value = true
+    message.success('保存成功')
+  } catch (err: any) {
+    message.warning('数据必须符合JSON格式')
+  }
 }
 </script>
 <style lang="less" scoped>

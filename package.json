@@ -2,7 +2,7 @@
   "name": "open-data-v",
   "version": "0.0.0",
   "scripts": {
-    "bootstrap": "pnpm install -r",
+    "bootstrap": "pnpm install",
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "pnpm build && vite preview",
@@ -10,8 +10,9 @@
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
     "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/",
     "prepare": "husky install",
-    "reinstall": "rimraf **/pnpm-lock.yaml && rimraf **/node_modules && pnpm run bootstrap"
+    "reinstall": "rimraf pnpm-lock.yaml && rimraf src/**/node_modules && rimraf node_modules && pnpm bootstrap"
   },
+  "license": "Apache-2.0",
   "dependencies": {
     "@codemirror/commands": "^6.1.0",
     "@codemirror/lang-javascript": "^6.0.2",
@@ -57,6 +58,7 @@
     "postcss": "^8.4.16",
     "postcss-html": "^1.2.0",
     "prettier": "^2.4.1",
+    "rimraf": "^3.0.2",
     "stylelint": "^14.0.1",
     "stylelint-config-recommended-vue": "^1.0.0",
     "tailwindcss": "^3.1.8",

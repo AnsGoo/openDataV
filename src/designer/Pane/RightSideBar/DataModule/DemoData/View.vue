@@ -2,12 +2,7 @@
   <n-form :model="formData">
     <n-form-item key="data" label="示例数据">
       <n-input-group>
-        <n-input
-          style="flex: 1"
-          placeholder="点击预览"
-          @click="() => (isShow = true)"
-          :readonly="true"
-        />
+        <n-input placeholder="点击预览" @click="() => (isShow = true)" :readonly="true" />
         <n-button type="primary" @click="() => (isShow = true)"> 预览 </n-button>
       </n-input-group>
     </n-form-item>
@@ -43,7 +38,7 @@ import {
   NCard,
   NFormItem
 } from 'naive-ui'
-import { BaseComponent, StaticRequestData } from '@/resource/models'
+import { BaseComponent, DemoRequestData } from '@/resource/models'
 
 import DataView from '@/components/DataView'
 
@@ -63,9 +58,9 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+  const demoRequest = props.curComponent.dataConfig?.requestConfig as DemoRequestData
   if (props.curComponent.dataConfig) {
-    const resp = await staticRequest.getRespData({ propValue: props.curComponent.propValue })
+    const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
     formData.afterData = JSON.stringify(resp.afterData, null, '\t')
   }
 }

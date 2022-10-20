@@ -1,6 +1,6 @@
 <template>
   <CodeEditor
-    :config="config"
+    :config="curConfig"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
     :code="content"
     ref="cm"
@@ -19,20 +19,24 @@ const props = withDefaults(
   defineProps<{
     content?: string
     disable?: boolean
+    config?: CodemirrorOption
   }>(),
   {
     content: '',
-    disabled: false
+    disabled: false,
+    config: () => {
+      return {
+        height: '600px',
+        tabSize: 4,
+        indentWithTab: true,
+        autofocus: true,
+        disabled: false
+      }
+    }
   }
 )
-const config = computed<CodemirrorOption>(() => {
-  return {
-    height: '600px',
-    tabSize: 4,
-    indentWithTab: true,
-    autofocus: true,
-    disabled: props.disable || false
-  }
+const curConfig = computed<CodemirrorOption>(() => {
+  return { ...props.config, disabled: props.disable || false }
 })
 
 const emits = defineEmits<{

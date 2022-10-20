@@ -12,7 +12,9 @@ const AsyncComponent = {
     const AsyncComp = defineAsyncComponent(Group.component)
     app.component(Group.componentName, AsyncComp)
 
-    const moduleFilesTs: any = import.meta.globEager('../resource/components/**/index.ts')
+    const moduleFilesTs: any = import.meta.glob('../resource/components/**/index.ts', {
+      eager: true
+    })
     Object.keys(moduleFilesTs).forEach((key: string) => {
       const componentOptions = moduleFilesTs[key]?.default
 
