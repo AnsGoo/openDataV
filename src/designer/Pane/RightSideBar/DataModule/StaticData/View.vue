@@ -36,10 +36,10 @@
 import { nextTick, onMounted, reactive, ref, watch } from 'vue'
 import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
 import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { ScriptType } from '@/enum'
 import Static from '@/apiView/RequestContent/static'
 import { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
-import { AfterScript } from '@/apiView/hooks/http/type'
+import { AfterScript } from '@/types/component'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()

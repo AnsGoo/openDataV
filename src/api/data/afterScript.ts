@@ -6,7 +6,7 @@ import { AfterScriptDetail } from './type'
  * 根据id 加载后置脚本
  * @param id
  */
-export const getAfterScriptApi = async (id: number): Promise<AxiosResponse<AfterScriptDetail>> => {
+export const getAfterScriptApi = async (id: string): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.get<AfterScriptDetail>({
     url: `/dataset/script/${id}/`
   })
@@ -27,7 +27,7 @@ export const getAfterScriptListApi = async (): Promise<AxiosResponse<AfterScript
  * @param data 后置脚本
  */
 export const updateAfterScriptApi = async (
-  id: number,
+  id: string,
   data: AfterScriptDetail
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.put<AfterScriptDetail>({
@@ -54,7 +54,7 @@ export const createAfterScriptApi = async (
  * @param data 后置脚本
  */
 export const deleteAfterScriptApi = async (
-  id: number
+  id: string
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.post<AfterScriptDetail>({
     url: `/dataset/script/${id}/`
