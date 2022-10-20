@@ -1,4 +1,4 @@
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { ScriptType } from '@/enum'
 import { notification } from '../message'
 import { CallbackType } from './type'
 

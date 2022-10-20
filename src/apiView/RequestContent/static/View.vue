@@ -8,8 +8,9 @@
         @update:value="dataChangeHandler"
         clearable
         @clear="clear"
+        placeholder="请选择数据"
       />
-      <n-input v-model:value="formData.title" class="title">
+      <n-input v-model:value="formData.title" class="title" v-if="mode === 'debug'">
         <template #prefix>
           <IconPark name="data" />
         </template>
@@ -36,7 +37,12 @@
         />
       </n-tab-pane>
       <n-tab-pane name="scripts" tab="脚本" display-directive="show">
-        <ScriptsEdtor :data="options.script" class="content" @update:data="scriptChangeHandler" />
+        <ScriptsEdtor
+          :data="options.script"
+          class="content"
+          @update:data="scriptChangeHandler"
+          :mode="mode"
+        />
       </n-tab-pane>
     </n-tabs>
   </n-card>
@@ -46,11 +52,10 @@
 import { onMounted, reactive, ref, watch } from 'vue'
 import { NTabs, NTabPane, NCard, NSelect, NSpace, NButtonGroup, NButton, NInput } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import ScriptsEdtor from '@/components/ScriptsEditor'
+import { ScriptType } from '@/enum'
+import ScriptsEdtor from '../modules/ScriptsEditor'
 import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
-import { AfterScript } from '@/apiView/hooks/http/type'
 import { message } from '@/utils/message'
 import type { StaticRequestOptions } from './type'
 import {
@@ -63,6 +68,7 @@ import {
 import { makeFunction } from '@/utils/data'
 import { useEventBus, StaticKey } from '@/bus'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
+import { AfterScript } from '@/types/component'
 
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(
@@ -253,7 +259,10 @@ watch(
 .static-data {
   display: flex;
   .selected {
-    width: 300px;
+    flex: 4;
+  }
+  .title {
+    flex: 8;
   }
 }
 </style>

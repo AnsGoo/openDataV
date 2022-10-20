@@ -138,4 +138,11 @@ export enum EChartTypeEnum {
   PIE = 'pie'
 }
 
+export enum ScriptType {
+  // json
+  Python = 'Python',
+  // form-data qs
+  Javascript = 'Javascript'
+}
+
 export const GlobalColorSwatches = ['#FFFFFF', '#18A058', '#2080F0', '#F0A020', '#D03050FF']

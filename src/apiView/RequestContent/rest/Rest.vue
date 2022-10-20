@@ -8,15 +8,16 @@
         @update:value="selectdChange"
         clearable
         @clear="clear"
+        placeholder="请选择数据"
       />
-      <n-input v-model:value="formData.title" class="title">
+      <n-input v-model:value="formData.title" class="title" v-if="mode === 'debug'">
         <template #prefix>
           <IconPark name="api" />
         </template>
       </n-input>
-      <n-space>
+      <n-space v-if="mode === 'debug'">
         <n-button-group class="save">
-          <n-button @click="formData.id ? handleUpdate : handleSave">保存</n-button>
+          <n-button @click="formData.id ? handleUpdate() : handleSave()">保存</n-button>
         </n-button-group>
       </n-space>
     </div>
@@ -90,6 +91,7 @@
         <n-tab-pane name="scripts" tab="脚本" display-directive="show">
           <ScriptsEditor
             :data="formData.afterScript"
+            :mode="mode"
             class="content"
             @update:data="afterScriptChange"
           />
@@ -118,9 +120,9 @@ import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import type { AxiosResponse } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/apiView/hooks/http'
-import ScriptsEditor from '@/components/ScriptsEditor'
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import { AfterScript, RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
+import ScriptsEditor from '../modules/ScriptsEditor'
+import { ScriptType } from '@/enum'
+import { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
 import { useEventBus, StaticKey } from '@/bus'
 import {
@@ -132,6 +134,7 @@ import {
 import { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import { message } from '@/utils/message'
+import { AfterScript } from '@/types/component'
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
 }
@@ -356,7 +359,10 @@ onMounted(async () => {
   display: flex;
   margin-bottom: 5px;
   .selected {
-    width: 300px;
+    flex: 4;
+  }
+  .title {
+    flex: 8;
   }
 }
 .api {

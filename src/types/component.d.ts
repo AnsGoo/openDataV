@@ -98,6 +98,11 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   dataIntegrationMode?: DataIntegrationMode
 }
 
+export interface AfterScript {
+  code: string
+  type: ScriptType
+}
+
 export type {
   ComponentStyle,
   ComponentType,
@@ -106,5 +111,6 @@ export type {
   DOMRectStyle,
   GroupStyle,
   CustomFormSchema,
-  InputNumberFormSchema
+  InputNumberFormSchema,
+  AfterScript
 }

@@ -1,9 +1,10 @@
 import Axios from 'axios'
 import type { AxiosInstance, AxiosResponse } from 'axios'
-import { AfterScript, FinallyResponse, StoreRequestOption } from './type'
+import { FinallyResponse, StoreRequestOption } from './type'
 import { cloneDeep } from 'lodash-es'
 import { message } from '@/utils/message'
 import { CallbackType, makeFunction } from '@/utils/data'
+import { AfterScript } from '@/types/component'
 
 export class RestRequest {
   private axiosInstance: AxiosInstance

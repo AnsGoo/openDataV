@@ -1,4 +1,4 @@
-import { AfterScript } from '@/apiView/hooks/http/type'
+import { AfterScript } from '@/types/component'
 
 export interface StaticRequestOptions {
   dataId: string
