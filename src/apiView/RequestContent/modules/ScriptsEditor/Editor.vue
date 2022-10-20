@@ -212,12 +212,12 @@ const handleSave = async () => {
       const data: AfterScriptDetail = resp.data
       formData.id = data.id!
       formData.title = data.name
-      message.success('数据保存成功')
+      message.success('脚本保存成功')
     } else {
-      message.warning('数据保存失败')
+      message.warning('脚本保存失败')
     }
   } catch (err) {
-    message.warning('数据保存失败')
+    message.warning('脚本保存失败')
   }
 }
 const handleUpdate = async () => {
@@ -228,12 +228,12 @@ const handleUpdate = async () => {
       type: props.data.type
     })
     if (resp.status === 200) {
-      message.success('数据更新成功')
+      message.success('脚本更新成功')
     } else {
-      message.warning('数据更新失败')
+      message.warning('脚本更新失败')
     }
   } catch (err) {
-    message.warning('数据更新失败')
+    message.warning('脚本更新失败')
   }
 }
 
@@ -263,14 +263,13 @@ onMounted(async () => {
   display: flex;
   .item {
     display: block;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin: 5px;
     &.language {
       width: 120px;
     }
     &.button {
       &:hover {
-        transform: scale(1.5);
+        transform: scale(1.1);
       }
     }
   }

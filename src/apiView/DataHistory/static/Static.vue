@@ -8,6 +8,7 @@
             v-for="item in dataList"
             :key="item.id!"
             class="data-item"
+            v-contextmenu="() => dataListContextmenus(item.id!)"
             @click="selectDataItem(item.id!)"
             ><n-space>{{ item.name }}</n-space></n-li
           >
@@ -19,6 +20,7 @@
             v-for="item in dataHistory"
             :key="item.id!"
             class="data-item"
+            v-contextmenu="() => dataHistoryContextmenus(item.id!)"
             @click="selectDataItem(item.id!)"
             ><n-space>{{ item.name }}</n-space></n-li
           >
@@ -28,12 +30,14 @@
   </n-card>
 </template>
 <script setup lang="ts">
-import { getStaticDataListApi } from '@/api/data'
+import { deleteStaticDataApi, getStaticDataListApi } from '@/api/data'
 import { NInput, NSpace, NCard, NTabs, NTabPane, NOl, NLi } from 'naive-ui'
 import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { StaticDataDetail } from '@/api/data'
+import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { message } from '@/utils/message'
 
 const snapShot = useDataSnapShot('STATIC', true)
 const dataHistory = ref<StaticDataDetail[]>([])
@@ -61,6 +65,43 @@ onMounted(async () => {
   await loadStaticList()
   await getHistory()
 })
+
+const removeData = async (id: string) => {
+  try {
+    const resp = await deleteStaticDataApi(id)
+    if (resp.status === 200) {
+      message.success('删除成功')
+      await loadStaticList()
+    }
+  } catch (err) {
+    return undefined
+  }
+}
+
+const clearSnapshot = async () => {
+  await snapShot.clear()
+  await getHistory()
+}
+
+const dataListContextmenus = (id: string): Optional<ContextmenuItem[]> => {
+  return [
+    {
+      text: '删除',
+      subText: '',
+      handler: () => removeData(id)
+    }
+  ]
+}
+
+const dataHistoryContextmenus = (_: string): Optional<ContextmenuItem[]> => {
+  return [
+    {
+      text: '清除',
+      subText: '',
+      handler: () => clearSnapshot()
+    }
+  ]
+}
 </script>
 <style lang="less">
 .data-item {
