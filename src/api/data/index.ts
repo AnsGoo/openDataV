@@ -2,13 +2,15 @@ import {
   getStaticDataApi,
   getStaticDataListApi,
   updateStaticDataApi,
-  createStaticDataApi
+  createStaticDataApi,
+  deleteStaticDataApi
 } from './staticData'
 import {
   getRestDataApi,
   getRestDataListApi,
   updateRestDataApi,
-  createRestDataApi
+  createRestDataApi,
+  deleteRestDataApi
 } from './restData'
 import type { StaticDataDetail } from './type'
 export {
@@ -16,9 +18,11 @@ export {
   getStaticDataListApi,
   updateStaticDataApi,
   createStaticDataApi,
+  deleteStaticDataApi,
   getRestDataApi,
   getRestDataListApi,
   updateRestDataApi,
-  createRestDataApi
+  createRestDataApi,
+  deleteRestDataApi
 }
 export type { StaticDataDetail }

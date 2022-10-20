@@ -17,6 +17,7 @@ class DataSnapShotDexie extends Dexie {
 }
 
 class DataSnapShot {
+  [x: string]: any
   public db: DataSnapShotDexie | undefined
   public key: string | undefined
   public snapshotMax = 10
@@ -37,8 +38,19 @@ class DataSnapShot {
     }
   }
 
+  /**
+   * 加载快照记录
+   * @returns 数据快照记录
+   */
   public async list(): Promise<any> {
     return await this.db?.data.where('type').equals(this.key!).reverse().toArray()
+  }
+  /**
+   * 清除快照记录
+   */
+  public async clear(): Promise<void> {
+    console.log('-----------')
+    await this.db?.data.where('type').equals(this.key!).delete()
   }
 }
 

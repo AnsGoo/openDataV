@@ -9,29 +9,7 @@
   >
     <template #tool-bar>
       <div>
-        <div class="script">
-          <n-select
-            :options="scriptList"
-            :value="formData.id"
-            class="selected"
-            @update:value="selectdChange"
-            clearable
-            @clear="clear"
-          />
-          <n-input v-model:value="formData.title" class="title" v-if="mode === 'debug'">
-            <template #prefix>
-              <IconPark name="code-one" />
-            </template>
-          </n-input>
-          <n-space v-if="mode === 'debug'">
-            <n-button-group class="save">
-              <n-button @click="handleUpdate" :disabled="formData.id === undefined">更新</n-button>
-              <n-button @click="handleSave" type="success">另存为</n-button>
-            </n-button-group>
-          </n-space>
-        </div>
         <div class="buttons">
-          <icon-park class="item button" name="save-one" @click="handleSubmit" />
           <icon-park class="item button" name="back" @click="handleUndo" />
           <icon-park class="item button" name="next" @click="handleRedo" />
         </div>
@@ -58,26 +36,16 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, watch, onMounted } from 'vue'
+import { computed, reactive, ref, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
-import { NSelect, NInput, NSpace, NButtonGroup, NButton } from 'naive-ui'
+import { NSelect } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
-import { message } from '@/utils/message'
-import {
-  getAfterScriptListApi,
-  updateAfterScriptApi,
-  createAfterScriptApi,
-  getAfterScriptApi
-} from '@/api/data/afterScript'
-import { AfterScriptDetail } from '@/api/data/type'
-
-const scriptList = ref<SelectOption[]>([])
 
 const savedStatus = ref<boolean>(true)
 
@@ -116,14 +84,10 @@ const emits = defineEmits<{
 }>()
 const languageMap = { Javascript: javascript, Python: python }
 
-const formData = reactive<{
-  id?: string
-  title?: string
-}>({})
-
 const form = reactive(props.data)
 const formChange = () => {
-  savedStatus.value = false
+  emits('update:data', form)
+  emits('change', form)
 }
 
 const languageOptions = computed<SelectOption[]>(() => {
@@ -154,29 +118,6 @@ const handleUndo = () => {
   }
 }
 
-const handleSubmit = () => {
-  emits('change', form)
-  emits('update:data', form)
-  savedStatus.value = true
-  message.success('保存成功')
-}
-
-const loadStaticList = async () => {
-  try {
-    const resp = await getAfterScriptListApi()
-    if (resp.status === 200) {
-      scriptList.value = resp.data.map((el) => {
-        return {
-          value: el.id,
-          label: el.name
-        }
-      })
-    }
-  } catch (err: any) {
-    console.log(err || err.message)
-  }
-}
-
 watch(
   () => props.data,
   () => {
@@ -186,77 +127,6 @@ watch(
     }
   }
 )
-
-const selectdChange = async (id: string) => {
-  if (id) {
-    await loadScriptData(id)
-  } else {
-    clear()
-  }
-}
-
-const clear = () => {
-  formData.id = undefined
-  formData.title = undefined
-  form.code = ''
-  form.type = ScriptType.Javascript
-}
-const handleSave = async () => {
-  try {
-    const resp = await createAfterScriptApi({
-      name: formData.title || '未命名',
-      code: props.data.code,
-      type: props.data.type
-    })
-    if (resp.status === 201) {
-      const data: AfterScriptDetail = resp.data
-      formData.id = data.id!
-      formData.title = data.name
-      message.success('脚本保存成功')
-    } else {
-      message.warning('脚本保存失败')
-    }
-  } catch (err) {
-    message.warning('脚本保存失败')
-  }
-}
-const handleUpdate = async () => {
-  try {
-    const resp = await updateAfterScriptApi(formData.id!, {
-      name: formData.title || '未命名',
-      code: props.data.code,
-      type: props.data.type
-    })
-    if (resp.status === 200) {
-      message.success('脚本更新成功')
-    } else {
-      message.warning('脚本更新失败')
-    }
-  } catch (err) {
-    message.warning('脚本更新失败')
-  }
-}
-
-const loadScriptData = async (id: string) => {
-  try {
-    const resp = await getAfterScriptApi(id)
-    if (resp.status === 200) {
-      const data: AfterScriptDetail = resp.data
-      formData.id = data.id
-      formData.title = data.name
-      form.code = data.code
-      form.type = data.type
-      emits('change', form)
-      emits('update:data', form)
-    }
-  } catch (err) {
-    return undefined
-  }
-}
-
-onMounted(async () => {
-  await loadStaticList()
-})
 </script>
 <style lang="less" scoped>
 .buttons {
@@ -269,7 +139,7 @@ onMounted(async () => {
     }
     &.button {
       &:hover {
-        transform: scale(1.1);
+        transform: scale(1.2);
       }
     }
   }
@@ -300,17 +170,4 @@ onMounted(async () => {
       background-color: #d03050;
     }
   }
-}
-
-.script {
-  display: flex;
-  margin-bottom: 5px;
-  .selected {
-    width: 300px;
-    flex: 5;
-  }
-  .title {
-    flex: 13;
-  }
-}
 </style>
