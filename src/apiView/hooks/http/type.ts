@@ -1,4 +1,4 @@
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { AfterScript } from '@/types/component'
 import type { AxiosResponse, Method } from 'axios'
 
 export interface KV {
@@ -31,11 +31,6 @@ export interface RequestResponse {
   data: string
   afterData: string
   headers: Recordable<string>
-}
-
-export interface AfterScript {
-  type: ScriptType
-  code: string
 }
 
 export declare type FinallyResponse<T> = AxiosResponse<T> & { afterData: any }

@@ -4,15 +4,14 @@
 
 <script setup lang="ts">
 import { h } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
-import { importCanvas, exportCanvas, toggleTheme } from './modules/actions'
+import { useRouter } from 'vue-router'
+import { toggleTheme } from './modules/actions'
 import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 import { ToolBar } from '@/components/ToolBar'
 import type { ToolBarItemType } from '@/components/ToolBar'
 import LogoView from '@/components/LogoView'
 
 const router = useRouter()
-const route = useRoute()
 
 const toolBars: ToolBarItemType[] = [
   {
@@ -28,18 +27,6 @@ const toolBars: ToolBarItemType[] = [
       }),
     divider: true,
     location: 'left'
-  },
-  {
-    label: '导入',
-    action: importCanvas,
-    icon: 'upload-one',
-    location: 'right'
-  },
-  {
-    label: '导出',
-    action: () => exportCanvas((route.params.index as string) || ''),
-    icon: 'download-one',
-    location: 'right'
   },
   {
     label: '主题',

@@ -45,10 +45,7 @@
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue'
 import { NCard, NSpace, NButtonGroup, NButton, NInput, NDivider, NTabs, NTabPane } from 'naive-ui'
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
-import ScriptsEdtor from '@/components/ScriptsEditor'
 import DataView from '@/components/DataView'
-import type { AfterScript } from '@/apiView/hooks/http/type'
 import { message } from '@/utils/message'
 import { useEventBus, StaticKey } from '@/bus'
 import {
@@ -57,8 +54,9 @@ import {
   createAfterScriptApi
 } from '@/api/data/afterScript'
 import { makeFunction } from '@/utils/data'
-import { ScriptEditorType } from '@/components/ScriptsEditor/type'
 import { AfterScriptDetail } from '@/api/data/type'
+import { ScriptType } from '@/enum'
+import { AfterScript } from '@/types/component'
 
 const config = ref({
   height: '300px',
@@ -96,7 +94,7 @@ useEventBus(StaticKey.SRCIPT_KEY, async (id: any) => {
 })
 
 const stdOut = ref<string>('')
-const scriptData = computed<ScriptEditorType>(() => {
+const scriptData = computed<AfterScript>(() => {
   return {
     code: formData.code,
     type: formData.type

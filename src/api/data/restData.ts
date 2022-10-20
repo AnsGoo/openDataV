@@ -6,9 +6,9 @@ import { RestDataDetail } from './type'
  * 根据id 加载Rest数据
  * @param id
  */
-export const getRestDataApi = async (id: number): Promise<AxiosResponse<RestDataDetail>> => {
+export const getRestDataApi = async (id: string): Promise<AxiosResponse<RestDataDetail>> => {
   return http.get<RestDataDetail>({
-    url: `/dataset/reset/${id}/`
+    url: `/dataset/rest/${id}/`
   })
 }
 
@@ -17,7 +17,7 @@ export const getRestDataApi = async (id: number): Promise<AxiosResponse<RestData
  */
 export const getRestDataListApi = async (): Promise<AxiosResponse<RestDataDetail[]>> => {
   return http.get<RestDataDetail[]>({
-    url: '/dataset/reset/'
+    url: '/dataset/rest/'
   })
 }
 
@@ -27,11 +27,11 @@ export const getRestDataListApi = async (): Promise<AxiosResponse<RestDataDetail
  * @param data Rest数据
  */
 export const updateRestDataApi = async (
-  id: number,
+  id: string,
   data: RestDataDetail
 ): Promise<AxiosResponse<RestDataDetail>> => {
   return http.put<RestDataDetail>({
-    url: `/dataset/reset/${id}/`,
+    url: `/dataset/rest/${id}/`,
     data: { ...data, id }
   })
 }
@@ -44,7 +44,7 @@ export const createRestDataApi = async (
   data: RestDataDetail
 ): Promise<AxiosResponse<RestDataDetail>> => {
   return http.post<RestDataDetail>({
-    url: '/dataset/reset/',
+    url: '/dataset/rest/',
     data: data
   })
 }
@@ -53,8 +53,8 @@ export const createRestDataApi = async (
  * 删除Rest数据
  * @param data Rest数据
  */
-export const deleteRestDataApi = async (id: number): Promise<AxiosResponse<RestDataDetail>> => {
+export const deleteRestDataApi = async (id: string): Promise<AxiosResponse<RestDataDetail>> => {
   return http.delete<RestDataDetail>({
-    url: `/dataset/reset/${id}/`
+    url: `/dataset/rest/${id}/`
   })
 }

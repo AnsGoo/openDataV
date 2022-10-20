@@ -59,7 +59,7 @@ import Rest from '@/apiView/RequestContent/rest'
 import { RequestOption } from '@/apiView/hooks/http/type'
 import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
-import { ScriptType } from '@/components/ScriptsEditor/eunm'
+import { ScriptType } from '@/enum'
 import { storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
 const props = defineProps<{
   curComponent: BaseComponent

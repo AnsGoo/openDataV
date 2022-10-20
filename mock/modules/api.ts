@@ -296,7 +296,7 @@ export default [
     }
   },
   {
-    url: '/restDataList',
+    url: '/dataset/rest/',
     method: 'get',
     statusCode: 200,
     response: () => {
@@ -304,16 +304,16 @@ export default [
     }
   },
   {
-    url: '/restData',
+    url: '/dataset/rest/:id',
     method: 'get',
     statusCode: 200,
-    response: ({ query }: any) => {
-      const id: string = query['id']
+    response: ({ url }: any) => {
+      const id = url.split('/')[3]
       return restData.filter((ele) => ele.id === id)[0]
     }
   },
   {
-    url: '/scripts',
+    url: '/dataset/script/',
     method: 'get',
     statusCode: 200,
     response: () => {
@@ -321,11 +321,11 @@ export default [
     }
   },
   {
-    url: '/scripts/:id',
+    url: '/dataset/script/:id',
     method: 'get',
     statusCode: 200,
     response: ({ url }) => {
-      const id = url.split('/')[2]
+      const id = url.split('/')[3]
       return scriptList.filter((el) => el.id === id)[0]
     }
   }
