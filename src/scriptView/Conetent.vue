@@ -20,7 +20,7 @@
     <n-card>
       <n-tabs>
         <n-tab-pane name="脚本">
-          <ScriptsEdtor
+          <Editor
             :data="scriptData"
             class="content"
             @update:data="scriptChangeHandler"
@@ -47,6 +47,7 @@ import { computed, reactive, ref } from 'vue'
 import { NCard, NSpace, NButtonGroup, NButton, NInput, NDivider, NTabs, NTabPane } from 'naive-ui'
 import DataView from '@/components/DataView'
 import { message } from '@/utils/message'
+import Editor from './Editor.vue'
 import { useEventBus, StaticKey } from '@/bus'
 import {
   getAfterScriptApi,
