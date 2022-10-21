@@ -80,13 +80,10 @@ const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: Re
 })
 const changeHandler = (option: RequestOption) => {
   formData.restOptions = option
-<<<<<<< HEAD
   setDataConfig()
 }
 
 const setDataConfig = () => {
-=======
->>>>>>> 06ed5a82dbd86b53c68a50ec354dcc1d0a5ff846
   props.curComponent.changeRequestDataConfig(DataType.REST, {
     options: requestOptionsToStore(formData.restOptions),
     otherConfig: {
@@ -125,17 +122,7 @@ const initData = () => {
       }
     }
 
-<<<<<<< HEAD
     setDataConfig()
-=======
-    props.curComponent.changeRequestDataConfig(DataType.REST, {
-      options: requestOptionsToStore(formData.restOptions),
-      otherConfig: {
-        isRepeat: formData.isRepeat,
-        interval: formData.interval
-      }
-    })
->>>>>>> 06ed5a82dbd86b53c68a50ec354dcc1d0a5ff846
   }
 }
 
