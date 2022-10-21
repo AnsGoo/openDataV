@@ -299,6 +299,7 @@ const afterScriptChange = (data: AfterScript) => {
 const selectdChange = async (id: string) => {
   await loadRestData(id)
   await send()
+  emits('update:restOptions', formData)
 }
 const handleSave = async () => {
   try {

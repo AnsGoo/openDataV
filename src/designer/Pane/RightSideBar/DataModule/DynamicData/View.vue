@@ -83,9 +83,10 @@ const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: Re
     }
   }
 })
-const changeHandler = () => {
+const changeHandler = (option: RequestOption) => {
+  formData.restOptions = option
   props.curComponent.changeRequestDataConfig(DataType.REST, {
-    options: formData.restOptions,
+    options: requestOptionsToStore(formData.restOptions),
     otherConfig: {
       isRepeat: formData.isRepeat,
       interval: formData.interval
