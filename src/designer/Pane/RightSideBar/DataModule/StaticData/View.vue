@@ -63,9 +63,7 @@ const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
   if (dataConfig && dataConfig.type === DataType.STATIC) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-    console.log(staticRequest)
     const result = staticRequest.toJSON()
-    console.log(result)
     formData.dataId = result.dataId
     formData.script = result.script!
     formData.title = result.title!
@@ -94,7 +92,6 @@ const dataChangeHandler = (id: string, title: string) => {
 }
 
 const scriptChangeHandler = (script: AfterScript) => {
-  console.log(script)
   formData.script = script
   changeHandler()
 }
