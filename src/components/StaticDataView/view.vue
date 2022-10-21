@@ -28,7 +28,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
@@ -92,6 +92,12 @@ const handleSave = () => {
     message.warning('数据必须符合JSON格式')
   }
 }
+watch(
+  () => props.content,
+  () => {
+    contentRef.value = JSON.stringify(props.content, null, '\t')
+  }
+)
 </script>
 <style lang="less" scoped>
 .buttons {

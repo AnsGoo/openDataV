@@ -71,10 +71,10 @@ class StaticRequestData implements RequestData {
 
   public toJSON(): StaticRequestOptions {
     return {
-      dataId: this.dataId || '',
+      dataId: cloneDeep(this.dataId || ''),
       type: DataType.STATIC,
-      script: this.afterScript,
-      title: this.title
+      script: cloneDeep(this.afterScript),
+      title: cloneDeep(this.title)
     }
   }
 

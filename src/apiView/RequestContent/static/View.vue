@@ -232,6 +232,10 @@ const handleUpdate = async () => {
 
 onMounted(async () => {
   await loadStaticList()
+  await init()
+})
+
+const init = async () => {
   if (props.options && props.options.dataId) {
     const resp: StaticDataDetail | undefined = await loadStaicData(props.options.dataId)
     if (resp) {
@@ -241,16 +245,21 @@ onMounted(async () => {
       getAfterData(props.options.script)
       emits('dataChange', props.options.dataId, resp.name)
     }
+  } else {
+    formData.id = ''
+    formData.title = ''
+    formData.originData = ''
+    formData.afterData = ''
   }
-})
+}
 
 watch(
   () => props.options,
-  () => {
-    if (props.options && props.options.dataId) {
-      formData.id = props.options.dataId
-      formData.title = props.options.title || ''
-    }
+  async () => {
+    await init()
+  },
+  {
+    deep: true
   }
 )
 </script>
