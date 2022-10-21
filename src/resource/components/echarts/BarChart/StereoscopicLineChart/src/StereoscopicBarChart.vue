@@ -202,7 +202,7 @@ const getOption = () => {
   option.series = [
     {
       type: 'custom',
-      renderItem(params, api) {
+      renderItem(_, api) {
         if (!api?.value) {
           return null
         }
