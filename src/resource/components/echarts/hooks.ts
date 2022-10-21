@@ -4,7 +4,7 @@ import mydark from './theme'
 
 type EchartOption = echarts.EChartsOption | any
 // 图表大小改变
-export const useEchart = (chartEl: Ref<ElRef>) => {
+export const useEchart = (chartEl: Ref<ElRef | undefined | null>) => {
   echarts.registerTheme('mydark', mydark)
   let chart: Nullable<echarts.EChartsType> = null
 

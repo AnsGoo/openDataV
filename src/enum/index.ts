@@ -1,5 +1,5 @@
 /*
-这里记录通用的枚举类型 
+这里记录通用的枚举类型
 */
 
 export enum ContentTypeEnum {
@@ -65,6 +65,8 @@ export enum ComponentGroup {
   BAR = 'BAR',
   // 百分比图
   PIE = 'PIE',
+  // 地图
+  MAP = 'MAP',
   // 仪表盘
   GAUGE = 'GAUGE',
   // 定制组件
@@ -90,6 +92,7 @@ export const ComponentGroupList: GroupType[] = [
   new GroupType('线状图', ComponentGroup.LINE, 'ChartLine'),
   new GroupType('柱状图', ComponentGroup.BAR, 'ChartHistogram'),
   new GroupType('饼图', ComponentGroup.PIE, 'ChartPie'),
+  new GroupType('地图', ComponentGroup.MAP, 'Earth'),
   new GroupType('仪表盘', ComponentGroup.GAUGE, 'Dashboard'),
   new GroupType('按钮', ComponentGroup.BUTTON, 'SwitchButton'),
   new GroupType('文本', ComponentGroup.TEXT, 'Text'),
