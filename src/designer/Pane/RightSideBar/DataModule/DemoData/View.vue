@@ -38,9 +38,11 @@ import {
   NCard,
   NFormItem
 } from 'naive-ui'
-import { BaseComponent, DemoRequestData } from '@/resource/models'
+import { BaseComponent, DataType, DemoRequestData } from '@/resource/models'
 
 import DataView from '@/components/DataView'
+import { cloneDeep } from 'lodash-es'
+import { message } from '@/utils/message'
 
 const props = defineProps<{
   curComponent: BaseComponent
@@ -58,10 +60,20 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const demoRequest = props.curComponent.dataConfig?.requestConfig as DemoRequestData
-  if (props.curComponent.dataConfig) {
-    const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
-    formData.afterData = JSON.stringify(resp.afterData, null, '\t')
+  const dataConfig = props.curComponent.dataConfig
+
+  if (dataConfig && dataConfig.type === DataType.DEMO) {
+    const demoRequest = props.curComponent.dataConfig?.requestConfig as DemoRequestData
+    if (props.curComponent.dataConfig) {
+      const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
+      formData.afterData = JSON.stringify(resp.afterData, null, '\t')
+    }
+  } else {
+    message.info('正在使用示例数据')
+    const exampleData = props.curComponent.exampleData
+    props.curComponent.changeRequestDataConfig(DataType.DEMO, {
+      data: cloneDeep(exampleData)
+    })
   }
 }
 

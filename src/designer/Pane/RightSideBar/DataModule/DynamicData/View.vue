@@ -60,7 +60,8 @@ import { RequestOption } from '@/apiView/hooks/http/type'
 import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 import { ScriptType } from '@/enum'
-import { storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
+import { requestOptionsToStore, storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
+import { message } from '@/utils/message'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
@@ -69,22 +70,23 @@ const isShow = ref<boolean>(false)
 
 const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: RequestOption }>({
   isRepeat: false,
-  interval: 300,
+  interval: 1000,
   restOptions: {
     method: RequestMethod.GET,
-    url: '/getNoSymptom',
+    url: '',
     headers: [{ key: '', value: '', disable: false, id: uuid() }],
     params: [{ key: '', value: '', disable: false, id: uuid() }],
     data: [{ key: '', value: '', disable: false, id: uuid() }],
     afterScript: {
-      code: 'return resp.filter(el => el.value > 50)',
+      code: '',
       type: ScriptType.Javascript
     }
   }
 })
-const changeHandler = () => {
+const changeHandler = (option: RequestOption) => {
+  formData.restOptions = option
   props.curComponent.changeRequestDataConfig(DataType.REST, {
-    options: formData.restOptions,
+    options: requestOptionsToStore(formData.restOptions),
     otherConfig: {
       isRepeat: formData.isRepeat,
       interval: formData.interval
@@ -97,17 +99,43 @@ onMounted(async () => {
 })
 
 const initData = () => {
-  const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
-  const otherConfig = props.curComponent.dataConfig?.otherConfig || {}
-  const { restOptions } = restRequest.toJSON()
-  formData.restOptions = storeOptionToRequestOptions(restOptions)
-  formData.interval = otherConfig.interval || 300
-  formData.isRepeat = otherConfig.isRepeat || false
+  const dataConfig = props.curComponent.dataConfig
+  if (dataConfig && dataConfig.type === DataType.REST) {
+    const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
+    const otherConfig = props.curComponent.dataConfig?.otherConfig || {}
+    const { restOptions } = restRequest.toJSON()
+    formData.restOptions = storeOptionToRequestOptions(restOptions)
+    formData.interval = otherConfig.interval || 1000
+    formData.isRepeat = otherConfig.isRepeat || false
+  } else {
+    message.info('请配置动态数据')
+    formData.isRepeat = false
+    formData.interval = 1000
+    formData.restOptions = {
+      method: RequestMethod.GET,
+      url: '',
+      headers: [{ key: '', value: '', disable: false, id: uuid() }],
+      params: [{ key: '', value: '', disable: false, id: uuid() }],
+      data: [{ key: '', value: '', disable: false, id: uuid() }],
+      afterScript: {
+        code: '',
+        type: ScriptType.Javascript
+      }
+    }
+
+    props.curComponent.changeRequestDataConfig(DataType.REST, {
+      options: requestOptionsToStore(formData.restOptions),
+      otherConfig: {
+        isRepeat: formData.isRepeat,
+        interval: formData.interval
+      }
+    })
+  }
 }
 
 watch(
   () => props.curComponent,
-  (value: BaseComponent) => {
+  async (value: BaseComponent) => {
     if (value) {
       initData()
     }

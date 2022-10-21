@@ -73,7 +73,7 @@ class StaticRequestData implements RequestData {
     return {
       dataId: this.dataId || '',
       type: DataType.STATIC,
-      script: this.afterScript,
+      script: cloneDeep(this.afterScript),
       title: this.title
     }
   }
