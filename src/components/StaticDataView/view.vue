@@ -2,7 +2,7 @@
   <CodeEditor
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    :code="contentRef"
+    v-model:code="contentRef"
     @change="codeChange"
     ref="cm"
   >
@@ -76,20 +76,19 @@ const emits = defineEmits<{
   (e: 'update:content', content?: string): void
 }>()
 
-const contentRef = computed<string>(() => {
-  return JSON.stringify(props.content, null, '\t')
-})
+const contentRef = ref<string>(JSON.stringify(props.content, null, '\t'))
 
-const codeChange = () => {
+const codeChange = (_: string) => {
   savedStatus.value = false
 }
 
-const handleSave = (value: string) => {
+const handleSave = () => {
   try {
-    emits('update:content', JSON.parse(value))
+    emits('update:content', JSON.parse(contentRef.value))
     savedStatus.value = true
     message.success('保存成功')
   } catch (err: any) {
+    console.log(err)
     message.warning('数据必须符合JSON格式')
   }
 }
