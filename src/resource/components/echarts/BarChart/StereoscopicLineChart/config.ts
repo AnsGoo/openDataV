@@ -79,7 +79,7 @@ class StereoscopicBarChartComponent extends BaseComponent {
       children: [
         {
           prop: 'axisLabelColor',
-          label: 'label颜色',
+          label: '柱体颜色',
           type: FormType.COLOR,
           componentOptions: {
             defaultValue: '#3DE7C9'
