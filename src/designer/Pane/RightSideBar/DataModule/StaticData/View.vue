@@ -33,13 +33,14 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
 import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
 import { ScriptType } from '@/enum'
 import Static from '@/apiView/RequestContent/static'
 import { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
 import { AfterScript } from '@/types/component'
+import { message } from '@/utils/message'
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
@@ -49,7 +50,7 @@ const formData = reactive<StaticRequestOptions>({
   dataId: '',
   title: '',
   script: {
-    code: 'return resp.filter(el => el.value > 50)',
+    code: '',
     type: ScriptType.Javascript
   }
 })
@@ -59,13 +60,23 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-  if (staticRequest) {
-    await nextTick(() => {
-      const result = staticRequest.toJSON()
-      formData.dataId = result.dataId
-      formData.script = result.script!
-      formData.title = result.title!
+  const dataConfig = props.curComponent.dataConfig
+  if (dataConfig && dataConfig.type === DataType.STATIC) {
+    const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+    console.log(staticRequest)
+    const result = staticRequest.toJSON()
+    console.log(result)
+    formData.dataId = result.dataId
+    formData.script = result.script!
+    formData.title = result.title!
+  } else {
+    message.info('请配置静态数据')
+    props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+      id: formData.dataId,
+      script: {
+        code: formData.script.code,
+        type: ScriptType.Javascript
+      }
     })
   }
 }
@@ -83,15 +94,16 @@ const dataChangeHandler = (id: string, title: string) => {
 }
 
 const scriptChangeHandler = (script: AfterScript) => {
+  console.log(script)
   formData.script = script
   changeHandler()
 }
 
 watch(
   () => props.curComponent,
-  async (value: BaseComponent) => {
-    if (value) {
-      await initData()
+  async () => {
+    if (props.curComponent) {
+      initData()
     }
   },
   { immediate: true }

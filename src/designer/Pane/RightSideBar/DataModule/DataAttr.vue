@@ -31,14 +31,7 @@ import StaticData from './StaticData'
 import DynamicData from './DynamicData'
 import DemoData from './DemoData'
 import { onMounted, reactive, ref, watch } from 'vue'
-import { ScriptType } from '@/enum'
-import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
-import { uuid } from '@/utils/utils'
-import { cloneDeep } from 'lodash-es'
 import { DataIntegrationMode } from '@/resource/models/data'
-import { requestOptionsToStore } from '@/apiView/hooks/http/utils'
-import { RequestOption } from '@/apiView/hooks/http/type'
-import { message } from '@/utils/message'
 
 const props = defineProps<{
   curComponent: BaseComponent
@@ -65,45 +58,7 @@ const dataTypeOptions = reactive([
 ])
 
 const typeChanged = (type: string) => {
-  if (type === DataType.DEMO) {
-    const exampleData = props.curComponent.exampleData
-    props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      data: cloneDeep(exampleData)
-    })
-    dataType.value = DataType.DEMO
-    message.info('正在使用示例数据')
-  } else if (type === DataType.STATIC) {
-    props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-      id: '',
-      script: {
-        code: '',
-        type: ScriptType.Javascript
-      }
-    })
-    dataType.value = DataType.STATIC
-    message.info('请配置静态数据')
-  } else if (type === DataType.REST) {
-    const restOptions: RequestOption = {
-      method: RequestMethod.GET,
-      url: '/getNoSymptom',
-      headers: [{ key: '', value: '', disable: false, id: uuid() }],
-      params: [{ key: '', value: '', disable: false, id: uuid() }],
-      data: [{ key: '', value: '', disable: false, id: uuid() }],
-      afterScript: {
-        code: '',
-        type: ScriptType.Javascript
-      }
-    }
-    props.curComponent.changeRequestDataConfig(DataType.REST, {
-      options: requestOptionsToStore(restOptions),
-      otherConfig: {
-        isRepeat: true,
-        interval: 1000
-      }
-    })
-    dataType.value = DataType.REST
-    message.info('请配置动态数据')
-  }
+  dataType.value = type
 }
 
 onMounted(() => {
@@ -123,7 +78,7 @@ watch(
       }
     }
   },
-  { immediate: true }
+  { deep: true }
 )
 </script>
 <style lang="less">
