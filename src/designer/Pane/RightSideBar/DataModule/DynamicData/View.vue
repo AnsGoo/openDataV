@@ -16,12 +16,7 @@
       <n-switch v-model:value="formData.isRepeat" @update:value="changeHandler" />
     </n-form-item>
     <n-form-item label="请求间隔" label-placement="left" v-if="formData.isRepeat">
-      <n-input-number
-        v-model:value="formData.interval"
-        :min="300"
-        :step="100"
-        @update:value="changeHandler"
-      >
+      <n-input-number v-model:value="formData.interval" :min="300" :step="100">
         <template #suffix> ms </template>
       </n-input-number>
     </n-form-item>
@@ -85,6 +80,10 @@ const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: Re
 })
 const changeHandler = (option: RequestOption) => {
   formData.restOptions = option
+  setDataConfig()
+}
+
+const setDataConfig = () => {
   props.curComponent.changeRequestDataConfig(DataType.REST, {
     options: requestOptionsToStore(formData.restOptions),
     otherConfig: {
@@ -123,13 +122,7 @@ const initData = () => {
       }
     }
 
-    props.curComponent.changeRequestDataConfig(DataType.REST, {
-      options: requestOptionsToStore(formData.restOptions),
-      otherConfig: {
-        isRepeat: formData.isRepeat,
-        interval: formData.interval
-      }
-    })
+    setDataConfig()
   }
 }
 
