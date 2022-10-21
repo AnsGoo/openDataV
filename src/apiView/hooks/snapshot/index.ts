@@ -49,7 +49,6 @@ class DataSnapShot {
    * 清除快照记录
    */
   public async clear(): Promise<void> {
-    console.log('-----------')
     await this.db?.data.where('type').equals(this.key!).delete()
   }
 }

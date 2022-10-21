@@ -60,7 +60,6 @@ function configGraphic() {
     buildPath(ctx, shape) {
       // 会canvas的应该都能看得懂，shape是从custom传入的
       const xAxisPoint = shape.xAxisPoint
-      // console.log(shape);
       const c0 = [shape.x, shape.y]
       const c1 = [shape.x - offsetX, shape.y - offsetY]
       const c2 = [xAxisPoint[0] - offsetX, xAxisPoint[1] - offsetY]
