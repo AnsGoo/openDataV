@@ -568,7 +568,7 @@ export const backgroundToCss = (value: any) => {
 }
 
 // 获取操作系统
-export function getOS(): string {
+export function getOS() {
   /**
    * 直接获取，实验属性
    * @see https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/platform#browser_compatibility
@@ -581,12 +581,12 @@ export function getOS(): string {
   const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
   const iosPlatforms = ['iPhone', 'iPad', 'iPod']
 
-  let os = 'unknown'
+  let os: 'unknown' | 'MacOS' | 'IOS' | 'Windows' | 'Android' | 'Linux' = 'unknown'
 
   if (macosPlatforms.indexOf(platform) !== -1) {
     os = 'MacOS'
   } else if (iosPlatforms.indexOf(platform) !== -1) {
-    os = 'iOS'
+    os = 'IOS'
   } else if (windowsPlatforms.indexOf(platform) !== -1) {
     os = 'Windows'
   } else if (/Android/.test(userAgent)) {
