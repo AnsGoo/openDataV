@@ -14,7 +14,7 @@
     <template v-for="(item, i) in component.subComponents" :key="item.id">
       <Shape
         :id="'shape' + item.id"
-        :defaultStyle="(item.style as any)"
+        :defaultStyle="item.style"
         :style="getShapeStyle(item)"
         :active="item.id === (curComponent || {}).id"
         :info="item"

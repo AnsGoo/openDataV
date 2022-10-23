@@ -19,9 +19,10 @@ const props = defineProps<{
   component: BasicLineChartComponent
 }>()
 
-let chartData: Array<{ label: string; value: number }> = []
+let chartData:
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)

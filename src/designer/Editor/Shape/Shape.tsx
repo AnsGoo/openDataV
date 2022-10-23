@@ -199,7 +199,7 @@ export default defineComponent({
         left = (curX - startX) / basicStore.scale + startLeft
 
         // // 修改当前组件样式
-        basicStore.syncComponentLoction({ top, left }, props.info!.parent, false)
+        basicStore.syncComponentLocation({ top, left }, props.info!.parent, false)
       })
       const up = () => {
         // 触发元素停止移动事件，用于隐藏标线
@@ -282,7 +282,7 @@ export default defineComponent({
         }
 
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-        basicStore.syncComponentLoction({ top, left, width, height }, props.info!.parent, false)
+        basicStore.syncComponentLocation({ top, left, width, height }, props.info!.parent, false)
       })
 
       const up = () => {
@@ -339,7 +339,7 @@ export default defineComponent({
         // 获取旋转的角度值
         rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
         // 修改当前组件样式
-        basicStore.syncComponentLoction({ rotate }, props.info!.parent, false)
+        basicStore.syncComponentLocation({ rotate }, props.info!.parent, false)
       })
 
       const up = () => {
@@ -439,7 +439,7 @@ export default defineComponent({
         switch (e.code) {
           case 'ArrowLeft':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { left: props.info.positionStyle.left - 1 },
               props.info.parent,
               false
@@ -447,7 +447,7 @@ export default defineComponent({
             break
           case 'ArrowUp':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { top: props.info.positionStyle.top - 1 },
               props.info.parent,
               false
@@ -455,7 +455,7 @@ export default defineComponent({
             break
           case 'ArrowRight':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { left: props.info.positionStyle.left + 1 },
               props.info.parent,
               false
@@ -463,7 +463,7 @@ export default defineComponent({
             break
           case 'ArrowDown':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { top: props.info.positionStyle.top + 1 },
               props.info.parent,
               false

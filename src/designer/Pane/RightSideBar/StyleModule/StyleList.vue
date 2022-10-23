@@ -51,7 +51,7 @@ const changed = debounce((key: string, val: any) => {
     if (locationKeys.includes(key)) {
       const parentComponent = props.curComponent.parent
       // key as 'top' | 'left' | 'width' | 'height' | 'rotate'
-      basicStore.syncComponentLoction({ [key]: val as number }, parentComponent, true)
+      basicStore.syncComponentLocation({ [key]: val as number }, parentComponent, true)
       if (parentComponent) {
         basicStore.resizeAutoComponent(parentComponent)
       }

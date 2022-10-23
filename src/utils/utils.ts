@@ -422,7 +422,7 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
 
 /**
  * 页面等比缩放
- * @param el 页面根
+ * @param rootEl 页面根
  * @param width 设计宽度
  * @param height 设计高度
  */
@@ -458,13 +458,13 @@ export const getComponentRealRect = (components: BaseComponent[]) => {
     const rotate = Number(ele.positionStyle.rotate)
     const leftTop: Vector = { x: left, y: top }
     const rightTop: Vector = { x: left + width, y: top }
-    const rightbottom: Vector = { x: left + width, y: top + height }
-    const leftbottom: Vector = { x: left, y: top + height }
+    const rightBottom: Vector = { x: left + width, y: top + height }
+    const leftBottom: Vector = { x: left, y: top + height }
     const center: Vector = { x: left + width / 2, y: top + height / 2 }
-    const loactions = [leftTop, rightbottom, leftbottom, rightTop]
+    const locations = [leftTop, rightBottom, leftBottom, rightTop]
     const xAxis: number[] = []
     const yAxis: number[] = []
-    loactions.forEach((el: Vector) => {
+    locations.forEach((el: Vector) => {
       const point = rotatePoint(el, center, rotate)
       xAxis.push(point.x)
       yAxis.push(point.y)
@@ -523,7 +523,7 @@ export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
     const toLength = toIndex.length
     const length = Math.min(toLength, fromLength)
     if (fromIndex.substring(0, length) === toIndex.substring(0, length)) {
-      return toLength > fromLength ? false : true
+      return toLength <= fromLength
     } else {
       return true
     }

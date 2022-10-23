@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="hidden"
-    v-contextmenu.stop="contextmenus"
+    v-contextmenu.stop="contextMenus"
     :style="{
       left: left + 'px',
       top: top + 'px',
@@ -77,7 +77,7 @@ const batchDelete = () => {
   composeStore.setHidden()
 }
 
-const contextmenus = (): ContextmenuItem[] => {
+const contextMenus = (): ContextmenuItem[] => {
   return [
     {
       text: '组合',

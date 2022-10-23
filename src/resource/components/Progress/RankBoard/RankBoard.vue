@@ -28,9 +28,11 @@ const props = defineProps<{
   component: BaseComponent
 }>()
 
-const dataSource = ref<Array<{ label: string; value: number }>>([])
+const dataSource = ref<
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData']
+>([])
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     dataSource.value = resp.afterData
   }

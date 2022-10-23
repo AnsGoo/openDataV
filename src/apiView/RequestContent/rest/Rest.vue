@@ -225,8 +225,8 @@ interface ErrorResponse extends Error {
 }
 let snapShot
 if (props.mode === 'debug') {
-  useEventBus(StaticKey.REST_KEY, async (id: any) => {
-    id as string, await loadRestData(id)
+  useEventBus(StaticKey.REST_KEY, async (id) => {
+    await loadRestData(id as string)
     await send()
   })
   snapShot = useDataSnapShot('REST', true)
@@ -279,7 +279,7 @@ const send = async () => {
     response.value.headers = resp.headers
     formData.id && snapShot && snapShot.save(formData)
   } catch (err: any) {
-    err as ErrorResponse
+    // err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})
     response.value.code = result.status
     response.value.data = err.stack || err.message

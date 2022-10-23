@@ -8,7 +8,7 @@
             v-model:value="myPixel"
             @update:value="setScreenSize"
             placeholder="选择分辨率"
-            :options="piexls"
+            :options="pixels"
           />
         </n-form-item>
         <n-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">
@@ -44,7 +44,7 @@ import { FormType } from '@/enum'
 import { CanvasStyleData } from '@/types/storeTypes'
 import BackItem from '../../modules/backItem'
 
-const piexls = computed<Recordable<string>[]>(() => {
+const pixels = computed<Recordable<string>[]>(() => {
   return [
     { label: '本设备', value: `${window.screen.width}X${window.screen.height}` },
     ...PixelEnum
@@ -69,10 +69,10 @@ const styleKeys = [
   { key: 'background', label: '背景', type: FormType.BACKGROUND }
 ]
 
-const setScreenSize = (piexl: string) => {
-  const piexls = piexl.split('X')
-  const width = parseInt(piexls[0])
-  const height = parseInt(piexls[1])
+const setScreenSize = (pixel: string) => {
+  const pixels = pixel.split('X')
+  const width = parseInt(pixels[0])
+  const height = parseInt(pixels[1])
   canvasStyleFrom.value.width = width
   canvasStyleFrom.value.height = height
 

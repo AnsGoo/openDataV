@@ -11,7 +11,7 @@ export interface StaticDataDetail {
 }
 
 export interface RestDataDetail extends Omit<StoreRequestOption, 'afterScript'> {
-  id?: string
+  id: string
   name: string
   author?: string
   createDate?: string
@@ -19,7 +19,7 @@ export interface RestDataDetail extends Omit<StoreRequestOption, 'afterScript'> 
 }
 
 export interface AfterScriptDetail extends AfterScript {
-  id?: string
+  id: string
   name: string
   author?: string
   createDate?: string

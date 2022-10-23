@@ -68,9 +68,11 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
   comHeight.value = height
 }
 
-const tableData = ref<Array<{ label: string; value: number }>>([])
+const tableData = ref<
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData']
+>([])
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     tableData.value = resp.afterData
   }

@@ -92,9 +92,8 @@ const props = withDefaults(
 )
 let snapShot
 if (props.mode === 'debug') {
-  useEventBus(StaticKey.STATIC_KEY, async (id: any) => {
-    id as unknown as string
-    await dataChangeHandler(id)
+  useEventBus(StaticKey.STATIC_KEY, async (id) => {
+    await dataChangeHandler(id as string)
   })
   snapShot = useDataSnapShot('STATIC', true)
 }
