@@ -217,8 +217,8 @@ export default defineComponent({
     }
 
     const selectCurComponent = (e: MouseEvent) => {
-      // 如果键盘 ctrl 键按下，则添加选中组件
-      if (e.ctrlKey) {
+      // 如果键盘 ctrl 或 command(mac) 键按下，则添加选中组件
+      if (e.ctrlKey || e.metaKey) {
         appendComponent()
         return
       }
@@ -428,9 +428,15 @@ export default defineComponent({
       document.addEventListener('keyup', keyUp)
       if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
 
+      const aliasCtrlKey = e.ctrlKey || e.metaKey
+
       e.stopPropagation()
-      if (props.info && e.ctrlKey) {
-        switch (e.key) {
+      if (props.info && aliasCtrlKey) {
+        /**
+         * 使用 code 可以避免大小写的问题。比如 s 的 code 为 KeyS，如果是 Key，那么就可能是 s 或 S。
+         * @see https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent/code#code_values
+         */
+        switch (e.code) {
           case 'ArrowLeft':
             e.preventDefault()
             basicStore.syncComponentLoction(
