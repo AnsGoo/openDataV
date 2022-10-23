@@ -566,3 +566,34 @@ export const backgroundToCss = (value: any) => {
   }
   return value
 }
+
+// 获取操作系统
+export function getOS(): string {
+  /**
+   * 直接获取，实验属性
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/platform#browser_compatibility
+   */
+  // @ts-expect-error 仅 chromium 核心 >=93 版本支持 navigator.userAgentData.platform 属性，兼容性查看上方链接
+  const platform = window.navigator?.userAgentData?.platform || window.navigator.platform
+  const userAgent = window.navigator.userAgent
+
+  const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K', 'macOS']
+  const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
+  const iosPlatforms = ['iPhone', 'iPad', 'iPod']
+
+  let os = 'unknown'
+
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = 'MacOS'
+  } else if (iosPlatforms.indexOf(platform) !== -1) {
+    os = 'iOS'
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = 'Windows'
+  } else if (/Android/.test(userAgent)) {
+    os = 'Android'
+  } else if (/Linux/.test(platform)) {
+    os = 'Linux'
+  }
+
+  return os
+}
