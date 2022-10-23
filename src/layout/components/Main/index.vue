@@ -3,9 +3,13 @@
     <template #default="{ Component, route }">
       <transition :name="getTransitionName" mode="out-in" appear>
         <keep-alive v-if="route.meta?.keepAlive">
-          <component :is="Component" :key="route.fullPath" />
+          <div>
+            <component :is="Component" :key="route.fullPath" />
+          </div>
         </keep-alive>
-        <component v-else :is="Component" :key="route.fullPath" />
+        <div v-else>
+          <component :is="Component" :key="route.fullPath" />
+        </div>
       </transition>
     </template>
   </RouterView>

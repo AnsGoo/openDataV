@@ -1,5 +1,6 @@
 import { UserConfigExport, ConfigEnv, loadEnv, ProxyOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import MarkDownPlugin, { Mode } from 'vite-plugin-markdown'
 import { viteMockServe } from 'vite-plugin-mock'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
@@ -35,7 +36,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         import { setupProdMockServer } from '../mock/mockProdServer';
         setupProdMockServer();
       `
-      })
+      }),
+      MarkDownPlugin({ mode: [Mode.HTML, Mode.TOC, Mode.VUE] })
     ],
     base: './',
     resolve: {
