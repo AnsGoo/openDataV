@@ -62,7 +62,7 @@ export abstract class BaseComponent {
   }
   dataConfig?: DataConfig
 
-  constructor(detail: ComponentType) {
+  protected constructor(detail: ComponentType) {
     if (detail.id) {
       this.id = detail.id
     } else {

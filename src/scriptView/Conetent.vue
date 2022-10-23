@@ -89,9 +89,8 @@ const scriptChangeHandler = async (script: AfterScript) => {
   formData.type = script.type
 }
 
-useEventBus(StaticKey.SRCIPT_KEY, async (id: any) => {
-  id as unknown as string
-  await loadAfterScript(id)
+useEventBus(StaticKey.SRCIPT_KEY, async (id) => {
+  await loadAfterScript(id as string)
 })
 
 const stdOut = ref<string>('')

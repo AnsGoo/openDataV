@@ -422,7 +422,7 @@ export const stylePropToCss = (key: string, value: any): Recordable<any> => {
 
 /**
  * 页面等比缩放
- * @param el 页面根
+ * @param rootEl 页面根
  * @param width 设计宽度
  * @param height 设计高度
  */
@@ -458,13 +458,13 @@ export const getComponentRealRect = (components: BaseComponent[]) => {
     const rotate = Number(ele.positionStyle.rotate)
     const leftTop: Vector = { x: left, y: top }
     const rightTop: Vector = { x: left + width, y: top }
-    const rightbottom: Vector = { x: left + width, y: top + height }
-    const leftbottom: Vector = { x: left, y: top + height }
+    const rightBottom: Vector = { x: left + width, y: top + height }
+    const leftBottom: Vector = { x: left, y: top + height }
     const center: Vector = { x: left + width / 2, y: top + height / 2 }
-    const loactions = [leftTop, rightbottom, leftbottom, rightTop]
+    const locations = [leftTop, rightBottom, leftBottom, rightTop]
     const xAxis: number[] = []
     const yAxis: number[] = []
-    loactions.forEach((el: Vector) => {
+    locations.forEach((el: Vector) => {
       const point = rotatePoint(el, center, rotate)
       xAxis.push(point.x)
       yAxis.push(point.y)
@@ -523,7 +523,7 @@ export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
     const toLength = toIndex.length
     const length = Math.min(toLength, fromLength)
     if (fromIndex.substring(0, length) === toIndex.substring(0, length)) {
-      return toLength > fromLength ? false : true
+      return toLength <= fromLength
     } else {
       return true
     }
@@ -565,4 +565,35 @@ export const backgroundToCss = (value: any) => {
     value['backgroundImage'] = `url(${value['backgroundImage']})`
   }
   return value
+}
+
+// 获取操作系统
+export function getOS() {
+  /**
+   * 直接获取，实验属性
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/NavigatorUAData/platform#browser_compatibility
+   */
+  // @ts-expect-error 仅 chromium 核心 >=93 版本支持 navigator.userAgentData.platform 属性，兼容性查看上方链接
+  const platform = window.navigator?.userAgentData?.platform || window.navigator.platform
+  const userAgent = window.navigator.userAgent
+
+  const macosPlatforms = ['Macintosh', 'MacIntel', 'MacPPC', 'Mac68K', 'macOS']
+  const windowsPlatforms = ['Win32', 'Win64', 'Windows', 'WinCE']
+  const iosPlatforms = ['iPhone', 'iPad', 'iPod']
+
+  let os: 'unknown' | 'MacOS' | 'IOS' | 'Windows' | 'Android' | 'Linux' = 'unknown'
+
+  if (macosPlatforms.indexOf(platform) !== -1) {
+    os = 'MacOS'
+  } else if (iosPlatforms.indexOf(platform) !== -1) {
+    os = 'IOS'
+  } else if (windowsPlatforms.indexOf(platform) !== -1) {
+    os = 'Windows'
+  } else if (/Android/.test(userAgent)) {
+    os = 'Android'
+  } else if (/Linux/.test(platform)) {
+    os = 'Linux'
+  }
+
+  return os
 }

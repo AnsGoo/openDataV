@@ -15,7 +15,7 @@ type Events = Recordable<any>
 
 function useEventBus(
   key: string,
-  handler: Handler<Events>,
+  handler: Handler<Events | string>,
   options: {
     isAppend: boolean
     isRegExp: boolean

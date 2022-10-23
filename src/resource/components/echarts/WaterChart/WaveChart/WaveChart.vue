@@ -18,9 +18,8 @@ const props = defineProps<{
 
 const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
-const chartData = ref<number>(0)
+const chartData = ref<number | RequestResponse<number>['afterData']>(0)
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     chartData.value = resp.afterData
   }

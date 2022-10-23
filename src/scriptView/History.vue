@@ -6,9 +6,9 @@
         <n-ol align-text>
           <n-li
             v-for="item in dataList"
-            :key="item.id!"
+            :key="item.id"
             class="data-item"
-            @click="selectDataItem(item.id!)"
+            @click="selectDataItem(item.id)"
           >
             <div class="rest-detail">
               <div>

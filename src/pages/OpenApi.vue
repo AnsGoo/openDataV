@@ -19,7 +19,7 @@
       <n-layout has-sider sider-placement="right">
         <!-- 中间画布 -->
         <n-layout-content class="content" v-resize="editorWindowResizeHandler">
-          <n-scrollbar x-scrollable :style="scrobarStyle">
+          <n-scrollbar x-scrollable :style="scrollbarStyle">
             <RequestContent :active="activeKey" />
           </n-scrollbar>
         </n-layout-content>
@@ -55,7 +55,7 @@ const collapsedRight = ref(false)
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)
-const scrobarStyle = computed(() => {
+const scrollbarStyle = computed(() => {
   return {
     width: windowWidth.value + 'px',
     height: windowHeight.value + 'px'

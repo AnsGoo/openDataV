@@ -2,7 +2,7 @@
   <n-layout v-resize="editorWindowResizeHandler">
     <!-- 中间画布 -->
     <n-layout-content class="content">
-      <n-scrollbar x-scrollable :style="scrobarStyle">
+      <n-scrollbar x-scrollable :style="scrollbarStyle">
         <Editor />
       </n-scrollbar>
     </n-layout-content>
@@ -81,7 +81,7 @@ const options: SelectOption[] = [
   }
 ]
 
-const scrobarStyle = computed(() => {
+const scrollbarStyle = computed(() => {
   return {
     width: windowWidth.value + 'px',
     height: windowHeight.value + 'px'
