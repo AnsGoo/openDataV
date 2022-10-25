@@ -9,8 +9,9 @@
 </template>
 <script lang="ts" setup>
 import { NButton, NTooltip, NDivider } from 'naive-ui'
-import { computed, h, VNode } from 'vue'
-import { iconNode, ToolBarItemType } from './type'
+import type { VNode } from 'vue'
+import { computed, h } from 'vue'
+import type { iconNode, ToolBarItemType } from './type'
 import { IconPark } from '@/plugins/icon'
 const props = withDefaults(
   defineProps<{

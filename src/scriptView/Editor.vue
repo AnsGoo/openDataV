@@ -42,8 +42,9 @@ import type { SelectOption } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+/* eslint-disable-next-line */
+import CodeEditor from '@/components/CodeEditor' // 忽略 import type
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 

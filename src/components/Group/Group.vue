@@ -40,7 +40,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
 import Shape from '@/designer/Editor/Shape'
 import { computed } from 'vue'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
   component: BaseComponent

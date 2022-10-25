@@ -1,5 +1,5 @@
 import { ContentTypeEnum } from '@/enum'
-import { AxiosRequestConfig, Canceler } from 'axios'
+import type { AxiosRequestConfig, Canceler } from 'axios'
 
 /**
  * 默认配置

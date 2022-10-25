@@ -26,7 +26,7 @@
 import { ref } from 'vue'
 import { NColorPicker, NSlider } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
-import { Gradient } from './type'
+import type { Gradient } from './type'
 
 const props = withDefaults(
   defineProps<{

@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import BasicLineChartComponent from './config'
-import { BasicLineChart } from './type'
+import type BasicLineChartComponent from './config'
+import type { BasicLineChart } from './type'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
 import { useProp, useData } from '@/resource/hooks'
-import { DataType } from '@/resource/models'
-import { RequestResponse } from '@/resource/models/type'
+import type { DataType } from '@/resource/models'
+import type { RequestResponse } from '@/resource/models/type'
 
 const chartEl = ref<ElRef>(null)
 let globalOption: EChartsOption

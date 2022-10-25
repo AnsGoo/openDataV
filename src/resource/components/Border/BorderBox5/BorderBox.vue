@@ -144,8 +144,8 @@
 import { useProp } from '@/resource/hooks'
 import { uuid } from '@/utils/utils'
 import { ref } from 'vue'
-import BorderBoxComponent from './config'
-import { BorderBox } from './type'
+import type BorderBoxComponent from './config'
+import type { BorderBox } from './type'
 
 const props = defineProps<{
   component: BorderBoxComponent

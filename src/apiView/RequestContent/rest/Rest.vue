@@ -5,7 +5,7 @@
         :options="restDataList"
         :value="formData.id"
         class="selected"
-        @update:value="selectdChange"
+        @update:value="selectedChange"
         clearable
         @clear="clear"
         placeholder="请选择数据"
@@ -69,18 +69,12 @@
       </n-tabs>
     </div>
     <div class="response">
-      <n-divider
-        title-placement="left"
-        style="
-           {
-            width: '50%';
-          }
-        "
-        >请求响应
-        <span :class="['resp-code', response.code >= 400 ? 'resp-fail' : 'resp-success']">{{
-          response.code ? response.code : ''
-        }}</span></n-divider
-      >
+      <n-divider title-placement="left">
+        请求响应
+        <span :class="['resp-code', response.code >= 400 ? 'resp-fail' : 'resp-success']">
+          {{ response.code ? response.code : '' }}
+        </span>
+      </n-divider>
       <n-tabs>
         <n-tab-pane name="data" tab="脚本处理结果" display-directive="show">
           <ReponseContentView :data="response.afterData" class="content" />
@@ -101,6 +95,7 @@
   </n-card>
 </template>
 <script setup lang="ts">
+import type { SelectOption } from 'naive-ui'
 import {
   NCard,
   NInput,
@@ -110,8 +105,7 @@ import {
   NSpace,
   NTabs,
   NTabPane,
-  NDivider,
-  SelectOption
+  NDivider
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { onMounted, reactive, ref } from 'vue'
@@ -122,7 +116,7 @@ import ReponseContentView from './modules/ReponseContentView.vue'
 import useRestRequest from '@/apiView/hooks/http'
 import ScriptsEditor from '../modules/ScriptsEditor'
 import { ScriptType } from '@/enum'
-import { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
+import type { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
 import { useEventBus, StaticKey } from '@/bus'
 import {
@@ -131,10 +125,10 @@ import {
   getRestDataListApi,
   updateRestDataApi
 } from '@/api/data'
-import { RestDataDetail } from '@/api/data/type'
+import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import { message } from '@/utils/message'
-import { AfterScript } from '@/types/component'
+import type { AfterScript } from '@/types/component'
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
 }
@@ -279,7 +273,7 @@ const send = async () => {
     response.value.headers = resp.headers
     formData.id && snapShot && snapShot.save(formData)
   } catch (err: any) {
-    // err as ErrorResponse
+    err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})
     response.value.code = result.status
     response.value.data = err.stack || err.message
@@ -296,7 +290,7 @@ const afterScriptChange = (data: AfterScript) => {
   formData.afterScript = data
   formChange()
 }
-const selectdChange = async (id: string) => {
+const selectedChange = async (id: string) => {
   await loadRestData(id)
   await send()
   emits('update:restOptions', formData)

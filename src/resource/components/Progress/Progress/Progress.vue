@@ -59,7 +59,7 @@ import { useProp } from '@/resource/hooks'
 import { uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus'
 import type { Progress } from './type'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
   component: BaseComponent

@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
 const projectStore = useProjectSettingStoreWithOut()

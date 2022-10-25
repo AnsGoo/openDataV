@@ -26,7 +26,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import { ToolBarItemType } from './type'
+import type { ToolBarItemType } from './type'
 import ToolBarItem from './ToolBarItem.vue'
 
 const props = withDefaults(

@@ -58,17 +58,17 @@ import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
 import { message } from '@/utils/message'
 import type { StaticRequestOptions } from './type'
+import type { StaticDataDetail } from '@/api/data'
 import {
   createStaticDataApi,
   getStaticDataApi,
   getStaticDataListApi,
-  StaticDataDetail,
   updateStaticDataApi
 } from '@/api/data'
 import { makeFunction } from '@/utils/data'
 import { useEventBus, StaticKey } from '@/bus'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import { AfterScript } from '@/types/component'
+import type { AfterScript } from '@/types/component'
 
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(

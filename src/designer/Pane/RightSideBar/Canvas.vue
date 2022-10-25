@@ -41,7 +41,7 @@ import { computed, ref } from 'vue'
 import { NForm, NFormItem, NInput, NSelect, NInputNumber, NScrollbar, NColorPicker } from 'naive-ui'
 import PixelEnum from '@/enum/pixel'
 import { FormType } from '@/enum'
-import { CanvasStyleData } from '@/types/storeTypes'
+import type { CanvasStyleData } from '@/types/storeTypes'
 import BackItem from '../../modules/backItem'
 
 const pixels = computed<Recordable<string>[]>(() => {

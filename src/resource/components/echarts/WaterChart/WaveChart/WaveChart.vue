@@ -5,12 +5,12 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { useEchart } from '../../hooks'
-import WaveChartComponent from './config'
+import type WaveChartComponent from './config'
 import { useProp, useData } from '@/resource/hooks'
 import 'echarts-liquidfill'
-import { WaveChartType } from './type'
-import { DataType } from '@/resource/models'
-import { RequestResponse } from '@/resource/models/type'
+import type { WaveChartType } from './type'
+import type { DataType } from '@/resource/models'
+import type { RequestResponse } from '@/resource/models/type'
 
 const props = defineProps<{
   component: WaveChartComponent

@@ -52,9 +52,9 @@ import { getRestDataListApi, deleteRestDataApi } from '@/api/data'
 import { NInput, NCard, NTabs, NTabPane, NOl, NLi, NGradientText } from 'naive-ui'
 import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
-import { RestDataDetail } from '@/api/data/type'
+import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { message } from '@/utils/message'
 
 const dataList = ref<RestDataDetail[]>([])

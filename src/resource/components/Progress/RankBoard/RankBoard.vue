@@ -20,10 +20,10 @@
 </template>
 <script setup lang="ts">
 import { useProp, useData } from '@/resource/hooks'
-import { BaseComponent, DataType } from '@/resource/models'
-import { RequestResponse } from '@/resource/models/type'
+import type { BaseComponent, DataType } from '@/resource/models'
+import type { RequestResponse } from '@/resource/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { RankBoard } from './type'
+import type { RankBoard } from './type'
 const props = defineProps<{
   component: BaseComponent
 }>()

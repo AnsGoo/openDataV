@@ -43,17 +43,9 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import {
-  NForm,
-  NFormItem,
-  NInput,
-  NSelect,
-  SelectOption,
-  NUpload,
-  NButton,
-  UploadCustomRequestOptions
-} from 'naive-ui'
-import { BackgroundImage } from '@/types/common'
+import type { SelectOption, UploadCustomRequestOptions } from 'naive-ui'
+import { NForm, NFormItem, NInput, NSelect, NUpload, NButton } from 'naive-ui'
+import type { BackgroundImage } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
 import { uploadImageFileApi } from '@/api/images'
 

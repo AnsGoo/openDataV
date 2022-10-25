@@ -1,6 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
 import type { LayoutData, SimpleLayoutData } from './type'
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 
 // 获取页面数据
 export const getPageApi = async (index: string): Promise<AxiosResponse<LayoutData>> => {

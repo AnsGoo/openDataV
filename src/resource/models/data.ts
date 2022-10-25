@@ -1,10 +1,12 @@
-import { getStaticDataApi, StaticDataDetail } from '@/api/data'
-import useRestRequest, { RestRequest } from '@/apiView/hooks/http'
-import { StoreRequestOption } from '@/apiView/hooks/http/type'
-import { AfterScript } from '@/types/component'
+import type { StaticDataDetail } from '@/api/data'
+import { getStaticDataApi } from '@/api/data'
+import type { RestRequest } from '@/apiView/hooks/http'
+import useRestRequest from '@/apiView/hooks/http'
+import type { StoreRequestOption } from '@/apiView/hooks/http/type'
+import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
 import { cloneDeep } from 'lodash-es'
-import { RequestResponse } from './type'
+import type { RequestResponse } from './type'
 
 export enum DataType {
   STATIC = 'STATIC',

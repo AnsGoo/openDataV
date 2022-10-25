@@ -1,4 +1,5 @@
-import { reactive, defineComponent, PropType, resolveComponent, h } from 'vue'
+import type { PropType } from 'vue'
+import { reactive, defineComponent, resolveComponent, h } from 'vue'
 import FontStyle from '../fontSytle'
 import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'

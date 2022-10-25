@@ -1,4 +1,4 @@
-import { AfterScript } from '@/types/component'
+import type { AfterScript } from '@/types/component'
 import type { AxiosResponse, Method } from 'axios'
 
 export interface KV {
@@ -22,7 +22,7 @@ export interface StoreRequestOption {
   url: string
   headers: Recordable
   params: Recordable
-  data: any
+  data: Recordable<any>
   afterScript: AfterScript
 }
 

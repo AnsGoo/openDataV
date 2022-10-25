@@ -25,7 +25,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { BaseComponent, DataType } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
+import { DataType } from '@/resource/models'
 import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } from 'naive-ui'
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'

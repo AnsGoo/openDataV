@@ -1,5 +1,5 @@
-import { Vector, Position } from '@/types/common'
-import { DOMRectStyle } from '@/types/component'
+import type { Vector, Position } from '@/types/common'
+import type { DOMRectStyle } from '@/types/component'
 import { rotatePoint } from './utils'
 
 const funcs = {

@@ -125,7 +125,8 @@
 
 <script lang="ts" setup>
 import { ref, watch, computed } from 'vue'
-import { ProjectSettingState, useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import type { ProjectSettingState } from '@/store/modules/projectSetting'
+import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import {
   NDrawer,
   NDrawerContent,

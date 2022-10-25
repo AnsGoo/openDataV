@@ -34,8 +34,8 @@ import type { EditorView, ViewUpdate } from '@codemirror/view'
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
-import { CodemirrorOption } from './type'
-import { Extension } from '@codemirror/state'
+import type { CodemirrorOption } from './type'
+import type { Extension } from '@codemirror/state'
 import { redo, undo } from '@codemirror/commands'
 
 const props = withDefaults(

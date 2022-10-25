@@ -66,7 +66,7 @@
 import { uuid } from '@/utils/utils'
 import { NInput, NButton, NInputGroup, NDivider } from 'naive-ui'
 import { ref, watch } from 'vue'
-import { KV } from './type'
+import type { KV } from './type'
 
 const props = withDefaults(defineProps<{ value: Array<KV>; title: string; options?: string[] }>(), {
   title: '',

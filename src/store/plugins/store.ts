@@ -1,4 +1,9 @@
-import { PiniaPlugin, PiniaPluginContext, SubscriptionCallbackMutation, StateTree } from 'pinia'
+import type {
+  PiniaPlugin,
+  PiniaPluginContext,
+  SubscriptionCallbackMutation,
+  StateTree
+} from 'pinia'
 
 /**
  * Storage类型

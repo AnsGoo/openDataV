@@ -59,8 +59,9 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, watch, onMounted } from 'vue'
-import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+/* eslint-disable-next-line */
+import CodeEditor from '@/components/CodeEditor' // 忽略 import type
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { NSelect, NInput, NSpace, NButtonGroup, NButton } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
@@ -75,7 +76,7 @@ import {
   createAfterScriptApi,
   getAfterScriptApi
 } from '@/api/data/afterScript'
-import { AfterScriptDetail } from '@/api/data/type'
+import type { AfterScriptDetail } from '@/api/data/type'
 
 const scriptList = ref<SelectOption[]>([])
 
