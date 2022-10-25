@@ -20,7 +20,7 @@
         <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
           {{ savedStatus ? '已保存' : '未保存' }}
         </div>
-        <div class="lang" @click="() => (isShow = true)">
+        <div class="lang" @click="isShow = true">
           <n-select
             v-model:value="form.type"
             :options="languageOptions"
