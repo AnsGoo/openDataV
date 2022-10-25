@@ -43,8 +43,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { NForm } from 'naive-ui'
-import { NFormItem, NInput, NButton } from 'naive-ui'
+/* eslint-disable-next-line */
+import { NFormItem, NInput, NButton, NForm } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
 import type { LoginData } from '@/types/user'
