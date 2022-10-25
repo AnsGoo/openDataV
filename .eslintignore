@@ -1,2 +1,5 @@
 /src/assets/*
 **/node_modules/**
+.vscode
+.idea
+public

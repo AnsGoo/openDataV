@@ -41,7 +41,7 @@ export const updateRestDataApi = async (
  * @param data Rest数据
  */
 export const createRestDataApi = async (
-  data: RestDataDetail
+  data: Exclude<RestDataDetail, 'id'>
 ): Promise<AxiosResponse<RestDataDetail>> => {
   return http.post<RestDataDetail>({
     url: '/dataset/rest/',
