@@ -1,10 +1,10 @@
 <template>
   <CodeEditor
+    ref="cm"
+    v-model:code="form.code"
     :language="languageType"
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    v-model:code="form.code"
-    ref="cm"
     @update:code="formChange"
   >
     <template #tool-bar>
@@ -14,19 +14,19 @@
             :options="scriptList"
             :value="formData.id"
             class="selected"
-            @update:value="selectdChange"
             clearable
+            @update:value="selectdChange"
             @clear="clear"
           />
-          <n-input v-model:value="formData.title" class="title" v-if="mode === 'debug'">
+          <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
             <template #prefix>
               <IconPark name="code-one" />
             </template>
           </n-input>
           <n-space v-if="mode === 'debug'">
             <n-button-group class="save">
-              <n-button @click="handleUpdate" :disabled="formData.id === undefined">更新</n-button>
-              <n-button @click="handleSave" type="success">另存为</n-button>
+              <n-button :disabled="formData.id === undefined" @click="handleUpdate">更新</n-button>
+              <n-button type="success" @click="handleSave">另存为</n-button>
             </n-button-group>
           </n-space>
         </div>
@@ -44,12 +44,12 @@
         </div>
         <div class="lang" @click="() => (isShow = true)">
           <n-select
-            :options="languageOptions"
             v-model:value="form.type"
+            :options="languageOptions"
             class="item language"
             size="tiny"
-            @update:value="formChange"
             style="width: 110px"
+            @update:value="formChange"
           />
         </div>
       </div>

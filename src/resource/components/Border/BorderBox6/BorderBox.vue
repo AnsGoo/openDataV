@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-13" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-border-box-13">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <path
         :fill="propValue.base.backgroundColor"

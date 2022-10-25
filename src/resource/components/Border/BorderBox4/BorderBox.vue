@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-8" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-border-box-8">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <path :id="path" :d="pathD" fill="transparent" />

@@ -1,9 +1,9 @@
 <template>
-  <div id="mb-ruler" class="style-ruler mb-ruler" v-contextmenu.stop="ruleContextMenus">
+  <div id="mb-ruler" v-contextmenu.stop="ruleContextMenus" class="style-ruler mb-ruler">
     <!-- 水平方向 -->
     <RulerWrapper
-      :vertical="false"
       ref="HRulerWrapperRef"
+      :vertical="false"
       :width="width"
       :height="16"
       :canvas-height="height"
@@ -19,8 +19,8 @@
     />
     <!-- 竖直方向 -->
     <RulerWrapper
-      :vertical="true"
       ref="VRulerWrapperRef"
+      :vertical="true"
       :width="16"
       :height="height"
       :canvas-height="height"

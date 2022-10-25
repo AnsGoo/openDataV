@@ -7,8 +7,8 @@
           <n-li
             v-for="item in dataList"
             :key="item.id"
-            class="data-item"
             v-contextmenu="() => dataListContextMenus(item.id)"
+            class="data-item"
             @click="selectDataItem(item.id)"
             ><n-space>{{ item.name }}</n-space></n-li
           >
@@ -19,8 +19,8 @@
           <n-li
             v-for="item in dataHistory"
             :key="item.id"
-            class="data-item"
             v-contextmenu="() => dataHistoryContextMenus(item.id)"
+            class="data-item"
             @click="selectDataItem(item.id)"
             ><n-space>{{ item.name }}</n-space></n-li
           >

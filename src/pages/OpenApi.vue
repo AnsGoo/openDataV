@@ -18,7 +18,7 @@
       </n-layout-sider>
       <n-layout has-sider sider-placement="right">
         <!-- 中间画布 -->
-        <n-layout-content class="content" v-resize="editorWindowResizeHandler">
+        <n-layout-content v-resize="editorWindowResizeHandler" class="content">
           <n-scrollbar x-scrollable :style="scrollbarStyle">
             <RequestContent :active="activeKey" />
           </n-scrollbar>

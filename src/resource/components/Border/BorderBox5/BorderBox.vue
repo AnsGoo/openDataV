@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-9" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-border-box-9">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <linearGradient :id="gradientId" x1="0%" y1="0%" x2="100%" y2="100%">

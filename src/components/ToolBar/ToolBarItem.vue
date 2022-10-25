@@ -1,11 +1,11 @@
 <template>
   <n-tooltip>
     <template #trigger>
-      <n-button quaternary size="small" @click="action" :title="label"> <IconComponent /></n-button>
+      <n-button quaternary size="small" :title="label" @click="action"> <IconComponent /></n-button>
     </template>
     <span>{{ label }}</span>
   </n-tooltip>
-  <n-divider vertical v-if="divider" />
+  <n-divider v-if="divider" vertical />
 </template>
 <script lang="ts" setup>
 import { NButton, NTooltip, NDivider } from 'naive-ui'

@@ -16,17 +16,17 @@
         </n-el>
         <n-slider
           :value="sliderValue"
-          @update:value="handleScale"
           :min="10"
           :max="200"
           style="width: 120px"
+          @update:value="handleScale"
         />
         <n-select
           :value="selectValue"
-          @update:value="handleScale"
           :options="options"
           size="tiny"
           style="width: 90px"
+          @update:value="handleScale"
         />
       </n-space>
     </n-layout-footer>

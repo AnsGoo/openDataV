@@ -5,12 +5,12 @@
         :options="restDataList"
         :value="formData.id"
         class="selected"
-        @update:value="selectedChange"
         clearable
-        @clear="clear"
         placeholder="请选择数据"
+        @update:value="selectedChange"
+        @clear="clear"
       />
-      <n-input v-model:value="formData.title" class="title" v-if="mode === 'debug'">
+      <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
         <template #prefix>
           <IconPark name="api" />
         </template>
@@ -23,13 +23,13 @@
     </div>
     <div class="api">
       <n-select
+        v-model:value="formData['method']"
         :options="requestMethodOptions"
         class="method"
-        v-model:value="formData['method']"
         :show-arrow="true"
         @update-value="formChange"
       />
-      <n-input class="url" v-model:value="formData['url']" @update-value="formChange" />
+      <n-input v-model:value="formData['url']" class="url" @update-value="formChange" />
       <n-space>
         <n-button-group class="send">
           <n-button type="primary" @click="send">调试</n-button>

@@ -1,6 +1,6 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <div :style="screenStyle" ref="screen" class="screen">
+    <div ref="screen" :style="screenStyle" class="screen">
       <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
     </div>
   </div>

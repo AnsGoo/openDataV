@@ -1,14 +1,14 @@
 <template>
-  <div class="dv-scroll-board" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-scroll-board">
     <div
-      class="header"
       v-if="propValue.header.header.length"
+      class="header"
       :style="`background-color: ${propValue.header.headerBGC};`"
     >
       <div
-        class="header-item"
         v-for="(item, i) in propValue.header.header"
         :key="`${item}${i}`"
+        class="header-item"
         :style="`
           height: ${propValue.header.headerHeight}px;
           line-height: ${propValue.header.headerHeight}px;
@@ -26,9 +26,9 @@
       }"
     >
       <div
-        class="row-item"
         v-for="(row, ri) in rowData"
         :key="row.rowIndex"
+        class="row-item"
         :style="`
           height: ${propValue.rows.data.height}px;
           line-height: ${propValue.rows.data.height}px;
@@ -38,9 +38,9 @@
         `"
       >
         <div
-          class="ceil"
           v-for="(ceil, ci) in row.ceils"
           :key="`${ceil}${ri}${ci}`"
+          class="ceil"
           v-html="ceil"
         ></div>
       </div>

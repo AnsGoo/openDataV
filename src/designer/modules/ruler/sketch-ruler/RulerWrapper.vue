@@ -1,6 +1,8 @@
 <template>
   <div :class="rwClassName" :style="rwStyle">
     <CanvasRuler
+      v-model:valueNum="valueNum"
+      v-model:showIndicator="showIndicator"
       :vertical="vertical"
       :scale="scale"
       :width="width"
@@ -10,8 +12,6 @@
       :select-start="selectStart"
       :select-length="selectLength"
       :palette="palette"
-      v-model:valueNum="valueNum"
-      v-model:showIndicator="showIndicator"
       @on-add-line="handleNewLine"
     />
     <div v-show="isShowReferLine" class="lines">

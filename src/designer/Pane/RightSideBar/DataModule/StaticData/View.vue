@@ -3,10 +3,10 @@
     <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
-          @click="() => (isShow = true)"
+          v-model:value="formData.title"
           :readonly="true"
           placeholder="编辑请点击"
-          v-model:value="formData.title"
+          @click="() => (isShow = true)"
         />
         <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
       </n-input-group>

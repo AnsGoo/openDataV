@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-1" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-border-box-1">
     <svg class="border" :width="width" :height="height">
       <polygon
         :fill="propValue.base.backgroundColor"
@@ -30,7 +30,7 @@
       />
     </svg>
 
-    <svg width="150px" height="150px" :key="item" v-for="item in border" :class="`${item} border`">
+    <svg v-for="item in border" :key="item" width="150px" height="150px" :class="`${item} border`">
       <polygon
         :fill="propValue.base.colorLeft"
         points="6,66 6,18 12,12 18,12 24,6 27,6 30,9 36,9 39,6 84,6 81,9 75,9 73.2,7 40.8,7 37.8,10.2 24,10.2 12,21 12,24 9,27 9,51 7.8,54 7.8,63"

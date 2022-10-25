@@ -6,7 +6,7 @@
     <!-- 左侧组件列表 -->
     <n-layout has-sider sider-placement="right" class="main">
       <!-- 中间画布 -->
-      <n-layout-content class="content" v-resize="editorWindowResizeHandler">
+      <n-layout-content v-resize="editorWindowResizeHandler" class="content">
         <n-scrollbar x-scrollable :style="scrollbarStyle">
           <ScriptContent />
         </n-scrollbar>

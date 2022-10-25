@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-decoration-11" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-decoration-11">
     <svg :width="width" :height="height">
       <polygon
         :fill="propValue.base.color2"

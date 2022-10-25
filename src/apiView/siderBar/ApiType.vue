@@ -1,11 +1,11 @@
 <template>
   <div class="main">
     <n-menu
+      v-model:value="activeItem"
       :options="menuOptions"
       class="sider-bar-item"
       :collapsed="false"
       :icon-size="30"
-      v-model:value="activeItem"
       @update:value="menuChange"
     />
   </div>

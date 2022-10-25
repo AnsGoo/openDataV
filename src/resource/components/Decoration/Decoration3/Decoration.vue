@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-decoration-6" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-decoration-6">
     <svg :width="width" :height="height">
       <template v-for="(point, i) in points" :key="i">
         <rect

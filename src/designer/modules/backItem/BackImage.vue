@@ -3,8 +3,8 @@
     <n-form-item label="图片">
       <n-input
         :value="data.backgroundImage"
-        @update:value="(value) => handleChange(value, 'backgroundImage')"
         placeholder="请输入图片地址"
+        @update:value="(value) => handleChange(value, 'backgroundImage')"
       />
       <n-upload :custom-request="customRequest" :show-file-list="false">
         <n-button size="small">上传</n-button>

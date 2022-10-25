@@ -1,10 +1,10 @@
 <template>
   <CodeEditor
+    ref="cm"
+    v-model:code="form.code"
     :language="languageType"
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    v-model:code="form.code"
-    ref="cm"
     @update:code="formChange"
   >
     <template #tool-bar>
@@ -22,12 +22,12 @@
         </div>
         <div class="lang" @click="() => (isShow = true)">
           <n-select
-            :options="languageOptions"
             v-model:value="form.type"
+            :options="languageOptions"
             class="item language"
             size="tiny"
-            @update:value="formChange"
             style="width: 110px"
+            @update:value="formChange"
           />
         </div>
       </div>

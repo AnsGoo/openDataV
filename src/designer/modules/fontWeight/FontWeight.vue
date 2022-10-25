@@ -1,10 +1,10 @@
 <template>
   <n-select
-    clearable
     v-model:value="weight"
+    clearable
     placeholder="请选择字重"
-    @update:value="change"
     :options="weights"
+    @update:value="change"
   />
 </template>
 

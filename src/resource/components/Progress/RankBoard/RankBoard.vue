@@ -1,6 +1,6 @@
 <template>
-  <div class="dv-scroll-ranking-board" :ref="ref">
-    <div class="row-item" v-for="(item, index) in dataSource" :key="item.label">
+  <div :ref="ref" class="dv-scroll-ranking-board">
+    <div v-for="(item, index) in dataSource" :key="item.label" class="row-item">
       <div class="ranking-info">
         <div class="rank">No.{{ index + 1 }}</div>
         <div class="info-name">{{ item.label }}</div>

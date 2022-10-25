@@ -15,23 +15,23 @@
         ref="ruleFormRef"
         :rules="rules"
         :model="formData"
-        @submit.prevent
         :show-message="true"
+        @submit.prevent
       >
         <div class="tip">登录</div>
         <n-form-item path="username">
           <n-input
+            v-model:value="formData.username"
             placeholder="请输入用户名"
             style="width: 100%; min-width: 360px"
-            v-model:value="formData.username"
           />
         </n-form-item>
         <n-form-item path="password">
           <n-input
+            v-model:value="formData.password"
             placeholder="请输入密码"
             style="width: 100%; min-width: 360px"
             type="password"
-            v-model:value="formData.password"
             @keydown.enter="loginAction"
           />
         </n-form-item>

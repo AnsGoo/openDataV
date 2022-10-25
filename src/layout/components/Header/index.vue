@@ -11,8 +11,8 @@
       </div>
       <!-- 刷新 -->
       <div
-        class="mr-1 layout-header-trigger layout-header-trigger-min"
         v-if="projectStore.headerSetting.isReload"
+        class="mr-1 layout-header-trigger layout-header-trigger-min"
         @click="reloadPage"
       >
         <icon-park name="refresh" :color="iconColor" />
@@ -30,7 +30,7 @@
                 {{ routeItem.meta.title }}
               </span>
             </n-dropdown>
-            <span class="link-text" :style="{ color: iconColor }" v-else>
+            <span v-else class="link-text" :style="{ color: iconColor }">
               {{ routeItem.meta.title }}
             </span>
           </n-breadcrumb-item>
@@ -42,7 +42,7 @@
       <div class="layout-header-trigger layout-header-trigger-min">
         <n-tooltip placement="bottom">
           <template #trigger>
-            <icon-park :name="fullscreenIcon" @click="toggleFullScreen" :color="iconColor" />
+            <icon-park :name="fullscreenIcon" :color="iconColor" @click="toggleFullScreen" />
           </template>
           <span>全屏</span>
         </n-tooltip>
@@ -50,14 +50,14 @@
       <div class="layout-header-trigger layout-header-trigger-min">
         <n-tooltip placement="bottom">
           <template #trigger>
-            <icon-park :name="themeIcon" @click="toggleTheme" :color="iconColor" />
+            <icon-park :name="themeIcon" :color="iconColor" @click="toggleTheme" />
           </template>
           <span>主题</span>
         </n-tooltip>
       </div>
       <!-- 个人中心 -->
       <div class="layout-header-trigger layout-header-trigger-min">
-        <n-dropdown trigger="hover" @select="avatarSelect" :options="avatarOptions">
+        <n-dropdown trigger="hover" :options="avatarOptions" @select="avatarSelect">
           <div class="avatar">
             <n-avatar round>
               {{ username }}

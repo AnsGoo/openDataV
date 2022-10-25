@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-percent-pond" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-percent-pond">
     <svg>
       <defs>
         <linearGradient :id="gradientId1" x1="0%" y1="0%" x2="100%" y2="0%">

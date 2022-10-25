@@ -2,11 +2,11 @@
   <div class="mark-line">
     <div
       v-for="line in lines"
+      v-show="lineStatus[line] || false"
       :key="line"
+      :ref="setLineRef"
       class="line"
       :class="line.includes('x') ? 'xline' : 'yline'"
-      :ref="setLineRef"
-      v-show="lineStatus[line] || false"
     ></div>
   </div>
 </template>

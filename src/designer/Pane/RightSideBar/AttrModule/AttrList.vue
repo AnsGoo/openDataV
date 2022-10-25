@@ -11,9 +11,9 @@
         <FormAttr
           :children="children"
           :data="formData[prop]"
-          @change="(key, value) => changed(prop, key, value)"
           :name="label"
           :uid="prop"
+          @change="(key, value) => changed(prop, key, value)"
           :ukey="curComponent.id"
         />
       </n-collapse-item>

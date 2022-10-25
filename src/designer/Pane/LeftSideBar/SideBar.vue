@@ -1,11 +1,11 @@
 <template>
   <n-tabs
+    v-if="!iscollapsed"
+    v-model:value="activeKey"
     type="line"
     animated
-    v-if="!iscollapsed"
     :bar-width="100"
     justify-content="center"
-    v-model:value="activeKey"
     @update:value="(key) => (activeKey = key)"
   >
     <n-tab-pane name="components" display-directive="show:lazy">
@@ -24,21 +24,21 @@
     </n-tab-pane>
   </n-tabs>
   <n-tabs
+    v-else
+    v-model:value="activeKey"
     type="line"
     animated
-    v-else
     :bar-width="48"
     justify-content="center"
     @update:value="collapsedTabPane"
-    v-model:value="activeKey"
   >
-    <n-tab-pane name="components" v-if="activeKey === 'components'" display-directive="show:lazy">
+    <n-tab-pane v-if="activeKey === 'components'" name="components" display-directive="show:lazy">
       <template #tab>
         <IconPark name="components" @click="switchTab('layer')" />
       </template>
       <ComponentList />
     </n-tab-pane>
-    <n-tab-pane name="layer" v-else-if="activeKey === 'layer'" display-directive="show:lazy">
+    <n-tab-pane v-else-if="activeKey === 'layer'" name="layer" display-directive="show:lazy">
       <template #tab>
         <IconPark name="layers" @click="switchTab('components')" />
       </template>

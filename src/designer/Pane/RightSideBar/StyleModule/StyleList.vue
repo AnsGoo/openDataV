@@ -11,10 +11,10 @@
         <FormAttr
           :children="children"
           :data="formData"
-          @change="changed"
           :name="label"
           :uid="prop"
           :ukey="curComponent.id"
+          @change="changed"
         />
       </n-collapse-item>
     </n-collapse>

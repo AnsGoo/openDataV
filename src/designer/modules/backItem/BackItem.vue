@@ -6,8 +6,8 @@
       v-if="selectOption === 'backgroundColor'"
       v-model:value="backgroundColor.backgroundColor"
       :swatches="GlobalColorSwatches"
-      @update:value="changeBackgroundColor"
       :modes="['hex', 'rgb', 'hsl']"
+      @update:value="changeBackgroundColor"
     />
 
     <div v-else-if="selectOption === 'backgroundImage'">
