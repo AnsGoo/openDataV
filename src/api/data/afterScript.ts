@@ -28,7 +28,7 @@ export const getAfterScriptListApi = async (): Promise<AxiosResponse<AfterScript
  */
 export const updateAfterScriptApi = async (
   id: string,
-  data: Partial<Exclude<AfterScriptDetail, 'id'>>
+  data: Omit<AfterScriptDetail, 'id'>
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.put<AfterScriptDetail>({
     url: `/dataset/script/${id}/`,
@@ -41,7 +41,7 @@ export const updateAfterScriptApi = async (
  * @param data 后置脚本
  */
 export const createAfterScriptApi = async (
-  data: Partial<Exclude<AfterScriptDetail, 'id'>>
+  data: Omit<AfterScriptDetail, 'id'>
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.post<AfterScriptDetail>({
     url: '/dataset/script/',
