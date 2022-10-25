@@ -1,6 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
-import { AxiosResponse } from 'axios'
-import { RestDataDetail } from './type'
+import type { AxiosResponse } from 'axios'
+import type { RestDataDetail } from './type'
 
 /**
  * 根据id 加载Rest数据

@@ -36,6 +36,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import Editor from '@/designer/Editor/Index.vue'
+import type { SelectOption } from 'naive-ui'
 import {
   NLayout,
   NLayoutContent,
@@ -44,7 +45,6 @@ import {
   NSlider,
   NSpace,
   NSelect,
-  SelectOption,
   NEl
 } from 'naive-ui'
 import { debounce } from 'lodash-es'

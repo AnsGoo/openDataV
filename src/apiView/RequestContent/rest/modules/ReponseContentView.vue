@@ -10,7 +10,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { json } from '@codemirror/lang-json'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 

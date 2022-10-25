@@ -1,12 +1,10 @@
-import {
+import type {
   Router,
-  createRouter,
-  createWebHashHistory,
-  createWebHistory,
   RouterHistory,
   RouteLocationNormalized,
   NavigationGuardNext
 } from 'vue-router'
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { LOGIN_URL, NoAuth, RouteMode } from '@/enum'
 import type { AppRouteRecordRaw, MenuType } from './types'
 import NProgress from '@/utils/progress'

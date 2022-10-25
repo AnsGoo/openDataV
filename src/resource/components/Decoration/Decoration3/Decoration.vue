@@ -41,7 +41,7 @@
 <script setup lang="ts">
 import { useProp } from '@/resource/hooks'
 import { onMounted, ref } from 'vue'
-import DecorationComponent from './config'
+import type DecorationComponent from './config'
 import type { Decoration } from './type'
 import { randomExtend } from './utils'
 

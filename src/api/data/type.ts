@@ -1,5 +1,5 @@
-import { StoreRequestOption } from '@/apiView/hooks/http/type'
-import { AfterScript } from '@/types/component'
+import type { StoreRequestOption } from '@/apiView/hooks/http/type'
+import type { AfterScript } from '@/types/component'
 
 export interface StaticDataDetail {
   id?: string

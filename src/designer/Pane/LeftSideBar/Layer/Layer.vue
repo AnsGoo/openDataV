@@ -20,9 +20,9 @@ import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'
 import type { MenuOption } from 'naive-ui'
 import { ComponentGroupList } from '@/enum'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { cloneDeep } from 'lodash-es'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()

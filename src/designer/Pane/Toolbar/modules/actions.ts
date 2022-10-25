@@ -1,9 +1,9 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
-import { ComponentDataType } from '@/types/component'
-import { CanvasStyleData } from '@/types/storeTypes'
-import { StoreComponentData } from '@/utils/db'
+import type { ComponentDataType } from '@/types/component'
+import type { CanvasStyleData } from '@/types/storeTypes'
+import type { StoreComponentData } from '@/utils/db'
 import { message } from '@/utils/message'
 import { exportRaw, importRaw } from '@/utils/utils'
 const snapShotStore = useSnapShotStoreWithOut()

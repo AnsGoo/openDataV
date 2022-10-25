@@ -43,10 +43,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { NForm, NFormItem, NInput, NButton } from 'naive-ui'
+import type { NForm } from 'naive-ui'
+import { NFormItem, NInput, NButton } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import { LoginData } from '@/types/user'
+import type { LoginData } from '@/types/user'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'

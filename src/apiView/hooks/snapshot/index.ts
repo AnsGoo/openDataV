@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-import Dexie, { Table } from 'dexie'
+import type { Table } from 'dexie'
+import Dexie from 'dexie'
 
 class DataSnapShotDexie extends Dexie {
   public data!: Table<{

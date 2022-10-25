@@ -1,5 +1,5 @@
-import { StoreComponentData } from '@/utils/db'
-import { BaseComponent } from '@/resource/models'
+import type { StoreComponentData } from '@/utils/db'
+import type { BaseComponent } from '@/resource/models'
 
 export interface CanvasStyleData {
   width: number

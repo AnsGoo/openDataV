@@ -87,6 +87,12 @@ module.exports = defineConfig({
         allowDestructuring: false, // Disallow `const { props, state } = this`; true by default
         allowedNames: ['self'] // Allow `const self = this`; `[]` by default
       }
-    ]
+    ],
+    /**
+     * 仅仅导入/导出声明
+     *
+     * @see https://jkchao.github.io/typescript-book-chinese/new/typescript-3.8.html#%E4%BB%85%E4%BB%85%E5%AF%BC%E5%85%A5-%E5%AF%BC%E5%87%BA%E5%A3%B0%E6%98%8E
+     */
+    '@typescript-eslint/consistent-type-imports': 2
   }
 })

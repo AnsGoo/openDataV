@@ -1,6 +1,6 @@
 import { ScriptType } from '@/enum'
 import { notification } from '../message'
-import { CallbackType } from './type'
+import type { CallbackType } from './type'
 
 /**
  * 创建函数

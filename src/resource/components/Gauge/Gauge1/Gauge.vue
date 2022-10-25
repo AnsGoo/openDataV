@@ -88,7 +88,7 @@ import { http } from '@/utils/http'
 import { useProp } from '@/resource/hooks'
 import { useEventBus } from '@/bus'
 import type { Gauge } from './type'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 const basicStore = useBasicStoreWithOut()

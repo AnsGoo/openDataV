@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-import { ComponentGroup, FormType } from '@/enum'
+import type { ComponentGroup } from '@/enum'
+import { FormType } from '@/enum'
 import { mod360, rotatePoint, uuid } from '@/utils/utils'
 import type {
   ComponentDataType,
@@ -9,13 +10,13 @@ import type {
   GroupStyle,
   PropsType
 } from '@/types/component'
-import { Vector } from '@/types/common'
+import type { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
+import type { RequestData } from './data'
 import {
   DataIntegrationMode,
   DataType,
   DemoRequestData,
-  RequestData,
   RestRequestData,
   StaticRequestData
 } from './data'

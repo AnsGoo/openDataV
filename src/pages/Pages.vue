@@ -58,7 +58,8 @@ import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
 import { message } from '@/utils/message'
 import { IconPark } from '@/plugins/icon'
-import { NCard, NEllipsis, NTooltip, NDropdown, DropdownOption, NButton } from 'naive-ui'
+import type { DropdownOption } from 'naive-ui'
+import { NCard, NEllipsis, NTooltip, NDropdown, NButton } from 'naive-ui'
 
 const router = useRouter()
 const loading = ref<boolean>(false)

@@ -36,7 +36,7 @@ import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { StaticDataDetail } from '@/api/data'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { message } from '@/utils/message'
 
 const snapShot = useDataSnapShot('STATIC', true)

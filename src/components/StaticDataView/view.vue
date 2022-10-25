@@ -29,8 +29,9 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
-import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+/* eslint-disable-next-line */
+import CodeEditor from '@/components/CodeEditor' // 忽略 import type
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
 

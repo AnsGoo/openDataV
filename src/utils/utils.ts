@@ -2,7 +2,7 @@ import type { DOMRectStyle, GroupStyle } from '@/types/component'
 import { message } from '@/utils/message'
 import type { Vector, Position } from '@/types/common'
 import { cloneDeep, isNumber } from 'lodash-es'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))

@@ -40,7 +40,7 @@
 import RulerLine from './RulerLine.vue'
 import CanvasRuler from '../canvas-ruler/index.vue'
 import { ref, computed } from 'vue'
-import { PaletteType } from '../index-types'
+import type { PaletteType } from '../index-types'
 const props = withDefaults(
   defineProps<{
     scale: number

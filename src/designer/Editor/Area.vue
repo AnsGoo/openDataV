@@ -15,10 +15,10 @@
 <script setup lang="ts">
 import { watch, computed, onUnmounted } from 'vue'
 import type { WatchStopHandle } from 'vue'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { Position } from '@/types/common'
+import type { Position } from '@/types/common'
 
 const composeStore = useComposeStoreWithOut()
 const basicStore = useBasicStoreWithOut()

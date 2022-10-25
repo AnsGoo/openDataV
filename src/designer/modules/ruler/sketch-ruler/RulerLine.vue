@@ -13,9 +13,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { ref, computed, onMounted } from 'vue'
-import { PaletteType } from '../index-types'
+import type { PaletteType } from '../index-types'
 
 const props = defineProps<{
   scale: number

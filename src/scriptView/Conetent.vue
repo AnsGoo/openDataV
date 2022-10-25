@@ -55,9 +55,9 @@ import {
   createAfterScriptApi
 } from '@/api/data/afterScript'
 import { makeFunction } from '@/utils/data'
-import { AfterScriptDetail } from '@/api/data/type'
+import type { AfterScriptDetail } from '@/api/data/type'
 import { ScriptType } from '@/enum'
-import { AfterScript } from '@/types/component'
+import type { AfterScript } from '@/types/component'
 
 const config = ref({
   height: '300px',

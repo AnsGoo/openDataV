@@ -6,10 +6,11 @@ import { EditMode } from '@/enum'
 import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
-import { BaseComponent, createComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
+import { createComponent } from '@/resource/models'
 import { cloneDeep } from 'lodash-es'
-import { ComponentDataType, DOMRectStyle } from '@/types/component'
-import { Position } from '@/types/common'
+import type { ComponentDataType, DOMRectStyle } from '@/types/component'
+import type { Position } from '@/types/common'
 
 const snapShotStore = useSnapShotStoreWithOut()
 

@@ -28,7 +28,7 @@ import { debounce } from 'lodash-es'
 import { computed, reactive, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
   curComponent: BaseComponent

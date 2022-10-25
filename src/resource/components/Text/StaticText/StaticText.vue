@@ -10,7 +10,7 @@
 <script setup lang="ts">
 import { useProp } from '@/resource/hooks'
 import { computed, ref } from 'vue'
-import StaticTextComponent from './config'
+import type StaticTextComponent from './config'
 import type { StaticTextType } from './type'
 
 const props = defineProps<{

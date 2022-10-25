@@ -1,6 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
-import { AxiosResponse } from 'axios'
-import { StaticDataDetail } from './type'
+import type { AxiosResponse } from 'axios'
+import type { StaticDataDetail } from './type'
 
 /**
  * 根据id 加载静态数据
