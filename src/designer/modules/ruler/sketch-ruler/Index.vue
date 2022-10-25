@@ -38,8 +38,8 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable-next-line */
-import RulerWrapper from './RulerWrapper.vue' // 忽略 import type 规则
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
+import RulerWrapper from './RulerWrapper.vue'
 import { computed, ref } from 'vue'
 import type { PaletteType, ShadowType } from '../index-types'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'

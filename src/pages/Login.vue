@@ -43,7 +43,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-/* eslint-disable-next-line */
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { NFormItem, NInput, NButton, NForm } from 'naive-ui'
 import { reactive, ref } from 'vue'
 

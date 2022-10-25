@@ -59,8 +59,8 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, watch, onMounted } from 'vue'
-/* eslint-disable-next-line */
-import CodeEditor from '@/components/CodeEditor' // 忽略 import type
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
+import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { NSelect, NInput, NSpace, NButtonGroup, NButton } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
