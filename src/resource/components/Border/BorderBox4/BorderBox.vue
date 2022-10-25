@@ -101,8 +101,8 @@ const pathD = computed(() => {
     position: absolute;
     width: 100%;
     height: 100%;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
   }
 }
 </style>

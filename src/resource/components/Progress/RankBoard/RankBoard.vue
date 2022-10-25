@@ -164,7 +164,7 @@ onUnmounted(() => {})
     }
     .shine {
       position: absolute;
-      left: 0%;
+      left: 0;
       top: 2px;
       height: v-bind(barHeight);
       width: 50px;
@@ -176,7 +176,7 @@ onUnmounted(() => {})
 }
 @keyframes shine {
   80% {
-    left: 0%;
+    left: 0;
     transform: translateX(-100%);
   }
   100% {

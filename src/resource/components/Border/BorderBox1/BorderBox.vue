@@ -113,18 +113,18 @@ const border: string[] = ['left-top', 'right-top', 'left-bottom', 'right-bottom'
   }
 
   .right-top {
-    right: 0px;
+    right: 0;
     transform: rotateY(180deg);
   }
 
   .left-bottom {
-    bottom: 0px;
+    bottom: 0;
     transform: rotateX(180deg);
   }
 
   .right-bottom {
-    right: 0px;
-    bottom: 0px;
+    right: 0;
+    bottom: 0;
     transform: rotateX(180deg) rotateY(180deg);
   }
 

@@ -79,8 +79,8 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 
   .dv-border-svg-container {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
 

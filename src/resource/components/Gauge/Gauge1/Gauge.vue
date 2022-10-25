@@ -162,8 +162,8 @@ useEventBus('actual', handler)
   justify-content: center;
   svg {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     transform-origin: left top;
   }
 }

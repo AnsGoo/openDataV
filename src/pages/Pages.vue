@@ -175,12 +175,12 @@ const previewIcon = (icon: string | undefined) => {
   @apply flex justify-between items-center;
 }
 :deep(.n-card__action) {
-  padding: 0px;
+  padding: 0;
 }
 
 :deep(.n-card) {
   .n-card-header {
-    padding: 5px 0px;
+    padding: 5px 0;
     transform: translate(15%, 0);
   }
 }

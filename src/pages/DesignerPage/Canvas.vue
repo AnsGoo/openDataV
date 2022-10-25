@@ -109,7 +109,7 @@ const changeScale = debounce((value: number) => {
 
 <style lang="less" scoped>
 .content {
-  box-shadow: inset 0px 0px 3px black;
+  box-shadow: inset 0 0 3px black;
 
   :deep(.n-scrollbar-content) {
     transform-origin: left top;
