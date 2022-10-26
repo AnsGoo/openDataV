@@ -36,9 +36,9 @@ export interface RestRequestOptions {
   type: DataType
 }
 
-interface RequestData<T = any> {
-  toJSON: () => T
-  getRespData: (options?: Recordable<T>) => Promise<RequestResponse<any>>
+interface RequestData {
+  toJSON: () => Recordable | undefined
+  getRespData: (options?: Recordable) => Promise<RequestResponse<any>>
 }
 
 class DemoRequestData implements RequestData {
