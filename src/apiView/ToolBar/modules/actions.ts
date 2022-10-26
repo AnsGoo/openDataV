@@ -1,7 +1,7 @@
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { ComponentDataType } from '@/types/component'
-import { CanvasStyleData } from '@/types/storeTypes'
+import type { ComponentDataType } from '@/types/component'
+import type { CanvasStyleData } from '@/types/storeTypes'
 
 import { exportRaw, importRaw } from '@/utils/utils'
 

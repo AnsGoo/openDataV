@@ -11,7 +11,7 @@
 <script lang="ts" setup>
 import { drawCavaseRuler } from './utils'
 import { reactive, ref, onMounted, watch } from 'vue'
-import { PaletteType } from '../index-types'
+import type { PaletteType } from '../index-types'
 
 const props = defineProps<{
   showIndicator: boolean

@@ -1,6 +1,6 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <div :style="screenStyle" ref="screen" class="screen">
+    <div ref="screen" :style="screenStyle" class="screen">
       <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
     </div>
   </div>
@@ -14,7 +14,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { LayoutData } from '@/api/pages'
-import { BaseComponent, createComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
+import { createComponent } from '@/resource/models'
 
 const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({

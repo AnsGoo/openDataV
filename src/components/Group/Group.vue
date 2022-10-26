@@ -1,34 +1,34 @@
 <template>
-  <div class="group" v-if="!editMode">
+  <div v-if="!editMode" class="group">
     <template v-for="item in component.subComponents" :key="item.id">
       <component
-        class="component"
         :is="item.component"
+        :id="'component' + item.id"
+        class="component"
         :style="getComponentStyle(item)"
         :component="item"
-        :id="'component' + item.id"
       />
     </template>
   </div>
-  <div class="group" :class="{ dotted: isActive }" v-else>
+  <div v-else class="group" :class="{ dotted: isActive }">
     <template v-for="(item, i) in component.subComponents" :key="item.id">
       <Shape
+        v-if="isShow(item.display)"
         :id="'shape' + item.id"
-        :defaultStyle="(item.style as any)"
+        :defaultStyle="item.style"
         :style="getShapeStyle(item)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
         :class="{ lock: item.locked }"
         :isInner="true"
         :index="i"
-        v-if="isShow(item.display)"
       >
         <component
-          class="component"
           :is="item.component"
+          :id="'component' + item.id"
+          class="component"
           :style="getInnerComponentShapeStyle(item)"
           :component="item"
-          :id="'component' + item.id"
         />
       </Shape>
     </template>
@@ -40,7 +40,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
 import Shape from '@/designer/Editor/Shape'
 import { computed } from 'vue'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
   component: BaseComponent

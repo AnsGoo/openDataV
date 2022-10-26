@@ -1,4 +1,4 @@
-import { RendererElement, RendererNode, VNode } from 'vue'
+import type { RendererElement, RendererNode, VNode } from 'vue'
 
 export type iconNode = () => VNode<
   RendererNode,

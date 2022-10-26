@@ -48,7 +48,7 @@ const basicRoutes = [
     component: () => import('@/pages/Preview.vue'),
     meta: {
       title: '预览界面',
-      permission: 'PerviewPage',
+      permission: 'PreviewPage',
       hideInMenu: true
     }
   },

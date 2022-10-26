@@ -6,8 +6,8 @@
       v-if="selectOption === 'backgroundColor'"
       v-model:value="backgroundColor.backgroundColor"
       :swatches="GlobalColorSwatches"
-      @update:value="changeBackgroundColor"
       :modes="['hex', 'rgb', 'hsl']"
+      @update:value="changeBackgroundColor"
     />
 
     <div v-else-if="selectOption === 'backgroundImage'">
@@ -21,11 +21,12 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { NSpace, NSelect, SelectOption, NColorPicker } from 'naive-ui'
+import type { SelectOption } from 'naive-ui'
+import { NSpace, NSelect, NColorPicker } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
 import LinearGradient from '../linearGradient'
 import type { Gradient } from '../linearGradient/type'
-import { BackgroundImage, BackgroundColor } from '@/types/common'
+import type { BackgroundImage, BackgroundColor } from '@/types/common'
 import BackImage from './BackImage.vue'
 import { isNumber } from 'lodash-es'
 

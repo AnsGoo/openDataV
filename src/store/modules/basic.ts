@@ -6,10 +6,11 @@ import { EditMode } from '@/enum'
 import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
-import { BaseComponent, createComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
+import { createComponent } from '@/resource/models'
 import { cloneDeep } from 'lodash-es'
-import { ComponentDataType, DOMRectStyle } from '@/types/component'
-import { Position } from '@/types/common'
+import type { ComponentDataType, DOMRectStyle } from '@/types/component'
+import type { Position } from '@/types/common'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -118,18 +119,24 @@ const useBasicStore = defineStore({
 
     /**
      * 同步当前组件的位置
-     * @param postion 位置
+     * @param position 位置
+     * @param parentComponent 父组件
+     * @param isSave 是否保存
      * @returns
      */
-    syncComponentLoction(postion: Position, parentComponent?: BaseComponent, isSave = true): void {
+    syncComponentLocation(
+      position: Position,
+      parentComponent?: BaseComponent,
+      isSave = true
+    ): void {
       if (!this.curComponent) {
         return
       }
-      const styleKyes = ['top', 'left', 'width', 'height', 'rotate']
-      const ablePostion: Position = {}
-      styleKyes.forEach((el) => {
-        if (postion[el] != undefined) {
-          ablePostion[el] = postion[el]
+      const styleKeys = ['top', 'left', 'width', 'height', 'rotate']
+      const ablePosition: Position = {}
+      styleKeys.forEach((el) => {
+        if (position[el] != undefined) {
+          ablePosition[el] = position[el]
         }
       })
 
@@ -138,41 +145,41 @@ const useBasicStore = defineStore({
         const groupStyle = this.curComponent.groupStyle!
         const gStyle = {
           gleft:
-            ablePostion.left !== undefined
-              ? toPercent((ablePostion.left! - parentStyle.left) / parentStyle.width)
+            ablePosition.left !== undefined
+              ? toPercent((ablePosition.left! - parentStyle.left) / parentStyle.width)
               : groupStyle.gleft,
           gtop:
-            ablePostion.top !== undefined
-              ? toPercent((ablePostion.top! - parentStyle.top) / parentStyle.height)
+            ablePosition.top !== undefined
+              ? toPercent((ablePosition.top! - parentStyle.top) / parentStyle.height)
               : groupStyle.gtop,
           gwidth:
-            ablePostion.width !== undefined
-              ? toPercent(ablePostion.width! / parentStyle.width)
+            ablePosition.width !== undefined
+              ? toPercent(ablePosition.width! / parentStyle.width)
               : groupStyle.gwidth,
           gheight:
-            ablePostion.height !== undefined
-              ? toPercent(ablePostion.height! / parentStyle.height)
+            ablePosition.height !== undefined
+              ? toPercent(ablePosition.height! / parentStyle.height)
               : groupStyle.gheight,
-          grotate: ablePostion.rotate !== undefined ? ablePostion.rotate! : groupStyle.grotate
+          grotate: ablePosition.rotate !== undefined ? ablePosition.rotate! : groupStyle.grotate
         }
         const newStyle = {
           left:
-            ablePostion.left !== undefined
-              ? ablePostion.left
+            ablePosition.left !== undefined
+              ? ablePosition.left
               : this.curComponent.positionStyle.left,
           top:
-            ablePostion.top !== undefined ? ablePostion.top : this.curComponent.positionStyle.top,
+            ablePosition.top !== undefined ? ablePosition.top : this.curComponent.positionStyle.top,
           width:
-            ablePostion.width !== undefined
-              ? ablePostion.width
+            ablePosition.width !== undefined
+              ? ablePosition.width
               : this.curComponent.positionStyle.width,
           height:
-            ablePostion.height !== undefined
-              ? ablePostion.height
+            ablePosition.height !== undefined
+              ? ablePosition.height
               : this.curComponent.positionStyle.height,
           rotate:
-            ablePostion.rotate !== undefined
-              ? ablePostion.rotate!
+            ablePosition.rotate !== undefined
+              ? ablePosition.rotate!
               : this.curComponent.positionStyle.rotate
         }
         this.curComponent.groupStyle = gStyle
@@ -180,8 +187,8 @@ const useBasicStore = defineStore({
           this.curComponent.change(key, newStyle[key])
         }
       } else {
-        for (const key in ablePostion) {
-          this.curComponent.change(key, ablePostion[key])
+        for (const key in ablePosition) {
+          this.curComponent.change(key, ablePosition[key])
         }
       }
 
@@ -195,9 +202,7 @@ const useBasicStore = defineStore({
 
     /**
      * 重置组件数据ID
-     * @param componentData 需要被重置的组件数据
-     * @param ids
-     * @param isUpdate
+     * @param components 需要被重置的组件数据
      */
     resetComponentData(components: Array<BaseComponent>) {
       components.forEach((item: BaseComponent) => {
@@ -239,6 +244,7 @@ const useBasicStore = defineStore({
     },
     /**
      * 设置当前组件的PropValue
+     * @param prop 组名
      * @param key 属性
      * @param value 值
      * @returns
@@ -292,6 +298,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层下移
      * @param index 组件索引
+     * @param parent
      */
     downComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -308,6 +315,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层上移
      * @param index 组件索引
+     * @param parent
      */
     upComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -327,6 +335,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层置顶
      * @param index 组件索引
+     * @param parent
      */
     topComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -345,6 +354,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层置底
      * @param index 组件索引
+     * @param parent
      */
     bottomComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -363,6 +373,7 @@ const useBasicStore = defineStore({
     /**
      * 根据索引移除组件
      * @param index 索引
+     * @param parent
      * @returns 移除结果
      */
     removeComponent(index: number, parent: Optional<BaseComponent>) {
@@ -431,7 +442,7 @@ const useBasicStore = defineStore({
     },
     /**
      * 重新自动调整组件尺寸
-     * @param component
+     * @param parentComponent
      */
     resizeAutoComponent(parentComponent: Optional<BaseComponent>): void {
       if (parentComponent && parentComponent.component === 'Group') {

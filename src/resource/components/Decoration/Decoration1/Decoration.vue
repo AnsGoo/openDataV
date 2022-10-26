@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-decoration-1" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-decoration-1">
     <svg
       :width="`${svgWH[0]}px`"
       :height="`${svgWH[1]}px`"
@@ -83,7 +83,7 @@
 <script setup lang="ts">
 import { useProp } from '@/resource/hooks'
 import { ref } from 'vue'
-import DecorationComponent from './config'
+import type DecorationComponent from './config'
 
 import type { Decoration } from './type'
 const props = defineProps<{

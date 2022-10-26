@@ -1,7 +1,8 @@
 import { componentList } from '@/designer/load'
-import { ComponentDataType } from '@/types/component'
-import { BaseComponent } from './component'
-import { DataIntegrationMode, DataType, RestRequestOptions, StaticRequestOptions } from './data'
+import type { ComponentDataType } from '@/types/component'
+import type { BaseComponent } from './component'
+import type { RestRequestOptions, StaticRequestOptions } from './data'
+import { DataIntegrationMode, DataType } from './data'
 
 export function createComponent(component: ComponentDataType): any {
   if ((component.component as string) in componentList) {

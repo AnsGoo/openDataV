@@ -4,23 +4,23 @@
       <n-input
         v-model:value="arrayValue[index]"
         type="text"
-        @change="handleChange(index)"
         placeholder="请输入数据"
+        @change="handleChange(index)"
       />
       <IconPark
+        v-if="type === 'dynamic'"
         name="delete-one"
         color="#F76560"
         @click="handleDelete(index)"
-        v-if="type === 'dynamic'"
       />
     </n-space>
-    <n-space :wrap="false" v-if="type === 'dynamic'">
+    <n-space v-if="type === 'dynamic'" :wrap="false">
       <n-input
         ref="addInputEl"
         v-model:value="newValue"
         type="text"
-        @keypress.enter="handleAdd"
         placeholder="请输入数据"
+        @keypress.enter="handleAdd"
       />
       <IconPark name="add-three" color="#4CD263" @click="handleAdd" />
     </n-space>

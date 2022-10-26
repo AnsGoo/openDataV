@@ -13,7 +13,7 @@
 import flvjs from 'flv.js'
 import { onMounted, ref } from 'vue'
 import type { FlvVideo } from './type'
-import FlvVideoComponent from './config'
+import type FlvVideoComponent from './config'
 import { useProp } from '@/resource/hooks'
 
 const props = defineProps<{

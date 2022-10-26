@@ -1,15 +1,15 @@
 <template>
   <div class="data-list" style="height: calc(100vh - 120px)">
     <n-form
-      @submit.prevent
       v-if="curComponent.dataIntegrationMode === DataIntegrationMode.UNIVERSAL"
+      @submit.prevent
     >
       <n-form-item key="dataType" label="数据类型">
         <n-select
           v-model:value="dataType"
           placeholder="请选择数据类型"
-          @update:value="typeChanged"
           :options="dataTypeOptions"
+          @update:value="typeChanged"
         />
       </n-form-item>
       <StaticData v-if="dataType === DataType.STATIC" :curComponent="curComponent" />
@@ -25,7 +25,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { BaseComponent, DataType } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
+import { DataType } from '@/resource/models'
 import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } from 'naive-ui'
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'

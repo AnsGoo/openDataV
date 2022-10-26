@@ -7,8 +7,8 @@
       center
       title="保存当前布局"
       style="width: 30%; min-width: 600px"
-      @update:show="() => (saveDialogVisible = false)"
       size="medium"
+      @update:show="saveDialogVisible = false"
     >
       <n-form :model="form" :rules="rules" @submit.prevent>
         <n-form-item label="页面名称" prop="name">
@@ -21,8 +21,8 @@
       <template #footer>
         <n-space>
           <n-button @click="saveDialogVisible = false">取消</n-button>
-          <n-button type="primary" @click="handleSubmit('new')" v-if="!index">新增</n-button>
-          <n-button type="primary" @click="handleSubmit('update')" v-else>更新</n-button>
+          <n-button v-if="!index" type="primary" @click="handleSubmit('new')">新增</n-button>
+          <n-button v-else type="primary" @click="handleSubmit('update')">更新</n-button>
         </n-space>
       </template>
     </n-modal>

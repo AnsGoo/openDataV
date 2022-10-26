@@ -2,20 +2,20 @@
   <n-form :model="formData">
     <n-form-item label="动态数据" label-placement="top">
       <n-input-group>
-        <n-input style="flex: 1" v-model:value="formData.restOptions.url" readonly>
+        <n-input v-model:value="formData.restOptions.url" style="flex: 1" readonly>
           <template #prefix>
             <n-gradient-text type="success" style="font-weight: 800">
               {{ formData.restOptions.method }}
             </n-gradient-text>
           </template>
         </n-input>
-        <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
+        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
       </n-input-group>
     </n-form-item>
     <n-form-item label="是否重复" label-placement="left">
       <n-switch v-model:value="formData.isRepeat" @update:value="changeHandler" />
     </n-form-item>
-    <n-form-item label="请求间隔" label-placement="left" v-if="formData.isRepeat">
+    <n-form-item v-if="formData.isRepeat" label="请求间隔" label-placement="left">
       <n-input-number v-model:value="formData.interval" :min="300" :step="100">
         <template #suffix> ms </template>
       </n-input-number>
@@ -49,9 +49,10 @@ import {
   NFormItem,
   NGradientText
 } from 'naive-ui'
-import { BaseComponent, DataType, RestRequestData } from '@/resource/models'
+import type { BaseComponent, RestRequestData } from '@/resource/models'
+import { DataType } from '@/resource/models'
 import Rest from '@/apiView/RequestContent/rest'
-import { RequestOption } from '@/apiView/hooks/http/type'
+import type { RequestOption } from '@/apiView/hooks/http/type'
 import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 import { ScriptType } from '@/enum'

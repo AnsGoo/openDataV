@@ -3,12 +3,12 @@
     <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
-          @click="() => (isShow = true)"
+          v-model:value="formData.title"
           :readonly="true"
           placeholder="编辑请点击"
-          v-model:value="formData.title"
+          @click="isShow = true"
         />
-        <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
+        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
       </n-input-group>
     </n-form-item>
   </n-form>
@@ -21,7 +21,7 @@
       role="dialog"
       aria-modal="true"
       closable
-      @close="() => (isShow = false)"
+      @close="isShow = false"
     >
       <Static
         v-model:options="formData"
@@ -35,11 +35,12 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
-import { BaseComponent, DataType, StaticRequestData } from '@/resource/models'
+import type { BaseComponent, StaticRequestData } from '@/resource/models'
+import { DataType } from '@/resource/models'
 import { ScriptType } from '@/enum'
 import Static from '@/apiView/RequestContent/static'
-import { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
-import { AfterScript } from '@/types/component'
+import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
+import type { AfterScript } from '@/types/component'
 import { message } from '@/utils/message'
 const props = defineProps<{
   curComponent: BaseComponent
@@ -69,7 +70,7 @@ const initData = async () => {
     formData.title = result.title!
   } else {
     message.info('请配置静态数据')
-    props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+    await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
       id: formData.dataId,
       script: {
         code: formData.script.code,
@@ -100,7 +101,7 @@ watch(
   () => props.curComponent,
   async () => {
     if (props.curComponent) {
-      initData()
+      await initData()
     }
   },
   { immediate: true }

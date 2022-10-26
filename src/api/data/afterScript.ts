@@ -1,6 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
-import { AxiosResponse } from 'axios'
-import { AfterScriptDetail } from './type'
+import type { AxiosResponse } from 'axios'
+import type { AfterScriptDetail } from './type'
 
 /**
  * 根据id 加载后置脚本
@@ -28,7 +28,7 @@ export const getAfterScriptListApi = async (): Promise<AxiosResponse<AfterScript
  */
 export const updateAfterScriptApi = async (
   id: string,
-  data: AfterScriptDetail
+  data: Partial<Pick<AfterScriptDetail, 'name' | 'code' | 'type'>>
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.put<AfterScriptDetail>({
     url: `/dataset/script/${id}/`,
@@ -41,7 +41,7 @@ export const updateAfterScriptApi = async (
  * @param data 后置脚本
  */
 export const createAfterScriptApi = async (
-  data: AfterScriptDetail
+  data: Pick<AfterScriptDetail, 'name' | 'code' | 'type'>
 ): Promise<AxiosResponse<AfterScriptDetail>> => {
   return http.post<AfterScriptDetail>({
     url: '/dataset/script/',
@@ -51,7 +51,7 @@ export const createAfterScriptApi = async (
 
 /**
  * 删除后置脚本
- * @param data 后置脚本
+ * @param id
  */
 export const deleteAfterScriptApi = async (
   id: string

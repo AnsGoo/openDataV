@@ -1,6 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
-import { AxiosResponse } from 'axios'
-import { RestDataDetail } from './type'
+import type { AxiosResponse } from 'axios'
+import type { RestDataDetail } from './type'
 
 /**
  * 根据id 加载Rest数据
@@ -28,11 +28,11 @@ export const getRestDataListApi = async (): Promise<AxiosResponse<RestDataDetail
  */
 export const updateRestDataApi = async (
   id: string,
-  data: RestDataDetail
+  data: Partial<Omit<RestDataDetail, 'id' | 'author' | 'createDate' | 'updateDate'>>
 ): Promise<AxiosResponse<RestDataDetail>> => {
   return http.put<RestDataDetail>({
     url: `/dataset/rest/${id}/`,
-    data: { ...data, id }
+    data: data
   })
 }
 
@@ -41,7 +41,7 @@ export const updateRestDataApi = async (
  * @param data Rest数据
  */
 export const createRestDataApi = async (
-  data: RestDataDetail
+  data: Omit<RestDataDetail, 'id' | 'author' | 'createDate' | 'updateDate'>
 ): Promise<AxiosResponse<RestDataDetail>> => {
   return http.post<RestDataDetail>({
     url: '/dataset/rest/',
@@ -51,7 +51,7 @@ export const createRestDataApi = async (
 
 /**
  * 删除Rest数据
- * @param data Rest数据
+ * @param id
  */
 export const deleteRestDataApi = async (id: string): Promise<AxiosResponse<RestDataDetail>> => {
   return http.delete<RestDataDetail>({

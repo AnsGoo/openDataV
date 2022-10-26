@@ -6,9 +6,9 @@
         <n-ol align-text>
           <n-li
             v-for="item in dataList"
-            :key="item.id!"
+            :key="item.id"
             class="data-item"
-            @click="selectDataItem(item.id!)"
+            @click="selectDataItem(item.id)"
           >
             <div class="rest-detail">
               <div>
@@ -29,7 +29,7 @@ import { NInput, NCard, NTabs, NTabPane, NOl, NLi, NGradientText } from 'naive-u
 import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
 import { getAfterScriptListApi } from '@/api/data/afterScript'
-import { AfterScriptDetail } from '@/api/data/type'
+import type { AfterScriptDetail } from '@/api/data/type'
 import { ScriptType } from '@/enum'
 
 const dataList = ref<AfterScriptDetail[]>([])

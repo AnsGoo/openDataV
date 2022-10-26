@@ -1,4 +1,5 @@
-import { UserConfigExport, ConfigEnv, loadEnv, ProxyOptions } from 'vite'
+import type { UserConfigExport, ConfigEnv, ProxyOptions } from 'vite'
+import { loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import { viteMockServe } from 'vite-plugin-mock'
 import vueJsx from '@vitejs/plugin-vue-jsx'

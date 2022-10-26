@@ -1,6 +1,8 @@
 <template>
   <div :class="rwClassName" :style="rwStyle">
     <CanvasRuler
+      v-model:valueNum="valueNum"
+      v-model:showIndicator="showIndicator"
       :vertical="vertical"
       :scale="scale"
       :width="width"
@@ -10,8 +12,6 @@
       :select-start="selectStart"
       :select-length="selectLength"
       :palette="palette"
-      v-model:valueNum="valueNum"
-      v-model:showIndicator="showIndicator"
       @on-add-line="handleNewLine"
     />
     <div v-show="isShowReferLine" class="lines">
@@ -40,7 +40,7 @@
 import RulerLine from './RulerLine.vue'
 import CanvasRuler from '../canvas-ruler/index.vue'
 import { ref, computed } from 'vue'
-import { PaletteType } from '../index-types'
+import type { PaletteType } from '../index-types'
 const props = withDefaults(
   defineProps<{
     scale: number

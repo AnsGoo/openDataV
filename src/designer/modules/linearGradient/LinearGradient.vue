@@ -2,22 +2,22 @@
   <div class="linear-gradient">
     <n-slider
       v-model:value="linearGradient.angle"
-      @update:value="changed"
       :step="5"
       size="small"
       :max="360"
+      @update:value="changed"
     />
     <NColorPicker
       v-model:value="linearGradient.color1"
-      @update:value="changed"
       :swatches="GlobalColorSwatches"
       clearable
+      @update:value="changed"
     />
     <NColorPicker
       v-model:value="linearGradient.color2"
-      @update:value="changed"
       :swatches="GlobalColorSwatches"
       clearable
+      @update:value="changed"
     />
   </div>
 </template>
@@ -26,7 +26,7 @@
 import { ref } from 'vue'
 import { NColorPicker, NSlider } from 'naive-ui'
 import { GlobalColorSwatches } from '@/enum'
-import { Gradient } from './type'
+import type { Gradient } from './type'
 
 const props = withDefaults(
   defineProps<{

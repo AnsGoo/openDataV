@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-import Dexie, { Table } from 'dexie'
+import type { Table } from 'dexie'
+import Dexie from 'dexie'
 
 class DataSnapShotDexie extends Dexie {
   public data!: Table<{
@@ -43,7 +44,7 @@ class DataSnapShot {
    * @returns 数据快照记录
    */
   public async list(): Promise<any> {
-    return await this.db?.data.where('type').equals(this.key!).reverse().toArray()
+    return this.db?.data.where('type').equals(this.key!).reverse().toArray()
   }
   /**
    * 清除快照记录

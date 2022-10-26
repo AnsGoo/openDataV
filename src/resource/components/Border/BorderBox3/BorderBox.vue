@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-6" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-border-box-6">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <polygon
         :fill="propValue.base.backgroundColor"
@@ -49,7 +49,7 @@
 <script setup lang="ts">
 import { useProp } from '@/resource/hooks'
 import { ref } from 'vue'
-import BorderBoxComponent from './config'
+import type BorderBoxComponent from './config'
 import type { BorderBox } from './type'
 
 const props = defineProps<{
@@ -79,8 +79,8 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 
   .dv-border-svg-container {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
 

@@ -1,6 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
 import type { LoginData } from '@/types/user'
-import { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 
 // 获取页面数据
 export const loginApi = async (data: LoginData): Promise<AxiosResponse<string>> => {
