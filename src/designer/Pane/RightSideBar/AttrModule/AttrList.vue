@@ -13,8 +13,8 @@
           :data="formData[prop]"
           :name="label"
           :uid="prop"
-          @change="(key, value) => changed(prop, key, value)"
           :ukey="curComponent.id"
+          @change="(key, value) => changed(prop, key, value)"
         />
       </n-collapse-item>
     </n-collapse>

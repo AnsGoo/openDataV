@@ -172,7 +172,7 @@ const doLogout = () => {
 
 // 切换全屏图标
 const toggleFullscreenIcon = () => {
-  fullscreenIcon.value = document.fullscreenElement !== null ? 'off-screen-one' : 'full-screen-one'
+  fullscreenIcon.value = document.fullscreenElement ? 'off-screen-one' : 'full-screen-one'
 }
 
 // 切换主题

@@ -6,6 +6,8 @@ import type { CallbackType } from './type'
  * 创建函数
  * @param type 函数类型
  * @param code 函数代码
+ * @param args
+ * @param isDebug
  */
 export function makeFunction(
   type: ScriptType,
