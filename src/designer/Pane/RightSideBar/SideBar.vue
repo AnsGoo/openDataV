@@ -8,7 +8,7 @@
       justify-content="center"
       @update:value="
         (key) => {
-          activeKey.value = key
+          activeKey = key
         }
       "
     >
