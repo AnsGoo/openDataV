@@ -70,7 +70,7 @@ const initData = async () => {
     formData.title = result.title!
   } else {
     message.info('请配置静态数据')
-    props.curComponent.changeRequestDataConfig(DataType.STATIC, {
+    await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
       id: formData.dataId,
       script: {
         code: formData.script.code,
@@ -101,7 +101,7 @@ watch(
   () => props.curComponent,
   async () => {
     if (props.curComponent) {
-      initData()
+      await initData()
     }
   },
   { immediate: true }

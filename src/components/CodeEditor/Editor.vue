@@ -110,7 +110,6 @@ defineExpose({ handleRedo, handleUndo })
 .editor {
   .main {
     display: flex;
-    width: max-width;
     overflow: hidden;
     ::-webkit-scrollbar {
       /*滚动条整体样式*/

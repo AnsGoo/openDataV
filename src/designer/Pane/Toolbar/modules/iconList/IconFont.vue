@@ -5,7 +5,7 @@
       :show="isShow"
       preset="card"
       :title="`图标数量${iconList.length}`"
-      style="width: 50%; maxwidth: 800px"
+      style="width: 50%; max-width: 800px"
       @mask-click="close"
       @close="close"
       @update:show="() => (isShow = false)"

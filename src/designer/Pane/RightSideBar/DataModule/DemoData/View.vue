@@ -72,7 +72,7 @@ const initData = async () => {
   } else {
     message.info('正在使用示例数据')
     const exampleData = props.curComponent.exampleData
-    props.curComponent.changeRequestDataConfig(DataType.DEMO, {
+    await props.curComponent.changeRequestDataConfig(DataType.DEMO, {
       data: cloneDeep(exampleData)
     })
   }

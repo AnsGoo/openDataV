@@ -371,7 +371,6 @@ onMounted(async () => {
   }
 }
 .response {
-  width: max-wdith;
   .resp-fail {
     color: #f76560;
     margin-left: 10px;

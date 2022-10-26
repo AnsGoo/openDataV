@@ -2,10 +2,10 @@
   <div class="login">
     <div class="left">
       <div class="name">
-        <span><img class="logo" src="/favicon.ico" /></span>
+        <span><img class="logo" src="/favicon.ico" alt="" /></span>
         <span> OPenDataV</span>
       </div>
-      <img class="home" src="/home.png" />
+      <img class="home" src="/home.png" alt="" />
       <div class="desc">
         <span>最具智能化数据可视化平台</span>
       </div>
@@ -83,7 +83,7 @@ const loginAction = async () => {
     try {
       const resp = await loginApi(data)
       if (resp.status === 200) {
-        userStore.setToken(resp.data)
+        await userStore.setToken(resp.data)
         message.success('登录成功')
         const redirect: string | undefined = route.query.redirect as string | undefined
         if (redirect) {
