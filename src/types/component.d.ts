@@ -79,7 +79,7 @@ export interface ComponentData {
 export interface ComponentRequestDataType {
   type: DataType
   otherConfig: Recordable
-  requestOptions: StaticRequestOptions | RestRequestOptions
+  requestOptions?: StaticRequestOptions | RestRequestOptions
 }
 export interface ComponentDataType {
   id: string

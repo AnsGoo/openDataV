@@ -37,7 +37,7 @@ export interface RestRequestOptions {
 }
 
 interface RequestData {
-  toJSON: () => Recordable | undefined
+  toJSON: () => any | undefined
   getRespData: (options?: Recordable) => Promise<RequestResponse<any>>
 }
 

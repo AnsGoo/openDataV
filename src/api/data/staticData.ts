@@ -28,7 +28,7 @@ export const getStaticDataListApi = async (): Promise<AxiosResponse<StaticDataDe
  */
 export const updateStaticDataApi = async (
   id: string,
-  data: StaticDataDetail
+  data: Partial<Pick<StaticDataDetail, 'name' | 'data'>>
 ): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.put<StaticDataDetail>({
     url: `/dataset/static/${id}/`,
@@ -41,7 +41,7 @@ export const updateStaticDataApi = async (
  * @param data 静态数据
  */
 export const createStaticDataApi = async (
-  data: StaticDataDetail
+  data: Pick<StaticDataDetail, 'name' | 'data'>
 ): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.post<StaticDataDetail>({
     url: '/dataset/static/',
