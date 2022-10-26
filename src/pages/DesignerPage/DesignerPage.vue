@@ -13,12 +13,16 @@
         bordered
         collapse-mode="width"
         show-trigger
-        @collapse="() => (collapsedLeft = true)"
-        @expand="() => (collapsedLeft = false)"
+        @collapse="collapsedLeft = true"
+        @expand="collapsedLeft = false"
       >
         <LeftSideBar
           v-model:iscollapsed="collapsedLeft"
-          @update:iscollapsed="(value) => (collapsedLeft = value)"
+          @update:iscollapsed="
+            (value) => {
+              collapsedLeft.value = value
+            }
+          "
         />
       </n-layout-sider>
       <n-layout has-sider sider-placement="right">
@@ -32,12 +36,16 @@
           :collapsed-width="35"
           collapse-mode="width"
           show-trigger="arrow-circle"
-          @collapse="() => (collapsedRight = true)"
-          @expand="() => (collapsedRight = false)"
+          @collapse="collapsedRight = true"
+          @expand="collapsedRight = false"
         >
           <RightSideBar
             v-model:iscollapsed="collapsedRight"
-            @update:iscollapsed="(value) => (collapsedRight = value)"
+            @update:iscollapsed="
+              (value) => {
+                collapsedRight.value = value
+              }
+            "
           />
         </n-layout-sider>
       </n-layout>

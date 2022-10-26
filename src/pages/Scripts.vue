@@ -20,8 +20,8 @@
         :collapsed-width="35"
         collapse-mode="width"
         show-trigger="arrow-circle"
-        @collapse="() => (collapsedRight = true)"
-        @expand="() => (collapsedRight = false)"
+        @collapse="collapsedRight = true"
+        @expand="collapsedRight = false"
       >
         <ScriptHistory />
       </n-layout-sider>

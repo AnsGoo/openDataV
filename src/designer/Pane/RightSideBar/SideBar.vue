@@ -6,7 +6,11 @@
       type="line"
       animated
       justify-content="center"
-      @update:value="(key) => (activeKey = key)"
+      @update:value="
+        (key) => {
+          activeKey.value = key
+        }
+      "
     >
       <n-tab-pane name="style" display-directive="show:lazy">
         <template #tab>

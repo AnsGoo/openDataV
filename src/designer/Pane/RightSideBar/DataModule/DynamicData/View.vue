@@ -9,7 +9,7 @@
             </n-gradient-text>
           </template>
         </n-input>
-        <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
+        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
       </n-input-group>
     </n-form-item>
     <n-form-item label="是否重复" label-placement="left">

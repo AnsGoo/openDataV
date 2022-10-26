@@ -6,9 +6,9 @@
           v-model:value="formData.title"
           :readonly="true"
           placeholder="编辑请点击"
-          @click="() => (isShow = true)"
+          @click="isShow = true"
         />
-        <n-button type="primary" @click="() => (isShow = true)"> 编辑 </n-button>
+        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
       </n-input-group>
     </n-form-item>
   </n-form>
@@ -21,7 +21,7 @@
       role="dialog"
       aria-modal="true"
       closable
-      @close="() => (isShow = false)"
+      @close="isShow = false"
     >
       <Static
         v-model:options="formData"
