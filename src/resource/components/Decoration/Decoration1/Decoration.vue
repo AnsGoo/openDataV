@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-decoration-1" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-decoration-1">
     <svg
       :width="`${svgWH[0]}px`"
       :height="`${svgWH[1]}px`"

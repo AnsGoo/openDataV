@@ -4,7 +4,7 @@
       <n-button type="primary" :loading="loading" @click="handleCreate"> 新建 </n-button>
     </n-card>
 
-    <div class="card" v-for="item in layoutList" :key="item.id">
+    <div v-for="item in layoutList" :key="item.id" class="card">
       <n-card :key="item.id" hoverable>
         <template #header>
           <n-ellipsis style="max-width: 8rem; font-size: 1rem">
@@ -15,8 +15,8 @@
           <img
             :src="previewIcon(item.thumbnail)"
             class="thumbnail-image"
-            @click="handleView(item)"
             alt=""
+            @click="handleView(item)"
           />
         </template>
         <template #action>
@@ -33,9 +33,9 @@
             </n-tooltip>
             <n-dropdown
               trigger="hover"
-              @select="(key) => handleSelect(key, item)"
               :options="options"
               :show-arrow="true"
+              @select="(key) => handleSelect(key, item)"
             >
               <n-button quaternary>
                 <template #icon>
@@ -175,12 +175,12 @@ const previewIcon = (icon: string | undefined) => {
   @apply flex justify-between items-center;
 }
 :deep(.n-card__action) {
-  padding: 0px;
+  padding: 0;
 }
 
 :deep(.n-card) {
   .n-card-header {
-    padding: 5px 0px;
+    padding: 5px 0;
     transform: translate(15%, 0);
   }
 }

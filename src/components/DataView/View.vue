@@ -1,9 +1,9 @@
 <template>
   <CodeEditor
+    ref="cm"
     :config="curConfig"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
     :code="content"
-    ref="cm"
     @change="formChange"
   />
 </template>

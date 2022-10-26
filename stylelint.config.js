@@ -1,5 +1,6 @@
 module.exports = {
   extends: ['stylelint-config-recommended-vue'],
+  customSyntax: 'postcss-less',
   rules: {
     'at-rule-no-unknown': [
       true,

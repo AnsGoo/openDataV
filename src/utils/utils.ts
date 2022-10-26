@@ -14,7 +14,7 @@ export function swap<T>(arr: Array<T>, i: number, j: number) {
  * @param excludes 剔除条件
  * @returns css
  */
-export function excludeStyle(style: Recordable<any>, excludes: Array<string> = []) {
+export function excludeStyle(style: Recordable, excludes: Array<string> = []) {
   let result: Recordable<string> = {}
   Object.keys(style).forEach((key) => {
     if (!excludes.includes(key)) {
@@ -32,7 +32,7 @@ export function excludeStyle(style: Recordable<any>, excludes: Array<string> = [
  * @param filters 过滤条件
  * @returns css
  */
-export function filterStyle(style: Recordable<any>, filters: Array<string> = []) {
+export function filterStyle(style: Recordable, filters: Array<string> = []) {
   let result: Recordable<string> = {}
   Object.keys(style).forEach((key) => {
     if (filters.includes(key)) {
@@ -49,7 +49,7 @@ export function filterStyle(style: Recordable<any>, filters: Array<string> = [])
  * @returns css
  */
 
-export const getGroupStyle = (style: Recordable<any>) => {
+export const getGroupStyle = (style: Recordable) => {
   const filters = ['gtop', 'gheight', 'gwidth', 'gleft', 'grotate']
   return filterStyle(style, filters)
 }
@@ -276,8 +276,8 @@ export function isImage(file) {
 }
 
 // 检测两个对象不同的属性值
-export const checkDiff = (obj1: Recordable<any>, obj2: Recordable<any>) => {
-  const result: Recordable<any> = {}
+export const checkDiff = (obj1: Recordable, obj2: Recordable) => {
+  const result: Recordable = {}
   if (!obj2) {
     return obj1
   }
@@ -292,7 +292,7 @@ export const checkDiff = (obj1: Recordable<any>, obj2: Recordable<any>) => {
 }
 
 // 清除对象属性
-export const cleanObjectProp = (obj: Recordable<any>, excludes: string[] = []) => {
+export const cleanObjectProp = (obj: Recordable, excludes: string[] = []) => {
   Object.keys(obj).forEach((key) => {
     if (excludes.includes(key)) {
       return
@@ -378,7 +378,7 @@ export const pasteText = (): string => {
   return textData
 }
 
-export const stylePropToCss = (key: string, value: any): Recordable<any> => {
+export const stylePropToCss = (key: string, value: any): Recordable => {
   switch (key) {
     case 'gwidth':
     case 'gheight':

@@ -202,9 +202,7 @@ const useBasicStore = defineStore({
 
     /**
      * 重置组件数据ID
-     * @param componentData 需要被重置的组件数据
-     * @param ids
-     * @param isUpdate
+     * @param components 需要被重置的组件数据
      */
     resetComponentData(components: Array<BaseComponent>) {
       components.forEach((item: BaseComponent) => {
@@ -246,6 +244,7 @@ const useBasicStore = defineStore({
     },
     /**
      * 设置当前组件的PropValue
+     * @param prop 组名
      * @param key 属性
      * @param value 值
      * @returns
@@ -299,6 +298,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层下移
      * @param index 组件索引
+     * @param parent
      */
     downComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -315,6 +315,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层上移
      * @param index 组件索引
+     * @param parent
      */
     upComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -334,6 +335,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层置顶
      * @param index 组件索引
+     * @param parent
      */
     topComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -352,6 +354,7 @@ const useBasicStore = defineStore({
     /**
      * 组件图层置底
      * @param index 组件索引
+     * @param parent
      */
     bottomComponent(index: number, parent: Optional<BaseComponent>) {
       let componentData = this.componentData
@@ -370,6 +373,7 @@ const useBasicStore = defineStore({
     /**
      * 根据索引移除组件
      * @param index 索引
+     * @param parent
      * @returns 移除结果
      */
     removeComponent(index: number, parent: Optional<BaseComponent>) {
@@ -438,7 +442,7 @@ const useBasicStore = defineStore({
     },
     /**
      * 重新自动调整组件尺寸
-     * @param component
+     * @param parentComponent
      */
     resizeAutoComponent(parentComponent: Optional<BaseComponent>): void {
       if (parentComponent && parentComponent.component === 'Group') {

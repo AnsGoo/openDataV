@@ -1,10 +1,10 @@
 <template>
   <component
-    class="component"
     :is="component.component"
+    :id="'component' + component.id"
+    class="component"
     :style="getComponentStyle(component)"
     :component="component"
-    :id="'component' + component.id"
   />
 </template>
 

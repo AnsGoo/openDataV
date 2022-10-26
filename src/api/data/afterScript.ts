@@ -51,7 +51,7 @@ export const createAfterScriptApi = async (
 
 /**
  * 删除后置脚本
- * @param data 后置脚本
+ * @param id
  */
 export const deleteAfterScriptApi = async (
   id: string

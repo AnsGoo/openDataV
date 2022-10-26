@@ -24,6 +24,7 @@ function getComponentCenter(style: DOMRectStyle): Vector {
 /**
  * 直线方程。已知两点坐标和第三点X坐标求Y坐标
  * k =（y-p1.y) / (x-p1.x)
+ * @param k
  * @param p1 p1点
  * @param x x坐标
  * @returns y坐标
@@ -35,6 +36,7 @@ export function lineEquationY(k, p1: Vector, x: number): number {
 /**
  * 直线方程。已知两点坐标和第三点Y坐标求X坐标
  *  k =（y-p1.y) / (x-p1.x)
+ * @param k
  * @param p1 p1点
  * @param y y坐标
  * @returns x坐标

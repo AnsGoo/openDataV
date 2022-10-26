@@ -51,7 +51,7 @@ export const createRestDataApi = async (
 
 /**
  * 删除Rest数据
- * @param data Rest数据
+ * @param id
  */
 export const deleteRestDataApi = async (id: string): Promise<AxiosResponse<RestDataDetail>> => {
   return http.delete<RestDataDetail>({

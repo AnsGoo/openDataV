@@ -1,11 +1,11 @@
 <template>
   <div
-    class="editor edit"
-    ref="editor"
     id="editor"
+    ref="editor"
+    v-contextmenu.stop="contextmenus"
+    class="editor edit"
     :style="bgStyle"
     @mousedown.left="handleMouseDown"
-    v-contextmenu.stop="contextmenus"
     @drop="handleDrop"
     @dragover="handleDragOver"
     @mouseup="deselectCurComponent"
@@ -23,6 +23,7 @@
     <!--页面组件列表展示-->
     <template v-for="(item, index) in componentData" :key="item.id">
       <Shape
+        v-if="basicStore.isEditMode && item.display"
         :id="'shape' + item.id"
         :defaultStyle="item.style"
         :style="getShapeStyle(item.style)"
@@ -30,14 +31,13 @@
         :info="item"
         :class="{ lock: item.locked }"
         :index="index"
-        v-if="basicStore.isEditMode && item.display"
       >
         <component
-          class="component"
           :is="item.component"
+          :id="'component' + item.id"
+          class="component"
           :style="getComponentShapeStyle(item)"
           :component="item"
-          :id="'component' + item.id"
         />
       </Shape>
     </template>

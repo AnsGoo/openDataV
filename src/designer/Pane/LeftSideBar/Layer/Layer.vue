@@ -1,6 +1,6 @@
 <template>
   <div>
-    <n-menu :options="menuOptions" @update:value="handleSelect" v-if="componentData.length > 0" />
+    <n-menu v-if="componentData.length > 0" :options="menuOptions" @update:value="handleSelect" />
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item>
         <n-empty description="画布为空" />

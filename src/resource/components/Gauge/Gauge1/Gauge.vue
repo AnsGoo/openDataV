@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-decoration-9" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-decoration-9">
     <svg width="100" height="100" :style="`transform: scale(${scaleRota[0]}, ${scaleRota[1]})`">
       <defs>
         <polygon :id="polygonId" points="15, 46.5, 21, 47.5, 21, 52.5, 15, 53.5" />
@@ -119,7 +119,7 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const handler = (event) => {
-  const item: Recordable<any> = event as Recordable<any>
+  const item: Recordable = event as Recordable
 
   if (propValue.data.datatag && item.TagName === propValue.data.datatag) {
     dataValue.value = Number(item.TagValue)
@@ -162,8 +162,8 @@ useEventBus('actual', handler)
   justify-content: center;
   svg {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     transform-origin: left top;
   }
 }

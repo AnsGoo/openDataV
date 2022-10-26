@@ -32,7 +32,7 @@ export class RestRequest {
 
     // const resp = await axiosInstance.request({url,params,data})
   }
-  public request<T = any>(args?: Recordable<any>): Promise<FinallyResponse<T>> {
+  public request<T = any>(args?: Recordable): Promise<FinallyResponse<T>> {
     return new Promise<FinallyResponse<T>>((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse>({ url: this.url, params: this.params, data: this.data })

@@ -100,7 +100,7 @@ class RouteView {
 
   /**
    * 检查用户是否有访问权限
-   * @param to 需要跳转的路由
+   * @param _to 需要跳转的路由
    * @returns 检查结果
    */
   private checkPermission(_to: RouteLocationNormalized): boolean {

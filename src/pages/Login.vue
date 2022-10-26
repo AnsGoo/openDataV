@@ -2,10 +2,10 @@
   <div class="login">
     <div class="left">
       <div class="name">
-        <span><img class="logo" src="/favicon.ico" /></span>
+        <span><img class="logo" src="/favicon.ico" alt="" /></span>
         <span> OPenDataV</span>
       </div>
-      <img class="home" src="/home.png" />
+      <img class="home" src="/home.png" alt="" />
       <div class="desc">
         <span>最具智能化数据可视化平台</span>
       </div>
@@ -15,23 +15,23 @@
         ref="ruleFormRef"
         :rules="rules"
         :model="formData"
-        @submit.prevent
         :show-message="true"
+        @submit.prevent
       >
         <div class="tip">登录</div>
         <n-form-item path="username">
           <n-input
+            v-model:value="formData.username"
             placeholder="请输入用户名"
             style="width: 100%; min-width: 360px"
-            v-model:value="formData.username"
           />
         </n-form-item>
         <n-form-item path="password">
           <n-input
+            v-model:value="formData.password"
             placeholder="请输入密码"
             style="width: 100%; min-width: 360px"
             type="password"
-            v-model:value="formData.password"
             @keydown.enter="loginAction"
           />
         </n-form-item>
@@ -43,8 +43,8 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { NForm } from 'naive-ui'
-import { NFormItem, NInput, NButton } from 'naive-ui'
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
+import { NFormItem, NInput, NButton, NForm } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
 import type { LoginData } from '@/types/user'
@@ -69,8 +69,8 @@ const formData = reactive<{
 })
 
 const rules = reactive<{
-  username: Recordable<any>[]
-  password: Recordable<any>[]
+  username: Recordable[]
+  password: Recordable[]
 }>({
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
   password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
@@ -83,7 +83,7 @@ const loginAction = async () => {
     try {
       const resp = await loginApi(data)
       if (resp.status === 200) {
-        userStore.setToken(resp.data)
+        await userStore.setToken(resp.data)
         message.success('登录成功')
         const redirect: string | undefined = route.query.redirect as string | undefined
         if (redirect) {

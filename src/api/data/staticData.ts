@@ -51,7 +51,7 @@ export const createStaticDataApi = async (
 
 /**
  * 删除静态数据
- * @param data 静态数据
+ * @param id 静态数据 id
  */
 export const deleteStaticDataApi = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.post<StaticDataDetail>({

@@ -2,9 +2,7 @@
   <n-layout class="layout" :position="fixedMenu" has-sider>
     <n-layout-sider
       show-trigger="bar"
-      @collapse="collapsed = true"
       :position="fixedMenu"
-      @expand="collapsed = false"
       :collapsed="collapsed"
       collapse-mode="width"
       :collapsed-width="64"
@@ -12,6 +10,8 @@
       :native-scrollbar="false"
       :inverted="inverted"
       class="layout-sider"
+      @collapse="collapsed = true"
+      @expand="collapsed = false"
     >
       <Logo :collapsed="collapsed" />
       <AsideMenu v-model:collapsed="collapsed" />

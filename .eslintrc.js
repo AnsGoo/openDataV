@@ -1,5 +1,6 @@
 const { defineConfig } = require('eslint-define-config')
-module.exports = defineConfig({
+
+module.exports = defineConfig?.({
   root: true,
   env: {
     browser: true,
@@ -56,7 +57,6 @@ module.exports = defineConfig({
     ],
     'space-before-function-paren': 'off',
 
-    'vue/attributes-order': 'off',
     'vue/one-component-per-file': 'off',
     'vue/html-closing-bracket-newline': 'off',
     'vue/max-attributes-per-line': 'off',
@@ -88,6 +88,12 @@ module.exports = defineConfig({
         allowedNames: ['self'] // Allow `const self = this`; `[]` by default
       }
     ],
+    /**
+     * 属性排序
+     *
+     * @see https://eslint.vuejs.org/rules/attributes-order.html#rule-details
+     */
+    'vue/attributes-order': 1,
     /**
      * 仅仅导入/导出声明
      *

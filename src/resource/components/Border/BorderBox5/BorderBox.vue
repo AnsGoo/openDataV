@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-9" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-border-box-9">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <linearGradient :id="gradientId" x1="0%" y1="0%" x2="100%" y2="100%">
@@ -177,8 +177,8 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
     position: absolute;
     width: 100%;
     height: 100%;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
   }
 }
 </style>

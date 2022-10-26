@@ -90,11 +90,7 @@ const getOption = () => {
       min: (value) => {
         if (propValue.data.min === 'dataMin') {
           return value.min - Number(propValue.data.minOffset || 0)
-        } else if (
-          propValue.data.min === '' ||
-          propValue.data.min === undefined ||
-          propValue.data.min === null
-        ) {
+        } else if (['', undefined, null].includes(propValue.data.min)) {
           return 0 - Number(propValue.data.minOffset || 0)
         } else {
           return Number(propValue.data.min) - Number(propValue.data.minOffset || 0)

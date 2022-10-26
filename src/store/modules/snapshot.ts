@@ -17,7 +17,7 @@ const useSnapShotStore = defineStore({
   }),
   actions: {
     async latestRecord() {
-      return await snapshotDb.snapshot.orderBy('id').last()
+      return snapshotDb.snapshot.orderBy('id').last()
     },
     /**
      * 上一次记录

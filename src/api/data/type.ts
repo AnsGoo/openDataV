@@ -19,9 +19,9 @@ export interface RestDataDetail extends Omit<StoreRequestOption, 'afterScript'> 
 }
 
 export interface AfterScriptDetail extends AfterScript {
-  id: string
+  readonly id: string
   name: string
-  author?: string
-  createDate?: string
-  updateDate?: string
+  readonly author?: string
+  readonly createDate?: string
+  readonly updateDate?: string
 }

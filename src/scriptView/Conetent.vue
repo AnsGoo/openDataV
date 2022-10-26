@@ -8,7 +8,7 @@
       </n-input>
       <n-space>
         <n-button-group class="save">
-          <n-button @click="run" type="success">运行</n-button>
+          <n-button type="success" @click="run">运行</n-button>
         </n-button-group>
       </n-space>
       <n-space>
@@ -23,8 +23,8 @@
           <Editor
             :data="scriptData"
             class="content"
-            @update:data="scriptChangeHandler"
             :config="config"
+            @update:data="scriptChangeHandler"
           />
         </n-tab-pane>
         <n-tab-pane name="入参">

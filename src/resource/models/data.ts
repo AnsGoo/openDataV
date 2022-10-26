@@ -28,8 +28,8 @@ export interface StaticRequestOptions {
   script?: AfterScript
 }
 
-export interface DemoData {
-  data: any
+export interface DemoData<T = any> {
+  data: T
 }
 export interface RestRequestOptions {
   restOptions: StoreRequestOption
@@ -37,7 +37,7 @@ export interface RestRequestOptions {
 }
 
 interface RequestData {
-  toJSON: () => Recordable<any> | undefined
+  toJSON: () => Recordable | undefined
   getRespData: (options?: Recordable) => Promise<RequestResponse<any>>
 }
 
@@ -52,12 +52,11 @@ class DemoRequestData implements RequestData {
   }
 
   public async getRespData(_?: Recordable): Promise<RequestResponse<any>> {
-    const response = {
+    return {
       status: 0,
       data: this.data,
       afterData: this.data
     }
-    return response
   }
 }
 

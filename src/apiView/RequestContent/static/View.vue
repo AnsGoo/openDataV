@@ -5,19 +5,19 @@
         :options="staticDataList"
         :value="formData.id"
         class="selected"
-        @update:value="dataChangeHandler"
         clearable
-        @clear="clear"
         placeholder="请选择数据"
+        @update:value="dataChangeHandler"
+        @clear="clear"
       />
-      <n-input v-model:value="formData.title" class="title" v-if="mode === 'debug'">
+      <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
         <template #prefix>
           <IconPark name="data" />
         </template>
       </n-input>
       <n-space v-if="mode === 'debug'">
         <n-button-group class="save">
-          <n-button @click="formData.id ? handleUpdate() : handleSave()" type="primary"
+          <n-button type="primary" @click="formData.id ? handleUpdate() : handleSave()"
             >保存</n-button
           >
         </n-button-group>
@@ -32,16 +32,16 @@
           :content="formData.originData"
           :title="formData.title"
           class="content"
-          @update:content="originDataChange"
           :mode="mode"
+          @update:content="originDataChange"
         />
       </n-tab-pane>
       <n-tab-pane name="scripts" tab="脚本" display-directive="show">
         <ScriptsEdtor
           :data="options.script"
           class="content"
-          @update:data="scriptChangeHandler"
           :mode="mode"
+          @update:data="scriptChangeHandler"
         />
       </n-tab-pane>
     </n-tabs>

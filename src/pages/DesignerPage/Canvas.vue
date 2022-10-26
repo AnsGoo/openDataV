@@ -16,17 +16,17 @@
         </n-el>
         <n-slider
           :value="sliderValue"
-          @update:value="handleScale"
           :min="10"
           :max="200"
           style="width: 120px"
+          @update:value="handleScale"
         />
         <n-select
           :value="selectValue"
-          @update:value="handleScale"
           :options="options"
           size="tiny"
           style="width: 90px"
+          @update:value="handleScale"
         />
       </n-space>
     </n-layout-footer>
@@ -109,7 +109,7 @@ const changeScale = debounce((value: number) => {
 
 <style lang="less" scoped>
 .content {
-  box-shadow: inset 0px 0px 3px black;
+  box-shadow: inset 0 0 3px black;
 
   :deep(.n-scrollbar-content) {
     transform-origin: left top;

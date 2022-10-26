@@ -2,13 +2,13 @@
 <template>
   <div class="attr-list">
     <n-scrollbar>
-      <n-form size="small" @submit.prevent label-placement="left" label-align="left">
+      <n-form size="small" label-placement="left" label-align="left" @submit.prevent>
         <n-form-item label="分辨率">
           <n-select
             v-model:value="myPixel"
-            @update:value="setScreenSize"
             placeholder="选择分辨率"
             :options="pixels"
+            @update:value="setScreenSize"
           />
         </n-form-item>
         <n-form-item v-for="({ key, label, type }, index) in styleKeys" :key="index" :label="label">

@@ -58,7 +58,7 @@ export default defineComponent({
       emit('change', key, val)
     }
 
-    const isShowLabel = (showLabel?: boolean) => (showLabel === false ? false : true)
+    const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const renderItem = (item: AttrType) => {
       const options: Recordable[] = item.componentOptions?.options || []
 
@@ -70,7 +70,6 @@ export default defineComponent({
               swatches={GlobalColorSwatches}
               modes={['hex', 'rgb', 'hsl']}
               onUpdateValue={(event) => changed(event, item.prop)}
-              clearable={true}
             />
           )
         case FormType.SELECT:
@@ -87,9 +86,7 @@ export default defineComponent({
           return (
             <NRadioGroup
               v-model:value={formData[item.prop]}
-              placeholder={item.label}
               onUpdateValue={(event) => changed(event, item.prop)}
-              clearable={true}
             >
               {options.map((op) => (
                 <NRadio label={op.value} key={op.value}>
@@ -152,7 +149,7 @@ export default defineComponent({
               clearable
               v-model:value={formData[item.prop]}
               onUpdateValue={(event) => changed(event, item.prop)}
-              readonly={item.componentOptions.editable === false ? true : false}
+              readonly={item.componentOptions.editable === false}
               disabled={item.componentOptions.disabled}
             />
           )

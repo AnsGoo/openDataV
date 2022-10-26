@@ -4,9 +4,9 @@
       {{ title }}
     </n-divider>
     <n-divider title-placement="right" style="width: 50%">
-      <icon-park name="add-three" color="#18A058" @click="addParams()" class="action" />
-      <icon-park name="clear" color="#F76560" @click="clearParams()" class="action" />
-      <icon-park name="editor" color="#2080F0" @click="editParams()" class="action" />
+      <icon-park name="add-three" color="#18A058" class="action" @click="addParams()" />
+      <icon-park name="clear" color="#F76560" class="action" @click="clearParams()" />
+      <icon-park name="editor" color="#2080F0" class="action" @click="editParams()" />
     </n-divider>
   </div>
   <div v-for="(item, index) in formData" :key="item.id">
@@ -34,17 +34,17 @@
           autocomplete: 'disabled'
         }"
         :value="formData[index]['key']"
-        @update:value="(value) => changed(index, 'key', value)"
         :allow-input="noSideSpace"
         :placeholder="`参数${index + 1}`"
+        @update:value="(value) => changed(index, 'key', value)"
       />
       <n-input
         style="width: 50%"
         size="small"
         :value="formData[index]['value']"
-        @update:value="(value) => changed(index, 'value', value)"
         :allow-input="noSideSpace"
         :placeholder="`值${index + 1}`"
+        @update:value="(value) => changed(index, 'value', value)"
       />
       <n-button size="small" @click="disableParams(index)">
         <template #icon>
