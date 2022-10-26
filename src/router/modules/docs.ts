@@ -1,22 +1,22 @@
 import Site from '@/docs/Site.vue'
-import { VueComponent as ReadMe } from '@/resource/readme.md'
+import ReadMe from '@/resource/readme.md'
 
 const basicRoutes = [
   {
     path: '/docs',
     name: 'Docs',
     component: Site,
-    redirect: 'API',
+    redirect: '/docs/component',
     meta: {
       title: '文档',
-      icon: 'api',
+      icon: 'docs',
       ignoreAuth: true,
       hideInMenu: true
     },
     children: [
       {
         path: '/docs/component',
-        name: 'component',
+        name: 'Component',
         component: ReadMe,
         meta: {
           title: '组件',
