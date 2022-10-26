@@ -190,8 +190,8 @@ export abstract class BaseComponent {
 
   get style(): ComponentStyle {
     if (this.styleIsChange) {
-      const customStyle: Recordable<any>[] = []
-      let transferStyle: Recordable<any> = {}
+      const customStyle: Recordable[] = []
+      let transferStyle: Recordable = {}
       this.styleFormValue.forEach((item) => {
         item.children.forEach((obj) => {
           if (obj.type === FormType.CUSTOM) {
@@ -223,7 +223,7 @@ export abstract class BaseComponent {
   }
 
   // 自定义样式编辑框数据处理
-  styleToCss(_: Recordable<any>[]): Nullable<Recordable<any>> {
+  styleToCss(_: Recordable[]): Nullable<Recordable> {
     return null
   }
 
@@ -409,7 +409,7 @@ export abstract class BaseComponent {
       el.change('rotate', rotate)
     })
   }
-  async changeRequestDataConfig(type: DataType, config: Recordable<any>) {
+  async changeRequestDataConfig(type: DataType, config: Recordable) {
     switch (type) {
       case DataType.STATIC:
         this.dataConfig = {

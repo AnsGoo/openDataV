@@ -35,7 +35,7 @@ const props = defineProps<{
 }>()
 const basicStore = useBasicStoreWithOut()
 
-const formData = reactive<Recordable<any>>({})
+const formData = reactive<Recordable>({})
 const styleKeys = computed(() => {
   if (props.curComponent) {
     return props.curComponent.styleFormValue
@@ -61,7 +61,7 @@ const changed = debounce((key: string, val: any) => {
   }
 }, 300)
 
-const updateFormData = debounce((newVal: Recordable<any>) => {
+const updateFormData = debounce((newVal: Recordable) => {
   const style = checkDiff(newVal, formData)
   if (style) {
     Object.keys(style).forEach((key) => {

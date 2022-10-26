@@ -81,7 +81,7 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const handler = (event) => {
-  const item: Recordable<any> = event as Recordable<any>
+  const item: Recordable = event as Recordable
 
   if (propValue.data.datatag && item.TagName === propValue.data.datatag) {
     dataValue.value = Number(
