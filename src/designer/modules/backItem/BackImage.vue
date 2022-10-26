@@ -3,8 +3,8 @@
     <n-form-item label="图片">
       <n-input
         :value="data.backgroundImage"
-        @update:value="(value) => handleChange(value, 'backgroundImage')"
         placeholder="请输入图片地址"
+        @update:value="(value) => handleChange(value, 'backgroundImage')"
       />
       <n-upload :custom-request="customRequest" :show-file-list="false">
         <n-button size="small">上传</n-button>
@@ -43,17 +43,9 @@
 
 <script lang="ts" setup>
 import { computed } from 'vue'
-import {
-  NForm,
-  NFormItem,
-  NInput,
-  NSelect,
-  SelectOption,
-  NUpload,
-  NButton,
-  UploadCustomRequestOptions
-} from 'naive-ui'
-import { BackgroundImage } from '@/types/common'
+import type { SelectOption, UploadCustomRequestOptions } from 'naive-ui'
+import { NForm, NFormItem, NInput, NSelect, NUpload, NButton } from 'naive-ui'
+import type { BackgroundImage } from '@/types/common'
 import { cloneDeep } from 'lodash-es'
 import { uploadImageFileApi } from '@/api/images'
 

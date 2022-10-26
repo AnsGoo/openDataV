@@ -1,6 +1,6 @@
 // https://iconpark.bytedance.com/official
 
-import { App } from 'vue'
+import type { App } from 'vue'
 import {
   DeleteOne,
   PreviewCloseOne,
@@ -76,7 +76,7 @@ import {
   DocDetail,
   Helpcenter
 } from '@icon-park/vue-next'
-import IconPark from './index.vue'
+import IconPark from './IconPark.vue'
 
 export { IconPark }
 

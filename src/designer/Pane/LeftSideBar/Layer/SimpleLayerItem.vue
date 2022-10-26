@@ -1,19 +1,19 @@
 <template>
   <IconPark
+    v-contextmenu.stop="contextmenus"
     draggable="true"
+    :name="name"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
-    v-contextmenu.stop="contextmenus"
-    :name="name"
   />
 </template>
 
 <script lang="ts" setup>
 import { eventBus, StaticKey } from '@/bus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { BaseComponent } from '@/resource/models'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { BaseComponent } from '@/resource/models'
 
 const props = withDefaults(
   defineProps<{

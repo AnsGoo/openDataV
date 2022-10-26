@@ -1,12 +1,16 @@
 <template>
   <div v-if="!iscollapsed">
     <n-tabs
+      v-if="curComponent"
+      v-model:value="activeKey"
       type="line"
       animated
-      v-if="curComponent"
       justify-content="center"
-      v-model:value="activeKey"
-      @update:value="(key) => (activeKey = key)"
+      @update:value="
+        (key) => {
+          activeKey = key
+        }
+      "
     >
       <n-tab-pane name="style" display-directive="show:lazy">
         <template #tab>
@@ -30,7 +34,7 @@
         <DataList :curComponent="curComponent!" />
       </n-tab-pane>
     </n-tabs>
-    <n-tabs type="line" animated v-else justify-content="center">
+    <n-tabs v-else type="line" animated justify-content="center">
       <n-tab-pane name="canvas" display-directive="show:lazy">
         <template #tab>
           <IconPark name="page" />

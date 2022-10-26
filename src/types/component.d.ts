@@ -1,6 +1,10 @@
-import { FormType, ComponentGroup } from '@/enum'
+import type { FormType, ComponentGroup, ScriptType } from '@/enum'
+import type { CanvasStyleData } from '@/types/storeTypes'
+import type { DataIntegrationMode } from '@/resource/models/data'
+import type { DataType, StaticRequestOptions, RestRequestOptions } from '@/resource/models/data'
+import type { ConcreteComponent } from 'vue'
 
-interface GroupStyle {
+export interface GroupStyle {
   gwidth: number
   gheight: number
   gleft: number
@@ -8,7 +12,7 @@ interface GroupStyle {
   grotate: number
 }
 
-interface DOMRectStyle {
+export interface DOMRectStyle {
   width: number
   height: number
   left: number
@@ -16,11 +20,11 @@ interface DOMRectStyle {
   rotate: number
 }
 
-interface ComponentStyle extends DOMRectStyle {
+export interface ComponentStyle extends DOMRectStyle {
   [propName: string]: string | number | boolean
 }
 
-interface BaseFormSchema {
+export interface BaseFormSchema {
   editable?: boolean
   disabled?: boolean
   required?: boolean
@@ -30,13 +34,13 @@ interface BaseFormSchema {
 
 type InputFormSchema = BaseFormSchema
 
-interface InputNumberFormSchema extends BaseFormSchema {
+export interface InputNumberFormSchema extends BaseFormSchema {
   min: number
   max: number
   step: number
 }
 
-interface CustomFormSchema extends BaseFormSchema {
+export interface CustomFormSchema extends BaseFormSchema {
   componentType: string | ConcreteComponent
   args: any
 }
@@ -46,7 +50,7 @@ interface ArrayFormSchema extends BaseFormSchema {
   type: 'static' | 'dynamic'
 }
 
-interface AttrType {
+export interface AttrType {
   prop: string
   label: string
   type?: FormType
@@ -61,7 +65,7 @@ interface AttrType {
 }
 
 // 分组类型
-interface PropsType {
+export interface PropsType {
   label: string
   prop: string
   children: AttrType[]
@@ -75,7 +79,7 @@ export interface ComponentData {
 export interface ComponentRequestDataType {
   type: DataType
   otherConfig: Recordable
-  requestOptions: StaticRequestOptions | RestRequestOptions
+  requestOptions?: StaticRequestOptions | RestRequestOptions
 }
 export interface ComponentDataType {
   id: string
@@ -101,16 +105,4 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
 export interface AfterScript {
   code: string
   type: ScriptType
-}
-
-export type {
-  ComponentStyle,
-  ComponentType,
-  PropsType,
-  AttrType,
-  DOMRectStyle,
-  GroupStyle,
-  CustomFormSchema,
-  InputNumberFormSchema,
-  AfterScript
 }

@@ -1,10 +1,11 @@
 import Axios from 'axios'
 import type { AxiosInstance, AxiosResponse } from 'axios'
-import { FinallyResponse, StoreRequestOption } from './type'
+import type { FinallyResponse, StoreRequestOption } from './type'
 import { cloneDeep } from 'lodash-es'
 import { message } from '@/utils/message'
-import { CallbackType, makeFunction } from '@/utils/data'
-import { AfterScript } from '@/types/component'
+import type { CallbackType } from '@/utils/data'
+import { makeFunction } from '@/utils/data'
+import type { AfterScript } from '@/types/component'
 
 export class RestRequest {
   private axiosInstance: AxiosInstance
@@ -31,7 +32,7 @@ export class RestRequest {
 
     // const resp = await axiosInstance.request({url,params,data})
   }
-  public request<T = any>(args?: Recordable<any>): Promise<FinallyResponse<T>> {
+  public request<T = any>(args?: Recordable): Promise<FinallyResponse<T>> {
     return new Promise<FinallyResponse<T>>((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse>({ url: this.url, params: this.params, data: this.data })

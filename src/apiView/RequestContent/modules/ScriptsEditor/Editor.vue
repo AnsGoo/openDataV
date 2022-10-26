@@ -1,10 +1,10 @@
 <template>
   <CodeEditor
+    ref="cm"
+    v-model:code="form.code"
     :language="languageType"
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    v-model:code="form.code"
-    ref="cm"
     @update:code="formChange"
   >
     <template #tool-bar>
@@ -14,19 +14,19 @@
             :options="scriptList"
             :value="formData.id"
             class="selected"
-            @update:value="selectdChange"
             clearable
+            @update:value="selectdChange"
             @clear="clear"
           />
-          <n-input v-model:value="formData.title" class="title" v-if="mode === 'debug'">
+          <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
             <template #prefix>
               <IconPark name="code-one" />
             </template>
           </n-input>
           <n-space v-if="mode === 'debug'">
             <n-button-group class="save">
-              <n-button @click="handleUpdate" :disabled="formData.id === undefined">更新</n-button>
-              <n-button @click="handleSave" type="success">另存为</n-button>
+              <n-button :disabled="formData.id === undefined" @click="handleUpdate">更新</n-button>
+              <n-button type="success" @click="handleSave">另存为</n-button>
             </n-button-group>
           </n-space>
         </div>
@@ -42,14 +42,14 @@
         <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
           {{ savedStatus ? '已保存' : '未保存' }}
         </div>
-        <div class="lang" @click="() => (isShow = true)">
+        <div class="lang" @click="isShow = true">
           <n-select
-            :options="languageOptions"
             v-model:value="form.type"
+            :options="languageOptions"
             class="item language"
             size="tiny"
-            @update:value="formChange"
             style="width: 110px"
+            @update:value="formChange"
           />
         </div>
       </div>
@@ -59,8 +59,9 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, watch, onMounted } from 'vue'
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { NSelect, NInput, NSpace, NButtonGroup, NButton } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
@@ -75,7 +76,7 @@ import {
   createAfterScriptApi,
   getAfterScriptApi
 } from '@/api/data/afterScript'
-import { AfterScriptDetail } from '@/api/data/type'
+import type { AfterScriptDetail } from '@/api/data/type'
 
 const scriptList = ref<SelectOption[]>([])
 

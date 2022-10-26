@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-percent-pond" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-percent-pond">
     <svg>
       <defs>
         <linearGradient :id="gradientId1" x1="0%" y1="0%" x2="100%" y2="0%">
@@ -59,7 +59,7 @@ import { useProp } from '@/resource/hooks'
 import { uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus'
 import type { Progress } from './type'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
   component: BaseComponent
@@ -81,7 +81,7 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 }
 
 const handler = (event) => {
-  const item: Recordable<any> = event as Recordable<any>
+  const item: Recordable = event as Recordable
 
   if (propValue.data.datatag && item.TagName === propValue.data.datatag) {
     dataValue.value = Number(
@@ -222,8 +222,8 @@ useEventBus('actual', handler)
 
   svg {
     position: absolute;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
     width: 100%;
     height: 100%;
   }

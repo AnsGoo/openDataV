@@ -1,10 +1,10 @@
 <template>
   <n-select
-    clearable
     v-model:value="font"
+    clearable
     placeholder="请选择字体"
-    @update:value="change"
     :options="fonts"
+    @update:value="change"
   />
 </template>
 

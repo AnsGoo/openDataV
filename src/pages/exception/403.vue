@@ -1,7 +1,7 @@
 <template>
   <div class="notfound">
     <div>
-      <img src="/errors/403.png" @click="toHome" />
+      <img src="/errors/403.png" alt="" @click="toHome" />
     </div>
   </div>
 </template>

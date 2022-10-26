@@ -11,11 +11,11 @@ export interface ChannelItem {
 
 const channels: Map<string, ChannelItem> = new Map()
 
-type Events = Recordable<any>
+type Events = Recordable
 
 function useEventBus(
   key: string,
-  handler: Handler<Events>,
+  handler: Handler<Events | string>,
   options: {
     isAppend: boolean
     isRegExp: boolean

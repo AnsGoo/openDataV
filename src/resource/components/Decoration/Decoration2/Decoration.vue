@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-decoration-11" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-decoration-11">
     <svg :width="width" :height="height">
       <polygon
         :fill="propValue.base.color2"
@@ -56,7 +56,7 @@
 <script setup lang="ts">
 import { useProp } from '@/resource/hooks'
 import { ref } from 'vue'
-import DecorationComponent from './config'
+import type DecorationComponent from './config'
 
 import type { Decoration } from './type'
 const props = defineProps<{
@@ -84,8 +84,8 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
 
   .decoration-content {
     position: absolute;
-    top: 0px;
-    left: 0px;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     display: flex;

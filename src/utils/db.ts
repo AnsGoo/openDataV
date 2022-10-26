@@ -1,5 +1,6 @@
-import { ComponentData } from '@/types/component'
-import Dexie, { Table } from 'dexie'
+import type { ComponentData } from '@/types/component'
+import type { Table } from 'dexie'
+import Dexie from 'dexie'
 
 export interface StoreComponentData extends ComponentData {
   id?: number

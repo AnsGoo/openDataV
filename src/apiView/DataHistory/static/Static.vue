@@ -6,10 +6,10 @@
         <n-ol align-text>
           <n-li
             v-for="item in dataList"
-            :key="item.id!"
+            :key="item.id"
+            v-contextmenu="() => dataListContextMenus(item.id)"
             class="data-item"
-            v-contextmenu="() => dataListContextmenus(item.id!)"
-            @click="selectDataItem(item.id!)"
+            @click="selectDataItem(item.id)"
             ><n-space>{{ item.name }}</n-space></n-li
           >
         </n-ol>
@@ -18,10 +18,10 @@
         <n-ol align-text>
           <n-li
             v-for="item in dataHistory"
-            :key="item.id!"
+            :key="item.id"
+            v-contextmenu="() => dataHistoryContextMenus(item.id)"
             class="data-item"
-            v-contextmenu="() => dataHistoryContextmenus(item.id!)"
-            @click="selectDataItem(item.id!)"
+            @click="selectDataItem(item.id)"
             ><n-space>{{ item.name }}</n-space></n-li
           >
         </n-ol>
@@ -36,7 +36,7 @@ import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { StaticDataDetail } from '@/api/data'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { message } from '@/utils/message'
 
 const snapShot = useDataSnapShot('STATIC', true)
@@ -83,7 +83,7 @@ const clearSnapshot = async () => {
   await getHistory()
 }
 
-const dataListContextmenus = (id: string): Optional<ContextmenuItem[]> => {
+const dataListContextMenus = (id: string): Optional<ContextmenuItem[]> => {
   return [
     {
       text: '删除',
@@ -93,7 +93,7 @@ const dataListContextmenus = (id: string): Optional<ContextmenuItem[]> => {
   ]
 }
 
-const dataHistoryContextmenus = (_: string): Optional<ContextmenuItem[]> => {
+const dataHistoryContextMenus = (_: string): Optional<ContextmenuItem[]> => {
   return [
     {
       text: '清除',

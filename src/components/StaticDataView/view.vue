@@ -1,12 +1,12 @@
 <template>
   <CodeEditor
+    ref="cm"
+    v-model:code="contentRef"
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    v-model:code="contentRef"
     @change="codeChange"
-    ref="cm"
   >
-    <template #tool-bar v-if="mode === 'debug'">
+    <template v-if="mode === 'debug'" #tool-bar>
       <div class="buttons">
         <icon-park class="item button" name="save-one" @click="handleSave" />
         <icon-park class="item button" name="back" @click="handleUndo" />
@@ -29,8 +29,9 @@
 
 <script lang="ts" setup>
 import { computed, ref, watch } from 'vue'
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
 

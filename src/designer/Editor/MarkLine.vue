@@ -2,11 +2,11 @@
   <div class="mark-line">
     <div
       v-for="line in lines"
+      v-show="lineStatus[line] || false"
       :key="line"
+      :ref="setLineRef"
       class="line"
       :class="line.includes('x') ? 'xline' : 'yline'"
-      :ref="setLineRef"
-      v-show="lineStatus[line] || false"
     ></div>
   </div>
 </template>
@@ -16,8 +16,8 @@ import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useEventBus, StaticKey } from '@/bus'
 import { calcComponentAxis } from '@/utils/utils'
-import { BaseComponent } from '@/resource/models'
-import { Position } from '@/types/common'
+import type { BaseComponent } from '@/resource/models'
+import type { Position } from '@/types/common'
 
 const basicStore = useBasicStoreWithOut()
 

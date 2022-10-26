@@ -9,11 +9,11 @@ declare module '*.md' {
   const html: string
 
   // When "Mode.React" is requested. VFC could take a generic like React.VFC<{ MyComponent: TypeOfMyComponent }>
-  import React from 'react'
+  import type React from 'react'
   const ReactComponent: React.VFC
 
   // When "Mode.Vue" is requested
-  import { ComponentOptions, Component } from 'vue'
+  import type { ComponentOptions, Component } from 'vue'
   const VueComponent: ComponentOptions
   const VueComponentWith: (components: Record<string, Component>) => ComponentOptions
 

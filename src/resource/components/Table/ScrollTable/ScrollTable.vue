@@ -1,14 +1,14 @@
 <template>
-  <div class="dv-scroll-board" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-scroll-board">
     <div
-      class="header"
       v-if="propValue.header.header.length"
+      class="header"
       :style="`background-color: ${propValue.header.headerBGC};`"
     >
       <div
-        class="header-item"
         v-for="(item, i) in propValue.header.header"
         :key="`${item}${i}`"
+        class="header-item"
         :style="`
           height: ${propValue.header.headerHeight}px;
           line-height: ${propValue.header.headerHeight}px;
@@ -26,9 +26,9 @@
       }"
     >
       <div
-        class="row-item"
         v-for="(row, ri) in rowData"
         :key="row.rowIndex"
+        class="row-item"
         :style="`
           height: ${propValue.rows.data.height}px;
           line-height: ${propValue.rows.data.height}px;
@@ -38,9 +38,9 @@
         `"
       >
         <div
-          class="ceil"
           v-for="(ceil, ci) in row.ceils"
           :key="`${ceil}${ri}${ci}`"
+          class="ceil"
           v-html="ceil"
         ></div>
       </div>
@@ -51,9 +51,9 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import { useProp, useData } from '@/resource/hooks'
-import { BaseComponent, DataType } from '@/resource/models'
-import { ScrollTableType } from './type'
-import { RequestResponse } from '@/resource/models/type'
+import type { BaseComponent, DataType } from '@/resource/models'
+import type { ScrollTableType } from './type'
+import type { RequestResponse } from '@/resource/models/type'
 
 const props = defineProps<{
   component: BaseComponent
@@ -68,9 +68,11 @@ const resizeHandler = (entries: ResizeObserverEntry[]) => {
   comHeight.value = height
 }
 
-const tableData = ref<Array<{ label: string; value: number }>>([])
+const tableData = ref<
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData']
+>([])
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     tableData.value = resp.afterData
   }
@@ -117,7 +119,7 @@ const rowData = computed(() => {
 
     .index {
       border-radius: 3px;
-      padding: 0px 3px;
+      padding: 0 3px;
     }
   }
 }

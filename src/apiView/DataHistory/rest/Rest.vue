@@ -6,10 +6,10 @@
         <n-ol align-text>
           <n-li
             v-for="item in dataList"
-            :key="item.id!"
+            :key="item.id"
+            v-contextmenu="() => dataListContextMenus(item.id)"
             class="data-item"
-            v-contextmenu="() => dataListContextmenus(item.id!)"
-            @click="selectDataItem(item.id!)"
+            @click="selectDataItem(item.id)"
           >
             <div class="rest-detail">
               <div class="desc">{{ item.name }}</div>
@@ -27,10 +27,10 @@
         <n-ol align-text>
           <n-li
             v-for="item in dataHistory"
-            :key="item.id!"
+            :key="item.id"
+            v-contextmenu="() => dataHistoryContextMenus(item.id)"
             class="data-item"
-            @click="selectDataItem(item.id!)"
-            v-contextmenu="() => dataHistoryContextmenus(item.id!)"
+            @click="selectDataItem(item.id)"
           >
             <div class="rest-detail">
               <div class="desc">{{ item.name }}</div>
@@ -52,9 +52,9 @@ import { getRestDataListApi, deleteRestDataApi } from '@/api/data'
 import { NInput, NCard, NTabs, NTabPane, NOl, NLi, NGradientText } from 'naive-ui'
 import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
-import { RestDataDetail } from '@/api/data/type'
+import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { message } from '@/utils/message'
 
 const dataList = ref<RestDataDetail[]>([])
@@ -101,7 +101,7 @@ const clearSnapshot = async () => {
   await getHistory()
 }
 
-const dataListContextmenus = (id: string): Optional<ContextmenuItem[]> => {
+const dataListContextMenus = (id: string): Optional<ContextmenuItem[]> => {
   return [
     {
       text: '删除',
@@ -111,7 +111,7 @@ const dataListContextmenus = (id: string): Optional<ContextmenuItem[]> => {
   ]
 }
 
-const dataHistoryContextmenus = (_: string): Optional<ContextmenuItem[]> => {
+const dataHistoryContextMenus = (_: string): Optional<ContextmenuItem[]> => {
   return [
     {
       text: '清除',

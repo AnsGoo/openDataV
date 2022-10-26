@@ -1,10 +1,12 @@
-import { getStaticDataApi, StaticDataDetail } from '@/api/data'
-import useRestRequest, { RestRequest } from '@/apiView/hooks/http'
-import { StoreRequestOption } from '@/apiView/hooks/http/type'
-import { AfterScript } from '@/types/component'
+import type { StaticDataDetail } from '@/api/data'
+import { getStaticDataApi } from '@/api/data'
+import type { RestRequest } from '@/apiView/hooks/http'
+import useRestRequest from '@/apiView/hooks/http'
+import type { StoreRequestOption } from '@/apiView/hooks/http/type'
+import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
 import { cloneDeep } from 'lodash-es'
-import { RequestResponse } from './type'
+import type { RequestResponse } from './type'
 
 export enum DataType {
   STATIC = 'STATIC',
@@ -26,8 +28,8 @@ export interface StaticRequestOptions {
   script?: AfterScript
 }
 
-export interface DemoData {
-  data: any
+export interface DemoData<T = any> {
+  data: T
 }
 export interface RestRequestOptions {
   restOptions: StoreRequestOption
@@ -35,7 +37,7 @@ export interface RestRequestOptions {
 }
 
 interface RequestData {
-  toJSON: () => Recordable<any> | undefined
+  toJSON: () => any | undefined
   getRespData: (options?: Recordable) => Promise<RequestResponse<any>>
 }
 
@@ -50,12 +52,11 @@ class DemoRequestData implements RequestData {
   }
 
   public async getRespData(_?: Recordable): Promise<RequestResponse<any>> {
-    const response = {
+    return {
       status: 0,
       data: this.data,
       afterData: this.data
     }
-    return response
   }
 }
 

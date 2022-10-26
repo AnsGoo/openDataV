@@ -1,6 +1,6 @@
 import { uuid } from '@/utils/utils'
 import { cloneDeep } from 'lodash-es'
-import { KV, RequestOption, StoreRequestOption } from './type'
+import type { KV, RequestOption, StoreRequestOption } from './type'
 
 export const KVToRecordable = (values: Array<KV>): Recordable => {
   const data = {}

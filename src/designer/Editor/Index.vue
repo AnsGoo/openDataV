@@ -1,11 +1,11 @@
 <template>
   <div
-    class="editor edit"
-    ref="editor"
     id="editor"
+    ref="editor"
+    v-contextmenu.stop="contextmenus"
+    class="editor edit"
     :style="bgStyle"
     @mousedown.left="handleMouseDown"
-    v-contextmenu.stop="contextmenus"
     @drop="handleDrop"
     @dragover="handleDragOver"
     @mouseup="deselectCurComponent"
@@ -23,21 +23,21 @@
     <!--页面组件列表展示-->
     <template v-for="(item, index) in componentData" :key="item.id">
       <Shape
+        v-if="basicStore.isEditMode && item.display"
         :id="'shape' + item.id"
-        :defaultStyle="(item.style as any)"
+        :defaultStyle="item.style"
         :style="getShapeStyle(item.style)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
         :class="{ lock: item.locked }"
         :index="index"
-        v-if="basicStore.isEditMode && item.display"
       >
         <component
-          class="component"
           :is="item.component"
+          :id="'component' + item.id"
+          class="component"
           :style="getComponentShapeStyle(item)"
           :component="item"
-          :id="'component' + item.id"
         />
       </Shape>
     </template>
@@ -60,11 +60,12 @@ import { filterStyle, uuid } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
-import { Position, Vector } from '@/types/common'
+import type { Position, Vector } from '@/types/common'
 import { getComponentShapeStyle } from '@/utils/utils'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-import { BaseComponent, createComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
+import { createComponent } from '@/resource/models'
 import { componentList } from '../load'
 import { DataIntegrationMode } from '@/resource/models/data'
 import { backgroundToCss } from '@/utils/utils'

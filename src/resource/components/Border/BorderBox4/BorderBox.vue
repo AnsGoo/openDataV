@@ -1,5 +1,5 @@
 <template>
-  <div class="dv-border-box-8" v-resize="resizeHandler">
+  <div v-resize="resizeHandler" class="dv-border-box-8">
     <svg class="dv-border-svg-container" :width="width" :height="height">
       <defs>
         <path :id="path" :d="pathD" fill="transparent" />
@@ -44,7 +44,7 @@
 import { useProp } from '@/resource/hooks'
 import { uuid } from '@/utils/utils'
 import { computed, ref } from 'vue'
-import BorderBoxComponent from './config'
+import type BorderBoxComponent from './config'
 import type { BorderBox } from './type'
 const props = defineProps<{
   component: BorderBoxComponent
@@ -101,8 +101,8 @@ const pathD = computed(() => {
     position: absolute;
     width: 100%;
     height: 100%;
-    left: 0px;
-    top: 0px;
+    left: 0;
+    top: 0;
   }
 }
 </style>

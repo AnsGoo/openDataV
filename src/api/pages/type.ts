@@ -1,4 +1,4 @@
-import { ComponentDataType } from '@/types/component'
+import type { ComponentDataType } from '@/types/component'
 import type { CanvasStyleData } from '@/types/storeTypes'
 
 export interface LayoutData {

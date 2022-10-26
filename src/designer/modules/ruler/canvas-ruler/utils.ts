@@ -82,7 +82,7 @@ export const drawCavaseRuler = (
     const x = offsetX + count * gridPixel + 0.5 // prevent canvas 1px line blurry
     h ? ctx.moveTo(x, 0) : ctx.moveTo(0, x)
     if (value % gridSize10 !== 0) {
-      h ? ctx.lineTo(x, (height * 1) / 4) : ctx.lineTo((width * 1) / 4, x)
+      h ? ctx.lineTo(x, height / 4) : ctx.lineTo(width / 4, x)
     }
   }
   ctx.stroke()

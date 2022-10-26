@@ -12,7 +12,7 @@ import { componentList } from '@/designer/load'
 import type { GroupType } from '@/enum'
 import { ComponentGroupList } from '@/enum'
 import { IconPark } from '@/plugins/icon'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 import ComponentItem from './ComponentItem.vue'
 
 const menuOptions = computed<MenuOption[]>(() => {

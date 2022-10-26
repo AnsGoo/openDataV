@@ -57,6 +57,7 @@
     "mockjs": "^1.1.0",
     "postcss": "^8.4.16",
     "postcss-html": "^1.2.0",
+    "postcss-less": "^6.0.0",
     "prettier": "^2.4.1",
     "rimraf": "^3.0.2",
     "stylelint": "^14.0.1",

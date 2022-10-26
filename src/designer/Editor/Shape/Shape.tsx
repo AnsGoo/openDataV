@@ -5,11 +5,11 @@ import type { ComponentPublicInstance, PropType } from 'vue'
 import { mod360, copyText, throttleFrame } from '@/utils/utils'
 import { eventBus, StaticKey } from '@/bus'
 import type { Vector } from '@/types/common'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-import { ComponentStyle } from '@/types/component'
+import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 import { IconPark } from '@/plugins/icon'
 import styles from './shape.module.less'
 
@@ -199,7 +199,7 @@ export default defineComponent({
         left = (curX - startX) / basicStore.scale + startLeft
 
         // // 修改当前组件样式
-        basicStore.syncComponentLoction({ top, left }, props.info!.parent, false)
+        basicStore.syncComponentLocation({ top, left }, props.info!.parent, false)
       })
       const up = () => {
         // 触发元素停止移动事件，用于隐藏标线
@@ -217,8 +217,8 @@ export default defineComponent({
     }
 
     const selectCurComponent = (e: MouseEvent) => {
-      // 如果键盘 ctrl 键按下，则添加选中组件
-      if (e.ctrlKey) {
+      // 如果键盘 ctrl 或 command(mac) 键按下，则添加选中组件
+      if (e.ctrlKey || e.metaKey) {
         appendComponent()
         return
       }
@@ -282,7 +282,7 @@ export default defineComponent({
         }
 
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-        basicStore.syncComponentLoction({ top, left, width, height }, props.info!.parent, false)
+        basicStore.syncComponentLocation({ top, left, width, height }, props.info!.parent, false)
       })
 
       const up = () => {
@@ -339,7 +339,7 @@ export default defineComponent({
         // 获取旋转的角度值
         rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
         // 修改当前组件样式
-        basicStore.syncComponentLoction({ rotate }, props.info!.parent, false)
+        basicStore.syncComponentLocation({ rotate }, props.info!.parent, false)
       })
 
       const up = () => {
@@ -428,12 +428,18 @@ export default defineComponent({
       document.addEventListener('keyup', keyUp)
       if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
 
+      const aliasCtrlKey = e.ctrlKey || e.metaKey
+
       e.stopPropagation()
-      if (props.info && e.ctrlKey) {
-        switch (e.key) {
+      if (props.info && aliasCtrlKey) {
+        /**
+         * 使用 code 可以避免大小写的问题。比如 s 的 code 为 KeyS，如果是 Key，那么就可能是 s 或 S。
+         * @see https://developer.mozilla.org/zh-CN/docs/Web/API/KeyboardEvent/code#code_values
+         */
+        switch (e.code) {
           case 'ArrowLeft':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { left: props.info.positionStyle.left - 1 },
               props.info.parent,
               false
@@ -441,7 +447,7 @@ export default defineComponent({
             break
           case 'ArrowUp':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { top: props.info.positionStyle.top - 1 },
               props.info.parent,
               false
@@ -449,7 +455,7 @@ export default defineComponent({
             break
           case 'ArrowRight':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { left: props.info.positionStyle.left + 1 },
               props.info.parent,
               false
@@ -457,7 +463,7 @@ export default defineComponent({
             break
           case 'ArrowDown':
             e.preventDefault()
-            basicStore.syncComponentLoction(
+            basicStore.syncComponentLocation(
               { top: props.info.positionStyle.top + 1 },
               props.info.parent,
               false
