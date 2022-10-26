@@ -10,17 +10,18 @@
   🎃OpenDataV 是一个纯前端的`拖拽式`、`可视化`、`低代码`数据可视化🌈开发平台，你可以用它自由的拼接成各种✨炫酷的大屏，同时支持用户方便的开发自己的组件并接入平台。
 
 ## 体验
-🧙国外：[http://datav.byteportrait.com/](http://datav.byteportrait.com/)
+🧙国外：[http://datav.byteportrait.com/](http://datav.byteportrait.com/)(纯前端)
 
-🧙国内：[http://small_bud_star.gitee.io/datav](http://small_bud_star.gitee.io/datav)
+🧙国内：[http://small_bud_star.gitee.io/opendatav](http://small_bud_star.gitee.io/opendatav)(已对接后端)
 
 ## 源码地址：
 
-🍨github:[https://github.com/AnsGoo/openDataV](https://github.com/AnsGoo/openDataV)
+🍨github: [https://github.com/AnsGoo/openDataV](https://github.com/AnsGoo/openDataV)
 
-🍨gitee:[https://gitee.com/small_bud_star/DataV](https://gitee.com/small_bud_star/DataV)
+🍨gitee: [https://gitee.com/small_bud_star/OpenDataV](https://gitee.com/small_bud_star/OpenDataV)
 
-gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
+🍨后端: [https://gitee.com/small_bud_star/open-data-backend](https://gitee.com/small_bud_star/open-data-backend)
+
 
 目前该项目在不断的完善中，🎉欢迎 issuer,🌹欢迎 start, 🎨欢迎 commit, 🚀欢迎 use...，💪欢迎一切技术交流活动
 
@@ -78,7 +79,7 @@ gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
 | pnpm | 7.9.3   |
 | vue  | 3.2.37  |
 
-🚥目前仅在`Chrome`和`Microsoft Edge`最新版浏览器测试过，其他浏览器未测试
+🚥目前仅在 `Chrome` 和 `Microsoft Edge` 最新版浏览器测试过，其他浏览器未测试
 
 ### 🎮启动项目
 
@@ -115,7 +116,7 @@ git commit 信息请按照如下规范进行书写
 
 **技术交流，请加微信群**
 
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221019)
+![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221026)
 
 **更新动态请关注公众号**
 
