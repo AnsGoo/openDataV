@@ -1,11 +1,17 @@
-# 教程
 ![](@/assets/logo.png)
 
 
+<div class="badge">
+
 ![](https://img.shields.io/github/license/AnsGoo/openDataV)
+
 ![](https://img.shields.io/github/stars/AnsGoo/openDataV)
+
 ![](https://img.shields.io/github/issues/AnsGoo/openDataV)
+
 ![](https://img.shields.io/github/forks/AnsGoo/openDataV)
+
+</div>
 
 ## 简介
   🎃OpenDataV 是一个纯前端的`拖拽式`、`可视化`、`低代码`数据可视化🌈开发平台，你可以用它自由的拼接成各种✨炫酷的大屏，同时支持用户方便的开发自己的组件并接入平台。
@@ -72,6 +78,7 @@ gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
 
 ## 💂开发
 
+
 ### 🧊开发环境
 | 名称 | 版本    |
 | ---- | ------- |
@@ -121,3 +128,21 @@ git commit 信息请按照如下规范进行书写
 **更新动态请关注公众号**
 
 ![wechat](https://image.xingxingzaixian.fun/uPic/gongzhonghao.jpg)
+
+<script setup > 
+
+</script>
+<style scoped>
+  .badge {
+    display: flex;
+    align-items: center;
+    align-content: center;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    justify-content: center;
+  }
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+</style>

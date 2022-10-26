@@ -1,5 +1,5 @@
 import Site from '@/docs/Site.vue'
-import ReadMe from '@/resource/readme.md'
+import ReadMe from '@/docs/tutorial/Home.md'
 
 const basicRoutes = [
   {
