@@ -5,7 +5,7 @@ import { cloneDeep } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { message } from '@/utils/message'
 import type { CopyItem } from '@/types/storeTypes'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const useCopyStore = defineStore({
   id: 'copy',

@@ -12,7 +12,7 @@ import { useEventBus } from '@/bus'
 import { http } from '@/utils/http'
 import type { SubTextType } from './type'
 import { useProp } from '@/resource/hooks'
-import SubTextComponent from './config'
+import type SubTextComponent from './config'
 
 const props = defineProps<{
   component: SubTextComponent

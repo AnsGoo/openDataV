@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-import { ComponentGroup, FormType } from '@/enum'
+import type { ComponentGroup } from '@/enum'
+import { FormType } from '@/enum'
 import { mod360, rotatePoint, uuid } from '@/utils/utils'
 import type {
   ComponentDataType,
@@ -9,13 +10,13 @@ import type {
   GroupStyle,
   PropsType
 } from '@/types/component'
-import { Vector } from '@/types/common'
+import type { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
+import type { RequestData } from './data'
 import {
   DataIntegrationMode,
   DataType,
   DemoRequestData,
-  RequestData,
   RestRequestData,
   StaticRequestData
 } from './data'
@@ -62,7 +63,7 @@ export abstract class BaseComponent {
   }
   dataConfig?: DataConfig
 
-  constructor(detail: ComponentType) {
+  protected constructor(detail: ComponentType) {
     if (detail.id) {
       this.id = detail.id
     } else {
@@ -189,8 +190,8 @@ export abstract class BaseComponent {
 
   get style(): ComponentStyle {
     if (this.styleIsChange) {
-      const customStyle: Recordable<any>[] = []
-      let transferStyle: Recordable<any> = {}
+      const customStyle: Recordable[] = []
+      let transferStyle: Recordable = {}
       this.styleFormValue.forEach((item) => {
         item.children.forEach((obj) => {
           if (obj.type === FormType.CUSTOM) {
@@ -222,7 +223,7 @@ export abstract class BaseComponent {
   }
 
   // 自定义样式编辑框数据处理
-  styleToCss(_: Recordable<any>[]): Nullable<Recordable<any>> {
+  styleToCss(_: Recordable[]): Nullable<Recordable> {
     return null
   }
 
@@ -408,7 +409,7 @@ export abstract class BaseComponent {
       el.change('rotate', rotate)
     })
   }
-  async changeRequestDataConfig(type: DataType, config: Recordable<any>) {
+  async changeRequestDataConfig(type: DataType, config: Recordable) {
     switch (type) {
       case DataType.STATIC:
         this.dataConfig = {

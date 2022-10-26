@@ -11,10 +11,10 @@
         <FormAttr
           :children="children"
           :data="formData[prop]"
-          @change="(key, value) => changed(prop, key, value)"
           :name="label"
           :uid="prop"
           :ukey="curComponent.id"
+          @change="(key, value) => changed(prop, key, value)"
         />
       </n-collapse-item>
     </n-collapse>
@@ -27,7 +27,7 @@ import { computed, reactive, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { cleanObjectProp } from '@/utils/utils'
 import { NCollapse, NCollapseItem } from 'naive-ui'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
   curComponent: BaseComponent

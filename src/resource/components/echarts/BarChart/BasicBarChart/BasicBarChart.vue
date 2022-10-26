@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import BasicLineChartComponent from './config'
-import { BasicLineChart } from './type'
+import type BasicLineChartComponent from './config'
+import type { BasicLineChart } from './type'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
 import { useProp, useData } from '@/resource/hooks'
-import { DataType } from '@/resource/models'
-import { RequestResponse } from '@/resource/models/type'
+import type { DataType } from '@/resource/models'
+import type { RequestResponse } from '@/resource/models/type'
 
 const chartEl = ref<ElRef>(null)
 let globalOption: EChartsOption
@@ -19,9 +19,10 @@ const props = defineProps<{
   component: BasicLineChartComponent
 }>()
 
-let chartData: Array<{ label: string; value: number }> = []
+let chartData:
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)
@@ -89,11 +90,7 @@ const getOption = () => {
       min: (value) => {
         if (propValue.data.min === 'dataMin') {
           return value.min - Number(propValue.data.minOffset || 0)
-        } else if (
-          propValue.data.min === '' ||
-          propValue.data.min === undefined ||
-          propValue.data.min === null
-        ) {
+        } else if (['', undefined, null].includes(propValue.data.min)) {
           return 0 - Number(propValue.data.minOffset || 0)
         } else {
           return Number(propValue.data.min) - Number(propValue.data.minOffset || 0)

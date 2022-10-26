@@ -5,13 +5,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useProp, useData } from '@/resource/hooks'
-import BasicLineChartComponent from './config'
-import { BasicLineChart } from './type'
+import type BasicLineChartComponent from './config'
+import type { BasicLineChart } from './type'
 import type { PieSeriesOption, EChartsOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
-import { DataType } from '@/resource/models'
-import { RequestResponse } from '@/resource/models/type'
+import type { DataType } from '@/resource/models'
+import type { RequestResponse } from '@/resource/models/type'
 
 const chartEl = ref<ElRef>(null)
 
@@ -21,9 +21,10 @@ const props = defineProps<{
 }>()
 
 const { updateEchart, resizeHandler } = useEchart(chartEl)
-let chartData: Array<{ label: string; value: number }> = []
+let chartData:
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)

@@ -4,11 +4,11 @@
       class="show-card"
       :show="isShow"
       preset="card"
-      @mask-click="close"
       :title="`图标数量${iconList.length}`"
+      style="width: 50%; max-width: 800px"
+      @mask-click="close"
       @close="close"
-      @update:show="() => (isShow = false)"
-      style="width: 50%; maxwidth: 800px"
+      @update:show="isShow = false"
     >
       <ul class="icon-list">
         <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">

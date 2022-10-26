@@ -24,15 +24,15 @@
 
         <div class="drawer-setting-item align-items-top">
           <span
-            class="theme-item"
             v-for="(item, index) in appThemeList"
             :key="index"
+            class="theme-item"
             :style="{ 'background-color': item }"
             @click="togTheme(item)"
           >
             <icon-park
-              size="12"
               v-if="item === currentThemeSettings.appTheme"
+              size="12"
               name="check"
               color="#FFF"
             />
@@ -49,7 +49,7 @@
               </template>
               <span>暗色侧边栏</span>
             </n-tooltip>
-            <n-badge dot color="#19be6b" v-if="currentThemeSettings.navTheme === 'dark'" />
+            <n-badge v-if="currentThemeSettings.navTheme === 'dark'" dot color="#19be6b" />
           </div>
 
           <div class="drawer-setting-item-style">
@@ -59,17 +59,17 @@
               </template>
               <span>白色侧边栏</span>
             </n-tooltip>
-            <n-badge dot color="#19be6b" v-if="currentThemeSettings.navTheme === 'light'" />
+            <n-badge v-if="currentThemeSettings.navTheme === 'light'" dot color="#19be6b" />
           </div>
 
           <div class="drawer-setting-item-style">
             <n-tooltip placement="top">
               <template #trigger>
-                <img :src="HeaderThemeDark" @click="togNavTheme('header-dark')" alt="暗色顶栏" />
+                <img :src="HeaderThemeDark" alt="暗色顶栏" @click="togNavTheme('header-dark')" />
               </template>
               <span>暗色顶栏</span>
             </n-tooltip>
-            <n-badge dot color="#19be6b" v-if="currentThemeSettings.navTheme === 'header-dark'" />
+            <n-badge v-if="currentThemeSettings.navTheme === 'header-dark'" dot color="#19be6b" />
           </div>
         </div>
         <n-divider title-placement="center">界面功能</n-divider>
@@ -125,7 +125,8 @@
 
 <script lang="ts" setup>
 import { ref, watch, computed } from 'vue'
-import { ProjectSettingState, useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import type { ProjectSettingState } from '@/store/modules/projectSetting'
+import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import {
   NDrawer,
   NDrawerContent,

@@ -8,7 +8,7 @@
       </n-input>
       <n-space>
         <n-button-group class="save">
-          <n-button @click="run" type="success">运行</n-button>
+          <n-button type="success" @click="run">运行</n-button>
         </n-button-group>
       </n-space>
       <n-space>
@@ -23,8 +23,8 @@
           <Editor
             :data="scriptData"
             class="content"
-            @update:data="scriptChangeHandler"
             :config="config"
+            @update:data="scriptChangeHandler"
           />
         </n-tab-pane>
         <n-tab-pane name="入参">
@@ -55,9 +55,9 @@ import {
   createAfterScriptApi
 } from '@/api/data/afterScript'
 import { makeFunction } from '@/utils/data'
-import { AfterScriptDetail } from '@/api/data/type'
+import type { AfterScriptDetail } from '@/api/data/type'
 import { ScriptType } from '@/enum'
-import { AfterScript } from '@/types/component'
+import type { AfterScript } from '@/types/component'
 
 const config = ref({
   height: '300px',
@@ -89,9 +89,8 @@ const scriptChangeHandler = async (script: AfterScript) => {
   formData.type = script.type
 }
 
-useEventBus(StaticKey.SRCIPT_KEY, async (id: any) => {
-  id as unknown as string
-  await loadAfterScript(id)
+useEventBus(StaticKey.SRCIPT_KEY, async (id) => {
+  await loadAfterScript(id as string)
 })
 
 const stdOut = ref<string>('')

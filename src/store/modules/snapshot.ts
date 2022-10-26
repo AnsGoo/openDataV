@@ -2,9 +2,10 @@ import { defineStore } from 'pinia'
 import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import type { CanvasStyleData, SnapData } from '@/types/storeTypes'
-import { snapshotDb, StoreComponentData } from '@/utils/db'
-import { BaseComponent } from '@/resource/models'
-import { ComponentDataType } from '@/types/component'
+import type { StoreComponentData } from '@/utils/db'
+import { snapshotDb } from '@/utils/db'
+import type { BaseComponent } from '@/resource/models'
+import type { ComponentDataType } from '@/types/component'
 
 const useSnapShotStore = defineStore({
   id: 'snapshot',
@@ -16,7 +17,7 @@ const useSnapShotStore = defineStore({
   }),
   actions: {
     async latestRecord() {
-      return await snapshotDb.snapshot.orderBy('id').last()
+      return snapshotDb.snapshot.orderBy('id').last()
     },
     /**
      * 上一次记录

@@ -1,16 +1,16 @@
 <template>
   <component
-    class="component"
     :is="component.component"
+    :id="'component' + component.id"
+    class="component"
     :style="getComponentStyle(component)"
     :component="component"
-    :id="'component' + component.id"
   />
 </template>
 
 <script setup lang="ts">
 import { getComponentStyle } from '@/utils/utils'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 
 defineProps<{ component: BaseComponent }>()
 </script>

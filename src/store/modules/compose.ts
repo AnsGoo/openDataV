@@ -3,9 +3,9 @@ import store from '@/store'
 import type { AreaData } from '@/types/storeTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { createGroupStyle, calcComponentsRect, getComponentRealRect } from '@/utils/utils'
-import { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/resource/models'
 import { componentList } from '@/designer/load'
-import { Position } from '@/types/common'
+import type { Position } from '@/types/common'
 import { getSelectComponents } from '../utils/utils'
 
 const basicStore = useBasicStoreWithOut()

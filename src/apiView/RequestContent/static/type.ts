@@ -1,4 +1,4 @@
-import { AfterScript } from '@/types/component'
+import type { AfterScript } from '@/types/component'
 
 export interface StaticRequestOptions {
   dataId: string

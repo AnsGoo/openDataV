@@ -1,6 +1,6 @@
 import { apiHttp as http } from '@/utils/http'
-import { AxiosResponse } from 'axios'
-import { StaticDataDetail } from './type'
+import type { AxiosResponse } from 'axios'
+import type { StaticDataDetail } from './type'
 
 /**
  * 根据id 加载静态数据
@@ -51,7 +51,7 @@ export const createStaticDataApi = async (
 
 /**
  * 删除静态数据
- * @param data 静态数据
+ * @param id 静态数据 id
  */
 export const deleteStaticDataApi = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.post<StaticDataDetail>({

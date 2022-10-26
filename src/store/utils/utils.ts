@@ -1,5 +1,5 @@
-import { Position } from '@/types/common'
-import { BaseComponent } from '@/resource/models'
+import type { Position } from '@/types/common'
+import type { BaseComponent } from '@/resource/models'
 import { calcComponentAxis } from '@/utils/utils'
 
 export const getSelectComponents = (

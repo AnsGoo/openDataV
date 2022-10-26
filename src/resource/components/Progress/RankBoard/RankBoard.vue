@@ -1,6 +1,6 @@
 <template>
-  <div class="dv-scroll-ranking-board" :ref="ref">
-    <div class="row-item" v-for="(item, index) in dataSource" :key="item.label">
+  <div :ref="ref" class="dv-scroll-ranking-board">
+    <div v-for="(item, index) in dataSource" :key="item.label" class="row-item">
       <div class="ranking-info">
         <div class="rank">No.{{ index + 1 }}</div>
         <div class="info-name">{{ item.label }}</div>
@@ -20,17 +20,19 @@
 </template>
 <script setup lang="ts">
 import { useProp, useData } from '@/resource/hooks'
-import { BaseComponent, DataType } from '@/resource/models'
-import { RequestResponse } from '@/resource/models/type'
+import type { BaseComponent, DataType } from '@/resource/models'
+import type { RequestResponse } from '@/resource/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import { RankBoard } from './type'
+import type { RankBoard } from './type'
 const props = defineProps<{
   component: BaseComponent
 }>()
 
-const dataSource = ref<Array<{ label: string; value: number }>>([])
+const dataSource = ref<
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData']
+>([])
 const dataChange = (resp: any, _: DataType) => {
-  resp as RequestResponse<Array<{ label: string; value: number }>>
   if (resp.status >= 0) {
     dataSource.value = resp.afterData
   }
@@ -162,7 +164,7 @@ onUnmounted(() => {})
     }
     .shine {
       position: absolute;
-      left: 0%;
+      left: 0;
       top: 2px;
       height: v-bind(barHeight);
       width: 50px;
@@ -174,7 +176,7 @@ onUnmounted(() => {})
 }
 @keyframes shine {
   80% {
-    left: 0%;
+    left: 0;
     transform: translateX(-100%);
   }
   100% {

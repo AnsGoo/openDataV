@@ -1,20 +1,20 @@
 <template>
   <div
+    v-contextmenu.stop="contextmenus"
     draggable="true"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
-    v-contextmenu.stop="contextmenus"
   >
     <div v-if="component.component === 'Group'" class="layer">
       <span v-show="mode === 'expand'">{{ component.name || '分组' }}</span>
-      <icon-park name="preview-open" size="15" v-if="component.display" />
-      <icon-park name="preview-close-one" size="15" v-else />
+      <icon-park v-if="component.display" name="preview-open" size="15" />
+      <icon-park v-else name="preview-close-one" size="15" />
     </div>
     <div v-else class="layer">
       <span v-show="mode === 'expand'">{{ component.name }}</span>
-      <icon-park size="15" name="preview-open" v-if="component.display" />
-      <icon-park size="15" name="preview-close-one" v-else />
+      <icon-park v-if="component.display" size="15" name="preview-open" />
+      <icon-park v-else size="15" name="preview-close-one" />
     </div>
   </div>
 </template>
@@ -22,8 +22,8 @@
 <script lang="ts" setup>
 import { eventBus, StaticKey } from '@/bus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { BaseComponent } from '@/resource/models'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { BaseComponent } from '@/resource/models'
 import { cloneDeep } from 'lodash-es'
 import { diffIndex } from '@/utils/utils'
 

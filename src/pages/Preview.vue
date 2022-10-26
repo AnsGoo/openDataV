@@ -1,6 +1,6 @@
 <template>
   <div class="bg" :style="bgStyle">
-    <div :style="screenStyle" ref="screen" class="screen">
+    <div ref="screen" :style="screenStyle" class="screen">
       <ComponentWrapper v-for="(item, index) in componentData" :key="index" :component="item" />
     </div>
   </div>
@@ -13,8 +13,8 @@ import { onUnmounted, onMounted, ref, computed } from 'vue'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { BaseComponent } from '@/resource/models'
-import { ComponentDataType } from '@/types/component'
+import type { BaseComponent } from '@/resource/models'
+import type { ComponentDataType } from '@/types/component'
 const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 

@@ -4,24 +4,24 @@
       <li
         v-if="!menu.hide"
         class="menu-item"
-        @click.stop="(event:MouseEvent) => handleClickMenuItem(menu, event)"
         :class="{ divider: menu.divider, disable: menu.disable }"
+        @click.stop="(event:MouseEvent) => handleClickMenuItem(menu, event)"
       >
         <div
+          v-if="!menu.divider"
           class="menu-item-content"
           :class="{
             'has-children': menu.children,
             'has-handler': menu.handler
           }"
-          v-if="!menu.divider"
         >
           <span class="text">{{ menu.text }}</span>
-          <span class="sub-text" v-if="menu.subText && !menu.children">{{ menu.subText }}</span>
+          <span v-if="menu.subText && !menu.children" class="sub-text">{{ menu.subText }}</span>
 
           <menu-content
+            v-if="menu.children && menu.children.length"
             class="sub-menu"
             :menus="menu.children"
-            v-if="menu.children && menu.children.length"
             :handleClickMenuItem="handleClickMenuItem"
           />
         </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { ContextmenuItem } from './types'
+import type { ContextmenuItem } from './types'
 
 defineProps<{
   menus: Array<ContextmenuItem>

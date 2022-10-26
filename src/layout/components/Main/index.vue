@@ -5,7 +5,7 @@
         <keep-alive v-if="route.meta?.keepAlive">
           <component :is="Component" :key="route.fullPath" />
         </keep-alive>
-        <component v-else :is="Component" :key="route.fullPath" />
+        <component :is="Component" v-else :key="route.fullPath" />
       </transition>
     </template>
   </RouterView>

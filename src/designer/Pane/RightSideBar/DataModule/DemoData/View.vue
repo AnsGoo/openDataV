@@ -2,8 +2,8 @@
   <n-form :model="formData">
     <n-form-item key="data" label="示例数据">
       <n-input-group>
-        <n-input placeholder="点击预览" @click="() => (isShow = true)" :readonly="true" />
-        <n-button type="primary" @click="() => (isShow = true)"> 预览 </n-button>
+        <n-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
+        <n-button type="primary" @click="isShow = true"> 预览 </n-button>
       </n-input-group>
     </n-form-item>
   </n-form>
@@ -38,7 +38,8 @@ import {
   NCard,
   NFormItem
 } from 'naive-ui'
-import { BaseComponent, DataType, DemoRequestData } from '@/resource/models'
+import type { BaseComponent, DemoRequestData } from '@/resource/models'
+import { DataType } from '@/resource/models'
 
 import DataView from '@/components/DataView'
 import { cloneDeep } from 'lodash-es'
@@ -71,7 +72,7 @@ const initData = async () => {
   } else {
     message.info('正在使用示例数据')
     const exampleData = props.curComponent.exampleData
-    props.curComponent.changeRequestDataConfig(DataType.DEMO, {
+    await props.curComponent.changeRequestDataConfig(DataType.DEMO, {
       data: cloneDeep(exampleData)
     })
   }

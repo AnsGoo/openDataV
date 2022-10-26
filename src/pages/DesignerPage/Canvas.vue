@@ -2,7 +2,7 @@
   <n-layout v-resize="editorWindowResizeHandler">
     <!-- 中间画布 -->
     <n-layout-content class="content">
-      <n-scrollbar x-scrollable :style="scrobarStyle">
+      <n-scrollbar x-scrollable :style="scrollbarStyle">
         <Editor />
       </n-scrollbar>
     </n-layout-content>
@@ -16,17 +16,17 @@
         </n-el>
         <n-slider
           :value="sliderValue"
-          @update:value="handleScale"
           :min="10"
           :max="200"
           style="width: 120px"
+          @update:value="handleScale"
         />
         <n-select
           :value="selectValue"
-          @update:value="handleScale"
           :options="options"
           size="tiny"
           style="width: 90px"
+          @update:value="handleScale"
         />
       </n-space>
     </n-layout-footer>
@@ -36,6 +36,7 @@
 <script lang="ts" setup>
 import { ref, computed } from 'vue'
 import Editor from '@/designer/Editor/Index.vue'
+import type { SelectOption } from 'naive-ui'
 import {
   NLayout,
   NLayoutContent,
@@ -44,7 +45,6 @@ import {
   NSlider,
   NSpace,
   NSelect,
-  SelectOption,
   NEl
 } from 'naive-ui'
 import { debounce } from 'lodash-es'
@@ -81,7 +81,7 @@ const options: SelectOption[] = [
   }
 ]
 
-const scrobarStyle = computed(() => {
+const scrollbarStyle = computed(() => {
   return {
     width: windowWidth.value + 'px',
     height: windowHeight.value + 'px'
@@ -109,7 +109,7 @@ const changeScale = debounce((value: number) => {
 
 <style lang="less" scoped>
 .content {
-  box-shadow: inset 0px 0px 3px black;
+  box-shadow: inset 0 0 3px black;
 
   :deep(.n-scrollbar-content) {
     transform-origin: left top;

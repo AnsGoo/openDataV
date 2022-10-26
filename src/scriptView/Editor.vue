@@ -1,10 +1,10 @@
 <template>
   <CodeEditor
+    ref="cm"
+    v-model:code="form.code"
     :language="languageType"
     :config="config"
     :theme="projectStore.darkTheme ? 'dark' : 'light'"
-    v-model:code="form.code"
-    ref="cm"
     @update:code="formChange"
   >
     <template #tool-bar>
@@ -20,14 +20,14 @@
         <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
           {{ savedStatus ? '已保存' : '未保存' }}
         </div>
-        <div class="lang" @click="() => (isShow = true)">
+        <div class="lang" @click="isShow = true">
           <n-select
-            :options="languageOptions"
             v-model:value="form.type"
+            :options="languageOptions"
             class="item language"
             size="tiny"
-            @update:value="formChange"
             style="width: 110px"
+            @update:value="formChange"
           />
         </div>
       </div>
@@ -42,8 +42,9 @@ import type { SelectOption } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
-import { CodemirrorOption } from '@/components/CodeEditor/type'
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 
