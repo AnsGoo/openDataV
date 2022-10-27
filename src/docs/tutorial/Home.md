@@ -1,6 +1,5 @@
 ![](@/assets/logo.png)
 
-
 <div class="badge">
 
 ![](https://img.shields.io/github/license/AnsGoo/openDataV)
@@ -130,7 +129,6 @@ git commit 信息请按照如下规范进行书写
 ![wechat](https://image.xingxingzaixian.fun/uPic/gongzhonghao.jpg)
 
 <script setup > 
-
 </script>
 <style scoped>
   .badge {
@@ -140,9 +138,5 @@ git commit 信息请按照如下规范进行书写
     flex-wrap: nowrap;
     flex-direction: row;
     justify-content: center;
-  }
-  img {
-    display: block;
-    margin: 0 auto;
   }
 </style>

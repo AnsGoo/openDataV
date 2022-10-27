@@ -7,4 +7,9 @@
 import { NCard } from 'naive-ui'
 import '@/css/markdown.css'
 </script>
-<style lang="css" scoped></style>
+<style lang="css" scoped>
+:deep(img) {
+  display: block;
+  margin: 0 auto;
+}
+</style>

@@ -1,23 +1,25 @@
 <template>
-  <div class="components">
+  <div v-memo="menus" class="components">
     <n-ul v-for="item in menus" :key="item.key">
-      <div class="group-label">
-        <IconPark :name="item.icon" size="25" />
+      <div class="group-label" @click="goTo(item.key)">
+        <IconPark :name="item.icon" size="20" />
         <span> {{ item.label }}</span>
         <span class="group-count">({{ item.count }})</span>
       </div>
-      <n-li v-for="child in item.children || []" :key="child.key">
-        <n-h4>{{ child.label }}</n-h4>
+      <n-li v-for="child in item.children || []" :key="child.key" @click="goTo(child.key)">
+        <div class="group-item">{{ child.label }}</div>
       </n-li>
     </n-ul>
   </div>
 </template>
 
 <script setup lang="ts">
-import { NUl, NLi, NH4 } from 'naive-ui'
+import { NUl, NLi } from 'naive-ui'
 import { IconPark } from '@/plugins/icon'
 import type { MenuItem } from './type'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 withDefaults(
   defineProps<{
     menus: Array<MenuItem>
@@ -26,11 +28,17 @@ withDefaults(
     menus: () => []
   }
 )
+
+const goTo = (key: string) => {
+  router.push({
+    name: key
+  })
+}
 </script>
 
 <style scoped lang="less">
 .group-label {
-  font-size: 20px;
+  font-size: 18px;
   display: inline-flex;
   flex-direction: row;
   flex-wrap: nowrap;
@@ -40,8 +48,8 @@ withDefaults(
   filter: invert(50%);
 }
 
-h4 {
-  margin-left: 25px;
+.group-item {
+  margin-left: 20px;
   &:hover {
     transform: scale(1.01);
     color: #2d8cf0;

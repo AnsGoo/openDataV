@@ -1,4 +1,4 @@
 import Content from './Content.vue'
-import { MenuItem } from './type'
+import type { MenuItem } from './type'
 export default Content
 export { MenuItem }
