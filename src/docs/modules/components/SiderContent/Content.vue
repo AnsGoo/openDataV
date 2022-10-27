@@ -1,13 +1,12 @@
 <template>
   <div v-memo="menus" class="components">
     <n-ul v-for="item in menus" :key="item.key">
-      <div class="group-label" @click="goTo(item.key)">
+      <div class="group-label group-item" @click="goTo(item.key)">
         <IconPark :name="item.icon" size="20" />
         <span> {{ item.label }}</span>
-        <span class="group-count">({{ item.count }})</span>
       </div>
       <n-li v-for="child in item.children || []" :key="child.key" @click="goTo(child.key)">
-        <div class="group-item">{{ child.label }}</div>
+        <div class="sub-group-item group-item">{{ child.label }}</div>
       </n-li>
     </n-ul>
   </div>
@@ -45,11 +44,12 @@ const goTo = (key: string) => {
   align-content: center;
   justify-content: center;
   align-items: center;
-  filter: invert(50%);
+}
+.sub-group-item {
+  margin-left: 20px;
 }
 
 .group-item {
-  margin-left: 20px;
   &:hover {
     transform: scale(1.01);
     color: #2d8cf0;

@@ -1,15 +1,71 @@
 import Site from '@/docs/Site.vue'
 import ReadMe from '@/docs/tutorial/Home.md'
-import ComponentContent from '@/docs/Content/ComponentContent.vue'
-import TutorialContent from '@/docs/Content/TutorialContent.vue'
-import StaticText from '@/docs/components/text/StaticText.md'
+import Content from '@/docs/Content/Content.vue'
+import { MainView } from '@/layout/components/Main'
+import { ComponentGroupList } from '@/enum'
+import type { GroupType } from '@/enum'
+import type { ComponentItem } from '@/types/component'
+
+const getComponents = () => {
+  const componentDocs: Array<ComponentItem> = ComponentGroupList.map((el: GroupType) => {
+    return {
+      label: el.name,
+      key: el.key,
+      icon: el.icon,
+      children: []
+    }
+  })
+  const moduleFilesTs: any = import.meta.glob('../../resource/components/**/index.ts', {
+    eager: true
+  })
+  Object.keys(moduleFilesTs).forEach((key: string) => {
+    const componentOptions = moduleFilesTs[key]?.default
+    const componentInstance = new componentOptions.config()
+    const docs = componentDocs.filter((el) => el.key === componentInstance.group)
+    if (docs.length > 0) {
+      docs[0].children.push({
+        key: componentInstance.component,
+        label: componentInstance.name,
+        docs: componentOptions.docs ? () => componentOptions.docs : undefined
+      })
+    }
+  })
+  return componentDocs.map((ele) => {
+    return {
+      path: ele.key.toLocaleLowerCase(),
+      name: ele.key,
+      component: MainView,
+      meta: {
+        title: ele.label,
+        icon: ele.icon,
+        ignoreAuth: true,
+        hideInMenu: true
+      },
+      children: ele.children.map((el) => {
+        console.log(el.key)
+        return {
+          path: el.key,
+          name: el.key,
+          component: el.docs,
+          meta: {
+            title: el.label,
+            ignoreAuth: true,
+            hideInMenu: true
+          }
+        }
+      })
+    }
+  })
+}
+
+console.log(getComponents())
 
 const basicRoutes = [
   {
     path: '/docs',
     name: 'Docs',
     component: Site,
-    redirect: '/docs/help/tutorial',
+    redirect: '/docs/designer/tutorial',
     meta: {
       title: '文档',
       icon: 'docs',
@@ -20,11 +76,13 @@ const basicRoutes = [
       {
         path: '/docs/designer',
         name: 'Designer',
-        component: TutorialContent,
+        component: Content,
         redirect: '/docs/designer/tutorial',
         meta: {
           title: '教程',
-          icon: 'helpcenter'
+          icon: 'helpcenter',
+          ignoreAuth: true,
+          hideInMenu: true
         },
         children: [
           {
@@ -33,7 +91,9 @@ const basicRoutes = [
             component: ReadMe,
             meta: {
               title: '教程',
-              icon: 'helpcenter'
+              icon: 'helpcenter',
+              ignoreAuth: true,
+              hideInMenu: true
             }
           }
         ]
@@ -41,11 +101,13 @@ const basicRoutes = [
       {
         path: 'quick-start',
         name: 'QuickStart',
-        component: TutorialContent,
+        component: Content,
         redirect: '/docs/quick-start/intro',
         meta: {
           title: '快速开始',
-          icon: 'data'
+          icon: 'data',
+          ignoreAuth: true,
+          hideInMenu: true
         },
         children: [
           {
@@ -54,7 +116,9 @@ const basicRoutes = [
             component: () => import('@/docs/quick-start/index.md'),
             meta: {
               title: '介绍',
-              icon: 'intr'
+              icon: 'data',
+              ignoreAuth: true,
+              hideInMenu: true
             }
           },
           {
@@ -63,7 +127,9 @@ const basicRoutes = [
             component: () => import('@/docs/quick-start/design.md'),
             meta: {
               title: '设计',
-              icon: 'intr'
+              icon: 'data',
+              ignoreAuth: true,
+              hideInMenu: true
             }
           },
           {
@@ -72,7 +138,9 @@ const basicRoutes = [
             component: () => import('@/docs/quick-start/public.md'),
             meta: {
               title: '发布',
-              icon: 'intr'
+              icon: 'data',
+              ignoreAuth: true,
+              hideInMenu: true
             }
           }
         ]
@@ -80,22 +148,13 @@ const basicRoutes = [
       {
         path: '/docs/component',
         name: 'Component',
-        component: ComponentContent,
+        component: Content,
         meta: {
           title: '组件',
-          icon: 'data'
+          icon: 'components'
         },
-        redirect: '/docs/component/static-text',
-        children: [
-          {
-            path: '/docs/component/static-text',
-            name: 'StaticText',
-            component: StaticText,
-            meta: {
-              title: '静态文本'
-            }
-          }
-        ]
+        redirect: '/docs/component/TEXT/StaticText',
+        children: [...getComponents()]
       },
       {
         path: '/docs/data',
