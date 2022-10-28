@@ -2,7 +2,7 @@ import type { FormType, ComponentGroup, ScriptType } from '@/enum'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { DataIntegrationMode } from '@/resource/models/data'
 import type { DataType, StaticRequestOptions, RestRequestOptions } from '@/resource/models/data'
-import type { ConcreteComponent } from 'vue'
+import type { Component, ConcreteComponent } from 'vue'
 
 export interface GroupStyle {
   gwidth: number
@@ -105,4 +105,15 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
 export interface AfterScript {
   code: string
   type: ScriptType
+}
+
+export interface ComponentItem {
+  label: string
+  icon: string
+  key: string
+  children: Array<{
+    label: string
+    key: string
+    docs?: Component
+  }>
 }

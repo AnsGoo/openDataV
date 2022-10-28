@@ -74,7 +74,7 @@ const handleUndo = () => {
 }
 
 const emits = defineEmits<{
-  (e: 'update:content', content?: string): void
+  (e: 'update:content', content?: any): void
 }>()
 
 const contentRef = ref<string>(JSON.stringify(props.content, null, '\t'))

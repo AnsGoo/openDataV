@@ -9,10 +9,32 @@ import { toggleTheme } from './modules/actions'
 import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 import { ToolBar } from '@/components/ToolBar'
 import type { ToolBarItemType } from '@/components/ToolBar'
-import LogoView from '@/components/LogoView'
+import ActionDetail from './modules/ActionDetail.vue'
+import Logo from './modules/Logo.vue'
+import docsRouters from '@/router/modules/docs'
 
 const router = useRouter()
+const emits = defineEmits<{
+  (e: 'change', value: string): void
+}>()
 
+const leftBars: ToolBarItemType[] = docsRouters[0].children.map((el) => {
+  return {
+    label: el.meta.title,
+    action: () => {
+      emits('change', 'help')
+      router.push({
+        name: el.name
+      })
+    },
+    icon: () =>
+      h(ActionDetail, {
+        icon: el.meta.icon,
+        label: el.meta.title
+      }),
+    location: 'left'
+  }
+})
 const toolBars: ToolBarItemType[] = [
   {
     label: '首页',
@@ -21,12 +43,16 @@ const toolBars: ToolBarItemType[] = [
         name: 'Pages'
       })
     },
-    icon: () =>
-      h(LogoView, {
-        width: '60px'
-      }),
+    icon: () => h(Logo),
     divider: true,
     location: 'left'
+  },
+  ...leftBars,
+  {
+    label: 'GitHub',
+    action: toggleTheme,
+    icon: 'doc-detail',
+    location: 'right'
   },
   {
     label: '主题',

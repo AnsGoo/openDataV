@@ -1,6 +1,7 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import Group from '@/components/Group'
+import type { BaseComponent } from '@/resource/models'
 
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}
@@ -19,7 +20,7 @@ const AsyncComponent = {
       const componentOptions = moduleFilesTs[key]?.default
 
       if (componentOptions) {
-        componentList[componentOptions.componentName] = componentOptions.config
+        componentList[componentOptions.componentName] = componentOptions.config as BaseComponent
 
         // 注册异步组件
         const asyncComp = defineAsyncComponent(componentOptions.component)
