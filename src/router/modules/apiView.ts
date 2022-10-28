@@ -3,7 +3,7 @@ import { EmptyLayout } from '@/layout'
 const basicRoutes = [
   {
     path: '/data',
-    name: 'Data',
+    name: 'DataSet',
     component: EmptyLayout,
     redirect: 'API',
     meta: {

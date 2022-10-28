@@ -597,3 +597,17 @@ export function getOS() {
 
   return os
 }
+
+/**
+ * 小驼峰转中划线命名
+ * @param key 需要转化的字符串
+ * @returns 结果
+ */
+export function camel2snake(key) {
+  return key
+    .replace(/[A-Z]/g, function (s) {
+      return ' ' + s.toLowerCase()
+    })
+    .trim()
+    .replaceAll(' ', '-')
+}

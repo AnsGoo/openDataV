@@ -82,7 +82,7 @@ export enum ComponentGroup {
   PROGERSS = 'PROGERSS',
   THERMOMETER = 'THERMOMETER',
   // 其他组件
-  OTHER = '其他'
+  OTHER = 'OTHER'
 }
 
 export const ComponentGroupList: GroupType[] = [
