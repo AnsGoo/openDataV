@@ -5,7 +5,7 @@
       <RouterView />
       <n-layout-footer position="absolute"
         ><div class="copyleft">
-          <div>Naive UI 2.33.5 · Made by TuSimple</div>
+          <div>OpenDataV · Made by AnsGoo</div>
         </div></n-layout-footer
       >
     </n-layout>
