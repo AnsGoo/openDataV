@@ -214,7 +214,6 @@ export abstract class BaseComponent {
       }
       this.styleIsChange = false
     }
-
     return this._styleValue
   }
 

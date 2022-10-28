@@ -9,7 +9,7 @@
 </template>
 <script lang="ts" setup>
 import { NButton, NTooltip, NDivider } from 'naive-ui'
-import type { VNode } from 'vue'
+import type { VNode, ComponentOptions } from 'vue'
 import { computed, h } from 'vue'
 import type { iconNode, ToolBarItemType } from './type'
 import { IconPark } from '@/plugins/icon'
@@ -31,7 +31,7 @@ const props = withDefaults(
   }
 )
 
-const IconComponent = computed<VNode>(() =>
+const IconComponent = computed<ComponentOptions>(() =>
   typeof props.icon === 'string'
     ? h(IconPark, {
         name: props.icon,

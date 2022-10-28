@@ -32,7 +32,6 @@ import type { MenuItem } from '../modules/components/SiderContent/type'
 import type { AppRouteRecordRaw } from '@/router/types'
 const route = useRoute()
 const componentMenus = computed<Array<MenuItem>>(() => {
-  console.log(route.matched)
   const matecheds = route.matched
   const name = matecheds[1].name
   const routers = docsRouters[0].children.filter((el) => el.name === name)

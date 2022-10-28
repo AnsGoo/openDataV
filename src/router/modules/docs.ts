@@ -5,6 +5,7 @@ import { MainView } from '@/layout/components/Main'
 import { ComponentGroupList } from '@/enum'
 import type { GroupType } from '@/enum'
 import type { ComponentItem } from '@/types/component'
+import { camel2snake } from '@/utils/utils'
 
 const getComponents = () => {
   const componentDocs: Array<ComponentItem> = ComponentGroupList.map((el: GroupType) => {
@@ -42,9 +43,8 @@ const getComponents = () => {
         hideInMenu: true
       },
       children: ele.children.map((el) => {
-        console.log(el.key)
         return {
-          path: el.key,
+          path: camel2snake(el.key),
           name: el.key,
           component: el.docs,
           meta: {
@@ -57,8 +57,6 @@ const getComponents = () => {
     }
   })
 }
-
-console.log(getComponents())
 
 const basicRoutes = [
   {
@@ -153,7 +151,7 @@ const basicRoutes = [
           title: '组件',
           icon: 'components'
         },
-        redirect: '/docs/component/TEXT/StaticText',
+        redirect: '/docs/component/text/static-text',
         children: [...getComponents()]
       },
       {

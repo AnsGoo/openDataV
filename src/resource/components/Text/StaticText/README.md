@@ -1,4 +1,5 @@
 
+
 # 静态文本（`StaticText`）
 
 > 展示一个静态文本，主要用于页面静态文本展示
@@ -34,18 +35,32 @@
 
 - 效果图
 
-- 属性配置
+<RenderCompoent
+  :config="StaticTextComponent"
+  :component="StaticText"
+  :prop-value="propValue"
+  :style="style"
+  title="静态文本"
+/>
 
-> 基础属性
 
-|组|属性|值|
-|:---:|:---:|:---:|
-|基础属性| `自定义文本`|HelloWord|
+<script setup lang="ts">
+import RenderCompoent from '@/docs/RenderCompoent.vue'
+import StaticTextComponent from './config'
+import StaticText from './StaticText.vue'
+import type { StaticTextType } from './type'
+const propValue: StaticTextType = {
+    base: {
+      text: 'OpenDataV 哈哈哈',
+      type: 'text'
+    }
+}
+const style = {
+  color: 'red',
+  fontSize: 40,
+  fontWeight: 800,
+  width: 450,
+  height: 100
+}
 
-- 样式配置
-
-|组|属性|值|
-|:---:|:---:|:---:|
-|字体设置| `颜色`|rgba(255, 215, 0, 1)|
-|字体设置|`字体大小`|52|
-|字体设置|`字体宽度`|800|
+</script>
