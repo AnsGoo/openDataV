@@ -1,11 +1,10 @@
-import Site from '@/docs/Site.vue'
 import ReadMe from '@/docs/tutorial/Home.md'
-import Content from '@/docs/Content/Content.vue'
-import { MainView } from '@/layout/components/Main'
+import { NothingLayout } from '@/layout'
 import { ComponentGroupList } from '@/enum'
 import type { GroupType } from '@/enum'
 import type { ComponentItem } from '@/types/component'
 import { camel2snake } from '@/utils/utils'
+import { defineAsyncComponent } from 'vue'
 
 const getComponents = () => {
   const componentDocs: Array<ComponentItem> = ComponentGroupList.map((el: GroupType) => {
@@ -27,7 +26,7 @@ const getComponents = () => {
       docs[0].children.push({
         key: componentInstance.component,
         label: componentInstance.name,
-        docs: componentOptions.docs ? () => componentOptions.docs : undefined
+        docs: componentOptions.docs ? () => defineAsyncComponent(componentOptions.docs) : undefined
       })
     }
   })
@@ -35,7 +34,7 @@ const getComponents = () => {
     return {
       path: ele.key.toLocaleLowerCase(),
       name: ele.key,
-      component: MainView,
+      component: NothingLayout,
       meta: {
         title: ele.label,
         icon: ele.icon,
@@ -62,7 +61,7 @@ const basicRoutes = [
   {
     path: '/docs',
     name: 'Docs',
-    component: Site,
+    component: () => import('@/docs/Site.vue'),
     redirect: '/docs/designer/tutorial',
     meta: {
       title: '文档',
@@ -74,7 +73,7 @@ const basicRoutes = [
       {
         path: '/docs/designer',
         name: 'Designer',
-        component: Content,
+        component: () => import('@/docs/Content/Content.vue'),
         redirect: '/docs/designer/tutorial',
         meta: {
           title: '教程',
@@ -86,7 +85,7 @@ const basicRoutes = [
           {
             path: 'tutorial',
             name: 'Tutorial',
-            component: ReadMe,
+            component: () => import('@/docs/tutorial/Home.md'),
             meta: {
               title: '教程',
               icon: 'helpcenter',
@@ -99,7 +98,7 @@ const basicRoutes = [
       {
         path: 'quick-start',
         name: 'QuickStart',
-        component: Content,
+        component: () => import('@/docs/Content/Content.vue'),
         redirect: '/docs/quick-start/intro',
         meta: {
           title: '快速开始',
@@ -146,7 +145,7 @@ const basicRoutes = [
       {
         path: '/docs/component',
         name: 'Component',
-        component: Content,
+        component: () => import('@/docs/Content/Content.vue'),
         meta: {
           title: '组件',
           icon: 'components'

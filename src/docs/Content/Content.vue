@@ -19,7 +19,7 @@
   </n-layout-content>
 </template>
 
-<script lang="ts" setup>
+<script lang="ts" setup name="DocConetent">
 import { NLayoutSider, NLayoutContent, NScrollbar } from 'naive-ui'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import RenderMD from '../RenderMD.vue'
