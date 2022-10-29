@@ -4,6 +4,27 @@
 
 > 展示一个静态文本，主要用于页面静态文本展示
 
+<RenderCompoent
+  :config="StaticTextComponent"
+  :component="StaticText"
+  :prop-value="{
+    base: {
+      text: '我们一起建设OpenDataV吧',
+      type: 'text'
+    }
+}"
+  :style="{
+  color: '#d03050',
+  fontSize: 40,
+  fontWeight: 800,
+  width: 550,
+  height: 100
+}
+"
+  title="静态文本"
+  mode="debug"
+/>
+
 ## 版本信息
 
 |组件版本|平台版本|说明|
@@ -32,8 +53,8 @@
 
 
 ## 示例
+<div class="demo">
 
-- 效果图
 
 <RenderCompoent
   :config="StaticTextComponent"
@@ -43,24 +64,56 @@
   title="静态文本"
 />
 
+<RenderCompoent
+  :config="StaticTextComponent"
+  :component="StaticText"
+  :prop-value="symbolPropvalue"
+  :style="{
+  color: '#18a058',
+  fontSize: 40,
+  fontWeight: 800,
+  width: 450,
+  height: 100
+}"
+  title="符号文本"
+/>
 
-<script setup lang="ts">
+</div>
+
+
+
+
+<script setup lang="ts" name="StaticTextDoc">
 import RenderCompoent from '@/docs/RenderCompoent.vue'
 import StaticTextComponent from './config'
 import StaticText from './StaticText.vue'
 import type { StaticTextType } from './type'
 const propValue: StaticTextType = {
     base: {
-      text: 'OpenDataV 哈哈哈',
+      text: 'OpenDataV',
       type: 'text'
     }
 }
 const style = {
-  color: 'red',
+  color: '#d03050',
   fontSize: 40,
   fontWeight: 800,
   width: 450,
   height: 100
 }
 
+const symbolPropvalue:StaticTextType = {
+   base: {
+      text: 'icon-clock',
+      type: 'symbol'
+    }
+
+}
+
 </script>
+<style scoped lang="less">
+
+  .demo {
+    /* display: flex */
+  }
+</style>

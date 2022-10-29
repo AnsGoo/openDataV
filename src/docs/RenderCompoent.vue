@@ -1,5 +1,5 @@
 <template>
-  <n-card :title="title" style="margin-bottom: 16px; height: 100%">
+  <n-card v-if="mode === 'debug'" :title="title" style="margin-bottom: 16px; height: 100%">
     <n-tabs type="line" animated>
       <n-tab-pane name="oasis" tab="效果" display-directive="show">
         <Render />
@@ -22,6 +22,9 @@
       </n-tab-pane>
     </n-tabs>
   </n-card>
+  <n-card v-else :title="title" style="margin-bottom: 16px; height: 100%">
+    <Render />
+  </n-card>
 </template>
 <script setup lang="ts">
 import { NCard, NTabs, NTabPane } from 'naive-ui'
@@ -33,13 +36,19 @@ import { reactive } from 'vue'
 import { computed, h } from 'vue'
 import StaticDataView from '@/components/StaticDataView'
 
-const props = defineProps<{
-  config: BaseComponent
-  component: DefineComponent
-  propValue: Recordable
-  style: Recordable
-  title: string
-}>()
+const props = withDefaults(
+  defineProps<{
+    config: BaseComponent
+    component: DefineComponent
+    propValue: Recordable
+    style: Recordable
+    title: string
+    mode?: 'view' | 'debug'
+  }>(),
+  {
+    mode: 'view'
+  }
+)
 // const componentInstance = new props.config(uuid())
 const form = reactive<{
   propValue: Recordable
