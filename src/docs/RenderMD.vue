@@ -20,6 +20,21 @@ const textColor = computed<string>(() => {
 </script>
 <style lang="less" scoped>
 :deep(.markdown-body) {
+  body {
+    scroll-behavior: smooth;
+  }
+
+  ol {
+    counter-reset: list-item;
+  }
+  li {
+    display: block;
+    counter-increment: list-item;
+  }
+  li:before {
+    content: counters(list-item, '.') ' ';
+  }
+  padding: 10px 50px;
   background-color: v-bind(backgroundColor) !important;
   img {
     display: block;
@@ -37,6 +52,9 @@ const textColor = computed<string>(() => {
   }
   code {
     color: #ffffffd1;
+  }
+  .toc-box {
+    width: 250px;
   }
 }
 </style>
