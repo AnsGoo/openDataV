@@ -25,6 +25,9 @@ const textColor = computed<string>(() => {
   .toc-box {
     position: fixed;
     right: 0px;
+    li {
+      list-style: none;
+    }
   }
   body {
     scroll-behavior: smooth;
