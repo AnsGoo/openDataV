@@ -7,7 +7,7 @@ module.exports = function (md) {
   let gstate
 
   function toc(state, silent) {
-    while (state.src.indexOf('\n') >= 0 && state.src.indexOf('\n') < state.src.indexOf('@[toc]')) {
+    while (state.src.indexOf('\n') >= 0 && state.src.indexOf('\n') < state.src.indexOf('[toc]')) {
       if (state.tokens.slice(-1)[0].type === 'softbreak') {
         state.src = state.src.split('\n').slice(1).join('\n')
         state.pos = 0
@@ -110,11 +110,10 @@ module.exports = function (md) {
           indent--
         }
       }
-      res = res.concat([
-        `<li><a href="javascript:document.querySelector('#${heading.anchor}').scrollIntoView({behavior: 'smooth'})">`,
-        heading.content,
-        '</a></li>'
-      ])
+
+      res.push(
+        `<li><a href="javascript:document.querySelector('#${heading.anchor}').scrollIntoView({behavior: 'smooth'})">${heading.content}</a></li>`
+      )
       return res.join('')
     })
 

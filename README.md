@@ -30,18 +30,17 @@
 ### 🤿 页面编辑
 
 1. 组件添加
-![组件添加](screenshot/screenshots2.gif)
+![screenshots2.gif](https://s2.loli.net/2022/10/31/nApiFm7PogI1dHS.gif)
 
 2. 组件操作
-![组件操作](screenshot/screenshots1.gif)
+![screenshots1.gif](https://s2.loli.net/2022/10/31/9lkiR15sVMLapIe.gif)
 
 3. 组件数据配置
-![组件数据配置](screenshot/screenshots.gif)
-
+![screenshots.gif](https://s2.loli.net/2022/10/31/28lf6NK35EaY9wJ.gif)
 
 ### 🖇️ 接口管理
 
-![](screenshot/API.png)
+![API.png](https://s2.loli.net/2022/10/31/f1GuMTIp2rzEPQF.png)
 
 
 ## 💒功能

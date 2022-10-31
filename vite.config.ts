@@ -40,7 +40,11 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         setupProdMockServer();
       `
       }),
-      MarkDownPlugin()
+      MarkDownPlugin({
+        markdownItSetup(md) {
+          md.use(require('./build/toc.js'))
+        }
+      })
     ],
     base: './',
     resolve: {
