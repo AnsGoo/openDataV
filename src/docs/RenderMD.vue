@@ -25,23 +25,13 @@ const textColor = computed<string>(() => {
   .toc-box {
     position: fixed;
     right: 0px;
-    li {
-      list-style: none;
-    }
+    width: max(15%, 250px);
   }
   body {
     scroll-behavior: smooth;
   }
-
-  ol {
-    counter-reset: list-item;
-  }
   li {
     display: block;
-    counter-increment: list-item;
-  }
-  li:before {
-    content: counters(list-item, '.') ' ';
   }
   padding: 10px 30px;
   background-color: v-bind(backgroundColor) !important;
@@ -61,9 +51,6 @@ const textColor = computed<string>(() => {
   }
   code {
     color: #ffffffd1;
-  }
-  .toc-box {
-    width: 250px;
   }
 }
 </style>
