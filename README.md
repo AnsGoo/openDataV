@@ -115,9 +115,9 @@ git commit 信息请按照如下规范进行书写
 
 **技术交流，请加微信群**
 
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221026)
+![weixinqun](./screenshot/wechat.png)
 
 **更新动态请关注公众号**
 
-![wechat](https://image.xingxingzaixian.fun/uPic/gongzhonghao.jpg)
+![wechat](./screenshot/OfficialAccounts.jpg)
 

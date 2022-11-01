@@ -1,8 +1,5 @@
 [toc]
 
-
-
-
 ![](@/assets/logo.png)
 
 <div class="badge">
@@ -128,15 +125,6 @@ git commit 信息请按照如下规范进行书写
 - style: 不影响程序逻辑的代码修改
 - other: 不属于以上类型的其他类型(日常事务)
 
-## ☎️ 联系方式
-
-**技术交流，请加微信群**
-
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221019)
-
-**更新动态请关注公众号**
-
-![wechat](https://image.xingxingzaixian.fun/uPic/gongzhonghao.jpg)
 
 
 <script setup > 
