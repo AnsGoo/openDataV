@@ -20,7 +20,7 @@
           v-model:iscollapsed="collapsedLeft"
           @update:iscollapsed="
             (value) => {
-              collapsedLeft.value = value
+              collapsedLeft = value
             }
           "
         />
@@ -43,7 +43,7 @@
             v-model:iscollapsed="collapsedRight"
             @update:iscollapsed="
               (value) => {
-                collapsedRight.value = value
+                collapsedRight = value
               }
             "
           />

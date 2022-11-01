@@ -23,7 +23,7 @@ const toolBars: ToolBarItemType[] = [
     },
     icon: () =>
       h(LogoView, {
-        width: '40px'
+        width: '60px'
       }),
     divider: true,
     location: 'left'

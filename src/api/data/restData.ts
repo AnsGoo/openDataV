@@ -28,11 +28,11 @@ export const getRestDataListApi = async (): Promise<AxiosResponse<RestDataDetail
  */
 export const updateRestDataApi = async (
   id: string,
-  data: Omit<RestDataDetail, 'id'>
+  data: Partial<Omit<RestDataDetail, 'id' | 'author' | 'createDate' | 'updateDate'>>
 ): Promise<AxiosResponse<RestDataDetail>> => {
   return http.put<RestDataDetail>({
     url: `/dataset/rest/${id}/`,
-    data: { ...data, id }
+    data: data
   })
 }
 
@@ -41,7 +41,7 @@ export const updateRestDataApi = async (
  * @param data Rest数据
  */
 export const createRestDataApi = async (
-  data: Omit<RestDataDetail, 'id'>
+  data: Omit<RestDataDetail, 'id' | 'author' | 'createDate' | 'updateDate'>
 ): Promise<AxiosResponse<RestDataDetail>> => {
   return http.post<RestDataDetail>({
     url: '/dataset/rest/',
