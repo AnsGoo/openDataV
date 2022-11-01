@@ -20,6 +20,20 @@ const textColor = computed<string>(() => {
 </script>
 <style lang="less" scoped>
 :deep(.markdown-body) {
+  max-width: max(80%, 70vw);
+  border-right: 1px solid;
+  .toc-box {
+    position: fixed;
+    right: 0px;
+    width: max(15%, 250px);
+  }
+  body {
+    scroll-behavior: smooth;
+  }
+  li {
+    display: block;
+  }
+  padding: 10px 30px;
   background-color: v-bind(backgroundColor) !important;
   img {
     display: block;
