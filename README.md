@@ -33,18 +33,17 @@
 ### 🤿 页面编辑
 
 1. 组件添加
-![组件添加](screenshot/screenshots2.gif)
+![screenshots2.gif](https://s2.loli.net/2022/10/31/nApiFm7PogI1dHS.gif)
 
 2. 组件操作
-![组件操作](screenshot/screenshots1.gif)
+![screenshots1.gif](https://s2.loli.net/2022/10/31/9lkiR15sVMLapIe.gif)
 
 3. 组件数据配置
-![组件数据配置](screenshot/screenshots.gif)
-
+![screenshots.gif](https://s2.loli.net/2022/10/31/28lf6NK35EaY9wJ.gif)
 
 ### 🖇️ 接口管理
 
-![](screenshot/API.png)
+![API.png](https://s2.loli.net/2022/10/31/f1GuMTIp2rzEPQF.png)
 
 
 ## 💒功能
@@ -119,9 +118,9 @@ git commit 信息请按照如下规范进行书写
 
 **技术交流，请加微信群**
 
-![weixinqun](https://image.xingxingzaixian.fun/weixinqun.jpg?t=20221026)
+![weixinqun](./screenshot/wechat.png)
 
 **更新动态请关注公众号**
 
-![wechat](https://image.xingxingzaixian.fun/uPic/gongzhonghao.jpg)
+![wechat](./screenshot/OfficialAccounts.jpg)
 

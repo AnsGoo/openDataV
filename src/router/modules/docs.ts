@@ -4,7 +4,6 @@ import { ComponentGroupList } from '@/enum'
 import type { GroupType } from '@/enum'
 import type { ComponentItem } from '@/types/component'
 import { camel2snake } from '@/utils/utils'
-import { defineAsyncComponent } from 'vue'
 
 const getComponents = () => {
   const componentDocs: Array<ComponentItem> = ComponentGroupList.map((el: GroupType) => {
@@ -26,7 +25,9 @@ const getComponents = () => {
       docs[0].children.push({
         key: componentInstance.component,
         label: componentInstance.name,
-        docs: componentOptions.docs ? () => defineAsyncComponent(componentOptions.docs) : undefined
+        docs: componentOptions.docs
+          ? componentOptions.docs
+          : () => import('@/docs/Content/Empty.vue')
       })
     }
   })
