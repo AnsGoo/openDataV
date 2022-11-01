@@ -90,13 +90,42 @@
 
 这里我们通过框选，选中`边框`和`柱状图`
 
+- 框选
+
+<video muted autoplay="autoplay" loop="loop">
+	<source src="./img/020.mp4" type="video/mp4" />
+</video>
+
+- ctr + '鼠标单击'
+
+<video muted autoplay="autoplay" loop="loop">
+	<source src="./img/021.mp4" type="video/mp4" />
+</video>
+
+- 通过图层选中
+
+<video muted autoplay="autoplay" loop="loop">
+	<source src="./img/022.mp4" type="video/mp4" />
+</video>
+
 ## 组合
 
-在选中框上右击组合进行组件的组合，这时候两个组件就被变成一个`分组`组件
+在选中框上右击组合进行组件的组合，这时候两个或者多个组件就被变成一个`分组`组件
+
+<video muted autoplay="autoplay" loop="loop">
+	<source src="./img/023.mp4" type="video/mp4" />
+</video>
+
+
 
 ## 拆分
 
 我们也可以通过选中分组组件，然后鼠标右击对`分组`组件进行`拆分`
+
+<video muted autoplay="autoplay" loop="loop">
+	<source src="./img/024.mp4" type="video/mp4" />
+</video>
+
 
 
 ## 更改图层顺序
