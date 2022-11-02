@@ -59,7 +59,7 @@
 同时我们可以对组件进行`拖动`、`旋转`、`拉伸`
 
 <video muted autoplay="autoplay" loop="loop">
-	<source src="./img/0010.mp4" type="video/mp4" />
+	<source src="./img/010.mp4" type="video/mp4" />
 </video>
 
 ## 配置组件数据
