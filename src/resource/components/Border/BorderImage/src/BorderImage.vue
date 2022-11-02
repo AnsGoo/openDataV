@@ -1,0 +1,43 @@
+<template>
+  <div v-resize="resizeHandler" class="border-image"></div>
+</template>
+
+<script setup lang="ts">
+import { useProp } from '@/resource/hooks'
+import { computed, ref, watch } from 'vue'
+import type BorderImageComponent from '../config'
+import type { BorderImage } from '../type'
+const props = defineProps<{
+  component: BorderImageComponent
+}>()
+
+const { propValue } = useProp<BorderImage>(props.component)
+
+const width = ref<number>(150)
+const height = ref<number>(150)
+const borderImageUrl = computed(() => `url(${propValue.base.borderSource || 'dev/border.png'})`)
+const borderImageSlice = computed(() => propValue.base.borderImageSlice || '51 38 20 132')
+const borderWidth = computed(() => propValue.base.borderWidth || '40.8px 30.4px 16px 105.6px')
+const backgroundColor = computed(() => propValue.base.backgroundColor || 'transparent')
+watch(borderWidth, (n) => {
+  console.log(n)
+})
+
+// 监听窗口大小变化
+
+const resizeHandler = (entries: ResizeObserverEntry[]) => {
+  const entry = entries[0]
+  const rect: DOMRectReadOnly = entry.contentRect
+  width.value = rect.width
+  height.value = rect.height
+}
+</script>
+
+<style lang="less" scoped>
+.border-image {
+  background-color: v-bind(backgroundColor);
+  border-width: v-bind(borderWidth);
+  border-image-source: v-bind(borderImageUrl);
+  border-image-slice: v-bind(borderImageSlice);
+}
+</style>

@@ -1,0 +1,17 @@
+{
+  "name": "border-box",
+  "version": "1.0.0",
+  "description": "边框",
+  "scripts": {},
+  "keywords": [
+    "OpenDataV"
+  ],
+  "author": "qwecxzpoi",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "tinycolor2": "^1.4.2"
+  },
+  "devDependencies": {
+    "@types/tinycolor2": "^1.4.3"
+  }
+}
