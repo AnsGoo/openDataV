@@ -37,10 +37,13 @@ const props = withDefaults(
     value: string[]
     count?: number
     type?: 'static' | 'dynamic'
+    maxItem?: number
+    minItem?: number
   }>(),
   {
     count: 1,
-    type: 'static'
+    type: 'static',
+    minItem: 0
   }
 )
 
@@ -61,6 +64,12 @@ const handleAdd = () => {
     return
   }
 
+  const { maxItem } = props
+  if (typeof maxItem === 'number' && arrayValue.length >= maxItem) {
+    message.warning(`最多 ${maxItem} 个输入框，添加失败`)
+    return
+  }
+
   arrayValue.push(newValue.value)
   emits('updateValue', arrayValue)
   newValue.value = ''
@@ -70,6 +79,11 @@ const handleAdd = () => {
 }
 
 const handleDelete = (index: number) => {
+  // minItem 有默认值，默认值为数值，不用再判断
+  if (arrayValue.length <= props.minItem) {
+    message.warning(`最少 ${props.minItem} 个输入框，删除失败`)
+    return
+  }
   arrayValue.splice(index, 1)
   emits('updateValue', arrayValue)
 }

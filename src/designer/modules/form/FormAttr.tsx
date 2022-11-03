@@ -62,6 +62,16 @@ export default defineComponent({
     const renderItem = (item: AttrType) => {
       const options: Recordable[] = item.componentOptions?.options || []
 
+      /**
+       * 获取设置的值
+       * @param {string} name 需要获取值的名称
+       * @param {any} [defaultValue=undefined] 默认值
+       * @return 返回值本体或默认值
+       */
+      function getOptionsValue<T = undefined>(name: string, defaultValue?: T): T {
+        return name in item.componentOptions ? item.componentOptions[name] : defaultValue
+      }
+
       switch (item.type) {
         case FormType.COLOR:
           return (
@@ -96,10 +106,8 @@ export default defineComponent({
             </NRadioGroup>
           )
         case FormType.NUMBER:
-          const numberMax: number =
-            'max' in item.componentOptions ? item.componentOptions.max : 9999999999
-          const numberMin: number =
-            'min' in item.componentOptions ? item.componentOptions.min : -9999999999
+          const numberMax: number = getOptionsValue<number>('max', 9999999999)
+          const numberMin: number = getOptionsValue<number>('min', -9999999999)
 
           return (
             <NInputNumber
@@ -123,8 +131,10 @@ export default defineComponent({
             }
           })
         case FormType.ARRAY:
-          const count = 'count' in item.componentOptions ? item.componentOptions.count : 1
-          const type = 'type' in item.componentOptions ? item.componentOptions.type : 'static'
+          const count = getOptionsValue<number>('count', 1)
+          const type = getOptionsValue<'static' | 'dynamic'>('type', 'static')
+          const maxItem = getOptionsValue<number | undefined>('maxItem')
+          const minItem = getOptionsValue<number>('minItem')
           return h(ArrayItem, {
             value: formData[item.prop],
             onUpdateValue: (value) => {
@@ -132,7 +142,9 @@ export default defineComponent({
               changed(value, item.prop)
             },
             count,
-            type
+            type,
+            maxItem,
+            minItem
           })
         case FormType.CUSTOM:
           return (

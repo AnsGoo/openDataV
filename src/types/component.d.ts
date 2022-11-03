@@ -48,6 +48,8 @@ export interface CustomFormSchema extends BaseFormSchema {
 interface ArrayFormSchema extends BaseFormSchema {
   count: number
   type: 'static' | 'dynamic'
+  maxItem?: number
+  minItem?: number
 }
 
 export interface AttrType {
