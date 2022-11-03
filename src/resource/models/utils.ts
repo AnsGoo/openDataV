@@ -27,6 +27,8 @@ export function createComponent(component: ComponentDataType): any {
             options: options.restOptions,
             otherConfig: data.otherConfig
           })
+        } else if (data.type === DataType.DEMO) {
+          obj.loadDemoData()
         }
       } else {
         obj.loadDemoData()
