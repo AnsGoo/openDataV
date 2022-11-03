@@ -9,6 +9,7 @@
           v-model:content="form.propValue"
           class="content"
           mode="debug"
+          height="300px"
           @update:content="propValueChange"
         />
       </n-tab-pane>
@@ -17,6 +18,7 @@
           v-model:content="form.style"
           class="content"
           mode="debug"
+          height="300px"
           @update:content="styleChange"
         />
       </n-tab-pane>

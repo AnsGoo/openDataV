@@ -63,7 +63,7 @@ const basicRoutes = [
     path: '/docs',
     name: 'Docs',
     component: () => import('@/docs/Site.vue'),
-    redirect: '/docs/designer/tutorial',
+    redirect: '/docs/quick-satrt/intro',
     meta: {
       title: '文档',
       icon: 'docs',
@@ -72,38 +72,13 @@ const basicRoutes = [
     },
     children: [
       {
-        path: '/docs/designer',
+        path: '/docs/quick-satrt',
         name: 'Designer',
         component: () => import('@/docs/Content/Content.vue'),
-        redirect: '/docs/designer/tutorial',
-        meta: {
-          title: '教程',
-          icon: 'helpcenter',
-          ignoreAuth: true,
-          hideInMenu: true
-        },
-        children: [
-          {
-            path: 'tutorial',
-            name: 'Tutorial',
-            component: () => import('@/docs/tutorial/Home.md'),
-            meta: {
-              title: '教程',
-              icon: 'helpcenter',
-              ignoreAuth: true,
-              hideInMenu: true
-            }
-          }
-        ]
-      },
-      {
-        path: 'quick-start',
-        name: 'QuickStart',
-        component: () => import('@/docs/Content/Content.vue'),
-        redirect: '/docs/quick-start/intro',
+        redirect: '/docs/quick-satrt/intro',
         meta: {
           title: '快速开始',
-          icon: 'data',
+          icon: 'QuickStart',
           ignoreAuth: true,
           hideInMenu: true
         },
@@ -111,32 +86,21 @@ const basicRoutes = [
           {
             path: 'intro',
             name: 'Intro',
-            component: () => import('@/docs/quick-start/index.md'),
+            component: () => import('@/docs/tutorial/Home.md'),
             meta: {
               title: '介绍',
-              icon: 'data',
+              icon: 'helpcenter',
               ignoreAuth: true,
               hideInMenu: true
             }
           },
           {
-            path: 'design',
-            name: 'Design',
-            component: () => import('@/docs/quick-start/design.md'),
+            path: 'quick-start',
+            name: 'QuickStart',
+            component: () => import('@/docs/tutorial/QuickStart.md'),
             meta: {
-              title: '设计',
-              icon: 'data',
-              ignoreAuth: true,
-              hideInMenu: true
-            }
-          },
-          {
-            path: 'public',
-            name: 'Public',
-            component: () => import('@/docs/quick-start/public.md'),
-            meta: {
-              title: '发布',
-              icon: 'data',
+              title: '快速开始',
+              icon: 'helpcenter',
               ignoreAuth: true,
               hideInMenu: true
             }
