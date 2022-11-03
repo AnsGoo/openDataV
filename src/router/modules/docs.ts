@@ -104,6 +104,17 @@ const basicRoutes = [
               ignoreAuth: true,
               hideInMenu: true
             }
+          },
+          {
+            path: 'common-issues',
+            name: 'CommonIssues',
+            component: () => import('@/docs/tutorial/CommonIssues.md'),
+            meta: {
+              title: '常见问题',
+              icon: 'helpcenter',
+              ignoreAuth: true,
+              hideInMenu: true
+            }
           }
         ]
       },

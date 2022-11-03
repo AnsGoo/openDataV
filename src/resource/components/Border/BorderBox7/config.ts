@@ -1,8 +1,8 @@
-import { ComponentGroup, FormType } from '@/enum';
-import type { PropsType } from '@/types/component';
-import { BaseComponent } from '@/resource/models';
+import { ComponentGroup, FormType } from '@/enum'
+import type { PropsType } from '@/types/component'
+import { BaseComponent } from '@/resource/models'
 
-export const componentName = 'BorderBox7';
+export const componentName = 'BorderBox7'
 class BorderBoxComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
     super({
@@ -12,7 +12,7 @@ class BorderBoxComponent extends BaseComponent {
       id,
       width: 459,
       height: 300
-    });
+    })
   }
 
   _prop: PropsType[] = [
@@ -62,8 +62,8 @@ class BorderBoxComponent extends BaseComponent {
         }
       ]
     }
-  ];
-  _style: PropsType[] = [];
+  ]
+  _style: PropsType[] = []
 }
 
-export default BorderBoxComponent;
+export default BorderBoxComponent

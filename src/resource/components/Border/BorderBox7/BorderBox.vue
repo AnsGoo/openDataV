@@ -218,38 +218,38 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from '@/resource/hooks';
-import { computed, ref } from 'vue';
-import type BorderBoxComponent from './config';
-import TinyColor2 from 'tinycolor2';
+import { useProp } from '@/resource/hooks'
+import { computed, ref } from 'vue'
+import type BorderBoxComponent from './config'
+import TinyColor2 from 'tinycolor2'
 
-import type { BorderBox } from './type';
+import type { BorderBox } from './type'
 
 function fade(color, percent) {
-  const rgbType = TinyColor2(color);
-  rgbType.setAlpha(percent / 100);
-  return rgbType.toRgbString();
+  const rgbType = TinyColor2(color)
+  rgbType.setAlpha(percent / 100)
+  return rgbType.toRgbString()
 }
 
 const props = defineProps<{
-  component: BorderBoxComponent;
-}>();
+  component: BorderBoxComponent
+}>()
 
-const textRef = ref();
-const { propValue } = useProp<BorderBox>(props.component);
-const filterId = computed(() => props.component.id);
-const titleWidth = computed(() => propValue.base.titleWidth);
+const textRef = ref()
+const { propValue } = useProp<BorderBox>(props.component)
+const filterId = computed(() => props.component.id)
+const titleWidth = computed(() => propValue.base.titleWidth)
 
-const width = ref<number>(150);
-const height = ref<number>(150);
-const mergedColor = computed(() => [propValue.base.colorLeft, propValue.base.colorRight]);
+const width = ref<number>(150)
+const height = ref<number>(150)
+const mergedColor = computed(() => [propValue.base.colorLeft, propValue.base.colorRight])
 
 const resizeHandler = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0];
-  const rect: DOMRectReadOnly = entry.contentRect;
-  width.value = rect.width;
-  height.value = rect.height;
-};
+  const entry = entries[0]
+  const rect: DOMRectReadOnly = entry.contentRect
+  width.value = rect.width
+  height.value = rect.height
+}
 </script>
 
 <style lang="less" scoped>
