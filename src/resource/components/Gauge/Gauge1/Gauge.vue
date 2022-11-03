@@ -111,8 +111,7 @@ const scaleRota = ref<number[]>([1, 1])
 
 const unit = ref<string>(propValue.attr.unit || '')
 
-const resizeHandler = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
+const resizeHandler = (entry: ResizeObserverEntry) => {
   const rect: DOMRectReadOnly = entry.contentRect
   const rato = Math.min(rect.width / 100, rect.height / 100)
   scaleRota.value = [rato, rato]

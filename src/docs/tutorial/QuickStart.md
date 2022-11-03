@@ -7,7 +7,30 @@
 
 接下来我们将带领大家创建一个页面，来熟悉该低代码平台的使用
 
-## 访问布局管理
+## 安装
+
+```shell
+git clone https://github.com/AnsGoo/openDataV.git
+
+npm install pnpm -g
+
+pnpm install
+```
+
+## 启动
+
+```shell
+pnpm dev
+```
+
+## 编译
+
+```shell
+pnpm build
+```
+
+
+# 访问布局管理
 
 ```shell
 /Pages

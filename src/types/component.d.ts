@@ -40,6 +40,12 @@ export interface InputNumberFormSchema extends BaseFormSchema {
   step: number
 }
 
+export interface SelectFormSchema extends BaseFormSchema {
+  options: Array<{ label: string; value: string | number }>
+}
+export type RadioFormSchema = SelectFormSchema
+export type SwitchFormSchema = SelectFormSchema
+
 export interface CustomFormSchema extends BaseFormSchema {
   componentType: string | ConcreteComponent
   args: any
@@ -63,6 +69,9 @@ export interface AttrType {
     | CustomFormSchema
     | ArrayFormSchema
     | BaseFormSchema
+    | SwitchFormSchema
+    | SelectFormSchema
+    | RadioFormSchema
   help?: string
 }
 

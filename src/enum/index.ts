@@ -31,7 +31,8 @@ export const LOGIN_URL = '/login'
 
 export enum EditMode {
   EDIT = 'edit',
-  PREVIEW = 'preview'
+  PREVIEW = 'preview',
+  VIEW = 'view'
 }
 
 export class GroupType {

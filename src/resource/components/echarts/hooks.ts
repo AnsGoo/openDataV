@@ -16,8 +16,7 @@ export const useEchart = (chartEl: Ref<ElRef | undefined | null>) => {
     }
   })
 
-  const resizeHandler = (entries) => {
-    const entry = entries[0]
+  const resizeHandler = (entry: ResizeObserverEntry) => {
     const { width, height } = entry.contentRect
     chart?.resize({ width, height })
   }
