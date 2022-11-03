@@ -2,7 +2,7 @@
   <n-result
     status="404"
     title="文档正在编写中..."
-    description="start一下吧，需要鼓励"
+    description="star一下吧，需要鼓励"
     style="height: 100%"
   >
     <template #icon>

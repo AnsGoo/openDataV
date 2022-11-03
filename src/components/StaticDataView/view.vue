@@ -43,16 +43,18 @@ const props = withDefaults(
     content?: any
     title?: string
     mode?: string
+    height?: string
   }>(),
   {
     content: '',
     title: '',
-    mode: 'use'
+    mode: 'use',
+    height: '600px'
   }
 )
 const config = computed<CodemirrorOption>(() => {
   return {
-    height: '600px',
+    height: props.height,
     tabSize: 4,
     indentWithTab: true,
     autofocus: true,
