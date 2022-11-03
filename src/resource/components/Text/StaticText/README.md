@@ -4,7 +4,7 @@
 
 > 展示一个静态文本，主要用于页面静态文本展示
 
-<RenderCompoent
+<RenderComponent
   :config="StaticTextComponent"
   :component="StaticText"
   :prop-value="{
@@ -54,7 +54,7 @@
 
 <div class="demo">
 
-<RenderCompoent
+<RenderComponent
   :config="StaticTextComponent"
   :component="StaticText"
   :prop-value="propValue"
@@ -62,10 +62,10 @@
   title="静态文本"
 />
 
-<RenderCompoent
+<RenderComponent
   :config="StaticTextComponent"
   :component="StaticText"
-  :prop-value="symbolPropvalue"
+  :prop-value="symbolPropValue"
   :style="{
   color: '#18a058',
   fontSize: 40,
@@ -79,7 +79,7 @@
 </div>
 
 <script setup lang="ts" name="StaticTextDoc">
-import RenderCompoent from '@/docs/RenderCompoent.vue'
+import RenderComponent from '@/docs/RenderComponent.vue'
 import StaticTextComponent from './config'
 import StaticText from './StaticText.vue'
 import type { StaticTextType } from './type'
@@ -90,19 +90,17 @@ const propValue: StaticTextType = {
   }
 }
 const style = {
-color: '#d03050',
-fontSize: 40,
-fontWeight: 800,
-width: 450,
-height: 100
+  color: '#d03050',
+  fontSize: 40,
+  fontWeight: 800,
+  width: 450,
+  height: 100
 }
 
-const symbolPropvalue:StaticTextType = {
+const symbolPropValue:StaticTextType = {
   base: {
     text: 'icon-clock',
     type: 'symbol'
   }
-
 }
-
 </script>
