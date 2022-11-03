@@ -31,17 +31,23 @@ class BorderImageComponent extends BaseComponent {
         {
           prop: 'borderImageSlice',
           label: '边框图片切片',
-          type: FormType.TEXT,
+          type: FormType.ARRAY,
           componentOptions: {
-            defaultValue: '51 38 20 132'
+            type: 'dynamic',
+            minItem: 1,
+            maxItem: 4,
+            defaultValue: ['51', '38', '20', '132']
           }
         },
         {
           prop: 'borderWidth',
           label: '边框宽度',
-          type: FormType.TEXT,
+          type: FormType.ARRAY,
           componentOptions: {
-            defaultValue: '40.8px 30.4px 16px 105.6px'
+            type: 'dynamic',
+            minItem: 1,
+            maxItem: 4,
+            defaultValue: ['40.8px', '30.4px', '16px', '105.6px']
           }
         },
         {
