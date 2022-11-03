@@ -2,7 +2,7 @@
   "name": "scrolltable",
   "version": "1.0.0",
   "description": "OpenDataV滚动表格",
-  "main": "index.ts",
+  "main": "ScrollTable/index.ts",
   "scripts": {},
   "keywords": [
     "OpenDataV"
