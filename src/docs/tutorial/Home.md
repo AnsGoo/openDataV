@@ -98,7 +98,7 @@ gitee 仅做代码同步，issues 或者 PR 请在 github 提交。
 
 ### 🎮 启动项目
 
-```shell
+```Bash
 
 # 安装依赖
 pnpm install

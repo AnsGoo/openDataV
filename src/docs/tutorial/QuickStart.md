@@ -9,7 +9,7 @@
 
 ## 安装
 
-```shell
+```Bash
 git clone https://github.com/AnsGoo/openDataV.git
 
 npm install pnpm -g
@@ -19,20 +19,20 @@ pnpm install
 
 ## 启动
 
-```shell
+```Bash
 pnpm dev
 ```
 
 ## 编译
 
-```shell
+```Bash
 pnpm build
 ```
 
 
 # 访问布局管理
 
-```shell
+```Bash
 /Pages
 ```
 

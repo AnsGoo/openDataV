@@ -372,6 +372,27 @@ const { propValue } = useProp<StaticTextType>(props.component, propValueChange)
 
 组件自己在内部通过不管通过`HTTP`或者`WebSocket` 自己处理数据的请求和响应,这时候组件的`属性栏`没有`数据`配置项
 
+```typescript
+
+const activeCount = ref<string>(props.propValue.base.count)
+
+const getData = async () => {
+  const resp = await http.get({url: '/getdata'})
+  activeCount.value = resp.data
+}
+const intervalId:number = 0
+onMounted( () => {
+  clearInterval(intervalId)
+  intervalId = setInterval( getData, 30000)
+})
+
+onUnmounted( () => {
+  clearInterval(intervalId)
+})
+
+
+```
+
 
 ### UNIVERSAL
 
@@ -400,7 +421,9 @@ useData(props.component, dataChange)
 
 `useData`钩子的第二个参数是一个数据处理回调，入参是获取到的数据，用户可以在回调中根据数据处理组件的渲染
 
+### `GLOBAL`
 
+待实现
 
 
 ## 监听组件尺寸
@@ -452,7 +475,7 @@ basicStore.isEditMode
 <div v-size="resizeHander">我是组件</div>
 ```
 
-```typescript
+```TypeScript
 const resizeHandler = (entry: ResizeObserverEntry) => {
   const {width, height}: DOMRectReadOnly = entry.contentRect
   doSomething()
