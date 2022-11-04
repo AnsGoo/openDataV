@@ -2,9 +2,17 @@ import type { Directive, DirectiveBinding } from 'vue'
 
 const RESIZE_OBSERVE = 'RESIZE_OBSERVE'
 
+interface CustomResizeObserverCallback {
+  (entry: ResizeObserverEntry): void
+}
+
 const resizeDOM = (el: HTMLElement, binding: DirectiveBinding) => {
-  const resizeHandler: ResizeObserverCallback = binding.value
-  const resizeObserver = new ResizeObserver(resizeHandler)
+  const resizeHandler: CustomResizeObserverCallback = binding.value
+  const resizeObserver = new ResizeObserver(
+    (entries: ResizeObserverEntry[], _observer: ResizeObserver) => {
+      resizeHandler(entries[0])
+    }
+  )
   resizeObserver.observe(el)
   return resizeObserver
 }

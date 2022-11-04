@@ -20,6 +20,7 @@ import {
   RestRequestData,
   StaticRequestData
 } from './data'
+import { h } from 'vue'
 
 interface DataConfig {
   type: DataType
@@ -128,7 +129,8 @@ export abstract class BaseComponent {
             prop: 'left',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.positionStyle.left
+              defaultValue: this.positionStyle.left,
+              suffix: () => h('span', {}, 'px')
             }
           },
           {
@@ -136,7 +138,8 @@ export abstract class BaseComponent {
             prop: 'top',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.positionStyle.top
+              defaultValue: this.positionStyle.top,
+              suffix: () => h('span', {}, 'px')
             }
           },
           {
@@ -144,7 +147,8 @@ export abstract class BaseComponent {
             prop: 'width',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.positionStyle.width
+              defaultValue: this.positionStyle.width,
+              suffix: () => h('span', {}, 'px')
             }
           },
           {
@@ -152,7 +156,8 @@ export abstract class BaseComponent {
             prop: 'height',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.positionStyle.height
+              defaultValue: this.positionStyle.height,
+              suffix: () => h('span', {}, 'px')
             }
           },
           {
@@ -160,7 +165,8 @@ export abstract class BaseComponent {
             prop: 'rotate',
             type: FormType.NUMBER,
             componentOptions: {
-              defaultValue: this.positionStyle.rotate
+              defaultValue: this.positionStyle.rotate,
+              suffix: () => h('span', {}, '°')
             }
           }
         ]

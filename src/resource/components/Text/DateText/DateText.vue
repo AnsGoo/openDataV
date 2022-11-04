@@ -14,8 +14,7 @@ const props = defineProps<{
 }>()
 const { propValue } = useProp<DateText>(props.component)
 const lineHeight = ref<string>('20px')
-const resizeHandler = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
+const resizeHandler = (entry: ResizeObserverEntry) => {
   const { height } = entry.contentRect
   lineHeight.value = `${height}px`
 }

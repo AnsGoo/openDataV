@@ -7,7 +7,30 @@
 
 接下来我们将带领大家创建一个页面，来熟悉该低代码平台的使用
 
-## 访问布局管理
+## 安装
+
+```shell
+git clone https://github.com/AnsGoo/openDataV.git
+
+npm install pnpm -g
+
+pnpm install
+```
+
+## 启动
+
+```shell
+pnpm dev
+```
+
+## 编译
+
+```shell
+pnpm build
+```
+
+
+# 访问布局管理
 
 ```shell
 /Pages
@@ -58,7 +81,7 @@
 
 同时我们可以对组件进行`拖动`、`旋转`、`拉伸`
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/010.mp4" type="video/mp4" />
 </video>
 
@@ -66,7 +89,7 @@
 
 将组件的示例数据改为静态数据，切换组件数据类型，这里我们选择静态数据,并选择具体的静态数据
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/011.mp4" type="video/mp4" />
 </video>
 
@@ -76,7 +99,7 @@
 所有的组件都有`位置大小`的公共样式，主要是用来设置组件的`坐标`、`尺寸`和`旋转`情况，你除过可以通过`拉伸`、`拖动`、`旋转`组件本身来改变这些值以外，还可以通过公共样式`位置大小`来精确更改。
 这里我让将组件旋转状态改为0
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/012.mp4" type="video/mp4" />
 </video>
 
@@ -92,19 +115,19 @@
 
 - 框选
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/020.mp4" type="video/mp4" />
 </video>
 
 - ctr + '鼠标单击'
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/021.mp4" type="video/mp4" />
 </video>
 
 - 通过图层选中
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/022.mp4" type="video/mp4" />
 </video>
 
@@ -112,7 +135,7 @@
 
 在选中框上右击组合进行组件的组合，这时候两个或者多个组件就被变成一个`分组`组件
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/023.mp4" type="video/mp4" />
 </video>
 
@@ -122,7 +145,7 @@
 
 我们也可以通过选中分组组件，然后鼠标右击对`分组`组件进行`拆分`
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/024.mp4" type="video/mp4" />
 </video>
 
@@ -141,21 +164,21 @@
 
 可以通过选中组件来，然后鼠标右击菜单栏里面的`置顶`、`上移一层`、`置底`、`下移一层`来更改组件的图层顺序
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/025.mp4" type="video/mp4" />
 </video>
 
 
 也可以通过`图层`一栏，鼠标右击的菜单栏里面的`置顶`、`上移一层`、`置底`、`下移一层`来更改组件的图层顺序
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/026.mp4" type="video/mp4" />
 </video>
 
 
 还可以通过拖动组件到对应的位置来修改图层顺序
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/027.mp4" type="video/mp4" />
 </video>
 
@@ -174,7 +197,7 @@
 
 默认页面使背景色，我们支持页面修改为`背景色`、`渐变色`、`背景图`
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/028.mp4" type="video/mp4" />
 </video>
 
@@ -182,7 +205,7 @@
 
 当我们完成页面的设计，我们可以通过`工具栏`里面的预览按钮去预览一下页面效果效果，也可以通过`保存`按钮来保存我们的页面，还可以通过`导出`按钮将我们页面设计在本地进行保存。
 
-<video muted autoplay="autoplay" loop="loop">
+<video muted autoplay="true" loop="true">
 	<source src="./img/029.mp4" type="video/mp4" />
 </video>
 

@@ -61,8 +61,7 @@ const { propValue } = useProp<Decoration>(props.component, propChange)
 const width = ref<number>(300)
 const height = ref<number>(35)
 
-const resizeHandler = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
+const resizeHandler = (entry: ResizeObserverEntry) => {
   const rect: DOMRectReadOnly = entry.contentRect
   width.value = rect.width
   height.value = rect.height

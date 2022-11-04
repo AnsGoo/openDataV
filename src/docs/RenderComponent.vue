@@ -36,10 +36,11 @@ import type { ComponentOptions, ConcreteComponent } from 'vue'
 import { reactive } from 'vue'
 import { computed, h } from 'vue'
 import StaticDataView from '@/components/StaticDataView'
+import type { BaseComponent } from '@/resource/models'
 
 const props = withDefaults(
   defineProps<{
-    config: any
+    config: new (id?: string, name?: string) => BaseComponent
     component: ConcreteComponent
     propValue: Recordable
     style: Recordable

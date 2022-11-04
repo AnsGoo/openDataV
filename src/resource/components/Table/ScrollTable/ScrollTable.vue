@@ -62,8 +62,7 @@ const props = defineProps<{
 const { propValue } = useProp<ScrollTableType>(props.component)
 
 const comHeight = ref<number>(0)
-const resizeHandler = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
+const resizeHandler = (entry: ResizeObserverEntry) => {
   const { height } = entry.contentRect
   comHeight.value = height
 }
