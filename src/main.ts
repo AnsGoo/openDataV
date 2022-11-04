@@ -9,9 +9,11 @@ import { AsyncComponent } from '@/designer/load'
 import router from '@/router'
 import Directive from '@/plugins/directive'
 import Icon from '@/plugins/icon'
+import XIcon from '@/plugins/xicon'
 const app = createApp(App)
 app.use(Directive)
 app.use(Icon)
+app.use(XIcon)
 
 app.use(AsyncComponent)
 
