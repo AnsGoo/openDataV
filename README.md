@@ -85,7 +85,7 @@
 
 ### 🎮启动项目
 
-```shell
+```Bash
 
 # 安装依赖
 pnpm install
@@ -118,7 +118,7 @@ git commit 信息请按照如下规范进行书写
 
 **技术交流，请加微信群**
 
-![weixinqun](./screenshot/wechat.png)
+<img src="./public/wechat.png" style="width:430px">
 
 **更新动态请关注公众号**
 
