@@ -158,8 +158,7 @@ const gradientId = ref<string>(`border-box-9-gradient-${uuid()}`)
 const maskId = ref<string>(`border-box-9-mask-${uuid()}`)
 
 // 监听窗口大小变化
-const resizeHandler = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
+const resizeHandler = (entry: ResizeObserverEntry) => {
   const rect: DOMRectReadOnly = entry.contentRect
   width.value = rect.width
   height.value = rect.height

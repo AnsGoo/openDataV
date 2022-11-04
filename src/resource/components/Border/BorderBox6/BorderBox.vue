@@ -58,8 +58,7 @@ const { propValue } = useProp<BorderBox>(props.component)
 const width = ref<number>(150)
 const height = ref<number>(150)
 
-const resizeHandler = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
+const resizeHandler = (entry: ResizeObserverEntry) => {
   const rect: DOMRectReadOnly = entry.contentRect
   width.value = rect.width
   height.value = rect.height

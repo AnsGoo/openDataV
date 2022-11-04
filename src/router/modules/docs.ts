@@ -104,6 +104,39 @@ const basicRoutes = [
               ignoreAuth: true,
               hideInMenu: true
             }
+          },
+          {
+            path: 'development',
+            name: 'Development',
+            component: () => import('@/docs/tutorial/Development.md'),
+            meta: {
+              title: '组件开发',
+              icon: 'helpcenter',
+              ignoreAuth: true,
+              hideInMenu: true
+            }
+          },
+          {
+            path: 'common-issues',
+            name: 'CommonIssues',
+            component: () => import('@/docs/tutorial/CommonIssues.md'),
+            meta: {
+              title: '常见问题',
+              icon: 'helpcenter',
+              ignoreAuth: true,
+              hideInMenu: true
+            }
+          },
+          {
+            path: 'license',
+            name: 'LICENSE',
+            component: () => import('@/docs/tutorial/License.md'),
+            meta: {
+              title: '版权声明',
+              icon: 'helpcenter',
+              ignoreAuth: true,
+              hideInMenu: true
+            }
           }
         ]
       },
