@@ -7,7 +7,15 @@ import ArrayItem from '../arrayItem'
 import CustomItem from '../customItem'
 import BackItem from '../backItem'
 import { FormType, GlobalColorSwatches } from '@/enum'
-import type { AttrType, CustomFormSchema } from '@/types/component'
+import type {
+  AttrType,
+  CustomFormSchema,
+  InputFormSchema,
+  InputNumberFormSchema,
+  RadioFormSchema,
+  SelectFormSchema,
+  SwitchFormSchema
+} from '@/types/component'
 import {
   NForm,
   NFormItem,
@@ -60,7 +68,9 @@ export default defineComponent({
 
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const renderItem = (item: AttrType) => {
-      const options: Recordable[] = item.componentOptions?.options || []
+      const options: Recordable[] =
+        (item.componentOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options ||
+        []
 
       /**
        * 获取设置的值
@@ -116,6 +126,10 @@ export default defineComponent({
               max={numberMax}
               min={numberMin}
               clearable={true}
+              v-slots={{
+                prefix: (item.componentOptions as InputNumberFormSchema).prefix,
+                suffix: (item.componentOptions as InputNumberFormSchema).suffix
+              }}
             />
           )
         case FormType.SWITCH:
@@ -163,6 +177,10 @@ export default defineComponent({
               onUpdateValue={(event) => changed(event, item.prop)}
               readonly={item.componentOptions.editable === false}
               disabled={item.componentOptions.disabled}
+              v-slots={{
+                prefix: (item.componentOptions as InputFormSchema).prefix,
+                suffix: (item.componentOptions as InputFormSchema).suffix
+              }}
             />
           )
       }

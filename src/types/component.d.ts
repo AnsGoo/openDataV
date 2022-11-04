@@ -2,7 +2,7 @@ import type { FormType, ComponentGroup, ScriptType } from '@/enum'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { DataIntegrationMode } from '@/resource/models/data'
 import type { DataType, StaticRequestOptions, RestRequestOptions } from '@/resource/models/data'
-import type { Component, ConcreteComponent } from 'vue'
+import type { Component, ConcreteComponent, VNode } from 'vue'
 
 export interface GroupStyle {
   gwidth: number
@@ -29,15 +29,19 @@ export interface BaseFormSchema {
   disabled?: boolean
   required?: boolean
   defaultValue: string | number | boolean | any
-  options?: any
 }
 
-type InputFormSchema = BaseFormSchema
+export interface InputFormSchema extends BaseFormSchema {
+  prefix?: () => VNode
+  suffix?: () => VNode
+}
 
 export interface InputNumberFormSchema extends BaseFormSchema {
   min: number
   max: number
   step: number
+  prefix?: () => VNode
+  suffix?: () => VNode
 }
 
 export interface SelectFormSchema extends BaseFormSchema {
