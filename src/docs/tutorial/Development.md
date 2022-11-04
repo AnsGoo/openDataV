@@ -51,6 +51,7 @@
  * {width}: 组件初始化长度
  * {height}: 组件初始化高度
  * {icon? }: 组件图标
+ * {dataIntegrationMode? }: 数据接入模式
  */
 
 class StaticTextComponent extends BaseComponent {
@@ -62,12 +63,24 @@ class StaticTextComponent extends BaseComponent {
       id,
       width: 150,
       height: 20,
-      icon
+      icon,
+      dataIntegrationMode: DataIntegrationMode.SELF
     })
   }
 }
 
 ```
+各个属性含义
+
+> `component`: 组件名
+> `group`: 组件分类
+> `name`: 组件label
+> `id`: 组件ID
+> `width`: 组件初始化长度
+> `height`: 组件初始化高度
+> `icon? `: 组件图标
+> `dataIntegrationMode? `: 数据接入模式
+
 
 除过需要继承`BaseComponent` 抽象类外，还需要重新定义`_prop`和`_style`属性，
 
@@ -292,6 +305,8 @@ const emits = defineEmits<{
 
 ## 监听组件属性
 
+当用户通过`属性栏`的`属性`更改组件属性时，画布中的组件需要根据用户更改来，对组件进行重新渲染。
+
 监听组件属性变化有三种方式
 
 ###  watch 观测
@@ -339,6 +354,51 @@ const { propValue } = useProp<StaticTextType>(props.component, propValueChange)
 
 ```
 
+### 注意事项
+需要注意的事，只有在编辑模式下才需要监听组件属性变化，在预览模式下不需要监听组件属性变化，因此可以在组件中判断编辑器模式(`什么是编辑器模式，详见编辑器模式`)，来决定是不是要对属性进行监听依次可以提升组件性能
+
+
+## 数据
+
+组件配置项对象在有一个`dataIntegrationMode` 数据接入模式的属性，他定义了组件可以从那里接入数据
+
+接入模式分为三类：
+
+> - `SELF`: 组件自己内部自行接入数据
+> - `UNIVERSAL`: 组件采用通用的方式接入数据
+> - `GLOBAL`: 组件从订阅全局数据
+
+### SELF 
+
+组件自己在内部通过不管通过`HTTP`或者`WebSocket` 自己处理数据的请求和响应,这时候组件的`属性栏`没有`数据`配置项
+
+
+### UNIVERSAL
+
+组件采用`useData`hook来统一处理数据，通用数据处理方式目前提供了三种数据接入方式，分别是`示例数据`、`静态数据`、`Rest数据`
+
+> - `示例数据`: 示例数据无法更改，主要 用来组件的展示，不建议在生产环境下使用
+> - `静态数据`: 静态数据从后台数据库中存储的静态数据中加载
+> - `Rest数据`: 根据用户提供的`REST`接口，发起HTTP请求，获取数据
+
+```typescript
+
+import { useData } from '@/resource/hooks'
+let chartData:
+  | Array<{ label: string; value: number }>
+  | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
+const dataChange = (resp: any, _: DataType) => {
+  if (resp.status >= 0) {
+    chartData = resp.afterData
+    doSomething(chartData)
+  }
+}
+
+useData(props.component, dataChange)
+
+```
+
+`useData`钩子的第二个参数是一个数据处理回调，入参是获取到的数据，用户可以在回调中根据数据处理组件的渲染
 
 
 
@@ -398,16 +458,6 @@ const resizeHandler = (entry: ResizeObserverEntry) => {
   doSomething()
 }
 ```
-
-## Hooks 
-
-1. 属性变化 Hook
-
-
-
-
-
-
 
 
 
