@@ -77,7 +77,7 @@ const getMenuOptions = (
         key: currentIndex,
         icon: () =>
           h(SimpleLayerItem, {
-            name: 'branch-one',
+            name: 'group',
             component: item,
             index: currentIndex,
             contextmenus: () => contextmenus(currentIndex),

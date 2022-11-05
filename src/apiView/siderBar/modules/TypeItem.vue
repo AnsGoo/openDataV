@@ -1,11 +1,10 @@
 <template>
   <div class="sider-bar-item">
-    <IconPark :name="icon" class="icon" />
+    <x-icon :name="icon" class="icon" />
     <span class="label">{{ label }}</span>
   </div>
 </template>
 <script setup lang="ts">
-import { IconPark } from '@/plugins/icon'
 defineProps<{
   icon: string
   label: string

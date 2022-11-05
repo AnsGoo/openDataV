@@ -12,7 +12,7 @@ import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
 import ComponentItem from './ComponentItem.vue'
 import type { GroupType } from '@/enum'
-import { IconPark } from '@/plugins/icon'
+import { XIcon } from '@/plugins/xicon'
 import type { BaseComponent } from '@/resource/models'
 
 const menuOptions = computed<MenuOption[]>(() => {
@@ -35,7 +35,7 @@ const menuOptions = computed<MenuOption[]>(() => {
       label: () => item.name,
       key: item.key,
       icon: () =>
-        h(IconPark, {
+        h(XIcon, {
           name: `${item.icon}`
         }),
       children: groups[item.key]?.map((el) => {

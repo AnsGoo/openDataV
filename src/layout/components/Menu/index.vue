@@ -18,7 +18,7 @@ import type { MenuType } from '@/router'
 import { routeView } from '@/router'
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
-import { IconPark } from '@/plugins/icon'
+import { XIcon } from '@/plugins/xicon'
 
 defineProps<{
   collapsed: boolean
@@ -71,7 +71,7 @@ function renderLink(name: string, title: string) {
 
 function renderIcon(icon: string) {
   return () =>
-    h(IconPark, {
+    h(XIcon, {
       name: icon
     })
 }

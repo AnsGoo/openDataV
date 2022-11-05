@@ -25,7 +25,7 @@
               <template #trigger>
                 <n-button quaternary @click="handleEdit(item)">
                   <template #icon>
-                    <icon-park name="editor" />
+                    <x-icon name="edit" />
                   </template>
                 </n-button>
               </template>
@@ -39,7 +39,7 @@
             >
               <n-button quaternary>
                 <template #icon>
-                  <icon-park name="setting" />
+                  <x-icon name="setting" />
                 </template>
               </n-button>
             </n-dropdown>
@@ -57,7 +57,7 @@ import { onMounted, ref, h } from 'vue'
 import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
 import { message } from '@/utils/message'
-import { IconPark } from '@/plugins/icon'
+import { XIcon } from '@/plugins/xicon'
 import type { DropdownOption } from 'naive-ui'
 import { NCard, NEllipsis, NTooltip, NDropdown, NButton } from 'naive-ui'
 
@@ -68,12 +68,12 @@ const options: DropdownOption[] = [
   {
     key: 'preview',
     label: '预览',
-    icon: renderIcon('preview-open')
+    icon: renderIcon('previewOpen')
   },
   {
     key: 'delete',
     label: '删除',
-    icon: renderIcon('delete-one')
+    icon: renderIcon('delete')
   }
 ]
 
@@ -83,7 +83,7 @@ onMounted(async () => {
 
 function renderIcon(icon: string) {
   return () =>
-    h(IconPark, {
+    h(XIcon, {
       name: icon
     })
 }
