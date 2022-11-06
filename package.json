@@ -76,6 +76,7 @@
     "singleQuote": true,
     "trailingComma": "none",
     "bracketSpacing": true,
-    "semi": false
+    "semi": false,
+    "endOfLine": "lf"
   }
 }
