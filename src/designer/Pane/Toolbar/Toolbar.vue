@@ -1,6 +1,6 @@
 <template>
   <ToolBar :bars="toolBars">
-    <div class=".tool-bar-title">{{ basicStore.name }}</div>
+    <div class="tool-bar-title">{{ basicStore.name }}</div>
   </ToolBar>
 </template>
 
@@ -107,9 +107,6 @@ const toolBars: ToolBarItemType[] = [
 
 <style scoped lang="less">
 .tool-bar-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 20px;
   font-weight: 400;
 }

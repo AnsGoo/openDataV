@@ -10,7 +10,7 @@
         :icon="item.icon"
       />
     </div>
-    <div class="tool-bar-midle"><slot></slot></div>
+    <div class="tool-bar-middle"><slot></slot></div>
     <div class="tool-bar-item">
       <ToolBarItem
         v-for="(item, index) in rightToolBars"
