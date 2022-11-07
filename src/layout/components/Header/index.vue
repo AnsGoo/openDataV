@@ -7,7 +7,7 @@
         class="ml-1 layout-header-trigger layout-header-trigger-min"
         @click="() => emits('update:collapsed', !collapsed)"
       >
-        <icon-park :name="!collapsed ? 'indent-left' : 'indent-right'" :color="iconColor" />
+        <x-icon :name="!collapsed ? 'expandLeft' : 'expandRight'" :color="iconColor" />
       </div>
       <!-- 刷新 -->
       <div
@@ -15,7 +15,7 @@
         class="mr-1 layout-header-trigger layout-header-trigger-min"
         @click="reloadPage"
       >
-        <icon-park name="refresh" :color="iconColor" />
+        <x-icon name="refresh" :color="iconColor" />
       </div>
       <!-- 面包屑 -->
       <n-breadcrumb v-if="projectStore.crumbsSetting.show">
@@ -42,15 +42,16 @@
       <div class="layout-header-trigger layout-header-trigger-min">
         <n-tooltip placement="bottom">
           <template #trigger>
-            <icon-park :name="fullscreenIcon" :color="iconColor" @click="toggleFullScreen" />
+            <x-icon :name="fullscreenIcon" :color="iconColor" @click="toggleFullScreen" />
           </template>
           <span>全屏</span>
         </n-tooltip>
       </div>
+
       <div class="layout-header-trigger layout-header-trigger-min">
         <n-tooltip placement="bottom">
           <template #trigger>
-            <icon-park :name="themeIcon" :color="iconColor" @click="toggleTheme" />
+            <x-icon :name="themeIcon" :color="iconColor" @click="toggleTheme" />
           </template>
           <span>主题</span>
         </n-tooltip>
@@ -62,17 +63,25 @@
             <n-avatar round>
               {{ username }}
               <template #icon>
-                <icon-park name="user" :color="iconColor" />
+                <x-icon name="user" :color="iconColor" />
               </template>
             </n-avatar>
           </div>
         </n-dropdown>
       </div>
+      <div class="layout-header-trigger layout-header-trigger-min">
+        <n-tooltip placement="bottom">
+          <template #trigger>
+            <x-icon name="github" :color="iconColor" @click="toGithub" />
+          </template>
+          <span>Github</span>
+        </n-tooltip>
+      </div>
       <!--设置-->
       <div class="layout-header-trigger layout-header-trigger-min" @click="openSetting">
         <n-tooltip placement="bottom-end">
           <template #trigger>
-            <icon-park name="setting" :color="iconColor" />
+            <x-icon name="setting" :color="iconColor" />
           </template>
           <span>项目配置</span>
         </n-tooltip>
@@ -106,8 +115,8 @@ const projectStore = useProjectSettingStoreWithOut()
 const username = userStore?.userName || ''
 
 const drawerSetting = ref()
-const fullscreenIcon = ref<string>('full-screen-one')
-const themeIcon = ref<string>('sun-one')
+const fullscreenIcon = ref<string>('fullScreen')
+const themeIcon = ref<string>('sun')
 
 const router = useRouter()
 const route = useRoute()
@@ -175,11 +184,15 @@ const toggleFullscreenIcon = () => {
   fullscreenIcon.value = document.fullscreenElement ? 'off-screen-one' : 'full-screen-one'
 }
 
+const toGithub = () => {
+  window.open('https://github.com/AnsGoo/openDataV', '_blank')
+}
+
 // 切换主题
 const toggleTheme = () => {
   projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
   projectStore.setDarkTheme(!projectStore.darkTheme)
-  themeIcon.value = projectStore.darkTheme ? 'sun-one' : 'moon'
+  themeIcon.value = projectStore.darkTheme ? 'sun' : 'moon'
 }
 
 // 监听全屏切换事件

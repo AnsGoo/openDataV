@@ -58,7 +58,7 @@ const basicRoutes = [
     component: Layout,
     meta: {
       title: '布局界面',
-      icon: 'page-template'
+      icon: 'template'
     },
     children: [
       {

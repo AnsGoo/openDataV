@@ -2,7 +2,7 @@
   <div v-memo="menus" class="components">
     <n-ul v-for="item in menus" :key="item.key">
       <div class="group-label group-item" @click="goTo(item.key)">
-        <IconPark :name="item.icon" size="20" />
+        <x-icon :name="item.icon" size="20" />
         <span> {{ item.label }}</span>
       </div>
       <n-li v-for="child in item.children || []" :key="child.key" @click="goTo(child.key)">
@@ -14,7 +14,6 @@
 
 <script setup lang="ts">
 import { NUl, NLi } from 'naive-ui'
-import { IconPark } from '@/plugins/icon'
 import type { MenuItem } from './type'
 import { useRouter } from 'vue-router'
 

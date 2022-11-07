@@ -29,6 +29,14 @@ const toolBars: ToolBarItemType[] = [
     location: 'left'
   },
   {
+    label: 'GitHub',
+    action: () => {
+      window.open('https://github.com/AnsGoo/openDataV', '_blank')
+    },
+    icon: 'github',
+    location: 'right'
+  },
+  {
     label: '主题',
     action: toggleTheme,
     icon: () => h(ThemeIcon),

@@ -46,7 +46,7 @@ const toolBars: ToolBarItemType[] = [
   {
     label: '保存',
     action: () => showSaveCard(route.params.index as string),
-    icon: 'save-one',
+    icon: 'save',
     location: 'left'
   },
   {
@@ -55,7 +55,7 @@ const toolBars: ToolBarItemType[] = [
       const { href } = router.resolve('/preview')
       window.open(href, '_blank')
     },
-    icon: 'computer',
+    icon: 'preview',
     location: 'left'
   },
   {
@@ -73,13 +73,13 @@ const toolBars: ToolBarItemType[] = [
   {
     label: '导出',
     action: () => exportCanvas((route.params.index as string) || ''),
-    icon: 'download-one',
+    icon: 'download',
     location: 'left'
   },
   {
     label: '导入',
     action: importCanvas,
-    icon: 'upload-one',
+    icon: 'upload',
     location: 'left'
   },
   {
@@ -90,13 +90,13 @@ const toolBars: ToolBarItemType[] = [
         el.requestFullscreen()
       }
     },
-    icon: 'full-screen',
+    icon: 'fullScreen',
     location: 'left'
   },
   {
     label: '坐标',
     action: setShowEm,
-    icon: 'cones',
+    icon: 'axis',
     location: 'left'
   },
   {

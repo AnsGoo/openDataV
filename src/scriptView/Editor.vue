@@ -10,8 +10,8 @@
     <template #tool-bar>
       <div>
         <div class="buttons">
-          <icon-park class="item button" name="back" @click="handleUndo" />
-          <icon-park class="item button" name="next" @click="handleRedo" />
+          <x-icon class="item button" name="back" @click="handleUndo" />
+          <x-icon class="item button" name="next" @click="handleRedo" />
         </div>
       </div>
     </template>
