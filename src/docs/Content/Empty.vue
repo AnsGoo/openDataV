@@ -2,7 +2,7 @@
   <n-result
     status="404"
     title="文档正在编写中..."
-    description="star一下吧，需要鼓励"
+    description="star一下，来为OpenDataV加速吧"
     style="height: 100%"
   >
     <template #icon>
