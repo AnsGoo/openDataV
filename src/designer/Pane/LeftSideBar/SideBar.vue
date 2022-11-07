@@ -14,14 +14,14 @@
   >
     <n-tab-pane name="components" display-directive="show:lazy">
       <template #tab>
-        <IconPark name="components" />
+        <x-icon name="components" />
         <span>组件</span>
       </template>
       <ComponentList />
     </n-tab-pane>
     <n-tab-pane name="layer" display-directive="show:lazy">
       <template #tab>
-        <IconPark name="layers" />
+        <x-icon name="layers" />
         <span>图层</span>
       </template>
       <Layer />
@@ -38,13 +38,13 @@
   >
     <n-tab-pane v-if="activeKey === 'components'" name="components" display-directive="show:lazy">
       <template #tab>
-        <IconPark name="components" @click="switchTab('layer')" />
+        <x-icon name="components" @click="switchTab('layer')" />
       </template>
       <ComponentList />
     </n-tab-pane>
     <n-tab-pane v-else-if="activeKey === 'layer'" name="layer" display-directive="show:lazy">
       <template #tab>
-        <IconPark name="layers" @click="switchTab('components')" />
+        <x-icon name="layers" @click="switchTab('components')" />
       </template>
       <Layer />
     </n-tab-pane>

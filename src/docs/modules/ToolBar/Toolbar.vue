@@ -50,8 +50,10 @@ const toolBars: ToolBarItemType[] = [
   ...leftBars,
   {
     label: 'GitHub',
-    action: toggleTheme,
-    icon: 'doc-detail',
+    action: () => {
+      window.open('https://github.com/AnsGoo/openDataV', '_blank')
+    },
+    icon: 'github',
     location: 'right'
   },
   {

@@ -12,7 +12,7 @@ import { NButton, NTooltip, NDivider } from 'naive-ui'
 import type { VNode, ComponentOptions } from 'vue'
 import { computed, h } from 'vue'
 import type { iconNode, ToolBarItemType } from './type'
-import { IconPark } from '@/plugins/icon'
+import { XIcon } from '@/plugins/xicon'
 const props = withDefaults(
   defineProps<{
     label: string
@@ -33,9 +33,9 @@ const props = withDefaults(
 
 const IconComponent = computed<ComponentOptions>(() =>
   typeof props.icon === 'string'
-    ? h(IconPark, {
+    ? h(XIcon, {
         name: props.icon,
-        size: '24'
+        size: 24
       })
     : (props.icon as iconNode)()
 )

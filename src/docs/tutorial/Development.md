@@ -33,7 +33,7 @@
 > - `config`：组件配置项对象
 > - `docs`：组件说明文档
 
-## 组件名：
+## 组件名
 
 组件名必须保证全局唯一，因为组件会被挂载到`Vue3`实例对象上
 
@@ -200,7 +200,6 @@ StaticTextType {
 
 ## 组件可用Form类型
 
-### Form分类
 本平台已经实现了常用的Form类型，例如：
 
 > `TEXT`: Input框
@@ -223,7 +222,7 @@ StaticTextType {
 
 > `CUSTOM`: 自定义Form
 
-### Form公共属性
+**Form公共属性**
 
 所有的Form 都有如下属性，其次每一种Form类型可能拥有自己独有的属性
 
@@ -235,11 +234,11 @@ StaticTextType {
 |defaultValue|默认值| 任意类型|
 |options|自有配置项| 任意类型|
 
-### TEXT Form属性
+1. TEXT Form属性
 
 无专有属性
 
-### NUMBER Form属性
+2. NUMBER Form属性
 
 |属性名|含义|说明|
 |----|---|---|
@@ -247,25 +246,25 @@ StaticTextType {
 |max|最大值| 数字型|
 |step|步长| 数字型|
 
-### SELECT Form属性
+3. SELECT Form属性
 
 |属性名|含义|说明|
 |----|---|---|
 |options|选项列表| `Array<{value:any, label:string}>`|
 
-### SWITCH Form属性
+4. SWITCH Form属性
 
 |属性名|含义|说明|
 |----|---|---|
 |options|选项列表| `Array<{value:any, label:string}>`|
 
-### RADIO Form属性
+5. RADIO Form属性
 
 |属性名|含义|说明|
 |----|---|---|
 |options|选项列表| `Array<{value:any, label:string}>`|
 
-### ARRAY Form 属性
+6. ARRAY Form 属性
 
 |属性名|含义|说明|
 |----|---|---|
@@ -275,14 +274,14 @@ StaticTextType {
 |minItem|最小数量| 数字型|
 
 
-### CUSTOM Form 属性
+7. CUSTOM Form 属性
 
 |属性名|含义|说明|
 |----|---|---|
 |componentType|组件| Form组件|
 |args|组件参数|任何类型|
 
-## 自定义Form类型
+8. 自定义Form类型
 
 我们自定义Form类型，自定义Form组件需要实现属性`value`和`update:value`的`emit`方法,具体详见本平台`FONT_STYLE`或者`BACKGROUND`等平台定制Form组件
 
@@ -426,13 +425,13 @@ useData(props.component, dataChange)
 待实现
 
 
-## 监听组件尺寸
+# 监听组件尺寸
 
 不管是在`画布`中`拉伸`组件还是通过`属性栏`的`样式`里面的`位置大小`属性进行配置，都会引起组件大小变动，可以通过`v-resize`指令来监听组件大小的更改，具体详见`常见指令`章节
 
 
 
-## 编辑器模式
+# 编辑器模式
 
 1. 模式分类
 
@@ -465,7 +464,7 @@ basicStore.isEditMode
 
 ```
 
-## 常用指令
+# 常用指令
 
 `v-resize` 组件缩放
 
@@ -481,6 +480,51 @@ const resizeHandler = (entry: ResizeObserverEntry) => {
   doSomething()
 }
 ```
+
+# 组件文档
+
+本项目主体文档采用`Markdown`编写，支持在Markdown中渲染Vue组件，为了方便文档书写，我们提供了一个工具组件`RenderComponent`,支持渲染任意组件，并提供`palyground`
+
+```vue
+<RenderComponent
+  :config="StaticTextComponent"
+  :component="StaticText"
+  :prop-value="{
+    base: {
+      text: '我们一起建设OpenDataV吧',
+      type: 'text'
+    }
+}"
+  :style="{
+  color: '#d03050',
+  fontSize: 40,
+  fontWeight: 800,
+  width: 550,
+  height: 100
+}
+"
+  title="静态文本"
+  mode="debug"
+/>
+```
+
+> - `mode`: 模式，可选项`debug`|`view`, 在`debug`下提供了`playground`功能
+> - `component`: 组件模板
+> - `config`:组件配置项类
+> - `propValue`:组件属性初始化配置项
+> - `style`:组件样式初始化配置项
+
+
+大家在撰写组件文档时需要有如下内容
+
+**1. 属性或者样式的解释**
+
+**2. 效果示例**
+
+**3. 可交互的`palyground`**
+
+
+
 
 
 

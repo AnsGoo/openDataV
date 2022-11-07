@@ -78,7 +78,7 @@ const basicRoutes = [
         redirect: '/docs/quick-satrt/intro',
         meta: {
           title: '快速开始',
-          icon: 'QuickStart',
+          icon: 'intro',
           ignoreAuth: true,
           hideInMenu: true
         },
@@ -89,7 +89,7 @@ const basicRoutes = [
             component: () => import('@/docs/tutorial/Home.md'),
             meta: {
               title: '介绍',
-              icon: 'helpcenter',
+              icon: 'intro',
               ignoreAuth: true,
               hideInMenu: true
             }
@@ -100,7 +100,7 @@ const basicRoutes = [
             component: () => import('@/docs/tutorial/QuickStart.md'),
             meta: {
               title: '快速开始',
-              icon: 'helpcenter',
+              icon: 'course',
               ignoreAuth: true,
               hideInMenu: true
             }
@@ -111,7 +111,7 @@ const basicRoutes = [
             component: () => import('@/docs/tutorial/Development.md'),
             meta: {
               title: '组件开发',
-              icon: 'helpcenter',
+              icon: 'development',
               ignoreAuth: true,
               hideInMenu: true
             }
@@ -122,7 +122,7 @@ const basicRoutes = [
             component: () => import('@/docs/tutorial/CommonIssues.md'),
             meta: {
               title: '常见问题',
-              icon: 'helpcenter',
+              icon: 'question',
               ignoreAuth: true,
               hideInMenu: true
             }
@@ -133,7 +133,7 @@ const basicRoutes = [
             component: () => import('@/docs/tutorial/License.md'),
             meta: {
               title: '版权声明',
-              icon: 'helpcenter',
+              icon: 'license',
               ignoreAuth: true,
               hideInMenu: true
             }

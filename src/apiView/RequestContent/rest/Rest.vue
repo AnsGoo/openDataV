@@ -12,7 +12,7 @@
       />
       <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
         <template #prefix>
-          <IconPark name="api" />
+          <x-icon name="api" />
         </template>
       </n-input>
       <n-space v-if="mode === 'debug'">

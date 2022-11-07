@@ -4,29 +4,13 @@
       {{ title }}
     </n-divider>
     <n-divider title-placement="right" style="width: 50%">
-      <icon-park name="add-three" color="#18A058" class="action" @click="addParams()" />
-      <icon-park name="clear" color="#F76560" class="action" @click="clearParams()" />
-      <icon-park name="editor" color="#2080F0" class="action" @click="editParams()" />
+      <x-icon name="add" color="#18A058" class="action" @click="addParams()" />
+      <x-icon name="clear" color="#F76560" class="action" @click="clearParams()" />
+      <x-icon name="edit" color="#2080F0" class="action" @click="editParams()" />
     </n-divider>
   </div>
   <div v-for="(item, index) in formData" :key="item.id">
     <n-input-group class="param-item">
-      <!-- <n-select
-        v-if="options && options.length > 0"
-        style="width: 50%"
-        size="small"
-        filterable
-        tag
-        :modelValue="formData[index]['key']"
-        @update:value="(value) => changed(index, 'key', value)"
-        :allow-input="noSideSpace"
-        :placeholder="`参数${index + 1}`"
-        :options="
-          options.map((el) => {
-            return { label: el, value: el }
-          }) || []
-        "
-      /> -->
       <n-input
         style="width: 50%"
         size="small"
@@ -48,15 +32,15 @@
       />
       <n-button size="small" @click="disableParams(index)">
         <template #icon>
-          <icon-park
-            :name="item.disable ? 'close-one' : 'check-one'"
+          <x-icon
+            :name="item.disable ? 'close' : 'check'"
             :color="item.disable ? '#333639' : '#2080F0'"
           />
         </template>
       </n-button>
       <n-button size="small" @click="removeParams(index)">
         <template #icon>
-          <icon-park name="delete-one" color="#F76560" />
+          <x-icon name="delete" color="#F76560" />
         </template>
       </n-button>
     </n-input-group>
