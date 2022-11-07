@@ -90,6 +90,20 @@ const restore = async (index: string) => {
 onUnmounted(() => {
   basicStore.clearCanvas()
 })
+
+// region 刷新时与编辑后关闭标签时提示
+function confirmBeforeunload(e: BeforeUnloadEvent) {
+  e.preventDefault()
+  e.returnValue = ''
+  return ''
+}
+onMounted(() => {
+  window.addEventListener('beforeunload', confirmBeforeunload)
+})
+onUnmounted(() => {
+  window.removeEventListener('beforeunload', confirmBeforeunload)
+})
+// endregion
 </script>
 
 <style scoped lang="less">
