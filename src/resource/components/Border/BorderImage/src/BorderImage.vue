@@ -15,7 +15,9 @@ const { propValue } = useProp<BorderImage>(props.component)
 
 const width = ref<number>(150)
 const height = ref<number>(150)
-const borderImageUrl = computed(() => `url(${propValue.base.borderSource || 'dev/border.png'})`)
+const borderImageUrl = computed(
+  () => `url(${propValue.base.borderSource || '/images/border-image.png'})`
+)
 const borderImageSlice = computed(() => propValue.base.borderImageSlice.join(' '))
 const borderWidth = computed(() => propValue.base.borderWidth.join(' '))
 const backgroundColor = computed(() => propValue.base.backgroundColor || 'transparent')
