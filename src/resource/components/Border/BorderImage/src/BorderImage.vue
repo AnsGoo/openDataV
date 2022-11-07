@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { useProp } from '@/resource/hooks'
-import { computed, ref, watch } from 'vue'
+import { computed, ref } from 'vue'
 import type BorderImageComponent from '../config'
 import type { BorderImage } from '../type'
 const props = defineProps<{
@@ -21,9 +21,6 @@ const borderImageUrl = computed(
 const borderImageSlice = computed(() => propValue.base.borderImageSlice.join(' '))
 const borderWidth = computed(() => propValue.base.borderWidth.join(' '))
 const backgroundColor = computed(() => propValue.base.backgroundColor || 'transparent')
-watch(borderWidth, (n) => {
-  console.log(n)
-})
 
 // 监听窗口大小变化
 
