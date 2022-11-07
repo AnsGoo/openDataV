@@ -1,4 +1,3 @@
-import ReadMe from '@/docs/tutorial/Home.md'
 import { NothingLayout } from '@/layout'
 import { ComponentGroupList } from '@/enum'
 import type { GroupType } from '@/enum'
@@ -150,15 +149,6 @@ const basicRoutes = [
         },
         redirect: '/docs/component/text/static-text',
         children: [...getComponents()]
-      },
-      {
-        path: '/docs/data',
-        name: 'Data',
-        component: ReadMe,
-        meta: {
-          title: '数据',
-          icon: 'data'
-        }
       }
     ]
   }

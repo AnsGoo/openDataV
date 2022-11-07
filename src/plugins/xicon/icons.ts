@@ -47,8 +47,6 @@ import {
   ArrowStepOver20Regular,
   FullScreenMaximize20Regular,
   Settings20Regular,
-  PanelRightExpand20Regular,
-  PanelLeftExpand20Regular,
   DocumentOnePage20Regular,
   Games20Regular,
   BorderNone20Regular,
