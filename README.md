@@ -10,9 +10,12 @@
   🎃OpenDataV 是一个纯前端的`拖拽式`、`可视化`、`低代码`数据可视化🌈开发平台，你可以用它自由的拼接成各种✨炫酷的大屏，同时支持用户方便的开发自己的组件并接入平台。
 
 ## 体验
-🧙国外：[http://datav.byteportrait.com/](http://datav.byteportrait.com/)(纯前端)
+🧙国外：[http://datav.byteportrait.com/](http://datav.byteportrait.com/)
 
-🧙国内：[http://small_bud_star.gitee.io/opendatav](http://small_bud_star.gitee.io/opendatav)(已对接后端)
+🧙国内：[http://small_bud_star.gitee.io/opendatav](http://small_bud_star.gitee.io/opendatav)
+
+🧙国内：[http://opendatav.xingxingzaixian.fun/](http://opendatav.xingxingzaixian.fun/) (已对接后端)
+
 
 ## 源码地址：
 
@@ -82,7 +85,7 @@
 
 ### 🎮启动项目
 
-```shell
+```Bash
 
 # 安装依赖
 pnpm install
@@ -115,7 +118,7 @@ git commit 信息请按照如下规范进行书写
 
 **技术交流，请加微信群**
 
-![weixinqun](./screenshot/wechat.png)
+<img src="./public/wechat.png" style="width:430px">
 
 **更新动态请关注公众号**
 

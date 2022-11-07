@@ -26,7 +26,7 @@ const basicRoutes = [
         component: () => import('@/pages/Scripts.vue'),
         meta: {
           title: '脚本管理',
-          icon: 'code-one'
+          icon: 'script'
         }
       }
     ]

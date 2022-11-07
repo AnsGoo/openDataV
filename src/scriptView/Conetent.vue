@@ -3,7 +3,7 @@
     <div class="static-data">
       <n-input v-model:value="formData.title" class="title">
         <template #prefix>
-          <IconPark name="code" />
+          <x-icon name="code" />
         </template>
       </n-input>
       <n-space>

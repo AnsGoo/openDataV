@@ -33,6 +33,7 @@ class BorderImageComponent extends BaseComponent {
           label: '边框图片切片',
           type: FormType.ARRAY,
           componentOptions: {
+            componentType: FormType.NUMBER,
             type: 'dynamic',
             minItem: 1,
             maxItem: 4,

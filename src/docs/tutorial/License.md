@@ -1,3 +1,24 @@
+
+
+[toc]
+
+## 开源合作
+
+
+本项目使用`Apache-2.0`开源协议，二次开发及其商用请遵守开源协议即可，若想采用商用授权请联系`OpenDataV`的作者，可邮件 **haiven_123@163.com**
+
+## 免责声明
+
+任何企业或者个人使用`OpenDataV`原始项目或者二次开发，对自己或者他人造成的任何形式的损失或者危害，`OpenDataV`开发者不承担任何法律风险
+
+
+## 权益声明
+
+本项目使用`Apache-2.0`开源协议，二次开发及其商用请遵守开源协议即可，如若擅自违反开源协议产生的法律纠纷，`OpenDataV`将会追究到底
+
+
+
+```license
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/
@@ -199,3 +220,5 @@
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
+
+```

@@ -14,21 +14,21 @@
     >
       <n-tab-pane name="style" display-directive="show:lazy">
         <template #tab>
-          <IconPark name="text-style" />
+          <x-icon name="textStyle" />
           <span v-show="!iscollapsed">样式</span>
         </template>
         <StyleList :curComponent="curComponent!" />
       </n-tab-pane>
       <n-tab-pane name="attr" display-directive="show:lazy">
         <template #tab>
-          <IconPark name="internal-data" />
+          <x-icon name="attr" />
           <span v-show="!iscollapsed">属性</span>
         </template>
         <AttrList :curComponent="curComponent!" />
       </n-tab-pane>
       <n-tab-pane name="data" display-directive="show:lazy">
         <template #tab>
-          <IconPark name="data" />
+          <x-icon name="data" />
           <span v-show="!iscollapsed">数据</span>
         </template>
         <DataList :curComponent="curComponent!" />
@@ -37,7 +37,7 @@
     <n-tabs v-else type="line" animated justify-content="center">
       <n-tab-pane name="canvas" display-directive="show:lazy">
         <template #tab>
-          <IconPark name="page" />
+          <x-icon name="page" />
           <span v-show="!iscollapsed">画布</span>
         </template>
         <Canvas />
@@ -58,7 +58,7 @@ import Canvas from './Canvas.vue'
 import StyleList from './StyleModule' // 右侧属性列表
 import AttrList from './AttrModule'
 import DataList from './DataModule'
-import { IconPark } from '@/plugins/icon'
+import { XIcon } from '@/plugins/xicon'
 
 const activeKey = ref<string>('attr')
 
@@ -82,7 +82,7 @@ const menuOptions = computed<MenuOption[]>(() => {
         label: '样式',
         key: '4',
         icon: () =>
-          h(IconPark, {
+          h(XIcon, {
             name: 'text-style',
             onClick: () => collapsedTabPane('style')
           })
@@ -91,8 +91,8 @@ const menuOptions = computed<MenuOption[]>(() => {
         label: '属性',
         key: '2',
         icon: () =>
-          h(IconPark, {
-            name: 'internal-data',
+          h(XIcon, {
+            name: 'attr',
             onClick: () => collapsedTabPane('attr')
           })
       },
@@ -100,7 +100,7 @@ const menuOptions = computed<MenuOption[]>(() => {
         label: '数据',
         key: '3',
         icon: () =>
-          h(IconPark, {
+          h(XIcon, {
             name: 'data',
             onClick: () => collapsedTabPane('data')
           })
@@ -112,7 +112,7 @@ const menuOptions = computed<MenuOption[]>(() => {
         label: '画布',
         key: '1',
         icon: () =>
-          h(IconPark, {
+          h(XIcon, {
             name: 'page'
           })
       }

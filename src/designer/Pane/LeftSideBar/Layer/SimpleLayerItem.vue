@@ -1,5 +1,5 @@
 <template>
-  <IconPark
+  <x-icon
     v-contextmenu.stop="contextmenus"
     draggable="true"
     :name="name"

@@ -25,7 +25,7 @@ const apiTypes = [
   },
   {
     label: 'REST',
-    icon: 'api',
+    icon: 'http',
     key: 'REST'
   },
   {

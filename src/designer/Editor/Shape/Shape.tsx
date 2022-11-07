@@ -10,8 +10,8 @@ import { useCopyStoreWithOut } from '@/store/modules/copy'
 import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 import type { BaseComponent } from '@/resource/models'
-import { IconPark } from '@/plugins/icon'
 import styles from './shape.module.less'
+import { XIcon } from '@/plugins/xicon'
 
 export default defineComponent({
   props: {
@@ -560,9 +560,9 @@ export default defineComponent({
           <span class={styles.errorInfo} v-show={isError.value}>
             {errorInfo.value}
           </span>
-          <IconPark
+          <XIcon
             class={styles.rotation}
-            name="one-third-rotation"
+            name="rotation"
             v-show={isActive.value}
             onMousedown={handleRotate}
           />

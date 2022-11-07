@@ -46,8 +46,7 @@ const scrollbarStyle = computed(() => {
   }
 })
 
-const editorWindowResizeHandler: ResizeObserverCallback = (entries: ResizeObserverEntry[]) => {
-  const entry = entries[0]
+const editorWindowResizeHandler = (entry: ResizeObserverEntry) => {
   const { width, height } = entry.contentRect
   windowWidth.value = width
   windowHeight.value = height

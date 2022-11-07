@@ -20,7 +20,7 @@
           />
           <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
             <template #prefix>
-              <IconPark name="code-one" />
+              <x-icon name="code" />
             </template>
           </n-input>
           <n-space v-if="mode === 'debug'">
@@ -31,9 +31,9 @@
           </n-space>
         </div>
         <div class="buttons">
-          <icon-park class="item button" name="save-one" @click="handleSubmit" />
-          <icon-park class="item button" name="back" @click="handleUndo" />
-          <icon-park class="item button" name="next" @click="handleRedo" />
+          <x-icon class="item button" name="save" @click="handleSubmit" />
+          <x-icon class="item button" name="back" @click="handleUndo" />
+          <x-icon class="item button" name="next" @click="handleRedo" />
         </div>
       </div>
     </template>

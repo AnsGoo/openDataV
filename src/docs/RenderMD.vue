@@ -26,12 +26,22 @@ const textColor = computed<string>(() => {
     position: fixed;
     right: 0px;
     width: max(15%, 250px);
+    li {
+      list-style: none;
+    }
   }
   body {
     scroll-behavior: smooth;
   }
-  li {
-    display: block;
+  ul {
+    li {
+      list-style-type: disc;
+    }
+  }
+  ol {
+    li {
+      list-style: decimal;
+    }
   }
   padding: 10px 30px;
   background-color: v-bind(backgroundColor) !important;
