@@ -8,11 +8,9 @@ interface CustomResizeObserverCallback {
 
 const resizeDOM = (el: HTMLElement, binding: DirectiveBinding) => {
   const resizeHandler: CustomResizeObserverCallback = binding.value
-  const resizeObserver = new ResizeObserver(
-    (entries: ResizeObserverEntry[]) => {
-      entries.length > 0 && resizeHandler(entries[0])
-    }
-  )
+  const resizeObserver = new ResizeObserver((entries: ResizeObserverEntry[]) => {
+    entries.length > 0 && resizeHandler(entries[0])
+  })
   resizeObserver.observe(el)
   return resizeObserver
 }
