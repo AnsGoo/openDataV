@@ -116,6 +116,17 @@ const basicRoutes = [
             }
           },
           {
+            path: 'data',
+            name: 'Data',
+            component: () => import('@/docs/tutorial/Data.md'),
+            meta: {
+              title: '数据集成',
+              icon: 'data',
+              ignoreAuth: true,
+              hideInMenu: true
+            }
+          },
+          {
             path: 'common-issues',
             name: 'CommonIssues',
             component: () => import('@/docs/tutorial/CommonIssues.md'),
