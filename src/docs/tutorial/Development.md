@@ -420,7 +420,7 @@ useData(props.component, dataChange)
 
 `useData`钩子的第二个参数是一个数据处理回调，入参是获取到的数据，用户可以在回调中根据数据处理组件的渲染
 
-### `GLOBAL`
+### GLOBAL
 
 待实现
 
