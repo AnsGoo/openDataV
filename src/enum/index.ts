@@ -97,8 +97,8 @@ export const ComponentGroupList: GroupType[] = [
   new GroupType('温度计', ComponentGroup.THERMOMETER, 'thermometer'),
   new GroupType('导航', ComponentGroup.NAVIFATION, 'navigation'),
   new GroupType('进度图', ComponentGroup.PROGERSS, 'progress'),
-  new GroupType('其他', ComponentGroup.OTHER, 'other'),
-  new GroupType('容器', ComponentGroup.CONTAINER, 'container')
+  new GroupType('容器', ComponentGroup.CONTAINER, 'container'),
+  new GroupType('其他', ComponentGroup.OTHER, 'other')
 ]
 
 export enum FormType {

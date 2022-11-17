@@ -46,8 +46,8 @@ const props = defineProps<{
   component: BaseComponent
 }>()
 
-const editMode = computed<boolean>(() => basicStore.isEditMode)
 const basicStore = useBasicStoreWithOut()
+const editMode = computed<boolean>(() => basicStore.isEditMode)
 
 const curComponent = computed(() => basicStore.curComponent)
 const isActive = computed(() => {

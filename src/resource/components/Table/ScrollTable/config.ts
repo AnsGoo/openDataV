@@ -47,7 +47,8 @@ class ScrollTableComponent extends BaseComponent {
           label: '高度',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 35
+            defaultValue: 35,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {

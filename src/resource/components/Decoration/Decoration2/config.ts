@@ -1,6 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import { h } from 'vue'
 
 export const componentName = 'Decoration2'
 class DecorationComponent extends BaseComponent {
@@ -65,7 +66,8 @@ class DecorationComponent extends BaseComponent {
           label: '字体大小',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 20
+            defaultValue: 20,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {

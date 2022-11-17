@@ -280,7 +280,6 @@ export default defineComponent({
           x: (moveEvent.clientX - editorRectInfo.left) / basicStore.scale,
           y: (moveEvent.clientY - editorRectInfo.top) / basicStore.scale
         }
-
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)
         basicStore.syncComponentLocation({ top, left, width, height }, props.info!.parent, false)
       })

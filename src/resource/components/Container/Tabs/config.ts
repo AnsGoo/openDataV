@@ -1,6 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import { h } from 'vue'
 
 export const componentName = 'Tabs'
 class TabsComponent extends BaseComponent {
@@ -31,22 +32,57 @@ class TabsComponent extends BaseComponent {
           }
         }
       ]
+    },
+    {
+      label: '样式配置',
+      prop: 'style',
+      children: [
+        {
+          prop: 'height',
+          label: '高度',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 45,
+            suffix: () => h('span', {}, 'px')
+          }
+        },
+        {
+          prop: 'color',
+          label: '颜色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#03A6E0CC'
+          }
+        },
+        {
+          prop: 'fontSize',
+          label: '字体大小',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 20,
+            suffix: () => h('span', {}, 'px')
+          }
+        },
+        {
+          prop: 'fontWeight',
+          label: '字体宽度',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 800
+          }
+        },
+        {
+          prop: 'fontFamily',
+          label: '字体',
+          type: FormType.FONT_STYLE,
+          componentOptions: {
+            defaultValue: 'Arial'
+          }
+        }
+      ]
     }
   ]
   _style: PropsType[] = []
-  private _items: Recordable<Array<BaseComponent>> = {}
-  get items(): Recordable<Array<BaseComponent>> {
-    return this._items
-  }
-  setItem(key: string, component: BaseComponent): void {
-    if (!this.items[key]) {
-      this._items[key] = [component]
-    } else {
-      if (this.items[key].findIndex((el) => el.id === component.id) === -1) {
-        this._items[key].push(component)
-      }
-    }
-  }
 }
 
 export default TabsComponent

@@ -2,6 +2,7 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import { DataIntegrationMode } from '@/resource/models/data'
+import { h } from 'vue'
 
 export const componentName = 'BasicPieChart'
 class BasicPieChartComponent extends BaseComponent {
@@ -100,18 +101,20 @@ class BasicPieChartComponent extends BaseComponent {
       children: [
         {
           prop: 'radiusMin',
-          label: '半径下限(%)',
+          label: '半径下限',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 40
+            defaultValue: 40,
+            suffix: () => h('span', {}, '%')
           }
         },
         {
           prop: 'radiusMax',
-          label: '半径上限(%)',
+          label: '半径上限',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 70
+            defaultValue: 70,
+            suffix: () => h('span', {}, '%')
           }
         },
 
