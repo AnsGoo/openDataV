@@ -1,6 +1,12 @@
 <template>
   <div>
-    <n-menu v-if="componentData.length > 0" :options="menuOptions" @update:value="handleSelect" />
+    <n-menu
+      v-if="componentData.length > 0"
+      :options="menuOptions"
+      :root-indent="1"
+      :indent="12"
+      @update:value="handleSelect"
+    />
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item>
         <n-empty description="画布为空" />

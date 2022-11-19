@@ -37,6 +37,8 @@ export default defineComponent({
     }
 
     const deleteComponent = () => {
+      console.log(props.index)
+      console.log(props.info)
       basicStore.removeComponent(props.index!, props.info!.parent)
     }
 

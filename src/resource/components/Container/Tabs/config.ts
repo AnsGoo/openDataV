@@ -22,6 +22,24 @@ class TabsComponent extends BaseComponent {
       prop: 'label',
       children: [
         {
+          prop: 'mode',
+          label: '模式',
+          type: FormType.SELECT,
+          componentOptions: {
+            defaultValue: 'horizontal',
+            options: [
+              {
+                label: '垂直',
+                value: 'vertical'
+              },
+              {
+                label: '水平',
+                value: 'horizontal'
+              }
+            ]
+          }
+        },
+        {
           prop: 'items',
           label: '标签',
           type: FormType.ARRAY,
