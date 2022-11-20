@@ -41,7 +41,7 @@ import { useToolbar } from '@/store/modules/toolbar'
 
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string; show: boolean }>()
-const { changeSavedState } = useToolbar()
+const { needCloseAlert } = useToolbar()
 
 const emit = defineEmits(['update:show'])
 const saveDialogVisible = computed({
@@ -78,10 +78,10 @@ const handleSubmit = async (type: string) => {
   }
 
   if (type === 'update') {
-    // changeSavedState()
     try {
       const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
+        needCloseAlert()
         message.success('修改成功')
       }
     } catch (e) {
@@ -93,6 +93,7 @@ const handleSubmit = async (type: string) => {
     try {
       const result = await savePageApi(layoutData)
       if (result.status === 201) {
+        needCloseAlert()
         message.success('保存成功')
         // // 新增页面成功，则跳转到编辑页
         router.push({
