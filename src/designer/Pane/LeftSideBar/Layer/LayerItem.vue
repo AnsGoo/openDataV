@@ -8,13 +8,13 @@
   >
     <div v-if="component.component === 'Group'" class="layer">
       <span v-show="mode === 'expand'">{{ component.name || '分组' }}</span>
-      <x-icon v-if="component.display" name="previewOpen" size="18" />
-      <x-icon v-else name="previewClose" size="18" />
+      <x-icon v-if="component.display" name="previewOpen" :size="18" />
+      <x-icon v-else name="previewClose" :size="18" />
     </div>
     <div v-else class="layer">
       <span v-show="mode === 'expand'">{{ component.name }}</span>
-      <x-icon v-if="component.display" size="18" name="previewOpen" />
-      <x-icon v-else size="18" name="previewClose" />
+      <x-icon v-if="component.display" :size="18" name="previewOpen" />
+      <x-icon v-else :size="18" name="previewClose" />
     </div>
   </div>
 </template>

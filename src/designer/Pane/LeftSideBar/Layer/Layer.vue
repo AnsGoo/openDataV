@@ -1,6 +1,12 @@
 <template>
   <div>
-    <n-menu v-if="componentData.length > 0" :options="menuOptions" @update:value="handleSelect" />
+    <n-menu
+      v-if="componentData.length > 0"
+      :options="menuOptions"
+      :root-indent="1"
+      :indent="12"
+      @update:value="handleSelect"
+    />
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item>
         <n-empty description="画布为空" />
@@ -19,7 +25,7 @@ import { useEventBus } from '@/bus'
 import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'
 import type { MenuOption } from 'naive-ui'
-import { ComponentGroupList } from '@/enum'
+import { ComponentGroup, ComponentGroupList } from '@/enum'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { cloneDeep } from 'lodash-es'
 import type { BaseComponent } from '@/resource/models'
@@ -64,7 +70,7 @@ const getMenuOptions = (
   for (let i = 0; i < components.length; i++) {
     const item = components[i]
     const currentIndex = calcIndex(i, fatherIndex)
-    if (item.component === 'Group') {
+    if (item.group === ComponentGroup.CONTAINER) {
       const childrenOptions: MenuOption[] = []
       options.push({
         label: () =>
@@ -77,7 +83,7 @@ const getMenuOptions = (
         key: currentIndex,
         icon: () =>
           h(SimpleLayerItem, {
-            name: 'group',
+            name: 'container',
             component: item,
             index: currentIndex,
             contextmenus: () => contextmenus(currentIndex),

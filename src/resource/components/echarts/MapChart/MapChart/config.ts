@@ -2,6 +2,7 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import { DataIntegrationMode } from '@/resource/models/data'
+import { h } from 'vue'
 
 export const componentName = 'MapChart'
 class MapChartComponent extends BaseComponent {
@@ -36,7 +37,8 @@ class MapChartComponent extends BaseComponent {
           label: '字体大小',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 10
+            defaultValue: 10,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {

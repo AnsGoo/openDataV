@@ -2,6 +2,7 @@ import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import { DataIntegrationMode } from '@/resource/models/data'
+import { h } from 'vue'
 
 export const componentName = 'ScrollRankingBoard'
 class RankBoardComponent extends BaseComponent {
@@ -66,7 +67,8 @@ class RankBoardComponent extends BaseComponent {
           label: '边框宽度',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 20
+            defaultValue: 20,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {
@@ -74,7 +76,8 @@ class RankBoardComponent extends BaseComponent {
           label: '圆角',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 10
+            defaultValue: 10,
+            suffix: () => h('span', {}, 'px')
           }
         }
       ]
@@ -96,7 +99,8 @@ class RankBoardComponent extends BaseComponent {
           label: '边框间隔',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 3
+            defaultValue: 3,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {
@@ -104,7 +108,8 @@ class RankBoardComponent extends BaseComponent {
           label: '线条宽度',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 5
+            defaultValue: 5,
+            suffix: () => h('span', {}, 'px')
           }
         }
       ]
@@ -118,7 +123,8 @@ class RankBoardComponent extends BaseComponent {
           label: '字体大小',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 15
+            defaultValue: 15,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {

@@ -9,10 +9,10 @@
             <template #trigger>
               <n-switch v-model:value="currentThemeSettings.darkTheme" class="dark-theme-switch">
                 <template #checked>
-                  <x-icon name="sun" size="14" color="#ffd93b" />
+                  <x-icon name="sun" :size="14" color="#ffd93b" />
                 </template>
                 <template #unchecked>
-                  <x-icon name="moon" size="14" color="#ffd93b" />
+                  <x-icon name="moon" :size="14" color="#ffd93b" />
                 </template>
               </n-switch>
             </template>
@@ -32,7 +32,7 @@
           >
             <x-icon
               v-if="item === currentThemeSettings.appTheme"
-              size="12"
+              :size="12"
               name="check"
               color="#FFF"
             />

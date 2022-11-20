@@ -93,13 +93,21 @@ const toolBars: ToolBarItemType[] = [
   {
     label: '图标',
     action: showIconCard,
-    icon: 'game-ps',
+    icon: 'cube',
     location: 'right'
   },
   {
     label: '主题',
     action: toggleTheme,
     icon: () => h(ThemeIcon),
+    location: 'right'
+  },
+  {
+    label: 'GitHub',
+    action: () => {
+      window.open('https://github.com/AnsGoo/openDataV', '_blank')
+    },
+    icon: 'github',
     location: 'right'
   }
 ]

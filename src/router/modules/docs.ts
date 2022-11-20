@@ -1,4 +1,3 @@
-import ReadMe from '@/docs/tutorial/Home.md'
 import { NothingLayout } from '@/layout'
 import { ComponentGroupList } from '@/enum'
 import type { GroupType } from '@/enum'
@@ -117,6 +116,17 @@ const basicRoutes = [
             }
           },
           {
+            path: 'data',
+            name: 'Data',
+            component: () => import('@/docs/tutorial/Data.md'),
+            meta: {
+              title: '数据集成',
+              icon: 'data',
+              ignoreAuth: true,
+              hideInMenu: true
+            }
+          },
+          {
             path: 'common-issues',
             name: 'CommonIssues',
             component: () => import('@/docs/tutorial/CommonIssues.md'),
@@ -150,15 +160,6 @@ const basicRoutes = [
         },
         redirect: '/docs/component/text/static-text',
         children: [...getComponents()]
-      },
-      {
-        path: '/docs/data',
-        name: 'Data',
-        component: ReadMe,
-        meta: {
-          title: '数据',
-          icon: 'data'
-        }
       }
     ]
   }

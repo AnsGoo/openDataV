@@ -7,7 +7,13 @@
         placeholder="请输入数据"
         @change="handleChange(index)"
       />
-      <XIcon v-if="type === 'dynamic'" name="delete" color="#F76560" @click="handleDelete(index)" />
+      <XIcon
+        v-if="type === 'dynamic'"
+        :size="18"
+        name="delete"
+        color="#F76560"
+        @click="handleDelete(index)"
+      />
     </n-space>
     <n-space v-if="type === 'dynamic'" :wrap="false">
       <n-input
@@ -17,7 +23,7 @@
         placeholder="请输入数据"
         @keypress.enter="handleAdd"
       />
-      <XIcon name="add-three" color="#4CD263" @click="handleAdd" />
+      <XIcon name="add" color="#4CD263" :size="18" @click="handleAdd" />
     </n-space>
   </n-space>
 </template>

@@ -1,6 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import { h } from 'vue'
 
 export const componentName = 'Gauge1'
 class GaugeComponent extends BaseComponent {
@@ -96,7 +97,8 @@ class GaugeComponent extends BaseComponent {
           label: '字体大小',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 40
+            defaultValue: 40,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {
