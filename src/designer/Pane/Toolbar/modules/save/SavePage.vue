@@ -1,14 +1,13 @@
 <template>
   <ConfigProvider>
     <n-modal
-      :show="saveDialogVisible"
+      v-model:show="saveDialogVisible"
       :mask-closable="false"
       preset="card"
       center
       title="保存当前布局"
       style="width: 30%; min-width: 600px"
       size="medium"
-      @update:show="saveDialogVisible = false"
     >
       <n-form :model="form" :rules="rules" @submit.prevent>
         <n-form-item label="页面名称" prop="name">
@@ -29,7 +28,7 @@
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { computed, reactive } from 'vue'
 import { NForm, NInput, NFormItem, NButton, NModal, NSpace } from 'naive-ui'
 import type { FormItemRule } from 'naive-ui'
 import { message } from '@/utils/message'
@@ -38,11 +37,19 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { savePageApi, updatePageApi } from '@/api/pages'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
+import { useToolbar } from '@/store/modules/toolbar'
 
 const basicStore = useBasicStoreWithOut()
-const props = defineProps<{ index?: string }>()
+const props = defineProps<{ index?: string; show: boolean }>()
+const { changeSavedState } = useToolbar()
 
-const saveDialogVisible = ref<boolean>(true)
+const emit = defineEmits(['update:show'])
+const saveDialogVisible = computed({
+  get: () => props.show,
+  set(visible) {
+    emit('update:show', visible)
+  }
+})
 const form = reactive<{
   name: string
   thumbnail: string
@@ -71,6 +78,7 @@ const handleSubmit = async (type: string) => {
   }
 
   if (type === 'update') {
+    // changeSavedState()
     try {
       const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
