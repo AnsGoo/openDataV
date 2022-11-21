@@ -1,13 +1,14 @@
 <template>
   <ConfigProvider>
     <n-modal
-      v-model:show="saveDialogVisible"
+      :show="saveDialogVisible"
       :mask-closable="false"
       preset="card"
       center
       title="保存当前布局"
       style="width: 30%; min-width: 600px"
       size="medium"
+      @update:show="saveDialogVisible = false"
     >
       <n-form :model="form" :rules="rules" @submit.prevent>
         <n-form-item label="页面名称" prop="name">
@@ -28,7 +29,7 @@
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
-import { computed, reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import { NForm, NInput, NFormItem, NButton, NModal, NSpace } from 'naive-ui'
 import type { FormItemRule } from 'naive-ui'
 import { message } from '@/utils/message'
@@ -40,16 +41,10 @@ import router from '@/router'
 import { useToolbar } from '@/store/modules/toolbar'
 
 const basicStore = useBasicStoreWithOut()
-const props = defineProps<{ index?: string; show: boolean }>()
-const { needCloseAlert } = useToolbar()
+const props = defineProps<{ index?: string }>()
+const { changeSavedState } = useToolbar()
 
-const emit = defineEmits(['update:show'])
-const saveDialogVisible = computed({
-  get: () => props.show,
-  set(visible) {
-    emit('update:show', visible)
-  }
-})
+const saveDialogVisible = ref<boolean>(true)
 const form = reactive<{
   name: string
   thumbnail: string

@@ -1,13 +1,11 @@
 <template>
   <ToolBar :bars="toolBars">
     <div class="tool-bar-title">{{ basicStore.name }}</div>
-    <SavePage v-model:show="showDialog" :index="route.params.index" />
-    <IconPage v-model:show="showIconDialog" />
   </ToolBar>
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent, h, ref } from 'vue'
+import { h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import type { ToolBarItemType } from '@/components/ToolBar'
 import {
@@ -19,6 +17,8 @@ import {
   toggleTheme
 } from './modules/actions'
 import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
+import showIconCard from './modules/iconList'
+import showSaveCard from './modules/save'
 
 import LogoView from '@/components/LogoView'
 import { ToolBar } from '@/components/ToolBar'
@@ -27,11 +27,6 @@ const basicStore = useBasicStoreWithOut()
 
 const router = useRouter()
 const route = useRoute()
-
-const SavePage = defineAsyncComponent(() => import('./modules/save/SavePage.vue'))
-const showDialog = ref(false)
-const IconPage = defineAsyncComponent(() => import('./modules/iconList/IconFont.vue'))
-const showIconDialog = ref(false)
 
 const toolBars: ToolBarItemType[] = [
   {
@@ -49,9 +44,7 @@ const toolBars: ToolBarItemType[] = [
   },
   {
     label: '保存',
-    action: () => {
-      showDialog.value = true
-    },
+    action: () => showSaveCard(route.params.index as string),
     icon: 'save'
   },
   {
@@ -99,9 +92,7 @@ const toolBars: ToolBarItemType[] = [
   },
   {
     label: '图标',
-    action: () => {
-      showIconDialog.value = true
-    },
+    action: showIconCard,
     icon: 'cube',
     location: 'right'
   },

@@ -1,13 +1,14 @@
 <template>
   <ConfigProvider>
     <n-modal
-      v-model:show="isShow"
       class="show-card"
+      :show="isShow"
       preset="card"
       :title="`图标数量${iconList.length}`"
       style="width: 50%; max-width: 800px"
       @mask-click="close"
       @close="close"
+      @update:show="isShow = false"
     >
       <ul class="icon-list">
         <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
@@ -19,7 +20,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, useAttrs } from 'vue'
+import { computed, ref } from 'vue'
 import { copyText } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { NModal } from 'naive-ui'
@@ -30,14 +31,7 @@ const iconList = computed<string[]>(() => {
   return iconfontList.glyphs.map((item) => `icon-${item.font_class}`)
 })
 
-const attrs = useAttrs()
-const emit = defineEmits(['update:show'])
-const isShow = computed({
-  get: () => attrs.show,
-  set(visible) {
-    emit('update:show', visible)
-  }
-})
+const isShow = ref<boolean>(true)
 const close = () => {
   isShow.value = false
 }
