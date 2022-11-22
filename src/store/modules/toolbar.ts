@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import projectSetting from '@/setting/projectSetting'
+import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
 // region 刷新时与编辑后关闭标签时提示
 function confirmBeforeunload(e: BeforeUnloadEvent) {
@@ -10,6 +10,7 @@ function confirmBeforeunload(e: BeforeUnloadEvent) {
 // endregion
 
 export const useToolbar = defineStore('toolbar', () => {
+  const useProject = useProjectSettingStoreWithOut()
   // 当值为 true 代表事件已经存在，不需要添加；为 false 代表事件不存在，需要添加
   let eventExist = false
   /**
@@ -17,7 +18,7 @@ export const useToolbar = defineStore('toolbar', () => {
    * @param {boolean} need 是否需要保存？
    */
   function needCloseAlert(need = false) {
-    if (projectSetting.enableCloseAlert) {
+    if (useProject.enableCloseAlert) {
       need ? addConfirm() : removeConfirm()
       eventExist = need
     }
