@@ -72,8 +72,9 @@ const resetFormData = () => {
   }
 
   if (props.curComponent && props.curComponent.propValue) {
-    formData.value = Object.assign(data, props.curComponent.propValue)
+    Object.assign(data, props.curComponent.propValue)
   }
+  formData.value = data
 }
 
 watch(

@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { debounce } from 'lodash-es'
+import { debounce, cloneDeep } from 'lodash-es'
 import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'
@@ -61,13 +61,27 @@ const changed = debounce((key: string, val: any) => {
 }, 300)
 
 watch(
-  () => [props.curComponent.id, props.curComponent.positionStyle],
+  () => props.curComponent.id,
   () => {
     if (props.curComponent && props.curComponent.id) {
-      formData.value = props.curComponent.style
+      formData.value = cloneDeep(props.curComponent.style)
     }
   },
   { immediate: true, deep: true }
+)
+
+const updatePositionStyle = debounce(() => {
+  Object.assign(formData.value, props.curComponent.positionStyle)
+}, 200)
+
+watch(
+  () => props.curComponent.positionStyle,
+  () => {
+    if (props.curComponent && props.curComponent.id) {
+      updatePositionStyle()
+    }
+  },
+  { deep: true }
 )
 </script>
 
