@@ -23,9 +23,8 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { computed, reactive, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
-import { cleanObjectProp } from '@/utils/utils'
 import { NCollapse, NCollapseItem } from 'naive-ui'
 import type { BaseComponent } from '@/resource/models'
 
@@ -43,7 +42,7 @@ interface PropData {
   [key: string]: any
 }
 
-const formData = reactive<PropData>({
+const formData = ref<PropData>({
   common: {
     name: props.curComponent.name,
     component: props.curComponent.component,
@@ -64,16 +63,18 @@ const changed = (form: string, key: string, val: any) => {
 }
 
 const resetFormData = () => {
-  cleanObjectProp(formData, ['common'])
-  formData.common.name = props.curComponent.name
-  formData.common.component = props.curComponent.component
-  formData.common.id = props.curComponent.id
+  const data: PropData = {
+    common: {
+      name: props.curComponent.name,
+      component: props.curComponent.component,
+      id: props.curComponent.id
+    }
+  }
 
   if (props.curComponent && props.curComponent.propValue) {
-    Object.keys(props.curComponent.propValue).forEach((key) => {
-      formData[key] = props.curComponent.propValue[key]
-    })
+    Object.assign(data, props.curComponent.propValue)
   }
+  formData.value = data
 }
 
 watch(
