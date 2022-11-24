@@ -23,9 +23,8 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { checkDiff, cleanObjectProp } from '@/utils/utils'
 import { debounce } from 'lodash-es'
-import { computed, reactive, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'
 import type { BaseComponent } from '@/resource/models'
@@ -35,7 +34,7 @@ const props = defineProps<{
 }>()
 const basicStore = useBasicStoreWithOut()
 
-const formData = reactive<Recordable>({})
+const formData = ref<Recordable>({})
 const styleKeys = computed(() => {
   if (props.curComponent) {
     return props.curComponent.styleFormValue
@@ -61,27 +60,11 @@ const changed = debounce((key: string, val: any) => {
   }
 }, 300)
 
-const updateFormData = debounce((newVal: Recordable) => {
-  const style = checkDiff(newVal, formData)
-  if (style) {
-    Object.keys(style).forEach((key) => {
-      formData[key] = style[key]
-    })
-  }
-}, 200)
-
-const resetFormData = () => {
-  if (props.curComponent) {
-    cleanObjectProp(formData)
-    updateFormData(props.curComponent.style)
-  }
-}
-
 watch(
   () => [props.curComponent.id, props.curComponent.positionStyle],
   () => {
     if (props.curComponent && props.curComponent.id) {
-      resetFormData()
+      formData.value = props.curComponent.style
     }
   },
   { immediate: true, deep: true }
