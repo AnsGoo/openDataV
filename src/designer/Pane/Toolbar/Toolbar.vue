@@ -1,6 +1,6 @@
 <template>
   <ToolBar :bars="toolBars">
-    <div class=".tool-bar-title">{{ basicStore.name }}</div>
+    <div class="tool-bar-title">{{ basicStore.name }}</div>
   </ToolBar>
 </template>
 
@@ -40,14 +40,12 @@ const toolBars: ToolBarItemType[] = [
       h(LogoView, {
         width: '40px'
       }),
-    divider: true,
-    location: 'left'
+    divider: true
   },
   {
     label: '保存',
     action: () => showSaveCard(route.params.index as string),
-    icon: 'save',
-    location: 'left'
+    icon: 'save'
   },
   {
     label: '预览',
@@ -55,32 +53,27 @@ const toolBars: ToolBarItemType[] = [
       const { href } = router.resolve('/preview')
       window.open(href, '_blank')
     },
-    icon: 'preview',
-    location: 'left'
+    icon: 'preview'
   },
   {
     label: '撤销',
     action: undo,
-    icon: 'back',
-    location: 'left'
+    icon: 'back'
   },
   {
     label: '恢复',
     action: recoveryDraft,
-    icon: 'next',
-    location: 'left'
+    icon: 'next'
   },
   {
     label: '导出',
     action: () => exportCanvas((route.params.index as string) || ''),
-    icon: 'download',
-    location: 'left'
+    icon: 'download'
   },
   {
     label: '导入',
     action: importCanvas,
-    icon: 'upload',
-    location: 'left'
+    icon: 'upload'
   },
   {
     label: '全屏',
@@ -90,14 +83,12 @@ const toolBars: ToolBarItemType[] = [
         el.requestFullscreen()
       }
     },
-    icon: 'fullScreen',
-    location: 'left'
+    icon: 'fullScreen'
   },
   {
     label: '坐标',
     action: setShowEm,
-    icon: 'axis',
-    location: 'left'
+    icon: 'axis'
   },
   {
     label: '图标',
@@ -124,9 +115,6 @@ const toolBars: ToolBarItemType[] = [
 
 <style scoped lang="less">
 .tool-bar-title {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
   font-size: 20px;
   font-weight: 400;
 }

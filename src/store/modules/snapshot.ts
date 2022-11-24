@@ -6,6 +6,7 @@ import type { StoreComponentData } from '@/utils/db'
 import { snapshotDb } from '@/utils/db'
 import type { BaseComponent } from '@/resource/models'
 import type { ComponentDataType } from '@/types/component'
+import { useToolbar } from '@/store/modules/toolbar'
 
 const useSnapShotStore = defineStore({
   id: 'snapshot',
@@ -59,6 +60,9 @@ const useSnapShotStore = defineStore({
      * @param canvasStyle 画布样式
      */
     recordSnapshot(canvasData: Array<BaseComponent>, canvasStyle: CanvasStyleData) {
+      // 改变值
+      const { needCloseAlert } = useToolbar()
+      needCloseAlert(true)
       this.latestSnapshot = {
         canvasData: cloneDeep(canvasData),
         canvasStyle: cloneDeep(canvasStyle)

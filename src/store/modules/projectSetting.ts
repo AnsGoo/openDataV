@@ -27,6 +27,7 @@ export interface ProjectSettingState {
   isPageAnimate: boolean //是否开启路由动画
   pageAnimateType: string //路由动画类型
   darkTheme: boolean
+  enableCloseAlert: boolean // 是否启用离开编辑界面提醒功能
 }
 
 const useProjectSettingStore = defineStore({
@@ -57,7 +58,9 @@ const useProjectSettingStore = defineStore({
       show: true
     },
     isPageAnimate: true,
-    pageAnimateType: 'zoom-fade'
+    pageAnimateType: 'zoom-fade',
+    // 是否启用离开编辑界面提醒功能
+    enableCloseAlert: false
   }),
   getters: {
     iconColor(): string {
