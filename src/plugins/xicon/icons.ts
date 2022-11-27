@@ -39,7 +39,8 @@ import {
   Course,
   ChartRing,
   OpenPanelRight,
-  OpenPanelLeft
+  OpenPanelLeft,
+  ContainerSoftware
 } from '@vicons/carbon'
 
 import {
@@ -145,7 +146,8 @@ const icons = {
   attr: QuadrantPlot,
   license: LicenseMaintenance,
   course: Course,
-  intro: ChartRing
+  intro: ChartRing,
+  container: ContainerSoftware
 }
 
 export default icons

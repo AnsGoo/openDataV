@@ -77,7 +77,9 @@ export enum ComponentGroup {
   PROGERSS = 'PROGERSS',
   THERMOMETER = 'THERMOMETER',
   // 其他组件
-  OTHER = 'OTHER'
+  OTHER = 'OTHER',
+  // 容器组件
+  CONTAINER = 'CONTAINER'
 }
 
 export const ComponentGroupList: GroupType[] = [
@@ -95,6 +97,7 @@ export const ComponentGroupList: GroupType[] = [
   new GroupType('温度计', ComponentGroup.THERMOMETER, 'thermometer'),
   new GroupType('导航', ComponentGroup.NAVIFATION, 'navigation'),
   new GroupType('进度图', ComponentGroup.PROGERSS, 'progress'),
+  new GroupType('容器', ComponentGroup.CONTAINER, 'container'),
   new GroupType('其他', ComponentGroup.OTHER, 'other')
 ]
 

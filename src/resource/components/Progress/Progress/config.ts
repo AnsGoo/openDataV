@@ -1,6 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
+import { h } from 'vue'
 
 export const componentName = 'Progress'
 class ProgressComponent extends BaseComponent {
@@ -104,7 +105,8 @@ class ProgressComponent extends BaseComponent {
           label: '字体大小',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 15
+            defaultValue: 15,
+            suffix: () => h('span', {}, 'px')
           }
         },
         {

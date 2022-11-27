@@ -37,6 +37,8 @@ export default defineComponent({
     }
 
     const deleteComponent = () => {
+      console.log(props.index)
+      console.log(props.info)
       basicStore.removeComponent(props.index!, props.info!.parent)
     }
 
@@ -280,7 +282,6 @@ export default defineComponent({
           x: (moveEvent.clientX - editorRectInfo.left) / basicStore.scale,
           y: (moveEvent.clientY - editorRectInfo.top) / basicStore.scale
         }
-
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)
         basicStore.syncComponentLocation({ top, left, width, height }, props.info!.parent, false)
       })

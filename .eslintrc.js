@@ -99,6 +99,13 @@ module.exports = defineConfig?.({
      *
      * @see https://jkchao.github.io/typescript-book-chinese/new/typescript-3.8.html#%E4%BB%85%E4%BB%85%E5%AF%BC%E5%85%A5-%E5%AF%BC%E5%87%BA%E5%A3%B0%E6%98%8E
      */
-    '@typescript-eslint/consistent-type-imports': 2
+    '@typescript-eslint/consistent-type-imports': 2,
+
+    /**
+     * 强制使用一致的换行符风格
+     *
+     * @see https://cn.eslint.org/docs/rules/linebreak-style
+     */
+    'linebreak-style': [2, 'unix']
   }
 })

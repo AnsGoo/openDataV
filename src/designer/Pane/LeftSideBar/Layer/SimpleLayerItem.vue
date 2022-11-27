@@ -2,6 +2,7 @@
   <x-icon
     v-contextmenu.stop="contextmenus"
     draggable="true"
+    :size="18"
     :name="name"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"

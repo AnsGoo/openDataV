@@ -25,7 +25,7 @@ class BorderImageComponent extends BaseComponent {
           label: '边框图片路径',
           type: FormType.TEXT,
           componentOptions: {
-            defaultValue: 'images/border-image.png'
+            defaultValue: '/images/border-image.png'
           }
         },
         {
