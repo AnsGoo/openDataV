@@ -42,7 +42,7 @@ import { useToolbar } from '@/store/modules/toolbar'
 
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string }>()
-const { changeSavedState } = useToolbar()
+const { needCloseAlert } = useToolbar()
 
 const saveDialogVisible = ref<boolean>(true)
 const form = reactive<{
