@@ -38,9 +38,11 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { savePageApi, updatePageApi } from '@/api/pages'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
+import { useToolbar } from '@/store/modules/toolbar'
 
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string }>()
+const { needCloseAlert } = useToolbar()
 
 const saveDialogVisible = ref<boolean>(true)
 const form = reactive<{
@@ -74,6 +76,7 @@ const handleSubmit = async (type: string) => {
     try {
       const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
+        needCloseAlert()
         message.success('修改成功')
       }
     } catch (e) {
@@ -85,6 +88,7 @@ const handleSubmit = async (type: string) => {
     try {
       const result = await savePageApi(layoutData)
       if (result.status === 201) {
+        needCloseAlert()
         message.success('保存成功')
         // // 新增页面成功，则跳转到编辑页
         router.push({

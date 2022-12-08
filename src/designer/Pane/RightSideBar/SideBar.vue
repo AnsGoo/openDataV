@@ -83,7 +83,7 @@ const menuOptions = computed<MenuOption[]>(() => {
         key: '4',
         icon: () =>
           h(XIcon, {
-            name: 'text-style',
+            name: 'textStyle',
             onClick: () => collapsedTabPane('style')
           })
       },

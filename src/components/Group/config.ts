@@ -7,7 +7,7 @@ class GroupComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,
-      group: ComponentGroup.BASIC,
+      group: ComponentGroup.CONTAINER,
       name: name ? name : '分组',
       id,
       width: 200,

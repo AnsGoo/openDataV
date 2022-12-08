@@ -3,62 +3,73 @@ import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/resource/models'
 import { h } from 'vue'
 
-export const componentName = 'Decoration2'
-class DecorationComponent extends BaseComponent {
+export const componentName = 'Tabs'
+class TabsComponent extends BaseComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,
-      group: ComponentGroup.DECORATION,
-      name: name ? name : '2#装饰',
+      group: ComponentGroup.CONTAINER,
+      name: name ? name : '标签页',
       id,
-      width: 200,
-      height: 60
+      width: 400,
+      height: 200
     })
   }
 
   _prop: PropsType[] = [
     {
-      label: '基础配置',
-      prop: 'base',
+      label: '标签配置',
+      prop: 'label',
       children: [
         {
-          prop: 'color1',
-          label: '颜色1',
-          type: FormType.COLOR,
+          prop: 'mode',
+          label: '模式',
+          type: FormType.SELECT,
           componentOptions: {
-            defaultValue: '#6586ec80'
+            defaultValue: 'horizontal',
+            options: [
+              {
+                label: '垂直',
+                value: 'vertical'
+              },
+              {
+                label: '水平',
+                value: 'horizontal'
+              }
+            ]
           }
         },
         {
-          prop: 'color2',
-          label: '颜色2',
-          type: FormType.COLOR,
+          prop: 'items',
+          label: '标签',
+          type: FormType.ARRAY,
           componentOptions: {
-            defaultValue: '#2cf7fe80'
-          }
-        },
-        {
-          prop: 'text',
-          label: '文本',
-          type: FormType.TEXT,
-          componentOptions: {
-            defaultValue: 'OpenDataV'
+            type: 'dynamic',
+            defaultValue: ['标签1', '标签2'],
+            minItem: 1
           }
         }
       ]
-    }
-  ]
-  _style: PropsType[] = [
+    },
     {
-      label: '字体设置',
-      prop: 'font',
+      label: '样式配置',
+      prop: 'style',
       children: [
+        {
+          prop: 'height',
+          label: '高度',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 45,
+            suffix: () => h('span', {}, 'px')
+          }
+        },
         {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
           componentOptions: {
-            defaultValue: '#1E90FF'
+            defaultValue: '#03A6E0CC'
           }
         },
         {
@@ -75,7 +86,7 @@ class DecorationComponent extends BaseComponent {
           label: '字体宽度',
           type: FormType.NUMBER,
           componentOptions: {
-            defaultValue: 200
+            defaultValue: 800
           }
         },
         {
@@ -89,6 +100,7 @@ class DecorationComponent extends BaseComponent {
       ]
     }
   ]
+  _style: PropsType[] = []
 }
 
-export default DecorationComponent
+export default TabsComponent

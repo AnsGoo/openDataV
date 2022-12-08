@@ -1,0 +1,13 @@
+{
+  "name": "tabs",
+  "version": "1.0.0",
+  "description": "Tabs组件",
+  "main": "index.js",
+  "scripts": {
+  },
+  "keywords": [
+    "OpenDataV"
+  ],
+  "author": "chenghaiwen",
+  "license": "Apache-2.0"
+}

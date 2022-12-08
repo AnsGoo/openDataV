@@ -454,4 +454,10 @@ export abstract class BaseComponent {
       data: exampleData
     })
   }
+  appendChild(child: BaseComponent) {
+    this.subComponents.push(child)
+  }
+  updateChild(index: number, child: BaseComponent) {
+    this.subComponents[index] = child
+  }
 }
