@@ -65,10 +65,12 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { getPageApi } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
-import { useToolbar } from '@/store/modules/toolbar'
+import { useUnloadAlert } from '@/hooks'
+
+useUnloadAlert()
 
 const basicStore = useBasicStoreWithOut()
-const { needCloseAlert } = useToolbar()
+
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
 
@@ -79,8 +81,6 @@ onMounted(async () => {
   if (index) {
     await restore(index)
   }
-  // 默认不需要确认
-  needCloseAlert()
 })
 
 const restore = async (index: string) => {
@@ -93,8 +93,6 @@ const restore = async (index: string) => {
 
 onUnmounted(() => {
   basicStore.clearCanvas()
-  // 当销毁页面后移除确认
-  needCloseAlert()
 })
 </script>
 
