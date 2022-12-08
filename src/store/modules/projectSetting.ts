@@ -60,7 +60,7 @@ const useProjectSettingStore = defineStore({
     isPageAnimate: true,
     pageAnimateType: 'zoom-fade',
     // 是否启用离开编辑界面提醒功能
-    enableCloseAlert: false
+    enableCloseAlert: true
   }),
   getters: {
     iconColor(): string {
