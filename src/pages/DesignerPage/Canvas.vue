@@ -1,5 +1,5 @@
 <template>
-  <n-layout v-resize="editorWindowResizeHandler">
+  <n-layout ref="centerCanvas" v-resize="editorWindowResizeHandler">
     <!-- 中间画布 -->
     <n-layout-content class="content">
       <n-scrollbar x-scrollable :style="scrollbarStyle">
@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import Editor from '@/designer/Editor/Index.vue'
 import type { SelectOption } from 'naive-ui'
 import {
@@ -104,6 +104,36 @@ const changeScale = debounce((value: number) => {
   basicStore.setScale(value)
   scaleValue.value = value / 100
 }, 300)
+
+// region 按住 alt 或 command + 滚轮缩放
+const centerCanvas = ref()
+function setScaleByWheel(e: WheelEvent) {
+  const max = 200
+  const min = 10
+  const limit = 10
+
+  const { altKey, metaKey, deltaY } = e
+  let scale = sliderValue.value
+  if (altKey || metaKey) {
+    if (min < scale && scale < max) {
+      scale = deltaY > 0 ? scale + limit : scale - limit
+    } else if (scale <= min && deltaY > 0) {
+      scale += limit
+    } else if (scale >= max && deltaY < 0) {
+      scale -= limit
+    }
+    handleScale(scale)
+  }
+}
+
+onMounted(() => {
+  centerCanvas.value.$el!.addEventListener('wheel', setScaleByWheel, false)
+})
+
+onBeforeUnmount(() => {
+  centerCanvas.value.$el!.removeEventListener('wheel', setScaleByWheel, false)
+})
+// endregion
 </script>
 
 <style lang="less" scoped>
