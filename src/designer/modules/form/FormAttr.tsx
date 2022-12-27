@@ -106,10 +106,11 @@ export default defineComponent({
           return (
             <NRadioGroup
               v-model:value={formData[item.prop]}
+              name={props.uid}
               onUpdateValue={(event) => changed(event, item.prop)}
             >
               {options.map((op) => (
-                <NRadio label={op.value} key={op.value}>
+                <NRadio value={op.value} key={op.value}>
                   {op.label}
                 </NRadio>
               ))}
