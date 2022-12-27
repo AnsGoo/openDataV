@@ -115,6 +115,7 @@ function setScaleByWheel(e: WheelEvent) {
   const { altKey, metaKey, deltaY } = e
   let scale = sliderValue.value
   if (altKey || metaKey) {
+    e.preventDefault()
     if (min < scale && scale < max) {
       scale = deltaY > 0 ? scale + limit : scale - limit
     } else if (scale <= min && deltaY > 0) {
