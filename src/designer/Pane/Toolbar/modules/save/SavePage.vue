@@ -38,6 +38,8 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { savePageApi, updatePageApi } from '@/api/pages'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
+import html2canvas from 'html2canvas'
+import type { Options as Html2CanvasOptions } from 'html2canvas'
 
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string }>()
@@ -56,7 +58,31 @@ const rules = reactive<{
   name: [{ required: true, message: '请输入页面名称', trigger: 'blur' }]
 })
 
+// 将界面生成图片并下载
+function createImgByHtml() {
+  const canvasData: HTMLDivElement = document.querySelector('#editor')!
+  if (canvasData) {
+    const options: Partial<Html2CanvasOptions> = {
+      width: canvasData.offsetWidth,
+      height: canvasData.offsetHeight,
+      backgroundColor: 'transparent',
+      useCORS: true,
+      logging: false,
+      scale: 1
+    }
+    html2canvas(canvasData, options).then((canvas) => {
+      // 转换为 base64
+      const url = canvas.toDataURL('image/png', 1)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = '截图'
+      a.click()
+    })
+  }
+}
+
 const handleSubmit = async (type: string) => {
+  createImgByHtml()
   const { name, thumbnail } = form
   if (!name) {
     message.error('请输入页面名称')
