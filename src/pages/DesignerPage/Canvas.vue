@@ -36,8 +36,17 @@
 <script lang="ts" setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import Editor from '@/designer/Editor/Index.vue'
-import type { SelectOption, NLayout } from 'naive-ui'
-import { NLayoutContent, NLayoutFooter, NScrollbar, NSlider, NSpace, NSelect, NEl } from 'naive-ui'
+import type { SelectOption } from 'naive-ui'
+import {
+  NLayout,
+  NLayoutContent,
+  NLayoutFooter,
+  NScrollbar,
+  NSlider,
+  NSpace,
+  NSelect,
+  NEl
+} from 'naive-ui'
 import { debounce } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
@@ -97,7 +106,7 @@ const changeScale = debounce((value: number) => {
 }, 300)
 
 // region 按住 alt 或 command + 滚轮缩放
-const centerCanvas = ref<InstanceType<typeof NLayout> | null>(null)
+const centerCanvas = ref()
 function setScaleByWheel(e: WheelEvent) {
   const max = 200
   const min = 10
@@ -119,11 +128,11 @@ function setScaleByWheel(e: WheelEvent) {
 }
 
 onMounted(() => {
-  centerCanvas.value!.$el.addEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value.$el!.addEventListener('wheel', setScaleByWheel, false)
 })
 
 onBeforeUnmount(() => {
-  centerCanvas.value!.$el.removeEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value.$el!.removeEventListener('wheel', setScaleByWheel, false)
 })
 // endregion
 </script>
