@@ -20,12 +20,14 @@ const textColor = computed<string>(() => {
 </script>
 <style lang="less" scoped>
 :deep(.markdown-body) {
-  max-width: max(80%, 70vw);
+  // max-width: max(80%, 70vw);
+  margin-right: 200px;
   border-right: 1px solid;
   .toc-box {
     position: fixed;
     right: 0px;
-    width: max(15%, 250px);
+    width: max(15%, 200px);
+    min-width: 200px;
     li {
       list-style: none;
     }

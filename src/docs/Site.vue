@@ -3,7 +3,6 @@
     <n-layout-header style="height: 60px"><ToolBar /></n-layout-header>
     <n-layout has-sider sider-placement="left" style="height: calc(99vh - 60px); overflow: hidden">
       <RouterView />
-
       <n-layout-footer position="absolute"
         ><div class="copyleft">
           <div>OpenDataV · Made by AnsGoo</div>
