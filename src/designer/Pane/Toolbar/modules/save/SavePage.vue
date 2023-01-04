@@ -14,8 +14,12 @@
         <n-form-item label="页面名称" prop="name">
           <n-input v-model:value="form.name" placeholder="请输入页面名称" />
         </n-form-item>
-        <n-form-item label="页面缩略图" prop="thumbnail">
+        <n-form-item v-show="!form.screenshot" label="页面缩略图" prop="thumbnail">
           <n-input v-model:value="form.thumbnail" placeholder="请输入缩略图地址" />
+        </n-form-item>
+        <n-form-item prop="screenshot">
+          截图大屏作为缩略图：(值为Base64，后端需要转换)
+          <n-checkbox v-model:checked="form.screenshot" />
         </n-form-item>
       </n-form>
       <template #footer>
@@ -30,16 +34,16 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { NForm, NInput, NFormItem, NButton, NModal, NSpace } from 'naive-ui'
 import type { FormItemRule } from 'naive-ui'
+import { NButton, NCheckbox, NForm, NFormItem, NInput, NModal, NSpace } from 'naive-ui'
 import { message } from '@/utils/message'
 import type { LayoutData } from '@/api/pages'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { savePageApi, updatePageApi } from '@/api/pages'
+import { useBasicStoreWithOut } from '@/store/modules/basic'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
-import html2canvas from 'html2canvas'
 import type { Options as Html2CanvasOptions } from 'html2canvas'
+import html2canvas from 'html2canvas'
 
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string }>()
@@ -48,9 +52,11 @@ const saveDialogVisible = ref<boolean>(true)
 const form = reactive<{
   name: string
   thumbnail: string
+  screenshot: boolean
 }>({
   name: basicStore.name,
-  thumbnail: basicStore.thumbnail
+  thumbnail: basicStore.thumbnail,
+  screenshot: false
 })
 const rules = reactive<{
   name: FormItemRule[]
@@ -60,29 +66,40 @@ const rules = reactive<{
 
 // 将界面生成图片并下载
 function createImgByHtml() {
-  const canvasData: HTMLDivElement = document.querySelector('#editor')!
-  if (canvasData) {
-    const options: Partial<Html2CanvasOptions> = {
-      width: canvasData.offsetWidth,
-      height: canvasData.offsetHeight,
-      backgroundColor: 'transparent',
-      useCORS: true,
-      logging: false,
-      scale: 1
+  const canvasData: HTMLDivElement = document.querySelector('#editor1')!
+  return new Promise<string>((resolve, reject) => {
+    if (canvasData) {
+      const options: Partial<Html2CanvasOptions> = {
+        width: canvasData.offsetWidth,
+        height: canvasData.offsetHeight,
+        backgroundColor: 'transparent',
+        useCORS: true,
+        logging: false,
+        scale: 1
+      }
+      html2canvas(canvasData, options).then((canvas) => {
+        // 转换为 base64
+        const base64 = canvas.toDataURL('image/png', 1)
+        resolve(base64)
+      })
+    } else {
+      reject({
+        error: '未获取到大屏页面'
+      })
     }
-    html2canvas(canvasData, options).then((canvas) => {
-      // 转换为 base64
-      const url = canvas.toDataURL('image/png', 1)
-      const a = document.createElement('a')
-      a.href = url
-      a.download = '截图'
-      a.click()
-    })
-  }
+  })
 }
 
 const handleSubmit = async (type: string) => {
-  createImgByHtml()
+  // 选择截图作为图片
+  if (form.screenshot) {
+    try {
+      form.thumbnail = await createImgByHtml()
+    } catch (e: any) {
+      message.error(e.error)
+      throw '未获取到大屏页面'
+    }
+  }
   const { name, thumbnail } = form
   if (!name) {
     message.error('请输入页面名称')
