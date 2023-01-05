@@ -75,6 +75,9 @@ const handleSubmit = async (type: string) => {
       const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
         message.success('修改成功')
+        if (basicStore.name !== name) {
+          basicStore.setName(name)
+        }
       }
     } catch (e) {
       message.error('保存失败，请导出到本地，并重新进入此页面')
@@ -86,7 +89,7 @@ const handleSubmit = async (type: string) => {
       const result = await savePageApi(layoutData)
       if (result.status === 201) {
         message.success('保存成功')
-        // // 新增页面成功，则跳转到编辑页
+        // 新增页面成功，则跳转到编辑页
         router.push({
           name: 'Editor',
           params: {
