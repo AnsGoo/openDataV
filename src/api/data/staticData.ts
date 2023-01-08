@@ -4,7 +4,7 @@ import type { StaticDataDetail } from './type'
 
 /**
  * 根据id 加载静态数据
- * @param id
+ * @param id 静态数据ID
  */
 export const getStaticDataApi = async (id: string): Promise<AxiosResponse<StaticDataDetail>> => {
   return http.get<StaticDataDetail>({

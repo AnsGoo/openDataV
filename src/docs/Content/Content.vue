@@ -1,7 +1,7 @@
 <template>
   <n-layout-sider
     class="right"
-    :width="240"
+    :width="180"
     :native-scrollbar="false"
     bordered
     collapse-mode="width"
