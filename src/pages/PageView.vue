@@ -44,7 +44,7 @@ const initComponents = async (index: string): Promise<void> => {
       setPageData(resp.data)
     }
   } catch (e: any) {
-    router.push({
+    await router.push({
       name: 'Error'
     })
   }

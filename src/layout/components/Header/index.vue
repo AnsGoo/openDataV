@@ -144,13 +144,13 @@ const breadcrumbList = computed(() => {
   return generator(route.matched)
 })
 
-const dropdownSelect = (key) => {
-  router.push({ name: key })
+const dropdownSelect = async (key) => {
+  await router.push({ name: key })
 }
 
 // 刷新页面
-const reloadPage = () => {
-  router.push({
+const reloadPage = async () => {
+  await router.push({
     path: unref(route).fullPath
   })
 }
@@ -163,9 +163,9 @@ const doLogout = () => {
     positiveText: '确定',
     negativeText: '取消',
     onPositiveClick: () => {
-      userStore.logout().then(() => {
+      userStore.logout().then(async () => {
         message.success('成功退出登录')
-        router
+        await router
           .replace({
             name: 'Login',
             query: {
@@ -221,10 +221,10 @@ const avatarOptions = [
 ]
 
 //头像下拉菜单
-const avatarSelect = (key) => {
+const avatarSelect = async (key) => {
   switch (key) {
     case 1:
-      router.push({ name: 'Setting' })
+      await router.push({ name: 'Setting' })
       break
     case 2:
       doLogout()

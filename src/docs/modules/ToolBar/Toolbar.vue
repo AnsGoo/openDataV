@@ -21,9 +21,9 @@ const emits = defineEmits<{
 const leftBars: ToolBarItemType[] = docsRouters[0].children.map((el) => {
   return {
     label: el.meta.title,
-    action: () => {
+    action: async () => {
       emits('change', 'help')
-      router.push({
+      await router.push({
         name: el.name
       })
     },
@@ -38,8 +38,8 @@ const leftBars: ToolBarItemType[] = docsRouters[0].children.map((el) => {
 const toolBars: ToolBarItemType[] = [
   {
     label: '首页',
-    action: (_e: MouseEvent) => {
-      router.push({
+    action: async (_e: MouseEvent) => {
+      await router.push({
         name: 'Pages'
       })
     },

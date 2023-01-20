@@ -31,8 +31,8 @@ const route = useRoute()
 const toolBars: ToolBarItemType[] = [
   {
     label: '首页',
-    action: (_e: MouseEvent) => {
-      router.push({
+    action: async (_e: MouseEvent) => {
+      await router.push({
         name: 'Pages'
       })
     },

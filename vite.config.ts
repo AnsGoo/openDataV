@@ -10,9 +10,9 @@ import { resolve } from 'path'
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   const { VITE_APP_PORT, VITE_APP_PROXY, VITE_MOCK } = loadEnv(mode, process.cwd())
 
-  const createProxy = (propxyList) => {
+  const createProxy = (proxyList) => {
     const ret = {} as Record<string, ProxyOptions>
-    for (const [prefix, target] of propxyList) {
+    for (const [prefix, target] of proxyList) {
       ret[prefix] = {
         target: target,
         changeOrigin: true,

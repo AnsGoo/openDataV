@@ -86,15 +86,9 @@ const loginAction = async () => {
         await userStore.setToken(resp.data)
         message.success('登录成功')
         const redirect: string | undefined = route.query.redirect as string | undefined
-        if (redirect) {
-          router.push({
-            path: redirect
-          })
-        } else {
-          router.push({
-            name: 'Pages'
-          })
-        }
+        await router.push({
+          path: redirect ? redirect : 'Pages'
+        })
       } else {
         message.success('登录失败')
       }

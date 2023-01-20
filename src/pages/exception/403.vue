@@ -11,8 +11,8 @@ import { useRouter } from 'vue-router'
 
 const router: Router = useRouter()
 
-const toHome = () => {
-  router.push({
+const toHome = async () => {
+  await router.push({
     name: 'Home'
   })
 }

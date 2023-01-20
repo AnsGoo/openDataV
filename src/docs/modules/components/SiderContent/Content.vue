@@ -27,8 +27,8 @@ withDefaults(
   }
 )
 
-const goTo = (key: string) => {
-  router.push({
+const goTo = async (key: string) => {
+  await router.push({
     name: key
   })
 }

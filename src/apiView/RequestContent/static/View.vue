@@ -141,7 +141,7 @@ const originDataChange = (value: any) => {
 }
 const dataChangeHandler = async (id: string) => {
   if (id) {
-    const resp: StaticDataDetail | undefined = await loadStaicData(id)
+    const resp: StaticDataDetail | undefined = await loadStaticData(id)
     if (resp) {
       formData.originData = resp.data
       getAfterData(props.options.script)
@@ -181,7 +181,7 @@ const getAfterData = (script: AfterScript) => {
   }
 }
 
-const loadStaicData = async (id: string): Promise<StaticDataDetail | undefined> => {
+const loadStaticData = async (id: string): Promise<StaticDataDetail | undefined> => {
   try {
     const resp = await getStaticDataApi(id)
     if (resp.status === 200) {
@@ -236,7 +236,7 @@ onMounted(async () => {
 
 const init = async () => {
   if (props.options && props.options.dataId) {
-    const resp: StaticDataDetail | undefined = await loadStaicData(props.options.dataId)
+    const resp: StaticDataDetail | undefined = await loadStaticData(props.options.dataId)
     if (resp) {
       formData.id = resp.id!
       formData.title = resp.name
