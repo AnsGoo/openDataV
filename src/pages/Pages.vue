@@ -101,7 +101,7 @@ const initUI = async (): Promise<void> => {
 
 const handleSelect = async (key: string | number, item: SimpleLayoutData) => {
   if (key === 'preview') {
-    router.push({
+    await router.push({
       name: 'PageView',
       params: {
         index: item.id
@@ -118,24 +118,24 @@ const handleSelect = async (key: string | number, item: SimpleLayoutData) => {
   }
 }
 
-const handleCreate = () => {
+const handleCreate = async () => {
   if (loading.value) {
     return false
   }
 
   loading.value = true
-  router.push({
+  await router.push({
     name: 'Create'
   })
 }
 
-const handleEdit = (item: SimpleLayoutData) => {
+const handleEdit = async (item: SimpleLayoutData) => {
   if (loading.value) {
     return false
   }
 
   loading.value = true
-  router.push({
+  await router.push({
     name: 'Editor',
     params: {
       index: item.id
@@ -143,8 +143,8 @@ const handleEdit = (item: SimpleLayoutData) => {
   })
 }
 
-const handleView = (item: SimpleLayoutData) => {
-  router.push({
+const handleView = async (item: SimpleLayoutData) => {
+  await router.push({
     name: 'PageView',
     params: {
       index: item.id

@@ -15,7 +15,7 @@
             :value="formData.id"
             class="selected"
             clearable
-            @update:value="selectdChange"
+            @update:value="selectedChange"
             @clear="clear"
           />
           <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
@@ -188,7 +188,7 @@ watch(
   }
 )
 
-const selectdChange = async (id: string) => {
+const selectedChange = async (id: string) => {
   if (id) {
     await loadScriptData(id)
   } else {

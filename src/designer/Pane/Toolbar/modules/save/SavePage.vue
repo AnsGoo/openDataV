@@ -90,7 +90,7 @@ const handleSubmit = async (type: string) => {
       if (result.status === 201) {
         message.success('保存成功')
         // 新增页面成功，则跳转到编辑页
-        router.push({
+        await router.push({
           name: 'Editor',
           params: {
             index: result.data.id

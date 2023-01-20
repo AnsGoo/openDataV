@@ -61,7 +61,7 @@ const scriptList = [
     author: Random.name(),
     createDate: Random.date('yyyy-MM-dd mm:HH:ss'),
     updateDate: Random.date('yyyy-MM-dd mm:HH:ss'),
-    code: 'return resp.map(el => {return { value: el.value, lable: el.name}})',
+    code: 'return resp.map(el => {return { value: el.value, label: el.name}})',
     type: 'Javascript'
   }
 ]

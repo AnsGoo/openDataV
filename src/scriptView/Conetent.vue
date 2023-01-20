@@ -29,10 +29,10 @@
         </n-tab-pane>
         <n-tab-pane name="入参">
           <DataView
-            v-model:content="pramas"
+            v-model:content="params"
             class="content"
             :config="config"
-            @update:content="pramasChange"
+            @update:content="paramsChange"
           />
         </n-tab-pane>
       </n-tabs>
@@ -79,9 +79,9 @@ const formData = reactive<{
   type: ScriptType.Javascript
 })
 
-const pramas = ref<string>(JSON.stringify({}, null, '\t'))
-const pramasChange = (content: string) => {
-  pramas.value = content
+const params = ref<string>(JSON.stringify({}, null, '\t'))
+const paramsChange = (content: string) => {
+  params.value = content
 }
 
 const scriptChangeHandler = async (script: AfterScript) => {
@@ -107,7 +107,7 @@ const run = () => {
     : undefined
   if (afterCallback && afterCallback.handler) {
     try {
-      stdOut.value = JSON.stringify(afterCallback.handler(JSON.parse(pramas.value), {}), null, '\t')
+      stdOut.value = JSON.stringify(afterCallback.handler(JSON.parse(params.value), {}), null, '\t')
     } catch (err: any) {
       stdOut.value = err.message || err
     }

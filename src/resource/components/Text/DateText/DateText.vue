@@ -1,5 +1,5 @@
 <template>
-  <span v-resize="resizeHandler">{{ customeText }}</span>
+  <span v-resize="resizeHandler">{{ customText }}</span>
 </template>
 
 <script setup lang="ts">
@@ -19,11 +19,11 @@ const resizeHandler = (entry: ResizeObserverEntry) => {
   lineHeight.value = `${height}px`
 }
 let intervalId: IntervalHandle
-const customeText = ref<string>(dayjs().format(propValue.base.format || 'YYYY-MM-DD HH:mm:ss'))
+const customText = ref<string>(dayjs().format(propValue.base.format || 'YYYY-MM-DD HH:mm:ss'))
 
 const updateData = () => {
-  const newformat: string = propValue.base.format
-  customeText.value = dayjs().format(newformat || 'YYYY-MM-DD HH:mm:ss')
+  const newFormat: string = propValue.base.format
+  customText.value = dayjs().format(newFormat || 'YYYY-MM-DD HH:mm:ss')
 }
 onMounted(() => {
   intervalId = setInterval(updateData, 1000)
