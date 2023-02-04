@@ -72,19 +72,20 @@ class StaticTextComponent extends BaseComponent {
 ```
 各个属性含义
 
-> `component`: 组件名
-> `group`: 组件分类
-> `name`: 组件label
-> `id`: 组件ID
-> `width`: 组件初始化长度
-> `height`: 组件初始化高度
-> `icon? `: 组件图标
-> `dataIntegrationMode? `: 数据接入模式
+> - `component`: 组件名
+> - `group`: 组件分类
+> - `name`: 组件label
+> - `id`: 组件ID
+> - `width`: 组件初始化长度
+> - `height`: 组件初始化高度
+> - `icon? `: 组件图标
+> - `dataIntegrationMode? `: 数据接入模式
 
 
 除过需要继承`BaseComponent` 抽象类外，还需要重新定义`_prop`和`_style`属性，
 
 > - `_prop属性`:定义了组件可以更改的属性
+
 > - `_style`: 定义了组件的外在的CSS样式
 
 ## 组件渲染模板对象
@@ -202,25 +203,25 @@ StaticTextType {
 
 本平台已经实现了常用的Form类型，例如：
 
-> `TEXT`: Input框
-> `TEXTAREA`: 文本域
-> `NUMBER`: 数字输入框
-> `SELECT`: 选择器
-> `COLOR`: 色盘
-> `RADIO`: 单选框
-> `SWITCH`: 开关
+> - `TEXT`: Input框
+> - `TEXTAREA`: 文本域
+> - `NUMBER`: 数字输入框
+> - `SELECT`: 选择器
+> - `COLOR`: 色盘
+> - `RADIO`: 单选框
+> - `SWITCH`: 开关
 
 以及平台定制的Form类型， 例如：
 
-> `FONT_STYLE`: 字体选择
-> `FONT_WEIGHT`: 字重选择
-> `ARRAY`: 动态列表Form
-> `BACKGROUND`: 背景选择
-> `LINEAR_GRADIENT`: 渐变色
+> - `FONT_STYLE`: 字体选择
+> - `FONT_WEIGHT`: 字重选择
+> - `ARRAY`: 动态列表Form
+> - `BACKGROUND`: 背景选择
+> - `LINEAR_GRADIENT`: 渐变色
 
 还有支持用户自定义`Form`
 
-> `CUSTOM`: 自定义Form
+> -`CUSTOM`: 自定义Form
 
 **Form公共属性**
 
@@ -401,6 +402,7 @@ onUnmounted( () => {
 > - `静态数据`: 静态数据从后台数据库中存储的静态数据中加载
 > - `Rest数据`: 根据用户提供的`REST`接口，发起HTTP请求，获取数据
 
+
 ```typescript
 
 import { useData } from '@/resource/hooks'
@@ -444,6 +446,7 @@ useData(props.component, dataChange)
 
 > 
 > - 在`编辑模式`下我们需要监听组件属性或者样式的变化，但是在`预览模式`和`视图模式`下我们不需要监听组件属性的变化,这时候我们可以获取编辑器模式，来在不同模式下采用不同的逻辑。
+
 > 
 > - 在`编辑模式`下我们采用示例数据来渲染组件，但是在`预览模式`和`视图模式`下我们采用生产数据渲染组件。
 
@@ -521,7 +524,7 @@ const resizeHandler = (entry: ResizeObserverEntry) => {
 
 **2. 效果示例**
 
-**3. 可交互的`palyground`**
+**3. 可交互的`playground`**
 
 
 
