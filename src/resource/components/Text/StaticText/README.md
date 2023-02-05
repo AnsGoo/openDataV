@@ -92,7 +92,7 @@ const style = {
   height: 100
 }
 
-const symbolPropValue:StaticTextType = {
+const symbolPropValue: StaticTextType = {
   base: {
     text: 'icon-clock',
     type: 'symbol'

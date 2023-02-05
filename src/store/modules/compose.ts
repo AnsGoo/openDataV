@@ -31,14 +31,21 @@ const useComposeStore = defineStore({
     }
   },
   actions: {
+    /**
+     * 判断组件是否在选取的组件内
+     * @param component
+     */
     isActived(component: BaseComponent): boolean {
       return this.components.findIndex((el: BaseComponent) => el.id === component.id) !== -1
     },
 
-    setSelectComponents(style: Position) {
-      const res = getSelectComponents(style, basicStore.componentData)
-      if (res) {
-        const { components, rect } = res
+    /**
+     * 给定区域获取该区域的组件
+     * @param style
+     */
+    setSelectComponents(position: Position) {
+      const { components, rect } = getSelectComponents(position, basicStore.componentData) || {}
+      if (components && rect) {
         this.style.left = rect.left
         this.style.top = rect.top
         this.style.width = rect.right - rect.left
@@ -59,7 +66,6 @@ const useComposeStore = defineStore({
       if (!component) {
         return
       }
-
       if (!this.ids.has(component.id)) {
         this.components.push(component)
         this.ids.add(component.id)
@@ -68,6 +74,10 @@ const useComposeStore = defineStore({
         }
       }
     },
+
+    /**
+     * 隐藏选定区域
+     */
     setHidden() {
       this.style = {
         left: 0,
@@ -78,21 +88,26 @@ const useComposeStore = defineStore({
       this.components = []
       this.ids.clear()
     },
+
+    /**
+     * 设置已选择的矩形位置
+     * @param position 位置
+     */
     setPostion(position: Partial<Position>) {
       if (position.left) {
-        this.style.left = position.left
+        this.style.left = Math.round(position.left)
       }
 
       if (position.top) {
-        this.style.top = position.top
+        this.style.top = Math.round(position.top)
       }
 
       if (position.width) {
-        this.style.width = position.width
+        this.style.width = Math.round(position.width)
       }
 
       if (position.height) {
-        this.style.height = position.height
+        this.style.height = Math.round(position.height)
       }
     },
     /**

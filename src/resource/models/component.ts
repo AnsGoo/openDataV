@@ -290,6 +290,10 @@ export abstract class BaseComponent {
   }
 
   change(prop: string, value: string | number | boolean | any, form?: string) {
+    const positionKey = ['top', 'left', 'height', 'width']
+    if (positionKey.includes(prop)) {
+      value = Math.round(value)
+    }
     if (form) {
       this.changeProp(form, prop, value)
     } else {
