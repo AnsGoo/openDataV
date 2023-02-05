@@ -119,6 +119,7 @@ export default defineComponent({
         case FormType.NUMBER:
           const numberMax: number = getOptionsValue<number>('max', 9999999999)
           const numberMin: number = getOptionsValue<number>('min', -9999999999)
+          const precision: number | undefined = getOptionsValue<number>('precision', undefined)
 
           return (
             <NInputNumber
@@ -126,6 +127,7 @@ export default defineComponent({
               onUpdateValue={(event) => changed(event, item.prop)}
               max={numberMax}
               min={numberMin}
+              precision={precision}
               clearable={true}
               v-slots={{
                 prefix: (item.componentOptions as InputNumberFormSchema).prefix,

@@ -130,7 +130,8 @@ export abstract class BaseComponent {
             type: FormType.NUMBER,
             componentOptions: {
               defaultValue: this.positionStyle.left,
-              suffix: () => h('span', {}, 'px')
+              suffix: () => h('span', {}, 'px'),
+              precision: 0
             }
           },
           {
@@ -139,7 +140,8 @@ export abstract class BaseComponent {
             type: FormType.NUMBER,
             componentOptions: {
               defaultValue: this.positionStyle.top,
-              suffix: () => h('span', {}, 'px')
+              suffix: () => h('span', {}, 'px'),
+              precision: 0
             }
           },
           {
@@ -148,7 +150,8 @@ export abstract class BaseComponent {
             type: FormType.NUMBER,
             componentOptions: {
               defaultValue: this.positionStyle.width,
-              suffix: () => h('span', {}, 'px')
+              suffix: () => h('span', {}, 'px'),
+              precision: 0
             }
           },
           {
@@ -157,7 +160,8 @@ export abstract class BaseComponent {
             type: FormType.NUMBER,
             componentOptions: {
               defaultValue: this.positionStyle.height,
-              suffix: () => h('span', {}, 'px')
+              suffix: () => h('span', {}, 'px'),
+              precision: 0
             }
           },
           {

@@ -42,6 +42,8 @@ export interface InputNumberFormSchema extends BaseFormSchema {
   step: number
   prefix?: () => VNode
   suffix?: () => VNode
+
+  precision?: number
 }
 
 export interface SelectFormSchema extends BaseFormSchema {
