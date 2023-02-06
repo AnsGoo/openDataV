@@ -7,7 +7,7 @@
             v-for="(lc, index) in linearGradients"
             :key="index"
             :offset="`${lc[0]}%`"
-            :stop-color="lc[1] as string"
+            :stop-color="lc[1]"
           />
         </linearGradient>
 
@@ -16,7 +16,7 @@
             v-for="(lc, index) in linearGradients"
             :key="index"
             :offset="`${lc[0]}%`"
-            :stop-color="(lc[1] as string)"
+            :stop-color="lc[1]"
           />
         </linearGradient>
       </defs>

@@ -2,6 +2,13 @@ import type { Position } from '@/types/common'
 import type { BaseComponent } from '@/resource/models'
 import { calcComponentAxis } from '@/utils/utils'
 
+/**
+ * 给定区域获取该区域范围内的所有组件和包含该这些组件的最小区域
+ * @param rect 区域范围
+ * @param componentData 所有组件数据
+ *
+ *@return {components: BaseComponent[], rect: Position} components 所有组件， minRect 最小区域
+ */
 export const getSelectComponents = (
   rect: Position,
   componentData: BaseComponent[]

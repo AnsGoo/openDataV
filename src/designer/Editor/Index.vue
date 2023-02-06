@@ -201,6 +201,7 @@ const handleMouseDown = (e: MouseEvent) => {
     }
     const width = Math.abs(moveEvent.clientX - startX) / basicStore.scale
     const height = Math.abs(moveEvent.clientY - startY) / basicStore.scale
+
     composeStore.setPostion({ left: start.x, top: start.y, width, height })
   }
   const up = (UpMoveEvent: MouseEvent) => {
@@ -212,8 +213,8 @@ const handleMouseDown = (e: MouseEvent) => {
     }
 
     const selectedRect: Position = {
-      left: composeStore.style.left,
-      top: composeStore.style.top,
+      left: Math.round(composeStore.style.left),
+      top: Math.round(composeStore.style.top),
       right: composeStore.style.left + composeStore.style.width,
       bottom: composeStore.style.top + composeStore.style.height
     }
