@@ -178,7 +178,7 @@ const points = computed(() => {
   }`
 })
 
-const linearGradients = computed(() => {
+const linearGradients = computed<[number, string][]>(() => {
   if (!mergedConfig.value.colors) {
     return []
   }
