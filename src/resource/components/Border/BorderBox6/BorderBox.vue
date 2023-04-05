@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from '@/resource/hooks'
+import { useProp } from '@/hooks'
 import { ref } from 'vue'
 import type BorderBoxComponent from './config'
 

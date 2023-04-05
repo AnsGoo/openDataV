@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash-es'
 import type { CanvasStyleData, SnapData } from '@/types/storeTypes'
 import type { StoreComponentData } from '@/utils/db'
 import { snapshotDb } from '@/utils/db'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 import type { ComponentDataType } from '@/types/component'
 
 const useSnapShotStore = defineStore({

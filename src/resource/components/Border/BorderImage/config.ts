@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent } from '@/models'
 
 export const componentName = 'BorderImage'
 class BorderImageComponent extends BaseComponent {

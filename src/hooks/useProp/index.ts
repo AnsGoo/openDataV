@@ -1,4 +1,4 @@
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 
 export const useProp = <T>(
   component: BaseComponent,

@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from '@/resource/hooks'
+import { useProp } from '@/hooks'
 import { ref } from 'vue'
 import type DecorationComponent from './config'
 

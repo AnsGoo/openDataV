@@ -14,8 +14,8 @@ import { useRoute, useRouter } from 'vue-router'
 import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { LayoutData } from '@/api/pages'
-import type { BaseComponent } from '@/resource/models'
-import { createComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
+import { createComponent } from '@/models'
 
 const componentData = ref<Array<BaseComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({

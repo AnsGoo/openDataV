@@ -1,7 +1,7 @@
 import DateTextComponent, { componentName } from './config'
-
+import DateText from './DateText.vue'
 export default {
   componentName,
-  component: () => import('./DateText.vue'),
+  component: DateText,
   config: DateTextComponent
 }

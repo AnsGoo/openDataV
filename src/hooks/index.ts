@@ -1,3 +1,5 @@
 import { useUnloadAlert } from './useUnload'
+import { useProp } from './useProp'
+import { useData } from './useData'
 
-export { useUnloadAlert }
+export { useUnloadAlert, useProp, useData }

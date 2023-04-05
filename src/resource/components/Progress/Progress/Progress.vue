@@ -55,11 +55,11 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { http } from '@/utils/http'
-import { useProp } from '@/resource/hooks'
+import { useProp } from '@/hooks'
 import { uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus'
 import type { Progress } from './type'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 
 const props = defineProps<{
   component: BaseComponent

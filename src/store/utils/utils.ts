@@ -1,5 +1,5 @@
 import type { Position } from '@/types/common'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 import { calcComponentAxis } from '@/utils/utils'
 
 /**

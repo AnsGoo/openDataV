@@ -21,7 +21,7 @@
 import { eventBus, StaticKey } from '@/bus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 import { cloneDeep } from 'lodash-es'
 import { diffIndex } from '@/utils/utils'
 

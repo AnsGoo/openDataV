@@ -28,7 +28,7 @@ import type { MenuOption } from 'naive-ui'
 import { ComponentGroup, ComponentGroupList } from '@/enum'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { cloneDeep } from 'lodash-es'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()

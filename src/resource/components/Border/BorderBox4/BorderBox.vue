@@ -41,7 +41,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from '@/resource/hooks'
+import { useProp } from '@/hooks'
 import { uuid } from '@/utils/utils'
 import { computed, ref } from 'vue'
 import type BorderBoxComponent from './config'

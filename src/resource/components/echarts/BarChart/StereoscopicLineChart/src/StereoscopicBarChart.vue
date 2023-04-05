@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useData, useProp } from '@/resource/hooks'
+import { useData, useProp } from '@/hooks'
 import type StereoscopicBarChartComponent from '../config'
 import type { StereoscopicBarChart } from '../type'
 import type { EChartsOption, XAXisComponentOption, CustomSeriesOption } from 'echarts'
 import { compareResetValue } from '../../../utils'
 import { useEchart } from '../../../hooks'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
+import type { DataType } from '@/models'
+import type { RequestResponse } from '@/models/type'
 import { graphic } from 'echarts'
 
 let globalOption: EChartsOption

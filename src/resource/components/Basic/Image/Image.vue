@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 defineProps<{
   component: BaseComponent
 }>()

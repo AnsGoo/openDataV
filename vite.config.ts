@@ -69,15 +69,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       cors: true
     },
     build: {
-      target: 'es2015',
-      chunkSizeWarningLimit: 1500,
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          // Used to delete console in production environment
-          drop_console: true
-        }
-      }
+      target: 'es2022',
+      chunkSizeWarningLimit: 1500
     },
     css: {
       preprocessorOptions: {

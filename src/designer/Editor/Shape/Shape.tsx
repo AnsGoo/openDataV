@@ -9,7 +9,7 @@ import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 import styles from './shape.module.less'
 import { XIcon } from '@/plugins/xicon'
 

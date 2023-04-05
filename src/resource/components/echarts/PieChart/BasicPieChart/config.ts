@@ -1,7 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
-import { DataIntegrationMode } from '@/resource/models/data'
+import { BaseComponent } from '@/models'
+import { DataIntegrationMode } from '@/models/data'
 import { h } from 'vue'
 
 export const componentName = 'BasicPieChart'

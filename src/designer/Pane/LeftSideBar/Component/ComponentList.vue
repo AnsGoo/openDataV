@@ -13,7 +13,7 @@ import type { MenuOption } from 'naive-ui'
 import ComponentItem from './ComponentItem.vue'
 import type { GroupType } from '@/enum'
 import { XIcon } from '@/plugins/xicon'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 
 const menuOptions = computed<MenuOption[]>(() => {
   const groups: { group: string; component: BaseComponent[] } | {} = {}

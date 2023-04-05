@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useData, useProp } from '@/resource/hooks'
+import { useData, useProp } from '@/hooks'
 import type MapChartComponent from '../config'
 import type { MapChart } from '../type'
 import type { EChartsOption } from 'echarts'
 import { graphic, registerMap } from 'echarts'
 import { useEchart } from '../../../hooks'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
+import type { DataType } from '@/models'
+import type { RequestResponse } from '@/models/type'
 import chinaMap from './assets/china.json'
 
 const chartEl = ref<ElRef>(null)

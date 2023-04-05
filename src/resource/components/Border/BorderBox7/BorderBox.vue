@@ -218,7 +218,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from '@/resource/hooks'
+import { useProp } from '@/hooks'
 import { computed, ref } from 'vue'
 import type BorderBoxComponent from './config'
 import TinyColor2 from 'tinycolor2'

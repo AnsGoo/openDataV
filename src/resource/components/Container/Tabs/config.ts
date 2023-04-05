@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent } from '@/models'
 import { h } from 'vue'
 
 export const componentName = 'Tabs'

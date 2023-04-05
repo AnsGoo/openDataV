@@ -1,9 +1,9 @@
 import { shallowRef, h } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent } from '@/models'
 import ScrollTableForm from './Form.vue'
-import { DataIntegrationMode } from '@/resource/models/data'
+import { DataIntegrationMode } from '@/models/data'
 
 export const componentName = 'ScrollTable'
 class ScrollTableComponent extends BaseComponent {

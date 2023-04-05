@@ -35,8 +35,8 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
-import type { BaseComponent, StaticRequestData } from '@/resource/models'
-import { DataType } from '@/resource/models'
+import type { BaseComponent, StaticRequestData } from '@/models'
+import { DataType } from '@/models'
 import { ScriptType } from '@/enum'
 import Static from '@/apiView/RequestContent/static'
 import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'

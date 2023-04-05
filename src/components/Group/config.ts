@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import { BaseComponent } from '@/resource/models'
+import { BaseComponent } from '@/models'
 
 export const componentName = 'Group'
 class GroupComponent extends BaseComponent {

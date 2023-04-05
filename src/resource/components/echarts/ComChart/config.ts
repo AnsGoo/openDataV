@@ -1,6 +1,6 @@
 import { ComponentGroup } from '@/enum'
-import { BaseComponent } from '@/resource/models'
-import { DataIntegrationMode } from '@/resource/models/data'
+import { BaseComponent } from '@/models'
+import { DataIntegrationMode } from '@/models/data'
 
 export const componentName = 'ComChart'
 class ComChartComponent extends BaseComponent {

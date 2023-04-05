@@ -1,5 +1,5 @@
-import type { BaseComponent } from '@/resource/models'
-import { DataType } from '@/resource/models'
+import type { BaseComponent } from '@/models'
+import { DataType } from '@/models'
 import { onMounted, onUnmounted } from 'vue'
 
 export const useData = (

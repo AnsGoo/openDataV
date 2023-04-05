@@ -26,7 +26,7 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 
 const props = defineProps<{
   curComponent: BaseComponent

@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import { getComponentStyle } from '@/utils/utils'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 
 defineProps<{ component: BaseComponent }>()
 </script>

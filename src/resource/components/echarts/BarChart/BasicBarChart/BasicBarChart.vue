@@ -9,9 +9,9 @@ import type { BasicLineChart } from './type'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
-import { useProp, useData } from '@/resource/hooks'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
+import { useProp, useData } from '@/hooks'
+import type { DataType } from '@/models'
+import type { RequestResponse } from '@/models/type'
 
 const chartEl = ref<ElRef>(null)
 let globalOption: EChartsOption

@@ -4,14 +4,14 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { useProp, useData } from '@/resource/hooks'
+import { useProp, useData } from '@/hooks'
 import type BasicLineChartComponent from './config'
 import type { BasicLineChart } from './type'
 import type { PieSeriesOption, EChartsOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
+import type { DataType } from '@/models'
+import type { RequestResponse } from '@/models/type'
 
 const chartEl = ref<ElRef>(null)
 

@@ -25,14 +25,14 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { BaseComponent } from '@/resource/models'
-import { DataType } from '@/resource/models'
+import type { BaseComponent } from '@/models'
+import { DataType } from '@/models'
 import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } from 'naive-ui'
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'
 import DemoData from './DemoData'
 import { onMounted, reactive, ref, watch } from 'vue'
-import { DataIntegrationMode } from '@/resource/models/data'
+import { DataIntegrationMode } from '@/models/data'
 
 const props = defineProps<{
   curComponent: BaseComponent

@@ -16,7 +16,7 @@ import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useEventBus, StaticKey } from '@/bus'
 import { calcComponentAxis } from '@/utils/utils'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 import type { Position } from '@/types/common'
 
 const basicStore = useBasicStoreWithOut()

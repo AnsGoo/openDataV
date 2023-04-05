@@ -36,7 +36,7 @@ import type { ComponentOptions, ConcreteComponent } from 'vue'
 import { reactive } from 'vue'
 import { computed, h } from 'vue'
 import StaticDataView from '@/components/StaticDataView'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 
 const props = withDefaults(
   defineProps<{

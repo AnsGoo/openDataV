@@ -1,7 +1,7 @@
 import type { FormType, ComponentGroup, ScriptType } from '@/enum'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import type { DataIntegrationMode } from '@/resource/models/data'
-import type { DataType, StaticRequestOptions, RestRequestOptions } from '@/resource/models/data'
+import type { DataIntegrationMode } from '@/models/data'
+import type { DataType, StaticRequestOptions, RestRequestOptions } from '@/models/data'
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
 export interface GroupStyle {

@@ -13,7 +13,7 @@ import { onUnmounted, onMounted, ref, computed } from 'vue'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { BaseComponent } from '@/resource/models'
+import type { BaseComponent } from '@/models'
 import type { ComponentDataType } from '@/types/component'
 const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
