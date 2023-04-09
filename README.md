@@ -126,3 +126,6 @@ git commit 信息请按照如下规范进行书写
 
 ![wechat](./screenshot/OfficialAccounts.jpg)
 
+**如果群链接失效请加微信，回复：OpenDataV 拉群**
+
+![](./screenshot/wechat.png)
