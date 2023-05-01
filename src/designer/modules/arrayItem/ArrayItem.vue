@@ -31,7 +31,8 @@
 <script lang="ts" setup>
 import { ref, reactive, nextTick } from 'vue'
 import { NSpace, NInput } from 'naive-ui'
-import { message } from '@/utils/message'
+import useMessage from '@/utils/message'
+const { message } = useMessage()
 
 const props = withDefaults(
   defineProps<{

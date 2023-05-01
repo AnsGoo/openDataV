@@ -2,7 +2,7 @@ import { defineComponent, ref, computed, onMounted, onErrorCaptured, watch } fro
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import type { ComponentPublicInstance, PropType } from 'vue'
-import { mod360, copyText, throttleFrame } from '@/utils/utils'
+import { mod360, copyText, throttleFrame, Logger } from '@/utils/utils'
 import { eventBus, StaticKey } from '@/bus'
 import type { Vector } from '@/types/common'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
@@ -136,7 +136,7 @@ export default defineComponent({
     const errorInfo = ref<string>('')
 
     onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: string) => {
-      console.log(err)
+      Logger.log(err)
       if (info === 'render function') {
         if (basicStore.isEditMode) {
           if (instance) {

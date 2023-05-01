@@ -3,7 +3,7 @@
     <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
-          v-model:value="formData.title"
+          v-model:value="formDataConfig.title"
           :readonly="true"
           placeholder="编辑请点击"
           @click="isShow = true"
@@ -24,7 +24,7 @@
       @close="isShow = false"
     >
       <Static
-        v-model:options="formData"
+        v-model:options="formDataConfig"
         @data-change="dataChangeHandler"
         @script-change="scriptChangeHandler"
       />
@@ -41,13 +41,14 @@ import { ScriptType } from '@/enum'
 import Static from '@/apiView/RequestContent/static'
 import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
 import type { AfterScript } from '@/types/component'
-import { message } from '@/utils/message'
+import useMessage from '@/utils/message'
+const { message } = useMessage()
 const props = defineProps<{
   curComponent: BaseComponent
 }>()
 const isShow = ref<boolean>(false)
 
-const formData = reactive<StaticRequestOptions>({
+const formDataConfig = reactive<StaticRequestOptions>({
   dataId: '',
   title: '',
   script: {
@@ -65,15 +66,15 @@ const initData = async () => {
   if (dataConfig && dataConfig.type === DataType.STATIC) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
     const result = staticRequest.toJSON()
-    formData.dataId = result.dataId
-    formData.script = result.script!
-    formData.title = result.title!
+    formDataConfig.dataId = result.dataId
+    formDataConfig.script = result.script!
+    formDataConfig.title = result.title!
   } else {
     message.info('请配置静态数据')
     await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-      id: formData.dataId,
+      id: formDataConfig.dataId,
       script: {
-        code: formData.script.code,
+        code: formDataConfig.script.code,
         type: ScriptType.Javascript
       }
     })
@@ -81,19 +82,19 @@ const initData = async () => {
 }
 const changeHandler = () => {
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    id: formData.dataId,
-    script: formData.script
+    id: formDataConfig.dataId,
+    script: formDataConfig.script
   })
 }
 
 const dataChangeHandler = (id: string, title: string) => {
-  formData.title = title
-  formData.dataId = id
+  formDataConfig.title = title
+  formDataConfig.dataId = id
   changeHandler()
 }
 
 const scriptChangeHandler = (script: AfterScript) => {
-  formData.script = script
+  formDataConfig.script = script
   changeHandler()
 }
 

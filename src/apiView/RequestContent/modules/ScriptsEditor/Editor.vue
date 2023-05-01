@@ -69,7 +69,9 @@ import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
-import { message } from '@/utils/message'
+import useMessage from '@/utils/message'
+import { Logger } from '@/utils/utils'
+
 import {
   getAfterScriptListApi,
   updateAfterScriptApi,
@@ -77,6 +79,8 @@ import {
   getAfterScriptApi
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
+
+const { message } = useMessage()
 
 const scriptList = ref<SelectOption[]>([])
 
@@ -174,7 +178,7 @@ const loadStaticList = async () => {
       })
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 

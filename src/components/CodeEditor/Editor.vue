@@ -37,6 +37,7 @@ import { oneDark } from '@codemirror/theme-one-dark'
 import type { CodemirrorOption } from './type'
 import type { Extension } from '@codemirror/state'
 import { redo, undo } from '@codemirror/commands'
+import { Logger } from '@/utils/utils'
 
 const props = withDefaults(
   defineProps<{
@@ -81,7 +82,7 @@ const extensions = computed(() => {
 const handleReady = ({ view }: any) => {
   cmView = view
 }
-const log = console.log
+const log = Logger.log
 const codeChange = (value: string, viewUpdate: ViewUpdate) => {
   emits('update:code', value)
   emits('change', value, viewUpdate)

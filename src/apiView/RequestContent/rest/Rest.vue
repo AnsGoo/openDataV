@@ -109,7 +109,7 @@ import {
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { onMounted, reactive, ref } from 'vue'
-import { uuid } from '@/utils/utils'
+import { Logger, uuid } from '@/utils/utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import type { AxiosResponse } from 'axios'
 import ReponseContentView from './modules/ReponseContentView.vue'
@@ -127,8 +127,10 @@ import {
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import { message } from '@/utils/message'
+import useMessage from '@/utils/message'
 import type { AfterScript } from '@/types/component'
+
+const { message } = useMessage()
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
 }
@@ -169,7 +171,7 @@ const loadRestList = async () => {
       })
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 

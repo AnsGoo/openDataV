@@ -4,7 +4,6 @@ import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import type { ComponentDataType } from '@/types/component'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { StoreComponentData } from '@/utils/db'
-import { message } from '@/utils/message'
 import { exportRaw, importRaw } from '@/utils/utils'
 const snapShotStore = useSnapShotStoreWithOut()
 // 状态管理
@@ -17,8 +16,6 @@ const undo = async () => {
       canvasData: snapshot.canvasData as ComponentDataType[],
       canvasStyle: snapshot.canvasStyle
     })
-  } else {
-    message.warning('没有快照了')
   }
 }
 
@@ -29,8 +26,6 @@ const recoveryDraft = async () => {
       canvasData: snapshot.canvasData as ComponentDataType[],
       canvasStyle: snapshot.canvasStyle
     })
-  } else {
-    message.warning('没有快照了')
   }
 }
 const setShowEm = () => {

@@ -2,6 +2,7 @@ import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import Group from '@/components/Group'
 import type { BaseComponent } from '@/models'
+import { Logger } from '@/utils/utils'
 
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}
@@ -31,7 +32,7 @@ const AsyncComponent = {
         })
         app.component(componentOptions.componentName, asyncComp)
       } else {
-        console.error(`${key} is not a valid component`)
+        Logger.error(`${key} is not a valid component`)
       }
     })
   }

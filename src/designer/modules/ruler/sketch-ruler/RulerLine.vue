@@ -8,7 +8,7 @@
     @mousedown="handleDown"
   >
     <div class="action" :style="actionStyle">
-      <span class="value">{{ startValue }}</span>
+      <span :class="{ value: true, 'is-vertical': vertical }">{{ startValue }}</span>
     </div>
   </div>
 </template>
@@ -106,7 +106,13 @@ const contextmenus = (): ContextmenuItem[] => {
 
   .value {
     pointer-events: none;
-    transform: scale(0.83);
+    mix-blend-mode: difference;
+    &:hover {
+      backgourd-color: yellow;
+    }
+  }
+  .is-vertical {
+    transform: rotate(-90deg);
   }
   .del {
     padding: 3px 5px;

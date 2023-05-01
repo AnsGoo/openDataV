@@ -11,7 +11,7 @@ import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { ref, onUnmounted, onMounted, computed } from 'vue'
 import { getPageApi } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
-import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
+import { backgroundToCss, filterStyle, Logger, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { LayoutData } from '@/api/pages'
 import type { BaseComponent } from '@/models'
@@ -37,7 +37,7 @@ const route = useRoute()
 const router = useRouter()
 
 const initComponents = async (index: string): Promise<void> => {
-  console.log('加载通用组件')
+  Logger.log('加载通用组件')
   try {
     const resp = await getPageApi(index)
     if (resp.data) {

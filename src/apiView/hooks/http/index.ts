@@ -2,11 +2,10 @@ import Axios from 'axios'
 import type { AxiosInstance, AxiosResponse } from 'axios'
 import type { FinallyResponse, StoreRequestOption } from './type'
 import { cloneDeep } from 'lodash-es'
-import { message } from '@/utils/message'
+
 import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
 import type { AfterScript } from '@/types/component'
-
 export class RestRequest {
   private axiosInstance: AxiosInstance
   public url: string
@@ -45,9 +44,6 @@ export class RestRequest {
                 if (afterData) {
                   result.afterData = afterData
                 } else {
-                  if (this.isDebugMode && !this.isNotify) {
-                    message.warning('请检查后置脚本是否有返回值')
-                  }
                   result.afterData = resp.data
                 }
               } catch (err) {

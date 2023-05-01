@@ -1,8 +1,30 @@
 import { componentList } from '@/designer/load'
-import type { ComponentDataType } from '@/types/component'
+import type { ComponentDataType, ComponentRequestDataType } from '@/types/component'
 import type { BaseComponent } from './component'
 import type { RestRequestOptions, StaticRequestOptions } from './data'
 import { DataIntegrationMode, DataType } from './data'
+
+const componentDataHandler = (componentObj: BaseComponent, data?: ComponentRequestDataType) => {
+  if (!data) {
+    componentObj.loadDemoData()
+    return
+  }
+  if (data.type === DataType.STATIC) {
+    const options = data.requestOptions as StaticRequestOptions
+    componentObj.changeRequestDataConfig(DataType.STATIC, {
+      id: options.dataId,
+      script: options.script
+    })
+  } else if (data.type === DataType.REST) {
+    const options = data.requestOptions as RestRequestOptions
+    componentObj.changeRequestDataConfig(DataType.REST, {
+      options: options.restOptions,
+      otherConfig: data.otherConfig
+    })
+  } else if (data.type === DataType.DEMO) {
+    componentObj.loadDemoData()
+  }
+}
 
 export function createComponent(component: ComponentDataType): any {
   if ((component.component as string) in componentList) {
@@ -14,25 +36,7 @@ export function createComponent(component: ComponentDataType): any {
     obj.dataIntegrationMode = component.dataIntegrationMode || DataIntegrationMode.SELF
     const data = component.data
     if (obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
-      if (data) {
-        if (data.type === DataType.STATIC) {
-          const options = data.requestOptions as StaticRequestOptions
-          obj.changeRequestDataConfig(DataType.STATIC, {
-            id: options.dataId,
-            script: options.script
-          })
-        } else if (data.type === DataType.REST) {
-          const options = data.requestOptions as RestRequestOptions
-          obj.changeRequestDataConfig(DataType.REST, {
-            options: options.restOptions,
-            otherConfig: data.otherConfig
-          })
-        } else if (data.type === DataType.DEMO) {
-          obj.loadDemoData()
-        }
-      } else {
-        obj.loadDemoData()
-      }
+      componentDataHandler(obj, data)
     }
     component.subComponents?.forEach((item) => {
       const subObj = createComponent(item)

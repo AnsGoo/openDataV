@@ -4,7 +4,9 @@ import type { ResultType } from '@/utils/http/config'
 import { httpConfig } from '@/utils/http/config'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { message } from '@/utils/message'
+import useMessage from '@/utils/message'
+import { Logger } from '@/utils/utils'
+const { message } = useMessage()
 
 class AxiosHttp {
   private axiosInstance: AxiosInstance
@@ -62,7 +64,7 @@ class AxiosHttp {
         message.info('请登录后使用')
         break
     }
-    console.log(status, msg)
+    Logger.log(status, msg)
   }
 
   public get<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {

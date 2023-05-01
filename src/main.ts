@@ -12,9 +12,7 @@ import XIcon from '@/plugins/xicon'
 const app = createApp(App)
 app.use(Directive)
 app.use(XIcon)
-console.log(new Date())
 app.use(AsyncComponent)
-console.log(new Date())
 
 // 注册状态管理器
 app.use(store)

@@ -32,12 +32,13 @@
 import { reactive, ref } from 'vue'
 import { NForm, NInput, NFormItem, NButton, NModal, NSpace } from 'naive-ui'
 import type { FormItemRule } from 'naive-ui'
-import { message } from '@/utils/message'
 import type { LayoutData } from '@/api/pages'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { savePageApi, updatePageApi } from '@/api/pages'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
+import useMessage from '@/utils/message'
+const { message } = useMessage()
 
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{ index?: string }>()

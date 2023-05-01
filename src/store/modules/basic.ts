@@ -4,13 +4,14 @@ import type { EditData, CanvasStyleData } from '@/types/storeTypes'
 import type { LayoutData } from '@/api/pages'
 import { EditMode } from '@/enum'
 import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
-import { message } from '@/utils/message'
+import useMessage from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
 import type { BaseComponent } from '@/models'
 import { createComponent } from '@/models'
 import { cloneDeep } from 'lodash-es'
 import type { ComponentDataType, DOMRectStyle } from '@/types/component'
 import type { Position } from '@/types/common'
+const { message } = useMessage()
 
 const snapShotStore = useSnapShotStoreWithOut()
 

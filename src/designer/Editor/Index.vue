@@ -68,7 +68,7 @@ import type { BaseComponent } from '@/models'
 import { createComponent } from '@/models'
 import { componentList } from '../load'
 import { DataIntegrationMode } from '@/models/data'
-import { backgroundToCss } from '@/utils/utils'
+import { backgroundToCss, Logger } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
@@ -105,14 +105,14 @@ const contextmenus = (): ContextmenuItem[] => {
 }
 
 onMounted(() => {
-  console.log('进入编辑模式')
+  Logger.log('进入编辑模式')
   basicStore.setEditMode(EditMode.EDIT)
   document.addEventListener('paste', pasteComponent)
   document.addEventListener('copy', copyComponent)
 })
 
 onUnmounted(() => {
-  console.log('进入预览模式')
+  Logger.log('进入预览模式')
   basicStore.setEditMode(EditMode.PREVIEW)
   document.removeEventListener('paste', pasteComponent)
   document.removeEventListener('copy', copyComponent)

@@ -46,7 +46,7 @@
 import { computed, reactive, ref } from 'vue'
 import { NCard, NSpace, NButtonGroup, NButton, NInput, NDivider, NTabs, NTabPane } from 'naive-ui'
 import DataView from '@/components/DataView'
-import { message } from '@/utils/message'
+import useMessage from '@/utils/message'
 import Editor from './Editor.vue'
 import { useEventBus, StaticKey } from '@/bus'
 import {
@@ -58,6 +58,9 @@ import { makeFunction } from '@/utils/data'
 import type { AfterScriptDetail } from '@/api/data/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
+import { Logger } from '@/utils/utils'
+
+const { message } = useMessage()
 
 const config = ref({
   height: '300px',
@@ -127,7 +130,7 @@ const loadAfterScript = async (id: string) => {
       formData.type = data.type
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 const handleSave = async () => {

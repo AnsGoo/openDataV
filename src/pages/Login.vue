@@ -51,14 +51,16 @@ import type { LoginData } from '@/types/user'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useRouter, useRoute } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
-import { message } from '@/utils/message'
 import { loginApi } from '@/api/user'
+import { Logger } from '@/utils/utils'
+import useMessage from '@/utils/message'
 
 const userStore = useUserStoreWithOut()
 const router: Router = useRouter()
 const route: Route = useRoute()
 
 const ruleFormRef = ref<InstanceType<typeof NForm>>()
+const { message } = useMessage()
 
 const formData = reactive<{
   username: string
@@ -96,7 +98,7 @@ const loginAction = async () => {
       message.error(`登录失败,请输入正确的账号密码`)
     }
   } catch (e: unknown) {
-    console.log(e)
+    Logger.log(e)
   }
 }
 </script>

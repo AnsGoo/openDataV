@@ -99,7 +99,8 @@ import { NTooltip, NDropdown, NAvatar, NBreadcrumb, NBreadcrumbItem } from 'naiv
 import { useUserStoreWithOut } from '@/store/modules/user'
 import ProjectSetting from './setting.vue'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { message, dialog } from '@/utils/message'
+import useMessage from '@/utils/message'
+const { message, dialog } = useMessage()
 
 defineProps<{
   collapsed: boolean

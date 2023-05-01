@@ -56,7 +56,7 @@
 import { ref, computed, onMounted } from 'vue'
 import { http } from '@/utils/http'
 import { useProp } from '@/hooks'
-import { uuid } from '@/utils/utils'
+import { Logger, uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus'
 import type { Progress } from './type'
 import type { BaseComponent } from '@/models'
@@ -105,7 +105,7 @@ const initData = async () => {
           ((Number(resp.data.TagValue) || 0) * 100) / Number(propValue.data.maxValue)
       }
     } catch (err: any) {
-      console.log(err.message || err)
+      Logger.log(err.message || err)
     }
   }
 }

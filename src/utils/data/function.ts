@@ -1,5 +1,4 @@
 import { ScriptType } from '@/enum'
-import { notification } from '../message'
 import type { CallbackType } from './type'
 
 /**
@@ -21,19 +20,11 @@ export function makeFunction(
   }
 }
 
-function makeJavaScriptsFunction(code: string, args: string[], isDebug?: boolean): CallbackType {
+function makeJavaScriptsFunction(code: string, args: string[], _isDebug?: boolean): CallbackType {
   try {
     const handler = new Function(...args, code) as (resp: any, options: Recordable) => any
     return { handler }
   } catch (err: any) {
-    if (isDebug) {
-      notification.error({
-        title: '脚本语法错误',
-        content: err.message,
-        duration: 10000,
-        closable: false
-      })
-    }
     return { error: err }
   }
 }

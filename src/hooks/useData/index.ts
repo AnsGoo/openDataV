@@ -28,13 +28,14 @@ export const useData = (
       clearInterval(timer)
     }
   })
-  if (callbackData && component.dataConfig) {
-    if (component.dataConfig?.type === DataType.REST && component.dataConfig.otherConfig.isRepeat) {
-      if (timer) {
-        clearInterval(timer)
-      }
-      const dataConfig = component.dataConfig
-      timer = setInterval(pullData, dataConfig.otherConfig.interval || 300)
+  if (!(callbackData && component.dataConfig)) {
+    return
+  }
+  if (component.dataConfig?.type === DataType.REST && component.dataConfig.otherConfig.isRepeat) {
+    if (timer) {
+      clearInterval(timer)
     }
+    const dataConfig = component.dataConfig
+    timer = setInterval(pullData, dataConfig.otherConfig.interval || 300)
   }
 }

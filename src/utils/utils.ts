@@ -1,5 +1,4 @@
 import type { DOMRectStyle, GroupStyle } from '@/types/component'
-import { message } from '@/utils/message'
 import type { Vector, Position } from '@/types/common'
 import { cloneDeep, isNumber } from 'lodash-es'
 import type { BaseComponent } from '@/models'
@@ -337,7 +336,7 @@ export const importRaw = (fileHandler, accept = '.*') => {
     if (e.currentTarget && e.currentTarget['files']) {
       const length = e.currentTarget['files'].length || 0
       if (length === 0) {
-        message.info('请选择文件')
+        return
       } else {
         const reader = new FileReader()
         reader.readAsText(e.currentTarget['files'][0])
@@ -611,3 +610,5 @@ export function camel2snake(key) {
     .trim()
     .replaceAll(' ', '-')
 }
+
+export const Logger = console

@@ -158,6 +158,7 @@ const handleLineRemove = (index: any) => {
       transform: translateX(-24px);
       .value {
         margin-left: 4px;
+        color: yellow;
       }
     }
   }
@@ -169,6 +170,7 @@ const handleLineRemove = (index: any) => {
       padding: 0 2px;
       margin-top: 4px;
       margin-left: 4px;
+      mix-blend-mode: difference;
     }
   }
 }
@@ -184,6 +186,7 @@ const handleLineRemove = (index: any) => {
       flex-direction: column;
       .value {
         margin-top: 4px;
+        color: yellow;
       }
     }
   }
@@ -197,6 +200,7 @@ const handleLineRemove = (index: any) => {
       margin-left: 2px;
       transform: rotate(-90deg);
       transform-origin: 0 0;
+      mix-blend-mode: difference;
     }
   }
 }

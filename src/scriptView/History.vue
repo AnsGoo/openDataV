@@ -31,6 +31,7 @@ import { onMounted, ref } from 'vue'
 import { getAfterScriptListApi } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
 import { ScriptType } from '@/enum'
+import { Logger } from '@/utils/utils'
 
 const dataList = ref<AfterScriptDetail[]>([])
 const loadStaticList = async () => {
@@ -40,7 +41,7 @@ const loadStaticList = async () => {
       dataList.value = resp.data
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 
