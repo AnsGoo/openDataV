@@ -9,12 +9,13 @@
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
-import { onUnmounted, onMounted, ref, computed } from 'vue'
+import { onUnmounted, onMounted, ref, computed, provide, readonly } from 'vue'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { BaseComponent } from '@/models'
 import type { ComponentDataType } from '@/types/component'
+import hooks from '@/hooks'
 const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 
@@ -24,7 +25,7 @@ const canvasStyleData = ref<CanvasStyleData>({
   height: 0,
   background: { backgroundColor: '#272e3b' }
 })
-
+provide('HOOKS', readonly(hooks))
 const screen = ref<HTMLDivElement | null>(null)
 
 const bgStyle = computed<Recordable<string>>(() => {

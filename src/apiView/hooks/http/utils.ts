@@ -24,6 +24,7 @@ export const recordabletoKV = (data: Recordable): Array<KV> => {
 }
 
 export const requestOptionsToStore = (options: RequestOption): StoreRequestOption => {
+  console.log(options)
   const data = cloneDeep(options)
   const result: StoreRequestOption = {
     headers: KVToRecordable(options.headers),

@@ -31,7 +31,6 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       vueJsx(),
       viteMockServe({
         mockPath: 'mock',
-        supportTs: true, //如果使用 js发开，则需要配置 supportTs 为 false
         logger: true,
         localEnabled: command === 'serve',
         prodEnabled: VITE_MOCK === 'true',

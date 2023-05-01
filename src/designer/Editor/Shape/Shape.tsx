@@ -1,4 +1,13 @@
-import { defineComponent, ref, computed, onMounted, onErrorCaptured, watch } from 'vue'
+import {
+  defineComponent,
+  ref,
+  computed,
+  onMounted,
+  onErrorCaptured,
+  watch,
+  provide,
+  readonly
+} from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import type { ComponentPublicInstance, PropType } from 'vue'
@@ -11,6 +20,7 @@ import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 import type { BaseComponent } from '@/models'
 import styles from './shape.module.less'
+import hooks from '@/hooks'
 
 export default defineComponent({
   props: {
@@ -30,7 +40,7 @@ export default defineComponent({
     const basicStore = useBasicStoreWithOut()
     const composeStore = useComposeStoreWithOut()
     const copyStore = useCopyStoreWithOut()
-
+    provide('HOOKS', readonly(hooks))
     const copy = () => {
       copyStore.copy(basicStore.curComponent!)
     }

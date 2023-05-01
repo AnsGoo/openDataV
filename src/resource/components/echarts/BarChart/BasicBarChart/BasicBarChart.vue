@@ -3,21 +3,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, inject } from 'vue'
 import type BasicLineChartComponent from './config'
-import type { BasicLineChart } from './type'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
-import { useProp, useData } from '@/hooks'
 import type { DataType } from '@/models'
 import type { RequestResponse } from '@/models/type'
+import type { HooksType } from '@/hooks/type'
+import type { BasicLineChart } from './type'
 
 const chartEl = ref<ElRef>(null)
 let globalOption: EChartsOption
 const props = defineProps<{
   component: BasicLineChartComponent
 }>()
+const { useProp, useData } = inject<HooksType>('HOOKS') || {}
 
 let chartData:
   | Array<{ label: string; value: number }>
@@ -28,14 +29,21 @@ const dataChange = (resp: any, _: DataType) => {
     updateData(chartData)
   }
 }
-useData(props.component, dataChange)
 
+if (useData) {
+  useData(props.component, dataChange)
+}
+
+let propValue: BasicLineChart
 const propValueChange = () => {
   updateData(chartData)
 }
+if (useProp) {
+  const { propValue: newPropValue } = useProp<BasicLineChart>(props.component, propValueChange)
+  propValue = newPropValue
+}
 
 const { updateEchart, resizeHandler } = useEchart(chartEl)
-const { propValue } = useProp<BasicLineChart>(props.component, propValueChange)
 
 onMounted(async () => {
   globalOption = getOption()

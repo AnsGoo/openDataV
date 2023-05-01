@@ -17,7 +17,7 @@ export const getRestDataApi = async (id: string): Promise<AxiosResponse<RestData
  */
 export const getRestDataListApi = async (): Promise<AxiosResponse<RestDataDetail[]>> => {
   return http.get<RestDataDetail[]>({
-    url: '/dataset/rest/'
+    url: '/dataset/rest'
   })
 }
 

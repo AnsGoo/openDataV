@@ -160,6 +160,7 @@ const props = withDefaults(
 const restDataList = ref<Array<SelectOption>>([])
 const loadRestList = async () => {
   try {
+    console.log(getRestDataListApi)
     const resp = await getRestDataListApi()
     if (resp.status === 200) {
       restDataList.value = resp.data.map((el: RestDataDetail) => {
