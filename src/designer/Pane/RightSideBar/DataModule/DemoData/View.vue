@@ -43,8 +43,7 @@ import { DataType } from '@/models'
 
 import DataView from '@/components/DataView'
 import { cloneDeep } from 'lodash-es'
-import useMessage from '@/utils/message'
-const { message } = useMessage()
+import { message } from '@/utils/message'
 
 const props = defineProps<{
   curComponent: BaseComponent

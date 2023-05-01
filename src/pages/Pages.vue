@@ -60,9 +60,7 @@ import { XIcon } from '@/plugins/xicon'
 import type { DropdownOption } from 'naive-ui'
 import { NCard, NEllipsis, NTooltip, NDropdown, NButton } from 'naive-ui'
 import { Logger } from '@/utils/utils'
-import useMessage from '@/utils/message'
-
-const { message } = useMessage()
+import { message } from '@/utils/message'
 
 const router = useRouter()
 const loading = ref<boolean>(false)

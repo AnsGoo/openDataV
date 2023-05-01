@@ -57,8 +57,8 @@ import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import { uuid } from '@/utils/utils'
 import { ScriptType } from '@/enum'
 import { requestOptionsToStore, storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
-import useMessage from '@/utils/message'
-const { message } = useMessage()
+import { message } from '@/utils/message'
+
 const props = defineProps<{
   curComponent: BaseComponent
 }>()

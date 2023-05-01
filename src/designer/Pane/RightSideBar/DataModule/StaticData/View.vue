@@ -41,8 +41,8 @@ import { ScriptType } from '@/enum'
 import Static from '@/apiView/RequestContent/static'
 import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
 import type { AfterScript } from '@/types/component'
-import useMessage from '@/utils/message'
-const { message } = useMessage()
+import { message } from '@/utils/message'
+
 const props = defineProps<{
   curComponent: BaseComponent
 }>()

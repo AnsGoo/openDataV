@@ -46,7 +46,7 @@
 import { computed, reactive, ref } from 'vue'
 import { NCard, NSpace, NButtonGroup, NButton, NInput, NDivider, NTabs, NTabPane } from 'naive-ui'
 import DataView from '@/components/DataView'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 import Editor from './Editor.vue'
 import { useEventBus, StaticKey } from '@/bus'
 import {
@@ -59,8 +59,6 @@ import type { AfterScriptDetail } from '@/api/data/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 import { Logger } from '@/utils/utils'
-
-const { message } = useMessage()
 
 const config = ref({
   height: '300px',

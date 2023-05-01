@@ -99,8 +99,10 @@ import { NTooltip, NDropdown, NAvatar, NBreadcrumb, NBreadcrumbItem } from 'naiv
 import { useUserStoreWithOut } from '@/store/modules/user'
 import ProjectSetting from './setting.vue'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import useMessage from '@/utils/message'
-const { message, dialog } = useMessage()
+import { dialog, message } from '@/utils/message'
+
+const router = useRouter()
+const route = useRoute()
 
 defineProps<{
   collapsed: boolean
@@ -118,9 +120,6 @@ const username = userStore?.userName || ''
 const drawerSetting = ref()
 const fullscreenIcon = ref<string>('fullScreen')
 const themeIcon = ref<string>('sun')
-
-const router = useRouter()
-const route = useRoute()
 
 const iconColor = computed<string>(() => projectStore.iconColor)
 

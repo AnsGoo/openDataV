@@ -38,9 +38,8 @@ import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { StaticDataDetail } from '@/api/data'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { Logger } from '@/utils/utils'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 
-const { message } = useMessage()
 const snapShot = useDataSnapShot('STATIC', true)
 const dataHistory = ref<StaticDataDetail[]>([])
 const dataList = ref<StaticDataDetail[]>([])

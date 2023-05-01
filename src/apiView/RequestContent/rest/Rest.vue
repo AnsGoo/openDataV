@@ -127,10 +127,9 @@ import {
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 import type { AfterScript } from '@/types/component'
 
-const { message } = useMessage()
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
 }

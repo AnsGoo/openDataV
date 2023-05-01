@@ -33,8 +33,7 @@ import { computed, ref, watch } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import useMessage from '@/utils/message'
-const { message } = useMessage()
+import { message } from '@/utils/message'
 
 const savedStatus = ref<boolean>(true)
 

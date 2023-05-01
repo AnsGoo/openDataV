@@ -55,14 +55,13 @@ import { onMounted, ref } from 'vue'
 import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
 const dataList = ref<RestDataDetail[]>([])
 const snapShot = useDataSnapShot('REST', true)
 const dataHistory = ref<RestDataDetail[]>([])
 
-const { message } = useMessage()
 const loadStaticList = async () => {
   try {
     const resp = await getRestDataListApi()

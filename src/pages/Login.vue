@@ -53,14 +53,13 @@ import { useRouter, useRoute } from 'vue-router'
 import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
 import { loginApi } from '@/api/user'
 import { Logger } from '@/utils/utils'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 
 const userStore = useUserStoreWithOut()
 const router: Router = useRouter()
 const route: Route = useRoute()
 
 const ruleFormRef = ref<InstanceType<typeof NForm>>()
-const { message } = useMessage()
 
 const formData = reactive<{
   username: string

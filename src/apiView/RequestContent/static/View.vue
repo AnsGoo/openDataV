@@ -56,7 +56,7 @@ import { ScriptType } from '@/enum'
 import ScriptsEdtor from '../modules/ScriptsEditor'
 import DataView from '@/components/DataView'
 import StaticDataView from '@/components/StaticDataView'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 import type { StaticRequestOptions } from './type'
 import type { StaticDataDetail } from '@/api/data'
 import {
@@ -70,7 +70,6 @@ import { useEventBus, StaticKey } from '@/bus'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { AfterScript } from '@/types/component'
 import { Logger } from '@/utils/utils'
-const { message } = useMessage()
 
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(

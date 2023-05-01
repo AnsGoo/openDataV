@@ -4,9 +4,8 @@ import type { ResultType } from '@/utils/http/config'
 import { httpConfig } from '@/utils/http/config'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
-const { message } = useMessage()
 
 class AxiosHttp {
   private axiosInstance: AxiosInstance

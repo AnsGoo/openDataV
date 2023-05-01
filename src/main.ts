@@ -10,6 +10,7 @@ import router from '@/router'
 import Directive from '@/plugins/directive'
 import XIcon from '@/plugins/xicon'
 const app = createApp(App)
+app.use(router)
 app.use(Directive)
 app.use(XIcon)
 app.use(AsyncComponent)
@@ -18,6 +19,5 @@ app.use(AsyncComponent)
 app.use(store)
 
 // 注册路由模块
-app.use(router)
 
 app.mount('#app', true)

@@ -69,7 +69,7 @@ import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
-import useMessage from '@/utils/message'
+import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
 import {
@@ -79,8 +79,6 @@ import {
   getAfterScriptApi
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
-
-const { message } = useMessage()
 
 const scriptList = ref<SelectOption[]>([])
 
