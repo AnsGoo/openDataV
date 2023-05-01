@@ -87,7 +87,6 @@ watch(
     const labelHeight = propValue.style.height
     const { top, left, width, height } = props.component.style
     for (let i = 0; i < len; i++) {
-      console.log(props.component.subComponents[i])
       if (!props.component.subComponents[i]) {
         const groupConfig = new GroupComponent(uuid())
         if (mode === 'horizontal') {
@@ -157,12 +156,10 @@ const getShow = (index: number) => {
 }
 
 const modeStyle = computed<string>(() => {
-  console.log(propValue.label.mode)
   return propValue.label.mode ? propValue.label.mode : 'horizontal'
 })
 const contentRef = ref<HTMLElement | null>(null)
 const content = computed<InstanceType<typeof GroupComponent>>(() => {
-  console.log(props.component.subComponents[activeKey.value])
   return props.component.subComponents[activeKey.value]
 })
 
