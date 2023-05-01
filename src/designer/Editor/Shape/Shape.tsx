@@ -11,7 +11,6 @@ import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 import type { BaseComponent } from '@/models'
 import styles from './shape.module.less'
-import { XIcon } from '@/plugins/xicon'
 
 export default defineComponent({
   props: {
@@ -559,7 +558,7 @@ export default defineComponent({
           <span class={styles.errorInfo} v-show={isError.value}>
             {errorInfo.value}
           </span>
-          <XIcon
+          <x-icon
             class={styles.rotation}
             name="rotation"
             v-show={isActive.value}
