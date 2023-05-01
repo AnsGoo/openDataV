@@ -65,9 +65,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 import { getPageApi } from '@/api/pages'
 import { useRoute } from 'vue-router'
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
-import { useUnloadAlert } from '@/hooks'
-
-useUnloadAlert()
 
 const basicStore = useBasicStoreWithOut()
 
