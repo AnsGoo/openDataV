@@ -4,7 +4,7 @@
     v-model:code="form.code"
     :language="languageType"
     :config="config"
-    :theme="projectStore.darkTheme ? 'dark' : 'light'"
+    :theme="darkTheme ? 'dark' : 'light'"
     @update:code="formChange"
   >
     <template #tool-bar>
@@ -36,19 +36,18 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, watch } from 'vue'
+import { computed, inject, reactive, ref, watch } from 'vue'
 import type { SelectOption } from 'naive-ui'
 import { NSelect } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 
-const projectStore = useProjectSettingStoreWithOut()
+const darkTheme = inject('DarkTheme', true)
 const savedStatus = ref<boolean>(true)
 const isShow = ref<boolean>(false)
 const props = withDefaults(

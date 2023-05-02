@@ -2,9 +2,8 @@
   <x-icon :name="themeIcon" />
 </template>
 <script lang="ts" setup>
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
-const projectStore = useProjectSettingStoreWithOut()
-const themeIcon = computed<string>(() => (projectStore.darkTheme ? 'sun' : 'moon'))
+const darkTheme = inject('DarkTheme', true)
+const themeIcon = computed<string>(() => (darkTheme ? 'sun' : 'moon'))
 </script>

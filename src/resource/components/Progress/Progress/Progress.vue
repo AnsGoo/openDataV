@@ -55,7 +55,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { http } from '@/utils/http'
-import { useProp } from '@/hooks'
+import { useProp } from '@/models/hooks'
 import { Logger, uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus'
 import type { Progress } from './type'

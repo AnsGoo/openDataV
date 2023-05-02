@@ -4,7 +4,7 @@
     v-model:code="form.code"
     :language="languageType"
     :config="config"
-    :theme="projectStore.darkTheme ? 'dark' : 'light'"
+    :theme="darkTheme ? 'dark' : 'light'"
     @update:code="formChange"
   >
     <template #tool-bar>
@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch, inject } from 'vue'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
@@ -66,7 +66,6 @@ import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 import { message } from '@/utils/message'
@@ -85,8 +84,6 @@ const scriptList = ref<SelectOption[]>([])
 const savedStatus = ref<boolean>(true)
 
 const isShow = ref<boolean>(false)
-
-const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
     data: AfterScript
@@ -118,6 +115,7 @@ const emits = defineEmits<{
   (e: 'change', value: AfterScript): void
 }>()
 const languageMap = { Javascript: javascript, Python: python }
+const darkTheme = inject('DarkTheme', true)
 
 const formData = reactive<{
   id?: string

@@ -48,7 +48,7 @@ import {
   NSpace
 } from 'naive-ui'
 import { debounce } from 'lodash-es'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)
@@ -57,7 +57,7 @@ const toolBarHeight = ref<number>(35)
 const sliderValue = ref<number>(100)
 const selectValue = ref<string>('100%')
 const scaleValue = ref<number>(1)
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 const options: SelectOption[] = [
   {
     value: 200,
@@ -101,7 +101,7 @@ const handleScale = (value: number) => {
 }
 
 const changeScale = debounce((value: number) => {
-  basicStore.setScale(value)
+  canvasState.setScale(value)
   scaleValue.value = value / 100
 }, 300)
 

@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'
@@ -31,7 +31,7 @@ import type { CustomComponent } from '@/models'
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 interface PropData {
   common: {
@@ -59,7 +59,7 @@ const attrKeys = computed(() => {
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
 const changed = (form: string, key: string, val: any) => {
-  basicStore.setCurComponentPropValue(form, key, val)
+  canvasState.setCurComponentPropValue(form, key, val)
 }
 
 const resetFormData = () => {

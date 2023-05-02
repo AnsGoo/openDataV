@@ -34,12 +34,12 @@ import type { FormItemRule } from 'naive-ui'
 import { NButton, NForm, NFormItem, NInput, NModal, NSpace } from 'naive-ui'
 import type { LayoutData } from '@/api/pages'
 import { savePageApi, updatePageApi } from '@/api/pages'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
 import { message } from '@/utils/message'
 
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 const props = defineProps<{ index?: string }>()
 
 const saveDialogVisible = ref<boolean>(true)
@@ -47,8 +47,8 @@ const form = reactive<{
   name: string
   thumbnail: string
 }>({
-  name: basicStore.name,
-  thumbnail: basicStore.thumbnail
+  name: canvasState.name,
+  thumbnail: canvasState.thumbnail
 })
 const rules = reactive<{
   name: FormItemRule[]
@@ -66,8 +66,8 @@ const handleSubmit = async (type: string) => {
   const layoutData: LayoutData = {
     name: name,
     thumbnail: thumbnail!,
-    canvasData: basicStore.layoutData,
-    canvasStyle: basicStore.canvasStyleData
+    canvasData: canvasState.layoutData,
+    canvasStyle: canvasState.canvasStyleData
   }
 
   if (type === 'update') {
@@ -75,8 +75,8 @@ const handleSubmit = async (type: string) => {
       const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
         message.success('修改成功')
-        if (basicStore.name !== name) {
-          basicStore.setName(name)
+        if (canvasState.name !== name) {
+          canvasState.setName(name)
         }
       }
     } catch (e) {

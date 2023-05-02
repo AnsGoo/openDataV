@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from '@/hooks'
+import { useProp } from '@/models/hooks'
 import { ref } from 'vue'
 import type DecorationComponent from './config'
 

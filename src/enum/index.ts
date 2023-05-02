@@ -45,6 +45,13 @@ export class GroupType {
     this.icon = icon
     this.key = key
   }
+  public toJSON() {
+    return {
+      name: this.name,
+      icon: this.icon,
+      key: this.key
+    }
+  }
 }
 
 export enum ComponentGroup {
@@ -68,7 +75,6 @@ export enum ComponentGroup {
   CUSTOM = 'CUSTOM',
   TEXT = 'TEXT',
   BUTTON = 'BUTTON',
-
   // 表格
   TABLE = 'TABLE',
 

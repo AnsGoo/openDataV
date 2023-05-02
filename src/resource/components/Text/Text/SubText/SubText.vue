@@ -11,7 +11,7 @@ import { onMounted, ref } from 'vue'
 import { useEventBus } from '@/bus'
 import { http } from '@/utils/http'
 import type { SubTextType } from './type'
-import { useProp } from '@/hooks'
+import { useProp } from '@/models/hooks'
 import type SubTextComponent from './config'
 
 const props = defineProps<{

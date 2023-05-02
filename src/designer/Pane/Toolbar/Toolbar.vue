@@ -1,6 +1,6 @@
 <template>
   <ToolBar :bars="toolBars">
-    <div class="tool-bar-title">{{ basicStore.name }}</div>
+    <div class="tool-bar-title">{{ canvasState.name }}</div>
   </ToolBar>
 </template>
 
@@ -22,9 +22,9 @@ import showIconCard from './modules/iconList'
 import showSaveCard from './modules/save'
 
 import LogoView from '@/components/LogoView'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 const router = useRouter()
 const route = useRoute()

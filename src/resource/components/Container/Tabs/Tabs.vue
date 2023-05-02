@@ -53,11 +53,11 @@ import {
 } from '@/utils/utils'
 import type TabsComponent from './config'
 import type { Tabs } from './type'
-import { useProp } from '@/hooks'
+import { useProp } from '@/models/hooks'
 import Shape from '@/designer/Editor/Shape'
 import type { CustomComponent } from '@/models'
 import { componentList } from '@/designer/load'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import { DataIntegrationMode } from '@/enum/data'
 import Group from '@/components/Group/Group.vue'
 import GroupComponent from '@/components/Group/config'
@@ -66,8 +66,8 @@ const props = defineProps<{
   component: TabsComponent
 }>()
 
-const basicStore = useBasicStoreWithOut()
-const editMode = computed<boolean>(() => basicStore.isEditMode)
+const canvasState = useCanvasState()
+const editMode = computed<boolean>(() => canvasState.isEditMode)
 const { propValue } = useProp<Tabs>(props.component)
 const labels = computed<Array<string>>(() => {
   return propValue.label.items || []
@@ -135,11 +135,11 @@ const getShapeStyle = (item: CustomComponent) => {
   }
 }
 
-const curComponent = computed(() => basicStore.curComponent)
+const curComponent = computed(() => canvasState.curComponent)
 const activeKey = ref<number>(0)
 
 const isShow = (display: boolean): boolean => {
-  return !(basicStore.isEditMode && display === false)
+  return !(canvasState.isEditMode && display === false)
 }
 
 const tabsClick = (index: number) => {
@@ -183,8 +183,8 @@ const handleDrop = async (e) => {
       component.loadDemoData()
     }
     const { top, left } = document.querySelector('#editor')!.getBoundingClientRect()
-    const y = (e.pageY - top) / basicStore.scale
-    const x = (e.pageX - left) / basicStore.scale
+    const y = (e.pageY - top) / canvasState.scale
+    const x = (e.pageX - left) / canvasState.scale
     const parentStyle = props.component.subComponents[activeKey.value].style
     component.change('top', y)
     component.change('left', x)

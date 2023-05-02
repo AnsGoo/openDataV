@@ -1,5 +1,7 @@
 import type { StoreComponentData } from '@/utils/db'
 import type { CustomComponent } from '@/models'
+import type { EditMode } from '@/enum'
+import type { Position } from '@/types/common'
 
 export interface CanvasStyleData {
   width: number
@@ -10,7 +12,7 @@ export interface CanvasStyleData {
 export interface EditData {
   name: string
   thumbnail: string
-  editMode: string
+  editMode: EditMode
   canvasStyleData: CanvasStyleData
   componentData: CustomComponent[]
   activeIndex?: string
@@ -41,7 +43,7 @@ export interface SnapData {
 }
 
 export interface AreaData {
-  style: Postion
+  style: Position
   components: CustomComponent[]
   ids: Set
 }

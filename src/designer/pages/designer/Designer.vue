@@ -60,24 +60,24 @@ import ToolBar from '../../Pane/Toolbar'
 import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'
 import Canvas from './Canvas.vue'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 import type { LayoutData } from '@/api/pages'
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
-import hooks from '@/hooks'
+import hooks from '@/models/hooks'
 
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
 provide('HOOKS', readonly(hooks))
 const setLayoutData = (data: LayoutData) => {
-  basicStore.setLayoutData(data)
+  canvasState.setLayoutData(data)
 }
 defineExpose({ setLayoutData })
 
 onUnmounted(() => {
-  basicStore.clearCanvas()
+  canvasState.clearCanvas()
 })
 </script>
 

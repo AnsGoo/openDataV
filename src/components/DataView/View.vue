@@ -2,19 +2,17 @@
   <CodeEditor
     ref="cm"
     :config="curConfig"
-    :theme="projectStore.darkTheme ? 'dark' : 'light'"
+    :theme="darkTheme ? 'dark' : 'light'"
     :code="content"
     @change="formChange"
   />
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
-const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
     content?: string
@@ -38,7 +36,7 @@ const props = withDefaults(
 const curConfig = computed<CodemirrorOption>(() => {
   return { ...props.config, disabled: props.disable || false }
 })
-
+const darkTheme = inject('DarkTheme', true)
 const emits = defineEmits<{
   (e: 'update:content', value: string): void
   (e: 'change', value: string): void

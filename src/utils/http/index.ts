@@ -3,7 +3,7 @@ import Axios from 'axios'
 import type { ResultType } from '@/utils/http/config'
 import { httpConfig } from '@/utils/http/config'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
@@ -27,8 +27,8 @@ class AxiosHttp {
         if (token && config.headers) {
           config.headers['authorization'] = token
         }
-        const basicStore = useBasicStoreWithOut()
-        if (this.isBlock && basicStore.isEditMode) {
+        const canvasState = useCanvasState()
+        if (this.isBlock && canvasState.isEditMode) {
           return Promise.reject('http is disable where the mode is edit')
         }
         return config

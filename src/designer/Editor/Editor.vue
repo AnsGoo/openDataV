@@ -23,7 +23,7 @@
     <!--页面组件列表展示-->
     <template v-for="(item, index) in componentData" :key="item.id">
       <Shape
-        v-if="basicStore.isEditMode && item.display"
+        v-if="canvasState.isEditMode && item.display"
         :id="'shape' + item.id"
         :defaultStyle="item.style"
         :style="getShapeStyle(item.style)"
@@ -57,33 +57,33 @@ import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape'
 import { backgroundToCss, filterStyle, getComponentShapeStyle, Logger, uuid } from '@/utils/utils'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useComposeStoreWithOut } from '@/store/modules/compose'
+import useActionState from '@/designer/state/actions'
 import { EditMode } from '@/enum'
 import type { Position, Vector } from '@/types/common'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { useCopyStoreWithOut } from '@/store/modules/copy'
+import useClipBoardState from '@/designer/state/clipBoard'
 import type { CustomComponent } from '@/models'
 import { createComponent } from '../utils'
 import { componentList } from '../load'
 import { DataIntegrationMode } from '@/enum/data'
-const basicStore = useBasicStoreWithOut()
-const composeStore = useComposeStoreWithOut()
-const copyStore = useCopyStoreWithOut()
+const actionState = useActionState()
+const clipBoardState = useClipBoardState()
+import useCanvasState from '@/designer/state/canvas'
+const canvasState = useCanvasState()
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
 }
 
 const clearCanvas = () => {
-  basicStore.clearCanvas()
+  canvasState.clearCanvas()
 }
 
 const paste = (_: HTMLElement, event: MouseEvent) => {
   const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
   const y = event.pageY - editorRectInfo.top
   const x = event.pageX - editorRectInfo.left
-  copyStore.paste(true, x, y)
+  clipBoardState.paste(true, x, y)
 }
 
 const contextmenus = (): ContextmenuItem[] => {
@@ -103,25 +103,25 @@ const contextmenus = (): ContextmenuItem[] => {
 
 onMounted(() => {
   Logger.log('进入编辑模式')
-  basicStore.setEditMode(EditMode.EDIT)
+  canvasState.setEditMode(EditMode.EDIT)
   document.addEventListener('paste', pasteComponent)
   document.addEventListener('copy', copyComponent)
 })
 
 onUnmounted(() => {
   Logger.log('进入预览模式')
-  basicStore.setEditMode(EditMode.PREVIEW)
+  canvasState.setEditMode(EditMode.PREVIEW)
   document.removeEventListener('paste', pasteComponent)
   document.removeEventListener('copy', copyComponent)
-  basicStore.clearCanvas()
+  canvasState.clearCanvas()
 })
 
 const componentData = computed(() => {
-  return basicStore.componentData
+  return canvasState.componentData
 })
 
-const canvasStyleData = computed(() => basicStore.canvasStyleData)
-const curComponent = computed(() => basicStore.curComponent)
+const canvasStyleData = computed(() => canvasState.canvasStyleData)
+const curComponent = computed(() => canvasState.curComponent)
 
 const bgStyle = computed<Recordable<string>>(() => {
   const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
@@ -139,8 +139,8 @@ const bgStyle = computed<Recordable<string>>(() => {
 })
 
 const copyComponent = () => {
-  if (basicStore.curComponent) {
-    copyStore.copy(basicStore.curComponent)
+  if (canvasState.curComponent) {
+    clipBoardState.copy(canvasState.curComponent)
   }
 }
 
@@ -153,10 +153,10 @@ const pasteComponent = (event: ClipboardEvent) => {
         component.change('top', component.positionStyle.top + 10)
         component.change('left', component.positionStyle.left + 10)
         component.id = uuid()
-        copyStore.copy(component)
+        clipBoardState.copy(component)
         event.preventDefault()
         event.stopPropagation()
-        basicStore.appendComponent(component)
+        canvasState.appendComponent(component)
       }
     } catch (_) {}
   }
@@ -173,50 +173,50 @@ const editor = ref<ElRef>(null)
 const isShowReferLine = ref<boolean>(true)
 const handleMouseDown = (e: MouseEvent) => {
   // 阻止默认事件，防止拖拽时出现拖拽图标
-  basicStore.setClickComponentStatus(false)
+  canvasState.setClickComponentStatus(false)
   e.preventDefault()
   e.stopPropagation()
-  composeStore.setHidden()
+  actionState.setHidden()
   // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
   const rectInfo = editor.value?.getBoundingClientRect()
   editorX.value = rectInfo!.x
   editorY.value = rectInfo!.y
   const startX = e.clientX
   const startY = e.clientY
-  start.x = (startX - editorX.value) / basicStore.scale
-  start.y = (startY - editorY.value) / basicStore.scale
+  start.x = (startX - editorX.value) / canvasState.scale
+  start.y = (startY - editorY.value) / canvasState.scale
 
   const move = (moveEvent: MouseEvent) => {
     moveEvent.preventDefault()
     moveEvent.stopPropagation()
 
     if (moveEvent.clientX < startX) {
-      start.x = (moveEvent.clientX - editorX.value) / basicStore.scale
+      start.x = (moveEvent.clientX - editorX.value) / canvasState.scale
     }
     if (moveEvent.clientY < startY) {
-      start.y = (moveEvent.clientY - editorY.value) / basicStore.scale
+      start.y = (moveEvent.clientY - editorY.value) / canvasState.scale
     }
-    const width = Math.abs(moveEvent.clientX - startX) / basicStore.scale
-    const height = Math.abs(moveEvent.clientY - startY) / basicStore.scale
+    const width = Math.abs(moveEvent.clientX - startX) / canvasState.scale
+    const height = Math.abs(moveEvent.clientY - startY) / canvasState.scale
 
-    composeStore.setPostion({ left: start.x, top: start.y, width, height })
+    actionState.setPostion({ left: start.x, top: start.y, width, height })
   }
   const up = (UpMoveEvent: MouseEvent) => {
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
     if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
-      composeStore.setHidden()
+      actionState.setHidden()
       return
     }
 
     const selectedRect: Position = {
-      left: Math.round(composeStore.style.left),
-      top: Math.round(composeStore.style.top),
-      right: composeStore.style.left + composeStore.style.width,
-      bottom: composeStore.style.top + composeStore.style.height
+      left: Math.round(actionState.style.left),
+      top: Math.round(actionState.style.top),
+      right: actionState.style.left + actionState.style.width,
+      bottom: actionState.style.top + actionState.style.height
     }
 
-    composeStore.setSelectComponents(selectedRect)
+    actionState.setSelectComponents(selectedRect)
   }
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)
@@ -233,11 +233,11 @@ const handleDrop = async (e) => {
     }
 
     const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-    const y = (e.pageY - editorRectInfo.top) / basicStore.scale
-    const x = (e.pageX - editorRectInfo.left) / basicStore.scale
+    const y = (e.pageY - editorRectInfo.top) / canvasState.scale
+    const x = (e.pageX - editorRectInfo.left) / canvasState.scale
     component.change('top', y)
     component.change('left', x)
-    basicStore.appendComponent(component)
+    canvasState.appendComponent(component)
   }
 }
 
@@ -247,8 +247,8 @@ const handleDragOver = (e) => {
 }
 
 const deselectCurComponent = () => {
-  if (!basicStore.isClickComponent) {
-    basicStore.setCurComponent(undefined)
+  if (!canvasState.isClickComponent) {
+    canvasState.setCurComponent(undefined)
   }
 }
 </script>

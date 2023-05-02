@@ -6,7 +6,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import type DateTextComponent from './config'
-import { useProp } from '@/hooks'
+import { useProp } from '@/models/hooks'
 import type { DateText } from './type'
 
 const props = defineProps<{

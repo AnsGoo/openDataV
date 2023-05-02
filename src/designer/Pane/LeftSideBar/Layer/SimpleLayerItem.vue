@@ -12,7 +12,7 @@
 
 <script lang="ts" setup>
 import { eventBus, StaticKey } from '@/bus'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import type { CustomComponent } from '@/models'
 
@@ -31,7 +31,7 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<{ (e: 'select', index: string): void }>()
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 const handleDragStart = (event: DragEvent, index: string) => {
   // event.preventDefault()
@@ -53,15 +53,15 @@ const handleDrop = (event: DragEvent, index: string) => {
   const componentIndex: string = event.dataTransfer?.getData('componentIndex') as string
   const toIndex: string = calcDragIndex(componentIndex, index)
   const indexes: number[] = componentIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(indexes)
-  const component: Optional<CustomComponent> = basicStore.cutComponent(
+  const cutComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  const component: Optional<CustomComponent> = canvasState.cutComponent(
     indexes[indexes.length - 1],
     cutComponent?.parent
   )
   if (component && toIndex) {
     const toIndexs: number[] = componentIndex.split('-').map((i) => Number(i))
-    const insertComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(toIndexs)
-    basicStore.insertComponent(toIndexs[toIndexs.length - 1], component, insertComponent)
+    const insertComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(toIndexs)
+    canvasState.insertComponent(toIndexs[toIndexs.length - 1], component, insertComponent)
     emits('select', index)
   }
 }

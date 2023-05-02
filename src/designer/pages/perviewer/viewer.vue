@@ -13,7 +13,7 @@ import type { LayoutData } from '@/api/pages'
 import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { CustomComponent } from '@/models'
-import hooks from '@/hooks'
+import hooks from '@/models/hooks'
 import { createComponent } from '@/designer/utils'
 
 provide('HOOKS', readonly(hooks))

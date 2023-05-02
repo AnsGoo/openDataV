@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useData, useProp } from '@/hooks'
+import { useData, useProp } from '@/models/hooks'
 import type { CustomComponent } from '@/models'
 import type { RequestResponse } from '@/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'

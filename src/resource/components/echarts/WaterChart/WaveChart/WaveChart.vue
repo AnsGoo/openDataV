@@ -6,7 +6,7 @@
 import { onMounted, ref } from 'vue'
 import { useEchart } from '../../hooks'
 import type WaveChartComponent from './config'
-import { useData, useProp } from '@/hooks'
+import { useData, useProp } from '@/models/hooks'
 import 'echarts-liquidfill'
 import type { WaveChartType } from './type'
 import type { DataType } from '@/enum/data'

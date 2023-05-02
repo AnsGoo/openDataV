@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useData, useProp } from '@/hooks'
+import { useData, useProp } from '@/models/hooks'
 import type BasicLineChartComponent from './config'
 import type { BasicLineChart } from './type'
 import type { EChartsOption, LineSeriesOption, XAXisComponentOption } from 'echarts'

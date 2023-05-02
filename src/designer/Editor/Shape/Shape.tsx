@@ -1,12 +1,12 @@
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useComposeStoreWithOut } from '@/store/modules/compose'
+import useCanvasState from '@/designer/state/canvas'
+import useActionState from '@/designer/state/actions'
 import { copyText, Logger, mod360, throttleFrame } from '@/utils/utils'
 import { eventBus, StaticKey } from '@/bus'
 import type { Vector } from '@/types/common'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { useCopyStoreWithOut } from '@/store/modules/copy'
+import useClipBoardState from '@/designer/state/clipBoard'
 import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
 import type { CustomComponent } from '@/models'
@@ -27,53 +27,53 @@ export default defineComponent({
     index: Number
   },
   setup(props, { slots }) {
-    const basicStore = useBasicStoreWithOut()
-    const composeStore = useComposeStoreWithOut()
-    const copyStore = useCopyStoreWithOut()
+    const canvasState = useCanvasState()
+    const actionState = useActionState()
+    const clipBoardState = useClipBoardState()
 
     const copy = () => {
-      copyStore.copy(basicStore.curComponent!)
+      clipBoardState.copy(canvasState.curComponent!)
     }
 
     const deleteComponent = () => {
-      basicStore.removeComponent(props.index!, props.info!.parent)
+      canvasState.removeComponent(props.index!, props.info!.parent)
     }
 
     const upComponent = () => {
-      basicStore.upComponent(props.index!, props.info!.parent)
+      canvasState.upComponent(props.index!, props.info!.parent)
     }
 
     const downComponent = () => {
-      basicStore.downComponent(props.index!, props.info!.parent)
+      canvasState.downComponent(props.index!, props.info!.parent)
     }
 
     const topComponent = () => {
-      basicStore.topComponent(props.index!, props.info!.parent)
+      canvasState.topComponent(props.index!, props.info!.parent)
     }
 
     /**
      * 复制组件ID
      */
     const copyComponentId = () => {
-      const id = basicStore.curComponent!.id
+      const id = canvasState.curComponent!.id
       copyText(id as string)
     }
 
     const bottomComponent = () => {
-      basicStore.bottomComponent(props.index!, props.info!.parent)
+      canvasState.bottomComponent(props.index!, props.info!.parent)
     }
 
     const decompose = () => {
-      basicStore.decompose()
+      canvasState.decompose()
     }
 
     const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
       // 如果当前有选中组件，并且接受到contextmenu事件的组件正是当前组件，就停止事件冒泡
-      if (basicStore.curComponent && basicStore.curComponent.id === props.info!.id) {
+      if (canvasState.curComponent && canvasState.curComponent.id === props.info!.id) {
         event.stopPropagation()
-      } else if (!basicStore.curComponent && !props.info!.parent) {
+      } else if (!canvasState.curComponent && !props.info!.parent) {
         // 如果当前没有选中组件，就选中最底层的组件
-        basicStore.setCurComponent(props.info!, props.index!.toString())
+        canvasState.setCurComponent(props.info!, props.index!.toString())
         event.stopPropagation()
       } else {
         return
@@ -83,7 +83,7 @@ export default defineComponent({
         {
           text: '拆分',
           subText: '',
-          disable: basicStore.curComponent?.component !== 'Group',
+          disable: canvasState.curComponent?.component !== 'Group',
           handler: decompose
         },
         { divider: true },
@@ -122,7 +122,7 @@ export default defineComponent({
       ]
     }
 
-    const showEm = computed(() => basicStore.isShowEm)
+    const showEm = computed(() => canvasState.isShowEm)
 
     const shape = ref<ElRef>(null)
 
@@ -137,7 +137,7 @@ export default defineComponent({
     onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: string) => {
       Logger.log(err)
       if (info === 'render function') {
-        if (basicStore.isEditMode) {
+        if (canvasState.isEditMode) {
           if (instance) {
             const { name }: { name: string } = instance['component'] || {}
             errorInfo.value = `组件[${name}]渲染异常`
@@ -156,12 +156,12 @@ export default defineComponent({
     })
 
     const isActive = computed<boolean>(() => {
-      return (props.active && !props.info!.locked) || composeStore.isActived(props.info!)
+      return (props.active && !props.info!.locked) || actionState.isActived(props.info!)
     })
 
     const appendComponent = () => {
-      composeStore.appendComponent(basicStore.curComponent)
-      composeStore.appendComponent(props.info!)
+      actionState.appendComponent(canvasState.curComponent)
+      actionState.appendComponent(props.info!)
     }
 
     /**
@@ -175,7 +175,7 @@ export default defineComponent({
       }
 
       // 如果没选择组件，或者选中的组件不是自己，就把事件向外冒泡
-      if (!basicStore.curComponent || props.info!.id !== basicStore.curComponent.id) return
+      if (!canvasState.curComponent || props.info!.id !== canvasState.curComponent.id) return
 
       // 如果组件锁定了，就把事件向外冒泡
       if (props.info!.locked) return
@@ -194,11 +194,11 @@ export default defineComponent({
       const move = throttleFrame((moveEvent) => {
         const curX = moveEvent.clientX
         const curY = moveEvent.clientY
-        top = (curY - startY) / basicStore.scale + startTop
-        left = (curX - startX) / basicStore.scale + startLeft
+        top = (curY - startY) / canvasState.scale + startTop
+        left = (curX - startX) / canvasState.scale + startLeft
 
         // // 修改当前组件样式
-        basicStore.syncComponentLocation({ top, left }, props.info!.parent, false)
+        canvasState.syncComponentLocation({ top, left }, props.info!.parent, false)
       })
       const up = () => {
         // 触发元素停止移动事件，用于隐藏标线
@@ -206,9 +206,9 @@ export default defineComponent({
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
         if (props.info && props.info.parent) {
-          basicStore.resizeAutoComponent(props.info.parent)
+          canvasState.resizeAutoComponent(props.info.parent)
         }
-        basicStore.saveComponentData()
+        canvasState.saveComponentData()
       }
 
       document.addEventListener('mousemove', move)
@@ -225,11 +225,11 @@ export default defineComponent({
       e.preventDefault()
       if (!props.isInner) {
         e.stopPropagation()
-        basicStore.setCurComponent(props.info, props.index!.toString())
+        canvasState.setCurComponent(props.info, props.index!.toString())
       } else {
-        if (props.info!.parent?.id === basicStore.benchmarkComponent?.id) {
+        if (props.info!.parent?.id === canvasState.benchmarkComponent?.id) {
           e.stopPropagation()
-          basicStore.setCurComponent(props.info, props.index!.toString())
+          canvasState.setCurComponent(props.info, props.index!.toString())
         }
       }
     }
@@ -243,7 +243,7 @@ export default defineComponent({
       if (props.info && (!props.info.parent || props.info.parent?.active)) {
         // 阻止向父组件冒泡
         e.stopPropagation()
-        basicStore.setCurComponent(props.info, props.index!.toString())
+        canvasState.setCurComponent(props.info, props.index!.toString())
       }
     }
 
@@ -255,7 +255,7 @@ export default defineComponent({
         return
       }
 
-      if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
+      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
       e.stopPropagation()
       e.preventDefault()
 
@@ -276,20 +276,20 @@ export default defineComponent({
         // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
         // 因此第一次点击时不触发 move 事件
         const curPositon: Vector = {
-          x: (moveEvent.clientX - editorRectInfo.left) / basicStore.scale,
-          y: (moveEvent.clientY - editorRectInfo.top) / basicStore.scale
+          x: (moveEvent.clientX - editorRectInfo.left) / canvasState.scale,
+          y: (moveEvent.clientY - editorRectInfo.top) / canvasState.scale
         }
         const { top, left, width, height } = stretchedComponents(point, position, curPositon)
-        basicStore.syncComponentLocation({ top, left, width, height }, props.info!.parent, false)
+        canvasState.syncComponentLocation({ top, left, width, height }, props.info!.parent, false)
       })
 
       const up = () => {
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
         if (props.info) {
-          basicStore.resizeAutoComponent(props.info.parent)
+          canvasState.resizeAutoComponent(props.info.parent)
         }
-        basicStore.saveComponentData()
+        canvasState.saveComponentData()
       }
 
       document.addEventListener('mousemove', move)
@@ -309,7 +309,7 @@ export default defineComponent({
       }
       e.preventDefault()
       e.stopPropagation()
-      if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
+      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
       if (props.info!.locked) return
 
       // 初始坐标和初始角度
@@ -337,16 +337,16 @@ export default defineComponent({
         // 获取旋转的角度值
         rotate = startRotate + rotateDegreeAfter - rotateDegreeBefore
         // 修改当前组件样式
-        basicStore.syncComponentLocation({ rotate }, props.info!.parent, false)
+        canvasState.syncComponentLocation({ rotate }, props.info!.parent, false)
       })
 
       const up = () => {
         document.removeEventListener('mousemove', move)
         document.removeEventListener('mouseup', up)
         if (props.info) {
-          basicStore.resizeAutoComponent(props.info.parent)
+          canvasState.resizeAutoComponent(props.info.parent)
         }
-        basicStore.saveComponentData()
+        canvasState.saveComponentData()
       }
 
       document.addEventListener('mousemove', move)
@@ -354,11 +354,11 @@ export default defineComponent({
     }
 
     const getCursor = () => {
-      if (!basicStore.curComponent) {
+      if (!canvasState.curComponent) {
         return {}
       }
 
-      const rotate: number = mod360(basicStore.curComponent!.style.rotate) // 取余 360
+      const rotate: number = mod360(canvasState.curComponent!.style.rotate) // 取余 360
       const result = {}
       let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
       const angleToCursor = [
@@ -424,7 +424,7 @@ export default defineComponent({
      */
     const keyDown = (e: KeyboardEvent): void => {
       document.addEventListener('keyup', keyUp)
-      if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
+      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
 
       const aliasCtrlKey = e.ctrlKey || e.metaKey
 
@@ -437,7 +437,7 @@ export default defineComponent({
         switch (e.code) {
           case 'ArrowLeft':
             e.preventDefault()
-            basicStore.syncComponentLocation(
+            canvasState.syncComponentLocation(
               { left: props.info.positionStyle.left - 1 },
               props.info.parent,
               false
@@ -445,7 +445,7 @@ export default defineComponent({
             break
           case 'ArrowUp':
             e.preventDefault()
-            basicStore.syncComponentLocation(
+            canvasState.syncComponentLocation(
               { top: props.info.positionStyle.top - 1 },
               props.info.parent,
               false
@@ -453,7 +453,7 @@ export default defineComponent({
             break
           case 'ArrowRight':
             e.preventDefault()
-            basicStore.syncComponentLocation(
+            canvasState.syncComponentLocation(
               { left: props.info.positionStyle.left + 1 },
               props.info.parent,
               false
@@ -461,7 +461,7 @@ export default defineComponent({
             break
           case 'ArrowDown':
             e.preventDefault()
-            basicStore.syncComponentLocation(
+            canvasState.syncComponentLocation(
               { top: props.info.positionStyle.top + 1 },
               props.info.parent,
               false
@@ -478,13 +478,13 @@ export default defineComponent({
     }
 
     const keyUp = (e: KeyboardEvent): void => {
-      if (!(basicStore.curComponent && props.info!.id === basicStore.curComponent.id)) return
+      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
 
       e.stopPropagation()
       if (props.info) {
-        basicStore.resizeAutoComponent(props.info.parent)
+        canvasState.resizeAutoComponent(props.info.parent)
       }
-      basicStore.saveComponentData()
+      canvasState.saveComponentData()
       document.removeEventListener('keyup', keyUp)
     }
 
@@ -493,7 +493,7 @@ export default defineComponent({
     })
 
     watch(
-      () => basicStore.curComponent,
+      () => canvasState.curComponent,
       (newValue: CustomComponent | undefined) => {
         if (newValue && props.info!.id === newValue.id) {
           document.addEventListener('keydown', keyDown)

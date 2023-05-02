@@ -4,19 +4,16 @@
   </n-card>
 </template>
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 import { NCard } from 'naive-ui'
 import '@/css/markdown.css'
 
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-
-const projectStore = useProjectSettingStoreWithOut()
-
+const darkTheme = inject<boolean>('DarkTheme', true)
 const backgroundColor = computed<string>(() => {
-  return projectStore.darkTheme ? '#101014' : '#ffffff'
+  return darkTheme ? '#101014' : '#ffffff'
 })
 const textColor = computed<string>(() => {
-  return projectStore.darkTheme ? '#ffffffd1' : '#333639'
+  return darkTheme ? '#ffffffd1' : '#333639'
 })
 </script>
 <style lang="less" scoped>

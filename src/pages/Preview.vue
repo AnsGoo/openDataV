@@ -6,14 +6,14 @@
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Previewer } from '@/designer'
 import { onMounted, ref } from 'vue'
-import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
+import useSnapShotState from '@/designer/state/snapshot'
 import type { ComponentDataType } from '@/types/component'
 
 const viewer = ref<InstanceType<typeof Previewer> | null>(null)
-const snapShotStore = useSnapShotStoreWithOut()
+const snapShotState = useSnapShotState()
 
 onMounted(async () => {
-  const snapshot = await snapShotStore.latestRecord()
+  const snapshot = await snapShotState.latestRecord()
   if (snapshot) {
     viewer.value!.setLayoutData({
       canvasData: snapshot.canvasData as ComponentDataType[],

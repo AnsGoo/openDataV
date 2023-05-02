@@ -16,65 +16,63 @@
 import type { WatchStopHandle } from 'vue'
 import { computed, onUnmounted, watch } from 'vue'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { useComposeStoreWithOut } from '@/store/modules/compose'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useActionState from '@/designer/state/actions'
 import type { Position } from '@/types/common'
-
-const composeStore = useComposeStoreWithOut()
-const basicStore = useBasicStoreWithOut()
-
-const hidden = computed<boolean>(() => composeStore.hidden)
-const left = computed<Position>(() => composeStore.style.left)
-const top = computed<Position>(() => composeStore.style.top)
-const width = computed<Position>(() => composeStore.style.width)
-const height = computed<Position>(() => composeStore.style.height)
+import useCanvasState from '@/designer/state/canvas'
+const actionState = useActionState()
+const canvasState = useCanvasState()
+const hidden = computed<boolean>(() => actionState.hidden)
+const left = computed<Position>(() => actionState.style.left)
+const top = computed<Position>(() => actionState.style.top)
+const width = computed<Position>(() => actionState.style.width)
+const height = computed<Position>(() => actionState.style.height)
 
 const stopWatch: WatchStopHandle = watch(
-  () => basicStore.curComponent,
+  () => canvasState.curComponent,
   () => {
-    if (composeStore.components.length > 0) {
-      composeStore.setHidden()
+    if (actionState.components.length > 0) {
+      actionState.setHidden()
     }
   }
 )
 
 const compose = () => {
-  composeStore.compose()
-  composeStore.setHidden()
+  actionState.compose()
+  actionState.setHidden()
 }
 
 const handleFlushLeft = () => {
-  composeStore.flushLeft()
-  composeStore.setHidden()
+  actionState.flushLeft()
+  actionState.setHidden()
 }
 
 const handleFlushRight = () => {
-  composeStore.flushRight()
-  composeStore.setHidden()
+  actionState.flushRight()
+  actionState.setHidden()
 }
 
 const handleFlushTop = () => {
-  composeStore.flushTop()
-  composeStore.setHidden()
+  actionState.flushTop()
+  actionState.setHidden()
 }
 const handleFlushBottom = () => {
-  composeStore.flushBottom()
-  composeStore.setHidden()
+  actionState.flushBottom()
+  actionState.setHidden()
 }
 
 const handleFlushRow = () => {
-  composeStore.flushRow()
-  composeStore.setHidden()
+  actionState.flushRow()
+  actionState.setHidden()
 }
 
 const handleFlushColumn = () => {
-  composeStore.flushColumn()
-  composeStore.setHidden()
+  actionState.flushColumn()
+  actionState.setHidden()
 }
 
 const batchDelete = () => {
-  composeStore.batchDeleteComponent(composeStore.components)
-  composeStore.setHidden()
+  actionState.batchDeleteComponent(actionState.components)
+  actionState.setHidden()
 }
 
 const contextMenus = (): ContextmenuItem[] => {
@@ -82,14 +80,14 @@ const contextMenus = (): ContextmenuItem[] => {
     {
       text: '组合',
       subText: '',
-      disable: !composeStore.canCompose,
+      disable: !actionState.canCompose,
       handler: compose
     },
     { divider: true },
     {
       text: '删除',
       subText: 'Ctrl + Delete',
-      disable: composeStore.components.length <= 0,
+      disable: actionState.components.length <= 0,
       handler: batchDelete
     },
     { divider: true },

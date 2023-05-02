@@ -1,20 +1,20 @@
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
+import useSnapShotState from '@/designer/state/snapshot'
 import type { ComponentDataType } from '@/types/component'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { StoreComponentData } from '@/utils/db'
 import { exportRaw, importRaw } from '@/utils/utils'
 import { message } from '@/utils/message'
 
-const snapShotStore = useSnapShotStoreWithOut()
+const snapShotState = useSnapShotState()
 // 状态管理
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 const projectStore = useProjectSettingStoreWithOut()
 const undo = async () => {
-  const snapshot: StoreComponentData | undefined = await snapShotStore.lastRecord()
+  const snapshot: StoreComponentData | undefined = await snapShotState.lastRecord()
   if (snapshot) {
-    basicStore.setLayoutData({
+    canvasState.setLayoutData({
       canvasData: snapshot.canvasData as ComponentDataType[],
       canvasStyle: snapshot.canvasStyle
     })
@@ -24,9 +24,9 @@ const undo = async () => {
 }
 
 const recoveryDraft = async () => {
-  const snapshot: StoreComponentData | undefined = await snapShotStore.nextRecord()
+  const snapshot: StoreComponentData | undefined = await snapShotState.nextRecord()
   if (snapshot) {
-    basicStore.setLayoutData({
+    canvasState.setLayoutData({
       canvasData: snapshot.canvasData as ComponentDataType[],
       canvasStyle: snapshot.canvasStyle
     })
@@ -35,18 +35,18 @@ const recoveryDraft = async () => {
   }
 }
 const setShowEm = () => {
-  basicStore.toggleShowEm()
+  canvasState.toggleShowEm()
 }
 
 const exportCanvas = (id: string) => {
-  const name: string = `${basicStore.name}` || 'OpenDataV'
+  const name: string = `${canvasState.name}` || 'OpenDataV'
   exportRaw(
     `${name}.json`,
     JSON.stringify({
       id: id,
       name: name,
-      canvasData: basicStore.layoutData,
-      canvasStyle: basicStore.canvasStyleData
+      canvasData: canvasState.layoutData,
+      canvasStyle: canvasState.canvasStyleData
     })
   )
 }
@@ -60,8 +60,8 @@ const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
     const layoutComponents: { canvasData: ComponentDataType[]; canvasStyle: CanvasStyleData } =
       JSON.parse(loadEvent.target.result as string)
     if (layoutComponents) {
-      basicStore.setComponentData(layoutComponents.canvasData)
-      basicStore.setCanvasStyle(layoutComponents.canvasStyle)
+      canvasState.setComponentData(layoutComponents.canvasData)
+      canvasState.setCanvasStyle(layoutComponents.canvasStyle)
     }
   }
 }

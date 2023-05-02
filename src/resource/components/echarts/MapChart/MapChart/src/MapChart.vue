@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useData, useProp } from '@/hooks'
+import { useData, useProp } from '@/models/hooks'
 import type MapChartComponent from '../config'
 import type { MapChart } from '../type'
 import type { EChartsOption } from 'echarts'

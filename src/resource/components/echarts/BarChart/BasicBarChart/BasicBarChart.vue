@@ -9,7 +9,7 @@ import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echar
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
 import type { RequestResponse } from '@/models/type'
-import type { HooksType } from '@/hooks/type'
+import type { HooksType } from '@/models/hooks/type'
 import type { BasicLineChart } from './type'
 import type { DataType } from '@/enum/data'
 

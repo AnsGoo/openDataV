@@ -405,7 +405,7 @@ onUnmounted( () => {
 
 ```typescript
 
-import { useData } from '@/hooks'
+import { useData } from '@/models/hooks'
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
@@ -453,17 +453,17 @@ useData(props.component, dataChange)
 
 3. 获取组件模式
 
-我们可以通过`basicStore`来获取编辑器模式,例如
+我们可以通过`canvasState`来获取编辑器模式,例如
 
 ```typescript
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from  '@/designer/state/canvas'
 
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 // editoMode 即为编辑器模式
-basicStore.editMode
+canvasState.editMode
 
 // isEditMode 可以判断编辑器是否处于编辑模式
-basicStore.isEditMode
+canvasState.isEditMode
 
 ```
 

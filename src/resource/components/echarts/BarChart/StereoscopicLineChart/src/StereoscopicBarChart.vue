@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { useData, useProp } from '@/hooks'
+import { useData, useProp } from '@/models/hooks'
 import type StereoscopicBarChartComponent from '../config'
 import type { StereoscopicBarChart } from '../type'
 import type { CustomSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'

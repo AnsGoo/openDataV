@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from '@/designer/state/canvas'
 import { cloneDeep, debounce } from 'lodash-es'
 import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
@@ -32,7 +32,7 @@ import type { CustomComponent } from '@/models'
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 const formData = ref<Recordable>({})
 const styleKeys = computed(() => {
@@ -50,12 +50,12 @@ const changed = debounce((key: string, val: any) => {
     if (locationKeys.includes(key)) {
       const parentComponent = props.curComponent.parent
       // key as 'top' | 'left' | 'width' | 'height' | 'rotate'
-      basicStore.syncComponentLocation({ [key]: val as number }, parentComponent, true)
+      canvasState.syncComponentLocation({ [key]: val as number }, parentComponent, true)
       if (parentComponent) {
-        basicStore.resizeAutoComponent(parentComponent)
+        canvasState.resizeAutoComponent(parentComponent)
       }
     } else {
-      basicStore.setCurComponentStyle(key, val)
+      canvasState.setCurComponentStyle(key, val)
     }
   }
 }, 300)
