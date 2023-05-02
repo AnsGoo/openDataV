@@ -38,15 +38,16 @@ import {
   NTabPane,
   NTabs
 } from 'naive-ui'
-import type { BaseComponent, DemoRequestData } from '@/models'
-import { DataType } from '@/models'
+import type { DemoRequestData } from '@/models'
+import { DataType } from '@/enum/data'
 
 import DataView from '@/components/DataView'
 import { cloneDeep } from 'lodash-es'
 import { message } from '@/utils/message'
+import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
 const isShow = ref<boolean>(false)
 
@@ -80,7 +81,7 @@ const initData = async () => {
 
 watch(
   () => props.curComponent,
-  (value: BaseComponent) => {
+  (value: CustomComponent) => {
     if (value) {
       initData()
     }

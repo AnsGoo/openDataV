@@ -39,7 +39,7 @@
 
 ## 组件配置项对象
 
-配置项对象是继承了 `BaseComponent` 抽象类的子类，在这里我们以静态文本为例
+配置项对象是继承了 `CustomComponent` 抽象类的子类，在这里我们以静态文本为例
 
 ```typescript
 
@@ -54,7 +54,7 @@
  * {dataIntegrationMode? }: 数据接入模式
  */
 
-class StaticTextComponent extends BaseComponent {
+class StaticTextComponent extends CustomComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,
@@ -82,7 +82,7 @@ class StaticTextComponent extends BaseComponent {
 > - `dataIntegrationMode? `: 数据接入模式
 
 
-除过需要继承`BaseComponent` 抽象类外，还需要重新定义`_prop`和`_style`属性，
+除过需要继承`CustomComponent` 抽象类外，还需要重新定义`_prop`和`_style`属性，
 
 > - `_prop属性`:定义了组件可以更改的属性
 

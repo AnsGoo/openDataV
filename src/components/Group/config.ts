@@ -1,8 +1,8 @@
 import { ComponentGroup } from '@/enum'
-import { BaseComponent } from '@/models'
+import { CustomComponent } from '@/models'
 
 export const componentName = 'Group'
-class GroupComponent extends BaseComponent {
+class GroupComponent extends CustomComponent {
   show = false
   constructor(id?: string, name?: string) {
     super({

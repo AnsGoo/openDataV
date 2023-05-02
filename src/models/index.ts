@@ -1,12 +1,4 @@
-import { BaseComponent } from './component'
-import { createComponent } from './utils'
-import { DataType, DemoRequestData, RestRequestData, StaticRequestData } from './data'
+import { CustomComponent } from './component'
+import { DemoRequestData, RestRequestData, StaticRequestData } from './data'
 
-export {
-  BaseComponent,
-  createComponent,
-  DataType,
-  StaticRequestData,
-  RestRequestData,
-  DemoRequestData
-}
+export { CustomComponent, StaticRequestData, RestRequestData, DemoRequestData }

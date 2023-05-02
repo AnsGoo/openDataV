@@ -18,7 +18,7 @@ import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import styles from './shape.module.less'
 import hooks from '@/hooks'
 
@@ -32,7 +32,7 @@ export default defineComponent({
       type: Boolean,
       default: false
     },
-    info: Object as PropType<BaseComponent>,
+    info: Object as PropType<CustomComponent>,
     defaultStyle: Object as PropType<ComponentStyle>,
     index: Number
   },
@@ -504,7 +504,7 @@ export default defineComponent({
 
     watch(
       () => basicStore.curComponent,
-      (newValue: BaseComponent | undefined) => {
+      (newValue: CustomComponent | undefined) => {
         if (newValue && props.info!.id === newValue.id) {
           document.addEventListener('keydown', keyDown)
         } else {

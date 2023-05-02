@@ -7,7 +7,7 @@ import { ref } from 'vue'
 import { useEchart } from '../hooks'
 import { useData } from '@/hooks'
 import type ComChartComponent from './config'
-import type { DataType } from '@/models'
+import type { DataType } from '@/enum/data'
 
 const props = defineProps<{
   component: ComChartComponent

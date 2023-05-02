@@ -1,10 +1,10 @@
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 export const useProp = <T>(
-  component: BaseComponent,
+  component: CustomComponent,
   callbackProp?: (prop: string, key: string, value: any) => void,
   callbackStyle?: (key: string, value: any) => void
-): { component: BaseComponent; propValue: T } => {
+): { component: CustomComponent; propValue: T } => {
   if (callbackProp) {
     component.changePropCallback(callbackProp)
   }

@@ -10,7 +10,7 @@ import type { BasicLineChart } from './type'
 import type { EChartsOption, PieSeriesOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
-import type { DataType } from '@/models'
+import type { DataType } from '@/enum/data'
 import type { RequestResponse } from '@/models/type'
 
 const chartEl = ref<ElRef>(null)

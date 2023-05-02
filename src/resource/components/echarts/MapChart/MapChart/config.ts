@@ -1,11 +1,11 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/models'
-import { DataIntegrationMode } from '@/models/data'
+import { CustomComponent } from '@/models'
+import { DataIntegrationMode } from '@/enum/data'
 import { h } from 'vue'
 
 export const componentName = 'MapChart'
-class MapChartComponent extends BaseComponent {
+class MapChartComponent extends CustomComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,

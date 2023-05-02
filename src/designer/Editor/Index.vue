@@ -63,11 +63,10 @@ import { EditMode } from '@/enum'
 import type { Position, Vector } from '@/types/common'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
-import type { BaseComponent } from '@/models'
-import { createComponent } from '@/models'
+import type { CustomComponent } from '@/models'
+import { createComponent } from '../utils'
 import { componentList } from '../load'
-import { DataIntegrationMode } from '@/models/data'
-
+import { DataIntegrationMode } from '@/enum/data'
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()
 const copyStore = useCopyStoreWithOut()
@@ -149,7 +148,7 @@ const pasteComponent = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
-      const component: BaseComponent = createComponent(JSON.parse(textData))
+      const component: CustomComponent = createComponent(JSON.parse(textData))
       if (component) {
         component.change('top', component.positionStyle.top + 10)
         component.change('left', component.positionStyle.left + 10)
@@ -228,7 +227,7 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component: BaseComponent = new componentList[componentName]()
+    const component: CustomComponent = new componentList[componentName]()
     if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
       component.loadDemoData()
     }

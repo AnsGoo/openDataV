@@ -1,10 +1,10 @@
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/models'
-import { DataIntegrationMode } from '@/models/data'
+import { CustomComponent } from '@/models'
+import { DataIntegrationMode } from '@/enum/data'
 
 export const componentName = 'BasicLineChart'
-class BasicLineChartComponent extends BaseComponent {
+class BasicLineChartComponent extends CustomComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,

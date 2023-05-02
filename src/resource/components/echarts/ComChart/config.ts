@@ -1,9 +1,9 @@
 import { ComponentGroup } from '@/enum'
-import { BaseComponent } from '@/models'
-import { DataIntegrationMode } from '@/models/data'
+import { CustomComponent } from '@/models'
+import { DataIntegrationMode } from '@/enum/data'
 
 export const componentName = 'ComChart'
-class ComChartComponent extends BaseComponent {
+class ComChartComponent extends CustomComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,

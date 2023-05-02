@@ -1,5 +1,5 @@
 import type { Position } from '@/types/common'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import { calcComponentAxis } from '@/utils/utils'
 
 /**
@@ -7,13 +7,13 @@ import { calcComponentAxis } from '@/utils/utils'
  * @param rect 区域范围
  * @param componentData 所有组件数据
  *
- *@return {components: BaseComponent[], rect: Position} components 所有组件， minRect 最小区域
+ *@return {components: CustomComponent[], rect: Position} components 所有组件， minRect 最小区域
  */
 export const getSelectComponents = (
   rect: Position,
-  componentData: BaseComponent[]
-): { components: Array<BaseComponent>; rect: Position } | undefined => {
-  const selectedComponents: Array<BaseComponent> = []
+  componentData: CustomComponent[]
+): { components: Array<CustomComponent>; rect: Position } | undefined => {
+  const selectedComponents: Array<CustomComponent> = []
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
   const rightSet: Set<number> = new Set()

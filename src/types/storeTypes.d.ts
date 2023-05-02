@@ -1,5 +1,5 @@
 import type { StoreComponentData } from '@/utils/db'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 export interface CanvasStyleData {
   width: number
@@ -12,13 +12,13 @@ export interface EditData {
   thumbnail: string
   editMode: string
   canvasStyleData: CanvasStyleData
-  componentData: BaseComponent[]
+  componentData: CustomComponent[]
   activeIndex?: string
-  curComponent: Optional<BaseComponent>
+  curComponent: Optional<CustomComponent>
   isClickComponent: boolean
   isShowEm: boolean
   ids: Set<string>
-  benchmarkComponent: Optional<BaseComponent>
+  benchmarkComponent: Optional<CustomComponent>
   scale: number
 }
 
@@ -29,7 +29,7 @@ export interface MenuStatus {
 }
 
 export interface CopyItem {
-  copyData: Optional<BaseComponent>
+  copyData: Optional<CustomComponent>
   isCut: boolean
 }
 
@@ -42,7 +42,7 @@ export interface SnapData {
 
 export interface AreaData {
   style: Postion
-  components: BaseComponent[]
+  components: CustomComponent[]
   ids: Set
 }
 

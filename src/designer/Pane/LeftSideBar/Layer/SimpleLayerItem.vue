@@ -14,11 +14,11 @@
 import { eventBus, StaticKey } from '@/bus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 const props = withDefaults(
   defineProps<{
-    component: BaseComponent
+    component: CustomComponent
     index: string
     activeKey?: string
     mode?: string
@@ -53,14 +53,14 @@ const handleDrop = (event: DragEvent, index: string) => {
   const componentIndex: string = event.dataTransfer?.getData('componentIndex') as string
   const toIndex: string = calcDragIndex(componentIndex, index)
   const indexes: number[] = componentIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
-  const component: Optional<BaseComponent> = basicStore.cutComponent(
+  const cutComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(indexes)
+  const component: Optional<CustomComponent> = basicStore.cutComponent(
     indexes[indexes.length - 1],
     cutComponent?.parent
   )
   if (component && toIndex) {
     const toIndexs: number[] = componentIndex.split('-').map((i) => Number(i))
-    const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
+    const insertComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(toIndexs)
     basicStore.insertComponent(toIndexs[toIndexs.length - 1], component, insertComponent)
     emits('select', index)
   }

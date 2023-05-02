@@ -11,7 +11,7 @@ import type { CustomSeriesOption, EChartsOption, XAXisComponentOption } from 'ec
 import { graphic } from 'echarts'
 import { compareResetValue } from '../../../utils'
 import { useEchart } from '../../../hooks'
-import type { DataType } from '@/models'
+import type { DataType } from '@/enum/data'
 import type { RequestResponse } from '@/models/type'
 
 let globalOption: EChartsOption

@@ -88,12 +88,12 @@ import { http } from '@/utils/http'
 import { useProp } from '@/hooks'
 import { useEventBus } from '@/bus'
 import type { Gauge } from './type'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 
 const basicStore = useBasicStoreWithOut()
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
 const propChange = (prop: string, key: string, value: any) => {

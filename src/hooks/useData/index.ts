@@ -1,9 +1,9 @@
-import type { BaseComponent } from '@/models'
-import { DataType } from '@/models'
+import type { CustomComponent } from '@/models'
+import { DataType } from '@/enum/data'
 import { onMounted, onUnmounted } from 'vue'
 
 export const useData = (
-  component: BaseComponent,
+  component: CustomComponent,
   callbackData?: (data: any, type: DataType) => void
 ) => {
   component.changeDataCallback(callbackData!)

@@ -21,13 +21,13 @@
 import { eventBus, StaticKey } from '@/bus'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import { cloneDeep } from 'lodash-es'
 import { diffIndex } from '@/utils/utils'
 
 const props = withDefaults(
   defineProps<{
-    component: BaseComponent
+    component: CustomComponent
     index: string
     activeKey?: string
     mode?: string
@@ -64,10 +64,10 @@ const handleDrop = (event: DragEvent, toIndex: string) => {
   const isDragAble = diffIndex(fromIndex, toIndex)
   if (!isDragAble) return
   const indexes: number[] = fromIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
+  const cutComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(indexes)
   const inComponent = cloneDeep(cutComponent)
   const toIndexs: number[] = toIndex.split('-').map((i) => Number(i))
-  const toComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
+  const toComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(toIndexs)
 
   if (inComponent && toComponent && toIndex) {
     const toComponentId: string = toComponent.id

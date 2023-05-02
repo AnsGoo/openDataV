@@ -4,7 +4,7 @@ import store from '@/store'
 import { cloneDeep } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import type { CopyItem } from '@/types/storeTypes'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 const useCopyStore = defineStore({
   id: 'copy',
@@ -13,7 +13,7 @@ const useCopyStore = defineStore({
     isCut: false
   }),
   actions: {
-    copy(data: BaseComponent) {
+    copy(data: CustomComponent) {
       this.copyData = cloneDeep(data)
       this.copyData.parent = undefined
       this.copyData.groupStyle = undefined

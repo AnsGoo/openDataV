@@ -6,20 +6,8 @@ import type { StoreRequestOption } from '@/apiView/hooks/http/type'
 import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
 import { cloneDeep } from 'lodash-es'
+import { DataType } from '@/enum/data'
 import type { RequestResponse } from './type'
-
-export enum DataType {
-  STATIC = 'STATIC',
-  REST = 'REST',
-  REALTIME = 'REALTIME',
-  DEMO = 'DEMO'
-}
-
-export enum DataIntegrationMode {
-  SELF = 'SELF',
-  UNIVERSAL = 'UNIVERSAL',
-  GLOBAL = 'GLOBAL'
-}
 
 export interface StaticRequestOptions {
   dataId: string
@@ -32,7 +20,7 @@ export interface DemoData<T = any> {
   data: T
 }
 export interface RestRequestOptions {
-  restOptions: StoreRequestOption
+  options: StoreRequestOption
   type: DataType
 }
 
@@ -65,9 +53,9 @@ class StaticRequestData implements RequestData {
   public afterScript?: AfterScript
   public title?: string
 
-  constructor(id: string | undefined, afterScript?: AfterScript) {
-    this.dataId = id
-    this.afterScript = afterScript
+  constructor(dataId: string | undefined, script?: AfterScript) {
+    this.dataId = dataId
+    this.afterScript = script
   }
 
   public toJSON(): StaticRequestOptions {
@@ -156,7 +144,7 @@ class RestRequestData implements RequestData {
 
   public toJSON(): RestRequestOptions {
     return {
-      restOptions: cloneDeep(this.requestOptions),
+      options: cloneDeep(this.requestOptions),
       type: DataType.REST
     }
   }

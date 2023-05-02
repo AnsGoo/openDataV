@@ -26,10 +26,10 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
 const basicStore = useBasicStoreWithOut()
 

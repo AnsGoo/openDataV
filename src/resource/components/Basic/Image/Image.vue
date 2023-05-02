@@ -4,10 +4,10 @@
 </template>
 
 <script setup lang="ts">
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 </script>
 

@@ -39,12 +39,6 @@
           :component="content"
         />
       </Shape>
-      <!-- <Group
-        :id="'component' + content.id"
-        class="component"
-        :style="getComponentStyle(content)"
-        :component="content"
-      /> -->
     </div>
   </div>
 </template>
@@ -61,10 +55,10 @@ import type TabsComponent from './config'
 import type { Tabs } from './type'
 import { useProp } from '@/hooks'
 import Shape from '@/designer/Editor/Shape'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import { componentList } from '@/designer/load'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { DataIntegrationMode } from '@/models/data'
+import { DataIntegrationMode } from '@/enum/data'
 import Group from '@/components/Group/Group.vue'
 import GroupComponent from '@/components/Group/config'
 
@@ -133,7 +127,7 @@ watch(
   }
 )
 
-const getShapeStyle = (item: BaseComponent) => {
+const getShapeStyle = (item: CustomComponent) => {
   if (item.groupStyle?.gheight) {
     return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {
@@ -184,7 +178,7 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component: BaseComponent = new componentList[componentName]()
+    const component: CustomComponent = new componentList[componentName]()
     if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
       component.loadDemoData()
     }

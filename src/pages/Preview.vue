@@ -13,14 +13,14 @@ import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import { useSnapShotStoreWithOut } from '@/store/modules/snapshot'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import type { ComponentDataType } from '@/types/component'
 import hooks from '@/hooks'
 
 const snapShotStore = useSnapShotStoreWithOut()
 const basicStore = useBasicStoreWithOut()
 
-const componentData = computed<BaseComponent[]>(() => basicStore.componentData)
+const componentData = computed<CustomComponent[]>(() => basicStore.componentData)
 const canvasStyleData = ref<CanvasStyleData>({
   width: 0,
   height: 0,

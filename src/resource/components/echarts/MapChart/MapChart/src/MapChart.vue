@@ -10,7 +10,7 @@ import type { MapChart } from '../type'
 import type { EChartsOption } from 'echarts'
 import { graphic, registerMap } from 'echarts'
 import { useEchart } from '../../../hooks'
-import type { DataType } from '@/models'
+import type { DataType } from '@/enum/data'
 import type { RequestResponse } from '@/models/type'
 import chinaMap from './assets/china.json'
 

@@ -3,7 +3,7 @@ import store from '@/store'
 import type { AreaData } from '@/types/storeTypes'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { calcComponentsRect, createGroupStyle, getComponentRealRect } from '@/utils/utils'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import { componentList } from '@/designer/load'
 import type { Position } from '@/types/common'
 import { getSelectComponents } from '../utils/utils'
@@ -35,8 +35,8 @@ const useComposeStore = defineStore({
      * 判断组件是否在选取的组件内
      * @param component
      */
-    isActived(component: BaseComponent): boolean {
-      return this.components.findIndex((el: BaseComponent) => el.id === component.id) !== -1
+    isActived(component: CustomComponent): boolean {
+      return this.components.findIndex((el: CustomComponent) => el.id === component.id) !== -1
     },
 
     /**
@@ -62,7 +62,7 @@ const useComposeStore = defineStore({
      * 向store 中增加组件
      * @param component 组件
      */
-    appendComponent(component: Optional<BaseComponent>): void {
+    appendComponent(component: Optional<CustomComponent>): void {
       if (!component) {
         return
       }
@@ -119,7 +119,7 @@ const useComposeStore = defineStore({
         this.style = { ...this.style, ...calcComponentsRect(this.components) }
       }
       const GroupClass = componentList['Group']
-      const groupComponent: BaseComponent = new GroupClass()
+      const groupComponent: CustomComponent = new GroupClass()
       for (const prop in this.style) {
         groupComponent.change(prop, this.style[prop])
       }
@@ -136,7 +136,7 @@ const useComposeStore = defineStore({
      * 将已经放到 Group 组件数据删除，也就是在 componentData 中删除，因为它们已经放到 Group 组件中了
      * @param deleteData
      */
-    batchDeleteComponent(deleteData: BaseComponent[]) {
+    batchDeleteComponent(deleteData: CustomComponent[]) {
       deleteData.forEach((component) => {
         for (let i = 0, len = basicStore.componentData.length; i < len; i++) {
           if (component.id === basicStore.componentData[i].id) {

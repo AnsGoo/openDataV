@@ -136,11 +136,11 @@ const getEmptyParams = () => {
 
 const props = withDefaults(
   defineProps<{
-    restOptions?: RequestOption
+    options?: RequestOption
     mode?: 'debug' | 'use'
   }>(),
   {
-    restOptions: () => {
+    options: () => {
       return {
         method: RequestMethod.GET,
         url: '/getRiskArea',
@@ -249,7 +249,7 @@ const loadRestData = async (id: string) => {
   }
 }
 const emits = defineEmits<{
-  (e: 'update:restOptions', value: RequestOption): void
+  (e: 'update:options', value: RequestOption): void
   (e: 'change', value: RequestOption): void
 }>()
 
@@ -257,7 +257,7 @@ interface RequestDataOption extends RequestOption {
   title?: string
   id?: string
 }
-const formData = reactive<RequestDataOption>(props.restOptions)
+const formData = reactive<RequestDataOption>(props.options)
 const response = ref<RequestResponse>({
   code: 0,
   data: '',
@@ -284,7 +284,7 @@ const send = async () => {
 }
 const formChange = () => {
   emits('change', formData)
-  emits('update:restOptions', formData)
+  emits('update:options', formData)
 }
 
 const afterScriptChange = (data: AfterScript) => {
@@ -294,7 +294,7 @@ const afterScriptChange = (data: AfterScript) => {
 const selectedChange = async (id: string) => {
   await loadRestData(id)
   await send()
-  emits('update:restOptions', formData)
+  emits('update:options', formData)
 }
 const handleSave = async () => {
   try {

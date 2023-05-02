@@ -35,16 +35,17 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import type { BaseComponent, StaticRequestData } from '@/models'
-import { DataType } from '@/models'
+import type { StaticRequestData } from '@/models'
+import { DataType } from '@/enum/data'
 import { ScriptType } from '@/enum'
 import Static from '@/apiView/RequestContent/static'
 import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
 import type { AfterScript } from '@/types/component'
 import { message } from '@/utils/message'
+import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
 const isShow = ref<boolean>(false)
 

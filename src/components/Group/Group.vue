@@ -40,10 +40,10 @@ import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
 import Shape from '@/designer/Editor/Shape'
 import { computed } from 'vue'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
 const basicStore = useBasicStoreWithOut()
@@ -65,7 +65,7 @@ const isActive = computed(() => {
 const isShow = (display: boolean): boolean => {
   return !(basicStore.isEditMode && display === false)
 }
-const getShapeStyle = (item: BaseComponent) => {
+const getShapeStyle = (item: CustomComponent) => {
   if (item.groupStyle?.gheight) {
     return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {

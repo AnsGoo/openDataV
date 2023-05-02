@@ -9,7 +9,7 @@ import type WaveChartComponent from './config'
 import { useData, useProp } from '@/hooks'
 import 'echarts-liquidfill'
 import type { WaveChartType } from './type'
-import type { DataType } from '@/models'
+import type { DataType } from '@/enum/data'
 import type { RequestResponse } from '@/models/type'
 
 const props = defineProps<{

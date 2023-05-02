@@ -4,7 +4,7 @@ import { cloneDeep } from 'lodash-es'
 import type { CanvasStyleData, SnapData } from '@/types/storeTypes'
 import type { StoreComponentData } from '@/utils/db'
 import { snapshotDb } from '@/utils/db'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import type { ComponentDataType } from '@/types/component'
 
 const useSnapShotStore = defineStore({
@@ -58,7 +58,7 @@ const useSnapShotStore = defineStore({
      * @param canvasData 组件数据
      * @param canvasStyle 画布样式
      */
-    recordSnapshot(canvasData: Array<BaseComponent>, canvasStyle: CanvasStyleData) {
+    recordSnapshot(canvasData: Array<CustomComponent>, canvasStyle: CanvasStyleData) {
       // 改变值
       this.latestSnapshot = {
         canvasData: cloneDeep(canvasData),

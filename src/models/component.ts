@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash-es'
 import type { ComponentGroup } from '@/enum'
 import { FormType } from '@/enum'
-import { uuid } from '@/utils/utils'
+import { uuid } from './utils'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -10,16 +10,11 @@ import type {
   GroupStyle,
   PropsType
 } from '@/types/component'
-import { cssTransfer } from './styleToCss'
 import type { RequestData } from './data'
-import {
-  DataIntegrationMode,
-  DataType,
-  DemoRequestData,
-  RestRequestData,
-  StaticRequestData
-} from './data'
+import { DemoRequestData, RestRequestData, StaticRequestData } from './data'
+
 import { h } from 'vue'
+import { DataIntegrationMode, DataType } from '@/enum/data'
 
 interface DataConfig {
   type: DataType
@@ -27,7 +22,7 @@ interface DataConfig {
   otherConfig: Recordable
 }
 
-export abstract class BaseComponent {
+export abstract class CustomComponent {
   id: string
   component: string
   group: ComponentGroup
@@ -54,8 +49,8 @@ export abstract class BaseComponent {
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
-  parent?: BaseComponent
-  subComponents: BaseComponent[] = []
+  parent?: CustomComponent
+  subComponents: CustomComponent[] = []
 
   _propValue: Recordable = {}
   _styleValue: ComponentStyle = {
@@ -200,23 +195,16 @@ export abstract class BaseComponent {
   get style(): ComponentStyle {
     if (this.styleIsChange) {
       const customStyle: Recordable[] = []
-      let transferStyle: Recordable = {}
       this.styleFormValue.forEach((item) => {
         item.children.forEach((obj) => {
           if (obj.type === FormType.CUSTOM) {
             customStyle[obj.prop] = obj.componentOptions.defaultValue
-          } else {
-            const css = cssTransfer(obj.type!, obj.prop, obj.componentOptions.defaultValue)
-            if (css) {
-              transferStyle = { ...transferStyle, ...css }
-            }
           }
           this._styleValue[obj.prop] = obj.componentOptions.defaultValue
         })
       })
 
       Object.assign(this._styleValue, this.extraStyle)
-      Object.assign(this._styleValue, transferStyle)
       const res = this.styleToCss(customStyle)
       if (res) {
         Object.assign(this._styleValue, res)
@@ -360,7 +348,7 @@ export abstract class BaseComponent {
    * @param deep
    * @param clear
    */
-  addComponent(components: BaseComponent[], deep = false, clear = false) {
+  addComponent(components: CustomComponent[], deep = false, clear = false) {
     if (clear) {
       this.subComponents = []
     }
@@ -391,7 +379,7 @@ export abstract class BaseComponent {
       case DataType.STATIC:
         this.dataConfig = {
           type: DataType.STATIC,
-          requestConfig: new StaticRequestData(config.id, config.script),
+          requestConfig: new StaticRequestData(config.options),
           otherConfig: config.otherConfig || {}
         }
         break
@@ -426,10 +414,10 @@ export abstract class BaseComponent {
       data: exampleData
     })
   }
-  appendChild(child: BaseComponent) {
+  appendChild(child: CustomComponent) {
     this.subComponents.push(child)
   }
-  updateChild(index: number, child: BaseComponent) {
+  updateChild(index: number, child: CustomComponent) {
     this.subComponents[index] = child
   }
 }

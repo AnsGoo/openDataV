@@ -1,7 +1,7 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 import Group from '@/components/Group'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import { Logger } from '@/utils/utils'
 
 // 编辑器左侧组件列表
@@ -21,7 +21,7 @@ const AsyncComponent = {
       const componentOptions = moduleFilesTs[key]?.default
 
       if (componentOptions) {
-        componentList[componentOptions.componentName] = componentOptions.config as BaseComponent
+        componentList[componentOptions.componentName] = componentOptions.config as CustomComponent
 
         // 注册异步组件
 

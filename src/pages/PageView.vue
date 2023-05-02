@@ -14,12 +14,12 @@ import { getPageApi } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
 import { backgroundToCss, filterStyle, Logger, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import type { BaseComponent } from '@/models'
-import { createComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import hooks from '@/hooks'
+import { createComponent } from '@/designer/utils'
 
 provide('HOOKS', readonly(hooks))
-const componentData = ref<Array<BaseComponent>>([])
+const componentData = ref<Array<CustomComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({
   width: 0,
   height: 0,

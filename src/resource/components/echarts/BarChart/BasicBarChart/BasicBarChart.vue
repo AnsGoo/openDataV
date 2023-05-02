@@ -8,10 +8,10 @@ import type BasicLineChartComponent from './config'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
-import type { DataType } from '@/models'
 import type { RequestResponse } from '@/models/type'
 import type { HooksType } from '@/hooks/type'
 import type { BasicLineChart } from './type'
+import type { DataType } from '@/enum/data'
 
 const chartEl = ref<ElRef>(null)
 let globalOption: EChartsOption
@@ -23,6 +23,7 @@ const { useProp, useData } = inject<HooksType>('HOOKS') || {}
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
+
 const dataChange = (resp: any, _: DataType) => {
   if (resp.status >= 0) {
     chartData = resp.afterData

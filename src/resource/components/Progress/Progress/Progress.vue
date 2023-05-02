@@ -59,10 +59,9 @@ import { useProp } from '@/hooks'
 import { Logger, uuid } from '@/utils/utils'
 import { useEventBus } from '@/bus'
 import type { Progress } from './type'
-import type { BaseComponent } from '@/models'
-
+import type { CustomComponent } from '@/models'
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
 const { propValue } = useProp<Progress>(props.component)

@@ -28,7 +28,7 @@ import SimpleLayerItem from './SimpleLayerItem.vue'
 import { ComponentGroup, ComponentGroupList } from '@/enum'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { cloneDeep } from 'lodash-es'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 
 const basicStore = useBasicStoreWithOut()
 const copyStore = useCopyStoreWithOut()
@@ -54,7 +54,7 @@ useEventBus('ActiveMenu', open)
 const handleSelect = (key: string) => {
   activeKey.value = key
   const indexes: number[] = key.split('-').map((i) => Number(i))
-  const activedComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
+  const activedComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(indexes)
   if (activedComponent) {
     basicStore.setCurComponent(activedComponent, key)
   }
@@ -64,7 +64,7 @@ const menuOptions = ref<MenuOption[]>([])
 
 const getMenuOptions = (
   fatherIndex: string,
-  components: BaseComponent[],
+  components: CustomComponent[],
   options: MenuOption[]
 ): MenuOption[] => {
   for (let i = 0; i < components.length; i++) {
@@ -123,7 +123,7 @@ const calcIndex = (index: number, fatherIndex: string) => {
 
 const copy = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<BaseComponent> = cloneDeep(basicStore.getComponentByIndex(indexes))
+  const component: Optional<CustomComponent> = cloneDeep(basicStore.getComponentByIndex(indexes))
   if (component) {
     copyStore.copy(component)
   }
@@ -174,8 +174,8 @@ const display = (index: string) => {
 }
 const cut = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
-  const component: Optional<BaseComponent> = basicStore.cutComponent(
+  const cutComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(indexes)
+  const component: Optional<CustomComponent> = basicStore.cutComponent(
     indexes[indexes.length - 1],
     cutComponent?.parent
   )
@@ -186,9 +186,9 @@ const cut = (index: string) => {
 
 const paste = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const insertComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
+  const insertComponent: Optional<CustomComponent> = basicStore.getComponentByIndex(indexes)
   if (copyStore.copyData) {
-    const data = cloneDeep(copyStore.copyData) as BaseComponent
+    const data = cloneDeep(copyStore.copyData) as CustomComponent
     data.id = uuid()
     basicStore.insertComponent(indexes[indexes.length - 1], data, insertComponent?.parent)
   }

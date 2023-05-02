@@ -16,7 +16,7 @@ import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { StaticKey, useEventBus } from '@/bus'
 import { calcComponentAxis } from '@/utils/utils'
-import type { BaseComponent } from '@/models'
+import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
 
 const basicStore = useBasicStoreWithOut()
@@ -64,7 +64,7 @@ useEventBus(StaticKey.DRAG_STOP, () => {
 })
 
 const showLine = (isDownward, isRightward) => {
-  const components = basicStore.componentData as Array<BaseComponent>
+  const components = basicStore.componentData as Array<CustomComponent>
   if (basicStore.curComponent) {
     const {
       top: mytop,

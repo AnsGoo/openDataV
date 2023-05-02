@@ -51,12 +51,12 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
 import { useData, useProp } from '@/hooks'
-import type { BaseComponent, DataType } from '@/models'
+import type { CustomComponent } from '@/models'
 import type { ScrollTableType } from './type'
 import type { RequestResponse } from '@/models/type'
-
+import type { DataType } from '@/enum/data'
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
 const { propValue } = useProp<ScrollTableType>(props.component)
