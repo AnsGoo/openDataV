@@ -1,40 +1,17 @@
 <template>
-  <div class="bg" :style="bgStyle">
-    <div ref="screen" :style="screenStyle" class="screen">
-      <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
-    </div>
-  </div>
+  <Previewer ref="viewer" />
 </template>
 
 <script setup lang="ts">
-import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
-import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
-import type { LayoutData } from '@/api/pages'
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
+import { Previewer } from '@/designer'
+import { onMounted, ref } from 'vue'
 import { getPageApi } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
-import { backgroundToCss, filterStyle, Logger, pageScale } from '@/utils/utils'
-import type { CanvasStyleData } from '@/types/storeTypes'
-import type { CustomComponent } from '@/models'
-import hooks from '@/hooks'
-import { createComponent } from '@/designer/utils'
+import { Logger } from '@/utils/utils'
 
-provide('HOOKS', readonly(hooks))
-const componentData = ref<Array<CustomComponent>>([])
-const canvasStyle = ref<CanvasStyleData>({
-  width: 0,
-  height: 0,
-  background: { backgroundColor: '#272e3b' }
-})
-const bgStyle = computed<Recordable<string>>(() => {
-  return backgroundToCss(canvasStyle.value.background)
-})
+const viewer = ref<InstanceType<typeof Previewer> | null>(null)
 
-const screenStyle = computed<Recordable<string>>(() => {
-  const style = {
-    ...canvasStyle.value
-  }
-  return filterStyle(style, ['width', 'height'])
-})
 const route = useRoute()
 const router = useRouter()
 
@@ -43,7 +20,7 @@ const initComponents = async (index: string): Promise<void> => {
   try {
     const resp = await getPageApi(index)
     if (resp.data) {
-      setPageData(resp.data)
+      viewer.value!.setLayoutData(resp.data)
     }
   } catch (e: any) {
     await router.push({
@@ -51,38 +28,10 @@ const initComponents = async (index: string): Promise<void> => {
     })
   }
 }
-
-const setPageData = (data: LayoutData): void => {
-  if (data.canvasStyle) {
-    canvasStyle.value = data.canvasStyle
-  }
-  if (data.canvasData) {
-    componentData.value = data.canvasData.map((ele) => {
-      return createComponent(ele)
-    })
-  }
-  setScale()
-}
-
 onMounted(async () => {
   // 如果是首页
   await initComponents(route.params.index as string)
-
-  window.addEventListener('resize', setScale)
 })
-
-onUnmounted(() => {
-  window.removeEventListener('resize', setScale)
-})
-
-const setScale = () => {
-  const screenEl: HTMLDivElement | null = document.querySelector('.screen')
-  if (screenEl) {
-    const designWidth = canvasStyle.value.width
-    const designHeight = canvasStyle.value.height
-    pageScale(screenEl, designWidth, designHeight)
-  }
-}
 </script>
 
 <style scoped lang="less">

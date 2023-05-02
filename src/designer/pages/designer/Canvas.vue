@@ -35,7 +35,7 @@
 
 <script lang="ts" setup>
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import Editor from '@/designer/Editor/Index.vue'
+import Editor from '../../Editor'
 import type { SelectOption } from 'naive-ui'
 import {
   NEl,

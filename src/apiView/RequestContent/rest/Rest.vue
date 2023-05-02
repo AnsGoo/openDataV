@@ -234,6 +234,9 @@ const loadRestData = async (id: string) => {
       const data: RestDataDetail = resp.data
       formData.method = data.method
       formData.url = data.url
+      if (!data.data) {
+        return
+      }
       const body = recordabletoKV(data.data || {})
       formData.data = body.length > 0 ? body : getEmptyParams()
       const params = recordabletoKV(data.params || {})

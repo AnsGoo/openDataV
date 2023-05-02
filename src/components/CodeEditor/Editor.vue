@@ -5,7 +5,7 @@
     </div>
     <div class="main" :style="{ maxHeight: config.height }">
       <codemirror
-        :model-value="code"
+        :model-value="code || ''"
         :style="{
           width: '100%',
           height: config.height,
@@ -31,6 +31,7 @@
 <script lang="ts" setup>
 import { computed } from 'vue'
 import type { EditorView, ViewUpdate } from '@codemirror/view'
+import type { EditorState } from '@codemirror/state'
 import { Codemirror } from 'vue-codemirror'
 import { json } from '@codemirror/lang-json'
 import { oneDark } from '@codemirror/theme-one-dark'
@@ -79,13 +80,23 @@ const extensions = computed(() => {
   return result
 })
 
-const handleReady = ({ view }: any) => {
+const handleReady = ({
+  view,
+  state: _state,
+  container: _container
+}: {
+  view: EditorView
+  state: EditorState
+  container: HTMLDivElement
+}) => {
   cmView = view
+  return true
 }
 const log = Logger.log
 const codeChange = (value: string, viewUpdate: ViewUpdate) => {
   emits('update:code', value)
   emits('change', value, viewUpdate)
+  return true
 }
 
 const handleRedo = () => {

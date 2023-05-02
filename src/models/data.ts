@@ -53,7 +53,7 @@ class StaticRequestData implements RequestData {
   public afterScript?: AfterScript
   public title?: string
 
-  constructor(dataId: string | undefined, script?: AfterScript) {
+  constructor({ dataId, script }: { dataId: string | undefined; script?: AfterScript }) {
     this.dataId = dataId
     this.afterScript = script
   }
@@ -118,7 +118,7 @@ class RestRequestData implements RequestData {
   public requestInstance: RestRequest
   public requestOptions: StoreRequestOption
 
-  constructor(options: StoreRequestOption) {
+  constructor({ options }: { options: StoreRequestOption }) {
     this.requestOptions = options
     this.requestInstance = useRestRequest(options, false)
   }

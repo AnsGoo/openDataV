@@ -45,7 +45,7 @@
           "interval": 300
         },
         "requestOptions": {
-          "restOptions": {
+          "options": {
             "headers": {},
             "params": {},
             "data": {},
@@ -203,7 +203,7 @@
           "interval": 300
         },
         "requestOptions": {
-          "restOptions": {
+          "options": {
             "headers": {},
             "params": {},
             "data": {},
@@ -366,7 +366,7 @@
           "interval": 300
         },
         "requestOptions": {
-          "restOptions": {
+          "options": {
             "headers": {},
             "params": {},
             "data": {},
@@ -673,7 +673,7 @@
               "interval": 300
             },
             "requestOptions": {
-              "restOptions": {
+              "options": {
                 "headers": [],
                 "params": [],
                 "data": [],

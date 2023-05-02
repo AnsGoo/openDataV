@@ -56,37 +56,25 @@
 </template>
 
 <script setup lang="ts">
-import ToolBar from '@/designer/Pane/Toolbar'
-import LeftSideBar from '@/designer/Pane/LeftSideBar'
-import RightSideBar from '@/designer/Pane/RightSideBar'
+import ToolBar from '../../Pane/Toolbar'
+import LeftSideBar from '../../Pane/LeftSideBar'
+import RightSideBar from '../../Pane/RightSideBar'
 import Canvas from './Canvas.vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { onMounted, onUnmounted, ref } from 'vue'
-import { getPageApi } from '@/api/pages'
-import { useRoute } from 'vue-router'
+import { onUnmounted, provide, readonly, ref } from 'vue'
+import type { LayoutData } from '@/api/pages'
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import hooks from '@/hooks'
 
 const basicStore = useBasicStoreWithOut()
 
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
-
-const route = useRoute()
-
-onMounted(async () => {
-  const index = route.params.index as string
-  if (index) {
-    await restore(index)
-  }
-})
-
-const restore = async (index: string) => {
-  const resp = await getPageApi(index)
-  if (!resp.data) {
-    return
-  }
-  basicStore.setLayoutData(resp.data)
+provide('HOOKS', readonly(hooks))
+const setLayoutData = (data: LayoutData) => {
+  basicStore.setLayoutData(data)
 }
+defineExpose({ setLayoutData })
 
 onUnmounted(() => {
   basicStore.clearCanvas()
