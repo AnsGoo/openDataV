@@ -3,14 +3,14 @@ import store from '@/store'
 import type { CanvasStyleData, EditData } from '@/types/storeTypes'
 import type { LayoutData } from '@/api/pages'
 import { EditMode } from '@/enum'
-import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'
+import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
 import { message } from '@/utils/message'
 import { useSnapShotStoreWithOut } from './snapshot'
 import type { BaseComponent } from '@/models'
 import { createComponent } from '@/models'
 import { cloneDeep } from 'lodash-es'
-import type { ComponentDataType, DOMRectStyle } from '@/types/component'
-import type { Position } from '@/types/common'
+import type { ComponentDataType, DOMRectStyle, GroupStyle } from '@/types/component'
+import type { Position, Vector } from '@/types/common'
 
 const snapShotStore = useSnapShotStoreWithOut()
 
@@ -193,11 +193,46 @@ const useBasicStore = defineStore({
       }
 
       if (this.curComponent.subComponents) {
-        this.curComponent.resizeSubComponents()
+        this.resizeSubComponent(this.curComponent)
       }
       if (isSave) {
         this.saveComponentData()
       }
+    },
+    /**
+     * 重新调整当前组件的子组件
+     * @param component 当前组件
+     */
+    resizeSubComponent(component: BaseComponent) {
+      if (!component.subComponents) return
+      console.log('---------')
+      const subComponents = component.subComponents
+      const parentStyle = component.positionStyle
+      subComponents.forEach((el: BaseComponent) => {
+        const groupStyle: GroupStyle = el.groupStyle!
+        const center: Vector = {
+          y: parentStyle.top + parentStyle.height / 2,
+          x: parentStyle.left + parentStyle.width / 2
+        }
+        const { top, left, height, width, rotate } = {
+          top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
+          left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
+          height: (parentStyle.height * groupStyle.gheight) / 100,
+          width: (parentStyle.width * groupStyle.gwidth) / 100,
+          rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
+        }
+        const point: Vector = {
+          y: top + height / 2,
+          x: left + width / 2
+        }
+
+        const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
+        el.change('top', Math.round(afterPoint.y - height / 2))
+        el.change('left', Math.round(afterPoint.x - width / 2))
+        el.change('height', Math.round(height))
+        el.change('width', Math.round(width))
+        el.change('rotate', rotate)
+      })
     },
 
     /**

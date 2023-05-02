@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash-es'
 import type { ComponentGroup } from '@/enum'
 import { FormType } from '@/enum'
-import { mod360, rotatePoint, uuid } from '@/utils/utils'
+import { uuid } from '@/utils/utils'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -10,7 +10,6 @@ import type {
   GroupStyle,
   PropsType
 } from '@/types/component'
-import type { Vector } from '@/types/common'
 import { cssTransfer } from './styleToCss'
 import type { RequestData } from './data'
 import {
@@ -386,41 +385,6 @@ export abstract class BaseComponent {
    */
   showComponent() {
     this.display = true
-  }
-
-  /**
-   * 重新调整当前组件的子组件
-   * @returns
-   */
-  resizeSubComponents() {
-    if (!this.subComponents) return
-    const subComponents = this.subComponents
-    const parentStyle = this.positionStyle
-    subComponents.forEach((el: BaseComponent) => {
-      const groupStyle: GroupStyle = el.groupStyle!
-      const center: Vector = {
-        y: parentStyle.top + parentStyle.height / 2,
-        x: parentStyle.left + parentStyle.width / 2
-      }
-      const { top, left, height, width, rotate } = {
-        top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
-        left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
-        height: (parentStyle.height * groupStyle.gheight) / 100,
-        width: (parentStyle.width * groupStyle.gwidth) / 100,
-        rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
-      }
-      const point: Vector = {
-        y: top + height / 2,
-        x: left + width / 2
-      }
-
-      const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.change('top', Math.round(afterPoint.y - height / 2))
-      el.change('left', Math.round(afterPoint.x - width / 2))
-      el.change('height', Math.round(height))
-      el.change('width', Math.round(width))
-      el.change('rotate', rotate)
-    })
   }
   async changeRequestDataConfig(type: DataType, config: Recordable) {
     switch (type) {
