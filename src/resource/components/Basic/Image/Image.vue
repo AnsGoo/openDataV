@@ -5,6 +5,7 @@
 
 <script setup lang="ts">
 import type { BaseComponent } from '@/models'
+
 defineProps<{
   component: BaseComponent
 }>()

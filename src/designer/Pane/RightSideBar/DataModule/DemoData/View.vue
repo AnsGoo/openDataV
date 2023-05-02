@@ -28,15 +28,15 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import {
-  NForm,
-  NInput,
-  NTabs,
-  NTabPane,
-  NInputGroup,
   NButton,
-  NModal,
   NCard,
-  NFormItem
+  NForm,
+  NFormItem,
+  NInput,
+  NInputGroup,
+  NModal,
+  NTabPane,
+  NTabs
 } from 'naive-ui'
 import type { BaseComponent, DemoRequestData } from '@/models'
 import { DataType } from '@/models'

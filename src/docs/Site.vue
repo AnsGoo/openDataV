@@ -12,7 +12,7 @@
   </n-layout>
 </template>
 <script lang="ts" setup>
-import { NLayout, NLayoutHeader, NLayoutFooter } from 'naive-ui'
+import { NLayout, NLayoutFooter, NLayoutHeader } from 'naive-ui'
 import ToolBar from './modules/ToolBar'
 import '@/css/markdown.css'
 </script>

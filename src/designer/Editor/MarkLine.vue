@@ -14,7 +14,7 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useEventBus, StaticKey } from '@/bus'
+import { StaticKey, useEventBus } from '@/bus'
 import { calcComponentAxis } from '@/utils/utils'
 import type { BaseComponent } from '@/models'
 import type { Position } from '@/types/common'

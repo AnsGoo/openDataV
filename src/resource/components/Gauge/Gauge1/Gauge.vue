@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { http } from '@/utils/http'
 import { useProp } from '@/hooks'
 import { useEventBus } from '@/bus'

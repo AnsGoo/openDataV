@@ -27,7 +27,7 @@
 <script lang="ts" setup>
 import type { BaseComponent } from '@/models'
 import { DataType } from '@/models'
-import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } from 'naive-ui'
+import { NDescriptions, NDescriptionsItem, NEmpty, NForm, NFormItem, NSelect } from 'naive-ui'
 import StaticData from './StaticData'
 import DynamicData from './DynamicData'
 import DemoData from './DemoData'

@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useProp, useData } from '@/hooks'
+import { onMounted, ref } from 'vue'
+import { useData, useProp } from '@/hooks'
 import type BasicLineChartComponent from './config'
 import type { BasicLineChart } from './type'
 import type { EChartsOption, LineSeriesOption, XAXisComponentOption } from 'echarts'

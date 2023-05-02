@@ -10,7 +10,7 @@
 </template>
 <script lang="ts" setup>
 import { drawCavaseRuler } from './utils'
-import { reactive, ref, onMounted, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 import type { PaletteType } from '../index-types'
 
 const props = defineProps<{

@@ -16,15 +16,15 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, h, watch } from 'vue'
+import { computed, h, ref, watch } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import { uuid } from '@/utils/utils'
-import { NDescriptions, NEmpty, NDescriptionsItem, NMenu } from 'naive-ui'
+import type { MenuOption } from 'naive-ui'
+import { NDescriptions, NDescriptionsItem, NEmpty, NMenu } from 'naive-ui'
 import { useEventBus } from '@/bus'
 import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'
-import type { MenuOption } from 'naive-ui'
 import { ComponentGroup, ComponentGroupList } from '@/enum'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { cloneDeep } from 'lodash-es'

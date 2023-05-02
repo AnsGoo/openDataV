@@ -1,5 +1,4 @@
-import type { BaseComponent } from '@/models'
-import type { DataType } from '@/models'
+import type { BaseComponent, DataType } from '@/models'
 
 export interface HooksType {
   useProp: <T>(

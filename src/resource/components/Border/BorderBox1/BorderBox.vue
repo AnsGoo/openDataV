@@ -76,6 +76,7 @@ import { useProp } from '@/hooks'
 import { ref } from 'vue'
 import type BorderBoxComponent from './config'
 import type { BorderBox } from './type'
+
 const props = defineProps<{
   component: BorderBoxComponent
 }>()

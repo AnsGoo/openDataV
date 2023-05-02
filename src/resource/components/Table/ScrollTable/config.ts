@@ -1,4 +1,4 @@
-import { shallowRef, h } from 'vue'
+import { h, shallowRef } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import type { PropsType } from '@/types/component'
 import { BaseComponent } from '@/models'

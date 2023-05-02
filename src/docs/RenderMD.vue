@@ -9,6 +9,7 @@ import { NCard } from 'naive-ui'
 import '@/css/markdown.css'
 
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+
 const projectStore = useProjectSettingStoreWithOut()
 
 const backgroundColor = computed<string>(() => {

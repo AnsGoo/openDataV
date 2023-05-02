@@ -3,11 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useProp, useData } from '@/hooks'
+import { onMounted, ref } from 'vue'
+import { useData, useProp } from '@/hooks'
 import type BasicLineChartComponent from './config'
 import type { BasicLineChart } from './type'
-import type { PieSeriesOption, EChartsOption } from 'echarts'
+import type { EChartsOption, PieSeriesOption } from 'echarts'
 import { compareResetValue } from '../../utils'
 import { useEchart } from '../../hooks'
 import type { DataType } from '@/models'

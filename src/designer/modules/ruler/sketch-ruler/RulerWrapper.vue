@@ -39,8 +39,9 @@
 <script lang="ts" setup>
 import RulerLine from './RulerLine.vue'
 import CanvasRuler from '../canvas-ruler/index.vue'
-import { ref, computed } from 'vue'
+import { computed, ref } from 'vue'
 import type { PaletteType } from '../index-types'
+
 const props = withDefaults(
   defineProps<{
     scale: number

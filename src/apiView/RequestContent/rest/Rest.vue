@@ -97,15 +97,15 @@
 <script setup lang="ts">
 import type { SelectOption } from 'naive-ui'
 import {
-  NCard,
-  NInput,
-  NSelect,
   NButton,
   NButtonGroup,
+  NCard,
+  NDivider,
+  NInput,
+  NSelect,
   NSpace,
-  NTabs,
   NTabPane,
-  NDivider
+  NTabs
 } from 'naive-ui'
 import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { onMounted, reactive, ref } from 'vue'
@@ -118,7 +118,7 @@ import ScriptsEditor from '../modules/ScriptsEditor'
 import { ScriptType } from '@/enum'
 import type { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
-import { useEventBus, StaticKey } from '@/bus'
+import { StaticKey, useEventBus } from '@/bus'
 import {
   createRestDataApi,
   getRestDataApi,

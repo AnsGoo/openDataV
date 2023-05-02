@@ -1,4 +1,4 @@
-import type { Vector, Position } from '@/types/common'
+import type { Position, Vector } from '@/types/common'
 import type { DOMRectStyle } from '@/types/component'
 import { rotatePoint } from './utils'
 

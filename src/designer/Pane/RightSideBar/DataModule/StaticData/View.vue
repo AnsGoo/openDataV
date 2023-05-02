@@ -34,7 +34,7 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
-import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
+import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import type { BaseComponent, StaticRequestData } from '@/models'
 import { DataType } from '@/models'
 import { ScriptType } from '@/enum'

@@ -1,6 +1,6 @@
 import { NothingLayout } from '@/layout'
-import { ComponentGroupList } from '@/enum'
 import type { GroupType } from '@/enum'
+import { ComponentGroupList } from '@/enum'
 import type { ComponentItem } from '@/types/component'
 import { camel2snake } from '@/utils/utils'
 

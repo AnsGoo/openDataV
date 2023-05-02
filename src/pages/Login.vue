@@ -44,13 +44,13 @@
 </template>
 <script lang="ts" setup>
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { NFormItem, NInput, NButton, NForm } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
 import type { LoginData } from '@/types/user'
 import { useUserStoreWithOut } from '@/store/modules/user'
-import { useRouter, useRoute } from 'vue-router'
-import type { Router, RouteLocationNormalizedLoaded as Route } from 'vue-router'
+import type { RouteLocationNormalizedLoaded as Route, Router } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { loginApi } from '@/api/user'
 import { Logger } from '@/utils/utils'
 import { message } from '@/utils/message'

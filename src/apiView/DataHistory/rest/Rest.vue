@@ -48,8 +48,8 @@
   </n-card>
 </template>
 <script setup lang="ts">
-import { getRestDataListApi, deleteRestDataApi } from '@/api/data'
-import { NInput, NCard, NTabs, NTabPane, NOl, NLi, NGradientText } from 'naive-ui'
+import { deleteRestDataApi, getRestDataListApi } from '@/api/data'
+import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
 import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
 import type { RestDataDetail } from '@/api/data/type'

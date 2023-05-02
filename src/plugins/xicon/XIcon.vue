@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
 import type { Component } from 'vue'
+import { computed } from 'vue'
 import { Icon } from '@vicons/utils'
 import { Help } from '@vicons/carbon'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'

@@ -29,12 +29,10 @@
   </n-card>
 </template>
 <script setup lang="ts">
-import { NCard, NTabs, NTabPane } from 'naive-ui'
-import { getComponentStyle } from '@/utils/utils'
-import { uuid } from '@/utils/utils'
+import { NCard, NTabPane, NTabs } from 'naive-ui'
+import { getComponentStyle, uuid } from '@/utils/utils'
 import type { ComponentOptions, ConcreteComponent } from 'vue'
-import { reactive } from 'vue'
-import { computed, h } from 'vue'
+import { computed, h, reactive } from 'vue'
 import StaticDataView from '@/components/StaticDataView'
 import type { BaseComponent } from '@/models'
 

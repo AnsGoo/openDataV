@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useEventBus } from '@/bus'
 import { http } from '@/utils/http'
 import type { SubTextType } from './type'

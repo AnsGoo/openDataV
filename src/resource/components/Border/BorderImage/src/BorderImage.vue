@@ -7,6 +7,7 @@ import { useProp } from '@/hooks'
 import { computed, ref } from 'vue'
 import type BorderImageComponent from '../config'
 import type { BorderImage } from '../type'
+
 const props = defineProps<{
   component: BorderImageComponent
 }>()

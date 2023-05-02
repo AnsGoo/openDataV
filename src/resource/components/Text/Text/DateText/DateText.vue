@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import dayjs from 'dayjs'
 import type DateTextComponent from './config'
 import { useProp } from '@/hooks'

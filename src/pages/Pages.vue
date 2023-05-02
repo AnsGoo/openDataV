@@ -51,14 +51,14 @@
 </template>
 
 <script setup lang="ts">
-import { getPageListApi, deletePageApi } from '@/api/pages'
 import type { SimpleLayoutData } from '@/api/pages'
-import { onMounted, ref, h } from 'vue'
+import { deletePageApi, getPageListApi } from '@/api/pages'
+import { h, onMounted, ref } from 'vue'
 import defaultImg from '@/assets/default.png'
 import { useRouter } from 'vue-router'
 import { XIcon } from '@/plugins/xicon'
 import type { DropdownOption } from 'naive-ui'
-import { NCard, NEllipsis, NTooltip, NDropdown, NButton } from 'naive-ui'
+import { NButton, NCard, NDropdown, NEllipsis, NTooltip } from 'naive-ui'
 import { Logger } from '@/utils/utils'
 import { message } from '@/utils/message'
 

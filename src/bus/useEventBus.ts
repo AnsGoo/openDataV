@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted } from 'vue'
+import type { Emitter, Handler } from 'mitt'
 import mitt from 'mitt'
-import type { Handler, Emitter } from 'mitt'
 
 const eventBus: Emitter<Events> = mitt<Events>()
 

@@ -3,10 +3,10 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { onMounted, ref } from 'vue'
 import { useEchart } from '../../hooks'
 import type WaveChartComponent from './config'
-import { useProp, useData } from '@/hooks'
+import { useData, useProp } from '@/hooks'
 import 'echarts-liquidfill'
 import type { WaveChartType } from './type'
 import type { DataType } from '@/models'

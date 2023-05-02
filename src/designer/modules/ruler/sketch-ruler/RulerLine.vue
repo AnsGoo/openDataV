@@ -14,7 +14,7 @@
 </template>
 <script lang="ts" setup>
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import type { PaletteType } from '../index-types'
 
 const props = defineProps<{

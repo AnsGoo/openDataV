@@ -1,5 +1,5 @@
 import type { ConfigProviderProps } from 'naive-ui'
-import { createDiscreteApi, lightTheme, darkTheme } from 'naive-ui'
+import { createDiscreteApi, darkTheme, lightTheme } from 'naive-ui'
 import { computed } from 'vue'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 

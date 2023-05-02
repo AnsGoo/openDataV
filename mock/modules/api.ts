@@ -300,7 +300,6 @@ export default [
     method: 'get',
     statusCode: 200,
     response: () => {
-      console.log(restData)
       return restData
     }
   },

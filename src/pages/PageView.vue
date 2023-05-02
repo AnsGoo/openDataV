@@ -8,12 +8,12 @@
 
 <script setup lang="ts">
 import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
-import { ref, onUnmounted, onMounted, computed, provide, readonly } from 'vue'
+import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
+import type { LayoutData } from '@/api/pages'
 import { getPageApi } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
 import { backgroundToCss, filterStyle, Logger, pageScale } from '@/utils/utils'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import type { LayoutData } from '@/api/pages'
 import type { BaseComponent } from '@/models'
 import { createComponent } from '@/models'
 import hooks from '@/hooks'

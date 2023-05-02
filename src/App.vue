@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { useRouter, RouterView } from 'vue-router'
+import { RouterView, useRouter } from 'vue-router'
 import { ref } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
-import { NLoadingBarProvider, NGlobalStyle } from 'naive-ui'
+import { NGlobalStyle, NLoadingBarProvider } from 'naive-ui'
 
 const basicStore = useBasicStoreWithOut()
 

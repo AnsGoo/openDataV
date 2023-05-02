@@ -43,16 +43,16 @@
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
 import {
+  NButton,
+  NCard,
   NForm,
+  NFormItem,
+  NGradientText,
   NInput,
   NInputGroup,
-  NButton,
-  NModal,
-  NCard,
-  NSwitch,
   NInputNumber,
-  NFormItem,
-  NGradientText
+  NModal,
+  NSwitch
 } from 'naive-ui'
 import type { BaseComponent, RestRequestData } from '@/models'
 import { DataType } from '@/models'

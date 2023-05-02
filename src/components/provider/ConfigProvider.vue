@@ -9,8 +9,9 @@
 </template>
 <script setup lang="ts">
 import { computed } from 'vue'
-import { NConfigProvider, zhCN, dateZhCN, darkTheme, lightTheme } from 'naive-ui'
+import { darkTheme, dateZhCN, lightTheme, NConfigProvider, zhCN } from 'naive-ui'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+
 const projectSettingsStore = useProjectSettingStoreWithOut()
 const getThemeOverrides = computed(() => {
   const appTheme = projectSettingsStore.appTheme

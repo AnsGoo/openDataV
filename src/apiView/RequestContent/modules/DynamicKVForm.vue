@@ -48,7 +48,7 @@
 </template>
 <script lang="ts" setup>
 import { uuid } from '@/utils/utils'
-import { NInput, NButton, NInputGroup, NDivider } from 'naive-ui'
+import { NButton, NDivider, NInput, NInputGroup } from 'naive-ui'
 import { ref, watch } from 'vue'
 import type { KV } from './type'
 

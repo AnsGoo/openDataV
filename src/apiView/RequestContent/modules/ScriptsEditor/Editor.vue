@@ -58,12 +58,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, watch, onMounted } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
-import { NSelect, NInput, NSpace, NButtonGroup, NButton } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
+import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
@@ -73,10 +73,10 @@ import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
 import {
-  getAfterScriptListApi,
-  updateAfterScriptApi,
   createAfterScriptApi,
-  getAfterScriptApi
+  getAfterScriptApi,
+  getAfterScriptListApi,
+  updateAfterScriptApi
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
 

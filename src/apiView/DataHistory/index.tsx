@@ -1,6 +1,7 @@
 import { defineComponent } from 'vue'
 import Rest from './rest'
 import Static from './static'
+
 export default defineComponent({
   props: {
     active: {

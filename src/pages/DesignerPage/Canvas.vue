@@ -34,18 +34,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import Editor from '@/designer/Editor/Index.vue'
 import type { SelectOption } from 'naive-ui'
 import {
+  NEl,
   NLayout,
   NLayoutContent,
   NLayoutFooter,
   NScrollbar,
-  NSlider,
-  NSpace,
   NSelect,
-  NEl
+  NSlider,
+  NSpace
 } from 'naive-ui'
 import { debounce } from 'lodash-es'
 import { useBasicStoreWithOut } from '@/store/modules/basic'

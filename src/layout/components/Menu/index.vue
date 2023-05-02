@@ -11,8 +11,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed, watch, h } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
+import { computed, h, onMounted, ref, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import type { MenuType } from '@/router'
 import { routeView } from '@/router'

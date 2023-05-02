@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios'
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Axios from 'axios'
 import type { ResultType } from '@/utils/http/config'
 import { httpConfig } from '@/utils/http/config'

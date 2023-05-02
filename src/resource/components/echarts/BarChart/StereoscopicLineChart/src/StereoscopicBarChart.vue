@@ -7,12 +7,12 @@ import { onMounted, ref } from 'vue'
 import { useData, useProp } from '@/hooks'
 import type StereoscopicBarChartComponent from '../config'
 import type { StereoscopicBarChart } from '../type'
-import type { EChartsOption, XAXisComponentOption, CustomSeriesOption } from 'echarts'
+import type { CustomSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
+import { graphic } from 'echarts'
 import { compareResetValue } from '../../../utils'
 import { useEchart } from '../../../hooks'
 import type { DataType } from '@/models'
 import type { RequestResponse } from '@/models/type'
-import { graphic } from 'echarts'
 
 let globalOption: EChartsOption
 const props = defineProps<{

@@ -86,6 +86,7 @@ import { ref } from 'vue'
 import type DecorationComponent from './config'
 
 import type { Decoration } from './type'
+
 const props = defineProps<{
   component: DecorationComponent
 }>()

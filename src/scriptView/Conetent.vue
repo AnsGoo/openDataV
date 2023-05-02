@@ -44,15 +44,15 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref } from 'vue'
-import { NCard, NSpace, NButtonGroup, NButton, NInput, NDivider, NTabs, NTabPane } from 'naive-ui'
+import { NButton, NButtonGroup, NCard, NDivider, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
 import DataView from '@/components/DataView'
 import { message } from '@/utils/message'
 import Editor from './Editor.vue'
-import { useEventBus, StaticKey } from '@/bus'
+import { StaticKey, useEventBus } from '@/bus'
 import {
+  createAfterScriptApi,
   getAfterScriptApi,
-  updateAfterScriptApi,
-  createAfterScriptApi
+  updateAfterScriptApi
 } from '@/api/data/afterScript'
 import { makeFunction } from '@/utils/data'
 import type { AfterScriptDetail } from '@/api/data/type'

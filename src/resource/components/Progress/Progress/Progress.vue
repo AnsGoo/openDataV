@@ -53,7 +53,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { http } from '@/utils/http'
 import { useProp } from '@/hooks'
 import { Logger, uuid } from '@/utils/utils'

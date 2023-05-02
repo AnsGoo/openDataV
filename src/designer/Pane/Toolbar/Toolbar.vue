@@ -8,21 +8,22 @@
 import { h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import type { ToolBarItemType } from '@/components/ToolBar'
+import { ToolBar } from '@/components/ToolBar'
 import {
-  undo,
-  recoveryDraft,
-  importCanvas,
   exportCanvas,
+  importCanvas,
+  recoveryDraft,
   setShowEm,
-  toggleTheme
+  toggleTheme,
+  undo
 } from './modules/actions'
 import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 import showIconCard from './modules/iconList'
 import showSaveCard from './modules/save'
 
 import LogoView from '@/components/LogoView'
-import { ToolBar } from '@/components/ToolBar'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
+
 const basicStore = useBasicStoreWithOut()
 
 const router = useRouter()

@@ -1,6 +1,6 @@
 import { BaseComponent } from './component'
 import { createComponent } from './utils'
-import { DataType, StaticRequestData, RestRequestData, DemoRequestData } from './data'
+import { DataType, DemoRequestData, RestRequestData, StaticRequestData } from './data'
 
 export {
   BaseComponent,

@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, inject } from 'vue'
+import { inject, onMounted, ref } from 'vue'
 import type BasicLineChartComponent from './config'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { compareResetValue } from '../../utils'

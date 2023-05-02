@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { NUl, NLi } from 'naive-ui'
+import { NLi, NUl } from 'naive-ui'
 import type { MenuItem } from './type'
 import { useRouter } from 'vue-router'
 

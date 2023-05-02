@@ -7,8 +7,8 @@ import { h } from 'vue'
 import { useRouter } from 'vue-router'
 import { toggleTheme } from './modules/actions'
 import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
-import { ToolBar } from '@/components/ToolBar'
 import type { ToolBarItemType } from '@/components/ToolBar'
+import { ToolBar } from '@/components/ToolBar'
 import LogoView from '@/components/LogoView'
 
 const router = useRouter()

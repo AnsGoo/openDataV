@@ -37,8 +37,8 @@
 
 <script lang="ts" setup>
 import { computed, reactive, ref, watch } from 'vue'
-import { NSelect } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
+import { NSelect } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
 import { javascript } from '@codemirror/lang-javascript'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'

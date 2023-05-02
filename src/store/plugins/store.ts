@@ -1,8 +1,8 @@
 import type {
   PiniaPlugin,
   PiniaPluginContext,
-  SubscriptionCallbackMutation,
-  StateTree
+  StateTree,
+  SubscriptionCallbackMutation
 } from 'pinia'
 import { Logger } from '@/utils/utils'
 

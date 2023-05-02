@@ -1,5 +1,5 @@
 import type { DOMRectStyle, GroupStyle } from '@/types/component'
-import type { Vector, Position } from '@/types/common'
+import type { Position, Vector } from '@/types/common'
 import { cloneDeep, isNumber } from 'lodash-es'
 import type { BaseComponent } from '@/models'
 

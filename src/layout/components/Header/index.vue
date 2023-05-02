@@ -93,9 +93,9 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, unref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { NTooltip, NDropdown, NAvatar, NBreadcrumb, NBreadcrumbItem } from 'naive-ui'
+import { computed, ref, unref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { NAvatar, NBreadcrumb, NBreadcrumbItem, NDropdown, NTooltip } from 'naive-ui'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import ProjectSetting from './setting.vue'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'

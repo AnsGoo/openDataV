@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { ContextmenuItem, Axis } from './types'
+import type { Axis, ContextmenuItem } from './types'
 
 import MenuContent from './MenuContent.vue'
 

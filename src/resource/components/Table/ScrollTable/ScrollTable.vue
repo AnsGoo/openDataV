@@ -49,8 +49,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed } from 'vue'
-import { useProp, useData } from '@/hooks'
+import { computed, ref } from 'vue'
+import { useData, useProp } from '@/hooks'
 import type { BaseComponent, DataType } from '@/models'
 import type { ScrollTableType } from './type'
 import type { RequestResponse } from '@/models/type'

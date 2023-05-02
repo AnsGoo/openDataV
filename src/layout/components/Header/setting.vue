@@ -124,20 +124,20 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, watch, computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { ProjectSettingState } from '@/store/modules/projectSetting'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import type { DrawerPlacement } from 'naive-ui'
 import {
+  NAlert,
+  NBadge,
+  NDivider,
   NDrawer,
   NDrawerContent,
-  NAlert,
   NSelect,
   NSwitch,
-  NDivider,
-  NTooltip,
-  NBadge
+  NTooltip
 } from 'naive-ui'
-import type { DrawerPlacement } from 'naive-ui'
 import NavThemeDark from '@/assets/images/nav-theme-dark.svg'
 import NavThemeLight from '@/assets/images/nav-theme-light.svg'
 import HeaderThemeDark from '@/assets/images/header-theme-dark.svg'

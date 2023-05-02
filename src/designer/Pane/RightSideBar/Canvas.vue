@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { computed, ref } from 'vue'
-import { NForm, NFormItem, NInput, NSelect, NInputNumber, NScrollbar, NColorPicker } from 'naive-ui'
+import { NColorPicker, NForm, NFormItem, NInput, NInputNumber, NScrollbar, NSelect } from 'naive-ui'
 import PixelEnum from '@/enum/pixel'
 import { FormType } from '@/enum'
 import type { CanvasStyleData } from '@/types/storeTypes'

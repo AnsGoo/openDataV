@@ -50,8 +50,8 @@
 
 <script lang="ts" setup>
 import { onMounted, reactive, ref, watch } from 'vue'
-import { NTabs, NTabPane, NCard, NSelect, NSpace, NButtonGroup, NButton, NInput } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
+import { NButton, NButtonGroup, NCard, NInput, NSelect, NSpace, NTabPane, NTabs } from 'naive-ui'
 import { ScriptType } from '@/enum'
 import ScriptsEdtor from '../modules/ScriptsEditor'
 import DataView from '@/components/DataView'
@@ -66,7 +66,7 @@ import {
   updateStaticDataApi
 } from '@/api/data'
 import { makeFunction } from '@/utils/data'
-import { useEventBus, StaticKey } from '@/bus'
+import { StaticKey, useEventBus } from '@/bus'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { AfterScript } from '@/types/component'
 import { Logger } from '@/utils/utils'

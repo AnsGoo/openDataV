@@ -1,17 +1,17 @@
+import type { ComponentPublicInstance, PropType } from 'vue'
 import {
-  defineComponent,
-  ref,
   computed,
-  onMounted,
+  defineComponent,
   onErrorCaptured,
-  watch,
+  onMounted,
   provide,
-  readonly
+  readonly,
+  ref,
+  watch
 } from 'vue'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
-import type { ComponentPublicInstance, PropType } from 'vue'
-import { mod360, copyText, throttleFrame, Logger } from '@/utils/utils'
+import { copyText, Logger, mod360, throttleFrame } from '@/utils/utils'
 import { eventBus, StaticKey } from '@/bus'
 import type { Vector } from '@/types/common'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'

@@ -13,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import { watch, computed, onUnmounted } from 'vue'
 import type { WatchStopHandle } from 'vue'
+import { computed, onUnmounted, watch } from 'vue'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { useBasicStoreWithOut } from '@/store/modules/basic'

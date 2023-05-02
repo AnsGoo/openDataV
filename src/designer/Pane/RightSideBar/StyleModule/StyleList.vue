@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { debounce, cloneDeep } from 'lodash-es'
+import { cloneDeep, debounce } from 'lodash-es'
 import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'

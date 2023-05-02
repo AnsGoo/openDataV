@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import store from '@/store'
-import type { EditData, CanvasStyleData } from '@/types/storeTypes'
+import type { CanvasStyleData, EditData } from '@/types/storeTypes'
 import type { LayoutData } from '@/api/pages'
 import { EditMode } from '@/enum'
 import { calcComponentsRect, swap, toPercent, uuid } from '@/utils/utils'

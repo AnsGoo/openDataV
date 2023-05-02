@@ -1,8 +1,8 @@
 import type {
-  Router,
-  RouterHistory,
+  NavigationGuardNext,
   RouteLocationNormalized,
-  NavigationGuardNext
+  Router,
+  RouterHistory
 } from 'vue-router'
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
 import { LOGIN_URL, NoAuth, RouteMode } from '@/enum'

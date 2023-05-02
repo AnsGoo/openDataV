@@ -30,11 +30,11 @@
 </template>
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
-import { NForm, NInput, NFormItem, NButton, NModal, NSpace } from 'naive-ui'
 import type { FormItemRule } from 'naive-ui'
+import { NButton, NForm, NFormItem, NInput, NModal, NSpace } from 'naive-ui'
 import type { LayoutData } from '@/api/pages'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { savePageApi, updatePageApi } from '@/api/pages'
+import { useBasicStoreWithOut } from '@/store/modules/basic'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
 import { message } from '@/utils/message'

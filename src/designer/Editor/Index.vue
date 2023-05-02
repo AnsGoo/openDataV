@@ -50,25 +50,23 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 import Ruler from '@/designer/Editor/Ruler.vue'
 import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
 import Shape from '@/designer/Editor/Shape'
-import { filterStyle, uuid } from '@/utils/utils'
+import { backgroundToCss, filterStyle, getComponentShapeStyle, Logger, uuid } from '@/utils/utils'
 import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { useComposeStoreWithOut } from '@/store/modules/compose'
 import { EditMode } from '@/enum'
 import type { Position, Vector } from '@/types/common'
-import { getComponentShapeStyle } from '@/utils/utils'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { useCopyStoreWithOut } from '@/store/modules/copy'
 import type { BaseComponent } from '@/models'
 import { createComponent } from '@/models'
 import { componentList } from '../load'
 import { DataIntegrationMode } from '@/models/data'
-import { backgroundToCss, Logger } from '@/utils/utils'
 
 const basicStore = useBasicStoreWithOut()
 const composeStore = useComposeStoreWithOut()

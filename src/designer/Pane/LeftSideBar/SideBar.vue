@@ -55,7 +55,7 @@
 import ComponentList from './Component/ComponentList.vue'
 import Layer from './Layer/Layer.vue'
 import { ref } from 'vue'
-import { NTabs, NTabPane } from 'naive-ui'
+import { NTabPane, NTabs } from 'naive-ui'
 
 const activeKey = ref<string>('components')
 const emits = defineEmits<{

@@ -1,5 +1,5 @@
 import type { PropType } from 'vue'
-import { reactive, defineComponent, resolveComponent, h } from 'vue'
+import { defineComponent, h, reactive, resolveComponent } from 'vue'
 import FontStyle from '../fontSytle'
 import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
@@ -17,15 +17,15 @@ import type {
   SwitchFormSchema
 } from '@/types/component'
 import {
+  NColorPicker,
   NForm,
   NFormItem,
   NInput,
-  NRadioGroup,
-  NRadio,
-  NSelect,
-  NSwitch,
   NInputNumber,
-  NColorPicker
+  NRadio,
+  NRadioGroup,
+  NSelect,
+  NSwitch
 } from 'naive-ui'
 
 export default defineComponent({

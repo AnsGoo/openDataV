@@ -1,4 +1,4 @@
-import { getPageApi, getPageListApi, savePageApi, updatePageApi, deletePageApi } from './pages'
+import { deletePageApi, getPageApi, getPageListApi, savePageApi, updatePageApi } from './pages'
 import type { LayoutData, SimpleLayoutData } from './type'
 
 export type { LayoutData, SimpleLayoutData }
