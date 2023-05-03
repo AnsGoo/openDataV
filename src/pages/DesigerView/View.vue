@@ -1,16 +1,20 @@
 <template>
-  <Designer ref="designer" />
+  <Designer ref="designer" :toolbars="toolBars" />
 </template>
 
 <script setup lang="ts">
-/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { onMounted, ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 import { getPageApi } from '@/api/pages'
-import type { Designer } from '@/designer'
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
+import { Designer } from '@/designer'
+import useToolBars from '@/pages/DesigerView/toolbars'
 
 const route = useRoute()
+const router = useRouter()
+const toolBars = useToolBars(router, route)
+
 const designer = ref<InstanceType<typeof Designer> | null>(null)
 
 onMounted(async () => {

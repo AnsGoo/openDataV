@@ -1,7 +1,7 @@
 <template>
   <n-layout class="home">
     <n-layout-header class="header">
-      <ToolBar />
+      <ToolBar :toolbars="toolbars" />
     </n-layout-header>
     <!-- 左侧组件列表 -->
     <n-layout has-sider class="main">
@@ -60,6 +60,7 @@ import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '@/api/pages'
+import type { ToolBarItemType } from '@/components/ToolBar'
 import useCanvasState from '@/designer/state/canvas'
 import hooks from '@/models/hooks'
 
@@ -68,6 +69,14 @@ import RightSideBar from '../../Pane/RightSideBar'
 import ToolBar from '../../Pane/Toolbar'
 import Canvas from './Canvas.vue'
 
+withDefaults(
+  defineProps<{
+    toolbars?: ToolBarItemType[]
+  }>(),
+  {
+    toolbars: () => []
+  }
+)
 const canvasState = useCanvasState()
 
 const collapsedLeft = ref(false)

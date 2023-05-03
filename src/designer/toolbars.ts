@@ -1,6 +1,5 @@
 import useCanvasState from '@/designer/state/canvas'
 import useSnapShotState from '@/designer/state/snapshot'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import type { ComponentDataType } from '@/types/component'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { StoreComponentData } from '@/utils/db'
@@ -10,7 +9,6 @@ import { exportRaw, importRaw } from '@/utils/utils'
 const snapShotState = useSnapShotState()
 // 状态管理
 const canvasState = useCanvasState()
-const projectStore = useProjectSettingStoreWithOut()
 const undo = async () => {
   const snapshot: StoreComponentData | undefined = await snapShotState.lastRecord()
   if (snapshot) {
@@ -66,9 +64,4 @@ const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   }
 }
 
-const toggleTheme = () => {
-  projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
-  projectStore.setDarkTheme(!projectStore.darkTheme)
-}
-
-export { exportCanvas, importCanvas, recoveryDraft, setShowEm, toggleTheme, undo }
+export { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo }

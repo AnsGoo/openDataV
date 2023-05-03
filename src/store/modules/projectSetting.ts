@@ -32,7 +32,7 @@ export interface ProjectSettingState {
 }
 
 const useProjectSettingStore = defineStore({
-  id: 'app-project-setting',
+  id: 'setting',
   state: (): ProjectSettingState => ({
     appTheme: '#2d8cf0',
     navTheme: 'dark',
