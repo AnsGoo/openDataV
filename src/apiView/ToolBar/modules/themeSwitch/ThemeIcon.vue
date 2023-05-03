@@ -9,6 +9,5 @@ const darkTheme = inject<ComputedRef<boolean>>(
   'DarkTheme',
   computed(() => true)
 )
-console.log(darkTheme)
 const themeIcon = computed<string>(() => (darkTheme.value ? 'sun' : 'moon'))
 </script>
