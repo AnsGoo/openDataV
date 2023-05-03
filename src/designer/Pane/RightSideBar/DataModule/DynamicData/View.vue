@@ -59,7 +59,7 @@ import {
 } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import type { RequestOption } from '@/apiView/hooks/http/type'
+import type { RestOption } from '@/apiView/hooks/http/type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
 import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import Rest from '@/apiView/RequestContent/rest'
@@ -75,7 +75,7 @@ const props = defineProps<{
 
 const isShow = ref<boolean>(false)
 
-const formData = reactive<{ isRepeat: boolean; interval: number; options: RequestOption }>({
+const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOption }>({
   isRepeat: false,
   interval: 1000,
   options: {

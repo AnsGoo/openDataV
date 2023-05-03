@@ -36,8 +36,8 @@
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
+import type { StoreStaticOption } from '@/apiView/hooks/http/type'
 import Static from '@/apiView/RequestContent/static'
-import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
 import { ScriptType } from '@/enum'
 import { DataType } from '@/enum/data'
 import type { CustomComponent, StaticRequestData } from '@/models'
@@ -49,7 +49,7 @@ const props = defineProps<{
 }>()
 const isShow = ref<boolean>(false)
 
-const formDataConfig = reactive<StaticRequestOptions>({
+const formDataConfig = reactive<StoreStaticOption>({
   id: '',
   title: '',
   script: {
@@ -66,17 +66,17 @@ const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
   if (dataConfig && dataConfig.type === DataType.STATIC) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-    const result = staticRequest.toJSON()
-    formDataConfig.id = result.id
-    formDataConfig.script = result.script!
-    formDataConfig.title = result.title!
+    const { options } = staticRequest.toJSON()
+    formDataConfig.id = options.id
+    formDataConfig.script = options.script!
+    formDataConfig.title = options.title!
   } else {
     message.info('请配置静态数据')
     await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
       options: {
         id: formDataConfig.id,
         script: {
-          code: formDataConfig.script.code,
+          code: formDataConfig.script!.code,
           type: ScriptType.Javascript
         }
       }

@@ -8,6 +8,7 @@ import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import showIconCard from './iconList'
 import showSaveCard from './save'
 import ThemeIcon from './themeSwitch/ThemeIcon.vue'
+import type { ToolBarItemType } from '@/components/ToolBar'
 
 const projectStore = useProjectSettingStoreWithOut()
 
@@ -15,7 +16,10 @@ const toggleTheme = () => {
   projectStore.setNavTheme(!projectStore.darkTheme ? 'light' : 'dark')
   projectStore.setDarkTheme(!projectStore.darkTheme)
 }
-export default function useToolBars(router: Router, route: RouteLocationNormalizedLoaded) {
+export default function useToolBars(
+  router: Router,
+  route: RouteLocationNormalizedLoaded
+): Array<ToolBarItemType> {
   return [
     {
       label: '首页',

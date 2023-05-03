@@ -118,7 +118,7 @@ import {
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import useRestRequest from '@/apiView/hooks/http'
-import type { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
+import type { RequestResponse, RestOption } from '@/apiView/hooks/http/type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import { StaticKey, useEventBus } from '@/bus'
@@ -138,7 +138,7 @@ const getEmptyParams = () => {
 
 const props = withDefaults(
   defineProps<{
-    options?: RequestOption
+    options?: RestOption
     mode?: 'debug' | 'use'
   }>(),
   {
@@ -254,11 +254,11 @@ const loadRestData = async (id: string) => {
   }
 }
 const emits = defineEmits<{
-  (e: 'update:options', value: RequestOption): void
-  (e: 'change', value: RequestOption): void
+  (e: 'update:options', value: RestOption): void
+  (e: 'change', value: RestOption): void
 }>()
 
-interface RequestDataOption extends RequestOption {
+interface RequestDataOption extends RestOption {
   title?: string
   id?: string
 }

@@ -60,6 +60,7 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
+import type { StoreStaticOption } from '@/apiView/hooks/http/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import { StaticKey, useEventBus } from '@/bus'
 import DataView from '@/components/DataView'
@@ -71,12 +72,11 @@ import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
 import ScriptsEdtor from '../modules/ScriptsEditor'
-import type { StaticRequestOptions } from './type'
 
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(
   defineProps<{
-    options?: StaticRequestOptions
+    options?: StoreStaticOption
     mode?: 'debug' | 'use'
   }>(),
   {
@@ -140,14 +140,14 @@ const clear = () => {
 
 const originDataChange = (value: any) => {
   formData.originData = value
-  getAfterData(props.options.script)
+  getAfterData(props.options.script!)
 }
 const dataChangeHandler = async (id: string) => {
   if (id) {
     const resp: StaticDataDetail | undefined = await loadStaticData(id)
     if (resp) {
       formData.originData = resp.data
-      getAfterData(props.options.script)
+      getAfterData(props.options.script!)
       formData.id = id
       formData.title = resp.name
       snapShot && snapShot.save({ id: id, name: resp.name })
@@ -244,7 +244,7 @@ const init = async () => {
       formData.id = resp.id!
       formData.title = resp.name
       formData.originData = resp.data
-      getAfterData(props.options.script)
+      getAfterData(props.options.script!)
       emits('dataChange', props.options.id, resp.name)
     }
   } else {
