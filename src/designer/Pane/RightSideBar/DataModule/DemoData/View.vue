@@ -73,7 +73,9 @@ const initData = async () => {
     message.info('正在使用示例数据')
     const exampleData = props.curComponent.exampleData
     await props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      data: cloneDeep(exampleData)
+      options: {
+        data: cloneDeep(exampleData)
+      }
     })
   }
 }

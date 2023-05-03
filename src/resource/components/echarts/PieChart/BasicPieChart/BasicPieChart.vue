@@ -27,6 +27,7 @@ let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
 const dataChange = (resp: any, _: DataType) => {
+  console.log(resp)
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)
@@ -102,6 +103,7 @@ const getOption = () => {
 }
 
 const updateData = (resp: Array<{ label: string; value: number }>) => {
+  console.log(resp)
   const upperLimit = propValue.data.upperLimit
   const lowerLimit = propValue.data.lowerLimit
   const data = resp.map((ele) => {

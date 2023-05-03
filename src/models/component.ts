@@ -13,8 +13,8 @@ import type {
   PropsType
 } from '@/types/component'
 
-import type { RequestData } from './data'
-import { DemoRequestData, RestRequestData, StaticRequestData } from './data'
+import type { RequestData } from './requestOption'
+import { DemoRequestData, RestRequestData, StaticRequestData } from './requestOption'
 import { uuid } from './utils'
 
 interface DataConfig {
@@ -324,7 +324,6 @@ export abstract class CustomComponent {
     for (const item of this.styleFormValue) {
       const propObj = item.children.find((obj) => obj.prop === prop)
       if (!propObj) continue
-
       propObj.componentOptions.defaultValue = value
       if (prop in this.positionStyle) {
         this.positionStyle[prop] = value
@@ -394,7 +393,7 @@ export abstract class CustomComponent {
       case DataType.DEMO:
         this.dataConfig = {
           type: DataType.DEMO,
-          requestConfig: new DemoRequestData(config.data),
+          requestConfig: new DemoRequestData(config.options),
           otherConfig: {}
         }
         break
@@ -412,7 +411,9 @@ export abstract class CustomComponent {
   loadDemoData() {
     const exampleData = this.exampleData
     this.changeRequestDataConfig(DataType.DEMO, {
-      data: exampleData
+      options: {
+        data: exampleData
+      }
     })
   }
   appendChild(child: CustomComponent) {

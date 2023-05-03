@@ -17,7 +17,7 @@ const componentDataHandler = (componentObj: CustomComponent, data?: ComponentReq
       }
     })
   } else {
-    const options = data.requestOptions
+    const { options } = data.requestOptions!
     componentObj.changeRequestDataConfig(data.type, {
       options: options,
       otherConfig: data.otherConfig

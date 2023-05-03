@@ -300,6 +300,7 @@ const selectedChange = async (id: string) => {
   await loadRestData(id)
   await send()
   emits('update:options', formData)
+  emits('change', formData)
 }
 const handleSave = async () => {
   try {

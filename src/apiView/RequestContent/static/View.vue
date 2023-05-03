@@ -82,7 +82,7 @@ const props = withDefaults(
   {
     options: () => {
       return {
-        dataId: '',
+        id: '',
         title: '',
         script: {
           code: '',
@@ -123,7 +123,7 @@ const formData = reactive<{
   originData: any
   afterData: string
 }>({
-  id: props.options.dataId,
+  id: props.options.id,
   title: props.options.title || '',
   afterData: '',
   originData: ''
@@ -238,14 +238,14 @@ onMounted(async () => {
 })
 
 const init = async () => {
-  if (props.options && props.options.dataId) {
-    const resp: StaticDataDetail | undefined = await loadStaticData(props.options.dataId)
+  if (props.options && props.options.id) {
+    const resp: StaticDataDetail | undefined = await loadStaticData(props.options.id)
     if (resp) {
       formData.id = resp.id!
       formData.title = resp.name
       formData.originData = resp.data
       getAfterData(props.options.script)
-      emits('dataChange', props.options.dataId, resp.name)
+      emits('dataChange', props.options.id, resp.name)
     }
   } else {
     formData.id = ''

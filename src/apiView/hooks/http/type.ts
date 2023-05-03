@@ -18,13 +18,19 @@ export interface RequestOption {
   afterScript: AfterScript
 }
 
-export interface StoreRequestOption {
+export interface StoreRestOption {
   method: Method
   url: string
   headers: Recordable
   params: Recordable
   data: Recordable
   afterScript: AfterScript
+}
+
+export interface StoreStaticOption {
+  id: string
+  title?: string
+  script?: AfterScript
 }
 
 export interface RequestResponse {

@@ -4,26 +4,22 @@ import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
 import type { RestRequest } from '@/apiView/hooks/http'
 import useRestRequest from '@/apiView/hooks/http'
-import type { StoreRequestOption } from '@/apiView/hooks/http/type'
+import type { StoreRestOption, StoreStaticOption } from '@/apiView/hooks/http/type'
 import { DataType } from '@/enum/data'
 import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
 
 import type { RequestResponse } from './type'
 
-export interface StaticRequestOptions {
-  dataId: string
-  title?: string
+type RequestOption = StoreStaticOption | StoreRestOption
+
+export interface RequestOptions<T = RequestOption> {
+  options: T
   type: DataType
-  script?: AfterScript
 }
 
 export interface DemoData<T = any> {
   data: T
-}
-export interface RestRequestOptions {
-  options: StoreRequestOption
-  type: DataType
 }
 
 interface RequestData {
@@ -34,7 +30,7 @@ interface RequestData {
 class DemoRequestData implements RequestData {
   public data: any
 
-  constructor(data: any) {
+  constructor({ data }: { data: any }) {
     this.data = data
   }
   public toJSON() {
@@ -51,21 +47,23 @@ class DemoRequestData implements RequestData {
 }
 
 class StaticRequestData implements RequestData {
-  public dataId?: string
+  public id?: string
   public afterScript?: AfterScript
   public title?: string
 
-  constructor({ dataId, script }: { dataId: string | undefined; script?: AfterScript }) {
-    this.dataId = dataId
+  constructor({ id, script }: { id: string | undefined; script?: AfterScript }) {
+    this.id = id
     this.afterScript = script
   }
 
-  public toJSON(): StaticRequestOptions {
+  public toJSON(): RequestOptions<StoreStaticOption> {
     return {
-      dataId: this.dataId || '',
-      type: DataType.STATIC,
-      script: cloneDeep(this.afterScript),
-      title: this.title
+      options: {
+        id: this.id || '',
+        script: cloneDeep(this.afterScript),
+        title: this.title
+      },
+      type: DataType.STATIC
     }
   }
 
@@ -82,7 +80,7 @@ class StaticRequestData implements RequestData {
       afterData: '',
       headers: {}
     }
-    if (!this.dataId) {
+    if (!this.id) {
       return response
     }
     const afterCallback =
@@ -90,7 +88,7 @@ class StaticRequestData implements RequestData {
         ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
         : undefined
     try {
-      const resp = await getStaticDataApi(this.dataId!)
+      const resp = await getStaticDataApi(this.id!)
       response.status = resp.status || -1
       if (resp.status < 400) {
         const data: StaticDataDetail = resp.data
@@ -118,9 +116,9 @@ class StaticRequestData implements RequestData {
 
 class RestRequestData implements RequestData {
   public requestInstance: RestRequest
-  public requestOptions: StoreRequestOption
+  public requestOptions: StoreRestOption
 
-  constructor({ options }: { options: StoreRequestOption }) {
+  constructor(options: StoreRestOption) {
     this.requestOptions = options
     this.requestInstance = useRestRequest(options, false)
   }
@@ -144,7 +142,7 @@ class RestRequestData implements RequestData {
     }
   }
 
-  public toJSON(): RestRequestOptions {
+  public toJSON(): RequestOptions<StoreRestOption> {
     return {
       options: cloneDeep(this.requestOptions),
       type: DataType.REST

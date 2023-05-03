@@ -26,7 +26,7 @@
       </n-input-number>
     </n-form-item>
   </n-form>
-  <n-modal v-model:show="isShow" display-directive="show">
+  <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
     <n-card
       style="width: 600px"
       title="动态数据"
@@ -35,7 +35,11 @@
       role="dialog"
       aria-modal="true"
     >
-      <Rest v-model:options="formData.options" @update:rest-options="changeHandler" />
+      <Rest
+        v-model:options="formData.options"
+        @update:rest-options="changeHandler"
+        @change="changeHandler"
+      />
     </n-card>
   </n-modal>
 </template>

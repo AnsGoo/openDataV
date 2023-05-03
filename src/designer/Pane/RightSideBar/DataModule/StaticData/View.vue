@@ -50,7 +50,7 @@ const props = defineProps<{
 const isShow = ref<boolean>(false)
 
 const formDataConfig = reactive<StaticRequestOptions>({
-  dataId: '',
+  id: '',
   title: '',
   script: {
     code: '',
@@ -67,30 +67,34 @@ const initData = async () => {
   if (dataConfig && dataConfig.type === DataType.STATIC) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
     const result = staticRequest.toJSON()
-    formDataConfig.dataId = result.dataId
+    formDataConfig.id = result.id
     formDataConfig.script = result.script!
     formDataConfig.title = result.title!
   } else {
     message.info('请配置静态数据')
     await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-      id: formDataConfig.dataId,
-      script: {
-        code: formDataConfig.script.code,
-        type: ScriptType.Javascript
+      options: {
+        id: formDataConfig.id,
+        script: {
+          code: formDataConfig.script.code,
+          type: ScriptType.Javascript
+        }
       }
     })
   }
 }
 const changeHandler = () => {
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    id: formDataConfig.dataId,
-    script: formDataConfig.script
+    options: {
+      id: formDataConfig.id,
+      script: formDataConfig.script
+    }
   })
 }
 
 const dataChangeHandler = (id: string, title: string) => {
   formDataConfig.title = title
-  formDataConfig.dataId = id
+  formDataConfig.id = id
   changeHandler()
 }
 
