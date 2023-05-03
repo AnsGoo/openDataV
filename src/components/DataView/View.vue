@@ -10,6 +10,7 @@
 
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
+import type { ComputedRef } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
 
@@ -36,7 +37,10 @@ const props = withDefaults(
 const curConfig = computed<CodemirrorOption>(() => {
   return { ...props.config, disabled: props.disable || false }
 })
-const darkTheme = inject('DarkTheme', true)
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const emits = defineEmits<{
   (e: 'update:content', value: string): void
   (e: 'change', value: string): void

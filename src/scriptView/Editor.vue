@@ -37,6 +37,7 @@
 
 <script lang="ts" setup>
 import { computed, inject, reactive, ref, watch } from 'vue'
+import type { ComputedRef } from 'vue'
 import type { SelectOption } from 'naive-ui'
 import { NSelect } from 'naive-ui'
 import { python } from '@codemirror/lang-python'
@@ -47,7 +48,10 @@ import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 
-const darkTheme = inject('DarkTheme', true)
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const savedStatus = ref<boolean>(true)
 const isShow = ref<boolean>(false)
 const props = withDefaults(

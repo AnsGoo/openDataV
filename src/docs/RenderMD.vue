@@ -7,13 +7,17 @@
 import { computed, inject } from 'vue'
 import { NCard } from 'naive-ui'
 import '@/css/markdown.css'
+import type { ComputedRef } from 'vue'
 
-const darkTheme = inject<boolean>('DarkTheme', true)
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const backgroundColor = computed<string>(() => {
-  return darkTheme ? '#101014' : '#ffffff'
+  return darkTheme.value ? '#101014' : '#ffffff'
 })
 const textColor = computed<string>(() => {
-  return darkTheme ? '#ffffffd1' : '#333639'
+  return darkTheme.value ? '#ffffffd1' : '#333639'
 })
 </script>
 <style lang="less" scoped>

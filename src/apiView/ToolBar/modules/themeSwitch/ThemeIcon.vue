@@ -3,7 +3,12 @@
 </template>
 <script lang="ts" setup>
 import { computed, inject } from 'vue'
+import type { ComputedRef } from 'vue'
 
-const darkTheme = inject('DarkTheme', true)
-const themeIcon = computed<string>(() => (darkTheme ? 'sun' : 'moon'))
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
+console.log(darkTheme)
+const themeIcon = computed<string>(() => (darkTheme.value ? 'sun' : 'moon'))
 </script>

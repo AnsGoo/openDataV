@@ -8,12 +8,16 @@
 </template>
 
 <script lang="ts" setup>
-import { inject, ref, watch } from 'vue'
+import { inject, ref, watch, computed } from 'vue'
+import type { ComputedRef } from 'vue'
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { json } from '@codemirror/lang-json'
 
-const darkTheme = inject('DarkTheme', true)
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const props = defineProps<{
   data: string
 }>()

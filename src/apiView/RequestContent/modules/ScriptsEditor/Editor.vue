@@ -78,7 +78,7 @@ import {
   updateAfterScriptApi
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
-
+import type { ComputedRef } from 'vue'
 const scriptList = ref<SelectOption[]>([])
 
 const savedStatus = ref<boolean>(true)
@@ -115,7 +115,10 @@ const emits = defineEmits<{
   (e: 'change', value: AfterScript): void
 }>()
 const languageMap = { Javascript: javascript, Python: python }
-const darkTheme = inject('DarkTheme', true)
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 
 const formData = reactive<{
   id?: string

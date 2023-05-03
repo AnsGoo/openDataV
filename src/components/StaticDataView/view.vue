@@ -29,6 +29,7 @@
 
 <script lang="ts" setup>
 import { computed, inject, ref, watch } from 'vue'
+import type { ComputedRef } from 'vue'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
@@ -36,7 +37,10 @@ import { message } from '@/utils/message'
 
 const savedStatus = ref<boolean>(true)
 
-const darkTheme = inject('DarkTheme', true)
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const props = withDefaults(
   defineProps<{
     content?: any

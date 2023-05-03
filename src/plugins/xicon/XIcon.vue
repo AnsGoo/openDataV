@@ -5,13 +5,16 @@
 </template>
 
 <script lang="ts" setup>
-import type { Component } from 'vue'
+import type { Component, ComputedRef } from 'vue'
 import { computed, inject } from 'vue'
 import { Icon } from '@vicons/utils'
 import { Help } from '@vicons/carbon'
 import icons from './icons'
 
-const darkTheme = inject('DarkTheme', true)
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const props = withDefaults(
   defineProps<{
     name: string
@@ -24,7 +27,7 @@ const props = withDefaults(
   }
 )
 const getIconColor = () => {
-  return darkTheme ? '#eeeee' : '#333'
+  return darkTheme.value ? '#eeeee' : '#333'
 }
 const iconColor = computed<string>(() => (props.color ? props.color : getIconColor()))
 const IconComponet = computed<Component>(() => {
