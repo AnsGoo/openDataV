@@ -9,7 +9,7 @@ export interface KV {
   id: string
 }
 
-export interface RequestOption {
+export interface RestOption {
   method: Method
   url: string
   headers: Array<KV>

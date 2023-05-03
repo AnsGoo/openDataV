@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash-es'
 
 import { uuid } from '@/utils/utils'
 
-import type { KV, RequestOption, StoreRestOption } from './type'
+import type { KV, RestOption, StoreRestOption } from './type'
 
 export const KVToRecordable = (values: Array<KV>): Recordable => {
   const data = {}
@@ -25,7 +25,7 @@ export const recordabletoKV = (data: Recordable): Array<KV> => {
   })
 }
 
-export const requestOptionsToStore = (options: RequestOption): StoreRestOption => {
+export const requestOptionsToStore = (options: RestOption): StoreRestOption => {
   const data = cloneDeep(options)
   const result: StoreRestOption = {
     headers: KVToRecordable(options.headers),
@@ -37,9 +37,9 @@ export const requestOptionsToStore = (options: RequestOption): StoreRestOption =
   }
   return result
 }
-export const storeOptionToRequestOptions = (data: StoreRestOption): RequestOption => {
+export const storeOptionToRequestOptions = (data: StoreRestOption): RestOption => {
   const options = cloneDeep(data)
-  const result: RequestOption = {
+  const result: RestOption = {
     headers: recordabletoKV(options.headers),
     params: recordabletoKV(options.params),
     data: recordabletoKV(options.data),
