@@ -2,13 +2,13 @@ import { h } from 'vue'
 import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 
 import LogoView from '@/components/LogoView'
+import type { ToolBarItemType } from '@/components/ToolBar'
 import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from '@/designer/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
 import showIconCard from './iconList'
 import showSaveCard from './save'
 import ThemeIcon from './themeSwitch/ThemeIcon.vue'
-import type { ToolBarItemType } from '@/components/ToolBar'
 
 const projectStore = useProjectSettingStoreWithOut()
 
