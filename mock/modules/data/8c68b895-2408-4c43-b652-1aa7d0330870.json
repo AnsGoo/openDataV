@@ -282,12 +282,14 @@
         "type": "STATIC",
         "otherConfig": {},
         "requestOptions": {
-          "dataId": "2",
-          "type": "STATIC",
-          "script": {
-            "code": "",
-            "type": "Javascript"
-          }
+          "options": {
+            "script": {
+              "code": "",
+              "type": "Javascript"
+            },
+            "id": "2"
+          },
+          "type": "STATIC"
         }
       }
     },
@@ -411,12 +413,14 @@
         "type": "STATIC",
         "otherConfig": {},
         "requestOptions": {
-          "dataId": "2",
-          "type": "STATIC",
-          "script": {
-            "code": "return Math.max(...resp.map(el => el.value)) / 1000",
-            "type": "Javascript"
-          }
+          "options": {
+            "id": "2",
+            "script": {
+              "code": "return Math.max(...resp.map(el => el.value)) / 1000",
+              "type": "Javascript"
+            }
+          },
+          "type": "STATIC"
         }
       }
     },
