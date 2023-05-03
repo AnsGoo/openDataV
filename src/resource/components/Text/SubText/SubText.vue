@@ -8,11 +8,13 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+
 import { useEventBus } from '@/bus'
-import { http } from '@/utils/http'
-import type { SubTextType } from './type'
 import { useProp } from '@/models/hooks'
+import { http } from '@/utils/http'
+
 import type SubTextComponent from './config'
+import type { SubTextType } from './type'
 
 const props = defineProps<{
   component: SubTextComponent

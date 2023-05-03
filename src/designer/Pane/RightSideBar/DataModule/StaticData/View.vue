@@ -33,16 +33,16 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import type { StaticRequestData } from '@/models'
-import { DataType } from '@/enum/data'
-import { ScriptType } from '@/enum'
+import { onMounted, reactive, ref, watch } from 'vue'
+
 import Static from '@/apiView/RequestContent/static'
 import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
+import { ScriptType } from '@/enum'
+import { DataType } from '@/enum/data'
+import type { CustomComponent, StaticRequestData } from '@/models'
 import type { AfterScript } from '@/types/component'
 import { message } from '@/utils/message'
-import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
   curComponent: CustomComponent

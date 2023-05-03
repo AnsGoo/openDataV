@@ -28,8 +28,9 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, ref, watch } from 'vue'
 import type { ComputedRef } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
+
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'

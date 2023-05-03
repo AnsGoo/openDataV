@@ -7,14 +7,15 @@
 </template>
 
 <script setup lang="ts">
-import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
+
 import type { LayoutData } from '@/api/pages'
-import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
-import type { CanvasStyleData } from '@/types/storeTypes'
+import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
+import { createComponent } from '@/designer/utils'
 import type { CustomComponent } from '@/models'
 import hooks from '@/models/hooks'
-import { createComponent } from '@/designer/utils'
+import type { CanvasStyleData } from '@/types/storeTypes'
+import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
 
 provide('HOOKS', readonly(hooks))
 

@@ -4,10 +4,11 @@
   </n-card>
 </template>
 <script lang="ts" setup>
-import { computed, inject } from 'vue'
-import { NCard } from 'naive-ui'
 import '@/css/markdown.css'
+
+import { NCard } from 'naive-ui'
 import type { ComputedRef } from 'vue'
+import { computed, inject } from 'vue'
 
 const darkTheme = inject<ComputedRef<boolean>>(
   'DarkTheme',

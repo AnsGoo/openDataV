@@ -1,5 +1,7 @@
-import { apiHttp as http } from '@/utils/http'
 import type { AxiosResponse } from 'axios'
+
+import { apiHttp as http } from '@/utils/http'
+
 import type { AfterScriptDetail } from './type'
 
 /**

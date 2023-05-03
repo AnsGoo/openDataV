@@ -7,8 +7,12 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
+import LogoView from '@/components/LogoView'
 import type { ToolBarItemType } from '@/components/ToolBar'
 import { ToolBar } from '@/components/ToolBar'
+import useCanvasState from '@/designer/state/canvas'
+
 import {
   exportCanvas,
   importCanvas,
@@ -17,12 +21,9 @@ import {
   toggleTheme,
   undo
 } from './modules/actions'
-import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 import showIconCard from './modules/iconList'
 import showSaveCard from './modules/save'
-
-import LogoView from '@/components/LogoView'
-import useCanvasState from '@/designer/state/canvas'
+import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 
 const canvasState = useCanvasState()
 

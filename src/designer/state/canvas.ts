@@ -1,15 +1,17 @@
-import type { CanvasStyleData, EditData } from '@/types/storeTypes'
+import { cloneDeep } from 'lodash-es'
+import { reactive } from 'vue'
+
 import type { LayoutData } from '@/api/pages'
 import { EditMode } from '@/enum'
-import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
-import { message } from '@/utils/message'
-import useSnapShotState from './snapshot'
 import type { CustomComponent } from '@/models'
-import { cloneDeep } from 'lodash-es'
-import type { ComponentDataType, DOMRectStyle, GroupStyle } from '@/types/component'
 import type { Position, Vector } from '@/types/common'
+import type { ComponentDataType, DOMRectStyle, GroupStyle } from '@/types/component'
+import type { CanvasStyleData, EditData } from '@/types/storeTypes'
+import { message } from '@/utils/message'
+import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
+
 import { createComponent } from '../utils'
-import { reactive } from 'vue'
+import useSnapShotState from './snapshot'
 
 const snapShotState = useSnapShotState()
 

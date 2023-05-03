@@ -1,12 +1,13 @@
+import type { Component, ConcreteComponent, VNode } from 'vue'
+
 import type { ComponentGroup, FormType, ScriptType } from '@/enum'
-import type { CanvasStyleData } from '@/types/storeTypes'
 import type {
   DataIntegrationMode,
   DataType,
   RestRequestOptions,
   StaticRequestOptions
 } from '@/models/data'
-import type { Component, ConcreteComponent, VNode } from 'vue'
+import type { CanvasStyleData } from '@/types/storeTypes'
 
 export interface GroupStyle {
   gwidth: number

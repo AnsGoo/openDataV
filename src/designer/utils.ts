@@ -1,8 +1,8 @@
 import { componentList } from '@/designer/load'
-import type { ComponentDataType, ComponentRequestDataType } from '@/types/component'
-import type { CustomComponent } from '@/models'
 import { DataIntegrationMode, DataType } from '@/enum/data'
+import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
+import type { ComponentDataType, ComponentRequestDataType } from '@/types/component'
 import { calcComponentAxis } from '@/utils/utils'
 
 const componentDataHandler = (componentObj: CustomComponent, data?: ComponentRequestDataType) => {

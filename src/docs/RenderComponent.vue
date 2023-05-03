@@ -30,11 +30,12 @@
 </template>
 <script setup lang="ts">
 import { NCard, NTabPane, NTabs } from 'naive-ui'
-import { getComponentStyle, uuid } from '@/utils/utils'
 import type { ComponentOptions, ConcreteComponent } from 'vue'
 import { computed, h, reactive } from 'vue'
+
 import StaticDataView from '@/components/StaticDataView'
 import type { CustomComponent } from '@/models'
+import { getComponentStyle, uuid } from '@/utils/utils'
 
 const props = withDefaults(
   defineProps<{

@@ -1,7 +1,8 @@
-import type { DOMRectStyle, GroupStyle } from '@/types/component'
-import type { Position, Vector } from '@/types/common'
 import { cloneDeep, isNumber } from 'lodash-es'
+
 import type { CustomComponent } from '@/models'
+import type { Position, Vector } from '@/types/common'
+import type { DOMRectStyle, GroupStyle } from '@/types/component'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))

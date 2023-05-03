@@ -41,9 +41,11 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref } from 'vue'
+
 import { useProp } from '@/models/hooks'
 import { uuid } from '@/utils/utils'
-import { computed, ref } from 'vue'
+
 import type BorderBoxComponent from './config'
 import type { BorderBox } from './type'
 

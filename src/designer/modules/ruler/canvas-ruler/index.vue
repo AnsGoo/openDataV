@@ -9,9 +9,10 @@
   ></canvas>
 </template>
 <script lang="ts" setup>
-import { drawCavaseRuler } from './utils'
 import { onMounted, reactive, ref, watch } from 'vue'
+
 import type { PaletteType } from '../index-types'
+import { drawCavaseRuler } from './utils'
 
 const props = defineProps<{
   showIndicator: boolean

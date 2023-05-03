@@ -1,6 +1,6 @@
-import ToolBarItem from './ToolBarItem.vue'
 import ToolBar from './ToolBar.vue'
+import ToolBarItem from './ToolBarItem.vue'
 import type { ToolBarItemType } from './type'
 
-export { ToolBarItem, ToolBar }
+export { ToolBar, ToolBarItem }
 export type { ToolBarItemType }

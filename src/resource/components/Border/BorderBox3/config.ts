@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
-import type { PropsType } from '@/types/component'
 import { CustomComponent } from '@/models'
+import type { PropsType } from '@/types/component'
 
 export const componentName = 'BorderBox3'
 class BorderBoxComponent extends CustomComponent {

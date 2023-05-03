@@ -53,12 +53,14 @@
 import type { MenuOption } from 'naive-ui'
 import { NMenu, NTabPane, NTabs } from 'naive-ui'
 import { computed, h, ref } from 'vue'
+
 import useCanvasState from '@/designer/state/canvas'
-import Canvas from './Canvas.vue'
-import StyleList from './StyleModule' // 右侧属性列表
-import AttrList from './AttrModule'
-import DataList from './DataModule'
 import { XIcon } from '@/plugins/xicon'
+
+import AttrList from './AttrModule'
+import Canvas from './Canvas.vue'
+import DataList from './DataModule'
+import StyleList from './StyleModule' // 右侧属性列表
 
 const activeKey = ref<string>('attr')
 

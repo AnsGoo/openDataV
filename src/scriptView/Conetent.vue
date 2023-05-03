@@ -43,22 +43,24 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref } from 'vue'
 import { NButton, NButtonGroup, NCard, NDivider, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
-import DataView from '@/components/DataView'
-import { message } from '@/utils/message'
-import Editor from './Editor.vue'
-import { StaticKey, useEventBus } from '@/bus'
+import { computed, reactive, ref } from 'vue'
+
 import {
   createAfterScriptApi,
   getAfterScriptApi,
   updateAfterScriptApi
 } from '@/api/data/afterScript'
-import { makeFunction } from '@/utils/data'
 import type { AfterScriptDetail } from '@/api/data/type'
+import { StaticKey, useEventBus } from '@/bus'
+import DataView from '@/components/DataView'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
+import { makeFunction } from '@/utils/data'
+import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
+
+import Editor from './Editor.vue'
 
 const config = ref({
   height: '300px',

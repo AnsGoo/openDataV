@@ -29,13 +29,14 @@
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
 import type { FormItemRule } from 'naive-ui'
 import { NButton, NForm, NFormItem, NInput, NModal, NSpace } from 'naive-ui'
+import { reactive, ref } from 'vue'
+
 import type { LayoutData } from '@/api/pages'
 import { savePageApi, updatePageApi } from '@/api/pages'
-import useCanvasState from '@/designer/state/canvas'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
+import useCanvasState from '@/designer/state/canvas'
 import router from '@/router'
 import { message } from '@/utils/message'
 

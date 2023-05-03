@@ -3,15 +3,17 @@
 </template>
 
 <script setup lang="ts">
-import { inject, onMounted, ref } from 'vue'
-import type BasicLineChartComponent from './config'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
-import { compareResetValue } from '../../utils'
-import { useEchart } from '../../hooks'
-import type { RequestResponse } from '@/models/type'
-import type { HooksType } from '@/models/hooks/type'
-import type { BasicLineChart } from './type'
+import { inject, onMounted, ref } from 'vue'
+
 import type { DataType } from '@/enum/data'
+import type { HooksType } from '@/models/hooks/type'
+import type { RequestResponse } from '@/models/type'
+
+import { useEchart } from '../../hooks'
+import { compareResetValue } from '../../utils'
+import type BasicLineChartComponent from './config'
+import type { BasicLineChart } from './type'
 
 const chartEl = ref<ElRef>(null)
 let globalOption: EChartsOption

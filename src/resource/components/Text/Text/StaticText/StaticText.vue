@@ -8,8 +8,10 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from '@/models/hooks'
 import { computed, ref } from 'vue'
+
+import { useProp } from '@/models/hooks'
+
 import type StaticTextComponent from './config'
 import type { StaticTextType } from './type'
 

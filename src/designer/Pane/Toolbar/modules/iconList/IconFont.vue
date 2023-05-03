@@ -20,12 +20,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
-import { copyText } from '@/utils/utils'
 import { NModal } from 'naive-ui'
-import ConfigProvider from '@/components/provider/ConfigProvider.vue'
+import { computed, ref } from 'vue'
+
 import iconfontList from '@/assets/directionFonts/iconfont.json'
+import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import { message } from '@/utils/message'
+import { copyText } from '@/utils/utils'
 
 const iconList = computed<string[]>(() => {
   return iconfontList.glyphs.map((item) => `icon-${item.font_class}`)

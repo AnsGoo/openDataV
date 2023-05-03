@@ -56,15 +56,17 @@
 </template>
 
 <script setup lang="ts">
-import ToolBar from '../../Pane/Toolbar'
+import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import { onUnmounted, provide, readonly, ref } from 'vue'
+
+import type { LayoutData } from '@/api/pages'
+import useCanvasState from '@/designer/state/canvas'
+import hooks from '@/models/hooks'
+
 import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'
+import ToolBar from '../../Pane/Toolbar'
 import Canvas from './Canvas.vue'
-import useCanvasState from '@/designer/state/canvas'
-import { onUnmounted, provide, readonly, ref } from 'vue'
-import type { LayoutData } from '@/api/pages'
-import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
-import hooks from '@/models/hooks'
 
 const canvasState = useCanvasState()
 

@@ -1,5 +1,5 @@
-import { useProp } from './useProp'
 import { useData } from './useData'
+import { useProp } from './useProp'
 
-export { useProp, useData }
+export { useData, useProp }
 export default { useProp, useData }

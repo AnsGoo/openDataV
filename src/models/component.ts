@@ -1,7 +1,9 @@
 import { cloneDeep } from 'lodash-es'
+import { h } from 'vue'
+
 import type { ComponentGroup } from '@/enum'
 import { FormType } from '@/enum'
-import { uuid } from './utils'
+import { DataIntegrationMode, DataType } from '@/enum/data'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -10,11 +12,10 @@ import type {
   GroupStyle,
   PropsType
 } from '@/types/component'
+
 import type { RequestData } from './data'
 import { DemoRequestData, RestRequestData, StaticRequestData } from './data'
-
-import { h } from 'vue'
-import { DataIntegrationMode, DataType } from '@/enum/data'
+import { uuid } from './utils'
 
 interface DataConfig {
   type: DataType

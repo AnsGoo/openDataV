@@ -1,7 +1,7 @@
-import type { StoreComponentData } from '@/utils/db'
-import type { CustomComponent } from '@/models'
 import type { EditMode } from '@/enum'
+import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
+import type { StoreComponentData } from '@/utils/db'
 
 export interface CanvasStyleData {
   width: number

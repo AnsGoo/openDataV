@@ -95,6 +95,7 @@
   </n-card>
 </template>
 <script setup lang="ts">
+import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import {
   NButton,
@@ -107,18 +108,8 @@ import {
   NTabPane,
   NTabs
 } from 'naive-ui'
-import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { onMounted, reactive, ref } from 'vue'
-import { Logger, uuid } from '@/utils/utils'
-import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
-import type { AxiosResponse } from 'axios'
-import ReponseContentView from './modules/ReponseContentView.vue'
-import useRestRequest from '@/apiView/hooks/http'
-import ScriptsEditor from '../modules/ScriptsEditor'
-import { ScriptType } from '@/enum'
-import type { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
-import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
-import { StaticKey, useEventBus } from '@/bus'
+
 import {
   createRestDataApi,
   getRestDataApi,
@@ -126,9 +117,20 @@ import {
   updateRestDataApi
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
+import useRestRequest from '@/apiView/hooks/http'
+import type { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
+import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import { message } from '@/utils/message'
+import { StaticKey, useEventBus } from '@/bus'
+import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
+import { message } from '@/utils/message'
+import { Logger, uuid } from '@/utils/utils'
+
+import DynamicKVForm from '../modules/DynamicKVForm.vue'
+import ScriptsEditor from '../modules/ScriptsEditor'
+import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
+import ReponseContentView from './modules/ReponseContentView.vue'
 
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]

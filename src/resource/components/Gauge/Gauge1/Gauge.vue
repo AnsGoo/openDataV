@@ -84,12 +84,14 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { http } from '@/utils/http'
-import { useProp } from '@/models/hooks'
+
 import { useEventBus } from '@/bus'
-import type { Gauge } from './type'
-import type { CustomComponent } from '@/models'
 import useCanvasState from '@/designer/state/canvas'
+import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
+import { http } from '@/utils/http'
+
+import type { Gauge } from './type'
 
 const canvasState = useCanvasState()
 const props = defineProps<{

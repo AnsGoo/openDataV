@@ -58,6 +58,8 @@
     "eslint-define-config": "^1.20.0",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "eslint-plugin-spellcheck": "^0.0.20",
     "eslint-plugin-vue": "^9.11.0",
     "husky": "^7.0.4",
     "less": "^4.1.3",

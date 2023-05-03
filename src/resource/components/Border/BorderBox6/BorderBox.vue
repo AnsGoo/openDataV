@@ -43,10 +43,11 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from '@/models/hooks'
 import { ref } from 'vue'
-import type BorderBoxComponent from './config'
 
+import { useProp } from '@/models/hooks'
+
+import type BorderBoxComponent from './config'
 import type { BorderBox } from './type'
 
 const props = defineProps<{

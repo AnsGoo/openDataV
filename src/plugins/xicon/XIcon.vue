@@ -5,10 +5,11 @@
 </template>
 
 <script lang="ts" setup>
+import { Help } from '@vicons/carbon'
+import { Icon } from '@vicons/utils'
 import type { Component, ComputedRef } from 'vue'
 import { computed, inject } from 'vue'
-import { Icon } from '@vicons/utils'
-import { Help } from '@vicons/carbon'
+
 import icons from './icons'
 
 const darkTheme = inject<ComputedRef<boolean>>(

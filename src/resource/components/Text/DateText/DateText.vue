@@ -3,10 +3,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
 import dayjs from 'dayjs'
-import type DateTextComponent from './config'
+import { onMounted, onUnmounted, ref } from 'vue'
+
 import { useProp } from '@/models/hooks'
+
+import type DateTextComponent from './config'
 import type { DateText } from './type'
 
 const props = defineProps<{

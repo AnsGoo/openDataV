@@ -51,24 +51,27 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
-import Ruler from '@/designer/Editor/Ruler.vue'
+
 import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
+import Ruler from '@/designer/Editor/Ruler.vue'
 import Shape from '@/designer/Editor/Shape'
-import { backgroundToCss, filterStyle, getComponentShapeStyle, Logger, uuid } from '@/utils/utils'
 import useActionState from '@/designer/state/actions'
-import { EditMode } from '@/enum'
-import type { Position, Vector } from '@/types/common'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import useCanvasState from '@/designer/state/canvas'
 import useClipBoardState from '@/designer/state/clipBoard'
-import type { CustomComponent } from '@/models'
-import { createComponent } from '../utils'
-import { componentList } from '../load'
+import { EditMode } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { Position, Vector } from '@/types/common'
+import { backgroundToCss, filterStyle, getComponentShapeStyle, Logger, uuid } from '@/utils/utils'
+
+import { componentList } from '../load'
+import { createComponent } from '../utils'
+
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
-import useCanvasState from '@/designer/state/canvas'
 const canvasState = useCanvasState()
 
 const getShapeStyle = (style) => {

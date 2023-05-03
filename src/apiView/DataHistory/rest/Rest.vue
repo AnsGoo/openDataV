@@ -48,12 +48,13 @@
   </n-card>
 </template>
 <script setup lang="ts">
-import { deleteRestDataApi, getRestDataListApi } from '@/api/data'
 import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
-import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
+
+import { deleteRestDataApi, getRestDataListApi } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
+import { eventBus, StaticKey } from '@/bus'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'

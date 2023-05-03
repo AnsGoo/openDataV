@@ -1,12 +1,14 @@
+import { cloneDeep } from 'lodash-es'
+
 import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
 import type { RestRequest } from '@/apiView/hooks/http'
 import useRestRequest from '@/apiView/hooks/http'
 import type { StoreRequestOption } from '@/apiView/hooks/http/type'
+import { DataType } from '@/enum/data'
 import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
-import { cloneDeep } from 'lodash-es'
-import { DataType } from '@/enum/data'
+
 import type { RequestResponse } from './type'
 
 export interface StaticRequestOptions {
@@ -150,4 +152,4 @@ class RestRequestData implements RequestData {
   }
 }
 
-export { StaticRequestData, RestRequestData, RequestData, DemoRequestData }
+export { DemoRequestData, RequestData, RestRequestData, StaticRequestData }

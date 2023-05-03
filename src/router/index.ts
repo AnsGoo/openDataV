@@ -5,10 +5,12 @@ import type {
   RouterHistory
 } from 'vue-router'
 import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router'
+
 import { LOGIN_URL, NoAuth, RouteMode } from '@/enum'
-import type { AppRouteRecordRaw, MenuType } from './types'
-import NProgress from '@/utils/progress'
 import { useUserStoreWithOut } from '@/store/modules/user'
+import NProgress from '@/utils/progress'
+
+import type { AppRouteRecordRaw, MenuType } from './types'
 
 const userStore = useUserStoreWithOut()
 class RouteView {
@@ -211,6 +213,6 @@ class RouteView {
 
 const routeView = new RouteView()
 
-export { routeView, MenuType }
+export { MenuType, routeView }
 
 export default routeView.getRouter()

@@ -26,10 +26,11 @@
 </template>
 <script setup lang="ts">
 import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
-import { eventBus, StaticKey } from '@/bus'
 import { onMounted, ref } from 'vue'
+
 import { getAfterScriptListApi } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
+import { eventBus, StaticKey } from '@/bus'
 import { ScriptType } from '@/enum'
 import { Logger } from '@/utils/utils'
 

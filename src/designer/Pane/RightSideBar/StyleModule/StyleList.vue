@@ -22,11 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import useCanvasState from '@/designer/state/canvas'
 import { cloneDeep, debounce } from 'lodash-es'
-import { computed, ref, watch } from 'vue'
-import FormAttr from '@/designer/modules/form/FormAttr'
 import { NCollapse, NCollapseItem } from 'naive-ui'
+import { computed, ref, watch } from 'vue'
+
+import FormAttr from '@/designer/modules/form/FormAttr'
+import useCanvasState from '@/designer/state/canvas'
 import type { CustomComponent } from '@/models'
 
 const props = defineProps<{

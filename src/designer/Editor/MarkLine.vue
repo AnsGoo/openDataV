@@ -13,11 +13,13 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
+
 import { StaticKey, useEventBus } from '@/bus'
-import { calcComponentAxis } from '@/utils/utils'
+import useCanvasState from '@/designer/state/canvas'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
-import useCanvasState from '@/designer/state/canvas'
+import { calcComponentAxis } from '@/utils/utils'
+
 const canvasState = useCanvasState()
 const linesRef = ref<Array<any>>([])
 

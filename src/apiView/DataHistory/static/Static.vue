@@ -30,15 +30,16 @@
   </n-card>
 </template>
 <script setup lang="ts">
+import { NCard, NInput, NLi, NOl, NSpace, NTabPane, NTabs } from 'naive-ui'
+import { onMounted, ref } from 'vue'
+
 import type { StaticDataDetail } from '@/api/data'
 import { deleteStaticDataApi, getStaticDataListApi } from '@/api/data'
-import { NCard, NInput, NLi, NOl, NSpace, NTabPane, NTabs } from 'naive-ui'
-import { eventBus, StaticKey } from '@/bus'
-import { onMounted, ref } from 'vue'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
+import { eventBus, StaticKey } from '@/bus'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { Logger } from '@/utils/utils'
 import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
 
 const snapShot = useDataSnapShot('STATIC', true)
 const dataHistory = ref<StaticDataDetail[]>([])

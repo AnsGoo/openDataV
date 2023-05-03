@@ -51,16 +51,17 @@
 </template>
 
 <script setup lang="ts">
-import type { SimpleLayoutData } from '@/api/pages'
-import { deletePageApi, getPageListApi } from '@/api/pages'
-import { h, onMounted, ref } from 'vue'
-import defaultImg from '@/assets/default.png'
-import { useRouter } from 'vue-router'
-import { XIcon } from '@/plugins/xicon'
 import type { DropdownOption } from 'naive-ui'
 import { NButton, NCard, NDropdown, NEllipsis, NTooltip } from 'naive-ui'
-import { Logger } from '@/utils/utils'
+import { h, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+import type { SimpleLayoutData } from '@/api/pages'
+import { deletePageApi, getPageListApi } from '@/api/pages'
+import defaultImg from '@/assets/default.png'
+import { XIcon } from '@/plugins/xicon'
 import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
 
 const router = useRouter()
 const loading = ref<boolean>(false)

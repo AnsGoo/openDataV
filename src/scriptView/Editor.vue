@@ -36,12 +36,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, inject, reactive, ref, watch } from 'vue'
-import type { ComputedRef } from 'vue'
+import { javascript } from '@codemirror/lang-javascript'
+import { python } from '@codemirror/lang-python'
 import type { SelectOption } from 'naive-ui'
 import { NSelect } from 'naive-ui'
-import { python } from '@codemirror/lang-python'
-import { javascript } from '@codemirror/lang-javascript'
+import type { ComputedRef } from 'vue'
+import { computed, inject, reactive, ref, watch } from 'vue'
+
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'

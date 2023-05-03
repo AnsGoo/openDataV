@@ -1,7 +1,8 @@
-import { ComponentGroup, FormType } from '@/enum'
-import type { PropsType } from '@/types/component'
-import { CustomComponent } from '@/models'
 import { h } from 'vue'
+
+import { ComponentGroup, FormType } from '@/enum'
+import { CustomComponent } from '@/models'
+import type { PropsType } from '@/types/component'
 
 export const componentName = 'Decoration2'
 class DecorationComponent extends CustomComponent {

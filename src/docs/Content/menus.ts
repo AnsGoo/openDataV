@@ -1,5 +1,6 @@
-import type { MenuItem } from '../modules/components/SiderContent'
 import type { AppRouteRecordRaw } from '@/router/types'
+
+import type { MenuItem } from '../modules/components/SiderContent'
 
 export const getMenus = (routers: AppRouteRecordRaw[]): Array<MenuItem> => {
   return routers.map((el) => {

@@ -1,4 +1,5 @@
 import { ScriptType } from '@/enum'
+
 import type { CallbackType } from './type'
 
 /**

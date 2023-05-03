@@ -16,19 +16,21 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, h, ref, watch } from 'vue'
-import useCanvasState from '@/designer/state/canvas'
-import useClipBoardState from '@/designer/state/clipBoard'
-import { uuid } from '@/utils/utils'
+import { cloneDeep } from 'lodash-es'
 import type { MenuOption } from 'naive-ui'
 import { NDescriptions, NDescriptionsItem, NEmpty, NMenu } from 'naive-ui'
+import { computed, h, ref, watch } from 'vue'
+
 import { useEventBus } from '@/bus'
+import useCanvasState from '@/designer/state/canvas'
+import useClipBoardState from '@/designer/state/clipBoard'
+import { ComponentGroup, ComponentGroupList } from '@/enum'
+import type { CustomComponent } from '@/models'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { uuid } from '@/utils/utils'
+
 import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'
-import { ComponentGroup, ComponentGroupList } from '@/enum'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { cloneDeep } from 'lodash-es'
-import type { CustomComponent } from '@/models'
 
 const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()

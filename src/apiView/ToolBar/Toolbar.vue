@@ -5,11 +5,13 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { useRouter } from 'vue-router'
-import { toggleTheme } from './modules/actions'
-import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
+
+import LogoView from '@/components/LogoView'
 import type { ToolBarItemType } from '@/components/ToolBar'
 import { ToolBar } from '@/components/ToolBar'
-import LogoView from '@/components/LogoView'
+
+import { toggleTheme } from './modules/actions'
+import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 
 const router = useRouter()
 

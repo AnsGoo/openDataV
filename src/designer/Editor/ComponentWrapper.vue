@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { getComponentStyle } from '@/utils/utils'
 import type { CustomComponent } from '@/models'
+import { getComponentStyle } from '@/utils/utils'
 
 defineProps<{ component: CustomComponent }>()
 </script>

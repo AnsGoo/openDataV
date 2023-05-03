@@ -29,8 +29,9 @@
 </template>
 
 <script lang="ts" setup>
-import { nextTick, reactive, ref } from 'vue'
 import { NInput, NSpace } from 'naive-ui'
+import { nextTick, reactive, ref } from 'vue'
+
 import { message } from '@/utils/message'
 
 const props = withDefaults(

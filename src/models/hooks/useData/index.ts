@@ -1,6 +1,7 @@
-import type { CustomComponent } from '@/models'
-import { DataType } from '@/enum/data'
 import { onMounted, onUnmounted } from 'vue'
+
+import { DataType } from '@/enum/data'
+import type { CustomComponent } from '@/models'
 
 export const useData = (
   component: CustomComponent,

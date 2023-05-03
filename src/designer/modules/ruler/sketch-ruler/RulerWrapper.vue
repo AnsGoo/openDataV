@@ -37,10 +37,11 @@
 </template>
 
 <script lang="ts" setup>
-import RulerLine from './RulerLine.vue'
-import CanvasRuler from '../canvas-ruler/index.vue'
 import { computed, ref } from 'vue'
+
+import CanvasRuler from '../canvas-ruler/index.vue'
 import type { PaletteType } from '../index-types'
+import RulerLine from './RulerLine.vue'
 
 const props = withDefaults(
   defineProps<{

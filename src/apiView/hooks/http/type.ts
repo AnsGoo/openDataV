@@ -1,5 +1,6 @@
-import type { AfterScript } from '@/types/component'
 import type { AxiosResponse, Method } from 'axios'
+
+import type { AfterScript } from '@/types/component'
 
 export interface KV {
   key: string

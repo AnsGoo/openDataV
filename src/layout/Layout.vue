@@ -43,11 +43,6 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, ref, unref } from 'vue'
-import { MainView } from './components/Main'
-import { AsideMenu } from './components/Menu'
-import { PageHeader } from './components/Header'
-import { Logo } from './components/Logo'
 import {
   NBackTop,
   NLayout,
@@ -56,7 +51,14 @@ import {
   NLayoutSider,
   useLoadingBar
 } from 'naive-ui'
+import { computed, onMounted, ref, unref } from 'vue'
+
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+
+import { PageHeader } from './components/Header'
+import { Logo } from './components/Logo'
+import { MainView } from './components/Main'
+import { AsideMenu } from './components/Menu'
 
 const projectStore = useProjectSettingStoreWithOut()
 const collapsed = ref<boolean>(false)

@@ -2,8 +2,9 @@
   <x-icon :name="themeIcon" />
 </template>
 <script lang="ts" setup>
-import { computed, inject } from 'vue'
 import type { ComputedRef } from 'vue'
+import { computed, inject } from 'vue'
+
 const darkTheme = inject<ComputedRef<boolean>>(
   'DarkTheme',
   computed(() => true)

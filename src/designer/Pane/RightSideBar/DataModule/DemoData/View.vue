@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { cloneDeep } from 'lodash-es'
 import {
   NButton,
   NCard,
@@ -38,13 +38,12 @@ import {
   NTabPane,
   NTabs
 } from 'naive-ui'
-import type { DemoRequestData } from '@/models'
-import { DataType } from '@/enum/data'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 import DataView from '@/components/DataView'
-import { cloneDeep } from 'lodash-es'
+import { DataType } from '@/enum/data'
+import type { CustomComponent, DemoRequestData } from '@/models'
 import { message } from '@/utils/message'
-import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
   curComponent: CustomComponent

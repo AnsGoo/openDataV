@@ -1,4 +1,16 @@
 import {
+  ApiOutlined,
+  ClearOutlined,
+  CloudDownloadOutlined,
+  CloudUploadOutlined,
+  DashboardOutlined,
+  EyeInvisibleOutlined,
+  EyeOutlined,
+  HomeOutlined,
+  LogoutOutlined,
+  PictureOutlined
+} from '@vicons/antd'
+import {
   Airplay,
   AreaCustom,
   ChartRing,
@@ -42,7 +54,6 @@ import {
   UserAvatar,
   ZAxis
 } from '@vicons/carbon'
-
 import {
   ArrowClockwiseDashes20Filled,
   ArrowStepBack20Regular,
@@ -59,23 +70,8 @@ import {
   PersonQuestionMark16Regular,
   Settings20Regular
 } from '@vicons/fluent'
-
-import {
-  ApiOutlined,
-  ClearOutlined,
-  CloudDownloadOutlined,
-  CloudUploadOutlined,
-  DashboardOutlined,
-  EyeInvisibleOutlined,
-  EyeOutlined,
-  HomeOutlined,
-  LogoutOutlined,
-  PictureOutlined
-} from '@vicons/antd'
-
-import { AddChartSharp } from '@vicons/material'
-
 import { CubeOutline, LogoNodejs, LogoPython } from '@vicons/ionicons5'
+import { AddChartSharp } from '@vicons/material'
 
 const icons = {
   delete: Delete,

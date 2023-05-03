@@ -29,16 +29,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import type { EditorView, ViewUpdate } from '@codemirror/view'
-import type { EditorState } from '@codemirror/state'
-import { Codemirror } from 'vue-codemirror'
-import { json } from '@codemirror/lang-json'
-import { oneDark } from '@codemirror/theme-one-dark'
-import type { CodemirrorOption } from './type'
-import type { Extension } from '@codemirror/state'
 import { redo, undo } from '@codemirror/commands'
+import { json } from '@codemirror/lang-json'
+import type { EditorState, Extension } from '@codemirror/state'
+import { oneDark } from '@codemirror/theme-one-dark'
+import type { EditorView, ViewUpdate } from '@codemirror/view'
+import { computed } from 'vue'
+import { Codemirror } from 'vue-codemirror'
+
 import { Logger } from '@/utils/utils'
+
+import type { CodemirrorOption } from './type'
 
 const props = withDefaults(
   defineProps<{

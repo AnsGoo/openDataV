@@ -7,6 +7,7 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+
 import Logo from '@/assets/logo.png'
 
 defineProps<{

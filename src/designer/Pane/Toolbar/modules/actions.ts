@@ -1,11 +1,11 @@
 import useCanvasState from '@/designer/state/canvas'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import useSnapShotState from '@/designer/state/snapshot'
+import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import type { ComponentDataType } from '@/types/component'
 import type { CanvasStyleData } from '@/types/storeTypes'
 import type { StoreComponentData } from '@/utils/db'
-import { exportRaw, importRaw } from '@/utils/utils'
 import { message } from '@/utils/message'
+import { exportRaw, importRaw } from '@/utils/utils'
 
 const snapShotState = useSnapShotState()
 // 状态管理
@@ -71,4 +71,4 @@ const toggleTheme = () => {
   projectStore.setDarkTheme(!projectStore.darkTheme)
 }
 
-export { undo, recoveryDraft, setShowEm, exportCanvas, importCanvas, toggleTheme }
+export { exportCanvas, importCanvas, recoveryDraft, setShowEm, toggleTheme, undo }

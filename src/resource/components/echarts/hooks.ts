@@ -1,6 +1,7 @@
+import * as echarts from 'echarts'
 import type { Ref } from 'vue'
 import { onMounted, onUnmounted } from 'vue'
-import * as echarts from 'echarts'
+
 import mydark from './theme'
 
 type EchartOption = echarts.EChartsOption | any

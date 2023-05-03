@@ -14,8 +14,9 @@
 
 <script setup lang="ts">
 import { NLi, NUl } from 'naive-ui'
-import type { MenuItem } from './type'
 import { useRouter } from 'vue-router'
+
+import type { MenuItem } from './type'
 
 const router = useRouter()
 withDefaults(

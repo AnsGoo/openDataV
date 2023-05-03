@@ -44,6 +44,15 @@
 </template>
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
+
+import GroupComponent from '@/components/Group/config'
+import Group from '@/components/Group/Group.vue'
+import Shape from '@/designer/Editor/Shape'
+import { componentList } from '@/designer/load'
+import useCanvasState from '@/designer/state/canvas'
+import { DataIntegrationMode } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
 import {
   filterStyle,
   getComponentStyle,
@@ -51,16 +60,9 @@ import {
   toPercent,
   uuid
 } from '@/utils/utils'
+
 import type TabsComponent from './config'
 import type { Tabs } from './type'
-import { useProp } from '@/models/hooks'
-import Shape from '@/designer/Editor/Shape'
-import type { CustomComponent } from '@/models'
-import { componentList } from '@/designer/load'
-import useCanvasState from '@/designer/state/canvas'
-import { DataIntegrationMode } from '@/enum/data'
-import Group from '@/components/Group/Group.vue'
-import GroupComponent from '@/components/Group/config'
 
 const props = defineProps<{
   component: TabsComponent

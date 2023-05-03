@@ -1,8 +1,9 @@
-import { ComponentGroup, FormType } from '@/enum'
-import type { PropsType } from '@/types/component'
-import { CustomComponent } from '@/models'
-import { DataIntegrationMode } from '@/enum/data'
 import { h } from 'vue'
+
+import { ComponentGroup, FormType } from '@/enum'
+import { DataIntegrationMode } from '@/enum/data'
+import { CustomComponent } from '@/models'
+import type { PropsType } from '@/types/component'
 
 export const componentName = 'BasicPieChart'
 class BasicPieChartComponent extends CustomComponent {

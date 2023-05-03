@@ -1,13 +1,15 @@
-import type { AreaData } from '@/types/storeTypes'
-import useCanvasState from './canvas'
-import { calcComponentsRect, createGroupStyle, getComponentRealRect } from '@/utils/utils'
-import type { CustomComponent } from '@/models'
+import { reactive } from 'vue'
+
 import { componentList } from '@/designer/load'
+import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
+import type { AreaData } from '@/types/storeTypes'
+import { calcComponentsRect, createGroupStyle, getComponentRealRect } from '@/utils/utils'
+
 import { getSelectComponents } from '../utils'
+import useCanvasState from './canvas'
 
 const canvasState = useCanvasState()
-import { reactive } from 'vue'
 
 class ActionState {
   public state = reactive<AreaData>({

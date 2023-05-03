@@ -93,13 +93,15 @@
 </template>
 
 <script lang="ts" setup>
+import { NAvatar, NBreadcrumb, NBreadcrumbItem, NDropdown, NTooltip } from 'naive-ui'
 import { computed, ref, unref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { NAvatar, NBreadcrumb, NBreadcrumbItem, NDropdown, NTooltip } from 'naive-ui'
-import { useUserStoreWithOut } from '@/store/modules/user'
-import ProjectSetting from './setting.vue'
+
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import { useUserStoreWithOut } from '@/store/modules/user'
 import { dialog, message } from '@/utils/message'
+
+import ProjectSetting from './setting.vue'
 
 const router = useRouter()
 const route = useRoute()

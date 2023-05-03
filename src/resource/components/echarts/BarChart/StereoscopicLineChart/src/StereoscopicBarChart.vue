@@ -3,16 +3,18 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useData, useProp } from '@/models/hooks'
-import type StereoscopicBarChartComponent from '../config'
-import type { StereoscopicBarChart } from '../type'
 import type { CustomSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { graphic } from 'echarts'
-import { compareResetValue } from '../../../utils'
-import { useEchart } from '../../../hooks'
+import { onMounted, ref } from 'vue'
+
 import type { DataType } from '@/enum/data'
+import { useData, useProp } from '@/models/hooks'
 import type { RequestResponse } from '@/models/type'
+
+import { useEchart } from '../../../hooks'
+import { compareResetValue } from '../../../utils'
+import type StereoscopicBarChartComponent from '../config'
+import type { StereoscopicBarChart } from '../type'
 
 let globalOption: EChartsOption
 const props = defineProps<{

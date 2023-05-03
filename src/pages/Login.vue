@@ -46,14 +46,14 @@
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { NButton, NForm, NFormItem, NInput } from 'naive-ui'
 import { reactive, ref } from 'vue'
-
-import type { LoginData } from '@/types/user'
-import { useUserStoreWithOut } from '@/store/modules/user'
 import type { RouteLocationNormalizedLoaded as Route, Router } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
+
 import { loginApi } from '@/api/user'
-import { Logger } from '@/utils/utils'
+import { useUserStoreWithOut } from '@/store/modules/user'
+import type { LoginData } from '@/types/user'
 import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
 
 const userStore = useUserStoreWithOut()
 const router: Router = useRouter()

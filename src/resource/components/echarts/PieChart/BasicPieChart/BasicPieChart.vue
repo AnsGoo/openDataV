@@ -3,15 +3,17 @@
 </template>
 
 <script setup lang="ts">
+import type { EChartsOption, PieSeriesOption } from 'echarts'
 import { onMounted, ref } from 'vue'
+
+import type { DataType } from '@/enum/data'
 import { useData, useProp } from '@/models/hooks'
+import type { RequestResponse } from '@/models/type'
+
+import { useEchart } from '../../hooks'
+import { compareResetValue } from '../../utils'
 import type BasicLineChartComponent from './config'
 import type { BasicLineChart } from './type'
-import type { EChartsOption, PieSeriesOption } from 'echarts'
-import { compareResetValue } from '../../utils'
-import { useEchart } from '../../hooks'
-import type { DataType } from '@/enum/data'
-import type { RequestResponse } from '@/models/type'
 
 const chartEl = ref<ElRef>(null)
 

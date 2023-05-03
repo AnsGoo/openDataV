@@ -1,9 +1,10 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Axios from 'axios'
+
+import useCanvasState from '@/designer/state/canvas'
+import { useUserStoreWithOut } from '@/store/modules/user'
 import type { ResultType } from '@/utils/http/config'
 import { httpConfig } from '@/utils/http/config'
-import { useUserStoreWithOut } from '@/store/modules/user'
-import useCanvasState from '@/designer/state/canvas'
 import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
@@ -102,4 +103,4 @@ class AxiosHttp {
 
 const http = new AxiosHttp(true)
 const apiHttp = new AxiosHttp(false)
-export { http, apiHttp }
+export { apiHttp, http }

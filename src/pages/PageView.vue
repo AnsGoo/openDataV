@@ -4,10 +4,11 @@
 
 <script setup lang="ts">
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Previewer } from '@/designer'
 import { onMounted, ref } from 'vue'
-import { getPageApi } from '@/api/pages'
 import { useRoute, useRouter } from 'vue-router'
+
+import { getPageApi } from '@/api/pages'
+import type { Previewer } from '@/designer'
 import { Logger } from '@/utils/utils'
 
 const viewer = ref<InstanceType<typeof Previewer> | null>(null)

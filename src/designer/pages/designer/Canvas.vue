@@ -34,8 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
-import Editor from '../../Editor'
+import { debounce } from 'lodash-es'
 import type { SelectOption } from 'naive-ui'
 import {
   NEl,
@@ -47,8 +46,11 @@ import {
   NSlider,
   NSpace
 } from 'naive-ui'
-import { debounce } from 'lodash-es'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+
 import useCanvasState from '@/designer/state/canvas'
+
+import Editor from '../../Editor'
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)

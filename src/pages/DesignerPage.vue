@@ -4,10 +4,11 @@
 
 <script setup lang="ts">
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Designer } from '@/designer'
 import { onMounted, ref } from 'vue'
-import { getPageApi } from '@/api/pages'
 import { useRoute } from 'vue-router'
+
+import { getPageApi } from '@/api/pages'
+import type { Designer } from '@/designer'
 
 const route = useRoute()
 const designer = ref<InstanceType<typeof Designer> | null>(null)

@@ -49,15 +49,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NCard, NInput, NSelect, NSpace, NTabPane, NTabs } from 'naive-ui'
-import { ScriptType } from '@/enum'
-import ScriptsEdtor from '../modules/ScriptsEditor'
-import DataView from '@/components/DataView'
-import StaticDataView from '@/components/StaticDataView'
-import { message } from '@/utils/message'
-import type { StaticRequestOptions } from './type'
+import { onMounted, reactive, ref, watch } from 'vue'
+
 import type { StaticDataDetail } from '@/api/data'
 import {
   createStaticDataApi,
@@ -65,11 +60,18 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
-import { makeFunction } from '@/utils/data'
-import { StaticKey, useEventBus } from '@/bus'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
+import { StaticKey, useEventBus } from '@/bus'
+import DataView from '@/components/DataView'
+import StaticDataView from '@/components/StaticDataView'
+import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
+import { makeFunction } from '@/utils/data'
+import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
+
+import ScriptsEdtor from '../modules/ScriptsEditor'
+import type { StaticRequestOptions } from './type'
 
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(

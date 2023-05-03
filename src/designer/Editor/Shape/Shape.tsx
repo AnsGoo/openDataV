@@ -1,15 +1,17 @@
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
-import useCanvasState from '@/designer/state/canvas'
-import useActionState from '@/designer/state/actions'
-import { copyText, Logger, mod360, throttleFrame } from '@/utils/utils'
+
 import { eventBus, StaticKey } from '@/bus'
-import type { Vector } from '@/types/common'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import useActionState from '@/designer/state/actions'
+import useCanvasState from '@/designer/state/canvas'
 import useClipBoardState from '@/designer/state/clipBoard'
+import type { CustomComponent } from '@/models'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { Vector } from '@/types/common'
 import type { ComponentStyle } from '@/types/component'
 import { stretchedComponents } from '@/utils/component'
-import type { CustomComponent } from '@/models'
+import { copyText, Logger, mod360, throttleFrame } from '@/utils/utils'
+
 import styles from './shape.module.less'
 
 export default defineComponent({

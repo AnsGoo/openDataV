@@ -4,6 +4,7 @@ import type {
   StateTree,
   SubscriptionCallbackMutation
 } from 'pinia'
+
 import { Logger } from '@/utils/utils'
 
 /**

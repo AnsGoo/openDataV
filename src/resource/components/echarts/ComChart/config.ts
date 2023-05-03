@@ -1,6 +1,6 @@
 import { ComponentGroup } from '@/enum'
-import { CustomComponent } from '@/models'
 import { DataIntegrationMode } from '@/enum/data'
+import { CustomComponent } from '@/models'
 
 export const componentName = 'ComChart'
 class ComChartComponent extends CustomComponent {

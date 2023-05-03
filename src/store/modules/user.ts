@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+
 import store from '@/store'
 import type { UserInfo } from '@/types/storeTypes'
 import { getStorageItem, removeStorageItem, setStorageItem } from '@/utils/storage'

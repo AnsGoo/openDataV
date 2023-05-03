@@ -23,9 +23,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
 import { NColorPicker, NSlider } from 'naive-ui'
+import { ref } from 'vue'
+
 import { GlobalColorSwatches } from '@/enum'
+
 import type { Gradient } from './type'
 
 const props = withDefaults(

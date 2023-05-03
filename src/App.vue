@@ -1,11 +1,12 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { RouterView, useRouter } from 'vue-router'
-import { ref, provide, readonly, computed } from 'vue'
-import useCanvasState from '@/designer/state/canvas'
-import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import { NGlobalStyle, NLoadingBarProvider } from 'naive-ui'
+import { computed, provide, readonly, ref } from 'vue'
+import { RouterView, useRouter } from 'vue-router'
+
+import ConfigProvider from '@/components/provider/ConfigProvider.vue'
+import useCanvasState from '@/designer/state/canvas'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
 const canvasState = useCanvasState()

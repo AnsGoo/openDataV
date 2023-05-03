@@ -19,12 +19,14 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useData, useProp } from '@/models/hooks'
-import type { CustomComponent } from '@/models'
-import type { RequestResponse } from '@/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
-import type { RankBoard } from './type'
+
 import type { DataType } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+import { useData, useProp } from '@/models/hooks'
+import type { RequestResponse } from '@/models/type'
+
+import type { RankBoard } from './type'
 
 const props = defineProps<{
   component: CustomComponent

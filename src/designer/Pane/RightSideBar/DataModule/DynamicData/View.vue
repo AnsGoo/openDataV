@@ -41,7 +41,6 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
 import {
   NButton,
   NCard,
@@ -54,16 +53,17 @@ import {
   NModal,
   NSwitch
 } from 'naive-ui'
-import type { RestRequestData } from '@/models'
-import { DataType } from '@/enum/data'
-import Rest from '@/apiView/RequestContent/rest'
+import { onMounted, reactive, ref, watch } from 'vue'
+
 import type { RequestOption } from '@/apiView/hooks/http/type'
-import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
-import { uuid } from '@/utils/utils'
-import { ScriptType } from '@/enum'
 import { requestOptionsToStore, storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
+import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
+import Rest from '@/apiView/RequestContent/rest'
+import { ScriptType } from '@/enum'
+import { DataType } from '@/enum/data'
+import type { CustomComponent, RestRequestData } from '@/models'
 import { message } from '@/utils/message'
-import type { CustomComponent } from '@/models'
+import { uuid } from '@/utils/utils'
 
 const props = defineProps<{
   curComponent: CustomComponent

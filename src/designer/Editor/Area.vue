@@ -15,10 +15,12 @@
 <script setup lang="ts">
 import type { WatchStopHandle } from 'vue'
 import { computed, onUnmounted, watch } from 'vue'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+
 import useActionState from '@/designer/state/actions'
-import type { Position } from '@/types/common'
 import useCanvasState from '@/designer/state/canvas'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { Position } from '@/types/common'
+
 const actionState = useActionState()
 const canvasState = useCanvasState()
 const hidden = computed<boolean>(() => actionState.hidden)

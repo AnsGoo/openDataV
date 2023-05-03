@@ -52,10 +52,11 @@
 </template>
 
 <script lang="ts" setup>
+import { NTabPane, NTabs } from 'naive-ui'
+import { ref } from 'vue'
+
 import ComponentList from './Component/ComponentList.vue'
 import Layer from './Layer/Layer.vue'
-import { ref } from 'vue'
-import { NTabPane, NTabs } from 'naive-ui'
 
 const activeKey = ref<string>('components')
 const emits = defineEmits<{

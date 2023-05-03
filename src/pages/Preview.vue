@@ -4,8 +4,9 @@
 
 <script setup lang="ts">
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Previewer } from '@/designer'
 import { onMounted, ref } from 'vue'
+
+import type { Previewer } from '@/designer'
 import useSnapShotState from '@/designer/state/snapshot'
 import type { ComponentDataType } from '@/types/component'
 

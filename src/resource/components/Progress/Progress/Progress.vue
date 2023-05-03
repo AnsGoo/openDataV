@@ -54,12 +54,15 @@
 
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
-import { http } from '@/utils/http'
-import { useProp } from '@/models/hooks'
-import { Logger, uuid } from '@/utils/utils'
+
 import { useEventBus } from '@/bus'
-import type { Progress } from './type'
 import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
+import { http } from '@/utils/http'
+import { Logger, uuid } from '@/utils/utils'
+
+import type { Progress } from './type'
+
 const props = defineProps<{
   component: CustomComponent
 }>()

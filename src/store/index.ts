@@ -1,4 +1,5 @@
 import { createPinia } from 'pinia'
+
 import { StoragePlugin } from './plugins'
 
 const store = createPinia()

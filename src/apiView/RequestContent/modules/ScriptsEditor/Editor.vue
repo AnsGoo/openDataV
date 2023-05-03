@@ -58,18 +58,12 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, onMounted, reactive, ref, watch, inject } from 'vue'
-/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import CodeEditor from '@/components/CodeEditor'
-import type { CodemirrorOption } from '@/components/CodeEditor/type'
+import { javascript } from '@codemirror/lang-javascript'
+import { python } from '@codemirror/lang-python'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
-import { python } from '@codemirror/lang-python'
-import { javascript } from '@codemirror/lang-javascript'
-import { ScriptType } from '@/enum'
-import type { AfterScript } from '@/types/component'
-import { message } from '@/utils/message'
-import { Logger } from '@/utils/utils'
+import type { ComputedRef } from 'vue'
+import { computed, inject, onMounted, reactive, ref, watch } from 'vue'
 
 import {
   createAfterScriptApi,
@@ -78,7 +72,14 @@ import {
   updateAfterScriptApi
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
-import type { ComputedRef } from 'vue'
+/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
+import CodeEditor from '@/components/CodeEditor'
+import type { CodemirrorOption } from '@/components/CodeEditor/type'
+import { ScriptType } from '@/enum'
+import type { AfterScript } from '@/types/component'
+import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
+
 const scriptList = ref<SelectOption[]>([])
 
 const savedStatus = ref<boolean>(true)

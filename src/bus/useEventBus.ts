@@ -1,6 +1,6 @@
-import { onMounted, onUnmounted } from 'vue'
 import type { Emitter, Handler } from 'mitt'
 import mitt from 'mitt'
+import { onMounted, onUnmounted } from 'vue'
 
 const eventBus: Emitter<Events> = mitt<Events>()
 
@@ -51,4 +51,4 @@ function useEventBus(
   return emit
 }
 
-export { eventBus, useEventBus, channels }
+export { channels, eventBus, useEventBus }

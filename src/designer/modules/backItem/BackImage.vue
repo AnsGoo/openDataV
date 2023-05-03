@@ -42,12 +42,13 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { cloneDeep } from 'lodash-es'
 import type { SelectOption, UploadCustomRequestOptions } from 'naive-ui'
 import { NButton, NForm, NFormItem, NInput, NSelect, NUpload } from 'naive-ui'
-import type { BackgroundImage } from '@/types/common'
-import { cloneDeep } from 'lodash-es'
+import { computed } from 'vue'
+
 import { uploadImageFileApi } from '@/api/images'
+import type { BackgroundImage } from '@/types/common'
 
 const props = defineProps<{
   value: BackgroundImage

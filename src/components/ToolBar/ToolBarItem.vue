@@ -11,8 +11,10 @@
 import { NButton, NDivider, NTooltip } from 'naive-ui'
 import type { ComponentOptions, VNode } from 'vue'
 import { computed, h } from 'vue'
-import type { iconNode, ToolBarItemType } from './type'
+
 import { XIcon } from '@/plugins/xicon'
+
+import type { iconNode, ToolBarItemType } from './type'
 
 const props = withDefaults(
   defineProps<{

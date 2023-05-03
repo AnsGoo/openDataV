@@ -25,14 +25,15 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { CustomComponent } from '@/models'
-import { DataType } from '@/enum/data'
 import { NDescriptions, NDescriptionsItem, NEmpty, NForm, NFormItem, NSelect } from 'naive-ui'
-import StaticData from './StaticData'
-import DynamicData from './DynamicData'
-import DemoData from './DemoData'
 import { onMounted, reactive, ref, watch } from 'vue'
-import { DataIntegrationMode } from '@/enum/data'
+
+import { DataIntegrationMode, DataType } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+
+import DemoData from './DemoData'
+import DynamicData from './DynamicData'
+import StaticData from './StaticData'
 
 const props = defineProps<{
   curComponent: CustomComponent

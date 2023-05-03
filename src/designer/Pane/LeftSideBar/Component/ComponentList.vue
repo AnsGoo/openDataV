@@ -5,15 +5,17 @@
 </template>
 
 <script setup lang="ts">
-import type { GroupType } from '@/enum'
-import { ComponentGroupList } from '@/enum'
-import { componentList } from '@/designer/load'
-import { computed, h } from 'vue'
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
-import ComponentItem from './ComponentItem.vue'
-import { XIcon } from '@/plugins/xicon'
+import { computed, h } from 'vue'
+
+import { componentList } from '@/designer/load'
+import type { GroupType } from '@/enum'
+import { ComponentGroupList } from '@/enum'
 import type { CustomComponent } from '@/models'
+import { XIcon } from '@/plugins/xicon'
+
+import ComponentItem from './ComponentItem.vue'
 
 const menuOptions = computed<MenuOption[]>(() => {
   const groups: { group: string; component: CustomComponent[] } | {} = {}

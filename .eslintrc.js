@@ -25,7 +25,7 @@ module.exports = defineConfig?.({
     'plugin:prettier/recommended'
     // 'plugin:jest/recommended'
   ],
-  plugins: ['prettier', 'import', '@typescript-eslint'],
+  plugins: ['prettier', 'import', '@typescript-eslint', 'spellcheck', 'simple-import-sort'],
   rules: {
     'vue/script-setup-uses-vars': 'error',
     '@typescript-eslint/ban-ts-ignore': 'off',
@@ -106,6 +106,11 @@ module.exports = defineConfig?.({
      *
      * @see https://cn.eslint.org/docs/rules/linebreak-style
      */
-    'linebreak-style': [2, 'unix']
+    'linebreak-style': [2, 'unix'],
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-duplicates': 'error'
   }
 })

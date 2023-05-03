@@ -1,5 +1,6 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
+
 import Group from '@/components/Group'
 import type { CustomComponent } from '@/models'
 import { Logger } from '@/utils/utils'
@@ -38,4 +39,4 @@ const AsyncComponent = {
   }
 }
 
-export { componentList, AsyncComponent }
+export { AsyncComponent, componentList }

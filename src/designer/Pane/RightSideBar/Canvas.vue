@@ -36,12 +36,14 @@
 </template>
 
 <script setup lang="ts">
-import useCanvasState from '@/designer/state/canvas'
-import { computed, ref } from 'vue'
 import { NColorPicker, NForm, NFormItem, NInput, NInputNumber, NScrollbar, NSelect } from 'naive-ui'
-import PixelEnum from '@/enum/pixel'
+import { computed, ref } from 'vue'
+
+import useCanvasState from '@/designer/state/canvas'
 import { FormType } from '@/enum'
+import PixelEnum from '@/enum/pixel'
 import type { CanvasStyleData } from '@/types/storeTypes'
+
 import BackItem from '../../modules/backItem'
 
 const pixels = computed<Recordable<string>[]>(() => {
