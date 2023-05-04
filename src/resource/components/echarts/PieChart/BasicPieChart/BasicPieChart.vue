@@ -3,15 +3,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { useProp, useData } from '@/resource/hooks'
+import type { EChartsOption, PieSeriesOption } from 'echarts'
+import { onMounted, ref } from 'vue'
+
+import type { DataType } from '@/enum/data'
+import { useData, useProp } from '@/models/hooks'
+import type { RequestResponse } from '@/models/type'
+
+import { useEchart } from '../../hooks'
+import { compareResetValue } from '../../utils'
 import type BasicLineChartComponent from './config'
 import type { BasicLineChart } from './type'
-import type { PieSeriesOption, EChartsOption } from 'echarts'
-import { compareResetValue } from '../../utils'
-import { useEchart } from '../../hooks'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
 
 const chartEl = ref<ElRef>(null)
 
@@ -25,6 +27,7 @@ let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
 const dataChange = (resp: any, _: DataType) => {
+  console.log(resp)
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)
@@ -100,6 +103,7 @@ const getOption = () => {
 }
 
 const updateData = (resp: Array<{ label: string; value: number }>) => {
+  console.log(resp)
   const upperLimit = propValue.data.upperLimit
   const lowerLimit = propValue.data.lowerLimit
   const data = resp.map((ele) => {

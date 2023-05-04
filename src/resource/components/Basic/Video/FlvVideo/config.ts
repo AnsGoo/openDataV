@@ -1,9 +1,9 @@
 import { ComponentGroup, FormType } from '@/enum'
+import { CustomComponent } from '@/models'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
 
 export const componentName = 'FlvVideo'
-class FlvVideoComponent extends BaseComponent {
+class FlvVideoComponent extends CustomComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,

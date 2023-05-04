@@ -1,11 +1,12 @@
-import { ComponentGroup, FormType } from '@/enum'
-import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
-import { DataIntegrationMode } from '@/resource/models/data'
 import { h } from 'vue'
 
+import { ComponentGroup, FormType } from '@/enum'
+import { DataIntegrationMode } from '@/enum/data'
+import { CustomComponent } from '@/models'
+import type { PropsType } from '@/types/component'
+
 export const componentName = 'ScrollRankingBoard'
-class RankBoardComponent extends BaseComponent {
+class RankBoardComponent extends CustomComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,

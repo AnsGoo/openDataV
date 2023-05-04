@@ -1,9 +1,11 @@
 import type {
   PiniaPlugin,
   PiniaPluginContext,
-  SubscriptionCallbackMutation,
-  StateTree
+  StateTree,
+  SubscriptionCallbackMutation
 } from 'pinia'
+
+import { Logger } from '@/utils/utils'
 
 /**
  * Storage类型
@@ -44,14 +46,14 @@ function logGroup(
   mutation: SubscriptionCallbackMutation<any>,
   state: StateTree
 ) {
-  const group = console.groupCollapsed || console.group
+  const group = Logger.groupCollapsed || Logger.group
   try {
     group(mutationId, new Date().toLocaleString())
-    console.log('mutation', mutation)
-    console.log('state', state)
-    console.groupEnd()
+    Logger.log('mutation', mutation)
+    Logger.log('state', state)
+    Logger.groupEnd()
   } catch (e) {
-    console.log('—— log end ——')
+    Logger.log('—— log end ——')
   }
 }
 

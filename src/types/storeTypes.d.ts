@@ -1,5 +1,7 @@
+import type { EditMode } from '@/enum'
+import type { CustomComponent } from '@/models'
+import type { Position } from '@/types/common'
 import type { StoreComponentData } from '@/utils/db'
-import type { BaseComponent } from '@/resource/models'
 
 export interface CanvasStyleData {
   width: number
@@ -10,15 +12,15 @@ export interface CanvasStyleData {
 export interface EditData {
   name: string
   thumbnail: string
-  editMode: string
+  editMode: EditMode
   canvasStyleData: CanvasStyleData
-  componentData: BaseComponent[]
+  componentData: CustomComponent[]
   activeIndex?: string
-  curComponent: Optional<BaseComponent>
+  curComponent: Optional<CustomComponent>
   isClickComponent: boolean
   isShowEm: boolean
   ids: Set<string>
-  benchmarkComponent: Optional<BaseComponent>
+  benchmarkComponent: Optional<CustomComponent>
   scale: number
 }
 
@@ -29,7 +31,7 @@ export interface MenuStatus {
 }
 
 export interface CopyItem {
-  copyData: Optional<BaseComponent>
+  copyData: Optional<CustomComponent>
   isCut: boolean
 }
 
@@ -41,8 +43,8 @@ export interface SnapData {
 }
 
 export interface AreaData {
-  style: Postion
-  components: BaseComponent[]
+  style: Position
+  components: CustomComponent[]
   ids: Set
 }
 

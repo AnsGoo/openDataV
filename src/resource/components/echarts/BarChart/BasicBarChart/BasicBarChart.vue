@@ -3,39 +3,50 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
+import { inject, onMounted, ref } from 'vue'
+
+import type { DataType } from '@/enum/data'
+import type { HooksType } from '@/models/hooks/type'
+import type { RequestResponse } from '@/models/type'
+
+import { useEchart } from '../../hooks'
+import { compareResetValue } from '../../utils'
 import type BasicLineChartComponent from './config'
 import type { BasicLineChart } from './type'
-import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
-import { compareResetValue } from '../../utils'
-import { useEchart } from '../../hooks'
-import { useProp, useData } from '@/resource/hooks'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
 
 const chartEl = ref<ElRef>(null)
 let globalOption: EChartsOption
 const props = defineProps<{
   component: BasicLineChartComponent
 }>()
+const { useProp, useData } = inject<HooksType>('HOOKS') || {}
 
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
+
 const dataChange = (resp: any, _: DataType) => {
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)
   }
 }
-useData(props.component, dataChange)
 
+if (useData) {
+  useData(props.component, dataChange)
+}
+
+let propValue: BasicLineChart
 const propValueChange = () => {
   updateData(chartData)
 }
+if (useProp) {
+  const { propValue: newPropValue } = useProp<BasicLineChart>(props.component, propValueChange)
+  propValue = newPropValue
+}
 
 const { updateEchart, resizeHandler } = useEchart(chartEl)
-const { propValue } = useProp<BasicLineChart>(props.component, propValueChange)
 
 onMounted(async () => {
   globalOption = getOption()

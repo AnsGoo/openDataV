@@ -25,7 +25,7 @@ const basicRoutes = [
   {
     path: '/page/create',
     name: 'Create',
-    component: () => import('@/pages/DesignerPage'),
+    component: () => import('@/pages/DesigerView/View.vue'),
     meta: {
       title: '创建页面',
       permission: 'CreatePage',
@@ -35,7 +35,7 @@ const basicRoutes = [
   {
     path: '/page/:index/edit',
     name: 'Editor',
-    component: () => import('@/pages/DesignerPage'),
+    component: () => import('@/pages/DesigerView/View.vue'),
     meta: {
       title: '编辑页面',
       permission: 'EditePage',

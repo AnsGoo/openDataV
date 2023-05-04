@@ -1,11 +1,13 @@
-import Axios from 'axios'
 import type { AxiosInstance, AxiosResponse } from 'axios'
-import type { FinallyResponse, StoreRequestOption } from './type'
+import Axios from 'axios'
 import { cloneDeep } from 'lodash-es'
-import { message } from '@/utils/message'
+
+import type { AfterScript } from '@/types/component'
 import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
-import type { AfterScript } from '@/types/component'
+import { message } from '@/utils/message'
+
+import type { FinallyResponse, StoreRestOption } from './type'
 
 export class RestRequest {
   private axiosInstance: AxiosInstance
@@ -16,7 +18,7 @@ export class RestRequest {
   private isNotify = false
   private isDebugMode? = false
 
-  constructor(requestOption: StoreRequestOption, isDebug?: boolean) {
+  constructor(requestOption: StoreRestOption, isDebug?: boolean) {
     const { headers, method, url, params, data, afterScript } = requestOption
     this.url = url
     this.params = params
@@ -72,6 +74,6 @@ export class RestRequest {
   }
 }
 
-export default function useRestRequest(requestOption: StoreRequestOption, isDebug?: boolean) {
+export default function useRestRequest(requestOption: StoreRestOption, isDebug?: boolean) {
   return new RestRequest(requestOption, isDebug)
 }

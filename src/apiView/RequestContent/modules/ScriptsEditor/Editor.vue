@@ -4,7 +4,7 @@
     v-model:code="form.code"
     :language="languageType"
     :config="config"
-    :theme="projectStore.darkTheme ? 'dark' : 'light'"
+    :theme="darkTheme ? 'dark' : 'light'"
     @update:code="formChange"
   >
     <template #tool-bar>
@@ -58,33 +58,33 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive, ref, watch, onMounted } from 'vue'
+import { javascript } from '@codemirror/lang-javascript'
+import { python } from '@codemirror/lang-python'
+import type { SelectOption } from 'naive-ui'
+import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
+import type { ComputedRef } from 'vue'
+import { computed, inject, onMounted, reactive, ref, watch } from 'vue'
+
+import {
+  createAfterScriptApi,
+  getAfterScriptApi,
+  getAfterScriptListApi,
+  updateAfterScriptApi
+} from '@/api/data/afterScript'
+import type { AfterScriptDetail } from '@/api/data/type'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
-import { NSelect, NInput, NSpace, NButtonGroup, NButton } from 'naive-ui'
-import type { SelectOption } from 'naive-ui'
-import { python } from '@codemirror/lang-python'
-import { javascript } from '@codemirror/lang-javascript'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 import { message } from '@/utils/message'
-import {
-  getAfterScriptListApi,
-  updateAfterScriptApi,
-  createAfterScriptApi,
-  getAfterScriptApi
-} from '@/api/data/afterScript'
-import type { AfterScriptDetail } from '@/api/data/type'
+import { Logger } from '@/utils/utils'
 
 const scriptList = ref<SelectOption[]>([])
 
 const savedStatus = ref<boolean>(true)
 
 const isShow = ref<boolean>(false)
-
-const projectStore = useProjectSettingStoreWithOut()
 const props = withDefaults(
   defineProps<{
     data: AfterScript
@@ -116,6 +116,10 @@ const emits = defineEmits<{
   (e: 'change', value: AfterScript): void
 }>()
 const languageMap = { Javascript: javascript, Python: python }
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 
 const formData = reactive<{
   id?: string
@@ -174,7 +178,7 @@ const loadStaticList = async () => {
       })
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 

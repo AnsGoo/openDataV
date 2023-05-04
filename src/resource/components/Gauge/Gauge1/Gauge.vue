@@ -83,17 +83,19 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import { http } from '@/utils/http'
-import { useProp } from '@/resource/hooks'
-import { useEventBus } from '@/bus'
-import type { Gauge } from './type'
-import type { BaseComponent } from '@/resource/models'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { onMounted, ref } from 'vue'
 
-const basicStore = useBasicStoreWithOut()
+import { useEventBus } from '@/bus'
+import useCanvasState from '@/designer/state/canvas'
+import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
+import { http } from '@/utils/http'
+
+import type { Gauge } from './type'
+
+const canvasState = useCanvasState()
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
 const propChange = (prop: string, key: string, value: any) => {
@@ -143,7 +145,7 @@ const initData = async () => {
       console.log(err.message || err)
     }
   }
-  if (basicStore.isEditMode) {
+  if (canvasState.isEditMode) {
     dataValue.value = Number((Math.random() * 100).toFixed(2))
   }
 }

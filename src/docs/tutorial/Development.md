@@ -39,7 +39,7 @@
 
 ## 组件配置项对象
 
-配置项对象是继承了 `BaseComponent` 抽象类的子类，在这里我们以静态文本为例
+配置项对象是继承了 `CustomComponent` 抽象类的子类，在这里我们以静态文本为例
 
 ```typescript
 
@@ -54,7 +54,7 @@
  * {dataIntegrationMode? }: 数据接入模式
  */
 
-class StaticTextComponent extends BaseComponent {
+class StaticTextComponent extends CustomComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,
@@ -82,7 +82,7 @@ class StaticTextComponent extends BaseComponent {
 > - `dataIntegrationMode? `: 数据接入模式
 
 
-除过需要继承`BaseComponent` 抽象类外，还需要重新定义`_prop`和`_style`属性，
+除过需要继承`CustomComponent` 抽象类外，还需要重新定义`_prop`和`_style`属性，
 
 > - `_prop属性`:定义了组件可以更改的属性
 
@@ -405,7 +405,7 @@ onUnmounted( () => {
 
 ```typescript
 
-import { useData } from '@/resource/hooks'
+import { useData } from '@/models/hooks'
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
@@ -453,17 +453,17 @@ useData(props.component, dataChange)
 
 3. 获取组件模式
 
-我们可以通过`basicStore`来获取编辑器模式,例如
+我们可以通过`canvasState`来获取编辑器模式,例如
 
 ```typescript
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import useCanvasState from  '@/designer/state/canvas'
 
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 // editoMode 即为编辑器模式
-basicStore.editMode
+canvasState.editMode
 
 // isEditMode 可以判断编辑器是否处于编辑模式
-basicStore.isEditMode
+canvasState.isEditMode
 
 ```
 

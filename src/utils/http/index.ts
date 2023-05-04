@@ -1,10 +1,12 @@
-import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios'
+import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Axios from 'axios'
+
+import useCanvasState from '@/designer/state/canvas'
+import { useUserStoreWithOut } from '@/store/modules/user'
 import type { ResultType } from '@/utils/http/config'
 import { httpConfig } from '@/utils/http/config'
-import { useUserStoreWithOut } from '@/store/modules/user'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
 import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
 
 class AxiosHttp {
   private axiosInstance: AxiosInstance
@@ -26,8 +28,8 @@ class AxiosHttp {
         if (token && config.headers) {
           config.headers['authorization'] = token
         }
-        const basicStore = useBasicStoreWithOut()
-        if (this.isBlock && basicStore.isEditMode) {
+        const canvasState = useCanvasState()
+        if (this.isBlock && canvasState.isEditMode) {
           return Promise.reject('http is disable where the mode is edit')
         }
         return config
@@ -62,7 +64,7 @@ class AxiosHttp {
         message.info('请登录后使用')
         break
     }
-    console.log(status, msg)
+    Logger.log(status, msg)
   }
 
   public get<T = any>(config: AxiosRequestConfig): Promise<AxiosResponse<T>> {
@@ -101,4 +103,4 @@ class AxiosHttp {
 
 const http = new AxiosHttp(true)
 const apiHttp = new AxiosHttp(false)
-export { http, apiHttp }
+export { apiHttp, http }

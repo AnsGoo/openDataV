@@ -31,7 +31,6 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       vueJsx(),
       viteMockServe({
         mockPath: 'mock',
-        supportTs: true, //如果使用 js发开，则需要配置 supportTs 为 false
         logger: true,
         localEnabled: command === 'serve',
         prodEnabled: VITE_MOCK === 'true',
@@ -69,15 +68,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       cors: true
     },
     build: {
-      target: 'es2015',
-      chunkSizeWarningLimit: 1500,
-      terserOptions: {
-        compress: {
-          keep_infinity: true,
-          // Used to delete console in production environment
-          drop_console: true
-        }
-      }
+      target: 'es2022',
+      chunkSizeWarningLimit: 1500
     },
     css: {
       preprocessorOptions: {

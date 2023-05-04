@@ -20,15 +20,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { isNumber } from 'lodash-es'
 import type { SelectOption } from 'naive-ui'
-import { NSpace, NSelect, NColorPicker } from 'naive-ui'
+import { NColorPicker, NSelect, NSpace } from 'naive-ui'
+import { onMounted, ref } from 'vue'
+
 import { GlobalColorSwatches } from '@/enum'
+import type { BackgroundColor, BackgroundImage } from '@/types/common'
+
 import LinearGradient from '../linearGradient'
 import type { Gradient } from '../linearGradient/type'
-import type { BackgroundImage, BackgroundColor } from '@/types/common'
 import BackImage from './BackImage.vue'
-import { isNumber } from 'lodash-es'
 
 const props = defineProps<{
   value: BackgroundColor | Gradient | BackgroundImage

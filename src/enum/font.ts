@@ -43,4 +43,4 @@ const SYS_FONT_WEIGHT = [
   { label: 'Black', value: 900 }
 ]
 
-export { SYS_FONTS, SYS_FONT_WEIGHT }
+export { SYS_FONT_WEIGHT, SYS_FONTS }

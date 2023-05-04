@@ -8,11 +8,14 @@
   <n-divider v-if="divider" vertical />
 </template>
 <script lang="ts" setup>
-import { NButton, NTooltip, NDivider } from 'naive-ui'
-import type { VNode, ComponentOptions } from 'vue'
+import { NButton, NDivider, NTooltip } from 'naive-ui'
+import type { ComponentOptions, VNode } from 'vue'
 import { computed, h } from 'vue'
-import type { iconNode, ToolBarItemType } from './type'
+
 import { XIcon } from '@/plugins/xicon'
+
+import type { iconNode, ToolBarItemType } from './type'
+
 const props = withDefaults(
   defineProps<{
     label: string

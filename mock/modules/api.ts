@@ -296,7 +296,7 @@ export default [
     }
   },
   {
-    url: '/dataset/rest/',
+    url: '/dataset/rest',
     method: 'get',
     statusCode: 200,
     response: () => {

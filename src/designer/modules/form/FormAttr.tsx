@@ -1,11 +1,17 @@
+import {
+  NColorPicker,
+  NForm,
+  NFormItem,
+  NInput,
+  NInputNumber,
+  NRadio,
+  NRadioGroup,
+  NSelect,
+  NSwitch
+} from 'naive-ui'
 import type { PropType } from 'vue'
-import { reactive, defineComponent, resolveComponent, h } from 'vue'
-import FontStyle from '../fontSytle'
-import FontWeight from '../fontWeight'
-import LinearGradient from '../linearGradient'
-import ArrayItem from '../arrayItem'
-import CustomItem from '../customItem'
-import BackItem from '../backItem'
+import { defineComponent, h, reactive, resolveComponent } from 'vue'
+
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type {
   AttrType,
@@ -16,17 +22,13 @@ import type {
   SelectFormSchema,
   SwitchFormSchema
 } from '@/types/component'
-import {
-  NForm,
-  NFormItem,
-  NInput,
-  NRadioGroup,
-  NRadio,
-  NSelect,
-  NSwitch,
-  NInputNumber,
-  NColorPicker
-} from 'naive-ui'
+
+import ArrayItem from '../arrayItem'
+import BackItem from '../backItem'
+import CustomItem from '../customItem'
+import FontStyle from '../fontSytle'
+import FontWeight from '../fontWeight'
+import LinearGradient from '../linearGradient'
 
 export default defineComponent({
   components: {

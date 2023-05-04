@@ -20,16 +20,19 @@
 </template>
 
 <script lang="ts" setup name="DocContent">
-import { NLayoutSider, NLayoutContent, NScrollbar } from 'naive-ui'
-import ConfigProvider from '@/components/provider/ConfigProvider.vue'
-import RenderMD from '../RenderMD.vue'
-import SiderContent from '../modules/components/SiderContent'
-import { getMenus } from './menus'
+import { NLayoutContent, NLayoutSider, NScrollbar } from 'naive-ui'
 import { computed } from 'vue'
 import { useRoute } from 'vue-router'
+
+import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import docsRouters from '@/router/modules/docs'
-import type { MenuItem } from '../modules/components/SiderContent/type'
 import type { AppRouteRecordRaw } from '@/router/types'
+
+import SiderContent from '../modules/components/SiderContent'
+import type { MenuItem } from '../modules/components/SiderContent/type'
+import RenderMD from '../RenderMD.vue'
+import { getMenus } from './menus'
+
 const route = useRoute()
 const componentMenus = computed<Array<MenuItem>>(() => {
   const matcheds = route.matched

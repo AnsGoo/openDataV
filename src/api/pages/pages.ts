@@ -1,6 +1,8 @@
-import { apiHttp as http } from '@/utils/http'
-import type { LayoutData, SimpleLayoutData } from './type'
 import type { AxiosResponse } from 'axios'
+
+import { apiHttp as http } from '@/utils/http'
+
+import type { LayoutData, SimpleLayoutData } from './type'
 
 /***
  * 获取页面数据

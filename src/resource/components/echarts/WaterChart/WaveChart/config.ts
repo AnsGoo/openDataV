@@ -1,10 +1,10 @@
 import { ComponentGroup, FormType } from '@/enum'
+import { DataIntegrationMode } from '@/enum/data'
+import { CustomComponent } from '@/models'
 import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
-import { DataIntegrationMode } from '@/resource/models/data'
 
 export const componentName = 'WaveChart'
-class WaveChartComponent extends BaseComponent {
+class WaveChartComponent extends CustomComponent {
   constructor(id?: string, name?: string, icon?: string) {
     super({
       component: componentName,

@@ -1,8 +1,8 @@
-import type { FormType, ComponentGroup, ScriptType } from '@/enum'
-import type { CanvasStyleData } from '@/types/storeTypes'
-import type { DataIntegrationMode } from '@/resource/models/data'
-import type { DataType, StaticRequestOptions, RestRequestOptions } from '@/resource/models/data'
 import type { Component, ConcreteComponent, VNode } from 'vue'
+
+import type { ComponentGroup, FormType, ScriptType } from '@/enum'
+import type { DataIntegrationMode, DataType, RequestOptions } from '@/models/requestOption'
+import type { CanvasStyleData } from '@/types/storeTypes'
 
 export interface GroupStyle {
   gwidth: number
@@ -96,7 +96,7 @@ export interface ComponentData {
 export interface ComponentRequestDataType {
   type: DataType
   otherConfig: Recordable
-  requestOptions?: StaticRequestOptions | RestRequestOptions
+  requestOptions?: RequestOptions
 }
 export interface ComponentDataType {
   id: string

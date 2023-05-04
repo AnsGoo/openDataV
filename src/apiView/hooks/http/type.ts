@@ -1,5 +1,6 @@
-import type { AfterScript } from '@/types/component'
 import type { AxiosResponse, Method } from 'axios'
+
+import type { AfterScript } from '@/types/component'
 
 export interface KV {
   key: string
@@ -8,7 +9,7 @@ export interface KV {
   id: string
 }
 
-export interface RequestOption {
+export interface RestOption {
   method: Method
   url: string
   headers: Array<KV>
@@ -17,13 +18,19 @@ export interface RequestOption {
   afterScript: AfterScript
 }
 
-export interface StoreRequestOption {
+export interface StoreRestOption {
   method: Method
   url: string
   headers: Recordable
   params: Recordable
   data: Recordable
   afterScript: AfterScript
+}
+
+export interface StoreStaticOption {
+  id: string
+  title?: string
+  script?: AfterScript
 }
 
 export interface RequestResponse {

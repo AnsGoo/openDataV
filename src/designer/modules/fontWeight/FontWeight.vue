@@ -9,9 +9,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
-import { SYS_FONT_WEIGHT } from '@/enum/font'
 import { NSelect } from 'naive-ui'
+import { reactive, ref } from 'vue'
+
+import { SYS_FONT_WEIGHT } from '@/enum/font'
 
 const props = withDefaults(
   defineProps<{

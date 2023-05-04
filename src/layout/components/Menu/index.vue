@@ -11,14 +11,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, computed, watch, h } from 'vue'
-import { useRoute, RouterLink } from 'vue-router'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import type { MenuType } from '@/router'
-import { routeView } from '@/router'
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
+import { computed, h, onMounted, ref, watch } from 'vue'
+import { RouterLink, useRoute } from 'vue-router'
+
 import { XIcon } from '@/plugins/xicon'
+import type { MenuType } from '@/router'
+import { routeView } from '@/router'
+import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
 defineProps<{
   collapsed: boolean

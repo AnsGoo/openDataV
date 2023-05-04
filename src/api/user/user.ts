@@ -1,6 +1,7 @@
-import { apiHttp as http } from '@/utils/http'
-import type { LoginData } from '@/types/user'
 import type { AxiosResponse } from 'axios'
+
+import type { LoginData } from '@/types/user'
+import { apiHttp as http } from '@/utils/http'
 
 //
 /***

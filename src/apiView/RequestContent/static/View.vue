@@ -49,15 +49,10 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
-import { NTabs, NTabPane, NCard, NSelect, NSpace, NButtonGroup, NButton, NInput } from 'naive-ui'
 import type { SelectOption } from 'naive-ui'
-import { ScriptType } from '@/enum'
-import ScriptsEdtor from '../modules/ScriptsEditor'
-import DataView from '@/components/DataView'
-import StaticDataView from '@/components/StaticDataView'
-import { message } from '@/utils/message'
-import type { StaticRequestOptions } from './type'
+import { NButton, NButtonGroup, NCard, NInput, NSelect, NSpace, NTabPane, NTabs } from 'naive-ui'
+import { onMounted, reactive, ref, watch } from 'vue'
+
 import type { StaticDataDetail } from '@/api/data'
 import {
   createStaticDataApi,
@@ -65,21 +60,29 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
-import { makeFunction } from '@/utils/data'
-import { useEventBus, StaticKey } from '@/bus'
+import type { StoreStaticOption } from '@/apiView/hooks/http/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
+import { StaticKey, useEventBus } from '@/bus'
+import DataView from '@/components/DataView'
+import StaticDataView from '@/components/StaticDataView'
+import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
+import { makeFunction } from '@/utils/data'
+import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
+
+import ScriptsEdtor from '../modules/ScriptsEditor'
 
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(
   defineProps<{
-    options?: StaticRequestOptions
+    options?: StoreStaticOption
     mode?: 'debug' | 'use'
   }>(),
   {
     options: () => {
       return {
-        dataId: '',
+        id: '',
         title: '',
         script: {
           code: '',
@@ -110,7 +113,7 @@ const loadStaticList = async () => {
       })
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 
@@ -120,7 +123,7 @@ const formData = reactive<{
   originData: any
   afterData: string
 }>({
-  id: props.options.dataId,
+  id: props.options.id,
   title: props.options.title || '',
   afterData: '',
   originData: ''
@@ -137,14 +140,14 @@ const clear = () => {
 
 const originDataChange = (value: any) => {
   formData.originData = value
-  getAfterData(props.options.script)
+  getAfterData(props.options.script!)
 }
 const dataChangeHandler = async (id: string) => {
   if (id) {
     const resp: StaticDataDetail | undefined = await loadStaticData(id)
     if (resp) {
       formData.originData = resp.data
-      getAfterData(props.options.script)
+      getAfterData(props.options.script!)
       formData.id = id
       formData.title = resp.name
       snapShot && snapShot.save({ id: id, name: resp.name })
@@ -235,14 +238,14 @@ onMounted(async () => {
 })
 
 const init = async () => {
-  if (props.options && props.options.dataId) {
-    const resp: StaticDataDetail | undefined = await loadStaticData(props.options.dataId)
+  if (props.options && props.options.id) {
+    const resp: StaticDataDetail | undefined = await loadStaticData(props.options.id)
     if (resp) {
       formData.id = resp.id!
       formData.title = resp.name
       formData.originData = resp.data
-      getAfterData(props.options.script)
-      emits('dataChange', props.options.dataId, resp.name)
+      getAfterData(props.options.script!)
+      emits('dataChange', props.options.id, resp.name)
     }
   } else {
     formData.id = ''

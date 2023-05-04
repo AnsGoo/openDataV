@@ -1,5 +1,7 @@
-import { apiHttp as http } from '@/utils/http'
 import type { AxiosResponse } from 'axios'
+
+import { apiHttp as http } from '@/utils/http'
+
 import type { RestDataDetail } from './type'
 
 /**
@@ -17,7 +19,7 @@ export const getRestDataApi = async (id: string): Promise<AxiosResponse<RestData
  */
 export const getRestDataListApi = async (): Promise<AxiosResponse<RestDataDetail[]>> => {
   return http.get<RestDataDetail[]>({
-    url: '/dataset/rest/'
+    url: '/dataset/rest'
   })
 }
 

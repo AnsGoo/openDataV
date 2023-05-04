@@ -18,16 +18,17 @@
 </template>
 
 <script lang="ts" setup>
-import { eventBus, StaticKey } from '@/bus'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { BaseComponent } from '@/resource/models'
 import { cloneDeep } from 'lodash-es'
+
+import { eventBus, StaticKey } from '@/bus'
+import useCanvasState from '@/designer/state/canvas'
+import type { CustomComponent } from '@/models'
+import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { diffIndex } from '@/utils/utils'
 
 const props = withDefaults(
   defineProps<{
-    component: BaseComponent
+    component: CustomComponent
     index: string
     activeKey?: string
     mode?: string
@@ -39,7 +40,7 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<{ (e: 'select', index: string): void }>()
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 const toggleIcon = (isDisplay: boolean) => (isDisplay ? 'previewOpen' : 'previewClose')
 
@@ -64,18 +65,18 @@ const handleDrop = (event: DragEvent, toIndex: string) => {
   const isDragAble = diffIndex(fromIndex, toIndex)
   if (!isDragAble) return
   const indexes: number[] = fromIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(indexes)
+  const cutComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
   const inComponent = cloneDeep(cutComponent)
   const toIndexs: number[] = toIndex.split('-').map((i) => Number(i))
-  const toComponent: Optional<BaseComponent> = basicStore.getComponentByIndex(toIndexs)
+  const toComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(toIndexs)
 
   if (inComponent && toComponent && toIndex) {
     const toComponentId: string = toComponent.id
-    basicStore.cutComponent(indexes[indexes.length - 1], cutComponent?.parent)
+    canvasState.cutComponent(indexes[indexes.length - 1], cutComponent?.parent)
     const parent = toComponent.parent || undefined
-    const data = parent ? parent.subComponents : basicStore.componentData
+    const data = parent ? parent.subComponents : canvasState.componentData
     const newToIndex = data.findIndex((el) => el.id === toComponentId)
-    basicStore.insertComponent(newToIndex!, inComponent!, parent)
+    canvasState.insertComponent(newToIndex!, inComponent!, parent)
     emits('select', toIndex)
   }
 }

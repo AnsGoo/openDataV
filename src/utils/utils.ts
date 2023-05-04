@@ -1,8 +1,8 @@
-import type { DOMRectStyle, GroupStyle } from '@/types/component'
-import { message } from '@/utils/message'
-import type { Vector, Position } from '@/types/common'
 import { cloneDeep, isNumber } from 'lodash-es'
-import type { BaseComponent } from '@/resource/models'
+
+import type { CustomComponent } from '@/models'
+import type { Position, Vector } from '@/types/common'
+import type { DOMRectStyle, GroupStyle } from '@/types/component'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))
@@ -59,7 +59,7 @@ export const getGroupStyle = (style: Recordable) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getComponentStyle = (component: BaseComponent) => {
+export const getComponentStyle = (component: CustomComponent) => {
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
@@ -77,7 +77,7 @@ export const getComponentStyle = (component: BaseComponent) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getComponentShapeStyle = (component: BaseComponent) => {
+export const getComponentShapeStyle = (component: CustomComponent) => {
   const style = cloneDeep(component.style)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
@@ -95,7 +95,7 @@ export const getComponentShapeStyle = (component: BaseComponent) => {
  * @param component 主要转化样式的组件
  * @returns css
  */
-export const getInnerComponentShapeStyle = (component: BaseComponent) => {
+export const getInnerComponentShapeStyle = (component: CustomComponent) => {
   const style = cloneDeep(component.style)
   return {
     ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
@@ -195,7 +195,7 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-export function decomposeComponent(component: BaseComponent, parentStyle: DOMRectStyle) {
+export function decomposeComponent(component: CustomComponent, parentStyle: DOMRectStyle) {
   // 获取元素的中心点坐标
   const groupStyle: GroupStyle = component.groupStyle!
   const center: Vector = {
@@ -226,7 +226,7 @@ export function decomposeComponent(component: BaseComponent, parentStyle: DOMRec
   }
 }
 
-export function createGroupStyle(groupComponent: BaseComponent) {
+export function createGroupStyle(groupComponent: CustomComponent) {
   const parentStyle: DOMRectStyle = groupComponent.positionStyle
   groupComponent.subComponents!.forEach((component) => {
     // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
@@ -244,7 +244,7 @@ export function createGroupStyle(groupComponent: BaseComponent) {
 /**
  * 计算组合组件的位置信息
  */
-export function calcComponentsRect(components: BaseComponent[]) {
+export function calcComponentsRect(components: CustomComponent[]) {
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
   const rightSet: Set<number> = new Set()
@@ -337,7 +337,7 @@ export const importRaw = (fileHandler, accept = '.*') => {
     if (e.currentTarget && e.currentTarget['files']) {
       const length = e.currentTarget['files'].length || 0
       if (length === 0) {
-        message.info('请选择文件')
+        return
       } else {
         const reader = new FileReader()
         reader.readAsText(e.currentTarget['files'][0])
@@ -438,14 +438,14 @@ export const pageScale = (rootEl: HTMLDivElement, width: number, height: number)
  * @param components
  * @returns
  */
-export const getComponentRealRect = (components: BaseComponent[]) => {
+export const getComponentRealRect = (components: CustomComponent[]) => {
   const maxRect: {
     right: number
     left: number
     top: number
     bottom: number
     center: Vector
-    component: BaseComponent
+    component: CustomComponent
   }[] = []
 
   const xAxisSet: Array<number> = []
@@ -611,3 +611,5 @@ export function camel2snake(key) {
     .trim()
     .replaceAll(' ', '-')
 }
+
+export const Logger = console

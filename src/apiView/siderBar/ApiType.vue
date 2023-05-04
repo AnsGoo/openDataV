@@ -12,11 +12,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed, h, ref } from 'vue'
-import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
+import { NMenu } from 'naive-ui'
+import { computed, h, ref } from 'vue'
 
 import TypeItem from './modules/TypeItem.vue'
+
 const apiTypes = [
   {
     label: 'STATIC',

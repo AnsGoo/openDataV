@@ -36,12 +36,14 @@
 </template>
 
 <script setup lang="ts">
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { NColorPicker, NForm, NFormItem, NInput, NInputNumber, NScrollbar, NSelect } from 'naive-ui'
 import { computed, ref } from 'vue'
-import { NForm, NFormItem, NInput, NSelect, NInputNumber, NScrollbar, NColorPicker } from 'naive-ui'
-import PixelEnum from '@/enum/pixel'
+
+import useCanvasState from '@/designer/state/canvas'
 import { FormType } from '@/enum'
+import PixelEnum from '@/enum/pixel'
 import type { CanvasStyleData } from '@/types/storeTypes'
+
 import BackItem from '../../modules/backItem'
 
 const pixels = computed<Recordable<string>[]>(() => {
@@ -51,16 +53,16 @@ const pixels = computed<Recordable<string>[]>(() => {
   ]
 })
 
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 const canvasStyleFrom = ref<CanvasStyleData>({
-  width: basicStore.canvasData.width,
-  height: basicStore.canvasData.height,
-  background: basicStore.canvasStyleData.background
+  width: canvasState.canvasData.width,
+  height: canvasState.canvasData.height,
+  background: canvasState.canvasStyleData.background
 })
 
 const styleChange = () => {
-  basicStore.setCanvasStyle(canvasStyleFrom.value)
+  canvasState.setCanvasStyle(canvasStyleFrom.value)
 }
 const myPixel = ref<string>('本设备')
 const styleKeys = [

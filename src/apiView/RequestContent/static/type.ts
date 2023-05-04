@@ -1,7 +1,7 @@
 import type { AfterScript } from '@/types/component'
 
 export interface StaticRequestOptions {
-  dataId: string
+  id: string
   title?: string
   script: AfterScript
 }

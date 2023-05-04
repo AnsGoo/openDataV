@@ -50,19 +50,21 @@
 </template>
 
 <script setup lang="ts">
-import { NTabs, NTabPane, NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
-import { ref, computed, h } from 'vue'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import Canvas from './Canvas.vue'
-import StyleList from './StyleModule' // 右侧属性列表
-import AttrList from './AttrModule'
-import DataList from './DataModule'
+import { NMenu, NTabPane, NTabs } from 'naive-ui'
+import { computed, h, ref } from 'vue'
+
+import useCanvasState from '@/designer/state/canvas'
 import { XIcon } from '@/plugins/xicon'
+
+import AttrList from './AttrModule'
+import Canvas from './Canvas.vue'
+import DataList from './DataModule'
+import StyleList from './StyleModule' // 右侧属性列表
 
 const activeKey = ref<string>('attr')
 
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 withDefaults(
   defineProps<{
     iscollapsed: boolean
@@ -74,9 +76,9 @@ const emits = defineEmits<{
   (e: 'update:iscollapsed', iscollapsed: boolean): void
 }>()
 
-const curComponent = computed(() => basicStore.curComponent)
+const curComponent = computed(() => canvasState.curComponent)
 const menuOptions = computed<MenuOption[]>(() => {
-  if (basicStore.curComponent) {
+  if (canvasState.curComponent) {
     return [
       {
         label: '样式',

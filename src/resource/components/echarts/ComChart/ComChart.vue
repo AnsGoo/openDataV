@@ -4,10 +4,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue'
+
+import type { DataType } from '@/enum/data'
+import { useData } from '@/models/hooks'
+
 import { useEchart } from '../hooks'
-import { useData } from '@/resource/hooks'
 import type ComChartComponent from './config'
-import type { DataType } from '@/resource/models'
 
 const props = defineProps<{
   component: ComChartComponent

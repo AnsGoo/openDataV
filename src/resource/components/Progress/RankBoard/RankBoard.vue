@@ -19,13 +19,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useProp, useData } from '@/resource/hooks'
-import type { BaseComponent, DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+
+import type { DataType } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+import { useData, useProp } from '@/models/hooks'
+import type { RequestResponse } from '@/models/type'
+
 import type { RankBoard } from './type'
+
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
 const dataSource = ref<

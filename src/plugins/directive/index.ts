@@ -1,9 +1,9 @@
 import type { App } from 'vue'
 
+import ClickOutsideDirective from './clickoutside'
 import ContextMenu from './contextmenu'
 import ActionDirective from './permission'
 import ResizeDomDirective from './resize'
-import ClickOutsideDirective from './clickoutside'
 
 export default {
   install(app: App) {

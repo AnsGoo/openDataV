@@ -1,5 +1,6 @@
 import type { Directive, DirectiveBinding } from 'vue'
 import { createVNode, render } from 'vue'
+
 import ContextmenuComponent from './ContextMenu.vue'
 
 const CTX_CONTEXTMENU_HANDLER = 'CTX_CONTEXTMENU_HANDLER'

@@ -25,12 +25,14 @@
   </n-card>
 </template>
 <script setup lang="ts">
-import { NInput, NCard, NTabs, NTabPane, NOl, NLi, NGradientText } from 'naive-ui'
-import { eventBus, StaticKey } from '@/bus'
+import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
 import { onMounted, ref } from 'vue'
+
 import { getAfterScriptListApi } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
+import { eventBus, StaticKey } from '@/bus'
 import { ScriptType } from '@/enum'
+import { Logger } from '@/utils/utils'
 
 const dataList = ref<AfterScriptDetail[]>([])
 const loadStaticList = async () => {
@@ -40,7 +42,7 @@ const loadStaticList = async () => {
       dataList.value = resp.data
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 

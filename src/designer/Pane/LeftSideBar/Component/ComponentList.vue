@@ -5,20 +5,22 @@
 </template>
 
 <script setup lang="ts">
-import { ComponentGroupList } from '@/enum'
-import { componentList } from '@/designer/load'
-import { computed, h } from 'vue'
-import { NMenu } from 'naive-ui'
 import type { MenuOption } from 'naive-ui'
-import ComponentItem from './ComponentItem.vue'
+import { NMenu } from 'naive-ui'
+import { computed, h } from 'vue'
+
+import { componentList } from '@/designer/load'
 import type { GroupType } from '@/enum'
+import { ComponentGroupList } from '@/enum'
+import type { CustomComponent } from '@/models'
 import { XIcon } from '@/plugins/xicon'
-import type { BaseComponent } from '@/resource/models'
+
+import ComponentItem from './ComponentItem.vue'
 
 const menuOptions = computed<MenuOption[]>(() => {
-  const groups: { group: string; component: BaseComponent[] } | {} = {}
+  const groups: { group: string; component: CustomComponent[] } | {} = {}
   Object.keys(componentList).forEach((key) => {
-    const component: BaseComponent = new componentList[key]()
+    const component: CustomComponent = new componentList[key]()
     const group = component.group
     if (!group || !component.show) {
       return

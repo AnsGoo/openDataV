@@ -22,17 +22,18 @@
 </template>
 
 <script setup lang="ts">
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { debounce, cloneDeep } from 'lodash-es'
-import { computed, ref, watch } from 'vue'
-import FormAttr from '@/designer/modules/form/FormAttr'
+import { cloneDeep, debounce } from 'lodash-es'
 import { NCollapse, NCollapseItem } from 'naive-ui'
-import type { BaseComponent } from '@/resource/models'
+import { computed, ref, watch } from 'vue'
+
+import FormAttr from '@/designer/modules/form/FormAttr'
+import useCanvasState from '@/designer/state/canvas'
+import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
-const basicStore = useBasicStoreWithOut()
+const canvasState = useCanvasState()
 
 const formData = ref<Recordable>({})
 const styleKeys = computed(() => {
@@ -50,12 +51,12 @@ const changed = debounce((key: string, val: any) => {
     if (locationKeys.includes(key)) {
       const parentComponent = props.curComponent.parent
       // key as 'top' | 'left' | 'width' | 'height' | 'rotate'
-      basicStore.syncComponentLocation({ [key]: val as number }, parentComponent, true)
+      canvasState.syncComponentLocation({ [key]: val as number }, parentComponent, true)
       if (parentComponent) {
-        basicStore.resizeAutoComponent(parentComponent)
+        canvasState.resizeAutoComponent(parentComponent)
       }
     } else {
-      basicStore.setCurComponentStyle(key, val)
+      canvasState.setCurComponentStyle(key, val)
     }
   }
 }, 300)

@@ -93,13 +93,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, computed, unref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
-import { NTooltip, NDropdown, NAvatar, NBreadcrumb, NBreadcrumbItem } from 'naive-ui'
-import { useUserStoreWithOut } from '@/store/modules/user'
-import ProjectSetting from './setting.vue'
+import { NAvatar, NBreadcrumb, NBreadcrumbItem, NDropdown, NTooltip } from 'naive-ui'
+import { computed, ref, unref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-import { message, dialog } from '@/utils/message'
+import { useUserStoreWithOut } from '@/store/modules/user'
+import { dialog, message } from '@/utils/message'
+
+import ProjectSetting from './setting.vue'
+
+const router = useRouter()
+const route = useRoute()
 
 defineProps<{
   collapsed: boolean
@@ -117,9 +122,6 @@ const username = userStore?.userName || ''
 const drawerSetting = ref()
 const fullscreenIcon = ref<string>('fullScreen')
 const themeIcon = ref<string>('sun')
-
-const router = useRouter()
-const route = useRoute()
 
 const iconColor = computed<string>(() => projectStore.iconColor)
 

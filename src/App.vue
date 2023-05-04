@@ -1,17 +1,20 @@
 <script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
-import { useRouter, RouterView } from 'vue-router'
-import { ref } from 'vue'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
+import { NGlobalStyle, NLoadingBarProvider } from 'naive-ui'
+import { computed, provide, readonly, ref } from 'vue'
+import { RouterView, useRouter } from 'vue-router'
+
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
-import { NLoadingBarProvider, NGlobalStyle } from 'naive-ui'
+import useCanvasState from '@/designer/state/canvas'
+import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
-const basicStore = useBasicStoreWithOut()
-
+const canvasState = useCanvasState()
+const projectStore = useProjectSettingStoreWithOut()
+provide('DarkTheme', readonly(computed(() => projectStore.darkTheme)))
 const overflow = ref<string>(
   (() => {
-    if (!basicStore.isEditMode) {
+    if (!canvasState.isEditMode) {
       return 'hidden'
     } else {
       return 'auto'

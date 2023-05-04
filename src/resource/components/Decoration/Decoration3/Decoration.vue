@@ -39,8 +39,10 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from '@/resource/hooks'
 import { onMounted, ref } from 'vue'
+
+import { useProp } from '@/models/hooks'
+
 import type DecorationComponent from './config'
 import type { Decoration } from './type'
 import { randomExtend } from './utils'

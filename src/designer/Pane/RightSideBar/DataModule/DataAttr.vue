@@ -25,17 +25,18 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { BaseComponent } from '@/resource/models'
-import { DataType } from '@/resource/models'
-import { NForm, NFormItem, NSelect, NDescriptions, NDescriptionsItem, NEmpty } from 'naive-ui'
-import StaticData from './StaticData'
-import DynamicData from './DynamicData'
-import DemoData from './DemoData'
+import { NDescriptions, NDescriptionsItem, NEmpty, NForm, NFormItem, NSelect } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
-import { DataIntegrationMode } from '@/resource/models/data'
+
+import { DataIntegrationMode, DataType } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+
+import DemoData from './DemoData'
+import DynamicData from './DynamicData'
+import StaticData from './StaticData'
 
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
 
 const dataType = ref<string>(DataType.DEMO)
@@ -71,7 +72,7 @@ onMounted(() => {
 
 watch(
   () => props.curComponent,
-  async (value: BaseComponent) => {
+  async (value: CustomComponent) => {
     if (value) {
       const dataConfig = props.curComponent.dataConfig
       if (dataConfig) {
