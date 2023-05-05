@@ -6,6 +6,7 @@
 
 <script lang="ts" setup>
 import Logo from '@/assets/logo.png'
+
 withDefaults(
   defineProps<{
     width: string

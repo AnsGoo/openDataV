@@ -12,9 +12,11 @@
   </n-layout>
 </template>
 <script lang="ts" setup>
-import { NLayout, NLayoutHeader, NLayoutFooter } from 'naive-ui'
-import ToolBar from './modules/ToolBar'
 import '@/css/markdown.css'
+
+import { NLayout, NLayoutFooter, NLayoutHeader } from 'naive-ui'
+
+import ToolBar from './modules/ToolBar'
 </script>
 <style scoped lang="less">
 :deep(.n-layout .n-layout-scroll-container) {

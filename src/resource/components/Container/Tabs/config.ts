@@ -1,10 +1,11 @@
-import { ComponentGroup, FormType } from '@/enum'
-import type { PropsType } from '@/types/component'
-import { BaseComponent } from '@/resource/models'
 import { h } from 'vue'
 
+import { ComponentGroup, FormType } from '@/enum'
+import { CustomComponent } from '@/models'
+import type { PropsType } from '@/types/component'
+
 export const componentName = 'Tabs'
-class TabsComponent extends BaseComponent {
+class TabsComponent extends CustomComponent {
   constructor(id?: string, name?: string) {
     super({
       component: componentName,

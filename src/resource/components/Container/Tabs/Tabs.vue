@@ -39,17 +39,20 @@
           :component="content"
         />
       </Shape>
-      <!-- <Group
-        :id="'component' + content.id"
-        class="component"
-        :style="getComponentStyle(content)"
-        :component="content"
-      /> -->
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
+
+import GroupComponent from '@/components/Group/config'
+import Group from '@/components/Group/Group.vue'
+import Shape from '@/designer/Editor/Shape'
+import { componentList } from '@/designer/load'
+import useCanvasState from '@/designer/state/canvas'
+import { DataIntegrationMode } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
 import {
   filterStyle,
   getComponentStyle,
@@ -57,23 +60,16 @@ import {
   toPercent,
   uuid
 } from '@/utils/utils'
+
 import type TabsComponent from './config'
 import type { Tabs } from './type'
-import { useProp } from '@/resource/hooks'
-import Shape from '@/designer/Editor/Shape'
-import type { BaseComponent } from '@/resource/models'
-import { componentList } from '@/designer/load'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { DataIntegrationMode } from '@/resource/models/data'
-import Group from '@/components/Group/Group.vue'
-import GroupComponent from '@/components/Group/config'
 
 const props = defineProps<{
   component: TabsComponent
 }>()
 
-const basicStore = useBasicStoreWithOut()
-const editMode = computed<boolean>(() => basicStore.isEditMode)
+const canvasState = useCanvasState()
+const editMode = computed<boolean>(() => canvasState.isEditMode)
 const { propValue } = useProp<Tabs>(props.component)
 const labels = computed<Array<string>>(() => {
   return propValue.label.items || []
@@ -87,7 +83,6 @@ watch(
     const labelHeight = propValue.style.height
     const { top, left, width, height } = props.component.style
     for (let i = 0; i < len; i++) {
-      console.log(props.component.subComponents[i])
       if (!props.component.subComponents[i]) {
         const groupConfig = new GroupComponent(uuid())
         if (mode === 'horizontal') {
@@ -134,7 +129,7 @@ watch(
   }
 )
 
-const getShapeStyle = (item: BaseComponent) => {
+const getShapeStyle = (item: CustomComponent) => {
   if (item.groupStyle?.gheight) {
     return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {
@@ -142,11 +137,11 @@ const getShapeStyle = (item: BaseComponent) => {
   }
 }
 
-const curComponent = computed(() => basicStore.curComponent)
+const curComponent = computed(() => canvasState.curComponent)
 const activeKey = ref<number>(0)
 
 const isShow = (display: boolean): boolean => {
-  return !(basicStore.isEditMode && display === false)
+  return !(canvasState.isEditMode && display === false)
 }
 
 const tabsClick = (index: number) => {
@@ -157,12 +152,10 @@ const getShow = (index: number) => {
 }
 
 const modeStyle = computed<string>(() => {
-  console.log(propValue.label.mode)
   return propValue.label.mode ? propValue.label.mode : 'horizontal'
 })
 const contentRef = ref<HTMLElement | null>(null)
 const content = computed<InstanceType<typeof GroupComponent>>(() => {
-  console.log(props.component.subComponents[activeKey.value])
   return props.component.subComponents[activeKey.value]
 })
 
@@ -187,13 +180,13 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component: BaseComponent = new componentList[componentName]()
+    const component: CustomComponent = new componentList[componentName]()
     if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
       component.loadDemoData()
     }
     const { top, left } = document.querySelector('#editor')!.getBoundingClientRect()
-    const y = (e.pageY - top) / basicStore.scale
-    const x = (e.pageX - left) / basicStore.scale
+    const y = (e.pageY - top) / canvasState.scale
+    const x = (e.pageX - left) / canvasState.scale
     const parentStyle = props.component.subComponents[activeKey.value].style
     component.change('top', y)
     component.change('left', x)

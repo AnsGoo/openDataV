@@ -13,6 +13,7 @@
 
 <script setup lang="ts">
 import SketchRule from '../modules/ruler'
+
 defineProps<{
   width: number
   height: number

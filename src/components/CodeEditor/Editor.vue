@@ -5,7 +5,7 @@
     </div>
     <div class="main" :style="{ maxHeight: config.height }">
       <codemirror
-        :model-value="code"
+        :model-value="code || ''"
         :style="{
           width: '100%',
           height: config.height,
@@ -29,14 +29,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import type { EditorView, ViewUpdate } from '@codemirror/view'
-import { Codemirror } from 'vue-codemirror'
-import { json } from '@codemirror/lang-json'
-import { oneDark } from '@codemirror/theme-one-dark'
-import type { CodemirrorOption } from './type'
-import type { Extension } from '@codemirror/state'
 import { redo, undo } from '@codemirror/commands'
+import { json } from '@codemirror/lang-json'
+import type { EditorState, Extension } from '@codemirror/state'
+import { oneDark } from '@codemirror/theme-one-dark'
+import type { EditorView, ViewUpdate } from '@codemirror/view'
+import { computed } from 'vue'
+import { Codemirror } from 'vue-codemirror'
+
+import { Logger } from '@/utils/utils'
+
+import type { CodemirrorOption } from './type'
 
 const props = withDefaults(
   defineProps<{
@@ -78,13 +81,23 @@ const extensions = computed(() => {
   return result
 })
 
-const handleReady = ({ view }: any) => {
+const handleReady = ({
+  view,
+  state: _state,
+  container: _container
+}: {
+  view: EditorView
+  state: EditorState
+  container: HTMLDivElement
+}) => {
   cmView = view
+  return true
 }
-const log = console.log
+const log = Logger.log
 const codeChange = (value: string, viewUpdate: ViewUpdate) => {
   emits('update:code', value)
   emits('change', value, viewUpdate)
+  return true
 }
 
 const handleRedo = () => {

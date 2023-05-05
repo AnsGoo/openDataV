@@ -51,15 +51,17 @@
 </template>
 
 <script setup lang="ts">
-import { getPageListApi, deletePageApi } from '@/api/pages'
-import type { SimpleLayoutData } from '@/api/pages'
-import { onMounted, ref, h } from 'vue'
-import defaultImg from '@/assets/default.png'
-import { useRouter } from 'vue-router'
-import { message } from '@/utils/message'
-import { XIcon } from '@/plugins/xicon'
 import type { DropdownOption } from 'naive-ui'
-import { NCard, NEllipsis, NTooltip, NDropdown, NButton } from 'naive-ui'
+import { NButton, NCard, NDropdown, NEllipsis, NTooltip } from 'naive-ui'
+import { h, onMounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+
+import type { SimpleLayoutData } from '@/api/pages'
+import { deletePageApi, getPageListApi } from '@/api/pages'
+import defaultImg from '@/assets/default.png'
+import { XIcon } from '@/plugins/xicon'
+import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
 
 const router = useRouter()
 const loading = ref<boolean>(false)
@@ -112,7 +114,7 @@ const handleSelect = async (key: string | number, item: SimpleLayoutData) => {
       await deletePageApi(item.id as string)
       await initUI()
     } catch (e: any) {
-      console.log(e?.message || e)
+      Logger.log(e?.message || e)
       message.error('删除失败')
     }
   }

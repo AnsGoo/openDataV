@@ -1,4 +1,4 @@
-import type { StoreRequestOption } from '@/apiView/hooks/http/type'
+import type { StoreRestOption } from '@/apiView/hooks/http/type'
 import type { AfterScript } from '@/types/component'
 
 export interface StaticDataDetail {
@@ -10,7 +10,7 @@ export interface StaticDataDetail {
   data: any
 }
 
-export interface RestDataDetail extends Omit<StoreRequestOption, 'afterScript'> {
+export interface RestDataDetail extends Omit<StoreRestOption, 'afterScript'> {
   readonly id: string
   name: string
   readonly author: string

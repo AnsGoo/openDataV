@@ -1,28 +1,29 @@
 import {
-  getStaticDataApi,
-  getStaticDataListApi,
-  updateStaticDataApi,
-  createStaticDataApi,
-  deleteStaticDataApi
-} from './staticData'
-import {
+  createRestDataApi,
+  deleteRestDataApi,
   getRestDataApi,
   getRestDataListApi,
-  updateRestDataApi,
-  createRestDataApi,
-  deleteRestDataApi
+  updateRestDataApi
 } from './restData'
-import type { StaticDataDetail } from './type'
-export {
+import {
+  createStaticDataApi,
+  deleteStaticDataApi,
   getStaticDataApi,
   getStaticDataListApi,
-  updateStaticDataApi,
+  updateStaticDataApi
+} from './staticData'
+import type { StaticDataDetail } from './type'
+
+export {
+  createRestDataApi,
   createStaticDataApi,
+  deleteRestDataApi,
   deleteStaticDataApi,
   getRestDataApi,
   getRestDataListApi,
+  getStaticDataApi,
+  getStaticDataListApi,
   updateRestDataApi,
-  createRestDataApi,
-  deleteRestDataApi
+  updateStaticDataApi
 }
 export type { StaticDataDetail }

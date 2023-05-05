@@ -1,7 +1,9 @@
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
+
 import Group from '@/components/Group'
-import type { BaseComponent } from '@/resource/models'
+import type { CustomComponent } from '@/models'
+import { Logger } from '@/utils/utils'
 
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}
@@ -20,16 +22,21 @@ const AsyncComponent = {
       const componentOptions = moduleFilesTs[key]?.default
 
       if (componentOptions) {
-        componentList[componentOptions.componentName] = componentOptions.config as BaseComponent
+        componentList[componentOptions.componentName] = componentOptions.config as CustomComponent
 
         // 注册异步组件
-        const asyncComp = defineAsyncComponent(componentOptions.component)
+
+        const asyncComp = defineAsyncComponent({
+          loader: componentOptions.component,
+          delay: 200,
+          timeout: 3000
+        })
         app.component(componentOptions.componentName, asyncComp)
       } else {
-        console.error(`${key} is not a valid component`)
+        Logger.error(`${key} is not a valid component`)
       }
     })
   }
 }
 
-export { componentList, AsyncComponent }
+export { AsyncComponent, componentList }

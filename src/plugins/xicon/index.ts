@@ -1,4 +1,5 @@
 import type { App } from 'vue'
+
 import XIcon from './XIcon.vue'
 
 export { XIcon }

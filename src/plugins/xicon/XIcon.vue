@@ -5,15 +5,17 @@
 </template>
 
 <script lang="ts" setup>
-import { computed } from 'vue'
-import type { Component } from 'vue'
-import { Icon } from '@vicons/utils'
 import { Help } from '@vicons/carbon'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import { Icon } from '@vicons/utils'
+import type { Component, ComputedRef } from 'vue'
+import { computed, inject } from 'vue'
+
 import icons from './icons'
 
-const projectStore = useProjectSettingStoreWithOut()
-
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const props = withDefaults(
   defineProps<{
     name: string
@@ -25,8 +27,10 @@ const props = withDefaults(
     color: ''
   }
 )
-
-const iconColor = computed<string>(() => (props.color ? props.color : projectStore.iconColor))
+const getIconColor = () => {
+  return darkTheme.value ? '#eeeee' : '#333'
+}
+const iconColor = computed<string>(() => (props.color ? props.color : getIconColor()))
 const IconComponet = computed<Component>(() => {
   return icons[props.name] ? icons[props.name] : Help
 })

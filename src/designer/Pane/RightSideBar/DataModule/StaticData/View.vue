@@ -3,7 +3,7 @@
     <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
-          v-model:value="formData.title"
+          v-model:value="formDataConfig.title"
           :readonly="true"
           placeholder="编辑请点击"
           @click="isShow = true"
@@ -24,7 +24,7 @@
       @close="isShow = false"
     >
       <Static
-        v-model:options="formData"
+        v-model:options="formDataConfig"
         @data-change="dataChangeHandler"
         @script-change="scriptChangeHandler"
       />
@@ -33,22 +33,24 @@
 </template>
 
 <script lang="ts" setup>
+import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
-import { NForm, NInput, NInputGroup, NButton, NModal, NCard, NFormItem } from 'naive-ui'
-import type { BaseComponent, StaticRequestData } from '@/resource/models'
-import { DataType } from '@/resource/models'
-import { ScriptType } from '@/enum'
+
+import type { StoreStaticOption } from '@/apiView/hooks/http/type'
 import Static from '@/apiView/RequestContent/static'
-import type { StaticRequestOptions } from '@/apiView/RequestContent/static/type'
+import { ScriptType } from '@/enum'
+import { DataType } from '@/enum/data'
+import type { CustomComponent, StaticRequestData } from '@/models'
 import type { AfterScript } from '@/types/component'
 import { message } from '@/utils/message'
+
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
 const isShow = ref<boolean>(false)
 
-const formData = reactive<StaticRequestOptions>({
-  dataId: '',
+const formDataConfig = reactive<StoreStaticOption>({
+  id: '',
   title: '',
   script: {
     code: '',
@@ -64,36 +66,40 @@ const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
   if (dataConfig && dataConfig.type === DataType.STATIC) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
-    const result = staticRequest.toJSON()
-    formData.dataId = result.dataId
-    formData.script = result.script!
-    formData.title = result.title!
+    const { options } = staticRequest.toJSON()
+    formDataConfig.id = options.id
+    formDataConfig.script = options.script!
+    formDataConfig.title = options.title!
   } else {
     message.info('请配置静态数据')
     await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-      id: formData.dataId,
-      script: {
-        code: formData.script.code,
-        type: ScriptType.Javascript
+      options: {
+        id: formDataConfig.id,
+        script: {
+          code: formDataConfig.script!.code,
+          type: ScriptType.Javascript
+        }
       }
     })
   }
 }
 const changeHandler = () => {
   props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    id: formData.dataId,
-    script: formData.script
+    options: {
+      id: formDataConfig.id,
+      script: formDataConfig.script
+    }
   })
 }
 
 const dataChangeHandler = (id: string, title: string) => {
-  formData.title = title
-  formData.dataId = id
+  formDataConfig.title = title
+  formDataConfig.id = id
   changeHandler()
 }
 
 const scriptChangeHandler = (script: AfterScript) => {
-  formData.script = script
+  formDataConfig.script = script
   changeHandler()
 }
 

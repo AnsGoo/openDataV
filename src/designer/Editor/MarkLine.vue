@@ -13,14 +13,14 @@
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { useEventBus, StaticKey } from '@/bus'
-import { calcComponentAxis } from '@/utils/utils'
-import type { BaseComponent } from '@/resource/models'
+
+import { StaticKey, useEventBus } from '@/bus'
+import useCanvasState from '@/designer/state/canvas'
+import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
+import { calcComponentAxis } from '@/utils/utils'
 
-const basicStore = useBasicStoreWithOut()
-
+const canvasState = useCanvasState()
 const linesRef = ref<Array<any>>([])
 
 const lines = reactive<Array<string>>(['xt', 'xc', 'xb', 'yl', 'yc', 'yr'])
@@ -64,20 +64,20 @@ useEventBus(StaticKey.DRAG_STOP, () => {
 })
 
 const showLine = (isDownward, isRightward) => {
-  const components = basicStore.componentData as Array<BaseComponent>
-  if (basicStore.curComponent) {
+  const components = canvasState.componentData as Array<CustomComponent>
+  if (canvasState.curComponent) {
     const {
       top: mytop,
       left: myleft,
       right: myright,
       bottom: mybottom
-    }: Position = calcComponentAxis(basicStore.curComponent.positionStyle)
+    }: Position = calcComponentAxis(canvasState.curComponent.positionStyle)
     const curComponentHalfwidth = (myright - myleft) / 2
     const curComponentHalfHeight = (mybottom - mytop) / 2
 
     hideLine()
     components.forEach((component) => {
-      if (component == basicStore.curComponent) return
+      if (component == canvasState.curComponent) return
       const componentStyle = calcComponentAxis(component.positionStyle)
       const { top, left, bottom, right } = componentStyle
       const componentHalfwidth = (right - left) / 2
@@ -166,7 +166,7 @@ const showLine = (isDownward, isRightward) => {
       }
 
       const needToShow: Array<any> = []
-      const { rotate } = basicStore.curComponent!.style
+      const { rotate } = canvasState.curComponent!.style
       Object.keys(conditions).forEach((key) => {
         // 遍历符合的条件并处理
         conditions[key].forEach((condition) => {
@@ -180,7 +180,7 @@ const showLine = (isDownward, isRightward) => {
                   height: mybottom - mytop
                 })
               : condition.dragShift
-          basicStore.setCurComponentStyle(key, value)
+          canvasState.setCurComponentStyle(key, value)
 
           condition.lineNode.style[key] = `${condition.lineShift}px`
           needToShow.push(condition.line)
@@ -201,7 +201,7 @@ const isNearly = (dragValue, targetValue) => {
 }
 
 const translatecurComponentShift = (key, condition, curComponentStyle) => {
-  const { width, height } = basicStore.curComponent!.style
+  const { width, height } = canvasState.curComponent!.style
   if (key == 'top') {
     return Math.round(condition.dragShift - ((height as number) - curComponentStyle.height) / 2)
   }

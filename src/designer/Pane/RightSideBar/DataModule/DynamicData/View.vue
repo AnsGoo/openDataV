@@ -2,10 +2,10 @@
   <n-form :model="formData">
     <n-form-item label="动态数据" label-placement="top">
       <n-input-group>
-        <n-input v-model:value="formData.restOptions.url" style="flex: 1" readonly>
+        <n-input v-model:value="formData.options.url" style="flex: 1" readonly>
           <template #prefix>
             <n-gradient-text type="success" style="font-weight: 800">
-              {{ formData.restOptions.method }}
+              {{ formData.options.method }}
             </n-gradient-text>
           </template>
         </n-input>
@@ -16,12 +16,17 @@
       <n-switch v-model:value="formData.isRepeat" @update:value="changeHandler" />
     </n-form-item>
     <n-form-item v-if="formData.isRepeat" label="请求间隔" label-placement="left">
-      <n-input-number v-model:value="formData.interval" :min="300" :step="100">
+      <n-input-number
+        v-model:value="formData.interval"
+        :min="300"
+        :step="100"
+        @update:value="changeHandler"
+      >
         <template #suffix> ms </template>
       </n-input-number>
     </n-form-item>
   </n-form>
-  <n-modal v-model:show="isShow" display-directive="show">
+  <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
     <n-card
       style="width: 600px"
       title="动态数据"
@@ -30,44 +35,50 @@
       role="dialog"
       aria-modal="true"
     >
-      <Rest v-model:restOptions="formData.restOptions" @update:rest-options="changeHandler" />
+      <Rest
+        v-model:options="formData.options"
+        @update:rest-options="changeHandler"
+        @change="changeHandler"
+      />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
 import {
+  NButton,
+  NCard,
   NForm,
+  NFormItem,
+  NGradientText,
   NInput,
   NInputGroup,
-  NButton,
-  NModal,
-  NCard,
-  NSwitch,
   NInputNumber,
-  NFormItem,
-  NGradientText
+  NModal,
+  NSwitch
 } from 'naive-ui'
-import type { BaseComponent, RestRequestData } from '@/resource/models'
-import { DataType } from '@/resource/models'
-import Rest from '@/apiView/RequestContent/rest'
-import type { RequestOption } from '@/apiView/hooks/http/type'
-import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
-import { uuid } from '@/utils/utils'
-import { ScriptType } from '@/enum'
+import { onMounted, reactive, ref, watch } from 'vue'
+
+import type { RestOption } from '@/apiView/hooks/http/type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
+import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
+import Rest from '@/apiView/RequestContent/rest'
+import { ScriptType } from '@/enum'
+import { DataType } from '@/enum/data'
+import type { CustomComponent, RestRequestData } from '@/models'
 import { message } from '@/utils/message'
+import { uuid } from '@/utils/utils'
+
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
 
 const isShow = ref<boolean>(false)
 
-const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: RequestOption }>({
+const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOption }>({
   isRepeat: false,
   interval: 1000,
-  restOptions: {
+  options: {
     method: RequestMethod.GET,
     url: '',
     headers: [{ key: '', value: '', disable: false, id: uuid() }],
@@ -79,14 +90,13 @@ const formData = reactive<{ isRepeat: boolean; interval: number; restOptions: Re
     }
   }
 })
-const changeHandler = (option: RequestOption) => {
-  formData.restOptions = option
+const changeHandler = () => {
   setDataConfig()
 }
 
 const setDataConfig = () => {
   props.curComponent.changeRequestDataConfig(DataType.REST, {
-    options: requestOptionsToStore(formData.restOptions),
+    options: requestOptionsToStore(formData.options),
     otherConfig: {
       isRepeat: formData.isRepeat,
       interval: formData.interval
@@ -103,15 +113,15 @@ const initData = () => {
   if (dataConfig && dataConfig.type === DataType.REST) {
     const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
     const otherConfig = props.curComponent.dataConfig?.otherConfig || {}
-    const { restOptions } = restRequest.toJSON()
-    formData.restOptions = storeOptionToRequestOptions(restOptions)
+    const { options } = restRequest.toJSON()
+    formData.options = storeOptionToRequestOptions(options)
     formData.interval = otherConfig.interval || 1000
     formData.isRepeat = otherConfig.isRepeat || false
   } else {
     message.info('请配置动态数据')
     formData.isRepeat = false
     formData.interval = 1000
-    formData.restOptions = {
+    formData.options = {
       method: RequestMethod.GET,
       url: '',
       headers: [{ key: '', value: '', disable: false, id: uuid() }],
@@ -129,7 +139,7 @@ const initData = () => {
 
 watch(
   () => props.curComponent,
-  async (value: BaseComponent) => {
+  async (value: CustomComponent) => {
     if (value) {
       initData()
     }

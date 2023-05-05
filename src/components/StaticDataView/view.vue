@@ -3,7 +3,7 @@
     ref="cm"
     v-model:code="contentRef"
     :config="config"
-    :theme="projectStore.darkTheme ? 'dark' : 'light'"
+    :theme="darkTheme ? 'dark' : 'light'"
     @change="codeChange"
   >
     <template v-if="mode === 'debug'" #tool-bar>
@@ -28,16 +28,20 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, ref, watch } from 'vue'
+import type { ComputedRef } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
+
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
 
 const savedStatus = ref<boolean>(true)
 
-const projectStore = useProjectSettingStoreWithOut()
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const props = withDefaults(
   defineProps<{
     content?: any

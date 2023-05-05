@@ -1,7 +1,8 @@
 import SubTextComponent, { componentName } from './config'
+import SubText from './SubText.vue'
 
 export default {
   componentName,
-  component: () => import('./SubText.vue'),
+  component: SubText,
   config: SubTextComponent
 }

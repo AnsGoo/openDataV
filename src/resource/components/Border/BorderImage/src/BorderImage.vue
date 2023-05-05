@@ -3,10 +3,13 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from '@/resource/hooks'
 import { computed, ref } from 'vue'
+
+import { useProp } from '@/models/hooks'
+
 import type BorderImageComponent from '../config'
 import type { BorderImage } from '../type'
+
 const props = defineProps<{
   component: BorderImageComponent
 }>()

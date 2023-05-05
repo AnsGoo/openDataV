@@ -9,10 +9,10 @@
 </template>
 
 <script setup lang="ts">
+import type { CustomComponent } from '@/models'
 import { getComponentStyle } from '@/utils/utils'
-import type { BaseComponent } from '@/resource/models'
 
-defineProps<{ component: BaseComponent }>()
+defineProps<{ component: CustomComponent }>()
 </script>
 
 <style lang="less" scoped>

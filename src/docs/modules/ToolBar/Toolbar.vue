@@ -5,13 +5,15 @@
 <script setup lang="ts">
 import { h } from 'vue'
 import { useRouter } from 'vue-router'
-import { toggleTheme } from './modules/actions'
-import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
-import { ToolBar } from '@/components/ToolBar'
+
 import type { ToolBarItemType } from '@/components/ToolBar'
-import ActionDetail from './modules/ActionDetail.vue'
-import Logo from './modules/Logo.vue'
+import { ToolBar } from '@/components/ToolBar'
 import docsRouters from '@/router/modules/docs'
+
+import ActionDetail from './modules/ActionDetail.vue'
+import { toggleTheme } from './modules/actions'
+import Logo from './modules/Logo.vue'
+import ThemeIcon from './modules/themeSwitch/ThemeIcon.vue'
 
 const router = useRouter()
 const emits = defineEmits<{

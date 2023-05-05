@@ -2,19 +2,23 @@
   <CodeEditor
     :language="json"
     :config="config"
-    :theme="projectStore.darkTheme ? 'dark' : 'light'"
+    :theme="darkTheme ? 'dark' : 'light'"
     :code="code"
   />
 </template>
 
 <script lang="ts" setup>
-import { ref, watch } from 'vue'
+import { json } from '@codemirror/lang-json'
+import type { ComputedRef } from 'vue'
+import { computed, inject, ref, watch } from 'vue'
+
 import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
-import { json } from '@codemirror/lang-json'
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 
-const projectStore = useProjectSettingStoreWithOut()
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const props = defineProps<{
   data: string
 }>()

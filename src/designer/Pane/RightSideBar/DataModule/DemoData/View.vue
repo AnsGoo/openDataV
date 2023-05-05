@@ -26,27 +26,27 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from 'vue'
+import { cloneDeep } from 'lodash-es'
 import {
-  NForm,
-  NInput,
-  NTabs,
-  NTabPane,
-  NInputGroup,
   NButton,
-  NModal,
   NCard,
-  NFormItem
+  NForm,
+  NFormItem,
+  NInput,
+  NInputGroup,
+  NModal,
+  NTabPane,
+  NTabs
 } from 'naive-ui'
-import type { BaseComponent, DemoRequestData } from '@/resource/models'
-import { DataType } from '@/resource/models'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 import DataView from '@/components/DataView'
-import { cloneDeep } from 'lodash-es'
+import { DataType } from '@/enum/data'
+import type { CustomComponent, DemoRequestData } from '@/models'
 import { message } from '@/utils/message'
 
 const props = defineProps<{
-  curComponent: BaseComponent
+  curComponent: CustomComponent
 }>()
 const isShow = ref<boolean>(false)
 
@@ -73,14 +73,16 @@ const initData = async () => {
     message.info('正在使用示例数据')
     const exampleData = props.curComponent.exampleData
     await props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      data: cloneDeep(exampleData)
+      options: {
+        data: cloneDeep(exampleData)
+      }
     })
   }
 }
 
 watch(
   () => props.curComponent,
-  (value: BaseComponent) => {
+  (value: CustomComponent) => {
     if (value) {
       initData()
     }

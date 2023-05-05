@@ -95,30 +95,21 @@
   </n-card>
 </template>
 <script setup lang="ts">
+import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import {
-  NCard,
-  NInput,
-  NSelect,
   NButton,
   NButtonGroup,
+  NCard,
+  NDivider,
+  NInput,
+  NSelect,
   NSpace,
-  NTabs,
   NTabPane,
-  NDivider
+  NTabs
 } from 'naive-ui'
-import DynamicKVForm from '../modules/DynamicKVForm.vue'
 import { onMounted, reactive, ref } from 'vue'
-import { uuid } from '@/utils/utils'
-import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
-import type { AxiosResponse } from 'axios'
-import ReponseContentView from './modules/ReponseContentView.vue'
-import useRestRequest from '@/apiView/hooks/http'
-import ScriptsEditor from '../modules/ScriptsEditor'
-import { ScriptType } from '@/enum'
-import type { RequestOption, RequestResponse } from '@/apiView/hooks/http/type'
-import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
-import { useEventBus, StaticKey } from '@/bus'
+
 import {
   createRestDataApi,
   getRestDataApi,
@@ -126,20 +117,32 @@ import {
   updateRestDataApi
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
+import useRestRequest from '@/apiView/hooks/http'
+import type { RequestResponse, RestOption } from '@/apiView/hooks/http/type'
+import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import { message } from '@/utils/message'
+import { StaticKey, useEventBus } from '@/bus'
+import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
+import { message } from '@/utils/message'
+import { Logger, uuid } from '@/utils/utils'
+
+import DynamicKVForm from '../modules/DynamicKVForm.vue'
+import ScriptsEditor from '../modules/ScriptsEditor'
+import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
+import ReponseContentView from './modules/ReponseContentView.vue'
+
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
 }
 
 const props = withDefaults(
   defineProps<{
-    restOptions?: RequestOption
+    options?: RestOption
     mode?: 'debug' | 'use'
   }>(),
   {
-    restOptions: () => {
+    options: () => {
       return {
         method: RequestMethod.GET,
         url: '/getRiskArea',
@@ -169,7 +172,7 @@ const loadRestList = async () => {
       })
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 
@@ -233,6 +236,9 @@ const loadRestData = async (id: string) => {
       const data: RestDataDetail = resp.data
       formData.method = data.method
       formData.url = data.url
+      if (!data.data) {
+        return
+      }
       const body = recordabletoKV(data.data || {})
       formData.data = body.length > 0 ? body : getEmptyParams()
       const params = recordabletoKV(data.params || {})
@@ -248,15 +254,15 @@ const loadRestData = async (id: string) => {
   }
 }
 const emits = defineEmits<{
-  (e: 'update:restOptions', value: RequestOption): void
-  (e: 'change', value: RequestOption): void
+  (e: 'update:options', value: RestOption): void
+  (e: 'change', value: RestOption): void
 }>()
 
-interface RequestDataOption extends RequestOption {
+interface RequestDataOption extends RestOption {
   title?: string
   id?: string
 }
-const formData = reactive<RequestDataOption>(props.restOptions)
+const formData = reactive<RequestDataOption>(props.options)
 const response = ref<RequestResponse>({
   code: 0,
   data: '',
@@ -283,7 +289,7 @@ const send = async () => {
 }
 const formChange = () => {
   emits('change', formData)
-  emits('update:restOptions', formData)
+  emits('update:options', formData)
 }
 
 const afterScriptChange = (data: AfterScript) => {
@@ -293,7 +299,8 @@ const afterScriptChange = (data: AfterScript) => {
 const selectedChange = async (id: string) => {
   await loadRestData(id)
   await send()
-  emits('update:restOptions', formData)
+  emits('update:options', formData)
+  emits('change', formData)
 }
 const handleSave = async () => {
   try {

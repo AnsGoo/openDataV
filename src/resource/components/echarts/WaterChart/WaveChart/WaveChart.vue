@@ -3,14 +3,17 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import 'echarts-liquidfill'
+
+import { onMounted, ref } from 'vue'
+
+import type { DataType } from '@/enum/data'
+import { useData, useProp } from '@/models/hooks'
+import type { RequestResponse } from '@/models/type'
+
 import { useEchart } from '../../hooks'
 import type WaveChartComponent from './config'
-import { useProp, useData } from '@/resource/hooks'
-import 'echarts-liquidfill'
 import type { WaveChartType } from './type'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
 
 const props = defineProps<{
   component: WaveChartComponent

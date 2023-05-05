@@ -48,18 +48,21 @@
   </n-card>
 </template>
 <script setup lang="ts">
-import { getRestDataListApi, deleteRestDataApi } from '@/api/data'
-import { NInput, NCard, NTabs, NTabPane, NOl, NLi, NGradientText } from 'naive-ui'
-import { eventBus, StaticKey } from '@/bus'
+import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
 import { onMounted, ref } from 'vue'
+
+import { deleteRestDataApi, getRestDataListApi } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
+import { eventBus, StaticKey } from '@/bus'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import { message } from '@/utils/message'
+import { Logger } from '@/utils/utils'
 
 const dataList = ref<RestDataDetail[]>([])
 const snapShot = useDataSnapShot('REST', true)
 const dataHistory = ref<RestDataDetail[]>([])
+
 const loadStaticList = async () => {
   try {
     const resp = await getRestDataListApi()
@@ -67,7 +70,7 @@ const loadStaticList = async () => {
       dataList.value = resp.data
     }
   } catch (err: any) {
-    console.log(err || err.message)
+    Logger.log(err || err.message)
   }
 }
 

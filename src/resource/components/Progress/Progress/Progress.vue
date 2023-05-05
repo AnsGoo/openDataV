@@ -53,16 +53,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
-import { http } from '@/utils/http'
-import { useProp } from '@/resource/hooks'
-import { uuid } from '@/utils/utils'
+import { computed, onMounted, ref } from 'vue'
+
 import { useEventBus } from '@/bus'
+import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
+import { http } from '@/utils/http'
+import { Logger, uuid } from '@/utils/utils'
+
 import type { Progress } from './type'
-import type { BaseComponent } from '@/resource/models'
 
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
 const { propValue } = useProp<Progress>(props.component)
@@ -105,7 +107,7 @@ const initData = async () => {
           ((Number(resp.data.TagValue) || 0) * 100) / Number(propValue.data.maxValue)
       }
     } catch (err: any) {
-      console.log(err.message || err)
+      Logger.log(err.message || err)
     }
   }
 }

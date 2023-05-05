@@ -36,22 +36,23 @@
 </template>
 
 <script setup lang="ts">
-import { useBasicStoreWithOut } from '@/store/modules/basic'
-import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
-import Shape from '@/designer/Editor/Shape'
 import { computed } from 'vue'
-import type { BaseComponent } from '@/resource/models'
+
+import Shape from '@/designer/Editor/Shape'
+import useCanvasState from '@/designer/state/canvas'
+import type { CustomComponent } from '@/models'
+import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
 
 const props = defineProps<{
-  component: BaseComponent
+  component: CustomComponent
 }>()
 
-const basicStore = useBasicStoreWithOut()
-const editMode = computed<boolean>(() => basicStore.isEditMode)
+const canvasState = useCanvasState()
+const editMode = computed<boolean>(() => canvasState.isEditMode)
 
-const curComponent = computed(() => basicStore.curComponent)
+const curComponent = computed(() => canvasState.curComponent)
 const isActive = computed(() => {
-  let curComponent = basicStore.curComponent
+  let curComponent = canvasState.curComponent
   while (curComponent) {
     if (curComponent.parent?.id === props.component.id) {
       return true
@@ -63,9 +64,9 @@ const isActive = computed(() => {
 })
 
 const isShow = (display: boolean): boolean => {
-  return !(basicStore.isEditMode && display === false)
+  return !(canvasState.isEditMode && display === false)
 }
-const getShapeStyle = (item: BaseComponent) => {
+const getShapeStyle = (item: CustomComponent) => {
   if (item.groupStyle?.gheight) {
     return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {

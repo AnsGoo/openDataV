@@ -3,15 +3,17 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { useData, useProp } from '@/resource/hooks'
-import type MapChartComponent from '../config'
-import type { MapChart } from '../type'
 import type { EChartsOption } from 'echarts'
 import { graphic, registerMap } from 'echarts'
+import { onMounted, ref } from 'vue'
+
+import type { DataType } from '@/enum/data'
+import { useData, useProp } from '@/models/hooks'
+import type { RequestResponse } from '@/models/type'
+
 import { useEchart } from '../../../hooks'
-import type { DataType } from '@/resource/models'
-import type { RequestResponse } from '@/resource/models/type'
+import type MapChartComponent from '../config'
+import type { MapChart } from '../type'
 import chinaMap from './assets/china.json'
 
 const chartEl = ref<ElRef>(null)
