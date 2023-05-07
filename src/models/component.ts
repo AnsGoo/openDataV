@@ -285,7 +285,6 @@ export abstract class CustomComponent {
     if (from === 'propValue') {
       this.changeProp(propKeys, value)
     } else if (from === 'style') {
-      console.log(propKeys, value)
       this.changeStyle(propKeys, value)
     }
   }

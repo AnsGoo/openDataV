@@ -84,7 +84,6 @@ class ActionState {
     if (!component) {
       return
     }
-    console.log(component)
     if (!this.ids.has(component.id)) {
       this.components.push(component)
       this.ids.add(component.id)
