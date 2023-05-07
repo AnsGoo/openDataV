@@ -45,7 +45,9 @@ const dataChange = (resp: any, _: DataType) => {
 }
 useData(props.component, dataChange)
 
-const propValueChange = (prop: string, key: string, value: any) => {
+const propValueChange = (propKeys: Array<string>, value: any) => {
+  if (propKeys.length !== 2) return
+  const [prop, key] = propKeys
   if (prop === 'bar') {
     switch (key) {
       case 'barHeight':

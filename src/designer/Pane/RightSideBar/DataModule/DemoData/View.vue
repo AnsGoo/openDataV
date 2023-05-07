@@ -14,30 +14,18 @@
       :bordered="false"
       size="small"
       role="dialog"
+      closable
       aria-modal="true"
+      @close="isShow = false"
     >
-      <n-tabs>
-        <n-tab-pane name="data" tab="示例数据" display-directive="show">
-          <DataView v-model:content="formData.afterData" class="content" :disable="true" />
-        </n-tab-pane>
-      </n-tabs>
+      <DataView v-model:content="formData.afterData" class="content" :disable="true" />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import {
-  NButton,
-  NCard,
-  NForm,
-  NFormItem,
-  NInput,
-  NInputGroup,
-  NModal,
-  NTabPane,
-  NTabs
-} from 'naive-ui'
+import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import DataView from '@/components/DataView'

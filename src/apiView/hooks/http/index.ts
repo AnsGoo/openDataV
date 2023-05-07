@@ -31,8 +31,6 @@ export class RestRequest {
       this.callback = undefined
     }
     this.isDebugMode = isDebug
-
-    // const resp = await axiosInstance.request({url,params,data})
   }
   public request<T = any>(args?: Recordable): Promise<FinallyResponse<T>> {
     return new Promise<FinallyResponse<T>>((resolve, reject) => {

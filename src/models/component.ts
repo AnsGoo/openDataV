@@ -15,7 +15,7 @@ import type {
 
 import type { RequestData } from './requestOption'
 import { DemoRequestData, RestRequestData, StaticRequestData } from './requestOption'
-import { uuid } from './utils'
+import { getObjProp, uuid } from './utils'
 
 interface DataConfig {
   type: DataType
@@ -35,8 +35,8 @@ export abstract class CustomComponent {
   show = true
   active = false
   dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
-  callbackProp?: (prop: string, key: string, value: any) => void
-  callbackStyle?: (prop: string, value: any) => void
+  callbackProp?: (propKeys: Array<string>, value: any) => void
+  callbackStyle?: (propKeys: Array<string>, value: any) => void
   callbackData?: (result: any, type: DataType) => void
 
   // 检测变化
@@ -183,8 +183,8 @@ export abstract class CustomComponent {
           this._propValue[item.prop] = {}
         }
 
-        item.children.forEach((obj) => {
-          this._propValue[item.prop][obj.prop] = obj.componentOptions.defaultValue
+        ;(item.children || []).forEach((obj) => {
+          this._propValue[item.prop][obj.prop] = obj.componentOptions!.defaultValue
         })
       })
       this.propIsChange = false
@@ -197,11 +197,11 @@ export abstract class CustomComponent {
     if (this.styleIsChange) {
       const customStyle: Recordable[] = []
       this.styleFormValue.forEach((item) => {
-        item.children.forEach((obj) => {
+        ;(item.children || []).forEach((obj) => {
           if (obj.type === FormType.CUSTOM) {
-            customStyle[obj.prop] = obj.componentOptions.defaultValue
+            customStyle[obj.prop] = obj.componentOptions!.defaultValue
           }
-          this._styleValue[obj.prop] = obj.componentOptions.defaultValue
+          this._styleValue[obj.prop] = obj.componentOptions!.defaultValue
         })
       })
 
@@ -257,9 +257,9 @@ export abstract class CustomComponent {
       if (!form) continue
 
       for (const child in component.propValue[prop]) {
-        const item = form.children.find((obj) => obj.prop === child)
+        const item = (form.children || []).find((obj) => obj.prop === child)
         if (!item) continue
-        item.componentOptions.defaultValue = component.propValue[prop][child]
+        item.componentOptions!.defaultValue = component.propValue[prop][child]
       }
     }
   }
@@ -269,9 +269,9 @@ export abstract class CustomComponent {
     this.styleIsChange = true
     for (const prop in component.style) {
       this.styleFormValue.forEach((item) => {
-        const propObj = item.children.find((obj) => obj.prop === prop)
+        const propObj = (item.children || []).find((obj) => obj.prop === prop)
         if (propObj) {
-          propObj.componentOptions.defaultValue = component.style[prop]
+          propObj.componentOptions!.defaultValue = component.style[prop]
 
           if (prop in this.positionStyle) {
             this.positionStyle[prop] = component.style[prop]
@@ -281,64 +281,53 @@ export abstract class CustomComponent {
     }
   }
 
-  change(prop: string, value: string | number | boolean | any, form?: string) {
-    const positionKey = ['top', 'left', 'height', 'width']
-    if (positionKey.includes(prop)) {
-      value = Math.round(value)
-    }
-    if (form) {
-      this.changeProp(form, prop, value)
-    } else {
-      this.changeStyle(prop, value)
+  change(propKeys: Array<string>, value: any, from: 'style' | 'propValue' | 'data') {
+    if (from === 'propValue') {
+      this.changeProp(propKeys, value)
+    } else if (from === 'style') {
+      console.log(propKeys, value)
+      this.changeStyle(propKeys, value)
     }
   }
   // 修改属性
-  changeProp(form: string, prop: string, value: string | number | boolean | any) {
+  changeProp(propKeys: Array<string>, value: string | number | boolean | any) {
     this.propIsChange = true
-    if (form === 'common' && prop === 'name') {
+    if (propKeys.length === 2 && propKeys[0] === 'common' && propKeys[1] === 'name') {
       this.name = value as string
       return
     }
 
-    const formObj = this.propFromValue.find((item) => item.prop === form)
-    if (!formObj) return
-
-    const propObj = formObj.children.find((obj) => obj.prop === prop)
-    if (!propObj) return
-    propObj.componentOptions.defaultValue = value
+    const curObj = getObjProp(this.propFromValue, propKeys)
+    curObj.componentOptions.defaultValue = value
 
     setTimeout(() => {
       if (this.callbackProp) {
-        this.callbackProp(form, prop, value)
+        this.callbackProp(propKeys, value)
       }
     }, 0)
   }
 
-  changePropCallback(callback: (prop: string, key: string, value: any) => void) {
+  changePropCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackProp = callback
   }
 
   // 修改样式
-  changeStyle(prop: string, value: any) {
-    this.styleIsChange = true
-    for (const item of this.styleFormValue) {
-      const propObj = item.children.find((obj) => obj.prop === prop)
-      if (!propObj) continue
-      propObj.componentOptions.defaultValue = value
-      if (prop in this.positionStyle) {
-        this.positionStyle[prop] = value
-      }
-
-      if (this.callbackStyle) {
-        this.callbackStyle(prop, value)
-      }
-      break
+  changeStyle(propKeys: Array<string>, value: any) {
+    const positionKey = ['top', 'left', 'height', 'width']
+    let changeValue = value
+    if (propKeys.length === 2 && propKeys[0] === 'position' && positionKey.includes(propKeys[1])) {
+      changeValue = Math.round(value)
+      this.positionStyle[propKeys[1]] = changeValue
     }
+    this.styleIsChange = true
+    const curObj = getObjProp(this.styleFormValue, propKeys)
+    curObj.componentOptions.defaultValue = value
+    if (this.callbackStyle) this.callbackStyle(propKeys, value)
 
-    this.extraStyle[prop] = value
+    // this.extraStyle[prop] = value
   }
 
-  changeStyleCallback(callback: (prop: string, value: any) => void) {
+  changeStyleCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackStyle = callback
   }
 

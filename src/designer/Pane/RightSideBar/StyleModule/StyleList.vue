@@ -45,18 +45,18 @@ const styleKeys = computed(() => {
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.style
-const changed = debounce((key: string, val: any) => {
+const changed = debounce((keys: Array<string>, val: any) => {
   if (props.curComponent) {
     const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
-    if (locationKeys.includes(key)) {
+    if (keys[0] === 'position' && locationKeys.includes(keys[1])) {
       const parentComponent = props.curComponent.parent
       // key as 'top' | 'left' | 'width' | 'height' | 'rotate'
-      canvasState.syncComponentLocation({ [key]: val as number }, parentComponent, true)
+      canvasState.syncComponentLocation({ [keys[1]]: val as number }, parentComponent, true)
       if (parentComponent) {
         canvasState.resizeAutoComponent(parentComponent)
       }
     } else {
-      canvasState.setCurComponentStyle(key, val)
+      canvasState.setCurComponentStyle(keys, val)
     }
   }
 }, 300)

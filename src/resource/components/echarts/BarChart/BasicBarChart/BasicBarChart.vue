@@ -38,7 +38,7 @@ if (useData) {
 }
 
 let propValue: BasicLineChart
-const propValueChange = () => {
+const propValueChange = (..._propValue) => {
   updateData(chartData)
 }
 if (useProp) {

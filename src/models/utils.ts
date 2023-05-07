@@ -1,3 +1,5 @@
+import type { PropsType } from '@/types/component'
+
 export const uuid = (hasHyphen?: string) => {
   return (
     hasHyphen ? 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx' : 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'
@@ -6,4 +8,12 @@ export const uuid = (hasHyphen?: string) => {
     const v = c == 'x' ? r : (r & 0x3) | 0x8
     return v.toString(16)
   })
+}
+
+export const getObjProp = (obj: Array<PropsType>, propKeys: Array<string>, start = 0) => {
+  const chidObj = obj.find((item) => item.prop === propKeys[start])
+  if (chidObj && chidObj.children && start < propKeys.length) {
+    return getObjProp(chidObj.children, propKeys, start + 1)
+  }
+  return chidObj
 }

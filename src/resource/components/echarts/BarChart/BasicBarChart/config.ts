@@ -175,6 +175,49 @@ class BasicBarChartComponent extends CustomComponent {
           }
         }
       ]
+    },
+    {
+      label: '测试',
+      prop: 'test',
+      children: [
+        {
+          prop: 'axisColor',
+          label: '轴线颜色',
+          type: FormType.COLOR,
+          componentOptions: {
+            defaultValue: '#00BAFF'
+          }
+        },
+        {
+          prop: 'axisLabelColor',
+          label: '轴线文字颜色',
+          type: FormType.MODAL,
+          componentOptions: {
+            defaultValue: '#00BAFF',
+            buttonText: '测试',
+            context: {
+              children: [
+                {
+                  prop: 'axisColor',
+                  label: '轴线颜色',
+                  type: FormType.COLOR,
+                  componentOptions: {
+                    defaultValue: '#00BAFF'
+                  }
+                },
+                {
+                  prop: 'axisLabelColor',
+                  label: '颜色1',
+                  type: FormType.COLOR,
+                  componentOptions: {
+                    defaultValue: '#3DE7C9'
+                  }
+                }
+              ]
+            }
+          }
+        }
+      ]
     }
   ]
   _style: PropsType[] = []

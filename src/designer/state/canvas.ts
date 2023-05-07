@@ -220,7 +220,6 @@ class CanvasState {
         ablePosition[el] = position[el]
       }
     })
-
     if (parentComponent) {
       const parentStyle = parentComponent.positionStyle
       const groupStyle = this.curComponent.groupStyle!
@@ -265,11 +264,11 @@ class CanvasState {
       }
       this.curComponent.groupStyle = gStyle
       for (const key in newStyle) {
-        this.curComponent.change(key, newStyle[key])
+        this.curComponent.change(['position', key], newStyle[key], 'style')
       }
     } else {
       for (const key in ablePosition) {
-        this.curComponent.change(key, ablePosition[key])
+        this.curComponent.change(['position', key], ablePosition[key], 'style')
       }
     }
 
@@ -307,11 +306,11 @@ class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.change('top', Math.round(afterPoint.y - height / 2))
-      el.change('left', Math.round(afterPoint.x - width / 2))
-      el.change('height', Math.round(height))
-      el.change('width', Math.round(width))
-      el.change('rotate', rotate)
+      el.change(['position', 'top'], Math.round(afterPoint.y - height / 2), 'style')
+      el.change(['position', 'left'], Math.round(afterPoint.x - width / 2), 'style')
+      el.change(['position', 'height'], Math.round(height), 'style')
+      el.change(['position', 'width'], Math.round(width), 'style')
+      el.change(['position', 'rotate'], rotate, 'style')
     })
   }
 
@@ -360,16 +359,16 @@ class CanvasState {
   /**
    * 设置当前组件的PropValue
    * @param prop 组名
-   * @param key 属性
+   * @param keys 属性组
    * @param value 值
    * @returns
    */
-  setCurComponentPropValue(prop: string, key: string, value: any): void {
+  setCurComponentPropValue(keys: Array<string>, value: any): void {
     const curComponent = this.curComponent
     if (!curComponent || !curComponent.propValue) {
       return
     }
-    curComponent.change(key, value, prop)
+    curComponent.change(keys, value, 'propValue')
     this.saveComponentData()
   }
   /**
@@ -378,16 +377,20 @@ class CanvasState {
    * @param value 值
    * @returns
    */
-  setCurComponentStyle(key: string, value: any): void {
+  setCurComponentStyle(keys: Array<string>, value: any): void {
     const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
     if (!this.curComponent) {
       return
     }
-
-    if (this.curComponent.groupStyle && groupStyleKeys.includes(key)) {
-      this.curComponent.groupStyle[key] = value
+    if (
+      keys.length === 2 &&
+      keys[0] === 'position' &&
+      this.curComponent.groupStyle &&
+      groupStyleKeys.includes(keys[1])
+    ) {
+      this.curComponent.groupStyle[keys[1]] = value
     } else {
-      this.curComponent.change(key, value)
+      this.curComponent.change(keys, value, 'style')
     }
     this.saveComponentData()
   }
@@ -572,7 +575,7 @@ class CanvasState {
       } else {
         const newGroupStyle = { ...parentStyle, top, left, height, width }
         for (const key in newGroupStyle) {
-          parentComponent.change(key, newGroupStyle[key])
+          parentComponent.change(['position', key], newGroupStyle[key], 'style')
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
           const gStyle = {
