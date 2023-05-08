@@ -1,6 +1,6 @@
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
-import type { ComponentGroup, FormType, ScriptType } from '@/enum'
+import type { ComponentGroup, ContainerType, FormType, ScriptType } from '@/enum'
 import type { DataIntegrationMode, DataType, RequestOptions } from '@/models/requestOption'
 import type { CanvasStyleData } from '@/types/storeTypes'
 
@@ -109,6 +109,42 @@ export interface PropsType {
     | ModalFormSchema
   help?: string
   children?: PropsType[]
+}
+
+export interface MetaForm {
+  label: string
+  prop: string
+  type?: FormType
+  component?: string | ConcreteComponent
+  showLabel?: boolean
+  props?:
+    | InputFormSchema
+    | InputNumberFormSchema
+    | CustomFormSchema
+    | ArrayFormSchema
+    | BaseFormSchema
+    | SwitchFormSchema
+    | SelectFormSchema
+    | RadioFormSchema
+    | ModalFormSchema
+}
+
+export interface MetaContainer {
+  label: string
+  prop: string
+  type?: ContainerType
+  component?: string | ConcreteComponent
+  props?:
+    | InputFormSchema
+    | InputNumberFormSchema
+    | CustomFormSchema
+    | ArrayFormSchema
+    | BaseFormSchema
+    | SwitchFormSchema
+    | SelectFormSchema
+    | RadioFormSchema
+    | ModalFormSchema
+  children?: MetaForm[]
 }
 
 export interface ComponentData {
