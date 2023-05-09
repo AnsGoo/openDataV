@@ -24,7 +24,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'url',
           label: '视频地址',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue:
               'https://mazwai.com/videvo_files/video/free/2019-01/small_watermarked/181004_04_Dolphins-Whale_06_preview.webm'
           }
@@ -33,7 +33,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'videoType',
           label: '视频类型',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: 'webm'
           }
         },
@@ -41,7 +41,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'controls',
           label: '控制器',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -49,7 +49,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'autoplay',
           label: '自动播放',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -57,7 +57,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'muted',
           label: '静音',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         }

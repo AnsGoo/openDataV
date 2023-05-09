@@ -25,7 +25,7 @@ class ImageComponent extends CustomComponent {
           prop: 'background',
           label: '背景',
           type: FormType.BACKGROUND,
-          componentOptions: {
+          props: {
             defaultValue: { backgroundColor: '#14c9c9' }
           }
         }

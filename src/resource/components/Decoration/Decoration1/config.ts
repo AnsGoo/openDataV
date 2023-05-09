@@ -24,7 +24,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color1',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#fff'
           }
         },
@@ -32,7 +32,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color2',
           label: '颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#0de7c2'
           }
         },
@@ -40,7 +40,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'pointSideLength',
           label: '点大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 5
           }
         }

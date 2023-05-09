@@ -24,7 +24,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color1',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00c2ff'
           }
         },
@@ -32,7 +32,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color2',
           label: '颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00C2FF42'
           }
         }

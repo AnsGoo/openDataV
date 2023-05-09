@@ -136,15 +136,16 @@ export enum FormType {
   // 背景
   BACKGROUND = 'BackItem',
   DATE = 'DatePicker',
-  MODAL = 'Modal'
+  MODAL = 'Modal',
+  TRANSFER = 'Transfer'
 }
 
 export enum ContainerType {
   CUSTOM_CONTAINER = 'CustomContainer',
-  TRANSFER = 'Transfer',
   FORM = 'Form',
   TABS = 'Tabs',
-  COLLAPSE = 'Collapse'
+  COLLAPSE = 'Collapse',
+  CARD = 'Card'
 }
 
 export enum EChartTypeEnum {

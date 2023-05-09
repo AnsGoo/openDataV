@@ -21,8 +21,8 @@ import type {
   CustomFormSchema,
   InputFormSchema,
   InputNumberFormSchema,
+  MetaForm,
   ModalFormSchema,
-  PropsType,
   RadioFormSchema,
   SelectFormSchema,
   SwitchFormSchema
@@ -57,7 +57,7 @@ export default defineComponent({
       required: true
     },
     children: {
-      type: Array as PropType<PropsType[]>,
+      type: Array as PropType<MetaForm[]>,
       required: true
     },
     data: {
@@ -74,8 +74,8 @@ export default defineComponent({
 
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const isShow = ref<boolean>(true)
-    const renderModal = (item: PropsType, path: Array<string>) => {
-      const options = ((item || {}).componentOptions || {}) as ModalFormSchema
+    const renderModal = (item: MetaForm, path: Array<string>) => {
+      const options = ((item || {}).props || {}) as ModalFormSchema
       return (
         <>
           <NInputGroup>
@@ -117,10 +117,9 @@ export default defineComponent({
         </>
       )
     }
-    const renderItem = (item: PropsType, path: Array<string> = []) => {
+    const renderItem = (item: MetaForm, path: Array<string> = []) => {
       const options: Recordable[] =
-        (item.componentOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options ||
-        []
+        (item.props as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
 
       /**
        * 获取设置的值
@@ -129,7 +128,7 @@ export default defineComponent({
        * @return 返回值本体或默认值
        */
       function getOptionsValue<T = undefined>(name: string, defaultValue?: T): T {
-        return name in (item.componentOptions || {}) ? item.componentOptions![name] : defaultValue
+        return name in (item.props || {}) ? item.props![name] : defaultValue
       }
 
       switch (item.type) {
@@ -180,8 +179,8 @@ export default defineComponent({
               precision={precision}
               clearable={true}
               v-slots={{
-                prefix: (item.componentOptions as InputNumberFormSchema).prefix,
-                suffix: (item.componentOptions as InputNumberFormSchema).suffix
+                prefix: (item.props as InputNumberFormSchema).prefix,
+                suffix: (item.props as InputNumberFormSchema).suffix
               }}
             />
           )
@@ -220,8 +219,8 @@ export default defineComponent({
             <CustomItem
               v-model:value={formData[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
-              component={(item.componentOptions as CustomFormSchema).componentType}
-              args={(item.componentOptions as CustomFormSchema).args}
+              component={(item.props as CustomFormSchema).componentType}
+              args={(item.props as CustomFormSchema).args}
             />
           )
         default:
@@ -230,11 +229,11 @@ export default defineComponent({
               clearable
               v-model:value={formData[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
-              readonly={item.componentOptions!.editable === false}
-              disabled={item.componentOptions!.disabled}
+              readonly={item.props!.editable === false}
+              disabled={item.props!.disabled}
               v-slots={{
-                prefix: (item.componentOptions as InputFormSchema).prefix,
-                suffix: (item.componentOptions as InputFormSchema).suffix
+                prefix: (item.props as InputFormSchema).prefix,
+                suffix: (item.props as InputFormSchema).suffix
               }}
             />
           )

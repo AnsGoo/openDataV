@@ -31,7 +31,7 @@ class ScrollTableComponent extends CustomComponent {
           prop: 'header',
           label: '表头数据',
           type: FormType.ARRAY,
-          componentOptions: {
+          props: {
             type: 'dynamic',
             defaultValue: ['姓名', '年龄', '性别']
           }
@@ -40,7 +40,7 @@ class ScrollTableComponent extends CustomComponent {
           prop: 'headerBGC',
           label: '背景色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00BAFF'
           }
         },
@@ -48,7 +48,7 @@ class ScrollTableComponent extends CustomComponent {
           prop: 'headerHeight',
           label: '高度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 35,
             suffix: () => h('span', {}, 'px')
           }
@@ -57,7 +57,7 @@ class ScrollTableComponent extends CustomComponent {
           prop: 'index',
           label: '是否显示索引',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: false
           }
         },
@@ -65,7 +65,7 @@ class ScrollTableComponent extends CustomComponent {
           prop: 'indexHeader',
           label: '索引显示',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: '#'
           }
         }
@@ -80,7 +80,7 @@ class ScrollTableComponent extends CustomComponent {
           label: '行配置',
           type: FormType.CUSTOM,
           showLabel: false,
-          componentOptions: {
+          props: {
             componentType: shallowRef(ScrollTableForm),
             defaultValue: {
               height: 30,

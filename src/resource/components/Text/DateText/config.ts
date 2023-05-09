@@ -26,7 +26,7 @@ class DateTextComponent extends CustomComponent {
           prop: 'format',
           label: '格式',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: 'YYYY-MM-DD HH:mm:ss'
           }
         }
@@ -42,7 +42,7 @@ class DateTextComponent extends CustomComponent {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: 'skyblue'
           }
         },
@@ -50,7 +50,7 @@ class DateTextComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20,
             suffix: () => h('span', {}, 'px')
           }
@@ -59,7 +59,7 @@ class DateTextComponent extends CustomComponent {
           prop: 'fontWeight',
           label: '字体宽度',
           type: FormType.FONT_WEIGHT,
-          componentOptions: {
+          props: {
             defaultValue: 200
           }
         },
@@ -67,7 +67,7 @@ class DateTextComponent extends CustomComponent {
           prop: 'fontFamily',
           label: '字体',
           type: FormType.FONT_STYLE,
-          componentOptions: {
+          props: {
             defaultValue: 'Arial'
           }
         }

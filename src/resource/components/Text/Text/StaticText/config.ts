@@ -27,7 +27,7 @@ class StaticTextComponent extends CustomComponent {
           prop: 'type',
           label: '文本类型',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'text',
             options: [
               { value: 'text', label: '文本' },
@@ -39,7 +39,7 @@ class StaticTextComponent extends CustomComponent {
           prop: 'text',
           label: '自定义文本',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: 'OpenDataV'
           }
         }
@@ -55,7 +55,7 @@ class StaticTextComponent extends CustomComponent {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#1E90FF'
           }
         },
@@ -63,7 +63,7 @@ class StaticTextComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20,
             suffix: () => h('span', {}, 'px')
           }
@@ -72,7 +72,7 @@ class StaticTextComponent extends CustomComponent {
           prop: 'fontWeight',
           label: '字体宽度',
           type: FormType.FONT_WEIGHT,
-          componentOptions: {
+          props: {
             defaultValue: 200
           }
         },
@@ -80,7 +80,7 @@ class StaticTextComponent extends CustomComponent {
           prop: 'fontFamily',
           label: '字体',
           type: FormType.FONT_STYLE,
-          componentOptions: {
+          props: {
             defaultValue: 'Arial'
           }
         }

@@ -140,7 +140,7 @@ const props = defineProps<{
           prop: 'type',
           label: '文本类型',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'text',
             options: [
               { value: 'text', label: '文本' },
@@ -152,7 +152,7 @@ const props = defineProps<{
           prop: 'text',
           label: '自定义文本',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: 'OpenDataV'
           }
         }
@@ -186,7 +186,7 @@ StaticTextType {
 - `prop`: 属性值
 - `type`: 属性值的Form类型
 - `showLabel`: 是否显示标签
-- `componentOptions`: Form组件配置
+- `props`: Form组件配置
 - `help`: Form帮助信息
 
 

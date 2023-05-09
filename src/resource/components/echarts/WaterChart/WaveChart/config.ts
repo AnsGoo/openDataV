@@ -27,7 +27,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'amplitude',
           label: '波动幅度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20
           }
         },
@@ -35,7 +35,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'outlineShow',
           label: '显示边框',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: false
           }
         },
@@ -43,7 +43,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'outlineColor',
           label: '边框颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3491FA'
           }
         },
@@ -51,7 +51,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'radius',
           label: '图形占比',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: '100%'
           }
         },
@@ -59,7 +59,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'shape',
           label: '形状',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'circle',
             options: [
               { value: 'circle', label: '圆形' },
@@ -77,7 +77,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'direction',
           label: '波动方向',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'left',
             options: [
               { value: 'left', label: '向左波动' },
@@ -89,7 +89,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'waveAnimation',
           label: '是否波动',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -97,7 +97,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'color',
           label: '水波颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3491FA'
           }
         },
@@ -105,7 +105,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'labelShow',
           label: '是否显示文本',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -113,7 +113,7 @@ class WaveChartComponent extends CustomComponent {
           prop: 'backgroundColor',
           label: '背景色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#FFFFFF'
           }
         }

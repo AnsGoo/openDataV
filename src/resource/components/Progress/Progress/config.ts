@@ -27,7 +27,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'history',
           label: '历史数据地址',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -35,7 +35,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'datatag',
           label: '数据标签',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -43,7 +43,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'maxValue',
           label: '最大值',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 150
           }
         }
@@ -57,7 +57,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'color1',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         },
@@ -65,7 +65,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'color2',
           label: '颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00BAFF'
           }
         },
@@ -73,7 +73,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'borderWidth',
           label: '边框宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 3
           }
         },
@@ -81,7 +81,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'borderGap',
           label: '边框间隔',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 3
           }
         },
@@ -89,7 +89,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'lineDash',
           label: '线条宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 5
           }
         },
@@ -97,7 +97,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'gapWeight',
           label: '线条间隙',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 1
           }
         },
@@ -105,7 +105,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 15,
             suffix: () => h('span', {}, 'px')
           }
@@ -114,7 +114,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'textColor',
           label: '文字颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#fff'
           }
         },
@@ -122,7 +122,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'borderRadius',
           label: '圆角',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 5
           }
         },
@@ -130,7 +130,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'localGradient',
           label: '局部渐变',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: false
           }
         },
@@ -138,7 +138,7 @@ class ProgressComponent extends CustomComponent {
           prop: 'formatter',
           label: '文字格式化',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: '{value}%'
           }
         }

@@ -27,7 +27,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'upperLimit',
           label: '上限',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 150
           }
         },
@@ -35,7 +35,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'lowerLimit',
           label: '下限',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 0
           }
         }
@@ -49,7 +49,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'axisLabelColor',
           label: 'label颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         },
@@ -57,7 +57,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'axisColor',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         }
@@ -71,7 +71,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'axisColor',
           label: '轴线颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00BAFF'
           }
         },
@@ -79,7 +79,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'axisLabelColor',
           label: '轴线文字颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00BAFF'
           }
         },
@@ -88,7 +88,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'xshow',
           label: 'X网格线是否显示',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -96,7 +96,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'yshow',
           label: 'Y网格线是否显示',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -104,7 +104,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'xLineType',
           label: 'X轴网格线样式',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'dotted',
             options: [
               { value: 'solid', label: 'solid' },
@@ -117,7 +117,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'yLineType',
           label: 'Y轴网格线样式',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'dotted',
             options: [
               { value: 'solid', label: 'solid' },
@@ -130,7 +130,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'xAxisLineColor',
           label: 'x轴网格线颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3391E4'
           }
         },
@@ -138,7 +138,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'yAxisLineColor',
           label: 'y轴网格线颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3391E4'
           }
         }
@@ -152,7 +152,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'lineArea',
           label: '显示区域色',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -160,7 +160,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'lineWidth',
           label: '折线宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 1
           }
         },
@@ -168,7 +168,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'lineColor',
           label: '折线颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         },
@@ -176,7 +176,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'lineLinearStart',
           label: '渐变起始色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3491FA'
           }
         },
@@ -184,7 +184,7 @@ class BasicLineChartComponent extends CustomComponent {
           prop: 'lineLinearEnd',
           label: '渐变结束色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: 'transparent'
           }
         }

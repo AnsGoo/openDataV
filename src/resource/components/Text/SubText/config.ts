@@ -27,7 +27,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'tag',
           label: '数据标签',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -35,7 +35,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'url',
           label: '获取数据API',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -43,7 +43,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'label',
           label: 'Label',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -51,7 +51,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'unit',
           label: '单位',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         }
@@ -67,7 +67,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#1E90FF'
           }
         },
@@ -75,7 +75,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20,
             suffix: () => h('span', {}, 'px')
           }
@@ -84,7 +84,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'fontWeight',
           label: '字体宽度',
           type: FormType.FONT_WEIGHT,
-          componentOptions: {
+          props: {
             defaultValue: 200
           }
         },
@@ -92,7 +92,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'fontFamily',
           label: '字体',
           type: FormType.FONT_STYLE,
-          componentOptions: {
+          props: {
             defaultValue: 'Arial'
           }
         }

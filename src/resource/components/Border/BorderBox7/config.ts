@@ -24,7 +24,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'title',
           label: '标题',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: '7#边框'
           }
         },
@@ -32,7 +32,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'titleWidth',
           label: '标题宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 180
           }
         },
@@ -40,7 +40,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'colorLeft',
           label: '边框颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#1a98fc'
           }
         },
@@ -48,7 +48,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'colorRight',
           label: '边框颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#005A5E'
           }
         },
@@ -56,7 +56,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'backgroundColor',
           label: '底色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: 'transparent'
           }
         }

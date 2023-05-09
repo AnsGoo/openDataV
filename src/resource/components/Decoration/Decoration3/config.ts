@@ -24,7 +24,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color1',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#7acaec'
           }
         },
@@ -32,7 +32,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color2',
           label: '颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#7acaec'
           }
         },
@@ -40,7 +40,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'rectWidth',
           label: '单个矩形宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 7
           }
         },
@@ -48,7 +48,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'space',
           label: '矩形间距',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 1
           }
         }

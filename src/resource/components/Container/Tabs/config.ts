@@ -26,7 +26,7 @@ class TabsComponent extends CustomComponent {
           prop: 'mode',
           label: '模式',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'horizontal',
             options: [
               {
@@ -44,7 +44,7 @@ class TabsComponent extends CustomComponent {
           prop: 'items',
           label: '标签',
           type: FormType.ARRAY,
-          componentOptions: {
+          props: {
             type: 'dynamic',
             defaultValue: ['标签1', '标签2'],
             minItem: 1
@@ -60,7 +60,7 @@ class TabsComponent extends CustomComponent {
           prop: 'height',
           label: '高度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 45,
             suffix: () => h('span', {}, 'px')
           }
@@ -69,7 +69,7 @@ class TabsComponent extends CustomComponent {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#03A6E0CC'
           }
         },
@@ -77,7 +77,7 @@ class TabsComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20,
             suffix: () => h('span', {}, 'px')
           }
@@ -86,7 +86,7 @@ class TabsComponent extends CustomComponent {
           prop: 'fontWeight',
           label: '字体宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 800
           }
         },
@@ -94,7 +94,7 @@ class TabsComponent extends CustomComponent {
           prop: 'fontFamily',
           label: '字体',
           type: FormType.FONT_STYLE,
-          componentOptions: {
+          props: {
             defaultValue: 'Arial'
           }
         }

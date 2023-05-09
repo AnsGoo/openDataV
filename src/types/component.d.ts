@@ -43,7 +43,6 @@ export interface InputNumberFormSchema extends BaseFormSchema {
   step: number
   prefix?: () => VNode
   suffix?: () => VNode
-
   precision?: number
 }
 
@@ -72,7 +71,29 @@ interface ArrayFormSchema extends BaseFormSchema {
   minItem?: number
 }
 
-export type FormItemComponentProps =
+interface CollapseProps {
+  accordion?: boolean
+}
+
+interface TabsProps {
+  type?: 'bar' | 'line' | 'card' | 'segment'
+  justifyContent?: 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'center' | 'end'
+  prefix?: () => VNode
+  suffix?: () => VNode
+}
+
+interface FormProps {
+  labelPlacement?: 'left' | 'top'
+  labelWidth?: number | string | 'auto'
+}
+
+interface CustomContainerProps {
+  componentType: string | ConcreteComponent
+  args: any
+}
+
+export type ContainerItemProps = CollapseProps | TabsProps | FormProps | CustomContainerProps
+export type FormItemProps =
   | InputFormSchema
   | InputNumberFormSchema
   | CustomFormSchema
@@ -82,34 +103,6 @@ export type FormItemComponentProps =
   | SelectFormSchema
   | RadioFormSchema
   | ModalFormSchema
-export interface AttrType {
-  prop: string
-  label: string
-  type?: FormType
-  showLabel?: boolean
-  componentOptions: FormItemComponentProps
-  help?: string
-}
-
-// 分组类型
-export interface PropsType {
-  label: string
-  prop: string
-  type?: FormType
-  showLabel?: boolean
-  componentOptions?:
-    | InputFormSchema
-    | InputNumberFormSchema
-    | CustomFormSchema
-    | ArrayFormSchema
-    | BaseFormSchema
-    | SwitchFormSchema
-    | SelectFormSchema
-    | RadioFormSchema
-    | ModalFormSchema
-  help?: string
-  children?: PropsType[]
-}
 
 export interface MetaForm {
   label: string
@@ -117,35 +110,40 @@ export interface MetaForm {
   type?: FormType
   component?: string | ConcreteComponent
   showLabel?: boolean
-  props?:
-    | InputFormSchema
-    | InputNumberFormSchema
-    | CustomFormSchema
-    | ArrayFormSchema
-    | BaseFormSchema
-    | SwitchFormSchema
-    | SelectFormSchema
-    | RadioFormSchema
-    | ModalFormSchema
+  props: FormItemProps
+  children?: MetaForm
+}
+
+export interface MetaContainerItem {
+  label: string
+  prop: string
+  showLabel?: boolean
+  type?: ContainerType
+  component?: string | ConcreteComponent
+  props?: ContainerItemProps
+  children: MetaForm[]
 }
 
 export interface MetaContainer {
   label: string
   prop: string
+  showLabel?: boolean
   type?: ContainerType
   component?: string | ConcreteComponent
-  props?:
-    | InputFormSchema
-    | InputNumberFormSchema
-    | CustomFormSchema
-    | ArrayFormSchema
-    | BaseFormSchema
-    | SwitchFormSchema
-    | SelectFormSchema
-    | RadioFormSchema
-    | ModalFormSchema
-  children?: MetaForm[]
+  props?: ContainerItemProps
+  children: MetaContainerItem[]
 }
+
+// export interface PropsType {
+//   label: string
+//   prop: string
+//   type?: FormType
+//   showLabel?: boolean
+//   componentOptions?: FormItemProps
+//   help?: string
+//   children?: PropsType[]
+// }
+export type PropsType = MetaContainerItem
 
 export interface ComponentData {
   canvasStyle: CanvasStyleData

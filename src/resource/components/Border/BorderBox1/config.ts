@@ -24,7 +24,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'colorLeft',
           label: '边框颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#4fd2dd'
           }
         },
@@ -32,7 +32,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'colorRight',
           label: '边框颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#235fa7'
           }
         },
@@ -40,7 +40,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'backgroundColor',
           label: '底色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: 'transparent'
           }
         }
