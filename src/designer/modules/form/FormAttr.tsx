@@ -14,7 +14,7 @@ import {
   NSwitch
 } from 'naive-ui'
 import type { PropType } from 'vue'
-import { defineComponent, h, reactive, ref, resolveComponent } from 'vue'
+import { defineComponent, h, reactive, ref } from 'vue'
 
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type {
@@ -117,6 +117,34 @@ export default defineComponent({
         </>
       )
     }
+
+    const renderFormItem = (item: MetaForm, path: Array<string> = []) => {
+      let component: {} = NInput
+      switch (item.type) {
+        case FormType.SWITCH:
+          component = NSwitch
+          break
+        case FormType.FONT_STYLE:
+          component = FontStyle
+          break
+        case FormType.FONT_WEIGHT:
+          component = FontWeight
+          break
+        case FormType.LINEAR_GRADIENT:
+          component = LinearGradient
+          break
+        case FormType.BACKGROUND:
+          component = BackItem
+          break
+      }
+      return h(component, {
+        value: formData[item.prop],
+        onUpdateValue: (value) => {
+          formData[item.prop] = value
+          changed(value, path)
+        }
+      })
+    }
     const renderItem = (item: MetaForm, path: Array<string> = []) => {
       const options: Recordable[] =
         (item.props as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
@@ -189,13 +217,7 @@ export default defineComponent({
         case FormType.FONT_WEIGHT:
         case FormType.LINEAR_GRADIENT:
         case FormType.BACKGROUND:
-          return h(resolveComponent(item.type), {
-            value: formData[item.prop],
-            onUpdateValue: (value) => {
-              formData[item.prop] = value
-              changed(value, [...path, item.prop])
-            }
-          })
+          return renderFormItem(item, [...path, item.prop])
         case FormType.ARRAY:
           const count = getOptionsValue<number>('count', 1)
           const type = getOptionsValue<'static' | 'dynamic'>('type', 'static')
@@ -240,7 +262,7 @@ export default defineComponent({
       }
     }
     return () => (
-      <NForm size="small" labelPlacement="left" labelAlign="left">
+      <NForm size="small" labelPlacement="top" labelAlign="left">
         {props.children.map((item) => (
           <NFormItem
             key={`${props.ukey}${item.prop}`}

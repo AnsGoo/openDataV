@@ -139,9 +139,7 @@ export enum FormType {
   MODAL = 'Modal',
   TRANSFER = 'Transfer'
 }
-
 export enum ContainerType {
-  CUSTOM_CONTAINER = 'CustomContainer',
   FORM = 'Form',
   TABS = 'Tabs',
   COLLAPSE = 'Collapse',

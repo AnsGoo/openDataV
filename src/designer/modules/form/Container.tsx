@@ -3,7 +3,7 @@ import type { PropType } from 'vue'
 import { defineComponent, reactive } from 'vue'
 
 import { ContainerType } from '@/enum'
-import type { CollapseProps, MetaContainerItem, MetaForm, TabsProps } from '@/types/component'
+import type { MetaContainerItem, MetaForm } from '@/types/component'
 
 import FormAttr from './FormAttr'
 
@@ -13,12 +13,17 @@ export default defineComponent({
   },
   props: {
     config: {
-      type: Object as PropType<MetaContainerItem>,
+      type: Object as PropType<Array<MetaContainerItem>>,
       required: true
     },
     data: {
       type: Object as PropType<Recordable>,
       required: true
+    },
+    mode: {
+      type: String as PropType<ContainerType>,
+      required: false,
+      default: ContainerType.COLLAPSE
     }
   },
   emits: ['change'],
@@ -27,21 +32,20 @@ export default defineComponent({
     const change = (keys: Array<string>, val: any) => {
       emit('change', keys, val)
     }
-    const renderContainer = (item: MetaContainerItem) => {
-      const containerProps = item.props!
-      switch (item.type) {
+    const renderContainer = (containerItems: Array<MetaContainerItem>) => {
+      switch (props.mode) {
         case ContainerType.COLLAPSE:
           return (
-            <NCollapse accordion={(containerProps as CollapseProps).accordion}>
-              {item.children.map((el) => {
+            <NCollapse accordion={true}>
+              {containerItems.map((el) => {
                 return (
-                  <NCollapseItem key={`${item.prop}${el.prop}`} title={el.label} name={el.prop}>
+                  <NCollapseItem key={el.prop} title={el.label} name={el.prop}>
                     <FormAttr
                       children={(el.children || []) as Array<MetaForm>}
                       data={formData[el.prop]}
                       name={el.label}
                       uid={el.prop}
-                      ukey={`${item.prop}${el.prop}`}
+                      ukey={el.prop}
                       onChange={change}
                     />
                   </NCollapseItem>
@@ -51,19 +55,16 @@ export default defineComponent({
           )
         case ContainerType.TABS:
           return (
-            <NTabs
-              type={(containerProps as TabsProps).type}
-              justifyContent={(containerProps as TabsProps).justifyContent}
-            >
-              {item.children.map((el) => {
+            <NTabs type="line">
+              {containerItems.map((el) => {
                 return (
-                  <NTabPane key={`${item.prop}${el.prop}`} tab={el.label} name={el.prop}>
+                  <NTabPane key={el.prop} tab={el.label} name={el.prop}>
                     <FormAttr
                       children={(el.children || []) as Array<MetaForm>}
                       data={formData[el.prop]}
                       name={el.label}
                       uid={el.prop}
-                      ukey={`${item.prop}${el.prop}`}
+                      ukey={el.prop}
                       onChange={change}
                     />
                   </NTabPane>
@@ -73,34 +74,36 @@ export default defineComponent({
           )
         case ContainerType.CARD:
           return (
-            <NCard title={item.label}>
-              {item.children.map((el) => {
+            <>
+              {containerItems.map((el) => {
                 return (
-                  <FormAttr
-                    children={(el.children || []) as Array<MetaForm>}
-                    key={`${item.prop}${el.prop}`}
-                    data={formData[el.prop]}
-                    name={el.label}
-                    uid={el.prop}
-                    ukey={`${item.prop}${el.prop}`}
-                    onChange={change}
-                  />
+                  <NCard title={el.label}>
+                    <FormAttr
+                      children={(el.children || []) as Array<MetaForm>}
+                      key={el.prop}
+                      data={formData[el.prop]}
+                      name={el.label}
+                      uid={el.prop}
+                      ukey={el.prop}
+                      onChange={change}
+                    />
+                  </NCard>
                 )
               })}
-            </NCard>
+            </>
           )
         case ContainerType.FORM:
           return (
             <>
-              {item.children.map((el) => {
+              {containerItems.map((el) => {
                 return (
                   <FormAttr
                     children={(el.children || []) as Array<MetaForm>}
-                    key={`${item.prop}${el.prop}`}
+                    key={el.prop}
                     data={formData[el.prop]}
                     name={el.label}
                     uid={el.prop}
-                    ukey={`${item.prop}${el.prop}`}
+                    ukey={el.prop}
                     onChange={change}
                   />
                 )

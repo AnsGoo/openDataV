@@ -1,38 +1,24 @@
-<!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list">
-    <n-collapse accordion>
-      <n-collapse-item
-        v-for="{ label, prop, children } in attrKeys"
-        :key="`${curComponent.id}${prop}`"
-        :title="label"
-        :name="prop"
-      >
-        <FormAttr
-          :children="children || []"
-          :data="formData[prop]"
-          :name="label"
-          :uid="prop"
-          :ukey="curComponent.id"
-          @change="(keys: Array<string>, value) => changed(keys, value)"
-        />
-      </n-collapse-item>
-    </n-collapse>
+    <Container :config="attrKeys" :data="formData" :mode="mode" @change="changed" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { NCollapse, NCollapseItem } from 'naive-ui'
 import { computed, ref, watch } from 'vue'
 
-import FormAttr from '@/designer/modules/form/FormAttr'
+import Container from '@/designer/modules/form/Container'
 import useCanvasState from '@/designer/state/canvas'
+import type { ContainerType } from '@/enum'
 import type { CustomComponent } from '@/models'
+import type { MetaContainerItem } from '@/types/component'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const canvasState = useCanvasState()
+
+const mode = computed<ContainerType>(() => props.curComponent.defaultViewType.propValue)
 
 interface PropData {
   common: {
@@ -51,7 +37,7 @@ const formData = ref<PropData>({
   }
 })
 
-const attrKeys = computed(() => {
+const attrKeys = computed<Array<MetaContainerItem>>(() => {
   if (props.curComponent) {
     return props.curComponent.propFromValue
   }

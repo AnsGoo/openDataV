@@ -123,26 +123,6 @@ export interface MetaContainerItem {
   props?: ContainerItemProps
   children: MetaForm[]
 }
-
-export interface MetaContainer {
-  label: string
-  prop: string
-  showLabel?: boolean
-  type?: ContainerType
-  component?: string | ConcreteComponent
-  props?: ContainerItemProps
-  children: MetaContainerItem[]
-}
-
-// export interface PropsType {
-//   label: string
-//   prop: string
-//   type?: FormType
-//   showLabel?: boolean
-//   componentOptions?: FormItemProps
-//   help?: string
-//   children?: PropsType[]
-// }
 export type PropsType = MetaContainerItem
 
 export interface ComponentData {
@@ -174,6 +154,7 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   width?: number
   height?: number
   dataIntegrationMode?: DataIntegrationMode
+  defaultViewType?: Record<'propValue' | 'style' | 'data', ContainerType>
 }
 
 export interface AfterScript {

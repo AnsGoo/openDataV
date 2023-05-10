@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash-es'
 import { h } from 'vue'
 
 import type { ComponentGroup } from '@/enum'
-import { FormType } from '@/enum'
+import { ContainerType, FormType } from '@/enum'
 import { DataIntegrationMode, DataType } from '@/enum/data'
 import type {
   ComponentDataType,
@@ -10,6 +10,7 @@ import type {
   ComponentType,
   DOMRectStyle,
   GroupStyle,
+  MetaContainerItem,
   MetaForm,
   PropsType
 } from '@/types/component'
@@ -43,6 +44,11 @@ export abstract class CustomComponent {
   // 检测变化
   propIsChange = true
   styleIsChange = true
+  defaultViewType = {
+    propValue: ContainerType.COLLAPSE,
+    style: ContainerType.COLLAPSE,
+    data: ContainerType.FORM
+  }
 
   // form表单中使用
   _prop: PropsType[] = []
@@ -76,10 +82,11 @@ export abstract class CustomComponent {
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
     this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
+    Object.assign(this.defaultViewType, detail.defaultViewType || {})
   }
 
-  get propFromValue(): PropsType[] {
-    const common: PropsType = {
+  get propFromValue(): MetaContainerItem[] {
+    const common: MetaContainerItem = {
       label: '公共属性',
       prop: 'common',
       children: [
@@ -114,9 +121,9 @@ export abstract class CustomComponent {
     return [common, ...this._prop]
   }
 
-  get styleFormValue(): PropsType[] {
+  get styleFormValue(): MetaContainerItem[] {
     if (!this._style.find((item) => item.prop === 'position')) {
-      const common: PropsType = {
+      const common: MetaContainerItem = {
         label: '位置大小',
         prop: 'position',
         children: [
