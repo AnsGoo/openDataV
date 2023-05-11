@@ -180,7 +180,7 @@ const showLine = (isDownward, isRightward) => {
                   height: mybottom - mytop
                 })
               : condition.dragShift
-          canvasState.setCurComponentStyle(key, value)
+          canvasState.setCurComponentStyle(['position', key], value)
 
           condition.lineNode.style[key] = `${condition.lineShift}px`
           needToShow.push(condition.line)

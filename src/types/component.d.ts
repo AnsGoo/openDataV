@@ -29,6 +29,7 @@ export interface BaseFormSchema {
   disabled?: boolean
   required?: boolean
   defaultValue: string | number | boolean | any
+  placeholder?: string
 }
 
 export interface InputFormSchema extends BaseFormSchema {
@@ -49,6 +50,13 @@ export interface InputNumberFormSchema extends BaseFormSchema {
 export interface SelectFormSchema extends BaseFormSchema {
   options: Array<{ label: string; value: string | number }>
 }
+
+export interface ModalFormSchema extends BaseFormSchema {
+  context: any
+  buttonText: string
+  size: 'small'
+  bordered: boolean
+}
 export type RadioFormSchema = SelectFormSchema
 export type SwitchFormSchema = SelectFormSchema
 
@@ -64,12 +72,32 @@ interface ArrayFormSchema extends BaseFormSchema {
   minItem?: number
 }
 
+export type FormItemComponentProps =
+  | InputFormSchema
+  | InputNumberFormSchema
+  | CustomFormSchema
+  | ArrayFormSchema
+  | BaseFormSchema
+  | SwitchFormSchema
+  | SelectFormSchema
+  | RadioFormSchema
+  | ModalFormSchema
 export interface AttrType {
   prop: string
   label: string
   type?: FormType
   showLabel?: boolean
-  componentOptions:
+  componentOptions: FormItemComponentProps
+  help?: string
+}
+
+// 分组类型
+export interface PropsType {
+  label: string
+  prop: string
+  type?: FormType
+  showLabel?: boolean
+  componentOptions?:
     | InputFormSchema
     | InputNumberFormSchema
     | CustomFormSchema
@@ -78,14 +106,9 @@ export interface AttrType {
     | SwitchFormSchema
     | SelectFormSchema
     | RadioFormSchema
+    | ModalFormSchema
   help?: string
-}
-
-// 分组类型
-export interface PropsType {
-  label: string
-  prop: string
-  children: AttrType[]
+  children?: PropsType[]
 }
 
 export interface ComponentData {

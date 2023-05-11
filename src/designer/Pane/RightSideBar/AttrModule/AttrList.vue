@@ -9,12 +9,12 @@
         :name="prop"
       >
         <FormAttr
-          :children="children"
+          :children="children || []"
           :data="formData[prop]"
           :name="label"
           :uid="prop"
           :ukey="curComponent.id"
-          @change="(key, value) => changed(prop, key, value)"
+          @change="(keys: Array<string>, value) => changed(keys, value)"
         />
       </n-collapse-item>
     </n-collapse>
@@ -59,8 +59,8 @@ const attrKeys = computed(() => {
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
-const changed = (form: string, key: string, val: any) => {
-  canvasState.setCurComponentPropValue(form, key, val)
+const changed = (keys: Array<string>, val: any) => {
+  canvasState.setCurComponentPropValue(keys, val)
 }
 
 const resetFormData = () => {

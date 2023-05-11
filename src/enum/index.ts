@@ -133,7 +133,8 @@ export enum FormType {
   // 数组框
   ARRAY = 'array',
   // 背景
-  BACKGROUND = 'BackItem'
+  BACKGROUND = 'BackItem',
+  MODAL = 'Modal'
 }
 
 export enum EChartTypeEnum {

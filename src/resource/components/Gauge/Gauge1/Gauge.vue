@@ -98,10 +98,11 @@ const props = defineProps<{
   component: CustomComponent
 }>()
 
-const propChange = (prop: string, key: string, value: any) => {
-  if (prop === 'attr' && key === 'color1') mergedColor.value[0] = value
-  if (prop === 'attr' && key === 'color2') mergedColor.value[1] = value
-  if (prop === 'attr' && key === 'unit') unit.value = value
+const propChange = (propKeys: Array<string>, value: any) => {
+  if (propKeys.length !== 2) return
+  if (propKeys[0] === 'attr' && propKeys[1] === 'color1') mergedColor.value[0] = value
+  if (propKeys[0] === 'attr' && propKeys[1] === 'color2') mergedColor.value[1] = value
+  if (propKeys[0] === 'attr' && propKeys[1] === 'unit') unit.value = value
 }
 const { propValue } = useProp<Gauge>(props.component, propChange)
 const mergedColor = ref<string[]>([propValue.attr.color1, propValue.attr.color2])
