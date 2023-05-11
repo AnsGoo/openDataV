@@ -2,7 +2,7 @@ import { h } from 'vue'
 
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Gauge1'
 class GaugeComponent extends CustomComponent {
@@ -18,7 +18,7 @@ class GaugeComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -27,7 +27,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'history',
           label: '历史数据地址',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -35,7 +35,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'datatag',
           label: '数据标签',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -43,7 +43,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'maxValue',
           label: '最大值',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 150
           }
         }
@@ -57,7 +57,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'color1',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#03A6E0CC'
           }
         },
@@ -65,7 +65,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'color2',
           label: '颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#03A6E04D'
           }
         },
@@ -73,14 +73,14 @@ class GaugeComponent extends CustomComponent {
           prop: 'unit',
           label: '单位',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = [
+  _style: MetaContainerItem[] = [
     {
       label: '字体设置',
       prop: 'font',
@@ -89,7 +89,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#03A6E0CC'
           }
         },
@@ -97,7 +97,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 40,
             suffix: () => h('span', {}, 'px')
           }
@@ -106,7 +106,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'fontWeight',
           label: '字体宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 800
           }
         },
@@ -114,7 +114,7 @@ class GaugeComponent extends CustomComponent {
           prop: 'fontFamily',
           label: '字体',
           type: FormType.FONT_STYLE,
-          componentOptions: {
+          props: {
             defaultValue: 'Arial'
           }
         }

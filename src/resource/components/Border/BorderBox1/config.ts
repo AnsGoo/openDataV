@@ -1,6 +1,6 @@
-import { ComponentGroup, FormType } from '@/enum'
+import { ComponentGroup, ContainerType, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'BorderBox1'
 class BorderBoxComponent extends CustomComponent {
@@ -11,11 +11,14 @@ class BorderBoxComponent extends CustomComponent {
       name: name ? name : '1#边框',
       id,
       width: 200,
-      height: 200
+      height: 200,
+      defaultViewType: {
+        propValue: ContainerType.CARD
+      }
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '基础配置',
       prop: 'base',
@@ -24,7 +27,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'colorLeft',
           label: '边框颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#4fd2dd'
           }
         },
@@ -32,7 +35,7 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'colorRight',
           label: '边框颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#235fa7'
           }
         },
@@ -40,14 +43,14 @@ class BorderBoxComponent extends CustomComponent {
           prop: 'backgroundColor',
           label: '底色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: 'transparent'
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
 }
 
 export default BorderBoxComponent

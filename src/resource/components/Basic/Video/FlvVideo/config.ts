@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'FlvVideo'
 class FlvVideoComponent extends CustomComponent {
@@ -15,7 +15,7 @@ class FlvVideoComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '视频配置',
       prop: 'basic',
@@ -24,7 +24,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'url',
           label: '视频地址',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue:
               'https://mazwai.com/videvo_files/video/free/2019-01/small_watermarked/181004_04_Dolphins-Whale_06_preview.webm'
           }
@@ -33,7 +33,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'videoType',
           label: '视频类型',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: 'webm'
           }
         },
@@ -41,7 +41,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'controls',
           label: '控制器',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -49,7 +49,7 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'autoplay',
           label: '自动播放',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         },
@@ -57,14 +57,14 @@ class FlvVideoComponent extends CustomComponent {
           prop: 'muted',
           label: '静音',
           type: FormType.SWITCH,
-          componentOptions: {
+          props: {
             defaultValue: true
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
 }
 
 export default FlvVideoComponent

@@ -1,6 +1,6 @@
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
-import type { ComponentGroup, FormType, ScriptType } from '@/enum'
+import type { ComponentGroup, ContainerType, FormType, ScriptType } from '@/enum'
 import type { DataIntegrationMode, DataType, RequestOptions } from '@/models/requestOption'
 import type { CanvasStyleData } from '@/types/storeTypes'
 
@@ -43,7 +43,6 @@ export interface InputNumberFormSchema extends BaseFormSchema {
   step: number
   prefix?: () => VNode
   suffix?: () => VNode
-
   precision?: number
 }
 
@@ -72,7 +71,29 @@ interface ArrayFormSchema extends BaseFormSchema {
   minItem?: number
 }
 
-export type FormItemComponentProps =
+interface CollapseProps {
+  accordion?: boolean
+}
+
+interface TabsProps {
+  type?: 'bar' | 'line' | 'card' | 'segment'
+  justifyContent?: 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'center' | 'end'
+  prefix?: () => VNode
+  suffix?: () => VNode
+}
+
+interface FormProps {
+  labelPlacement?: 'left' | 'top'
+  labelWidth?: number | string | 'auto'
+}
+
+interface CustomContainerProps {
+  componentType: string | ConcreteComponent
+  args: any
+}
+
+export type ContainerItemProps = CollapseProps | TabsProps | FormProps | CustomContainerProps
+export type FormItemProps =
   | InputFormSchema
   | InputNumberFormSchema
   | CustomFormSchema
@@ -82,34 +103,39 @@ export type FormItemComponentProps =
   | SelectFormSchema
   | RadioFormSchema
   | ModalFormSchema
-export interface AttrType {
-  prop: string
+
+export interface MetaForm {
   label: string
+  prop: string
   type?: FormType
+  component?: string | ConcreteComponent
   showLabel?: boolean
-  componentOptions: FormItemComponentProps
-  help?: string
+  /**
+   * @deprecated componentOptions即将弃用，建议使用props
+   */
+  componentOptions?: FormItemProps
+  props?: FormItemProps
+  children?: MetaForm
 }
 
-// 分组类型
-export interface PropsType {
+export interface MetaContainerItem {
   label: string
   prop: string
-  type?: FormType
   showLabel?: boolean
-  componentOptions?:
-    | InputFormSchema
-    | InputNumberFormSchema
-    | CustomFormSchema
-    | ArrayFormSchema
-    | BaseFormSchema
-    | SwitchFormSchema
-    | SelectFormSchema
-    | RadioFormSchema
-    | ModalFormSchema
-  help?: string
-  children?: PropsType[]
+  type?: ContainerType
+  component?: string | ConcreteComponent
+  /**
+   * @deprecated componentOptions即将弃用，建议使用props
+   */
+  componentOptions?: ContainerItemProps
+  props?: ContainerItemProps
+  children: MetaForm[]
 }
+
+/**
+ * @deprecated PropsType 类型即将废弃，建议使用 MetaContainerItem
+ */
+export type PropsType = MetaContainerItem
 
 export interface ComponentData {
   canvasStyle: CanvasStyleData
@@ -140,6 +166,9 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   width?: number
   height?: number
   dataIntegrationMode?: DataIntegrationMode
+  defaultViewType?: {
+    [T: 'propValue' | 'style' | 'data']: ContainerType
+  }
 }
 
 export interface AfterScript {

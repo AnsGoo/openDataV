@@ -2,7 +2,7 @@ import { cloneDeep } from 'lodash-es'
 import { h } from 'vue'
 
 import type { ComponentGroup } from '@/enum'
-import { FormType } from '@/enum'
+import { ContainerType, FormType } from '@/enum'
 import { DataIntegrationMode, DataType } from '@/enum/data'
 import type {
   ComponentDataType,
@@ -10,7 +10,8 @@ import type {
   ComponentType,
   DOMRectStyle,
   GroupStyle,
-  PropsType
+  MetaContainerItem,
+  MetaForm
 } from '@/types/component'
 
 import type { RequestData } from './requestOption'
@@ -42,10 +43,15 @@ export abstract class CustomComponent {
   // 检测变化
   propIsChange = true
   styleIsChange = true
+  defaultViewType = {
+    propValue: ContainerType.COLLAPSE,
+    style: ContainerType.COLLAPSE,
+    data: ContainerType.FORM
+  }
 
   // form表单中使用
-  _prop: PropsType[] = []
-  _style: PropsType[] = []
+  _prop: MetaContainerItem[] = []
+  _style: MetaContainerItem[] = []
   extraStyle: Recordable<string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
@@ -75,10 +81,11 @@ export abstract class CustomComponent {
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
     this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
+    Object.assign(this.defaultViewType, detail.defaultViewType || {})
   }
 
-  get propFromValue(): PropsType[] {
-    const common: PropsType = {
+  get propFromValue(): MetaContainerItem[] {
+    const common: MetaContainerItem = {
       label: '公共属性',
       prop: 'common',
       children: [
@@ -86,7 +93,7 @@ export abstract class CustomComponent {
           label: '名称',
           prop: 'name',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: this.name
           }
         },
@@ -94,7 +101,7 @@ export abstract class CustomComponent {
           label: '组件',
           prop: 'component',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: this.component,
             editable: false
           }
@@ -103,7 +110,7 @@ export abstract class CustomComponent {
           label: '组件ID',
           prop: 'id',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: this.id,
             editable: false
           }
@@ -113,9 +120,9 @@ export abstract class CustomComponent {
     return [common, ...this._prop]
   }
 
-  get styleFormValue(): PropsType[] {
+  get styleFormValue(): MetaContainerItem[] {
     if (!this._style.find((item) => item.prop === 'position')) {
-      const common: PropsType = {
+      const common: MetaContainerItem = {
         label: '位置大小',
         prop: 'position',
         children: [
@@ -123,7 +130,7 @@ export abstract class CustomComponent {
             label: '左边距',
             prop: 'left',
             type: FormType.NUMBER,
-            componentOptions: {
+            props: {
               defaultValue: this.positionStyle.left,
               suffix: () => h('span', {}, 'px'),
               precision: 0
@@ -133,7 +140,7 @@ export abstract class CustomComponent {
             label: '上边距',
             prop: 'top',
             type: FormType.NUMBER,
-            componentOptions: {
+            props: {
               defaultValue: this.positionStyle.top,
               suffix: () => h('span', {}, 'px'),
               precision: 0
@@ -143,7 +150,7 @@ export abstract class CustomComponent {
             label: '宽度',
             prop: 'width',
             type: FormType.NUMBER,
-            componentOptions: {
+            props: {
               defaultValue: this.positionStyle.width,
               suffix: () => h('span', {}, 'px'),
               precision: 0
@@ -153,7 +160,7 @@ export abstract class CustomComponent {
             label: '高度',
             prop: 'height',
             type: FormType.NUMBER,
-            componentOptions: {
+            props: {
               defaultValue: this.positionStyle.height,
               suffix: () => h('span', {}, 'px'),
               precision: 0
@@ -163,7 +170,7 @@ export abstract class CustomComponent {
             label: '旋转角度',
             prop: 'rotate',
             type: FormType.NUMBER,
-            componentOptions: {
+            props: {
               defaultValue: this.positionStyle.rotate,
               suffix: () => h('span', {}, '°')
             }
@@ -184,7 +191,10 @@ export abstract class CustomComponent {
         }
 
         ;(item.children || []).forEach((obj) => {
-          this._propValue[item.prop][obj.prop] = obj.componentOptions!.defaultValue
+          const objProps = obj.props || obj.componentOptions
+          if (objProps) {
+            this._propValue[item.prop][obj.prop] = objProps!.defaultValue
+          }
         })
       })
       this.propIsChange = false
@@ -198,10 +208,13 @@ export abstract class CustomComponent {
       const customStyle: Recordable[] = []
       this.styleFormValue.forEach((item) => {
         ;(item.children || []).forEach((obj) => {
-          if (obj.type === FormType.CUSTOM) {
-            customStyle[obj.prop] = obj.componentOptions!.defaultValue
+          const objProps = obj.props || obj.componentOptions
+          if (objProps) {
+            if (obj.type === FormType.CUSTOM) {
+              customStyle[obj.prop] = objProps.defaultValue
+            }
+            this._styleValue[obj.prop] = objProps!.defaultValue
           }
-          this._styleValue[obj.prop] = obj.componentOptions!.defaultValue
         })
       })
 
@@ -259,7 +272,10 @@ export abstract class CustomComponent {
       for (const child in component.propValue[prop]) {
         const item = (form.children || []).find((obj) => obj.prop === child)
         if (!item) continue
-        item.componentOptions!.defaultValue = component.propValue[prop][child]
+        const objProps = item.props || item.componentOptions
+        if (objProps) {
+          objProps.defaultValue = component.propValue[prop][child]
+        }
       }
     }
   }
@@ -271,8 +287,11 @@ export abstract class CustomComponent {
       this.styleFormValue.forEach((item) => {
         const propObj = (item.children || []).find((obj) => obj.prop === prop)
         if (propObj) {
-          propObj.componentOptions!.defaultValue = component.style[prop]
-
+          const objProps = propObj.props || propObj.componentOptions
+          if (!objProps) {
+            return
+          }
+          objProps.defaultValue = component.style[prop]
           if (prop in this.positionStyle) {
             this.positionStyle[prop] = component.style[prop]
           }
@@ -296,8 +315,11 @@ export abstract class CustomComponent {
       return
     }
 
-    const curObj = getObjProp(this.propFromValue, propKeys)
-    curObj.componentOptions.defaultValue = value
+    const curObj = getObjProp(this.propFromValue, propKeys) as MetaForm
+    const objProps = curObj.props || curObj.componentOptions
+    if (objProps) {
+      objProps.defaultValue = value
+    }
 
     setTimeout(() => {
       if (this.callbackProp) {
@@ -319,8 +341,11 @@ export abstract class CustomComponent {
       this.positionStyle[propKeys[1]] = changeValue
     }
     this.styleIsChange = true
-    const curObj = getObjProp(this.styleFormValue, propKeys)
-    curObj.componentOptions.defaultValue = value
+    const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
+    const objProps = curObj.props || curObj.componentOptions
+    if (objProps) {
+      objProps.defaultValue = value
+    }
     if (this.callbackStyle) this.callbackStyle(propKeys, value)
 
     // this.extraStyle[prop] = value

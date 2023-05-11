@@ -2,7 +2,7 @@ import { h } from 'vue'
 
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Decoration2'
 class DecorationComponent extends CustomComponent {
@@ -17,7 +17,7 @@ class DecorationComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '基础配置',
       prop: 'base',
@@ -26,7 +26,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color1',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#6586ec80'
           }
         },
@@ -34,7 +34,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color2',
           label: '颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#2cf7fe80'
           }
         },
@@ -42,14 +42,14 @@ class DecorationComponent extends CustomComponent {
           prop: 'text',
           label: '文本',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: 'OpenDataV'
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = [
+  _style: MetaContainerItem[] = [
     {
       label: '字体设置',
       prop: 'font',
@@ -58,7 +58,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#1E90FF'
           }
         },
@@ -66,7 +66,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20,
             suffix: () => h('span', {}, 'px')
           }
@@ -75,7 +75,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'fontWeight',
           label: '字体宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 200
           }
         },
@@ -83,7 +83,7 @@ class DecorationComponent extends CustomComponent {
           prop: 'fontFamily',
           label: '字体',
           type: FormType.FONT_STYLE,
-          componentOptions: {
+          props: {
             defaultValue: 'Arial'
           }
         }
