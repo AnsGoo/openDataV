@@ -19,6 +19,7 @@ import { defineComponent, h, reactive, ref } from 'vue'
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type {
   CustomFormSchema,
+  FormItemProps,
   InputFormSchema,
   InputNumberFormSchema,
   MetaForm,
@@ -146,8 +147,10 @@ export default defineComponent({
       })
     }
     const renderItem = (item: MetaForm, path: Array<string> = []) => {
+      const itemOptions = (item.props || item.componentOptions || {}) as FormItemProps
+      console.log(itemOptions)
       const options: Recordable[] =
-        (item.props as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
+        (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
 
       /**
        * 获取设置的值
@@ -156,7 +159,7 @@ export default defineComponent({
        * @return 返回值本体或默认值
        */
       function getOptionsValue<T = undefined>(name: string, defaultValue?: T): T {
-        return name in (item.props || {}) ? item.props![name] : defaultValue
+        return name in itemOptions ? itemOptions[name] : defaultValue
       }
 
       switch (item.type) {
@@ -207,8 +210,8 @@ export default defineComponent({
               precision={precision}
               clearable={true}
               v-slots={{
-                prefix: (item.props as InputNumberFormSchema).prefix,
-                suffix: (item.props as InputNumberFormSchema).suffix
+                prefix: (itemOptions as InputNumberFormSchema).prefix,
+                suffix: (itemOptions as InputNumberFormSchema).suffix
               }}
             />
           )
@@ -241,8 +244,8 @@ export default defineComponent({
             <CustomItem
               v-model:value={formData[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
-              component={(item.props as CustomFormSchema).componentType}
-              args={(item.props as CustomFormSchema).args}
+              component={(itemOptions as CustomFormSchema).componentType}
+              args={(itemOptions as CustomFormSchema).args}
             />
           )
         default:
@@ -251,11 +254,11 @@ export default defineComponent({
               clearable
               v-model:value={formData[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
-              readonly={item.props!.editable === false}
-              disabled={item.props!.disabled}
+              readonly={itemOptions!.editable === false}
+              disabled={itemOptions!.disabled}
               v-slots={{
-                prefix: (item.props as InputFormSchema).prefix,
-                suffix: (item.props as InputFormSchema).suffix
+                prefix: (itemOptions as InputFormSchema).prefix,
+                suffix: (itemOptions as InputFormSchema).suffix
               }}
             />
           )

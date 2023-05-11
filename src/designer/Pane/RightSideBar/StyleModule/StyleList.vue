@@ -29,19 +29,19 @@ import { computed, ref, watch } from 'vue'
 import FormAttr from '@/designer/modules/form/FormAttr'
 import useCanvasState from '@/designer/state/canvas'
 import type { CustomComponent } from '@/models'
+import type { ComponentStyle } from '@/types/component'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const canvasState = useCanvasState()
 
-const formData = ref<Recordable>({})
+const formData = ref<ComponentStyle>({ ...props.curComponent.style })
 const styleKeys = computed(() => {
   if (props.curComponent) {
     return props.curComponent.styleFormValue
-  } else {
-    return {}
   }
+  return []
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.style
@@ -65,6 +65,7 @@ watch(
   () => props.curComponent.id,
   () => {
     if (props.curComponent && props.curComponent.id) {
+      console.log(props.curComponent.style)
       formData.value = cloneDeep(props.curComponent.style)
     }
   },

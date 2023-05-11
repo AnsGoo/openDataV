@@ -192,7 +192,10 @@ export abstract class CustomComponent {
         }
 
         ;(item.children || []).forEach((obj) => {
-          this._propValue[item.prop][obj.prop] = obj.props!.defaultValue
+          const objProps = obj.props || obj.componentOptions
+          if (objProps) {
+            this._propValue[item.prop][obj.prop] = objProps!.defaultValue
+          }
         })
       })
       this.propIsChange = false
@@ -206,10 +209,13 @@ export abstract class CustomComponent {
       const customStyle: Recordable[] = []
       this.styleFormValue.forEach((item) => {
         ;(item.children || []).forEach((obj) => {
-          if (obj.type === FormType.CUSTOM) {
-            customStyle[obj.prop] = obj.props!.defaultValue
+          const objProps = obj.props || obj.componentOptions
+          if (objProps) {
+            if (obj.type === FormType.CUSTOM) {
+              customStyle[obj.prop] = objProps.defaultValue
+            }
+            this._styleValue[obj.prop] = objProps!.defaultValue
           }
-          this._styleValue[obj.prop] = obj.props!.defaultValue
         })
       })
 
@@ -267,7 +273,10 @@ export abstract class CustomComponent {
       for (const child in component.propValue[prop]) {
         const item = (form.children || []).find((obj) => obj.prop === child)
         if (!item) continue
-        item.props!.defaultValue = component.propValue[prop][child]
+        const objProps = item.props || item.componentOptions
+        if (objProps) {
+          objProps.defaultValue = component.propValue[prop][child]
+        }
       }
     }
   }
@@ -279,8 +288,11 @@ export abstract class CustomComponent {
       this.styleFormValue.forEach((item) => {
         const propObj = (item.children || []).find((obj) => obj.prop === prop)
         if (propObj) {
-          propObj.props!.defaultValue = component.style[prop]
-
+          const objProps = propObj.props || propObj.componentOptions
+          if (!objProps) {
+            return
+          }
+          objProps.defaultValue = component.style[prop]
           if (prop in this.positionStyle) {
             this.positionStyle[prop] = component.style[prop]
           }
@@ -305,7 +317,10 @@ export abstract class CustomComponent {
     }
 
     const curObj = getObjProp(this.propFromValue, propKeys) as MetaForm
-    curObj.props.defaultValue = value
+    const objProps = curObj.props || curObj.componentOptions
+    if (objProps) {
+      objProps.defaultValue = value
+    }
 
     setTimeout(() => {
       if (this.callbackProp) {
@@ -328,7 +343,10 @@ export abstract class CustomComponent {
     }
     this.styleIsChange = true
     const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
-    curObj.props.defaultValue = value
+    const objProps = curObj.props || curObj.componentOptions
+    if (objProps) {
+      objProps.defaultValue = value
+    }
     if (this.callbackStyle) this.callbackStyle(propKeys, value)
 
     // this.extraStyle[prop] = value

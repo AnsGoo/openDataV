@@ -110,7 +110,11 @@ export interface MetaForm {
   type?: FormType
   component?: string | ConcreteComponent
   showLabel?: boolean
-  props: FormItemProps
+  /**
+   * @deprecated componentOptions即将弃用，建议使用props
+   */
+  componentOptions?: FormItemProps
+  props?: FormItemProps
   children?: MetaForm
 }
 
@@ -120,9 +124,17 @@ export interface MetaContainerItem {
   showLabel?: boolean
   type?: ContainerType
   component?: string | ConcreteComponent
+  /**
+   * @deprecated componentOptions即将弃用，建议使用props
+   */
+  componentOptions?: ContainerItemProps
   props?: ContainerItemProps
   children: MetaForm[]
 }
+
+/**
+ * @deprecated PropsType 类型即将废弃，建议使用 MetaContainerItem
+ */
 export type PropsType = MetaContainerItem
 
 export interface ComponentData {

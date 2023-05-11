@@ -27,7 +27,7 @@ class BasicBarChartComponent extends CustomComponent {
           prop: 'upperLimit',
           label: '上限',
           type: FormType.NUMBER,
-          props: {
+          componentOptions: {
             defaultValue: 150
           }
         },
