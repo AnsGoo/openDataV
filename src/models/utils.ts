@@ -1,4 +1,4 @@
-import type { MetaForm, PropsType } from '@/types/component'
+import type { MetaContainerItem, MetaForm } from '@/types/component'
 
 export const uuid = (hasHyphen?: string) => {
   return (
@@ -11,10 +11,10 @@ export const uuid = (hasHyphen?: string) => {
 }
 
 export const getObjProp = (
-  obj: Array<PropsType> | Array<MetaForm>,
+  obj: Array<MetaContainerItem> | Array<MetaForm>,
   propKeys: Array<string>,
   start = 0
-): MetaForm | PropsType => {
+): MetaForm | MetaContainerItem => {
   // @ts-ignore
   const chidObj = obj.find((item) => item.prop === propKeys[start])
   if (chidObj && chidObj.children && start < propKeys.length) {

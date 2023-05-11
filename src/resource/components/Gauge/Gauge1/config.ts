@@ -2,7 +2,7 @@ import { h } from 'vue'
 
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Gauge1'
 class GaugeComponent extends CustomComponent {
@@ -18,7 +18,7 @@ class GaugeComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -80,7 +80,7 @@ class GaugeComponent extends CustomComponent {
       ]
     }
   ]
-  _style: PropsType[] = [
+  _style: MetaContainerItem[] = [
     {
       label: '字体设置',
       prop: 'font',

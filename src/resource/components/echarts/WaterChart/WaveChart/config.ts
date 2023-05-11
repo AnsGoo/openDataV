@@ -1,7 +1,7 @@
 import { ComponentGroup, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'WaveChart'
 class WaveChartComponent extends CustomComponent {
@@ -18,7 +18,7 @@ class WaveChartComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '图表配置',
       prop: 'options',

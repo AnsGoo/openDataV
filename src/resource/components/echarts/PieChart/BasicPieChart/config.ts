@@ -3,7 +3,7 @@ import { h } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'BasicPieChart'
 class BasicPieChartComponent extends CustomComponent {
@@ -20,7 +20,7 @@ class BasicPieChartComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -130,7 +130,7 @@ class BasicPieChartComponent extends CustomComponent {
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
   get exampleData() {
     return [
       { label: '秦', value: Math.round(Math.random() * 100) },

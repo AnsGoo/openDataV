@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'BorderImage'
 class BorderImageComponent extends CustomComponent {
@@ -15,7 +15,7 @@ class BorderImageComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '基础配置',
       prop: 'base',
@@ -62,7 +62,7 @@ class BorderImageComponent extends CustomComponent {
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
 }
 
 export default BorderImageComponent

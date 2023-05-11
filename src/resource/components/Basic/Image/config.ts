@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Image'
 class ImageComponent extends CustomComponent {
@@ -15,8 +15,8 @@ class ImageComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = []
-  _style: PropsType[] = [
+  _prop: MetaContainerItem[] = []
+  _style: MetaContainerItem[] = [
     {
       label: '背景设置',
       prop: 'background',

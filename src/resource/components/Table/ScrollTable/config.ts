@@ -3,7 +3,7 @@ import { h, shallowRef } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 import ScrollTableForm from './Form.vue'
 
@@ -22,7 +22,7 @@ class ScrollTableComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '表头',
       prop: 'header',

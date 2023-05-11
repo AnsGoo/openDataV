@@ -2,7 +2,7 @@ import { h } from 'vue'
 
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Progress'
 class ProgressComponent extends CustomComponent {
@@ -18,7 +18,7 @@ class ProgressComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -145,7 +145,7 @@ class ProgressComponent extends CustomComponent {
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
 }
 
 export default ProgressComponent

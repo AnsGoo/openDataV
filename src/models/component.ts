@@ -11,8 +11,7 @@ import type {
   DOMRectStyle,
   GroupStyle,
   MetaContainerItem,
-  MetaForm,
-  PropsType
+  MetaForm
 } from '@/types/component'
 
 import type { RequestData } from './requestOption'
@@ -51,8 +50,8 @@ export abstract class CustomComponent {
   }
 
   // form表单中使用
-  _prop: PropsType[] = []
-  _style: PropsType[] = []
+  _prop: MetaContainerItem[] = []
+  _style: MetaContainerItem[] = []
   extraStyle: Recordable<string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }

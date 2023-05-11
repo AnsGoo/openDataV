@@ -126,7 +126,7 @@ const props = defineProps<{
 
 组件属性是定义了组件在编辑器右侧`属性栏`中的`属性`的可配置项
 
-组件属性的由属性配置项对象`PropsType`和组件属性值对象构成
+组件属性的由属性配置项对象`MetaContainerItem`和组件属性值对象构成
 
 
 ```typescript
@@ -175,7 +175,7 @@ StaticTextType {
 
 
 ```
-属性配置项对象`PropsType`
+属性配置项对象`MetaContainerItem`
 - `label`: 分类标签
 - `prop`: 分类值
 - `children`: `AttrType`子属性配置项集合
