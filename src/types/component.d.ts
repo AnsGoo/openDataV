@@ -166,7 +166,9 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   width?: number
   height?: number
   dataIntegrationMode?: DataIntegrationMode
-  defaultViewType?: Record<'propValue' | 'style' | 'data', ContainerType>
+  defaultViewType?: {
+    [T: 'propValue' | 'style' | 'data']: ContainerType
+  }
 }
 
 export interface AfterScript {

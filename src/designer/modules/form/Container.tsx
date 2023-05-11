@@ -23,7 +23,7 @@ export default defineComponent({
     mode: {
       type: String as PropType<ContainerType>,
       required: false,
-      default: ContainerType.COLLAPSE
+      defalut: ContainerType.COLLAPSE
     }
   },
   emits: ['change'],
@@ -77,7 +77,7 @@ export default defineComponent({
             <>
               {containerItems.map((el) => {
                 return (
-                  <NCard title={el.label}>
+                  <NCard title={el.label} size="small">
                     <FormAttr
                       children={(el.children || []) as Array<MetaForm>}
                       key={el.prop}
