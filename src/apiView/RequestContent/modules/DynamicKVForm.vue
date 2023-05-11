@@ -130,7 +130,7 @@ watch(
     &:hover {
       scale: 1.2;
     }
-    transition: transform 1s scale;
+    transition: transform 1s ease-in-out;
   }
 }
 </style>

@@ -110,7 +110,7 @@ const contextmenus = (): ContextmenuItem[] => {
     pointer-events: none;
     mix-blend-mode: difference;
     &:hover {
-      backgourd-color: yellow;
+      background-color: yellow;
     }
   }
   .is-vertical {
