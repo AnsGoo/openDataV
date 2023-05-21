@@ -75,7 +75,7 @@ const handleSubmit = async (type: string) => {
     try {
       const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
-        message.info('修改成功')
+        message.success('修改成功')
         if (canvasState.name !== name) {
           canvasState.setName(name)
         }
@@ -89,7 +89,7 @@ const handleSubmit = async (type: string) => {
     try {
       const result = await savePageApi(layoutData)
       if (result.status === 201) {
-        message.info('保存成功')
+        message.success('保存成功')
         // 新增页面成功，则跳转到编辑页
         await router.push({
           name: 'Editor',

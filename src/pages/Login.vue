@@ -85,13 +85,13 @@ const loginAction = async () => {
       const resp = await loginApi(data)
       if (resp.status === 200) {
         await userStore.setToken(resp.data)
-        Logger.info('登录成功')
+        message.success('登录成功')
         const redirect: string | undefined = route.query.redirect as string | undefined
         await router.push({
           path: redirect ? redirect : 'Pages'
         })
       } else {
-        Logger.info('登录失败')
+        message.error('登录失败')
       }
     } catch (e: any) {
       message.error(`登录失败,请输入正确的账号密码`)
