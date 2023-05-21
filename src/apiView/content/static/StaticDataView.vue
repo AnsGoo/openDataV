@@ -1,5 +1,5 @@
 <template>
-  <CodeEditor ref="cm" :value="value" :mode="mode" @change="codeChange">
+  <OCodeEditor ref="cm" :value="value" :mode="mode" @change="codeChange">
     <template v-if="mode === 'debug'" #tool-bar>
       <div class="buttons">
         <x-icon class="item button" name="save" @click="handleSave" />
@@ -19,14 +19,12 @@
         </div>
       </div>
     </template>
-  </CodeEditor>
+  </OCodeEditor>
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import CodeEditor from '@/designer/data/CodeEditor.vue'
 import { message } from '@/utils/message'
 
 const savedStatus = ref<boolean>(true)
@@ -47,7 +45,7 @@ const props = withDefaults(
   }
 )
 
-const cm = ref<InstanceType<typeof CodeEditor> | null>(null)
+const cm = ref<HTMLElement | null>(null)
 const emits = defineEmits<{
   (e: 'update:value', value?: any): void
   (e: 'change', value?: any): void

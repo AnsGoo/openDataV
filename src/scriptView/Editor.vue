@@ -1,12 +1,5 @@
 <template>
-  <CodeEditor
-    ref="cm"
-    v-model:code="form.code"
-    :language="languageType"
-    :config="config"
-    :theme="darkTheme ? 'dark' : 'light'"
-    @update:code="formChange"
-  >
+  <OCodeEditor ref="cm" v-model:value="form.code" @update:value="formChange">
     <template #tool-bar>
       <div>
         <div class="buttons">
@@ -20,41 +13,19 @@
         <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
           {{ savedStatus ? '已保存' : '未保存' }}
         </div>
-        <div class="lang" @click="isShow = true">
-          <n-select
-            v-model:value="form.type"
-            :options="languageOptions"
-            class="item language"
-            size="tiny"
-            style="width: 110px"
-            @update:value="formChange"
-          />
-        </div>
       </div>
     </template>
-  </CodeEditor>
+  </OCodeEditor>
 </template>
 
 <script lang="ts" setup>
-import { javascript } from '@codemirror/lang-javascript'
-import { python } from '@codemirror/lang-python'
-import type { SelectOption } from 'naive-ui'
-import { NSelect } from 'naive-ui'
-import type { ComputedRef } from 'vue'
-import { computed, inject, reactive, ref, watch } from 'vue'
+import { reactive, ref, watch } from 'vue'
 
-/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import CodeEditor from '@/components/CodeEditor'
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 
-const darkTheme = inject<ComputedRef<boolean>>(
-  'DarkTheme',
-  computed(() => true)
-)
 const savedStatus = ref<boolean>(true)
-const isShow = ref<boolean>(false)
 const props = withDefaults(
   defineProps<{
     data: AfterScript
@@ -85,7 +56,6 @@ const emits = defineEmits<{
   (e: 'update:data', value: AfterScript): void
   (e: 'change', value: AfterScript): void
 }>()
-const languageMap = { Javascript: javascript, Python: python }
 
 const form = reactive(props.data)
 const formChange = () => {
@@ -93,21 +63,7 @@ const formChange = () => {
   emits('change', form)
 }
 
-const languageOptions = computed<SelectOption[]>(() => {
-  return Object.keys(ScriptType).map((el) => {
-    return {
-      label: el,
-      value: el
-    }
-  })
-})
-
-const language = ref<string>(ScriptType.Javascript)
-const languageType = computed<Function>(() => {
-  return languageMap[language.value] || javascript
-})
-
-const cm = ref<InstanceType<typeof CodeEditor> | null>(null)
+const cm = ref<HTMLElement | null>(null) as any
 const handleRedo = () => {
   const handler = cm.value!.handleRedo
   if (handler) {
@@ -125,6 +81,7 @@ watch(
   () => props.data,
   () => {
     if (props.data) {
+      console.log(props.data)
       form.code = props.data.code
       form.type = props.data.type
     }

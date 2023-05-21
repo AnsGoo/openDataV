@@ -25,7 +25,7 @@
     </div>
     <n-tabs>
       <n-tab-pane name="data" tab="处理数据" display-directive="show">
-        <DataView v-model:value="formData.afterData" />
+        <OCodeEditor v-model:value="formData.afterData" />
       </n-tab-pane>
       <n-tab-pane name="origin" tab="原始数据" display-directive="show">
         <StaticDataView
@@ -63,7 +63,6 @@ import {
 } from '@/api/data'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import { StaticKey, useEventBus } from '@/bus'
-import TextareaDataView from '@/designer/data/CodeEditor.vue'
 import { ScriptType } from '@/enum'
 import { makeFunction } from '@/utils/data'
 import { message } from '@/utils/message'
@@ -73,7 +72,6 @@ import type { AfterScript, StoreStaticOption } from '../../type'
 import { Logger } from '../../utils'
 import StaticDataView from './StaticDataView.vue'
 
-const DataView = TextareaDataView
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(
   defineProps<{

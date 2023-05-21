@@ -5,7 +5,7 @@
         <Render />
       </n-tab-pane>
       <n-tab-pane name="attr" tab="属性" display-directive="show">
-        <CodeEditor
+        <OCodeEditor
           v-model:value="form.propValue"
           class="content"
           mode="debug"
@@ -14,7 +14,7 @@
         />
       </n-tab-pane>
       <n-tab-pane name="style" tab="样式" display-directive="show">
-        <CodeEditor
+        <OCodeEditor
           v-model:value="form.style"
           class="content"
           mode="debug"
@@ -33,7 +33,6 @@ import { NCard, NTabPane, NTabs } from 'naive-ui'
 import type { ComponentOptions, ConcreteComponent } from 'vue'
 import { computed, h, reactive } from 'vue'
 
-import CodeEditor from '@/designer/data/CodeEditor.vue'
 import type { CustomComponent } from '@/models'
 import { getComponentStyle, uuid } from '@/utils/utils'
 

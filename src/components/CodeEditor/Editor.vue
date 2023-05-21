@@ -3,21 +3,21 @@
     <div class="tool-bar">
       <slot name="tool-bar"> </slot>
     </div>
-    <div class="main" :style="{ maxHeight: config.height }">
+    <div class="main" :style="{ maxHeight: codemirrorConfig.height }">
       <codemirror
-        :model-value="code || ''"
+        :model-value="value || ''"
         :style="{
           width: '100%',
-          height: config.height,
+          height: codemirrorConfig.height,
           backgroundColor: '#fff',
           color: '#333'
         }"
         placeholder="Please enter the code."
         :extensions="extensions"
-        :autofocus="config.autofocus"
-        :disabled="config.disabled"
-        :indent-with-tab="config.indentWithTab"
-        :tab-size="config.tabSize"
+        :autofocus="codemirrorConfig.autofocus"
+        :disabled="codemirrorConfig.disabled"
+        :indent-with-tab="codemirrorConfig.indentWithTab"
+        :tab-size="codemirrorConfig.tabSize"
         @ready="handleReady"
         @focus="log('focus', $event)"
         @blur="log('blur', $event)"
@@ -30,11 +30,12 @@
 
 <script lang="ts" setup>
 import { redo, undo } from '@codemirror/commands'
-import { json } from '@codemirror/lang-json'
+import { javascript } from '@codemirror/lang-javascript'
 import type { EditorState, Extension } from '@codemirror/state'
 import { oneDark } from '@codemirror/theme-one-dark'
 import type { EditorView, ViewUpdate } from '@codemirror/view'
-import { computed } from 'vue'
+import type { ComputedRef } from 'vue'
+import { computed, inject } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 
 import type { CodemirrorOption } from './type'
@@ -43,39 +44,42 @@ const Logger = console
 
 const props = withDefaults(
   defineProps<{
-    config?: CodemirrorOption
-    code?: string
-    language?: Function
-    theme?: string
+    value?: string
+    height?: string
+    disabled?: boolean
+    mode?: 'debug' | 'use'
   }>(),
   {
-    config: () => ({
-      height: '200px',
-      tabSize: 4,
-      indentWithTab: true,
-      autofocus: true,
-      disabled: false,
-      line: false
-    }),
-    code: '',
-    language: json,
-    theme: 'dark'
+    value: '',
+    height: '600px',
+    disabled: false,
+    mode: 'use'
   }
 )
 
+const codemirrorConfig = computed<CodemirrorOption>(() => {
+  return {
+    height: props.height,
+    tabSize: 4,
+    indentWithTab: true,
+    autofocus: true,
+    disabled: props.disabled,
+    line: false
+  }
+})
 const emits = defineEmits<{
-  (e: 'update:code', value: string): void
+  (e: 'update:value', value: string): void
   (e: 'change', value: string, viewUpdate: ViewUpdate): void
 }>()
 
 let cmView: EditorView
-
+const darkTheme = inject<ComputedRef<boolean>>(
+  'DarkTheme',
+  computed(() => true)
+)
 const extensions = computed(() => {
-  const result: Extension[] = []
-  if (props.language) {
-    result.push(props.language())
-  }
-  if (props.theme === 'dark') {
+  const result: Extension[] = [javascript()]
+  if (darkTheme.value) {
     result.push(oneDark)
   }
   return result
@@ -95,7 +99,7 @@ const handleReady = ({
 }
 const log = Logger.log
 const codeChange = (value: string, viewUpdate: ViewUpdate) => {
-  emits('update:code', value)
+  emits('update:value', value)
   emits('change', value, viewUpdate)
   return true
 }

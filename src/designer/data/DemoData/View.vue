@@ -18,7 +18,7 @@
       aria-modal="true"
       @close="isShow = false"
     >
-      <DataView v-model:value="formData.afterData" />
+      <OCodeEditor v-model:value="formData.afterData" />
     </n-card>
   </n-modal>
 </template>
@@ -32,14 +32,11 @@ import { DataType } from '@/enum/data'
 import type { CustomComponent, DemoRequestData } from '@/models'
 import { message } from '@/utils/message'
 
-import TextareaDataView from '../CodeEditor.vue'
-
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const isShow = ref<boolean>(false)
 
-const DataView = TextareaDataView
 const formData = reactive<{
   afterData: string
 }>({

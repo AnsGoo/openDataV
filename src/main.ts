@@ -6,21 +6,24 @@ import '@/assets/directionFonts/iconfont.css'
 import { createApp } from 'vue'
 
 import { AsyncComponent } from '@/designer/load'
+import useComponetPlugin from '@/designer/loadPlugin'
 import Directive from '@/plugins/directive'
-import XIcon from '@/plugins/xicon'
 import router from '@/router'
 import store from '@/store'
 
 import App from './App.vue'
+import CodeEditor from './components/CodeEditor'
+
+const componetPlugin = useComponetPlugin({ codeEditorComponet: CodeEditor })
 
 const app = createApp(App)
 app.use(router)
 app.use(Directive)
-app.use(XIcon)
 app.use(AsyncComponent)
 
 // 注册状态管理器
 app.use(store)
+app.use(componetPlugin)
 
 // 注册路由模块
 

@@ -1,5 +1,5 @@
 <template>
-  <CodeEditor ref="cm" v-model:value="form.code" @update:code="formChange">
+  <OCodeEditor ref="cm" v-model:value="form.code" @update:code="formChange">
     <template #tool-bar>
       <div>
         <div class="script">
@@ -45,7 +45,7 @@
         </div>
       </div>
     </template>
-  </CodeEditor>
+  </OCodeEditor>
 </template>
 
 <script lang="ts" setup>
@@ -60,8 +60,6 @@ import {
   updateAfterScriptApi
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
-/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import CodeEditor from '@/designer/data/CodeEditor.vue'
 import { Logger } from '@/utils/utils'
 
 import { ScriptType } from '../const'
@@ -112,7 +110,7 @@ const languageOptions = computed<SelectOption[]>(() => {
   })
 })
 
-const cm = ref<InstanceType<typeof CodeEditor> | null>(null)
+const cm = ref<HTMLElement | null>(null)
 const handleSubmit = () => {
   emits('change', form)
   emits('update:data', form)

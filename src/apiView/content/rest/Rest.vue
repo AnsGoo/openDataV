@@ -77,10 +77,10 @@
       </n-divider>
       <n-tabs>
         <n-tab-pane name="data" tab="脚本处理结果" display-directive="show">
-          <CodeEditor :value="response.afterData" class="content" />
+          <OCodeEditor :value="response.afterData" class="content" />
         </n-tab-pane>
         <n-tab-pane name="origin" tab="原始请求结果" display-directive="show">
-          <CodeEditor :value="response.data" class="content" />
+          <OCodeEditor :value="response.data" class="content" />
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本" display-directive="show">
           <ScriptsEditor
@@ -118,7 +118,6 @@ import {
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import { StaticKey, useEventBus } from '@/bus'
-import CodeEditor from '@/designer/data/CodeEditor.vue'
 
 import ScriptsEditor from '../../components/ScriptsEditor.vue'
 import { ScriptType } from '../../const'
