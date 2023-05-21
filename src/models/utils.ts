@@ -1,3 +1,5 @@
+import { isUndefined } from 'lodash-es'
+
 import type { MetaContainerItem, MetaForm } from '@/types/component'
 
 export const uuid = (hasHyphen?: string) => {
@@ -21,4 +23,56 @@ export const getObjProp = (
     return getObjProp(chidObj.children, propKeys, start + 1)
   }
   return chidObj
+}
+
+/**
+ * 根据表单配置，生成初始化表单值
+ * @param formItems 表单配置项
+ * @param modelValue 表单初始值
+ */
+export const buildModeValue = (
+  formItems: Array<MetaForm> | Array<MetaContainerItem>,
+  modelValue: Recordable<any>
+) => {
+  formItems.forEach((el) => {
+    if (el.children) {
+      const childModelValue = {}
+      buildModeValue(el.children, childModelValue)
+      modelValue[el.prop] = childModelValue
+    } else {
+      modelValue[el.prop] = el.props?.defaultValue
+    }
+  })
+}
+
+/**
+ * 根据对象属性路径更新对象
+ * @param modelValue 对象
+ * @param keys 属性路径
+ * @param value 属性值
+ */
+export const updateModeValue = (modelValue: Recordable<any>, keys: Array<string>, value: any) => {
+  keys.reduce((acc, cur, i) => {
+    return (acc[cur] = i === keys.length - 1 ? value : acc[cur] || {})
+    // 根据递归创建空对象，直到是最后一个属性并赋值
+  }, modelValue)
+}
+
+export const updateFormItemsValue = (
+  formItems: Array<MetaForm> | Array<MetaContainerItem>,
+  modelValue: Recordable<any>
+) => {
+  formItems.forEach((item) => {
+    if (item.children) {
+      if (isUndefined(modelValue[item.prop])) {
+        modelValue[item.prop] = {}
+      }
+      return updateFormItemsValue(item.children, modelValue[item.prop])
+    }
+    if (!isUndefined(modelValue[item.prop]) && (item.props || item.componentOptions)) {
+      return ((item.props || item.componentOptions).defaultValue = modelValue[item.prop])
+    } else {
+      modelValue[item.prop] = (item.props || item.componentOptions).defaultValue
+    }
+  })
 }

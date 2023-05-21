@@ -12,8 +12,8 @@
 import type { ComputedRef } from 'vue'
 import { computed, inject } from 'vue'
 
-import CodeEditor from '@/components/CodeEditor'
-import type { CodemirrorOption } from '@/components/CodeEditor/type'
+import CodeEditor from '../CodeEditor'
+import type { CodemirrorOption } from '../CodeEditor/type'
 
 const props = withDefaults(
   defineProps<{

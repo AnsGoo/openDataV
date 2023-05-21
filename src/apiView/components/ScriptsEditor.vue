@@ -64,8 +64,8 @@ import type { AfterScriptDetail } from '@/api/data/type'
 import CodeEditor from '@/designer/data/CodeEditor.vue'
 import { Logger } from '@/utils/utils'
 
-import { ScriptType } from '../../../const'
-import type { AfterScript } from '../../../type'
+import { ScriptType } from '../const'
+import type { AfterScript } from '../type'
 
 const scriptList = ref<SelectOption[]>([])
 

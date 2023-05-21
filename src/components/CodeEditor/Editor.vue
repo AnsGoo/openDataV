@@ -37,9 +37,9 @@ import type { EditorView, ViewUpdate } from '@codemirror/view'
 import { computed } from 'vue'
 import { Codemirror } from 'vue-codemirror'
 
-import { Logger } from '@/utils/utils'
-
 import type { CodemirrorOption } from './type'
+
+const Logger = console
 
 const props = withDefaults(
   defineProps<{

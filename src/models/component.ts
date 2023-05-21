@@ -16,7 +16,7 @@ import type {
 
 import type { RequestData } from './requestOption'
 import { DemoRequestData, RestRequestData, StaticRequestData } from './requestOption'
-import { getObjProp, uuid } from './utils'
+import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
   type: DataType
@@ -117,7 +117,10 @@ export abstract class CustomComponent {
         }
       ]
     }
-    return [common, ...this._prop]
+    const propFrom = [common, ...this._prop]
+    const propValue = {}
+    buildModeValue(propFrom, propValue)
+    return propFrom
   }
 
   get styleFormValue(): MetaContainerItem[] {
@@ -185,21 +188,9 @@ export abstract class CustomComponent {
 
   get propValue() {
     if (this.propIsChange) {
-      this._prop.forEach((item) => {
-        if (!Reflect.has(this._propValue, item.prop)) {
-          this._propValue[item.prop] = {}
-        }
-
-        ;(item.children || []).forEach((obj) => {
-          const objProps = obj.props || obj.componentOptions
-          if (objProps) {
-            this._propValue[item.prop][obj.prop] = objProps!.defaultValue
-          }
-        })
-      })
+      updateFormItemsValue(this._prop, this._propValue)
       this.propIsChange = false
     }
-
     return this._propValue
   }
 
@@ -263,27 +254,16 @@ export abstract class CustomComponent {
   }
 
   // 后端数据回填propValue
-  setPropValue(component: Record<string, any>) {
+  setPropValue({ propValue }: { propValue: Record<string, any> }) {
     this.propIsChange = true
-    for (const prop in component.propValue) {
-      const form = this._prop.find((obj) => obj.prop === prop)
-      if (!form) continue
-
-      for (const child in component.propValue[prop]) {
-        const item = (form.children || []).find((obj) => obj.prop === child)
-        if (!item) continue
-        const objProps = item.props || item.componentOptions
-        if (objProps) {
-          objProps.defaultValue = component.propValue[prop][child]
-        }
-      }
-    }
+    updateFormItemsValue(this._prop, propValue)
+    this._propValue = propValue
   }
 
   // 后端数据回填style
-  setStyleValue(component: Record<string, any>) {
+  setStyleValue({ style }: { style: Record<string, any> }) {
     this.styleIsChange = true
-    for (const prop in component.style) {
+    for (const prop in style) {
       this.styleFormValue.forEach((item) => {
         const propObj = (item.children || []).find((obj) => obj.prop === prop)
         if (propObj) {
@@ -291,9 +271,9 @@ export abstract class CustomComponent {
           if (!objProps) {
             return
           }
-          objProps.defaultValue = component.style[prop]
+          objProps.defaultValue = style[prop]
           if (prop in this.positionStyle) {
-            this.positionStyle[prop] = component.style[prop]
+            this.positionStyle[prop] = style[prop]
           }
         }
       })
@@ -314,13 +294,7 @@ export abstract class CustomComponent {
       this.name = value as string
       return
     }
-
-    const curObj = getObjProp(this.propFromValue, propKeys) as MetaForm
-    const objProps = curObj.props || curObj.componentOptions
-    if (objProps) {
-      objProps.defaultValue = value
-    }
-
+    updateModeValue(this._propValue, propKeys, value)
     setTimeout(() => {
       if (this.callbackProp) {
         this.callbackProp(propKeys, value)

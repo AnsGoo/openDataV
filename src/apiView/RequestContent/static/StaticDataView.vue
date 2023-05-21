@@ -1,21 +1,16 @@
 <template>
-  <CodeEditor
-    ref="cm"
-    v-model:code="contentRef"
-    :config="config"
-    :theme="darkTheme ? 'dark' : 'light'"
-    @change="codeChange"
-  >
+  <CodeEditor ref="cm" :value="value" :mode="mode" @change="codeChange">
     <template v-if="mode === 'debug'" #tool-bar>
       <div class="buttons">
         <x-icon class="item button" name="save" @click="handleSave" />
-        <x-icon class="item button" name="back" @click="handleUndo" />
-        <x-icon class="item button" name="next" @click="handleRedo" />
       </div>
     </template>
     <template #footer>
       <div class="footer">
-        <div class="left">{{ title ? `数据名称：${title}` : '' }}</div>
+        <div class="left">
+          <span v-if="error" class="err-message"> {{ error }}</span>
+          <span v-else class="info-message">{{ title ? `数据名称：${title}` : '' }}</span>
+        </div>
         <div class="right">
           <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
             {{ savedStatus ? '已保存' : '未保存' }}
@@ -28,83 +23,44 @@
 </template>
 
 <script lang="ts" setup>
-import type { ComputedRef } from 'vue'
-import { computed, inject, ref, watch } from 'vue'
+import { ref } from 'vue'
 
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import CodeEditor from '@/components/CodeEditor'
-import type { CodemirrorOption } from '@/components/CodeEditor/type'
+import CodeEditor from '@/designer/data/CodeEditor.vue'
 import { message } from '@/utils/message'
 
 const savedStatus = ref<boolean>(true)
 
-const darkTheme = inject<ComputedRef<boolean>>(
-  'DarkTheme',
-  computed(() => true)
-)
 const props = withDefaults(
   defineProps<{
-    content?: any
+    value?: string
     title?: string
-    mode?: string
+    mode?: 'debug' | 'use'
     height?: string
+    error?: string
   }>(),
   {
-    content: '',
+    value: '',
     title: '',
     mode: 'use',
     height: '600px'
   }
 )
-const config = computed<CodemirrorOption>(() => {
-  return {
-    height: props.height,
-    tabSize: 4,
-    indentWithTab: true,
-    autofocus: true,
-    disabled: props.mode === 'debug' ? false : true
-  }
-})
+
 const cm = ref<InstanceType<typeof CodeEditor> | null>(null)
-const handleRedo = () => {
-  const handler = cm.value!.handleRedo
-  if (handler) {
-    handler()
-  }
-}
-const handleUndo = () => {
-  const handler = cm.value!.handleUndo
-  if (handler) {
-    handler()
-  }
-}
-
 const emits = defineEmits<{
-  (e: 'update:content', content?: any): void
+  (e: 'update:value', value?: any): void
+  (e: 'change', value?: any): void
 }>()
-
-const contentRef = ref<string>(JSON.stringify(props.content, null, '\t'))
-
 const codeChange = (_: string) => {
   savedStatus.value = false
 }
 
 const handleSave = () => {
-  try {
-    emits('update:content', JSON.parse(contentRef.value))
-    savedStatus.value = true
-    message.success('保存成功')
-  } catch (err: any) {
-    console.log(err)
-    message.warning('数据必须符合JSON格式')
-  }
+  emits('update:value', props.value)
+  savedStatus.value = true
+  message.info('保存成功')
 }
-watch(
-  () => props.content,
-  () => {
-    contentRef.value = JSON.stringify(props.content, null, '\t')
-  }
-)
 </script>
 <style lang="less" scoped>
 .buttons {
@@ -137,7 +93,12 @@ watch(
     border-radius: 2px;
   }
   .left {
-    color: #2080f0;
+    .err-message {
+      color: #d03050;
+    }
+    .info-message {
+      color: #2080f0;
+    }
   }
   .right {
     display: flex;

@@ -7,7 +7,7 @@ import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
 import { message } from '@/utils/message'
 
-import type { FinallyResponse, StoreRestOption } from './type'
+import type { FinallyResponse, StoreRestOption } from '../type'
 
 export class RestRequest {
   private axiosInstance: AxiosInstance

@@ -115,7 +115,7 @@ export interface MetaForm {
    */
   componentOptions?: FormItemProps
   props?: FormItemProps
-  children?: MetaForm
+  children?: MetaForm[]
 }
 
 export interface MetaContainerItem {

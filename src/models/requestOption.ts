@@ -4,12 +4,11 @@ import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
 import type { RestRequest } from '@/apiView/hooks/http'
 import useRestRequest from '@/apiView/hooks/http'
-import type { StoreRestOption, StoreStaticOption } from '@/apiView/hooks/http/type'
 import { DataType } from '@/enum/data'
 import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
 
-import type { RequestResponse } from './type'
+import type { RequestResponse, StoreRestOption, StoreStaticOption } from './type'
 
 type RequestOption = StoreStaticOption | StoreRestOption
 

@@ -1,5 +1,5 @@
 <template>
-  <n-form>
+  <n-form size="small">
     <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
@@ -36,13 +36,12 @@
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import type { StoreStaticOption } from '@/apiView/hooks/http/type'
-import Static from '@/apiView/RequestContent/static'
-import { ScriptType } from '@/enum'
-import { DataType } from '@/enum/data'
 import type { CustomComponent, StaticRequestData } from '@/models'
 import type { AfterScript } from '@/types/component'
-import { message } from '@/utils/message'
+
+import { DataType, ScriptType } from '../const'
+import Static from '../RequestContent/static'
+import type { StoreStaticOption } from '../type'
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -71,7 +70,6 @@ const initData = async () => {
     formDataConfig.script = options.script!
     formDataConfig.title = options.title!
   } else {
-    message.info('请配置静态数据')
     await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
       options: {
         id: formDataConfig.id,

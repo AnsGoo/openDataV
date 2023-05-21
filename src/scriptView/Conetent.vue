@@ -146,7 +146,7 @@ const handleSave = async () => {
       formData.title = data.name
       formData.code = data.code
       formData.type = data.type
-      message.success('数据保存成功')
+      Logger.info('数据保存成功')
     } else {
       message.warning('数据保存失败')
     }
@@ -162,7 +162,7 @@ const handleUpdate = async () => {
       type: formData.type
     })
     if (resp.status === 200) {
-      message.success('数据更新成功')
+      Logger.info('数据更新成功')
     } else {
       message.warning('数据更新失败')
     }

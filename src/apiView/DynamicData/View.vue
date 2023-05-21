@@ -1,5 +1,5 @@
 <template>
-  <n-form :model="formData">
+  <n-form :model="formData" size="small">
     <n-form-item label="动态数据" label-placement="top">
       <n-input-group>
         <n-input v-model:value="formData.options.url" style="flex: 1" readonly>
@@ -59,15 +59,13 @@ import {
 } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import type { RestOption } from '@/apiView/hooks/http/type'
-import { requestOptionsToStore, storeOptionToRequestOptions } from '@/apiView/hooks/http/utils'
-import { RequestMethod } from '@/apiView/RequestContent/requestEnums'
 import Rest from '@/apiView/RequestContent/rest'
-import { ScriptType } from '@/enum'
-import { DataType } from '@/enum/data'
 import type { CustomComponent, RestRequestData } from '@/models'
-import { message } from '@/utils/message'
-import { uuid } from '@/utils/utils'
+
+import { DataType, ScriptType } from '../const'
+import { RequestMethod } from '../RequestContent/requestEnums'
+import type { RestOption } from '../type'
+import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -118,7 +116,6 @@ const initData = () => {
     formData.interval = otherConfig.interval || 1000
     formData.isRepeat = otherConfig.isRepeat || false
   } else {
-    message.info('请配置动态数据')
     formData.isRepeat = false
     formData.interval = 1000
     formData.options = {

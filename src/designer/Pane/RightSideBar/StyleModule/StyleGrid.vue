@@ -1,43 +1,28 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list">
-    <n-collapse accordion>
-      <n-collapse-item
-        v-for="{ label, prop, children } in styleKeys"
-        :key="`${curComponent.id}${prop}`"
-        :title="label"
-        :name="prop"
-      >
-        <FormAttr
-          :children="children"
-          :data="formData"
-          :name="label"
-          :uid="prop"
-          :ukey="curComponent.id"
-          @change="changed"
-        />
-      </n-collapse-item>
-    </n-collapse>
+    <Container :config="styleKeys" :data="formData" :mode="mode" @change="changed" />
   </div>
 </template>
 
 <script setup lang="ts">
 import { cloneDeep, debounce } from 'lodash-es'
-import { NCollapse, NCollapseItem } from 'naive-ui'
 import { computed, ref, watch } from 'vue'
 
-import FormAttr from '@/designer/modules/form/FormAttr'
+import Container from '@/designer/modules/form/Container'
 import useCanvasState from '@/designer/state/canvas'
+import type { ContainerType } from '@/enum'
 import type { CustomComponent } from '@/models'
-import type { ComponentStyle } from '@/types/component'
+import type { ComponentStyle, MetaContainerItem } from '@/types/component'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const canvasState = useCanvasState()
+const mode = computed<ContainerType>(() => props.curComponent.defaultViewType.style)
 
 const formData = ref<ComponentStyle>({ ...props.curComponent.style })
-const styleKeys = computed(() => {
+const styleKeys = computed<Array<MetaContainerItem>>(() => {
   if (props.curComponent) {
     return props.curComponent.styleFormValue
   }

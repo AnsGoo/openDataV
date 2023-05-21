@@ -59,7 +59,7 @@ class ActionState {
 
   /**
    * 给定区域获取该区域的组件
-   * @param style
+   * @param position
    */
   setSelectComponents(position: Position) {
     const { components, rect } = getSelectComponents(position, canvasState.componentData) || {}

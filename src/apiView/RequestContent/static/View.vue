@@ -25,15 +25,16 @@
     </div>
     <n-tabs>
       <n-tab-pane name="data" tab="处理数据" display-directive="show">
-        <DataView v-model:content="formData.afterData" class="content" :disable="true" />
+        <DataView v-model:value="formData.afterData" />
       </n-tab-pane>
       <n-tab-pane name="origin" tab="原始数据" display-directive="show">
         <StaticDataView
-          :content="formData.originData"
+          v-model:value="originData"
           :title="formData.title"
           class="content"
           :mode="mode"
-          @update:content="originDataChange"
+          :error="errMessage"
+          @update:value="originDataChange"
         />
       </n-tab-pane>
       <n-tab-pane name="scripts" tab="脚本" display-directive="show">
@@ -60,19 +61,19 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
-import type { StoreStaticOption } from '@/apiView/hooks/http/type'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import { StaticKey, useEventBus } from '@/bus'
-import DataView from '@/components/DataView'
-import StaticDataView from '@/components/StaticDataView'
+import TextareaDataView from '@/designer/data/CodeEditor.vue'
 import { ScriptType } from '@/enum'
-import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
 import { message } from '@/utils/message'
-import { Logger } from '@/utils/utils'
 
+import type { AfterScript, StoreStaticOption } from '../../type'
+import { Logger } from '../../utils'
 import ScriptsEdtor from '../modules/ScriptsEditor'
+import StaticDataView from './StaticDataView.vue'
 
+const DataView = TextareaDataView
 const staticDataList = ref<Array<SelectOption>>([])
 const props = withDefaults(
   defineProps<{
@@ -137,15 +138,25 @@ const emits = defineEmits<{
 const clear = () => {
   formData.id = undefined
 }
+const errMessage = ref<string | undefined>(undefined)
 
 const originDataChange = (value: any) => {
-  formData.originData = value
-  getAfterData(props.options.script!)
+  try {
+    formData.originData = JSON.parse(value)
+    getAfterData(props.options.script!)
+  } catch (err) {
+    errMessage.value = '语法错误'
+    return
+  }
+  originData.value = value
 }
+
+const originData = ref<string>('')
 const dataChangeHandler = async (id: string) => {
   if (id) {
     const resp: StaticDataDetail | undefined = await loadStaticData(id)
     if (resp) {
+      originData.value = JSON.stringify(resp.data, null, '\t')
       formData.originData = resp.data
       getAfterData(props.options.script!)
       formData.id = id
@@ -206,7 +217,7 @@ const handleSave = async () => {
       formData.id = data.id
       formData.title = data.name
       formData.originData = data.data
-      message.success('数据保存成功')
+      Logger.info('数据保存成功')
       await loadStaticList()
     } else {
       message.warning('数据保存失败')
@@ -222,7 +233,7 @@ const handleUpdate = async () => {
       name: formData.title || '未命名'
     })
     if (resp.status === 200) {
-      message.success('数据更新成功')
+      Logger.info('数据更新成功')
       await loadStaticList()
     } else {
       message.warning('数据更新失败')

@@ -143,7 +143,8 @@ export enum ContainerType {
   FORM = 'Form',
   TABS = 'Tabs',
   COLLAPSE = 'Collapse',
-  CARD = 'Card'
+  CARD = 'Card',
+  TIMELINE = 'Timeline'
 }
 
 export enum EChartTypeEnum {

@@ -1,6 +1,11 @@
 import type { AxiosResponse, Method } from 'axios'
 
-import type { AfterScript } from '@/types/component'
+import type { ScriptType } from '@/enum'
+
+export interface AfterScript {
+  code: string
+  type: ScriptType
+}
 
 export interface KV {
   key: string
@@ -41,3 +46,8 @@ export interface RequestResponse {
 }
 
 export declare type FinallyResponse<T> = AxiosResponse<T> & { afterData: any }
+
+export interface CallbackType {
+  handler?: (resp: any, options: Recordable) => any
+  error?: Error
+}

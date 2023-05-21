@@ -5,21 +5,21 @@
         <Render />
       </n-tab-pane>
       <n-tab-pane name="attr" tab="属性" display-directive="show">
-        <StaticDataView
-          v-model:content="form.propValue"
+        <CodeEditor
+          v-model:value="form.propValue"
           class="content"
           mode="debug"
           height="300px"
-          @update:content="propValueChange"
+          @update:value="propValueChange"
         />
       </n-tab-pane>
       <n-tab-pane name="style" tab="样式" display-directive="show">
-        <StaticDataView
-          v-model:content="form.style"
+        <CodeEditor
+          v-model:value="form.style"
           class="content"
           mode="debug"
           height="300px"
-          @update:content="styleChange"
+          @update:value="styleChange"
         />
       </n-tab-pane>
     </n-tabs>
@@ -33,7 +33,7 @@ import { NCard, NTabPane, NTabs } from 'naive-ui'
 import type { ComponentOptions, ConcreteComponent } from 'vue'
 import { computed, h, reactive } from 'vue'
 
-import StaticDataView from '@/components/StaticDataView'
+import CodeEditor from '@/designer/data/CodeEditor.vue'
 import type { CustomComponent } from '@/models'
 import { getComponentStyle, uuid } from '@/utils/utils'
 
@@ -44,32 +44,34 @@ const props = withDefaults(
     propValue: Recordable
     style: Recordable
     title: string
-    mode?: 'view' | 'debug'
+    mode?: 'view' | 'debug' | 'use'
   }>(),
   {
-    mode: 'view'
+    mode: 'debug'
   }
 )
 // const componentInstance = new props.config(uuid())
 const form = reactive<{
-  propValue: Recordable
-  style: Recordable
+  propValue: string
+  style: string
 }>({
-  propValue: props.propValue,
-  style: props.style
+  propValue: JSON.stringify(props.propValue, null, '\t'),
+  style: JSON.stringify(props.style, null, '\t')
 })
 
-const propValueChange = (value: Recordable) => {
+const propValueChange = (value: string) => {
   form.propValue = value
 }
-const styleChange = (style: Recordable) => {
+const styleChange = (style: string) => {
   form.style = style
 }
 
 const Render = computed<ComponentOptions>(() => {
   const componentInstance = new props.config(uuid())
-  componentInstance.setPropValue({ propValue: form.propValue })
-  componentInstance.setStyleValue({ style: form.style })
+  const style = JSON.parse(form.style)
+  const propValue = JSON.parse(form.propValue)
+  componentInstance.setStyleValue({ style: style })
+  componentInstance.setPropValue({ propValue: propValue })
   return h(props.component, {
     id: componentInstance.id,
     key: componentInstance.id,

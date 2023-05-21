@@ -77,10 +77,10 @@
       </n-divider>
       <n-tabs>
         <n-tab-pane name="data" tab="脚本处理结果" display-directive="show">
-          <ReponseContentView :data="response.afterData" class="content" />
+          <CodeEditor :value="response.afterData" class="content" />
         </n-tab-pane>
         <n-tab-pane name="origin" tab="原始请求结果" display-directive="show">
-          <ReponseContentView :data="response.data" class="content" />
+          <CodeEditor :value="response.data" class="content" />
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本" display-directive="show">
           <ScriptsEditor
@@ -117,20 +117,17 @@ import {
   updateRestDataApi
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
-import useRestRequest from '@/apiView/hooks/http'
-import type { RequestResponse, RestOption } from '@/apiView/hooks/http/type'
-import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/hooks/http/utils'
-import useDataSnapShot from '@/apiView/hooks/snapshot'
 import { StaticKey, useEventBus } from '@/bus'
-import { ScriptType } from '@/enum'
-import type { AfterScript } from '@/types/component'
-import { message } from '@/utils/message'
-import { Logger, uuid } from '@/utils/utils'
+import CodeEditor from '@/designer/data/CodeEditor.vue'
 
-import DynamicKVForm from '../modules/DynamicKVForm.vue'
+import { ScriptType } from '../../const'
+import useRestRequest from '../../hooks/http'
+import useDataSnapShot from '../../hooks/snapshot'
+import type { AfterScript, RequestResponse, RestOption } from '../../type'
+import { KVToRecordable, Logger, recordabletoKV, requestOptionsToStore, uuid } from '../../utils'
 import ScriptsEditor from '../modules/ScriptsEditor'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
-import ReponseContentView from './modules/ReponseContentView.vue'
+import DynamicKVForm from './DynamicKVForm.vue'
 
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
@@ -319,12 +316,12 @@ const handleSave = async () => {
       const data: RestDataDetail = resp.data
       formData.id = data.id!
       formData.title = data.name
-      message.success('数据保存成功')
+      Logger.info('数据保存成功')
     } else {
-      message.warning('数据保存失败')
+      Logger.warn('数据保存失败')
     }
   } catch (err) {
-    message.warning('数据保存失败')
+    Logger.warn('数据保存失败')
   }
 }
 const handleUpdate = async () => {
@@ -341,12 +338,12 @@ const handleUpdate = async () => {
       params: params
     })
     if (resp.status === 200) {
-      message.success('数据更新成功')
+      Logger.info('数据更新成功')
     } else {
-      message.warning('数据更新失败')
+      Logger.warn('数据更新失败')
     }
   } catch (err) {
-    message.warning('数据更新失败')
+    Logger.warn('数据更新失败')
   }
 }
 

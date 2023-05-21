@@ -4,38 +4,35 @@
       <n-input
         :value="data.backgroundImage"
         placeholder="请输入图片地址"
-        @update:value="(value) => handleChange(value, 'backgroundImage')"
+        @update:value="(value:string) => handleChange(value, 'backgroundImage')"
       />
-      <n-upload :custom-request="customRequest" :show-file-list="false">
-        <n-button size="small">上传</n-button>
-      </n-upload>
     </n-form-item>
     <n-form-item label="填充">
       <n-select
         :value="data.backgroundRepeat"
         :options="repeatOptions"
-        @update:value="(value) => handleChange(value, 'backgroundRepeat')"
+        @update:value="(value:string) => handleChange(value, 'backgroundRepeat')"
       />
     </n-form-item>
     <n-form-item label="附着">
       <n-select
         :value="data.backgroundAttachment"
         :options="attachmentOptions"
-        @update:value="(value) => handleChange(value, 'backgroundAttachment')"
+        @update:value="(value:string) => handleChange(value, 'backgroundAttachment')"
       />
     </n-form-item>
     <n-form-item label="位置">
       <n-select
         :value="data.backgroundPosition"
         :options="positionOptions"
-        @update:value="(value) => handleChange(value, 'backgroundPosition')"
+        @update:value="(value:string) => handleChange(value, 'backgroundPosition')"
       />
     </n-form-item>
     <n-form-item label="尺寸">
       <n-select
         :value="data.backgroundSize"
         :options="sizeOptions"
-        @update:value="(value) => handleChange(value, 'backgroundSize')"
+        @update:value="(value:string) => handleChange(value, 'backgroundSize')"
       />
     </n-form-item>
   </n-form>
@@ -43,11 +40,10 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import type { SelectOption, UploadCustomRequestOptions } from 'naive-ui'
-import { NButton, NForm, NFormItem, NInput, NSelect, NUpload } from 'naive-ui'
+import type { SelectOption } from 'naive-ui'
+import { NForm, NFormItem, NInput, NSelect } from 'naive-ui'
 import { computed } from 'vue'
 
-import { uploadImageFileApi } from '@/api/images'
 import type { BackgroundImage } from '@/types/common'
 
 const props = defineProps<{
@@ -67,20 +63,6 @@ const data = computed<BackgroundImage>(() => {
     backgroundSize: props.value.backgroundSize || 'cover'
   }
 })
-
-const customRequest = async ({ file, onFinish, onError }: UploadCustomRequestOptions) => {
-  try {
-    const formData = new FormData()
-    formData.append('file', file.file as File)
-    const resp = await uploadImageFileApi(formData)
-    if (resp.status === 200) {
-      handleChange(resp.data.url, 'backgroundImage')
-    }
-    onFinish()
-  } catch (e) {
-    onError()
-  }
-}
 
 const repeatOptions: SelectOption[] = [
   {
