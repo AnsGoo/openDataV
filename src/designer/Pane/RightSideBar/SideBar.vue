@@ -52,15 +52,17 @@
 <script setup lang="ts">
 import type { MenuOption } from 'naive-ui'
 import { NMenu, NTabPane, NTabs } from 'naive-ui'
-import { computed, h, ref } from 'vue'
+import { computed, getCurrentInstance, h, ref } from 'vue'
 
 import useCanvasState from '@/designer/state/canvas'
-import { XIcon } from '@/plugins/xicon'
 
 import AttrList from './AttrModule'
 import Canvas from './Canvas.vue'
 import DataList from './DataModule'
-import StyleList from './StyleModule' // 右侧属性列表
+import StyleList from './StyleModule'
+// 右侧属性列表
+const instance = getCurrentInstance()
+const XIcon = instance!.appContext.components['XIcon']
 
 const activeKey = ref<string>('attr')
 

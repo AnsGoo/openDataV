@@ -3,7 +3,7 @@ import { h } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'ScrollRankingBoard'
 class RankBoardComponent extends CustomComponent {
@@ -20,7 +20,7 @@ class RankBoardComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -29,7 +29,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'maxValue',
           label: '最大值',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 150
           }
         },
@@ -37,7 +37,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'unit',
           label: '单位',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         }
@@ -51,7 +51,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'color1',
           label: '颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         },
@@ -59,7 +59,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'color2',
           label: '颜色2',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00BAFF'
           }
         },
@@ -67,7 +67,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'barHeight',
           label: '边框宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20,
             suffix: () => h('span', {}, 'px')
           }
@@ -76,7 +76,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'borderRadius',
           label: '圆角',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 10,
             suffix: () => h('span', {}, 'px')
           }
@@ -91,7 +91,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'lineColor',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         },
@@ -99,7 +99,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'borderGap',
           label: '边框间隔',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 3,
             suffix: () => h('span', {}, 'px')
           }
@@ -108,7 +108,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'lineHeight',
           label: '线条宽度',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 5,
             suffix: () => h('span', {}, 'px')
           }
@@ -123,7 +123,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 15,
             suffix: () => h('span', {}, 'px')
           }
@@ -132,7 +132,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'labelColor',
           label: '标题字体颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         },
@@ -140,7 +140,7 @@ class RankBoardComponent extends CustomComponent {
           prop: 'rankColor',
           label: '排名字体颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         },
@@ -148,14 +148,14 @@ class RankBoardComponent extends CustomComponent {
           prop: 'valueColor',
           label: '值字体颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#3DE7C9'
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
   get exampleData() {
     return [
       { label: '秦', value: Math.round(Math.random() * 100) },

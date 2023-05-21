@@ -41,11 +41,11 @@ class ClipBoardState {
     const canvasState = useCanvasState()
 
     if (isMouse) {
-      this.copyData.change('top', y!)
-      this.copyData.change('left', x!)
+      this.copyData.change(['position', 'top'], y!, 'style')
+      this.copyData.change(['position', 'left'], x!, 'style')
     } else {
-      this.copyData.change('top', (this.copyData.style.top as number) + 10)
-      this.copyData.change('left', (this.copyData.style.left as number) + 10)
+      this.copyData.change(['position', 'top'], (this.copyData.style.top as number) + 10, 'style')
+      this.copyData.change(['position', 'left'], (this.copyData.style.left as number) + 10, 'style')
     }
 
     const data = cloneDeep(this.copyData)

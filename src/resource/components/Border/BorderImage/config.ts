@@ -1,6 +1,6 @@
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'BorderImage'
 class BorderImageComponent extends CustomComponent {
@@ -15,7 +15,7 @@ class BorderImageComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '基础配置',
       prop: 'base',
@@ -24,7 +24,7 @@ class BorderImageComponent extends CustomComponent {
           prop: 'borderSource',
           label: '边框图片路径',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: '/images/border-image.png'
           }
         },
@@ -32,7 +32,7 @@ class BorderImageComponent extends CustomComponent {
           prop: 'borderImageSlice',
           label: '边框图片切片',
           type: FormType.ARRAY,
-          componentOptions: {
+          props: {
             componentType: FormType.NUMBER,
             type: 'dynamic',
             minItem: 1,
@@ -44,7 +44,7 @@ class BorderImageComponent extends CustomComponent {
           prop: 'borderWidth',
           label: '边框宽度',
           type: FormType.ARRAY,
-          componentOptions: {
+          props: {
             type: 'dynamic',
             minItem: 1,
             maxItem: 4,
@@ -55,14 +55,14 @@ class BorderImageComponent extends CustomComponent {
           prop: 'backgroundColor',
           label: '底色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: 'transparent'
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
 }
 
 export default BorderImageComponent

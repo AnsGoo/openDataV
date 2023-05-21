@@ -217,11 +217,11 @@ export function decomposeComponent(component: CustomComponent, parentStyle: DOMR
     }
 
     const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-    component.change('top', Math.round(afterPoint.y - height / 2))
-    component.change('left', Math.round(afterPoint.x - width / 2))
-    component.change('height', Math.round(height))
-    component.change('width', Math.round(width))
-    component.change('rotate', rotate)
+    component.change(['position', 'top'], Math.round(afterPoint.y - height / 2), 'style')
+    component.change(['position', 'left'], Math.round(afterPoint.x - width / 2), 'style')
+    component.change(['position', 'height'], Math.round(height), 'style')
+    component.change(['position', 'width'], Math.round(width), 'style')
+    component.change(['position', 'rotate'], rotate, 'style')
     component.groupStyle = undefined
   }
 }

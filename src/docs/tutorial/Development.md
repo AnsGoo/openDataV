@@ -126,7 +126,7 @@ const props = defineProps<{
 
 组件属性是定义了组件在编辑器右侧`属性栏`中的`属性`的可配置项
 
-组件属性的由属性配置项对象`PropsType`和组件属性值对象构成
+组件属性的由属性配置项对象`MetaContainerItem`和组件属性值对象构成
 
 
 ```typescript
@@ -140,7 +140,7 @@ const props = defineProps<{
           prop: 'type',
           label: '文本类型',
           type: FormType.SELECT,
-          componentOptions: {
+          props: {
             defaultValue: 'text',
             options: [
               { value: 'text', label: '文本' },
@@ -152,7 +152,7 @@ const props = defineProps<{
           prop: 'text',
           label: '自定义文本',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: 'OpenDataV'
           }
         }
@@ -175,7 +175,7 @@ StaticTextType {
 
 
 ```
-属性配置项对象`PropsType`
+属性配置项对象`MetaContainerItem`
 - `label`: 分类标签
 - `prop`: 分类值
 - `children`: `AttrType`子属性配置项集合
@@ -186,7 +186,7 @@ StaticTextType {
 - `prop`: 属性值
 - `type`: 属性值的Form类型
 - `showLabel`: 是否显示标签
-- `componentOptions`: Form组件配置
+- `props`: Form组件配置
 - `help`: Form帮助信息
 
 

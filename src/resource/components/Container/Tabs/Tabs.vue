@@ -86,15 +86,15 @@ watch(
       if (!props.component.subComponents[i]) {
         const groupConfig = new GroupComponent(uuid())
         if (mode === 'horizontal') {
-          groupConfig.change('top', top + labelHeight)
-          groupConfig.change('left', left)
-          groupConfig.change('width', width)
-          groupConfig.change('height', height - labelHeight)
+          groupConfig.change(['position', 'top'], top + labelHeight, 'style')
+          groupConfig.change(['position', 'left'], left, 'style')
+          groupConfig.change(['position', 'width'], width, 'style')
+          groupConfig.change(['position', 'height'], height - labelHeight, 'style')
         } else {
-          groupConfig.change('top', top)
-          groupConfig.change('left', left + labelHeight)
-          groupConfig.change('width', width - labelHeight)
-          groupConfig.change('height', height)
+          groupConfig.change(['position', 'top'], top, 'style')
+          groupConfig.change(['position', 'left'], left + labelHeight, 'style')
+          groupConfig.change(['position', 'width'], width - labelHeight, 'style')
+          groupConfig.change(['position', 'height'], height, 'style')
         }
         groupConfig.parent = props.component
         groupConfig.groupStyle = {
@@ -108,11 +108,11 @@ watch(
       } else {
         const groupConfig = props.component.subComponents[i]
         if (mode === 'horizontal') {
-          groupConfig.change('top', top + labelHeight)
-          groupConfig.change('left', left)
+          groupConfig.change(['position', 'top'], top + labelHeight, 'style')
+          groupConfig.change(['position', 'left'], left, 'style')
         } else {
-          groupConfig.change('top', top)
-          groupConfig.change('left', left + labelHeight)
+          groupConfig.change(['position', 'top'], top, 'style')
+          groupConfig.change(['position', 'left'], left + labelHeight, 'style')
         }
         groupConfig.groupStyle = {
           gleft: toPercent((groupConfig.positionStyle.left - left) / width),
@@ -188,8 +188,8 @@ const handleDrop = async (e) => {
     const y = (e.pageY - top) / canvasState.scale
     const x = (e.pageX - left) / canvasState.scale
     const parentStyle = props.component.subComponents[activeKey.value].style
-    component.change('top', y)
-    component.change('left', x)
+    component.change(['position', 'top'], y, 'style')
+    component.change(['position', 'left'], x, 'style')
     component.groupStyle = {
       gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
       gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),

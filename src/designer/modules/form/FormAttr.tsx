@@ -1,23 +1,30 @@
+import { isUndefined } from 'lodash-es'
 import {
+  NButton,
+  NCard,
   NColorPicker,
   NForm,
   NFormItem,
   NInput,
+  NInputGroup,
   NInputNumber,
+  NModal,
   NRadio,
   NRadioGroup,
   NSelect,
   NSwitch
 } from 'naive-ui'
 import type { PropType } from 'vue'
-import { defineComponent, h, reactive, resolveComponent } from 'vue'
+import { defineComponent, h, reactive, ref } from 'vue'
 
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type {
-  AttrType,
   CustomFormSchema,
+  FormItemProps,
   InputFormSchema,
   InputNumberFormSchema,
+  MetaForm,
+  ModalFormSchema,
   RadioFormSchema,
   SelectFormSchema,
   SwitchFormSchema
@@ -52,7 +59,7 @@ export default defineComponent({
       required: true
     },
     children: {
-      type: Array as PropType<AttrType[]>,
+      type: Array as PropType<MetaForm[]>,
       required: true
     },
     data: {
@@ -63,16 +70,94 @@ export default defineComponent({
   emits: ['change'],
   setup(props, { emit }) {
     const formData = reactive<Recordable>(props.data)
-
-    const changed = (val: any, key: string) => {
-      emit('change', key, val)
+    const changed = (val: any, keys: Array<string>) => {
+      emit('change', keys, val)
+    }
+    const isShowLabel = (showLabel?: boolean) => showLabel !== false
+    const isShow = ref<boolean>(false)
+    const renderModal = (item: MetaForm, modelValue: Recordable, path: Array<string>) => {
+      const options = ((item || {}).props || {}) as ModalFormSchema
+      return (
+        <>
+          <NInputGroup>
+            <NInput
+              readonly={true}
+              onClick={() => (isShow.value = true)}
+              placeholder={options.placeholder}
+              value={JSON.stringify(modelValue)}
+            />
+            <NButton type="primary" onClick={() => (isShow.value = true)}>
+              {options.buttonText}
+            </NButton>
+          </NInputGroup>
+          <NModal v-model:show={isShow.value} displayDirective="show">
+            <NCard
+              title={item.label || ''}
+              style="width: 600px"
+              size={options.size || 'small'}
+              role="dialog"
+              aria-modal={true}
+              bordered={options.bordered || false}
+              closable={true}
+              onClose={() => (isShow.value = false)}
+            >
+              <NForm size="small" labelPlacement="left" labelAlign="left">
+                {(item.children || []).map((el) => {
+                  return (
+                    <NFormItem
+                      key={`${props.ukey}${item.prop}${el.prop}`}
+                      label={el.label}
+                      showLabel={isShowLabel(el.showLabel)}
+                    >
+                      {renderItem(el, modelValue, path)}
+                    </NFormItem>
+                  )
+                })}
+              </NForm>
+            </NCard>
+          </NModal>
+        </>
+      )
     }
 
-    const isShowLabel = (showLabel?: boolean) => showLabel !== false
-    const renderItem = (item: AttrType) => {
+    const renderFormItem = (
+      item: MetaForm,
+      modelValue: Recordable<any>,
+      path: Array<string> = []
+    ) => {
+      let component: {} = NInput
+      switch (item.type) {
+        case FormType.SWITCH:
+          component = NSwitch
+          break
+        case FormType.FONT_STYLE:
+          component = FontStyle
+          break
+        case FormType.FONT_WEIGHT:
+          component = FontWeight
+          break
+        case FormType.LINEAR_GRADIENT:
+          component = LinearGradient
+          break
+        case FormType.BACKGROUND:
+          component = BackItem
+          break
+      }
+      return h(component, {
+        value: modelValue[item.prop],
+        onUpdateValue: (value) => {
+          modelValue[item.prop] = value
+          changed(value, path)
+        }
+      })
+    }
+    const renderItem = (item: MetaForm, modelValue, path: Array<string> = []) => {
+      if (!modelValue) {
+        return <> </>
+      }
+      const itemOptions = (item.props || item.componentOptions || {}) as FormItemProps
       const options: Recordable[] =
-        (item.componentOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options ||
-        []
+        (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
 
       /**
        * 获取设置的值
@@ -81,25 +166,25 @@ export default defineComponent({
        * @return 返回值本体或默认值
        */
       function getOptionsValue<T = undefined>(name: string, defaultValue?: T): T {
-        return name in item.componentOptions ? item.componentOptions[name] : defaultValue
+        return name in itemOptions ? itemOptions[name] : defaultValue
       }
 
       switch (item.type) {
         case FormType.COLOR:
           return (
             <NColorPicker
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               swatches={GlobalColorSwatches}
               modes={['hex', 'rgb', 'hsl']}
-              onUpdateValue={(event) => changed(event, item.prop)}
+              onUpdateValue={(event) => changed(event, [...path, item.prop])}
             />
           )
         case FormType.SELECT:
           return (
             <NSelect
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               placeholder={item.label}
-              onUpdateValue={(event) => changed(event, item.prop)}
+              onUpdateValue={(event) => changed(event, [...path, item.prop])}
               options={options}
               clearable={true}
             />
@@ -107,9 +192,9 @@ export default defineComponent({
         case FormType.RADIO:
           return (
             <NRadioGroup
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               name={props.uid}
-              onUpdateValue={(event) => changed(event, item.prop)}
+              onUpdateValue={(event) => changed(event, [...path, item.prop])}
             >
               {options.map((op) => (
                 <NRadio value={op.value} key={op.value}>
@@ -125,15 +210,15 @@ export default defineComponent({
 
           return (
             <NInputNumber
-              v-model:value={formData[item.prop]}
-              onUpdateValue={(event) => changed(event, item.prop)}
+              v-model:value={modelValue[item.prop]}
+              onUpdateValue={(event) => changed(event, [...path, item.prop])}
               max={numberMax}
               min={numberMin}
               precision={precision}
               clearable={true}
               v-slots={{
-                prefix: (item.componentOptions as InputNumberFormSchema).prefix,
-                suffix: (item.componentOptions as InputNumberFormSchema).suffix
+                prefix: (itemOptions as InputNumberFormSchema).prefix,
+                suffix: (itemOptions as InputNumberFormSchema).suffix
               }}
             />
           )
@@ -142,63 +227,63 @@ export default defineComponent({
         case FormType.FONT_WEIGHT:
         case FormType.LINEAR_GRADIENT:
         case FormType.BACKGROUND:
-          return h(resolveComponent(item.type), {
-            value: formData[item.prop],
-            onUpdateValue: (value) => {
-              formData[item.prop] = value
-              changed(value, item.prop)
-            }
-          })
+          return renderFormItem(item, modelValue, [...path, item.prop])
         case FormType.ARRAY:
           const count = getOptionsValue<number>('count', 1)
           const type = getOptionsValue<'static' | 'dynamic'>('type', 'static')
           const maxItem = getOptionsValue<number | undefined>('maxItem')
           const minItem = getOptionsValue<number>('minItem')
           return h(ArrayItem, {
-            value: formData[item.prop],
+            value: modelValue[item.prop],
             onUpdateValue: (value) => {
-              formData[item.prop] = value
-              changed(value, item.prop)
+              modelValue[item.prop] = value
+              changed(value, [...path, item.prop])
             },
             count,
             type,
             maxItem,
             minItem
           })
+        case FormType.MODAL:
+          const childModelValue = modelValue[item.prop]
+          if (isUndefined(childModelValue)) {
+            return <></>
+          }
+          return renderModal(item, childModelValue, [...path, item.prop])
         case FormType.CUSTOM:
           return (
             <CustomItem
-              v-model:value={formData[item.prop]}
-              onUpdateValue={(event) => changed(event, item.prop)}
-              component={(item.componentOptions as CustomFormSchema).componentType}
-              args={(item.componentOptions as CustomFormSchema).args}
+              v-model:value={modelValue[item.prop]}
+              onUpdateValue={(event) => changed(event, [...path, item.prop])}
+              component={(itemOptions as CustomFormSchema).componentType}
+              args={(itemOptions as CustomFormSchema).args}
             />
           )
         default:
           return (
             <NInput
               clearable
-              v-model:value={formData[item.prop]}
-              onUpdateValue={(event) => changed(event, item.prop)}
-              readonly={item.componentOptions.editable === false}
-              disabled={item.componentOptions.disabled}
+              v-model:value={modelValue[item.prop]}
+              onUpdateValue={(event) => changed(event, [...path, item.prop])}
+              readonly={itemOptions!.editable === false}
+              disabled={itemOptions!.disabled}
               v-slots={{
-                prefix: (item.componentOptions as InputFormSchema).prefix,
-                suffix: (item.componentOptions as InputFormSchema).suffix
+                prefix: (itemOptions as InputFormSchema).prefix,
+                suffix: (itemOptions as InputFormSchema).suffix
               }}
             />
           )
       }
     }
     return () => (
-      <NForm size="small" labelPlacement="left" labelAlign="left">
+      <NForm size="small" labelPlacement="top" labelAlign="left">
         {props.children.map((item) => (
           <NFormItem
             key={`${props.ukey}${item.prop}`}
             label={item.label}
             showLabel={isShowLabel(item.showLabel)}
           >
-            {renderItem(item)}
+            {isUndefined(formData) ? <></> : renderItem(item, formData, [props.uid])}
           </NFormItem>
         ))}
       </NForm>

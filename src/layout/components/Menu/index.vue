@@ -16,7 +16,7 @@ import { NMenu } from 'naive-ui'
 import { computed, h, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 
-import { XIcon } from '@/plugins/xicon'
+import XIcon from '@/designer/components/xicon/XIcon.vue'
 import type { MenuType } from '@/router'
 import { routeView } from '@/router'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'

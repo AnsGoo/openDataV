@@ -10,7 +10,7 @@
       <n-space justify="end" align="center" style="height: 100%; margin-right: 5px">
         <n-el
           tag="span"
-          style="color: var(--primary-color); transition: 0.3s var(--cubic-bezier-ease-in-out)"
+          :style="{ color: primaryColor, transition: `all 0.3s ${cubicBezierEaseInOut}` }"
         >
           画布缩放:
         </n-el>
@@ -44,7 +44,8 @@ import {
   NScrollbar,
   NSelect,
   NSlider,
-  NSpace
+  NSpace,
+  useThemeVars
 } from 'naive-ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
@@ -82,6 +83,9 @@ const options: SelectOption[] = [
     label: '50%'
   }
 ]
+
+const themeVars = useThemeVars()
+const { primaryColor, cubicBezierEaseInOut } = themeVars.value
 
 const scrollbarStyle = computed(() => {
   return {

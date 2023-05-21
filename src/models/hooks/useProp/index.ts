@@ -2,8 +2,8 @@ import type { CustomComponent } from '@/models'
 
 export const useProp = <T>(
   component: CustomComponent,
-  callbackProp?: (prop: string, key: string, value: any) => void,
-  callbackStyle?: (key: string, value: any) => void
+  callbackProp?: (propKeys: Array<string>, value: any) => void,
+  callbackStyle?: (propKeys: Array<string>, value: any) => void
 ): { component: CustomComponent; propValue: T } => {
   if (callbackProp) {
     component.changePropCallback(callbackProp)

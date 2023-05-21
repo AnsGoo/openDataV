@@ -3,7 +3,7 @@ import { h } from 'vue'
 import { ComponentGroup, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'MapChart'
 class MapChartComponent extends CustomComponent {
@@ -20,7 +20,7 @@ class MapChartComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '文字配置',
       prop: 'label',
@@ -29,7 +29,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'axisLabelColor',
           label: '文字颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#ffffff'
           }
         },
@@ -37,7 +37,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'axisFontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 10,
             suffix: () => h('span', {}, 'px')
           }
@@ -46,7 +46,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'emphasisColor',
           label: '强调色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#fff'
           }
         }
@@ -60,7 +60,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'shadowColor',
           label: '阴影颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#0A4C8B'
           }
         },
@@ -68,7 +68,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'borderColor',
           label: '边界颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#00F6FF'
           }
         },
@@ -76,7 +76,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'borderColor1',
           label: '边界颜色1',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#87ADCB'
           }
         },
@@ -84,7 +84,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'emphasisAreaColor',
           label: '强调渐变色开始',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#073684'
           }
         },
@@ -92,7 +92,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'emphasisAreaColor1',
           label: '强调色渐变色结尾',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#2B91B7'
           }
         },
@@ -100,7 +100,7 @@ class MapChartComponent extends CustomComponent {
           prop: 'areaColor',
           label: '渐变色开始',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#073684'
           }
         },
@@ -108,14 +108,14 @@ class MapChartComponent extends CustomComponent {
           prop: 'areaColor1',
           label: '渐变色结尾',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#061E3D'
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = []
+  _style: MetaContainerItem[] = []
 
   get exampleData() {
     return [

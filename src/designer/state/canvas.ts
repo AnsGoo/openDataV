@@ -2,11 +2,18 @@ import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import type { LayoutData } from '@/api/pages'
-import { EditMode } from '@/enum'
+import { ContainerType, EditMode, FormType } from '@/enum'
+import PixelEnum from '@/enum/pixel'
 import type { CustomComponent } from '@/models'
+import { buildModeValue, updateModeValue } from '@/models/utils'
 import type { Position, Vector } from '@/types/common'
-import type { ComponentDataType, DOMRectStyle, GroupStyle } from '@/types/component'
-import type { CanvasStyleData, EditData } from '@/types/storeTypes'
+import type {
+  ComponentDataType,
+  DOMRectStyle,
+  GroupStyle,
+  MetaContainerItem
+} from '@/types/component'
+import type { CanvasStyleConfig, CanvasStyleData, EditData } from '@/types/storeTypes'
 import { message } from '@/utils/message'
 import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
 
@@ -18,8 +25,55 @@ const snapShotState = useSnapShotState()
 const baseCanvasStyleData: CanvasStyleData = {
   width: window.screen.width,
   height: window.screen.height,
-  background: { backgroundColor: '#272e3b' }
+  background: { backgroundColor: '#272e3b' },
+  extraAttrs: {}
 }
+
+const pixels = [
+  { label: '本设备', value: `${window.screen.width}X${window.screen.height}` },
+  ...PixelEnum
+]
+const baseCanvasStyleConfig: Array<MetaContainerItem> = [
+  {
+    label: '基本配置',
+    prop: 'basic',
+    children: [
+      {
+        prop: 'pixel',
+        label: '分辨率',
+        type: FormType.SELECT,
+        props: {
+          options: pixels,
+          defaultValue: `${window.screen.width}X${window.screen.height}`
+        }
+      },
+      {
+        prop: 'width',
+        label: '宽度',
+        type: FormType.NUMBER,
+        props: {
+          defaultValue: window.screen.width
+        }
+      },
+      {
+        prop: 'height',
+        label: '高度',
+        type: FormType.NUMBER,
+        props: {
+          defaultValue: window.screen.height
+        }
+      },
+      {
+        prop: 'background',
+        label: '背景',
+        type: FormType.BACKGROUND,
+        props: {
+          defaultValue: { backgroundColor: '#272e3b' }
+        }
+      }
+    ]
+  }
+]
 
 window.localStorage.setItem('canvasData', JSON.stringify([]))
 window.localStorage.setItem('canvasStyle', JSON.stringify(baseCanvasStyleData))
@@ -48,9 +102,41 @@ class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
-    scale: 1
+    scale: 1,
+    canvasStyleConfig: {
+      formItems: baseCanvasStyleConfig,
+      mode: ContainerType.CARD
+    }
   })
-  constructor() {}
+  constructor(config?: CanvasStyleConfig) {
+    const extraStyles = config
+      ? config
+      : {
+          formItems: [],
+          mode: ContainerType.CARD
+        }
+
+    this.state.canvasStyleConfig.formItems = [
+      ...baseCanvasStyleConfig,
+      ...(extraStyles.formItems || [])
+    ]
+    this.state.canvasStyleConfig.mode = extraStyles.mode
+    this.rebuildCanvasExtraStyle(extraStyles.formItems || [])
+  }
+
+  get canvasStyleConfig(): CanvasStyleConfig {
+    return this.state.canvasStyleConfig
+  }
+  get canvasGlobalData() {
+    return {
+      basic: {
+        width: this.canvasStyleData.width,
+        height: this.canvasStyleData.height,
+        background: this.canvasStyleData.background
+      },
+      ...this.canvasStyleData.extraAttrs
+    }
+  }
 
   get isShowEm(): boolean {
     return this.state.isShowEm
@@ -159,6 +245,35 @@ class CanvasState {
       this.canvasStyleData = data.canvasStyle
     }
   }
+  setCanvasStyle(keys: Array<string>, val: any) {
+    if (keys.length === 2 && keys[0] === 'basic') {
+      if (keys[1] === 'pixel') {
+        const pixels = val.split('X')
+        this.canvasData.height = parseInt(pixels[1])
+        this.canvasData.width = parseInt(pixels[0])
+      } else {
+        this.canvasData[keys[1]] = val
+      }
+    } else {
+      const extraAttrs = this.canvasData.extraAttrs
+      updateModeValue(extraAttrs, keys, val)
+    }
+    this.saveComponentData()
+  }
+  rebuildCanvasExtraStyle(formItems: MetaContainerItem[]) {
+    const basicAttrs: {
+      width?: number
+      height?: number
+      background?: any
+    } = {}
+    buildModeValue(baseCanvasStyleConfig, basicAttrs)
+    this.canvasStyleData.width = basicAttrs.width || window.screen.width
+    this.canvasStyleData.height = basicAttrs.height || window.screen.height
+    this.canvasStyleData.background = basicAttrs.background || { backgroundColor: '#272e3b' }
+    const extraAttrs = {}
+    buildModeValue(formItems, extraAttrs)
+    this.canvasStyleData.extraAttrs = extraAttrs
+  }
   setClickComponentStatus(status: boolean): void {
     this.isClickComponent = status
   }
@@ -175,10 +290,7 @@ class CanvasState {
   setName(name: string): void {
     this.name = name
   }
-  setCanvasStyle(style: CanvasStyleData): void {
-    this.canvasStyleData = style
-    this.saveComponentData()
-  }
+
   /**
    * 设置当前组件
    * @param component 当前组件
@@ -220,7 +332,6 @@ class CanvasState {
         ablePosition[el] = position[el]
       }
     })
-
     if (parentComponent) {
       const parentStyle = parentComponent.positionStyle
       const groupStyle = this.curComponent.groupStyle!
@@ -265,11 +376,11 @@ class CanvasState {
       }
       this.curComponent.groupStyle = gStyle
       for (const key in newStyle) {
-        this.curComponent.change(key, newStyle[key])
+        this.curComponent.change(['position', key], newStyle[key], 'style')
       }
     } else {
       for (const key in ablePosition) {
-        this.curComponent.change(key, ablePosition[key])
+        this.curComponent.change(['position', key], ablePosition[key], 'style')
       }
     }
 
@@ -307,11 +418,11 @@ class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.change('top', Math.round(afterPoint.y - height / 2))
-      el.change('left', Math.round(afterPoint.x - width / 2))
-      el.change('height', Math.round(height))
-      el.change('width', Math.round(width))
-      el.change('rotate', rotate)
+      el.change(['position', 'top'], Math.round(afterPoint.y - height / 2), 'style')
+      el.change(['position', 'left'], Math.round(afterPoint.x - width / 2), 'style')
+      el.change(['position', 'height'], Math.round(height), 'style')
+      el.change(['position', 'width'], Math.round(width), 'style')
+      el.change(['position', 'rotate'], rotate, 'style')
     })
   }
 
@@ -360,16 +471,16 @@ class CanvasState {
   /**
    * 设置当前组件的PropValue
    * @param prop 组名
-   * @param key 属性
+   * @param keys 属性组
    * @param value 值
    * @returns
    */
-  setCurComponentPropValue(prop: string, key: string, value: any): void {
+  setCurComponentPropValue(keys: Array<string>, value: any): void {
     const curComponent = this.curComponent
     if (!curComponent || !curComponent.propValue) {
       return
     }
-    curComponent.change(key, value, prop)
+    curComponent.change(keys, value, 'propValue')
     this.saveComponentData()
   }
   /**
@@ -378,16 +489,20 @@ class CanvasState {
    * @param value 值
    * @returns
    */
-  setCurComponentStyle(key: string, value: any): void {
+  setCurComponentStyle(keys: Array<string>, value: any): void {
     const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
     if (!this.curComponent) {
       return
     }
-
-    if (this.curComponent.groupStyle && groupStyleKeys.includes(key)) {
-      this.curComponent.groupStyle[key] = value
+    if (
+      keys.length === 2 &&
+      keys[0] === 'position' &&
+      this.curComponent.groupStyle &&
+      groupStyleKeys.includes(keys[1])
+    ) {
+      this.curComponent.groupStyle[keys[1]] = value
     } else {
-      this.curComponent.change(key, value)
+      this.curComponent.change(keys, value, 'style')
     }
     this.saveComponentData()
   }
@@ -409,6 +524,7 @@ class CanvasState {
     this.isShowEm = false
     this.name = ''
     this.thumbnail = ''
+    // this.rebuildCanvasExtraStyle()
     this.canvasStyleData = baseCanvasStyleData
   }
   /**
@@ -572,7 +688,7 @@ class CanvasState {
       } else {
         const newGroupStyle = { ...parentStyle, top, left, height, width }
         for (const key in newGroupStyle) {
-          parentComponent.change(key, newGroupStyle[key])
+          parentComponent.change(['position', key], newGroupStyle[key], 'style')
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
           const gStyle = {
@@ -628,7 +744,65 @@ class CanvasState {
   }
 }
 
-const canvasState = new CanvasState()
+const canvasState = new CanvasState({
+  formItems: [
+    {
+      label: '数据配置',
+      prop: 'data',
+      children: [
+        {
+          prop: 'upperLimit',
+          label: '上限',
+          type: FormType.NUMBER,
+          componentOptions: {
+            defaultValue: 150
+          }
+        },
+        {
+          prop: 'lowerLimit',
+          label: '下限',
+          type: FormType.NUMBER,
+          props: {
+            defaultValue: 0
+          }
+        },
+        {
+          prop: 'max',
+          label: '最大值',
+          type: FormType.TEXT,
+          props: {
+            defaultValue: 'dataMax'
+          }
+        },
+        {
+          prop: 'min',
+          label: '最小值',
+          type: FormType.TEXT,
+          props: {
+            defaultValue: '0'
+          }
+        },
+        {
+          prop: 'maxOffset',
+          label: '最大偏移值',
+          type: FormType.NUMBER,
+          props: {
+            defaultValue: 0
+          }
+        },
+        {
+          prop: 'minOffset',
+          label: '最小偏移值',
+          type: FormType.NUMBER,
+          props: {
+            defaultValue: 0
+          }
+        }
+      ]
+    }
+  ],
+  mode: ContainerType.CARD
+})
 export default function useCanvasState() {
   return canvasState
 }

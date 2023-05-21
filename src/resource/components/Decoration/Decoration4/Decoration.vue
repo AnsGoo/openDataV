@@ -157,9 +157,12 @@ const props = defineProps<{
   component: DecorationComponent
 }>()
 
-const propChange = (prop: string, key: string, value: any) => {
-  if (prop === 'base' && key === 'color1') mergedColor.value[0] = value
-  if (prop === 'base' && key === 'color2') mergedColor.value[1] = value
+const propChange = (propKeys: Array<string>, value: any) => {
+  if (propKeys.length !== 2) {
+    return
+  }
+  if (propKeys[0] === 'base' && propKeys[1] === 'color1') mergedColor.value[0] = value
+  if (propKeys[0] === 'base' && propKeys[1] === 'color2') mergedColor.value[1] = value
 }
 
 const { propValue } = useProp<Decoration>(props.component, propChange)

@@ -50,7 +50,9 @@ import { randomExtend } from './utils'
 const props = defineProps<{
   component: DecorationComponent
 }>()
-const propChange = (prop: string, key: string, value: any) => {
+const propChange = (propKeys: Array<string>, value: any) => {
+  if (propKeys.length !== 2) return
+  const [prop, key] = propKeys
   if (prop === 'base' && key === 'rectWidth') rectWidth.value = value
   if (prop === 'base' && key === 'space') rectSpace.value = value
   if (prop === 'base' && key === 'color1') mergedColor.value[0] = value

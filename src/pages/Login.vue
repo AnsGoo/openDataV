@@ -91,7 +91,7 @@ const loginAction = async () => {
           path: redirect ? redirect : 'Pages'
         })
       } else {
-        message.success('登录失败')
+        message.error('登录失败')
       }
     } catch (e: any) {
       message.error(`登录失败,请输入正确的账号密码`)

@@ -2,7 +2,7 @@ import { h } from 'vue'
 
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { PropsType } from '@/types/component'
+import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'SubText'
 class SubTextComponent extends CustomComponent {
@@ -18,7 +18,7 @@ class SubTextComponent extends CustomComponent {
     })
   }
 
-  _prop: PropsType[] = [
+  _prop: MetaContainerItem[] = [
     {
       label: '基础配置',
       prop: 'base',
@@ -27,7 +27,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'tag',
           label: '数据标签',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -35,7 +35,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'url',
           label: '获取数据API',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -43,7 +43,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'label',
           label: 'Label',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         },
@@ -51,14 +51,14 @@ class SubTextComponent extends CustomComponent {
           prop: 'unit',
           label: '单位',
           type: FormType.TEXT,
-          componentOptions: {
+          props: {
             defaultValue: ''
           }
         }
       ]
     }
   ]
-  _style: PropsType[] = [
+  _style: MetaContainerItem[] = [
     {
       label: '字体设置',
       prop: 'font',
@@ -67,7 +67,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'color',
           label: '颜色',
           type: FormType.COLOR,
-          componentOptions: {
+          props: {
             defaultValue: '#1E90FF'
           }
         },
@@ -75,7 +75,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'fontSize',
           label: '字体大小',
           type: FormType.NUMBER,
-          componentOptions: {
+          props: {
             defaultValue: 20,
             suffix: () => h('span', {}, 'px')
           }
@@ -84,7 +84,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'fontWeight',
           label: '字体宽度',
           type: FormType.FONT_WEIGHT,
-          componentOptions: {
+          props: {
             defaultValue: 200
           }
         },
@@ -92,7 +92,7 @@ class SubTextComponent extends CustomComponent {
           prop: 'fontFamily',
           label: '字体',
           type: FormType.FONT_STYLE,
-          componentOptions: {
+          props: {
             defaultValue: 'Arial'
           }
         }

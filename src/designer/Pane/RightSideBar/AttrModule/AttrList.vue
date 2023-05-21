@@ -1,38 +1,24 @@
-<!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <div class="attr-list">
-    <n-collapse accordion>
-      <n-collapse-item
-        v-for="{ label, prop, children } in attrKeys"
-        :key="`${curComponent.id}${prop}`"
-        :title="label"
-        :name="prop"
-      >
-        <FormAttr
-          :children="children"
-          :data="formData[prop]"
-          :name="label"
-          :uid="prop"
-          :ukey="curComponent.id"
-          @change="(key, value) => changed(prop, key, value)"
-        />
-      </n-collapse-item>
-    </n-collapse>
+    <Container :config="attrKeys" :data="formData" :mode="mode" @change="changed" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { NCollapse, NCollapseItem } from 'naive-ui'
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 
-import FormAttr from '@/designer/modules/form/FormAttr'
+import Container from '@/designer/modules/form/Container'
 import useCanvasState from '@/designer/state/canvas'
+import type { ContainerType } from '@/enum'
 import type { CustomComponent } from '@/models'
+import type { MetaContainerItem } from '@/types/component'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const canvasState = useCanvasState()
+
+const mode = computed<ContainerType>(() => props.curComponent.defaultViewType.propValue)
 
 interface PropData {
   common: {
@@ -43,15 +29,9 @@ interface PropData {
   [key: string]: any
 }
 
-const formData = ref<PropData>({
-  common: {
-    name: props.curComponent.name,
-    component: props.curComponent.component,
-    id: props.curComponent.id
-  }
-})
+const formData = computed(() => resetFormData())
 
-const attrKeys = computed(() => {
+const attrKeys = computed<Array<MetaContainerItem>>(() => {
   if (props.curComponent) {
     return props.curComponent.propFromValue
   }
@@ -59,8 +39,8 @@ const attrKeys = computed(() => {
 })
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
-const changed = (form: string, key: string, val: any) => {
-  canvasState.setCurComponentPropValue(form, key, val)
+const changed = (keys: Array<string>, val: any) => {
+  canvasState.setCurComponentPropValue(keys, val)
 }
 
 const resetFormData = () => {
@@ -75,16 +55,8 @@ const resetFormData = () => {
   if (props.curComponent && props.curComponent.propValue) {
     Object.assign(data, props.curComponent.propValue)
   }
-  formData.value = data
+  return data
 }
-
-watch(
-  () => props.curComponent.id,
-  () => {
-    resetFormData()
-  },
-  { immediate: true }
-)
 </script>
 
 <style scoped>
