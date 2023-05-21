@@ -68,9 +68,9 @@ import { ScriptType } from '@/enum'
 import { makeFunction } from '@/utils/data'
 import { message } from '@/utils/message'
 
+import ScriptsEdtor from '../../components/ScriptsEditor.vue'
 import type { AfterScript, StoreStaticOption } from '../../type'
 import { Logger } from '../../utils'
-import ScriptsEdtor from '../modules/ScriptsEditor'
 import StaticDataView from './StaticDataView.vue'
 
 const DataView = TextareaDataView

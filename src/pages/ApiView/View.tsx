@@ -1,8 +1,8 @@
 import { defineComponent } from 'vue'
 
-import GraphQL from './graphQL'
-import Rest from './rest'
-import Static from './static'
+import GraphQL from '@/apiView/content/graphQL'
+import Rest from '@/apiView/content/rest'
+import Static from '@/apiView/content/static'
 
 export default defineComponent({
   props: {

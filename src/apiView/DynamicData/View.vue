@@ -59,11 +59,11 @@ import {
 } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import Rest from '@/apiView/RequestContent/rest'
+import Rest from '@/apiView/content/rest'
 import type { CustomComponent, RestRequestData } from '@/models'
 
 import { DataType, ScriptType } from '../const'
-import { RequestMethod } from '../RequestContent/requestEnums'
+import { RequestMethod } from '../content/requestEnums'
 import type { RestOption } from '../type'
 import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
 

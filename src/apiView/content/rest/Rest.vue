@@ -120,12 +120,12 @@ import type { RestDataDetail } from '@/api/data/type'
 import { StaticKey, useEventBus } from '@/bus'
 import CodeEditor from '@/designer/data/CodeEditor.vue'
 
+import ScriptsEditor from '../../components/ScriptsEditor.vue'
 import { ScriptType } from '../../const'
 import useRestRequest from '../../hooks/http'
 import useDataSnapShot from '../../hooks/snapshot'
 import type { AfterScript, RequestResponse, RestOption } from '../../type'
 import { KVToRecordable, Logger, recordabletoKV, requestOptionsToStore, uuid } from '../../utils'
-import ScriptsEditor from '../modules/ScriptsEditor'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import DynamicKVForm from './DynamicKVForm.vue'
 

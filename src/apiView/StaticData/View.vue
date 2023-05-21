@@ -40,7 +40,7 @@ import type { CustomComponent, StaticRequestData } from '@/models'
 import type { AfterScript } from '@/types/component'
 
 import { DataType, ScriptType } from '../const'
-import Static from '../RequestContent/static'
+import Static from '../content/static'
 import type { StoreStaticOption } from '../type'
 
 const props = defineProps<{

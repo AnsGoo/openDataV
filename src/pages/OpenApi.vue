@@ -48,10 +48,10 @@
 import { NLayout, NLayoutContent, NLayoutHeader, NLayoutSider, NScrollbar } from 'naive-ui'
 import { computed, ref } from 'vue'
 
-import DataHistory from '@/apiView/DataHistory'
-import RequestContent from '@/apiView/RequestContent'
-import ApiType from '@/apiView/siderBar/indext'
-import ToolBar from '@/apiView/ToolBar'
+import DataHistory from './ApiView/DataHistory'
+import ApiType from './ApiView/siderBar/indext'
+import ToolBar from './ApiView/ToolBar'
+import RequestContent from './ApiView/View'
 
 const collapsedRight = ref(false)
 

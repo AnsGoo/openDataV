@@ -75,22 +75,13 @@ const isShow = ref<boolean>(false)
 const props = withDefaults(
   defineProps<{
     data: AfterScript
-    mode?: 'use' | 'debug'
+    mode?: 'use' | 'debug' | 'view'
   }>(),
   {
     data: () => {
       return {
         code: '',
         type: ScriptType.Javascript
-      }
-    },
-    config: () => {
-      return {
-        height: '600px',
-        tabSize: 4,
-        indentWithTab: true,
-        autofocus: true,
-        disabled: false
       }
     },
     mode: 'use'
