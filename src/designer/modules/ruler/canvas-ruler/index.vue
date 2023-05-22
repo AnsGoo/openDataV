@@ -9,6 +9,7 @@
   ></canvas>
 </template>
 <script lang="ts" setup>
+/* eslint-disable vue/no-dupe-keys */
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import type { PaletteType } from '../index-types'
@@ -47,14 +48,14 @@ onMounted(() => {
 const initCanvasRef = () => {
   state.canvasContext = canvas.value && canvas.value.getContext('2d')
 }
-const updateCanvasContext = (ratio: number) => {
+const updateCanvasContext = (ratioValue: number) => {
   if (canvas.value) {
     // 比例宽高
-    canvas.value.width = props.width! * ratio!
-    canvas.value.height = props.height! * ratio!
+    canvas.value.width = props.width! * ratioValue
+    canvas.value.height = props.height! * ratioValue
     const ctx = state.canvasContext
     if (ctx) {
-      ctx.font = `${12 * ratio!}px -apple-system,
+      ctx.font = `${12 * ratioValue}px -apple-system,
                 "Helvetica Neue", ".SFNSText-Regular",
                 "SF UI Text", Arial, "PingFang SC", "Hiragino Sans GB",
                 "Microsoft YaHei", "WenQuanYi Zen Hei", sans-serif`
