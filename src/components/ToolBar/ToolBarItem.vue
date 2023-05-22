@@ -10,9 +10,7 @@
 <script lang="ts" setup>
 import { NButton, NDivider, NTooltip } from 'naive-ui'
 import type { ComponentOptions, VNode } from 'vue'
-import { computed, h } from 'vue'
-
-import { XIcon } from '@/plugins/xicon'
+import { computed, getCurrentInstance, h } from 'vue'
 
 import type { iconNode, ToolBarItemType } from './type'
 
@@ -33,6 +31,9 @@ const props = withDefaults(
     isButton: true
   }
 )
+
+const instance = getCurrentInstance()
+const XIcon = instance!.appContext.components['XIcon']
 
 const IconComponent = computed<ComponentOptions>(() =>
   typeof props.icon === 'string'

@@ -59,7 +59,7 @@ const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
       JSON.parse(loadEvent.target.result as string)
     if (layoutComponents) {
       canvasState.setComponentData(layoutComponents.canvasData)
-      canvasState.setCanvasStyle(layoutComponents.canvasStyle)
+      // canvasState.setCanvasStyle(layoutComponents.canvasStyle)
     }
   }
 }

@@ -30,8 +30,8 @@ export function createComponent(component: ComponentDataType): any {
     const _class = componentList[component.component as string]
     const obj: CustomComponent = new _class(component.id, component.name, component.icon)
     obj.groupStyle = component.groupStyle
-    obj.setPropValue(component)
-    obj.setStyleValue(component)
+    obj.setPropValue({ propValue: component.propValue })
+    obj.setStyleValue({ style: component.style })
     obj.dataIntegrationMode = component.dataIntegrationMode || DataIntegrationMode.SELF
     const data = component.data
     if (obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {

@@ -59,7 +59,7 @@ import { useRouter } from 'vue-router'
 import type { SimpleLayoutData } from '@/api/pages'
 import { deletePageApi, getPageListApi } from '@/api/pages'
 import defaultImg from '@/assets/default.png'
-import { XIcon } from '@/plugins/xicon'
+import XIcon from '@/designer/components/xicon/XIcon.vue'
 import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 

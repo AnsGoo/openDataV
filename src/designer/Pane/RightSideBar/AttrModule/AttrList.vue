@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { computed } from 'vue'
 
 import Container from '@/designer/modules/form/Container'
 import useCanvasState from '@/designer/state/canvas'
@@ -29,13 +29,7 @@ interface PropData {
   [key: string]: any
 }
 
-const formData = ref<PropData>({
-  common: {
-    name: props.curComponent.name,
-    component: props.curComponent.component,
-    id: props.curComponent.id
-  }
-})
+const formData = computed(() => resetFormData())
 
 const attrKeys = computed<Array<MetaContainerItem>>(() => {
   if (props.curComponent) {
@@ -61,16 +55,8 @@ const resetFormData = () => {
   if (props.curComponent && props.curComponent.propValue) {
     Object.assign(data, props.curComponent.propValue)
   }
-  formData.value = data
+  return data
 }
-
-watch(
-  () => props.curComponent.id,
-  () => {
-    resetFormData()
-  },
-  { immediate: true }
-)
 </script>
 
 <style scoped>

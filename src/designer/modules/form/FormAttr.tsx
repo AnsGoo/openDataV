@@ -1,3 +1,4 @@
+import { isUndefined } from 'lodash-es'
 import {
   NButton,
   NCard,
@@ -72,10 +73,9 @@ export default defineComponent({
     const changed = (val: any, keys: Array<string>) => {
       emit('change', keys, val)
     }
-
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
-    const isShow = ref<boolean>(true)
-    const renderModal = (item: MetaForm, path: Array<string>) => {
+    const isShow = ref<boolean>(false)
+    const renderModal = (item: MetaForm, modelValue: Recordable, path: Array<string>) => {
       const options = ((item || {}).props || {}) as ModalFormSchema
       return (
         <>
@@ -84,6 +84,7 @@ export default defineComponent({
               readonly={true}
               onClick={() => (isShow.value = true)}
               placeholder={options.placeholder}
+              value={JSON.stringify(modelValue)}
             />
             <NButton type="primary" onClick={() => (isShow.value = true)}>
               {options.buttonText}
@@ -101,14 +102,14 @@ export default defineComponent({
               onClose={() => (isShow.value = false)}
             >
               <NForm size="small" labelPlacement="left" labelAlign="left">
-                {options.context.children.map((el) => {
+                {(item.children || []).map((el) => {
                   return (
                     <NFormItem
                       key={`${props.ukey}${item.prop}${el.prop}`}
                       label={el.label}
                       showLabel={isShowLabel(el.showLabel)}
                     >
-                      {renderItem(el, path)}
+                      {renderItem(el, modelValue, path)}
                     </NFormItem>
                   )
                 })}
@@ -119,7 +120,11 @@ export default defineComponent({
       )
     }
 
-    const renderFormItem = (item: MetaForm, path: Array<string> = []) => {
+    const renderFormItem = (
+      item: MetaForm,
+      modelValue: Recordable<any>,
+      path: Array<string> = []
+    ) => {
       let component: {} = NInput
       switch (item.type) {
         case FormType.SWITCH:
@@ -139,16 +144,18 @@ export default defineComponent({
           break
       }
       return h(component, {
-        value: formData[item.prop],
+        value: modelValue[item.prop],
         onUpdateValue: (value) => {
-          formData[item.prop] = value
+          modelValue[item.prop] = value
           changed(value, path)
         }
       })
     }
-    const renderItem = (item: MetaForm, path: Array<string> = []) => {
+    const renderItem = (item: MetaForm, modelValue, path: Array<string> = []) => {
+      if (!modelValue) {
+        return <> </>
+      }
       const itemOptions = (item.props || item.componentOptions || {}) as FormItemProps
-      console.log(itemOptions)
       const options: Recordable[] =
         (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
 
@@ -166,7 +173,7 @@ export default defineComponent({
         case FormType.COLOR:
           return (
             <NColorPicker
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               swatches={GlobalColorSwatches}
               modes={['hex', 'rgb', 'hsl']}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
@@ -175,7 +182,7 @@ export default defineComponent({
         case FormType.SELECT:
           return (
             <NSelect
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               placeholder={item.label}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
               options={options}
@@ -185,7 +192,7 @@ export default defineComponent({
         case FormType.RADIO:
           return (
             <NRadioGroup
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               name={props.uid}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
             >
@@ -203,7 +210,7 @@ export default defineComponent({
 
           return (
             <NInputNumber
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
               max={numberMax}
               min={numberMin}
@@ -220,16 +227,16 @@ export default defineComponent({
         case FormType.FONT_WEIGHT:
         case FormType.LINEAR_GRADIENT:
         case FormType.BACKGROUND:
-          return renderFormItem(item, [...path, item.prop])
+          return renderFormItem(item, modelValue, [...path, item.prop])
         case FormType.ARRAY:
           const count = getOptionsValue<number>('count', 1)
           const type = getOptionsValue<'static' | 'dynamic'>('type', 'static')
           const maxItem = getOptionsValue<number | undefined>('maxItem')
           const minItem = getOptionsValue<number>('minItem')
           return h(ArrayItem, {
-            value: formData[item.prop],
+            value: modelValue[item.prop],
             onUpdateValue: (value) => {
-              formData[item.prop] = value
+              modelValue[item.prop] = value
               changed(value, [...path, item.prop])
             },
             count,
@@ -238,11 +245,15 @@ export default defineComponent({
             minItem
           })
         case FormType.MODAL:
-          return renderModal(item, [...path, item.prop])
+          const childModelValue = modelValue[item.prop]
+          if (isUndefined(childModelValue)) {
+            return <></>
+          }
+          return renderModal(item, childModelValue, [...path, item.prop])
         case FormType.CUSTOM:
           return (
             <CustomItem
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
               component={(itemOptions as CustomFormSchema).componentType}
               args={(itemOptions as CustomFormSchema).args}
@@ -252,7 +263,7 @@ export default defineComponent({
           return (
             <NInput
               clearable
-              v-model:value={formData[item.prop]}
+              v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
               readonly={itemOptions!.editable === false}
               disabled={itemOptions!.disabled}
@@ -272,7 +283,7 @@ export default defineComponent({
             label={item.label}
             showLabel={isShowLabel(item.showLabel)}
           >
-            {renderItem(item, [props.uid])}
+            {isUndefined(formData) ? <></> : renderItem(item, formData, [props.uid])}
           </NFormItem>
         ))}
       </NForm>

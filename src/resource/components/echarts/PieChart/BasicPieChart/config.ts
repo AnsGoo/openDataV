@@ -1,6 +1,6 @@
 import { h } from 'vue'
 
-import { ComponentGroup, FormType } from '@/enum'
+import { ComponentGroup, ContainerType, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
 import type { MetaContainerItem } from '@/types/component'
@@ -16,7 +16,10 @@ class BasicPieChartComponent extends CustomComponent {
       width: 520,
       height: 260,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataIntegrationMode: DataIntegrationMode.UNIVERSAL,
+      defaultViewType: {
+        propValue: ContainerType.CARD
+      }
     })
   }
 

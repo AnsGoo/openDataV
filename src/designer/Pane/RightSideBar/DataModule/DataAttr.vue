@@ -12,10 +12,7 @@
           @update:value="typeChanged"
         />
       </n-form-item>
-      <StaticData v-if="dataType === DataType.STATIC" :curComponent="curComponent" />
-      <!-- <RealTimeData v-else-if="dataType === 'RealTime'" /> -->
-      <DynamicData v-else-if="dataType === DataType.REST" :curComponent="curComponent" />
-      <DemoData v-else-if="dataType === DataType.DEMO" :curComponent="curComponent" />
+      <DataComponent :curComponent="curComponent" />
     </n-form>
     <n-descriptions v-else class="placeholder">
       <n-descriptions-item>
@@ -26,38 +23,27 @@
 </template>
 <script lang="ts" setup>
 import { NDescriptions, NDescriptionsItem, NEmpty, NForm, NFormItem, NSelect } from 'naive-ui'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 
+import useEmpty from '@/designer/modules/Empty'
+import useDataState from '@/designer/state/data'
 import { DataIntegrationMode, DataType } from '@/enum/data'
 import type { CustomComponent } from '@/models'
-
-import DemoData from './DemoData'
-import DynamicData from './DynamicData'
-import StaticData from './StaticData'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 
+const dataState = useDataState()
 const dataType = ref<string>(DataType.DEMO)
-const dataTypeOptions = reactive([
-  {
-    label: '示例数据',
-    value: DataType.DEMO
-  },
-  {
-    label: '静态数据',
-    value: DataType.STATIC
-  },
-  {
-    label: '动态数据',
-    value: DataType.REST
-  },
-  {
-    label: '实时数据',
-    value: DataType.REALTIME
+const dataTypeOptions = computed(() => dataState.allDataType)
+const DataComponent = computed(() => {
+  if (dataType.value) {
+    const dataComponent = dataState.getDataComponent(dataType.value)
+    return dataComponent ? dataComponent.component : useEmpty('未发现相应的数据插件')
   }
-])
+  return useEmpty('未发现相应的数据插件')
+})
 
 const typeChanged = (type: string) => {
   dataType.value = type

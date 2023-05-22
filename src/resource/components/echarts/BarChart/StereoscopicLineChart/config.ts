@@ -1,4 +1,4 @@
-import { ComponentGroup, FormType } from '@/enum'
+import { ComponentGroup, ContainerType, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
 import type { MetaContainerItem } from '@/types/component'
@@ -14,7 +14,10 @@ class StereoscopicBarChartComponent extends CustomComponent {
       width: 500,
       height: 170,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataIntegrationMode: DataIntegrationMode.UNIVERSAL,
+      defaultViewType: {
+        propValue: ContainerType.FORM
+      }
     })
   }
 

@@ -20,31 +20,26 @@
     <n-card>
       <n-tabs>
         <n-tab-pane name="脚本">
-          <Editor
-            :data="scriptData"
-            class="content"
-            :config="config"
-            @update:data="scriptChangeHandler"
-          />
+          <Editor :data="formData" class="content" @update:data="scriptChangeHandler" />
         </n-tab-pane>
         <n-tab-pane name="入参">
-          <DataView
-            v-model:content="params"
-            class="content"
-            :config="config"
-            @update:content="paramsChange"
-          />
+          <OCodeEditor v-model:value="params" @update:value="paramsChange" />
         </n-tab-pane>
       </n-tabs>
       <n-divider title-placement="left"> 输出 </n-divider>
-      <DataView v-model:content="stdOut" class="content" :disable="true" :config="config" />
+      <OCodeEditor
+        v-model:value="stdOut"
+        class="content"
+        :disable="true"
+        @update:value="scriptChangeHandler"
+      />
     </n-card>
   </n-card>
 </template>
 
 <script lang="ts" setup>
 import { NButton, NButtonGroup, NCard, NDivider, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
-import { computed, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
 import {
   createAfterScriptApi,
@@ -53,7 +48,6 @@ import {
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
 import { StaticKey, useEventBus } from '@/bus'
-import DataView from '@/components/DataView'
 import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
@@ -61,14 +55,6 @@ import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
 import Editor from './Editor.vue'
-
-const config = ref({
-  height: '300px',
-  tabSize: 4,
-  indentWithTab: true,
-  autofocus: true,
-  disabled: false
-})
 
 const formData = reactive<{
   id?: string
@@ -97,12 +83,6 @@ useEventBus(StaticKey.SRCIPT_KEY, async (id) => {
 })
 
 const stdOut = ref<string>('')
-const scriptData = computed<AfterScript>(() => {
-  return {
-    code: formData.code,
-    type: formData.type
-  }
-})
 
 const run = () => {
   const afterCallback = formData.code
@@ -122,6 +102,7 @@ const run = () => {
 const loadAfterScript = async (id: string) => {
   try {
     const resp = await getAfterScriptApi(id)
+    console.log(resp)
     if (resp.status === 200) {
       const data = resp.data
       formData.id = data.id
@@ -146,7 +127,7 @@ const handleSave = async () => {
       formData.title = data.name
       formData.code = data.code
       formData.type = data.type
-      message.success('数据保存成功')
+      Logger.info('数据保存成功')
     } else {
       message.warning('数据保存失败')
     }
@@ -162,7 +143,7 @@ const handleUpdate = async () => {
       type: formData.type
     })
     if (resp.status === 200) {
-      message.success('数据更新成功')
+      Logger.info('数据更新成功')
     } else {
       message.warning('数据更新失败')
     }
