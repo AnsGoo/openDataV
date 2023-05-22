@@ -745,62 +745,6 @@ class CanvasState {
 }
 
 const canvasState = new CanvasState({
-  formItems: [
-    {
-      label: '数据配置',
-      prop: 'data',
-      children: [
-        {
-          prop: 'upperLimit',
-          label: '上限',
-          type: FormType.NUMBER,
-          componentOptions: {
-            defaultValue: 150
-          }
-        },
-        {
-          prop: 'lowerLimit',
-          label: '下限',
-          type: FormType.NUMBER,
-          props: {
-            defaultValue: 0
-          }
-        },
-        {
-          prop: 'max',
-          label: '最大值',
-          type: FormType.TEXT,
-          props: {
-            defaultValue: 'dataMax'
-          }
-        },
-        {
-          prop: 'min',
-          label: '最小值',
-          type: FormType.TEXT,
-          props: {
-            defaultValue: '0'
-          }
-        },
-        {
-          prop: 'maxOffset',
-          label: '最大偏移值',
-          type: FormType.NUMBER,
-          props: {
-            defaultValue: 0
-          }
-        },
-        {
-          prop: 'minOffset',
-          label: '最小偏移值',
-          type: FormType.NUMBER,
-          props: {
-            defaultValue: 0
-          }
-        }
-      ]
-    }
-  ],
   mode: ContainerType.CARD
 })
 export default function useCanvasState() {
