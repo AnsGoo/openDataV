@@ -1,6 +1,6 @@
 <template>
-  <OCodeEditor ref="cm" :value="value" :mode="mode" @change="codeChange">
-    <template v-if="mode === 'debug'" #tool-bar>
+  <OCodeEditor ref="cm" :value="value" :mode="mode" :disabled="disabled" @change="codeChange">
+    <template #tool-bar>
       <div class="buttons">
         <x-icon class="item button" name="save" @click="handleSave" />
       </div>
@@ -8,7 +8,7 @@
     <template #footer>
       <div class="footer">
         <div class="left">
-          <span v-if="error" class="err-message"> {{ error }}</span>
+          <span v-if="error" class="err-message"> 异常信息：{{ error }}</span>
           <span v-else class="info-message">{{ title ? `数据名称：${title}` : '' }}</span>
         </div>
         <div class="right">
@@ -25,8 +25,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 
-import { message } from '@/utils/message'
-
 const savedStatus = ref<boolean>(true)
 
 const props = withDefaults(
@@ -36,12 +34,14 @@ const props = withDefaults(
     mode?: 'debug' | 'use'
     height?: string
     error?: string
+    disabled?: boolean
   }>(),
   {
     value: '',
     title: '',
     mode: 'use',
-    height: '600px'
+    height: '600px',
+    disabled: false
   }
 )
 
@@ -57,7 +57,6 @@ const codeChange = (_: string) => {
 const handleSave = () => {
   emits('update:value', props.value)
   savedStatus.value = true
-  message.info('保存成功')
 }
 </script>
 <style lang="less" scoped>

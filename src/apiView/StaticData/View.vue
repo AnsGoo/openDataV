@@ -14,7 +14,7 @@
   </n-form>
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
-      style="width: 600px"
+      style="width: 800px"
       title="静态数据"
       :bordered="false"
       size="small"
@@ -23,7 +23,7 @@
       closable
       @close="isShow = false"
     >
-      <Static
+      <StaticData
         v-model:options="formDataConfig"
         @data-change="dataChangeHandler"
         @script-change="scriptChangeHandler"
@@ -40,8 +40,8 @@ import type { CustomComponent, StaticRequestData } from '@/models'
 import type { AfterScript } from '@/types/component'
 
 import { DataType, ScriptType } from '../const'
-import Static from '../content/static'
 import type { StoreStaticOption } from '../type'
+import StaticData from './StaticData.vue'
 
 const props = defineProps<{
   curComponent: CustomComponent

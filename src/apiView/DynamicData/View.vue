@@ -28,7 +28,7 @@
   </n-form>
   <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
     <n-card
-      style="width: 600px"
+      style="width: 800px"
       title="动态数据"
       :bordered="false"
       size="small"
@@ -59,13 +59,13 @@ import {
 } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import Rest from '@/apiView/content/rest'
 import type { CustomComponent, RestRequestData } from '@/models'
 
 import { DataType, ScriptType } from '../const'
 import { RequestMethod } from '../content/requestEnums'
 import type { RestOption } from '../type'
 import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
+import Rest from './DynamicExtendView.vue'
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -78,7 +78,7 @@ const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOp
   interval: 1000,
   options: {
     method: RequestMethod.GET,
-    url: '',
+    url: '/getRiskArea',
     headers: [{ key: '', value: '', disable: false, id: uuid() }],
     params: [{ key: '', value: '', disable: false, id: uuid() }],
     data: [{ key: '', value: '', disable: false, id: uuid() }],
