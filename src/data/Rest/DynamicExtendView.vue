@@ -36,15 +36,20 @@ import {
   updateRestDataApi
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
+import { ScriptType } from '@/apiView/const'
+import { RequestMethod } from '@/apiView/content/requestEnums'
+import Rest from '@/apiView/content/rest/Rest.vue'
+import useRestRequest from '@/apiView/hooks/http'
+import useDataSnapShot from '@/apiView/hooks/snapshot'
+import type { RequestResponse, RestOption } from '@/apiView/type'
+import {
+  KVToRecordable,
+  Logger,
+  recordabletoKV,
+  requestOptionsToStore,
+  uuid
+} from '@/apiView/utils'
 import { StaticKey, useEventBus } from '@/bus'
-
-import { ScriptType } from '../const'
-import { RequestMethod } from '../content/requestEnums'
-import Rest from '../content/rest/Rest.vue'
-import useRestRequest from '../hooks/http'
-import useDataSnapShot from '../hooks/snapshot'
-import type { RequestResponse, RestOption } from '../type'
-import { KVToRecordable, Logger, recordabletoKV, requestOptionsToStore, uuid } from '../utils'
 
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
@@ -194,6 +199,7 @@ const send = async () => {
   }
 }
 const formChange = () => {
+  console.log('2', formData)
   emits('change', formData)
   emits('update:options', formData)
 }

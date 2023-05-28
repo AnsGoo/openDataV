@@ -27,6 +27,7 @@ let chartData:
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
 
 const dataChange = (resp: any, _: DataType) => {
+  console.log(resp)
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)

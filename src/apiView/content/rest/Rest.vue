@@ -185,8 +185,10 @@ const send = async () => {
     response.value.afterData = err.stack || err.message
     response.value.headers = result.headers || result?.config?.headers || {}
   }
+  formChange()
 }
 const formChange = () => {
+  console.log('formData', formData)
   emits('change', formData)
   emits('update:options', formData)
 }

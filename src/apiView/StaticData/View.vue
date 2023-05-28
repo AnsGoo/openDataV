@@ -45,10 +45,11 @@
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent, StaticRequestData } from '@/models'
+import type { CustomComponent } from '@/models'
 import type { AfterScript } from '@/types/component'
 
 import { DataType, ScriptType } from '../const'
+import type StaticRequestData from './handler'
 import DataHandler from './handler'
 import StaticContent from './StaticData.vue'
 

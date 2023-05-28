@@ -35,7 +35,15 @@
       role="dialog"
       aria-modal="true"
     >
+      <slot
+        v-if="slots.default"
+        :options="formData.options"
+        mode="use"
+        @data-change="changeHandler"
+        @script-change="changeHandler"
+      ></slot>
       <Rest
+        v-else
         v-model:options="formData.options"
         @update:rest-options="changeHandler"
         @change="changeHandler"
@@ -57,20 +65,22 @@ import {
   NModal,
   NSwitch
 } from 'naive-ui'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent, RestRequestData } from '@/models'
+import type { CustomComponent } from '@/models'
 
 import { DataType, ScriptType } from '../const'
 import { RequestMethod } from '../content/requestEnums'
+import Rest from '../content/rest/Rest.vue'
 import type { RestOption } from '../type'
 import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
-import Rest from './DynamicExtendView.vue'
+import type RestRequestData from './handler'
 import DataHandler from './handler'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
+const slots = useSlots()
 
 const isShow = ref<boolean>(false)
 
@@ -89,7 +99,8 @@ const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOp
     }
   }
 })
-const changeHandler = () => {
+const changeHandler = (data) => {
+  console.log('----------', formData, data)
   setDataConfig()
 }
 
