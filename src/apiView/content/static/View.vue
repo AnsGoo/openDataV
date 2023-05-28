@@ -2,20 +2,10 @@
   <n-card>
     <div class="static-data">
       <slot name="data-select"></slot>
-      <n-input v-if="mode === 'debug'" :value="title" class="title">
-        <template #prefix>
-          <x-icon name="data" />
-        </template>
-      </n-input>
-      <n-space v-if="mode === 'debug'">
-        <n-button-group class="save">
-          <n-button type="primary" @click="handleSave">保存</n-button>
-        </n-button-group>
-      </n-space>
     </div>
     <n-tabs>
       <n-tab-pane name="data" tab="处理数据" display-directive="show">
-        <OCodeEditor v-model:value="afterData" disabled="true" />
+        <OCodeEditor v-model:value="afterData" :disabled="true" />
       </n-tab-pane>
       <n-tab-pane name="origin" tab="原始数据" display-directive="show">
         <StaticDataView
@@ -40,7 +30,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NButton, NButtonGroup, NCard, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
+import { NCard, NTabPane, NTabs } from 'naive-ui'
 import { computed, onMounted, ref } from 'vue'
 
 import { ScriptType } from '@/enum'
@@ -68,7 +58,7 @@ const props = withDefaults(
         type: ScriptType.Javascript
       }
     },
-    mode: 'use',
+    mode: 'debug',
     data: ''
   }
 )
@@ -86,14 +76,9 @@ const afterData = computed(() => {
   }
 })
 
-const handleSave = () => {
-  emits('save', props.id, props.title, props.data)
-}
-
 const emits = defineEmits<{
   (e: 'dataChange', value: string): void
   (e: 'scriptChange', script: AfterScript): void
-  (e: 'save', id: string, title: string, data: any): void
 }>()
 
 const errMessage = ref<string | undefined>(undefined)
@@ -126,15 +111,3 @@ onMounted(() => {
   getScriptChangeHandler(props.script)
 })
 </script>
-
-<style lang="less" scoped>
-.static-data {
-  display: flex;
-  .selected {
-    flex: 4;
-  }
-  .title {
-    flex: 8;
-  }
-}
-</style>

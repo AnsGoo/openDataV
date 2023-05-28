@@ -26,7 +26,7 @@ const { updateEchart, resizeHandler } = useEchart(chartEl)
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
-const dataChange = (resp: any, _: DataType) => {
+const dataChange = (resp: any, _: DataType | string) => {
   console.log(resp)
   if (resp.status >= 0) {
     chartData = resp.afterData

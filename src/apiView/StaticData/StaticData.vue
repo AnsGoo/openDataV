@@ -4,26 +4,34 @@
     :title="formData.title"
     :data="formData.originData"
     :script="options.script"
-    mode="debug"
+    :mode="mode"
     @save="handleSaveOrUpdate"
   >
     <template #data-select>
       <n-select
+        v-model:value="formData.id"
         :options="staticDataList"
-        :value="formData.id"
         class="selected"
         clearable
         placeholder="请选择数据"
         @update:value="dataChangeHandler"
         @clear="clear"
       />
+      <n-input-group v-if="mode === 'debug'">
+        <n-input v-model:value="formData.title" class="title">
+          <template #prefix>
+            <x-icon name="data" />
+          </template>
+        </n-input>
+        <n-button type="primary" @click="handleSave">保存</n-button>
+      </n-input-group>
     </template>
   </StaticContent>
 </template>
 
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
-import { NSelect } from 'naive-ui'
+import { NButton, NInput, NInputGroup, NSelect } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import type { StaticDataDetail } from '@/api/data'
@@ -59,7 +67,7 @@ const props = withDefaults(
         }
       }
     },
-    mode: 'use'
+    mode: 'debug'
   }
 )
 if (props.mode === 'debug') {
@@ -75,7 +83,7 @@ const loadStaticList = async () => {
       staticDataList.value = resp.data.map((el: StaticDataDetail) => {
         return {
           label: el.name,
-          value: el.id
+          value: el.id.toString()
         }
       })
     }
@@ -161,7 +169,7 @@ const handleSave = async () => {
     })
     if (resp.status === 201) {
       const data = resp.data as StaticDataDetail
-      formData.id = data.id
+      formData.id = data.id.toString()
       formData.title = data.name
       formData.originData = data.data
       Logger.info('数据保存成功')

@@ -66,6 +66,7 @@ import { RequestMethod } from '../content/requestEnums'
 import type { RestOption } from '../type'
 import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
 import Rest from './DynamicExtendView.vue'
+import DataHandler from './handler'
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -93,13 +94,15 @@ const changeHandler = () => {
 }
 
 const setDataConfig = () => {
-  props.curComponent.changeRequestDataConfig(DataType.REST, {
-    options: requestOptionsToStore(formData.options),
+  const dataConfig = {
+    type: DataType.REST,
+    requestConfig: new DataHandler(requestOptionsToStore(formData.options)),
     otherConfig: {
       isRepeat: formData.isRepeat,
       interval: formData.interval
     }
-  })
+  }
+  props.curComponent.changeRequestDataConfig(dataConfig)
 }
 
 onMounted(async () => {

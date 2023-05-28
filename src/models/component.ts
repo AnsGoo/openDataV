@@ -3,7 +3,8 @@ import { h } from 'vue'
 
 import type { ComponentGroup } from '@/enum'
 import { ContainerType, FormType } from '@/enum'
-import { DataIntegrationMode, DataType } from '@/enum/data'
+import type { DataType } from '@/enum/data'
+import { DataIntegrationMode } from '@/enum/data'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -15,7 +16,6 @@ import type {
 } from '@/types/component'
 
 import type { RequestData } from './requestOption'
-import { DemoRequestData, RestRequestData, StaticRequestData } from './requestOption'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
@@ -38,7 +38,7 @@ export abstract class CustomComponent {
   dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
-  callbackData?: (result: any, type: DataType) => void
+  callbackData?: (result: any, type: DataType | string) => void
 
   // 检测变化
   propIsChange = true
@@ -295,11 +295,9 @@ export abstract class CustomComponent {
       return
     }
     updateModeValue(this._propValue, propKeys, value)
-    setTimeout(() => {
-      if (this.callbackProp) {
-        this.callbackProp(propKeys, value)
-      }
-    }, 0)
+    if (this.callbackProp) {
+      this.callbackProp(propKeys, value)
+    }
   }
 
   changePropCallback(callback: (propKeys: Array<string>, value: any) => void) {
@@ -361,30 +359,8 @@ export abstract class CustomComponent {
   showComponent() {
     this.display = true
   }
-  async changeRequestDataConfig(type: DataType, config: Recordable) {
-    switch (type) {
-      case DataType.STATIC:
-        this.dataConfig = {
-          type: DataType.STATIC,
-          requestConfig: new StaticRequestData(config.options),
-          otherConfig: config.otherConfig || {}
-        }
-        break
-      case DataType.REST:
-        this.dataConfig = {
-          type: DataType.REST,
-          requestConfig: new RestRequestData(config.options),
-          otherConfig: config.otherConfig || {}
-        }
-        break
-      case DataType.DEMO:
-        this.dataConfig = {
-          type: DataType.DEMO,
-          requestConfig: new DemoRequestData(config.options),
-          otherConfig: {}
-        }
-        break
-    }
+  async changeRequestDataConfig(dataConfig) {
+    this.dataConfig = dataConfig
     if (this.callbackData) {
       const result = await this.dataConfig?.requestConfig?.getRespData({
         propvalue: this.propValue
@@ -392,16 +368,16 @@ export abstract class CustomComponent {
       this.callbackData(result, this.dataConfig!.type)
     }
   }
-  changeDataCallback(callback: (result: any, type: DataType) => void) {
+  changeDataCallback(callback: (result: any, type: DataType | string) => void) {
     this.callbackData = callback
   }
   loadDemoData() {
     const exampleData = this.exampleData
-    this.changeRequestDataConfig(DataType.DEMO, {
-      options: {
-        data: exampleData
+    setTimeout(() => {
+      if (this.callbackData) {
+        this.callbackData({ status: 200, data: exampleData, afterData: exampleData }, 'DEMO')
       }
-    })
+    }, 200)
   }
   appendChild(child: CustomComponent) {
     this.subComponents.push(child)

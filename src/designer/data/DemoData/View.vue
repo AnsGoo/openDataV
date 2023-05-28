@@ -30,7 +30,8 @@ import { onMounted, reactive, ref, watch } from 'vue'
 
 import { DataType } from '@/enum/data'
 import type { CustomComponent, DemoRequestData } from '@/models'
-import { message } from '@/utils/message'
+
+import DataHandler from './handler'
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -57,13 +58,14 @@ const initData = async () => {
       formData.afterData = JSON.stringify(resp.afterData, null, '\t')
     }
   } else {
-    message.info('正在使用示例数据')
     const exampleData = props.curComponent.exampleData
-    await props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      options: {
+    const dataConfig = {
+      type: DataType.DEMO,
+      requestConfig: new DataHandler({
         data: cloneDeep(exampleData)
-      }
-    })
+      })
+    }
+    await props.curComponent.changeRequestDataConfig(dataConfig)
   }
 }
 

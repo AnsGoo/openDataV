@@ -18,7 +18,7 @@ const props = defineProps<{
 const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 
-const dataChange = (resp: any, _: DataType) => {
+const dataChange = (resp: any, _: DataType | string) => {
   if (!resp || !resp.afterData) {
     return
   }

@@ -72,7 +72,7 @@ const savedStatus = ref<boolean>(true)
 const isShow = ref<boolean>(false)
 const props = withDefaults(
   defineProps<{
-    data: AfterScript
+    data?: AfterScript
     mode?: 'use' | 'debug' | 'view'
   }>(),
   {

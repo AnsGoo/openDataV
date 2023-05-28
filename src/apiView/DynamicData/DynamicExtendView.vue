@@ -170,7 +170,7 @@ interface RequestDataOption extends RestOption {
 }
 const formData = reactive<RequestDataOption>(props.options)
 const response = ref<RequestResponse>({
-  code: 0,
+  status: 0,
   data: '',
   afterData: '',
   headers: {}

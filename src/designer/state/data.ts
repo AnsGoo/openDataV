@@ -8,6 +8,7 @@ interface DataPlugin {
   type: string
   name: string
   component: any
+  handler: any
 }
 
 class DataState {

@@ -1,28 +1,28 @@
 import { componentList } from '@/designer/load'
-import { DataIntegrationMode, DataType } from '@/enum/data'
+import useDataState from '@/designer/state/data'
+import { DataIntegrationMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
 import type { ComponentDataType, ComponentRequestDataType } from '@/types/component'
 import { calcComponentAxis } from '@/utils/utils'
 
 const componentDataHandler = (componentObj: CustomComponent, data?: ComponentRequestDataType) => {
+  console.log(data)
+  const dataState = useDataState()
   if (!data) {
     componentObj.loadDemoData()
     return
   }
-  if (data.type === DataType.DEMO) {
-    componentObj.changeRequestDataConfig(DataType.DEMO, {
-      options: {
-        data: componentObj.exampleData
-      }
-    })
-  } else {
-    const { options } = data.requestOptions!
-    componentObj.changeRequestDataConfig(data.type, {
-      options: options,
-      otherConfig: data.otherConfig
-    })
+
+  const dataHandler = dataState.getDataComponent[data.type].handler
+  const { options } = data.requestOptions!
+  const otherConfig = data.otherConfig || {}
+  const dataConfig = {
+    type: data.type,
+    requestConfig: new dataHandler(options),
+    otherConfig: otherConfig
   }
+  componentObj.changeRequestDataConfig(dataConfig)
 }
 
 export function createComponent(component: ComponentDataType): any {
