@@ -171,6 +171,7 @@ const response = ref<RequestResponse>({
 })
 const send = async () => {
   const restRequest = useRestRequest(requestOptionsToStore(formData), true)
+  formChange()
   try {
     const resp = await restRequest.request()
     response.value.code = resp.status
@@ -185,10 +186,8 @@ const send = async () => {
     response.value.afterData = err.stack || err.message
     response.value.headers = result.headers || result?.config?.headers || {}
   }
-  formChange()
 }
 const formChange = () => {
-  console.log('formData', formData)
   emits('change', formData)
   emits('update:options', formData)
 }

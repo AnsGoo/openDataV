@@ -53,6 +53,8 @@ import type StaticRequestData from './handler'
 import DataHandler from './handler'
 import StaticContent from './StaticData.vue'
 
+const slots = useSlots()
+
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
@@ -72,8 +74,6 @@ const formDataConfig = reactive<{
     type: ScriptType.Javascript
   }
 })
-
-const slots = useSlots()
 
 onMounted(async () => {
   await initData()

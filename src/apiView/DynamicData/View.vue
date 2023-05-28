@@ -39,13 +39,13 @@
         v-if="slots.default"
         :options="formData.options"
         mode="use"
-        @data-change="changeHandler"
-        @script-change="changeHandler"
+        @update:options="changeHandler"
+        @change="changeHandler"
       ></slot>
       <Rest
         v-else
         v-model:options="formData.options"
-        @update:rest-options="changeHandler"
+        @update:options="changeHandler"
         @change="changeHandler"
       />
     </n-card>
@@ -81,7 +81,6 @@ const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const slots = useSlots()
-
 const isShow = ref<boolean>(false)
 
 const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOption }>({
@@ -99,8 +98,8 @@ const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOp
     }
   }
 })
-const changeHandler = (data) => {
-  console.log('----------', formData, data)
+const changeHandler = (...data) => {
+  console.log('----------', data)
   setDataConfig()
 }
 
