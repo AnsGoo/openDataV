@@ -6,7 +6,8 @@ export const REDIRECT_ROUTE = {
   component: Layout,
   name: 'RedirectTo',
   meta: {
-    title: 'Redirect'
+    title: 'Redirect',
+    hideInMenu: true
   },
   children: [
     {
