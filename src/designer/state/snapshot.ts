@@ -15,11 +15,10 @@ class SnapshotState {
     cursor: 0
   })
 
-  // @ts-ignore
   get latestSnapshot(): StoreComponentData | undefined {
     return this.state.latestSnapshot
   }
-  set latestSnapshot(snapshot: StoreComponentData) {
+  set latestSnapshot(snapshot: StoreComponentData | undefined) {
     this.state.latestSnapshot = snapshot
   }
 

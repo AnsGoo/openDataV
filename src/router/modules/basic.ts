@@ -1,5 +1,26 @@
 import { Layout } from '@/layout'
 
+// 重定向路由
+export const REDIRECT_ROUTE = {
+  path: '/redirect',
+  component: Layout,
+  name: 'RedirectTo',
+  meta: {
+    title: 'Redirect',
+    hideInMenu: true
+  },
+  children: [
+    {
+      path: '/redirect/:path(.*)/:_redirect_type(.*)/:_origin_params(.*)',
+      name: 'Redirect',
+      component: () => import('@/pages/redirect/index.vue'),
+      meta: {
+        title: 'Redirect'
+      }
+    }
+  ]
+}
+
 const basicRoutes = [
   {
     path: '/',
@@ -72,6 +93,7 @@ const basicRoutes = [
       }
     ]
   },
+  REDIRECT_ROUTE,
   {
     path: '/404',
     name: '404',
