@@ -35,15 +35,7 @@
       role="dialog"
       aria-modal="true"
     >
-      <slot
-        v-if="slots.default"
-        :options="formData.options"
-        mode="use"
-        @update:options="changeHandler"
-        @change="changeHandler"
-      ></slot>
-      <Rest
-        v-else
+      <RestView
         v-model:options="formData.options"
         @update:options="changeHandler"
         @change="changeHandler"
@@ -65,7 +57,7 @@ import {
   NModal,
   NSwitch
 } from 'naive-ui'
-import { onMounted, reactive, ref, useSlots, watch } from 'vue'
+import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 
@@ -82,7 +74,13 @@ const props = defineProps<{
 }>()
 const slots = useSlots()
 const isShow = ref<boolean>(false)
-
+const RestView = computed(() => {
+  if (slots.default) {
+    return slots.default()[0].type
+  } else {
+    return Rest
+  }
+})
 const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOption }>({
   isRepeat: false,
   interval: 1000,

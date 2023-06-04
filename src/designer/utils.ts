@@ -13,8 +13,7 @@ const componentDataHandler = (componentObj: CustomComponent, data?: ComponentReq
     componentObj.loadDemoData()
     return
   }
-
-  const dataHandler = dataState.getDataComponent[data.type].handler
+  const dataHandler = dataState.getDataComponent(data.type).handler
   const { options } = data.requestOptions!
   const otherConfig = data.otherConfig || {}
   const dataConfig = {

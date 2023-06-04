@@ -23,16 +23,8 @@
       closable
       @close="isShow = false"
     >
-      <slot
-        v-if="slots.default"
-        :options="formDataConfig"
-        mode="use"
-        @data-change="dataChangeHandler"
-        @script-change="scriptChangeHandler"
-      ></slot>
-      <StaticContent
-        v-else
-        :options="formDataConfig"
+      <StaticView
+        v-model:options="formDataConfig"
         mode="use"
         @data-change="dataChangeHandler"
         @script-change="scriptChangeHandler"
@@ -43,7 +35,7 @@
 
 <script lang="ts" setup>
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import { onMounted, reactive, ref, useSlots, watch } from 'vue'
+import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 import type { AfterScript } from '@/types/component'
@@ -54,6 +46,14 @@ import DataHandler from './handler'
 import StaticContent from './StaticData.vue'
 
 const slots = useSlots()
+
+const StaticView = computed(() => {
+  if (slots.default) {
+    return slots.default()[0].type
+  } else {
+    return StaticContent
+  }
+})
 
 const props = defineProps<{
   curComponent: CustomComponent
