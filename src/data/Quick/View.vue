@@ -15,7 +15,7 @@
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 800px"
-      title="静态数据"
+      title="快速数据"
       :bordered="false"
       size="small"
       role="dialog"
