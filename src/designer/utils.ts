@@ -8,7 +8,7 @@ import { calcComponentAxis } from '@/utils/utils'
 
 const componentDataHandler = (componentObj: CustomComponent, data?: ComponentRequestDataType) => {
   const dataState = useDataState()
-  if (!data) {
+  if (!(data && data.requestOptions)) {
     componentObj.loadDemoData()
     return
   }
