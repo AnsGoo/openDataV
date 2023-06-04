@@ -23,7 +23,6 @@ export function makeFunction(
 
 function makeJavaScriptsFunction(code: string, args: string[], _isDebug?: boolean): CallbackType {
   try {
-    console.log(...args, code)
     const handler = new Function(...args, code) as (resp: any, options: Recordable) => any
     return { handler }
   } catch (err: any) {

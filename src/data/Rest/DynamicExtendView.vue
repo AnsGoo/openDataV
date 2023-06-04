@@ -199,7 +199,6 @@ const send = async () => {
   }
 }
 const formChange = () => {
-  console.log('2', formData)
   emits('change', formData)
   emits('update:options', formData)
 }

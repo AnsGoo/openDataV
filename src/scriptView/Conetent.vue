@@ -102,9 +102,9 @@ const run = () => {
 const loadAfterScript = async (id: string) => {
   try {
     const resp = await getAfterScriptApi(id)
-    console.log(resp)
     if (resp.status === 200) {
       const data = resp.data
+      formData.id = data.id
       formData.id = data.id
       formData.title = data.name
       formData.code = data.code

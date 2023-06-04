@@ -7,7 +7,6 @@ import type { ComponentDataType, ComponentRequestDataType } from '@/types/compon
 import { calcComponentAxis } from '@/utils/utils'
 
 const componentDataHandler = (componentObj: CustomComponent, data?: ComponentRequestDataType) => {
-  console.log(data)
   const dataState = useDataState()
   if (!data) {
     componentObj.loadDemoData()

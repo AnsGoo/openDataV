@@ -96,8 +96,7 @@ const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOp
     }
   }
 })
-const changeHandler = (...data) => {
-  console.log('----------', data)
+const changeHandler = () => {
   setDataConfig()
 }
 
