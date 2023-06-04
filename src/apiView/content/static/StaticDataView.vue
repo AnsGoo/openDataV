@@ -1,5 +1,12 @@
 <template>
-  <OCodeEditor ref="cm" :value="value" :mode="mode" :disabled="disabled" @change="codeChange">
+  <OCodeEditor
+    ref="cm"
+    :value="data"
+    :mode="mode"
+    :disabled="disabled"
+    @update:value="dataChange"
+    @change="codeChange"
+  >
     <template #tool-bar>
       <div class="buttons">
         <x-icon class="item button" name="save" @click="handleSave" />
@@ -29,7 +36,7 @@ const savedStatus = ref<boolean>(true)
 
 const props = withDefaults(
   defineProps<{
-    value?: string
+    data?: string
     title?: string
     mode?: 'debug' | 'use'
     height?: string
@@ -37,7 +44,7 @@ const props = withDefaults(
     disabled?: boolean
   }>(),
   {
-    value: '',
+    data: '',
     title: '',
     mode: 'use',
     height: '600px',
@@ -47,15 +54,20 @@ const props = withDefaults(
 
 const cm = ref<HTMLElement | null>(null)
 const emits = defineEmits<{
-  (e: 'update:value', value?: any): void
+  (e: 'update:data', value?: any): void
   (e: 'change', value?: any): void
 }>()
 const codeChange = (_: string) => {
   savedStatus.value = false
 }
+const dataChange = (value: string) => {
+  emits('update:data', value)
+  emits('change', value)
+}
 
 const handleSave = () => {
-  emits('update:value', props.value)
+  emits('update:data', props.data)
+  emits('change', props.data)
   savedStatus.value = true
 }
 </script>

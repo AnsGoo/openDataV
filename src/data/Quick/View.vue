@@ -37,13 +37,13 @@
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
+import { ScriptType } from '@/apiView/const'
 import type { CustomComponent } from '@/models'
 import type { AfterScript } from '@/types/component'
 
-import { DataType, ScriptType } from '../const'
-import StaticContent from '../content/static/View.vue'
 import type StaticRequestData from './handler'
-import DataHandler from './handler'
+import DataHandler, { QUICK_TYPE } from './handler'
+import StaticContent from './Quick.vue'
 
 const slots = useSlots()
 
@@ -61,9 +61,13 @@ const props = defineProps<{
 const isShow = ref<boolean>(false)
 
 const formDataConfig = reactive<{
+  id: string
+  title: string
   data: string
   script: AfterScript
 }>({
+  id: '',
+  title: '',
   data: '',
   script: {
     code: '',
@@ -77,15 +81,17 @@ onMounted(async () => {
 
 const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.STATIC) {
+  if (dataConfig && dataConfig.type === QUICK_TYPE) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
     const { options } = staticRequest.toJSON()
+    formDataConfig.id = options.id
     formDataConfig.script = options.script!
+    formDataConfig.title = options.title!
   } else {
     const dataConfig = {
-      type: DataType.STATIC,
+      type: QUICK_TYPE,
       requestConfig: new DataHandler({
-        data: formDataConfig.data,
+        id: formDataConfig.id,
         script: {
           code: formDataConfig.script!.code,
           type: ScriptType.Javascript
@@ -97,17 +103,18 @@ const initData = async () => {
 }
 const changeHandler = () => {
   const dataConfig = {
-    type: DataType.STATIC,
+    type: QUICK_TYPE,
     requestConfig: new DataHandler({
-      data: formDataConfig.data,
+      id: formDataConfig.id,
       script: formDataConfig.script
     })
   }
   props.curComponent.changeRequestDataConfig(dataConfig)
 }
 
-const dataChangeHandler = (data) => {
-  formDataConfig.data = data
+const dataChangeHandler = (id: string, title: string) => {
+  formDataConfig.id = id
+  formDataConfig.title = title
   changeHandler()
 }
 

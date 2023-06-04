@@ -19,7 +19,7 @@ import type { RequestData } from './requestOption'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
-  type: DataType
+  type: string
   requestConfig: RequestData
   otherConfig: Recordable
 }
