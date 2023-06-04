@@ -198,22 +198,13 @@ importers:
     dependencies:
       dayjs: 1.11.7
 
-  src/resource/components/Text/Text:
-    specifiers:
-      dayjs: ^1.11.5
-    dependencies:
-      dayjs: 1.11.7
-
   src/resource/components/echarts:
     specifiers:
-      '@types/echarts': ^4.9.16
       echarts: ^5.3.3
       echarts-liquidfill: ^3.1.0
     dependencies:
       echarts: 5.4.2
       echarts-liquidfill: 3.1.0_echarts@5.4.2
-    devDependencies:
-      '@types/echarts': 4.9.17
 
 packages:
 
@@ -1055,12 +1046,6 @@ packages:
       '@types/tern': 0.23.4
     dev: true
 
-  /@types/echarts/4.9.17:
-    resolution: {integrity: sha512-/G6BfkA9lwjpJIS/Av6oljzj1ub58WQJW9t7300xyRUFgoBych7uve+NbV8L1oaDS5mg4b78JYP88q+ebVJ0Wg==}
-    dependencies:
-      '@types/zrender': 4.0.3
-    dev: true
-
   /@types/estree/1.0.1:
     resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
     dev: true
@@ -1131,10 +1116,6 @@ packages:
 
   /@types/tinycolor2/1.4.3:
     resolution: {integrity: sha512-Kf1w9NE5HEgGxCRyIcRXR/ZYtDv0V8FVPtYHwLxl0O+maGX0erE77pQlD0gpP+/KByMZ87mOA79SjifhSB3PjQ==}
-    dev: true
-
-  /@types/zrender/4.0.3:
-    resolution: {integrity: sha512-EPI269lkHNsObwILJ1k1z7znLjKyePuWRy/XKK0shSGpBb9cIX307arcwJV4+2NeZj5wEjN06r4D8yFv7sI06g==}
     dev: true
 
   /@typescript-eslint/eslint-plugin/4.33.0_s2qqtxhzmb7vugvfoyripfgp7i:
@@ -4239,6 +4220,7 @@ packages:
   /source-map/0.6.1:
     resolution: {integrity: sha512-UjgapumWlbMhkBgzT7Ykc5YXUT46F0iKu8SGXq0bcwP5dz/h0Plj6enJqjz1Zbq2l5WaqYnrVbwWOWMyF3F47g==}
     engines: {node: '>=0.10.0'}
+    requiresBuild: true
     optional: true
 
   /spdx-correct/3.2.0:

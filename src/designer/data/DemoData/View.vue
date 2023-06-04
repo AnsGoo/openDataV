@@ -29,8 +29,9 @@ import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'n
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import { DataType } from '@/enum/data'
-import type { CustomComponent, DemoRequestData } from '@/models'
-import { message } from '@/utils/message'
+import type { CustomComponent } from '@/models'
+
+import DataHandler from './handler'
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -51,19 +52,20 @@ const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
 
   if (dataConfig && dataConfig.type === DataType.DEMO) {
-    const demoRequest = props.curComponent.dataConfig?.requestConfig as DemoRequestData
+    const demoRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
     if (props.curComponent.dataConfig) {
       const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
       formData.afterData = JSON.stringify(resp.afterData, null, '\t')
     }
   } else {
-    message.info('正在使用示例数据')
     const exampleData = props.curComponent.exampleData
-    await props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      options: {
+    const dataConfig = {
+      type: DataType.DEMO,
+      requestConfig: new DataHandler({
         data: cloneDeep(exampleData)
-      }
-    })
+      })
+    }
+    await props.curComponent.changeRequestDataConfig(dataConfig)
   }
 }
 

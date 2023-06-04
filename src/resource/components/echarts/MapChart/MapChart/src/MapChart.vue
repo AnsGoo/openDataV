@@ -24,7 +24,7 @@ const props = defineProps<{
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
-const dataChange = (resp: any, _: DataType) => {
+const dataChange = (resp: any, _: DataType | string) => {
   if (resp.status >= 0) {
     chartData = resp.afterData
     updateData(chartData)

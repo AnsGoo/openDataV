@@ -39,10 +39,11 @@ export interface StoreStaticOption {
 }
 
 export interface RequestResponse {
-  code: number
+  status: number
   data: string
   afterData: string
-  headers: Recordable<string>
+  headers?: Recordable<string>
+  [key: string]: any
 }
 
 export declare type FinallyResponse<T> = AxiosResponse<T> & { afterData: any }

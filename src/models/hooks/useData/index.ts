@@ -5,7 +5,7 @@ import type { CustomComponent } from '@/models'
 
 export const useData = (
   component: CustomComponent,
-  callbackData?: (data: any, type: DataType) => void
+  callbackData?: (data: any, type: DataType | string) => void
 ) => {
   component.changeDataCallback(callbackData!)
   let timer: IntervalHandle = 0

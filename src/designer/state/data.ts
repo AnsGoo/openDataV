@@ -1,13 +1,14 @@
 import { reactive } from 'vue'
 
-import RestDataPlugin from '@/apiView/DynamicData'
 import StaticDataPlugin from '@/apiView/StaticData'
+import RestDataPlugin from '@/data/Rest'
 import DemoDatePlugin from '@/designer/data/DemoData'
 
 interface DataPlugin {
   type: string
   name: string
   component: any
+  handler: any
 }
 
 class DataState {

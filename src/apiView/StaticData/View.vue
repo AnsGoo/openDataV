@@ -14,7 +14,7 @@
   </n-form>
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
-      style="width: 600px"
+      style="width: 800px"
       title="静态数据"
       :bordered="false"
       size="small"
@@ -23,8 +23,9 @@
       closable
       @close="isShow = false"
     >
-      <Static
+      <StaticView
         v-model:options="formDataConfig"
+        mode="use"
         @data-change="dataChangeHandler"
         @script-change="scriptChangeHandler"
       />
@@ -34,23 +35,40 @@
 
 <script lang="ts" setup>
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent, StaticRequestData } from '@/models'
+import type { CustomComponent } from '@/models'
 import type { AfterScript } from '@/types/component'
 
 import { DataType, ScriptType } from '../const'
-import Static from '../content/static'
-import type { StoreStaticOption } from '../type'
+import type StaticRequestData from './handler'
+import DataHandler from './handler'
+import StaticContent from './StaticData.vue'
+
+const slots = useSlots()
+
+const StaticView = computed(() => {
+  if (slots.default) {
+    return slots.default()[0].type
+  } else {
+    return StaticContent
+  }
+})
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const isShow = ref<boolean>(false)
 
-const formDataConfig = reactive<StoreStaticOption>({
+const formDataConfig = reactive<{
+  id: string
+  title: string
+  data: string
+  script: AfterScript
+}>({
   id: '',
   title: '',
+  data: '',
   script: {
     code: '',
     type: ScriptType.Javascript
@@ -70,29 +88,33 @@ const initData = async () => {
     formDataConfig.script = options.script!
     formDataConfig.title = options.title!
   } else {
-    await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-      options: {
+    const dataConfig = {
+      type: DataType.STATIC,
+      requestConfig: new DataHandler({
         id: formDataConfig.id,
         script: {
           code: formDataConfig.script!.code,
           type: ScriptType.Javascript
         }
-      }
-    })
+      })
+    }
+    await props.curComponent.changeRequestDataConfig(dataConfig)
   }
 }
 const changeHandler = () => {
-  props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    options: {
+  const dataConfig = {
+    type: DataType.STATIC,
+    requestConfig: new DataHandler({
       id: formDataConfig.id,
       script: formDataConfig.script
-    }
-  })
+    })
+  }
+  props.curComponent.changeRequestDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (id: string, title: string) => {
-  formDataConfig.title = title
   formDataConfig.id = id
+  formDataConfig.title = title
   changeHandler()
 }
 
