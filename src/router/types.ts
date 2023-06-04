@@ -5,6 +5,7 @@ export interface Meta extends RouteMeta {
   title: string
   ignoreAuth?: boolean
   permission?: string
+  // 是否在菜单中隐藏
   hideInMenu?: boolean
   keepAlive?: boolean
   icon?: string
