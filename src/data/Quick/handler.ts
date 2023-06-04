@@ -6,6 +6,7 @@ import { DataType } from '@/enum/data'
 import type { RequestData, RequestOptions } from '@/models/requestOption'
 import type { RequestResponse, StoreStaticOption } from '@/models/type'
 import type { AfterScript } from '@/types/component'
+import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
 
 const QUICK_TYPE = 'QUICK'
@@ -13,10 +14,15 @@ class QuickRequestData implements RequestData {
   public id?: string
   public afterScript?: AfterScript
   public title?: string
+  public callback?: CallbackType
 
   constructor({ id, script }: { id: string | undefined; script?: AfterScript }) {
     this.id = id
     this.afterScript = script
+    this.callback =
+      this.afterScript && this.afterScript.code
+        ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
+        : undefined
   }
 
   public toJSON(): RequestOptions<StoreStaticOption> {
@@ -46,10 +52,6 @@ class QuickRequestData implements RequestData {
     if (!this.id) {
       return response
     }
-    const afterCallback =
-      this.afterScript && this.afterScript.code
-        ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
-        : undefined
     try {
       const resp = await getStaticDataApi(this.id!)
       response.status = resp.status || -1
@@ -66,9 +68,9 @@ class QuickRequestData implements RequestData {
       response.afterData = err.stack || err.message
       response.headers = result.headers || result?.config?.headers || {}
     }
-    if (afterCallback && afterCallback.handler) {
+    if (this.callback && this.callback.handler) {
       try {
-        response.afterData = afterCallback.handler(response.data, options || {})
+        response.afterData = this.callback.handler(response.data, options || {})
       } catch (err: any) {
         response.afterData = err.message || err
       }
