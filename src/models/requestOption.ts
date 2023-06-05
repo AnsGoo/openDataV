@@ -15,7 +15,11 @@ export interface DemoData<T = any> {
 
 interface RequestData {
   toJSON: () => any | undefined
-  getRespData: (options?: Recordable) => Promise<RequestResponse<any>>
+  getRespData: (
+    options?: Recordable,
+    callback?: (result: any, type: DataType | string) => void,
+    type?: string
+  ) => Promise<RequestResponse<any>> | Promise<void>
 }
 
 export { RequestData }
