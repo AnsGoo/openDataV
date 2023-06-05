@@ -1,6 +1,7 @@
 import { reactive } from 'vue'
 
 import StaticDataPlugin from '@/apiView/StaticData'
+import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
 import DemoDatePlugin from '@/designer/data/DemoData'
 
@@ -16,7 +17,8 @@ class DataState {
     plugins: {
       [DemoDatePlugin.type]: DemoDatePlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
-      [RestDataPlugin.type]: RestDataPlugin
+      [RestDataPlugin.type]: RestDataPlugin,
+      [QuickDataPlugin.type]: QuickDataPlugin
     }
   })
 

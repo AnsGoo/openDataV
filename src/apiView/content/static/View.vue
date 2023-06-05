@@ -9,17 +9,17 @@
       </n-tab-pane>
       <n-tab-pane name="origin" tab="原始数据" display-directive="show">
         <StaticDataView
-          :value="originData"
+          :data="originData"
           :title="title"
           class="content"
           :mode="mode"
           :error="errMessage"
-          @update:value="originDataChange"
+          @update:data="originDataChange"
         />
       </n-tab-pane>
       <n-tab-pane name="scripts" tab="脚本" display-directive="show">
         <ScriptsEdtor
-          :data="script"
+          :data="options.script"
           class="content"
           :mode="mode"
           @update:data="scriptChangeHandler"
@@ -43,52 +43,64 @@ import StaticDataView from './StaticDataView.vue'
 
 const props = withDefaults(
   defineProps<{
-    id?: string
+    options?: {
+      script: AfterScript
+      data: string
+    }
     title?: string
-    script?: AfterScript
-    data?: any
     mode?: 'debug' | 'use'
   }>(),
   {
-    id: '',
     title: '',
-    script: () => {
+    options: () => {
       return {
-        code: '',
-        type: ScriptType.Javascript
+        data: '',
+        script: {
+          code: '',
+          type: ScriptType.Javascript
+        }
       }
     },
-    mode: 'debug',
-    data: ''
+    mode: 'debug'
   }
 )
 const afterCallback = ref<CallbackType | undefined>(undefined)
 
 const afterData = computed(() => {
+  let parseData
+  try {
+    parseData = JSON.parse(props.options.data)
+  } catch (err: any) {
+    return props.options.data
+  }
   if (afterCallback.value && afterCallback.value.handler) {
     try {
-      return JSON.stringify(afterCallback.value.handler(props.data, {}), null, '\t')
+      return JSON.stringify(afterCallback.value.handler(parseData, {}), null, '\t')
     } catch (err: any) {
-      return err.message || err
+      return (err.message || err).toString()
     }
   } else {
-    return JSON.stringify(props.data, null, '\t')
+    return JSON.stringify(parseData, null, '\t')
   }
 })
 
 const emits = defineEmits<{
+  (e: 'update:options', value: { script?: AfterScript; data: string }): void
   (e: 'dataChange', value: string): void
   (e: 'scriptChange', script: AfterScript): void
 }>()
 
 const errMessage = ref<string | undefined>(undefined)
 
-const originData = computed<string>(() => JSON.stringify(props.data, null, '\t'))
+const originData = computed<string>(() => {
+  return props.options.data
+})
 
-const originDataChange = (value: any) => {
+const originDataChange = (value: string) => {
+  emits('dataChange', value)
+  errMessage.value = undefined
   try {
     JSON.parse(value)
-    emits('dataChange', value)
   } catch (err) {
     errMessage.value = '语法错误'
     return
@@ -108,6 +120,6 @@ const getScriptChangeHandler = (script: AfterScript) => {
 }
 
 onMounted(() => {
-  getScriptChangeHandler(props.script)
+  getScriptChangeHandler(props.options.script)
 })
 </script>

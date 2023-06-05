@@ -3,6 +3,7 @@ import type { AxiosResponse, Method } from 'axios'
 import type { ScriptType } from '@/enum'
 
 export interface AfterScript {
+  id?: string
   code: string
   type: ScriptType
 }

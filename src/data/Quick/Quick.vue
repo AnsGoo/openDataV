@@ -1,10 +1,9 @@
 <template>
   <StaticContent
-    :id="formData.id"
     :title="formData.title"
-    :data="formData.originData"
-    :script="options.script"
+    :options="staticDataOptions"
     :mode="mode"
+    @script-change="scriptChangeHandler"
     @save="handleSaveOrUpdate"
   >
     <template #data-select>
@@ -41,13 +40,11 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
+import StaticContent from '@/apiView/content/static/View.vue'
+import type { AfterScript, StoreStaticOption } from '@/apiView/type'
 import { StaticKey, useEventBus } from '@/bus'
 import { ScriptType } from '@/enum'
-import { makeFunction } from '@/utils/data'
 import { message } from '@/utils/message'
-
-import StaticContent from '../content/static/View.vue'
-import type { AfterScript, StoreStaticOption } from '../type'
 
 const Logger = console
 const staticDataList = ref<Array<SelectOption>>([])
@@ -76,6 +73,11 @@ if (props.mode === 'debug') {
   })
 }
 
+const staticDataOptions = reactive<{ data: string; script: AfterScript }>({
+  data: '',
+  script: props.options.script!
+})
+
 const loadStaticList = async () => {
   try {
     const resp = await getStaticDataListApi()
@@ -96,11 +98,9 @@ const formData = reactive<{
   id?: string
   title: string
   originData: any
-  afterData: string
 }>({
   id: props.options.id,
   title: props.options.title || '',
-  afterData: '',
   originData: ''
 })
 
@@ -113,41 +113,24 @@ const clear = () => {
   formData.id = undefined
 }
 
-const originData = ref<string>('')
 const dataChangeHandler = async (id: string) => {
   if (id) {
     const resp: StaticDataDetail | undefined = await loadStaticData(id)
     if (resp) {
-      originData.value = JSON.stringify(resp.data, null, '\t')
+      staticDataOptions.data = JSON.stringify(resp.data, null, '\t')
       formData.originData = resp.data
-      getAfterData(props.options.script!)
       formData.id = id
       formData.title = resp.name
     }
   } else {
+    staticDataOptions.data = ''
     formData.originData = ''
-    formData.afterData = ''
   }
   emits('dataChange', formData.id!, formData.title)
 }
-const getAfterData = (script: AfterScript) => {
-  const afterCallback =
-    script && script.code
-      ? makeFunction(script.type, script.code, ['resp', 'options'], false)
-      : undefined
-  if (afterCallback && afterCallback.handler) {
-    try {
-      formData.afterData = JSON.stringify(
-        afterCallback.handler(formData.originData, {}),
-        null,
-        '\t'
-      )
-    } catch (err: any) {
-      formData.afterData = err.message || err
-    }
-  } else {
-    formData.afterData = JSON.stringify(formData.originData, null, '\t')
-  }
+
+const scriptChangeHandler = (script: AfterScript) => {
+  emits('scriptChange', script)
 }
 
 const loadStaticData = async (id: string): Promise<StaticDataDetail | undefined> => {
@@ -172,6 +155,7 @@ const handleSave = async () => {
       formData.id = data.id.toString()
       formData.title = data.name
       formData.originData = data.data
+      staticDataOptions.data = JSON.stringify(data.data, null, '\t')
       Logger.info('数据保存成功')
       await loadStaticList()
     } else {
@@ -215,14 +199,14 @@ const init = async () => {
       formData.id = resp.id!
       formData.title = resp.name
       formData.originData = resp.data
-      getAfterData(props.options.script!)
+      staticDataOptions.data = JSON.stringify(formData.originData, null, '\t')
       emits('dataChange', props.options.id, resp.name)
     }
   } else {
     formData.id = ''
     formData.title = ''
     formData.originData = ''
-    formData.afterData = ''
+    staticDataOptions.data = ''
   }
 }
 
