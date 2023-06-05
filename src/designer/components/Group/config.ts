@@ -1,4 +1,5 @@
 import { ComponentGroup } from '@/enum'
+import { DataIntegrationMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
 
 export const componentName = 'Group'
@@ -11,7 +12,8 @@ class GroupComponent extends CustomComponent {
       name: name ? name : '分组',
       id,
       width: 200,
-      height: 200
+      height: 200,
+      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
     })
   }
 }

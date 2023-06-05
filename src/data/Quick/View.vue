@@ -41,7 +41,6 @@ import { ScriptType } from '@/apiView/const'
 import type { CustomComponent } from '@/models'
 import type { AfterScript } from '@/types/component'
 
-import type StaticRequestData from './handler'
 import DataHandler, { QUICK_TYPE } from './handler'
 import StaticContent from './Quick.vue'
 
@@ -82,7 +81,7 @@ onMounted(async () => {
 const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
   if (dataConfig && dataConfig.type === QUICK_TYPE) {
-    const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+    const staticRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
     const { options } = staticRequest.toJSON()
     formDataConfig.id = options.id
     formDataConfig.script = options.script!

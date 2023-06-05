@@ -38,10 +38,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import Shape from '@/designer/Editor/Shape'
-import useCanvasState from '@/designer/state/canvas'
 import type { CustomComponent } from '@/models'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
+
+import Shape from '../../Editor/Shape'
+import useCanvasState from '../../state/canvas'
 
 const props = defineProps<{
   component: CustomComponent
