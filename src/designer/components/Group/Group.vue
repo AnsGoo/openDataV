@@ -36,9 +36,12 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, inject } from 'vue'
 
+import { useEventBus } from '@/bus'
+import type { DataType } from '@/enum/data'
 import type { CustomComponent } from '@/models'
+import type { HooksType } from '@/models/hooks/type'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
 
 import Shape from '../../Editor/Shape'
@@ -47,6 +50,19 @@ import useCanvasState from '../../state/canvas'
 const props = defineProps<{
   component: CustomComponent
 }>()
+const dataChange = (resp: any, _: DataType) => {
+  if (resp.status >= 0) {
+    const data = resp.afterData
+    const myChannel = props.component.propValue.dataOption.channel
+    const channel = myChannel ? myChannel : props.component.id
+    useEventBus(channel, data)
+  }
+}
+const { useData } = inject<HooksType>('HOOKS') || {}
+
+if (useData) {
+  useData(props.component, dataChange)
+}
 
 const canvasState = useCanvasState()
 const editMode = computed<boolean>(() => canvasState.isEditMode)
@@ -65,7 +81,7 @@ const isActive = computed(() => {
 })
 
 const isShow = (display: boolean): boolean => {
-  return !(canvasState.isEditMode && display === false)
+  return !(canvasState.isEditMode && !display)
 }
 const getShapeStyle = (item: CustomComponent) => {
   if (item.groupStyle?.gheight) {
