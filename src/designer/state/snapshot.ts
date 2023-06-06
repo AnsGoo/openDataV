@@ -22,11 +22,10 @@ class SnapshotState {
     this.state.latestSnapshot = snapshot
   }
 
-  get timeHandler(): TimeoutHandle {
-    // @ts-ignore
+  get timeHandler(): TimeoutHandle | undefined {
     return this.state.timeHandler
   }
-  set timeHandler(timeHandler: TimeoutHandle) {
+  set timeHandler(timeHandler: TimeoutHandle | undefined) {
     this.state.timeHandler = timeHandler
   }
 
@@ -102,7 +101,6 @@ class SnapshotState {
       if (snapshot) {
         this.cursor = snapshot.id!
       }
-      // @ts-ignore
       this.timeHandler = undefined
     })
   }
@@ -111,7 +109,6 @@ class SnapshotState {
    */
   async clearSnapshot() {
     await snapshotDb.snapshot.clear()
-    // @ts-ignore
     this.latestSnapshot = undefined
   }
   /**
