@@ -3,14 +3,14 @@ import { cloneDeep } from 'lodash-es'
 import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
 import { DataType } from '@/enum/data'
-import type { RequestData, RequestOptions } from '@/models/requestOption'
+import type { RequestDataInstance, RequestOptions } from '@/models/requestOption'
 import type { RequestResponse, StoreStaticOption } from '@/models/type'
 import type { AfterScript } from '@/types/component'
 import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
 
 const QUICK_TYPE = 'QUICK'
-class QuickRequestData implements RequestData {
+class QuickRequestData implements RequestDataInstance {
   public id?: string
   public afterScript?: AfterScript
   public title?: string

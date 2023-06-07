@@ -1,13 +1,13 @@
 import { cloneDeep } from 'lodash-es'
 
 import { DataType } from '@/enum/data'
-import type { RequestData, RequestOptions } from '@/models/requestOption'
+import type { RequestDataInstance, RequestOptions } from '@/models/requestOption'
 import type { RequestResponse } from '@/models/type'
 import type { AfterScript } from '@/types/component'
 import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
 
-class StaticRequestData implements RequestData {
+class StaticRequestData implements RequestDataInstance {
   public afterScript?: AfterScript
   public data?: any
   public callback?: CallbackType | undefined
