@@ -1,6 +1,6 @@
 <template>
   <n-form size="small">
-    <n-form-item key="title" label="静态数据">
+    <n-form-item key="title" label="快速数据">
       <n-input-group>
         <n-input
           v-model:value="formDataConfig.title"
@@ -23,7 +23,7 @@
       closable
       @close="isShow = false"
     >
-      <StaticView
+      <StaticContent
         v-model:options="formDataConfig"
         mode="use"
         @data-change="dataChangeHandler"
@@ -35,7 +35,7 @@
 
 <script lang="ts" setup>
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 import { ScriptType } from '@/apiView/const'
 import type { CustomComponent } from '@/models'
@@ -43,16 +43,6 @@ import type { AfterScript } from '@/types/component'
 
 import DataHandler, { QUICK_TYPE } from './handler'
 import StaticContent from './Quick.vue'
-
-const slots = useSlots()
-
-const StaticView = computed(() => {
-  if (slots.default) {
-    return slots.default()[0].type
-  } else {
-    return StaticContent
-  }
-})
 
 const props = defineProps<{
   curComponent: CustomComponent
