@@ -2,9 +2,10 @@ import { NSpin } from 'naive-ui'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
-import Group from '@/components/Group'
 import type { CustomComponent } from '@/models'
 import { Logger } from '@/utils/utils'
+
+import Group from './components/Group'
 
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}
