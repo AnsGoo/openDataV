@@ -26,7 +26,7 @@
       <StaticView
         v-model:options="formDataConfig"
         mode="use"
-        @data-change="dataChangeHandler"
+        @channel-change="dataChangeHandler"
         @script-change="scriptChangeHandler"
       />
     </n-card>
@@ -41,9 +41,9 @@ import type { CustomComponent } from '@/models'
 import type { AfterScript } from '@/types/component'
 
 import { DataType, ScriptType } from '../const'
-import StaticContent from '../content/static/View.vue'
 import type StaticRequestData from './handler'
 import DataHandler from './handler'
+import SubDataView from './SubDataView.vue'
 
 const slots = useSlots()
 
@@ -51,7 +51,7 @@ const StaticView = computed(() => {
   if (slots.default) {
     return slots.default()[0].type
   } else {
-    return StaticContent
+    return SubDataView
   }
 })
 
