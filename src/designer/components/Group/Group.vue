@@ -38,7 +38,7 @@
 <script setup lang="ts">
 import { computed, inject } from 'vue'
 
-import { useEventBus } from '@/bus'
+import { eventBus } from '@/bus'
 import type { DataType } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { HooksType } from '@/models/hooks/type'
@@ -55,7 +55,7 @@ const dataChange = (resp: any, _: DataType) => {
     const data = resp.afterData
     const myChannel = props.component.propValue.dataOption.channel
     const channel = myChannel ? myChannel : props.component.id
-    useEventBus(channel, data)
+    eventBus.on(channel, data)
   }
 }
 const { useData } = inject<HooksType>('HOOKS') || {}
