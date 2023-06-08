@@ -15,7 +15,7 @@
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 800px"
-      title="订阅数据"
+      title="订阅通道"
       :bordered="false"
       size="small"
       role="dialog"
