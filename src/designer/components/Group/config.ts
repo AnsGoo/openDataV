@@ -25,10 +25,18 @@ class GroupComponent extends CustomComponent {
       children: [
         {
           prop: 'channel',
-          label: '发布频道',
+          label: '发布通道',
           type: FormType.TEXT,
           props: {
             defaultValue: undefined
+          }
+        },
+        {
+          prop: 'isRegExp',
+          label: '是否开启正则匹配',
+          type: FormType.SWITCH,
+          props: {
+            defaultValue: false
           }
         }
       ]
