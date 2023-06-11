@@ -141,7 +141,7 @@ const curComponent = computed(() => canvasState.curComponent)
 const activeKey = ref<number>(0)
 
 const isShow = (display: boolean): boolean => {
-  return !(canvasState.isEditMode && display === false)
+  return !(canvasState.isEditMode && !display)
 }
 
 const tabsClick = (index: number) => {
