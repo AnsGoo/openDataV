@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NCard, NFormItem, NInput } from 'naive-ui'
+import { NCard, NForm, NFormItem, NInput } from 'naive-ui'
 import { onMounted, ref } from 'vue'
 
 import { ScriptType } from '@/enum'
