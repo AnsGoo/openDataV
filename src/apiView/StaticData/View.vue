@@ -3,7 +3,7 @@
     <n-form-item key="title" label="静态数据">
       <n-input-group>
         <n-input
-          v-model:value="formDataConfig.title"
+          v-model:value="formDataConfig.data"
           :readonly="true"
           placeholder="编辑请点击"
           @click="isShow = true"
