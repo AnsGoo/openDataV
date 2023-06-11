@@ -1,0 +1,8 @@
+import{u as y}from"./index-9ca6ba45.js";import{u as H}from"./index-c01320d9.js";import{d as b,e as m,l as k,h as B,w as T,o as a,c as r,u as t,n as l,F as d,i,B as C,a as D,_ as L}from"./index-48fbbfb5.js";const z={class:"dv-scroll-board"},I=["innerHTML"],M=["innerHTML"],S=b({__name:"ScrollTable",props:{component:{}},setup(v){const h=v,{propValue:e}=H(h.component),u=m(0),g=s=>{const{height:n}=s.contentRect;u.value=n},_=m([]),f=(s,n)=>{s.status>=0&&(_.value=s.afterData)};y(h.component,f);const x=k(()=>_.value.map((s,n)=>({rowIndex:n,ceils:Object.values(s)})));return(s,n)=>{const $=B("resize");return T((a(),r("div",z,[t(e).header.header.length?(a(),r("div",{key:0,class:"header",style:l(`background-color: ${t(e).header.headerBGC};`)},[(a(!0),r(d,null,i(t(e).header.header,(o,c)=>(a(),r("div",{key:`${o}${c}`,class:"header-item",style:l(`
+          height: ${t(e).header.headerHeight}px;
+          line-height: ${t(e).header.headerHeight}px;
+        `),innerHTML:o},null,12,I))),128))],4)):C("",!0),D("div",{class:"rows",style:l({height:`${u.value-(t(e).header.header.length?t(e).header.headerHeight:0)}px`})},[(a(!0),r(d,null,i(x.value,(o,c)=>(a(),r("div",{key:o.rowIndex,class:"row-item",style:l(`
+          height: ${t(e).rows.data.height}px;
+          line-height: ${t(e).rows.data.height}px;
+          background-color: ${t(e).rows.data[o.rowIndex%2===0?"evenRowBGC":"oddRowBGC"]};
+        `)},[(a(!0),r(d,null,i(o.ceils,(p,w)=>(a(),r("div",{key:`${p}${c}${w}`,class:"ceil",innerHTML:p},null,8,M))),128))],4))),128))],4)])),[[$,g]])}}});const F=L(S,[["__scopeId","data-v-1e7c813f"]]);export{F as default};
