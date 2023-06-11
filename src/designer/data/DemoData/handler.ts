@@ -1,7 +1,7 @@
 import type { RequestResponse } from '@/apiView/type'
-import type { RequestData } from '@/models/requestOption'
+import type { RequestDataInstance } from '@/models/requestOption'
 
-class DemoRequestData implements RequestData {
+class DemoRequestData implements RequestDataInstance {
   public data: any
 
   constructor({ data }: { data: any }) {
