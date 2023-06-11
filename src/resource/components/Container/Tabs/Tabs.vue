@@ -45,8 +45,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 
-import Group from '@/components/Group/Group.vue'
 import GroupComponent from '@/designer/components/Group/config'
+import Group from '@/designer/components/Group/Group.vue'
 import Shape from '@/designer/Editor/Shape'
 import { componentList } from '@/designer/load'
 import useCanvasState from '@/designer/state/canvas'
