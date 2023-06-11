@@ -1,9 +1,9 @@
 <template>
   <n-form size="small">
-    <n-form-item key="title" label="快速数据">
+    <n-form-item key="title" label="订阅数据">
       <n-input-group>
         <n-input
-          v-model:value="formDataConfig.title"
+          v-model:value="formDataConfig.channel"
           :readonly="true"
           placeholder="编辑请点击"
           @click="isShow = true"
@@ -15,7 +15,7 @@
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 800px"
-      title="快速数据"
+      title="订阅通道"
       :bordered="false"
       size="small"
       role="dialog"
@@ -23,10 +23,10 @@
       closable
       @close="isShow = false"
     >
-      <StaticContent
+      <StaticView
         v-model:options="formDataConfig"
         mode="use"
-        @data-change="dataChangeHandler"
+        @channel-change="dataChangeHandler"
         @script-change="scriptChangeHandler"
       />
     </n-card>
@@ -35,14 +35,25 @@
 
 <script lang="ts" setup>
 import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import { ScriptType } from '@/apiView/const'
 import type { CustomComponent } from '@/models'
 import type { AfterScript } from '@/types/component'
 
-import DataHandler, { QUICK_TYPE } from './handler'
-import StaticContent from './Quick.vue'
+import { DataType, ScriptType } from '../const'
+import type StaticRequestData from './handler'
+import DataHandler from './handler'
+import SubDataView from './SubDataView.vue'
+
+const slots = useSlots()
+
+const StaticView = computed(() => {
+  if (slots.default) {
+    return slots.default()[0].type
+  } else {
+    return SubDataView
+  }
+})
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -50,14 +61,10 @@ const props = defineProps<{
 const isShow = ref<boolean>(false)
 
 const formDataConfig = reactive<{
-  id: string
-  title: string
-  data: string
+  channel: string
   script: AfterScript
 }>({
-  id: '',
-  title: '',
-  data: '',
+  channel: '',
   script: {
     code: '',
     type: ScriptType.Javascript
@@ -70,40 +77,37 @@ onMounted(async () => {
 
 const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === QUICK_TYPE) {
-    const staticRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
+  if (dataConfig && dataConfig.type === DataType.SUB) {
+    const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
     const { options } = staticRequest.toJSON()
-    formDataConfig.id = options.id
     formDataConfig.script = options.script!
-    formDataConfig.title = options.title!
   } else {
     const dataConfig = {
-      type: QUICK_TYPE,
+      type: DataType.SUB,
       requestConfig: new DataHandler({
-        id: formDataConfig.id,
+        channel: formDataConfig.channel,
         script: {
           code: formDataConfig.script!.code,
           type: ScriptType.Javascript
         }
       })
     }
-    await props.curComponent.changeRequestDataConfig(dataConfig)
+    await props.curComponent.changeRequestDataConfig(dataConfig, 'PUSH')
   }
 }
 const changeHandler = () => {
   const dataConfig = {
-    type: QUICK_TYPE,
+    type: DataType.SUB,
     requestConfig: new DataHandler({
-      id: formDataConfig.id,
+      channel: formDataConfig.channel,
       script: formDataConfig.script
     })
   }
-  props.curComponent.changeRequestDataConfig(dataConfig)
+  props.curComponent.changeRequestDataConfig(dataConfig, 'PUSH')
 }
 
-const dataChangeHandler = (id: string, title: string) => {
-  formDataConfig.id = id
-  formDataConfig.title = title
+const dataChangeHandler = (data) => {
+  formDataConfig.channel = data
   changeHandler()
 }
 

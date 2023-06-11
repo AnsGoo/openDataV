@@ -3,10 +3,10 @@ import { cloneDeep } from 'lodash-es'
 import type { RestRequest } from '@/apiView/hooks/http'
 import useRestRequest from '@/apiView/hooks/http'
 import { DataType } from '@/enum/data'
-import type { RequestData, RequestOptions } from '@/models/requestOption'
+import type { RequestDataInstance, RequestOptions } from '@/models/requestOption'
 import type { RequestResponse, StoreRestOption } from '@/models/type'
 
-class RestRequestData implements RequestData {
+class RestRequestData implements RequestDataInstance {
   public requestInstance: RestRequest
   public requestOptions: StoreRestOption
 

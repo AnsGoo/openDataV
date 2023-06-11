@@ -15,13 +15,13 @@ import type {
   MetaForm
 } from '@/types/component'
 
-import type { RequestData } from './requestOption'
+import type { RequestDataInstance } from './requestOption'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
   type: string
-  requestConfig: RequestData
-  otherConfig: Recordable
+  requestConfig: RequestDataInstance
+  otherConfig?: Recordable
 }
 
 export abstract class CustomComponent {
@@ -359,13 +359,26 @@ export abstract class CustomComponent {
   showComponent() {
     this.display = true
   }
-  async changeRequestDataConfig(dataConfig) {
+  async changeRequestDataConfig(dataConfig: DataConfig, mode: 'PULL' | 'PUSH' = 'PULL') {
     this.dataConfig = dataConfig
-    if (this.callbackData) {
-      const result = await this.dataConfig?.requestConfig?.getRespData({
-        propvalue: this.propValue
-      })
-      this.callbackData(result, this.dataConfig!.type)
+    const { requestConfig } = this.dataConfig
+    if (requestConfig && requestConfig.close) {
+      requestConfig.close()
+    }
+    if (this.callbackData && mode === 'PULL') {
+      if (mode === 'PULL') {
+        const result = await this.dataConfig?.requestConfig?.getRespData!({
+          propvalue: this.propValue
+        })
+        this.callbackData(result, this.dataConfig!.type)
+      } else {
+        await this.dataConfig?.requestConfig?.pubData!(
+          {
+            propvalue: this.propValue
+          },
+          this.callbackData
+        )
+      }
     }
   }
   changeDataCallback(callback: (result: any, type: DataType | string) => void) {

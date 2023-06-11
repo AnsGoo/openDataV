@@ -144,8 +144,8 @@ export interface ComponentData {
 
 export interface ComponentRequestDataType {
   type: DataType
-  otherConfig: Recordable
-  requestOptions?: RequestOptions
+  otherConfig?: Recordable
+  requestOptions: RequestOptions
 }
 export interface ComponentDataType {
   id: string

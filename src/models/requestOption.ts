@@ -13,9 +13,14 @@ export interface DemoData<T = any> {
   data: T
 }
 
-interface RequestData {
+interface RequestDataInstance {
   toJSON: () => any | undefined
-  getRespData: (options?: Recordable) => Promise<RequestResponse<any>>
+  getRespData?: (options?: Recordable) => Promise<RequestResponse<any>>
+  pubData?: (
+    options?: Recordable,
+    callback?: (result: any, type: DataType | string) => void
+  ) => Promise<void>
+  close?: () => void
 }
 
-export { RequestData }
+export { RequestDataInstance }
