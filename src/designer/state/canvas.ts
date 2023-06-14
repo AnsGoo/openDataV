@@ -470,7 +470,6 @@ class CanvasState {
   }
   /**
    * 设置当前组件的PropValue
-   * @param prop 组名
    * @param keys 属性组
    * @param value 值
    * @returns
@@ -485,7 +484,7 @@ class CanvasState {
   }
   /**
    * 设置当前组件的样式
-   * @param key 属性
+   * @param keys
    * @param value 值
    * @returns
    */
@@ -691,14 +690,13 @@ class CanvasState {
           parentComponent.change(['position', key], newGroupStyle[key], 'style')
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
-          const gStyle = {
+          el.groupStyle = {
             gleft: toPercent((el.positionStyle.left - newGroupStyle.left) / newGroupStyle.width),
             gtop: toPercent((el.positionStyle.top - newGroupStyle.top) / newGroupStyle.height),
             gwidth: toPercent(el.positionStyle.width / newGroupStyle.width),
             gheight: toPercent(el.positionStyle.height / newGroupStyle.height),
             grotate: el.positionStyle.rotate
           }
-          el.groupStyle = gStyle
         })
         if (parentComponent.parent) {
           this.resizeAutoComponent(parentComponent.parent)

@@ -8,6 +8,7 @@
   <n-divider v-if="divider" vertical />
 </template>
 <script lang="ts" setup>
+import { isString } from 'lodash-es'
 import { NButton, NDivider, NTooltip } from 'naive-ui'
 import type { ComponentOptions, VNode } from 'vue'
 import { computed, getCurrentInstance, h } from 'vue'
@@ -36,7 +37,7 @@ const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 
 const IconComponent = computed<ComponentOptions>(() =>
-  typeof props.icon === 'string'
+  isString(props.icon)
     ? h(XIcon, {
         name: props.icon,
         size: 24

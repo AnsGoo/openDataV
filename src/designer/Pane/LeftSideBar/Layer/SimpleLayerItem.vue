@@ -70,9 +70,7 @@ const calcDragIndex = (fromIndex: string, toIndex: string): string => {
   const toIndexs: number[] = toIndex.split('-').map((el: string) => parseInt(el))
   const fromLength: number = fromIndexs.length
   for (let i = 0; i < fromLength; i++) {
-    if (fromIndexs[i] === toIndexs[i]) {
-      continue
-    } else if (fromIndexs[i] > toIndexs[i]) {
+    if (fromIndexs[i] > toIndexs[i]) {
       return toIndex
     } else if (fromIndexs[i] < toIndexs[i]) {
       if (i + 1 == fromLength) {

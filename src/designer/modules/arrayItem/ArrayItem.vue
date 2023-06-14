@@ -29,6 +29,7 @@
 </template>
 
 <script lang="ts" setup>
+import { isNumber } from 'lodash-es'
 import { NInput, NSpace } from 'naive-ui'
 import { nextTick, reactive, ref } from 'vue'
 
@@ -67,7 +68,7 @@ const handleAdd = () => {
   }
 
   const { maxItem } = props
-  if (typeof maxItem === 'number' && arrayValue.length >= maxItem) {
+  if (isNumber(maxItem) && arrayValue.length >= maxItem) {
     message.warning(`最多 ${maxItem} 个输入框，添加失败`)
     return
   }
