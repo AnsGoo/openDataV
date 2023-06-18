@@ -54,7 +54,7 @@
       <n-divider title-placement="left">
         请求响应
         <span :class="['resp-code', response.status >= 400 ? 'resp-fail' : 'resp-success']">
-          {{ response.code ? response.code : '' }}
+          {{ response.status ? response.status : '' }}
         </span>
       </n-divider>
       <n-tabs>
@@ -181,7 +181,7 @@ const send = async () => {
   formChange()
   try {
     const resp = await requestInstance.request(requestOptionsToStore(formData))
-    response.value.code = resp.status
+    response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
     if (callback && callback.handler) {
       const afterData = callback.handler(resp.data, {})

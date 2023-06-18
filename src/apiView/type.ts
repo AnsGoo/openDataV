@@ -28,6 +28,15 @@ export interface RestOption {
   }
 }
 
+export interface WebsocketOption {
+  url: string
+  message: string
+  afterScript: AfterScript
+  timeout: number
+  isRetry: boolean
+  maxRetryCount: number
+}
+
 export interface StoreRestOption {
   method: Method
   url: string
