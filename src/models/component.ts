@@ -20,7 +20,6 @@ import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid
 interface DataConfig {
   type: string
   requestConfig: RequestDataInstance
-  otherConfig?: Recordable
 }
 
 export abstract class CustomComponent {
@@ -242,7 +241,6 @@ export abstract class CustomComponent {
     if (this.dataConfig) {
       component.data = {
         type: this.dataConfig?.type,
-        otherConfig: this.dataConfig?.otherConfig,
         requestOptions: this.dataConfig?.requestConfig.toJSON()
       }
     }
@@ -372,6 +370,9 @@ export abstract class CustomComponent {
   }
   changeDataCallback(callback: (result: any, type?: string) => void) {
     this.callbackData = callback
+    this.dataConfig?.requestConfig.connect!(this.callbackData, {
+      propvalue: this.propValue
+    })
   }
   loadDemoData() {
     const exampleData = this.exampleData

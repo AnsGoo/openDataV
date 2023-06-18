@@ -18,8 +18,6 @@ export interface DemoData<T = any> {
 export type DataAcceptor = (result: any, id?: string) => void
 interface RequestDataInstance {
   toJSON: () => any | undefined
-  getRespData?: (options?: Recordable) => Promise<Response>
-  pubData?: (callback: DataAcceptor, options?: Recordable) => Promise<void>
   connect: (dataAcceptor: DataAcceptor, _options?: Recordable) => void
   close?: () => void
 }
