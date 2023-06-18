@@ -3,7 +3,6 @@ import { h } from 'vue'
 
 import type { ComponentGroup } from '@/enum'
 import { ContainerType, FormType } from '@/enum'
-import type { DataType } from '@/enum/data'
 import { DataIntegrationMode } from '@/enum/data'
 import type {
   ComponentDataType,
@@ -38,7 +37,7 @@ export abstract class CustomComponent {
   dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
-  callbackData?: (result: any, type: DataType | string) => void
+  callbackData?: (result: any, type?: string) => void
 
   // 检测变化
   propIsChange = true
@@ -359,36 +358,26 @@ export abstract class CustomComponent {
   showComponent() {
     this.display = true
   }
-  async changeRequestDataConfig(dataConfig: DataConfig, mode: 'PULL' | 'PUSH' = 'PULL') {
-    this.dataConfig = dataConfig
-    const { requestConfig } = this.dataConfig
+  async changeRequestDataConfig(dataConfig: DataConfig) {
+    const { requestConfig } = this.dataConfig || {}
     if (requestConfig && requestConfig.close) {
       requestConfig.close()
     }
-    if (this.callbackData && mode === 'PULL') {
-      if (mode === 'PULL') {
-        const result = await this.dataConfig?.requestConfig?.getRespData!({
-          propvalue: this.propValue
-        })
-        this.callbackData(result, this.dataConfig!.type)
-      } else {
-        await this.dataConfig?.requestConfig?.pubData!(
-          {
-            propvalue: this.propValue
-          },
-          this.callbackData
-        )
-      }
+    this.dataConfig = dataConfig
+    if (this.callbackData) {
+      await this.dataConfig?.requestConfig.connect!(this.callbackData, {
+        propvalue: this.propValue
+      })
     }
   }
-  changeDataCallback(callback: (result: any, type: DataType | string) => void) {
+  changeDataCallback(callback: (result: any, type?: string) => void) {
     this.callbackData = callback
   }
   loadDemoData() {
     const exampleData = this.exampleData
     setTimeout(() => {
       if (this.callbackData) {
-        this.callbackData({ status: 200, data: exampleData, afterData: exampleData }, 'DEMO')
+        this.callbackData({ status: 'SUCCESS', data: exampleData, afterData: exampleData }, 'DEMO')
       }
     }, 200)
   }

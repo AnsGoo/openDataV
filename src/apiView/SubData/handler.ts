@@ -2,8 +2,12 @@ import { cloneDeep } from 'lodash-es'
 
 import { eventBus, useEventBus } from '@/bus'
 import { DataType } from '@/enum/data'
-import type { RequestDataInstance, RequestOptions } from '@/models/requestOption'
-import type { RequestResponse } from '@/models/type'
+import type {
+  DataAcceptor,
+  RequestDataInstance,
+  RequestOptions,
+  Response
+} from '@/models/requestOption'
 import type { AfterScript } from '@/types/component'
 import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
@@ -36,20 +40,17 @@ class SubRequestData implements RequestDataInstance {
     eventBus.off(this.channel)
   }
 
-  public async pubData(
-    options?: Recordable,
-    callback?: (result: any, type: DataType | string) => void
-  ): Promise<void> {
+  public async connect(acceptor: DataAcceptor, options?: Recordable) {
     useEventBus(this.channel, (event) => {
-      const response: RequestResponse<any> = {
-        status: 200,
+      const response: Response = {
+        status: 'SUCCESS',
         data: event,
         afterData:
           this.callback && this.callback.handler
             ? this.callback.handler(event, options || {})
             : event
       }
-      callback && callback(response, 'SUB')
+      acceptor && acceptor(response, 'SUB')
     })
   }
 }

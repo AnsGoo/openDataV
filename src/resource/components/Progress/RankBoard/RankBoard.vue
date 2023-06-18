@@ -21,7 +21,6 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
-import type { DataType } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import { useData, useProp } from '@/models/hooks'
 import type { RequestResponse } from '@/models/type'
@@ -36,8 +35,8 @@ const dataSource = ref<
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData']
 >([])
-const dataChange = (resp: any, _: DataType | string) => {
-  if (resp.status >= 0) {
+const dataChange = (resp: any, _?: string) => {
+  if (resp.status === 'SUCCESS') {
     dataSource.value = resp.afterData
   }
 

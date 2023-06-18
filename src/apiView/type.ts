@@ -22,6 +22,10 @@ export interface RestOption {
   params: Array<KV>
   data: Array<KV>
   afterScript: AfterScript
+  otherConfig: {
+    isRepeat: boolean
+    interval: number
+  }
 }
 
 export interface StoreRestOption {
@@ -31,6 +35,10 @@ export interface StoreRestOption {
   params: Recordable
   data: Recordable
   afterScript: AfterScript
+  otherConfig: {
+    isRepeat: boolean
+    interval: number
+  }
 }
 
 export interface StoreStaticOption {

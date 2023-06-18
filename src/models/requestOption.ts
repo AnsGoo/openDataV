@@ -1,26 +1,26 @@
-import type { DataType } from '@/enum/data'
+export interface Response {
+  status: 'SUCCESS' | 'FAILED'
+  data: any
+  afterData: any
+}
 
-import type { RequestResponse, StoreRestOption, StoreStaticOption } from './type'
-
-type RequestOption = StoreStaticOption | StoreRestOption
+type RequestOption = any
 
 export interface RequestOptions<T = RequestOption> {
   options: T
-  type: DataType
+  type: string
 }
 
 export interface DemoData<T = any> {
   data: T
 }
 
+export type DataAcceptor = (result: any, id?: string) => void
 interface RequestDataInstance {
   toJSON: () => any | undefined
-  getRespData?: (options?: Recordable) => Promise<RequestResponse<any>>
-  pubData?: (
-    options?: Recordable,
-    callback?: (result: any, type: DataType | string) => void
-  ) => Promise<void>
+  getRespData?: (options?: Recordable) => Promise<Response>
+  pubData?: (callback: DataAcceptor, options?: Recordable) => Promise<void>
+  connect: (dataAcceptor: DataAcceptor, _options?: Recordable) => void
   close?: () => void
 }
-
 export { RequestDataInstance }

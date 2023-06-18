@@ -7,7 +7,6 @@ import 'echarts-liquidfill'
 
 import { onMounted, ref } from 'vue'
 
-import type { DataType } from '@/enum/data'
 import { useData, useProp } from '@/models/hooks'
 import type { RequestResponse } from '@/models/type'
 
@@ -22,8 +21,8 @@ const props = defineProps<{
 const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 const chartData = ref<number | RequestResponse<number>['afterData']>(0)
-const dataChange = (resp: any, _: DataType | string) => {
-  if (resp.status >= 0) {
+const dataChange = (resp: any, _?: string) => {
+  if (resp.status === 'SUCCESS') {
     chartData.value = resp.afterData
   }
 

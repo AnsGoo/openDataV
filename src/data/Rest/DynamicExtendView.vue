@@ -39,7 +39,7 @@ import type { RestDataDetail } from '@/api/data/type'
 import { ScriptType } from '@/apiView/const'
 import { RequestMethod } from '@/apiView/content/requestEnums'
 import Rest from '@/apiView/content/rest/Rest.vue'
-import useRestRequest from '@/apiView/hooks/http'
+import { useRequest } from '@/apiView/hooks/http'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
 import type { RequestResponse, RestOption } from '@/apiView/type'
 import {
@@ -50,6 +50,7 @@ import {
   uuid
 } from '@/apiView/utils'
 import { StaticKey, useEventBus } from '@/bus'
+import { makeFunction } from '@/utils/data'
 
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
@@ -71,6 +72,10 @@ const props = withDefaults(
         afterScript: {
           code: '',
           type: ScriptType.Javascript
+        },
+        otherConfig: {
+          isRepeat: false,
+          interval: 1000
         }
       }
     },
@@ -180,13 +185,26 @@ const response = ref<RequestResponse>({
   afterData: '',
   headers: {}
 })
+const requestInstance = useRequest()
 const send = async () => {
-  const restRequest = useRestRequest(requestOptionsToStore(formData), true)
   try {
-    const resp = await restRequest.request()
+    const callback =
+      props.options.afterScript && props.options.afterScript
+        ? makeFunction(
+            props.options.afterScript.type,
+            props.options.afterScript.code,
+            ['resp', 'options'],
+            false
+          )
+        : undefined
+    const resp = await requestInstance.request(requestOptionsToStore(formData))
     response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
-    response.value.afterData = JSON.stringify(resp.afterData, null, '\t')
+
+    if (callback && callback.handler) {
+      const afterData = callback.handler(resp.data, {})
+      response.value.afterData = JSON.stringify(afterData, null, '\t')
+    }
     response.value.headers = resp.headers
     formData.id && snapShot && snapShot.save(formData)
   } catch (err: any) {

@@ -3,10 +3,9 @@ import type { Method } from 'axios'
 import type { AfterScript } from '@/apiView/type'
 
 export interface RequestResponse<T> {
-  status: number
+  status: 'SUCCESS' | 'FAILED'
   data: any
   afterData: T
-  headers?: Recordable<string>
 }
 export interface StoreRestOption {
   method: Method
@@ -15,6 +14,10 @@ export interface StoreRestOption {
   params: Recordable
   data: Recordable
   afterScript: AfterScript
+  otherConfig: {
+    interval: number
+    isRepeat: boolean
+  }
 }
 
 export interface StoreStaticOption {

@@ -2,10 +2,10 @@
   <n-form :model="formData" size="small">
     <n-form-item label="动态数据" label-placement="top">
       <n-input-group>
-        <n-input v-model:value="formData.options.url" style="flex: 1" readonly>
+        <n-input v-model:value="formData.url" style="flex: 1" readonly>
           <template #prefix>
             <n-gradient-text type="success" style="font-weight: 800">
-              {{ formData.options.method }}
+              {{ formData.method }}
             </n-gradient-text>
           </template>
         </n-input>
@@ -13,11 +13,11 @@
       </n-input-group>
     </n-form-item>
     <n-form-item label="是否重复" label-placement="left">
-      <n-switch v-model:value="formData.isRepeat" @update:value="changeHandler" />
+      <n-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
     </n-form-item>
-    <n-form-item v-if="formData.isRepeat" label="请求间隔" label-placement="left">
+    <n-form-item v-if="formData.otherConfig.isRepeat" label="请求间隔" label-placement="left">
       <n-input-number
-        v-model:value="formData.interval"
+        v-model:value="formData.otherConfig.interval"
         :min="300"
         :step="100"
         @update:value="changeHandler"
@@ -36,7 +36,7 @@
       aria-modal="true"
     >
       <RestView
-        v-model:options="formData.options"
+        v-model:options="formData"
         @update:options="changeHandler"
         @change="changeHandler"
       />
@@ -64,7 +64,7 @@ import type { CustomComponent } from '@/models'
 import { DataType, ScriptType } from '../const'
 import { RequestMethod } from '../content/requestEnums'
 import Rest from '../content/rest/Rest.vue'
-import type { RestOption } from '../type'
+import type { RestOption, StoreRestOption } from '../type'
 import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
@@ -81,19 +81,19 @@ const RestView = computed(() => {
     return Rest
   }
 })
-const formData = reactive<{ isRepeat: boolean; interval: number; options: RestOption }>({
-  isRepeat: false,
-  interval: 1000,
-  options: {
-    method: RequestMethod.GET,
-    url: '/getRiskArea',
-    headers: [{ key: '', value: '', disable: false, id: uuid() }],
-    params: [{ key: '', value: '', disable: false, id: uuid() }],
-    data: [{ key: '', value: '', disable: false, id: uuid() }],
-    afterScript: {
-      code: '',
-      type: ScriptType.Javascript
-    }
+const formData = reactive<RestOption>({
+  method: RequestMethod.GET,
+  url: '/getRiskArea',
+  headers: [{ key: '', value: '', disable: false, id: uuid() }],
+  params: [{ key: '', value: '', disable: false, id: uuid() }],
+  data: [{ key: '', value: '', disable: false, id: uuid() }],
+  afterScript: {
+    code: '',
+    type: ScriptType.Javascript
+  },
+  otherConfig: {
+    isRepeat: false,
+    interval: 1000
   }
 })
 const changeHandler = () => {
@@ -103,11 +103,7 @@ const changeHandler = () => {
 const setDataConfig = () => {
   const dataConfig = {
     type: DataType.REST,
-    requestConfig: new DataHandler(requestOptionsToStore(formData.options)),
-    otherConfig: {
-      isRepeat: formData.isRepeat,
-      interval: formData.interval
-    }
+    requestConfig: new DataHandler(requestOptionsToStore(formData))
   }
   props.curComponent.changeRequestDataConfig(dataConfig)
 }
@@ -120,15 +116,10 @@ const initData = () => {
   const dataConfig = props.curComponent.dataConfig
   if (dataConfig && dataConfig.type === DataType.REST) {
     const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
-    const otherConfig = props.curComponent.dataConfig?.otherConfig || {}
     const { options } = restRequest.toJSON()
-    formData.options = storeOptionToRequestOptions(options)
-    formData.interval = otherConfig.interval || 1000
-    formData.isRepeat = otherConfig.isRepeat || false
+    Object.assign(formData, storeOptionToRequestOptions(options as StoreRestOption))
   } else {
-    formData.isRepeat = false
-    formData.interval = 1000
-    formData.options = {
+    Object.assign(formData, {
       method: RequestMethod.GET,
       url: '',
       headers: [{ key: '', value: '', disable: false, id: uuid() }],
@@ -137,9 +128,12 @@ const initData = () => {
       afterScript: {
         code: '',
         type: ScriptType.Javascript
+      },
+      otherConfig: {
+        isRepeat: false,
+        interval: 1000
       }
-    }
-
+    })
     setDataConfig()
   }
 }
