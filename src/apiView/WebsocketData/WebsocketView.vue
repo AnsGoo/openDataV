@@ -69,7 +69,7 @@ const props = withDefaults(
         },
         timeout: 3000,
         isRetry: false,
-        retryCount: 0
+        maxRetryCount: 0
       }
     },
     mode: 'use'
