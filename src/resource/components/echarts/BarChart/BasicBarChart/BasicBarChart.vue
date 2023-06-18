@@ -6,7 +6,6 @@
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { inject, onMounted, ref } from 'vue'
 
-import type { DataType } from '@/enum/data'
 import type { HooksType } from '@/models/hooks/type'
 import type { RequestResponse } from '@/models/type'
 
@@ -26,8 +25,8 @@ let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
 
-const dataChange = (resp: any, _: DataType) => {
-  if (resp.status >= 0) {
+const dataChange = (resp: any, _?: string) => {
+  if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)
   }

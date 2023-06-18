@@ -53,7 +53,7 @@
     <div class="response">
       <n-divider title-placement="left">
         请求响应
-        <span :class="['resp-code', response.code >= 400 ? 'resp-fail' : 'resp-success']">
+        <span :class="['resp-code', response.status >= 400 ? 'resp-fail' : 'resp-success']">
           {{ response.code ? response.code : '' }}
         </span>
       </n-divider>
@@ -91,9 +91,12 @@ import {
 } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
+import type { CallbackType } from '@/utils/data'
+import { makeFunction } from '@/utils/data'
+
 import ScriptsEditor from '../../components/ScriptsEditor.vue'
 import { ScriptType } from '../../const'
-import useRestRequest from '../../hooks/http'
+import { useRequest } from '../../hooks/http'
 import type { AfterScript, RequestResponse, RestOption } from '../../type'
 import { requestOptionsToStore, uuid } from '../../utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
@@ -115,6 +118,10 @@ const props = withDefaults(
         afterScript: {
           code: '',
           type: ScriptType.Javascript
+        },
+        otherConfig: {
+          isRepeat: false,
+          interval: 1000
         }
       }
     },
@@ -157,7 +164,7 @@ const emits = defineEmits<{
   (e: 'update:options', value: RestOption): void
   (e: 'change', value: RestOption): void
 }>()
-
+let callback: CallbackType | undefined
 interface RequestDataOption extends RestOption {
   title?: string
   id?: string
@@ -169,22 +176,23 @@ const response = ref<RequestResponse>({
   afterData: '',
   headers: {}
 })
+const requestInstance = useRequest()
 const send = async () => {
-  const restRequest = useRestRequest(requestOptionsToStore(formData), true)
   formChange()
   try {
-    const resp = await restRequest.request()
+    const resp = await requestInstance.request(requestOptionsToStore(formData))
     response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
-    response.value.afterData = JSON.stringify(resp.afterData, null, '\t')
-    response.value.headers = resp.headers
+    if (callback && callback.handler) {
+      const afterData = callback.handler(resp.data, {})
+      response.value.afterData = JSON.stringify(afterData, null, '\t')
+    }
   } catch (err: any) {
     err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})
     response.value.code = result.status
     response.value.data = err.stack || err.message
     response.value.afterData = err.stack || err.message
-    response.value.headers = result.headers || result?.config?.headers || {}
   }
 }
 const formChange = () => {
@@ -194,6 +202,8 @@ const formChange = () => {
 
 const afterScriptChange = (data: AfterScript) => {
   formData.afterScript = data
+  callback =
+    data && data.code ? makeFunction(data.type, data.code, ['resp', 'options'], false) : undefined
   formChange()
 }
 </script>

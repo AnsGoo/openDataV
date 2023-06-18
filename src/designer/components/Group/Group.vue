@@ -39,7 +39,6 @@
 import { computed, inject } from 'vue'
 
 import { channels, eventBus } from '@/bus'
-import type { DataType } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { HooksType } from '@/models/hooks/type'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
@@ -50,8 +49,8 @@ import useCanvasState from '../../state/canvas'
 const props = defineProps<{
   component: CustomComponent
 }>()
-const dataChange = (resp: any, _: DataType) => {
-  if (resp.status >= 0) {
+const dataChange = (resp: any, _?: string) => {
+  if (resp.status === 'SUCCESS') {
     const data = resp.afterData
     const propValue = props.component.propValue
     const myChannel = propValue.dataOption.channel

@@ -1,5 +1,4 @@
-import type { RequestResponse } from '@/apiView/type'
-import type { RequestDataInstance } from '@/models/requestOption'
+import type { DataAcceptor, RequestDataInstance, Response } from '@/models/requestOption'
 
 class DemoRequestData implements RequestDataInstance {
   public data: any
@@ -11,9 +10,14 @@ class DemoRequestData implements RequestDataInstance {
     return undefined
   }
 
-  public async getRespData(_?: Recordable): Promise<RequestResponse> {
+  public async connect(acceptor: DataAcceptor, options?: Recordable) {
+    const resp = await this.getRespData(options)
+    acceptor(resp)
+  }
+
+  public async getRespData(_?: Recordable): Promise<Response> {
     return {
-      status: 0,
+      status: 'SUCCESS',
       data: this.data,
       afterData: this.data
     }

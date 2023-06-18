@@ -14,11 +14,13 @@ const componentDataHandler = (componentObj: CustomComponent, data?: ComponentReq
   }
   const dataHandler = dataState.getDataComponent(data.type).handler
   const { options } = data.requestOptions!
-  const otherConfig = data.otherConfig || {}
+  const otherConfig = data.otherConfig
+  if (otherConfig) {
+    options.otherConfig = otherConfig
+  }
   const dataConfig = {
     type: data.type,
-    requestConfig: new dataHandler(options),
-    otherConfig: otherConfig
+    requestConfig: new dataHandler(options)
   }
   componentObj.changeRequestDataConfig(dataConfig)
 }

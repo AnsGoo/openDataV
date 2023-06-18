@@ -1,8 +1,12 @@
 import { cloneDeep } from 'lodash-es'
 
 import { DataType } from '@/enum/data'
-import type { RequestDataInstance, RequestOptions } from '@/models/requestOption'
-import type { RequestResponse } from '@/models/type'
+import type {
+  DataAcceptor,
+  RequestDataInstance,
+  RequestOptions,
+  Response
+} from '@/models/requestOption'
 import type { AfterScript } from '@/types/component'
 import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
@@ -31,19 +35,24 @@ class StaticRequestData implements RequestDataInstance {
     }
   }
 
-  public async getRespData(options?: Recordable): Promise<RequestResponse<any>> {
-    const response: RequestResponse<any> = {
-      status: -1,
+  public async connect(acceptor: DataAcceptor, options?: Recordable) {
+    const resp = await this.getRespData(options)
+    acceptor(resp)
+  }
+
+  public async getRespData(options?: Recordable): Promise<Response> {
+    const response: Response = {
+      status: 'SUCCESS',
       data: '',
-      afterData: '',
-      headers: {}
+      afterData: ''
     }
     let parseData = {}
     try {
       parseData = JSON.parse(this.data)
       response.afterData = parseData
-      response.status = 200
+      response.status = 'SUCCESS'
     } catch (err: any) {
+      response.status = 'FAILED'
       response.afterData = err.message || err
       return response
     }
@@ -51,9 +60,9 @@ class StaticRequestData implements RequestDataInstance {
     if (this.callback && this.callback.handler) {
       try {
         response.afterData = this.callback.handler(parseData, options || {})
-        response.status = 200
+        response.status = 'SUCCESS'
       } catch (err: any) {
-        response.status = -1
+        response.status = 'FAILED'
         response.afterData = err.message || err
       }
     }

@@ -3,8 +3,13 @@ import { cloneDeep } from 'lodash-es'
 import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
 import { DataType } from '@/enum/data'
-import type { RequestDataInstance, RequestOptions } from '@/models/requestOption'
-import type { RequestResponse, StoreStaticOption } from '@/models/type'
+import type {
+  DataAcceptor,
+  RequestDataInstance,
+  RequestOptions,
+  Response
+} from '@/models/requestOption'
+import type { StoreStaticOption } from '@/models/type'
 import type { AfterScript } from '@/types/component'
 import type { CallbackType } from '@/utils/data'
 import { makeFunction } from '@/utils/data'
@@ -42,19 +47,22 @@ class QuickRequestData implements RequestDataInstance {
   public static loads(data: string): any | undefined {
     return JSON.parse(data)
   }
-  public async getRespData(options?: Recordable): Promise<RequestResponse<any>> {
-    const response: RequestResponse<any> = {
-      status: -1,
+
+  public async connect(acceptor: DataAcceptor, options?: Recordable) {
+    const resp = await this.getRespData(options)
+    acceptor(resp)
+  }
+  public async getRespData(options?: Recordable): Promise<Response> {
+    const response: Response = {
+      status: 'SUCCESS',
       data: '',
-      afterData: '',
-      headers: {}
+      afterData: ''
     }
     if (!this.id) {
       return response
     }
     try {
       const resp = await getStaticDataApi(this.id!)
-      response.status = resp.status || -1
       if (resp.status < 400) {
         const data: StaticDataDetail = resp.data
         this.title = data.name
@@ -62,11 +70,9 @@ class QuickRequestData implements RequestDataInstance {
         response.afterData = data.data
       }
     } catch (err: any) {
-      const result = err.response || (err.toJSON ? err.toJSON() : {})
-      response.status = result.status
+      response.status = 'FAILED'
       response.data = err.stack || err.message
       response.afterData = err.stack || err.message
-      response.headers = result.headers || result?.config?.headers || {}
     }
     if (this.callback && this.callback.handler) {
       try {

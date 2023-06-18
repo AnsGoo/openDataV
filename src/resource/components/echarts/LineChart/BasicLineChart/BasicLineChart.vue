@@ -6,7 +6,6 @@
 import type { EChartsOption, LineSeriesOption, XAXisComponentOption } from 'echarts'
 import { onMounted, ref } from 'vue'
 
-import type { DataType } from '@/enum/data'
 import { useData, useProp } from '@/models/hooks'
 import type { RequestResponse } from '@/models/type'
 
@@ -23,10 +22,12 @@ const props = defineProps<{
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
-const dataChange = (resp: any, _: DataType | string) => {
-  if (resp.status >= 0) {
+const dataChange = (resp: any, _?: string) => {
+  if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)
+  } else {
+    updateData([])
   }
 }
 

@@ -92,7 +92,7 @@ const initData = async () => {
         }
       })
     }
-    await props.curComponent.changeRequestDataConfig(dataConfig, 'PUSH')
+    await props.curComponent.changeRequestDataConfig(dataConfig)
   }
 }
 const changeHandler = () => {
@@ -103,7 +103,7 @@ const changeHandler = () => {
       script: formDataConfig.script
     })
   }
-  props.curComponent.changeRequestDataConfig(dataConfig, 'PUSH')
+  props.curComponent.changeRequestDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (data) => {
