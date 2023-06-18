@@ -2,9 +2,10 @@ import { reactive } from 'vue'
 
 import StaticDataPlugin from '@/apiView/StaticData'
 import SubDataPlugin from '@/apiView/SubData'
+import WebsocketDataPlugin from '@/apiView/WebsocketData'
 import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
-import DemoDatePlugin from '@/designer/data/DemoData'
+import DemoDataPlugin from '@/designer/data/DemoData'
 
 interface DataPlugin {
   type: string
@@ -16,11 +17,12 @@ interface DataPlugin {
 class DataState {
   private state = reactive<{ plugins: Recordable<DataPlugin> }>({
     plugins: {
-      [DemoDatePlugin.type]: DemoDatePlugin,
+      [DemoDataPlugin.type]: DemoDataPlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
       [RestDataPlugin.type]: RestDataPlugin,
       [QuickDataPlugin.type]: QuickDataPlugin,
-      [SubDataPlugin.type]: SubDataPlugin
+      [SubDataPlugin.type]: SubDataPlugin,
+      [WebsocketDataPlugin.type]: WebsocketDataPlugin
     }
   })
 

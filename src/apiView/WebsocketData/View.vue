@@ -1,23 +1,20 @@
 <template>
   <n-form :model="formData" size="small">
-    <n-form-item label="动态数据" label-placement="top">
+    <n-form-item label="链接地址" label-placement="top">
       <n-input-group>
         <n-input v-model:value="formData.url" style="flex: 1" readonly>
           <template #prefix>
             <n-gradient-text type="success" style="font-weight: 800">
-              {{ formData.method }}
+              {{ formData.url.includes(':') ? formData.url.split(':')[0] : '' }}
             </n-gradient-text>
           </template>
         </n-input>
         <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
       </n-input-group>
     </n-form-item>
-    <n-form-item label="是否重复" label-placement="top">
-      <n-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
-    </n-form-item>
-    <n-form-item v-if="formData.otherConfig.isRepeat" label="请求间隔" label-placement="top">
+    <n-form-item label="超时时间" label-placement="top">
       <n-input-number
-        v-model:value="formData.otherConfig.interval"
+        v-model:value="formData.timeout"
         :min="300"
         :step="100"
         @update:value="changeHandler"
@@ -25,17 +22,29 @@
         <template #suffix> ms </template>
       </n-input-number>
     </n-form-item>
+    <n-form-item label="是否重试" label-placement="top">
+      <n-switch v-model:value="formData.isRetry" @update:value="changeHandler" />
+    </n-form-item>
+    <n-form-item v-if="formData.isRetry" label="最大重试次数" label-placement="top">
+      <n-input-number
+        v-model:value="formData.maxRetryCount"
+        :step="1"
+        placeholder="小于等于0表示不限制重试次数"
+        @update:value="changeHandler"
+      />
+    </n-form-item>
   </n-form>
-  <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
+  <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="close">
     <n-card
       style="width: 800px"
-      title="动态数据"
+      title="WS数据"
       :bordered="false"
       size="small"
       role="dialog"
       aria-modal="true"
     >
-      <RestView
+      <WsView
+        ref="wsRef"
         v-model:options="formData"
         @update:options="changeHandler"
         @change="changeHandler"
@@ -62,50 +71,56 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 import type { CustomComponent } from '@/models'
 
 import { DataType, ScriptType } from '../const'
-import { RequestMethod } from '../content/requestEnums'
-import Rest from '../content/rest/Rest.vue'
-import type { RestOption, StoreRestOption } from '../type'
-import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
+import type { WebsocketOption } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
+import WebsocketView from './WebsocketView.vue'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const slots = useSlots()
+
 const isShow = ref<boolean>(false)
-const RestView = computed(() => {
+const WsView = computed(() => {
   if (slots.default) {
     return slots.default()[0].type
   } else {
-    return Rest
+    return WebsocketView
   }
 })
-const formData = reactive<RestOption>({
-  method: RequestMethod.GET,
-  url: '/getRiskArea',
-  headers: [{ key: '', value: '', disable: false, id: uuid() }],
-  params: [{ key: '', value: '', disable: false, id: uuid() }],
-  data: [{ key: '', value: '', disable: false, id: uuid() }],
+
+// @ts-ignore
+const wsRef = ref<InstanceType<typeof WsView> | null>(null)
+const close = () => {
+  changeHandler()
+  if (wsRef.value && wsRef.value.close) {
+    wsRef.value.close()
+  }
+}
+const formData = reactive<WebsocketOption>({
+  url: '',
+  message: '',
   afterScript: {
     code: '',
     type: ScriptType.Javascript
   },
-  otherConfig: {
-    isRepeat: false,
-    interval: 1000
-  }
+  timeout: 3000,
+  isRetry: false,
+  maxRetryCount: 0
 })
 const changeHandler = () => {
   setDataConfig()
 }
 
 const setDataConfig = () => {
-  const dataConfig = {
-    type: DataType.REST,
-    requestConfig: new DataHandler(requestOptionsToStore(formData))
+  if (formData.url) {
+    const dataConfig = {
+      type: DataType.WS,
+      requestConfig: new DataHandler(formData)
+    }
+    props.curComponent.changeRequestDataConfig(dataConfig)
   }
-  props.curComponent.changeRequestDataConfig(dataConfig)
 }
 
 onMounted(async () => {
@@ -114,25 +129,20 @@ onMounted(async () => {
 
 const initData = () => {
   const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.REST) {
+  if (dataConfig && dataConfig.type === DataType.WS) {
     const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
     const { options } = restRequest.toJSON()
-    Object.assign(formData, storeOptionToRequestOptions(options as StoreRestOption))
+    Object.assign(formData, options)
   } else {
     Object.assign(formData, {
-      method: RequestMethod.GET,
       url: '',
-      headers: [{ key: '', value: '', disable: false, id: uuid() }],
-      params: [{ key: '', value: '', disable: false, id: uuid() }],
-      data: [{ key: '', value: '', disable: false, id: uuid() }],
+      message: '',
       afterScript: {
         code: '',
         type: ScriptType.Javascript
       },
-      otherConfig: {
-        isRepeat: false,
-        interval: 1000
-      }
+      isRetry: false,
+      retryCount: 0
     })
     setDataConfig()
   }

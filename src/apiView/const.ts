@@ -1,7 +1,8 @@
 export enum DataType {
   STATIC = 'STATIC',
   REST = 'REST',
-  SUB = 'SUB'
+  SUB = 'SUB',
+  WS = 'WS'
 }
 
 export enum ScriptType {
