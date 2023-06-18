@@ -59,16 +59,17 @@
       </n-divider>
       <n-tabs>
         <n-tab-pane name="data" tab="脚本处理结果" display-directive="show">
-          <OCodeEditor :value="response.afterData" class="content" />
+          <OCodeEditor :value="response.afterData" class="content" height="400px" />
         </n-tab-pane>
         <n-tab-pane name="origin" tab="原始请求结果" display-directive="show">
-          <OCodeEditor :value="response.data" class="content" />
+          <OCodeEditor :value="response.data" class="content" height="400px" />
         </n-tab-pane>
         <n-tab-pane name="scripts" tab="脚本" display-directive="show">
           <ScriptsEditor
             :data="formData.afterScript"
             :mode="mode"
             class="content"
+            height="400px"
             @update:data="afterScriptChange"
           />
         </n-tab-pane>

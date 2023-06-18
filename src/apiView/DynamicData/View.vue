@@ -26,10 +26,11 @@
   </n-form-item>
   <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
     <n-card
-      style="width: 800px"
+      style="width: 600px"
       title="动态数据"
       :bordered="false"
       size="small"
+      closable
       role="dialog"
       aria-modal="true"
     >

@@ -37,6 +37,7 @@
       style="width: 800px"
       title="WS数据"
       :bordered="false"
+      closable
       size="small"
       role="dialog"
       aria-modal="true"
