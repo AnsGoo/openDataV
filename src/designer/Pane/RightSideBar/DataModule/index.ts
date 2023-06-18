@@ -1,3 +1,3 @@
-import DataAttr from './DataAttr.vue'
+import DataAttr from './DataAttr'
 
 export default DataAttr

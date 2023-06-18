@@ -1,39 +1,37 @@
 <template>
-  <n-form :model="formData" size="small">
-    <n-form-item label="链接地址" label-placement="top">
-      <n-input-group>
-        <n-input v-model:value="formData.url" style="flex: 1" readonly>
-          <template #prefix>
-            <n-gradient-text type="success" style="font-weight: 800">
-              {{ formData.url.includes(':') ? formData.url.split(':')[0] : '' }}
-            </n-gradient-text>
-          </template>
-        </n-input>
-        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-      </n-input-group>
-    </n-form-item>
-    <n-form-item label="超时时间" label-placement="top">
-      <n-input-number
-        v-model:value="formData.timeout"
-        :min="300"
-        :step="100"
-        @update:value="changeHandler"
-      >
-        <template #suffix> ms </template>
-      </n-input-number>
-    </n-form-item>
-    <n-form-item label="是否重试" label-placement="top">
-      <n-switch v-model:value="formData.isRetry" @update:value="changeHandler" />
-    </n-form-item>
-    <n-form-item v-if="formData.isRetry" label="最大重试次数" label-placement="top">
-      <n-input-number
-        v-model:value="formData.maxRetryCount"
-        :step="1"
-        placeholder="小于等于0表示不限制重试次数"
-        @update:value="changeHandler"
-      />
-    </n-form-item>
-  </n-form>
+  <n-form-item label="链接地址" label-placement="top">
+    <n-input-group>
+      <n-input v-model:value="formData.url" style="flex: 1" readonly>
+        <template #prefix>
+          <n-gradient-text type="success" style="font-weight: 800">
+            {{ formData.url.includes(':') ? formData.url.split(':')[0] : '' }}
+          </n-gradient-text>
+        </template>
+      </n-input>
+      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
+    </n-input-group>
+  </n-form-item>
+  <n-form-item label="超时时间" label-placement="top">
+    <n-input-number
+      v-model:value="formData.timeout"
+      :min="300"
+      :step="100"
+      @update:value="changeHandler"
+    >
+      <template #suffix> ms </template>
+    </n-input-number>
+  </n-form-item>
+  <n-form-item label="是否重试" label-placement="top">
+    <n-switch v-model:value="formData.isRetry" @update:value="changeHandler" />
+  </n-form-item>
+  <n-form-item v-if="formData.isRetry" label="最大重试次数" label-placement="top">
+    <n-input-number
+      v-model:value="formData.maxRetryCount"
+      :step="1"
+      placeholder="小于等于0表示不限制重试次数"
+      @update:value="changeHandler"
+    />
+  </n-form-item>
   <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="close">
     <n-card
       style="width: 800px"
@@ -57,7 +55,6 @@
 import {
   NButton,
   NCard,
-  NForm,
   NFormItem,
   NGradientText,
   NInput,

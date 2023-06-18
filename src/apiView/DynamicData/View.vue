@@ -1,31 +1,29 @@
 <template>
-  <n-form :model="formData" size="small">
-    <n-form-item label="动态数据" label-placement="top">
-      <n-input-group>
-        <n-input v-model:value="formData.url" style="flex: 1" readonly>
-          <template #prefix>
-            <n-gradient-text type="success" style="font-weight: 800">
-              {{ formData.method }}
-            </n-gradient-text>
-          </template>
-        </n-input>
-        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-      </n-input-group>
-    </n-form-item>
-    <n-form-item label="是否重复" label-placement="top">
-      <n-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
-    </n-form-item>
-    <n-form-item v-if="formData.otherConfig.isRepeat" label="请求间隔" label-placement="top">
-      <n-input-number
-        v-model:value="formData.otherConfig.interval"
-        :min="300"
-        :step="100"
-        @update:value="changeHandler"
-      >
-        <template #suffix> ms </template>
-      </n-input-number>
-    </n-form-item>
-  </n-form>
+  <n-form-item label="动态数据" label-placement="top">
+    <n-input-group>
+      <n-input v-model:value="formData.url" style="flex: 1" readonly>
+        <template #prefix>
+          <n-gradient-text type="success" style="font-weight: 800">
+            {{ formData.method }}
+          </n-gradient-text>
+        </template>
+      </n-input>
+      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
+    </n-input-group>
+  </n-form-item>
+  <n-form-item label="是否重复" label-placement="top">
+    <n-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
+  </n-form-item>
+  <n-form-item v-if="formData.otherConfig.isRepeat" label="请求间隔" label-placement="top">
+    <n-input-number
+      v-model:value="formData.otherConfig.interval"
+      :min="300"
+      :step="100"
+      @update:value="changeHandler"
+    >
+      <template #suffix> ms </template>
+    </n-input-number>
+  </n-form-item>
   <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
     <n-card
       style="width: 800px"
@@ -48,7 +46,6 @@
 import {
   NButton,
   NCard,
-  NForm,
   NFormItem,
   NGradientText,
   NInput,
