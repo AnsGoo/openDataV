@@ -1,17 +1,15 @@
 <template>
-  <n-form size="small">
-    <n-form-item key="title" label="订阅数据">
-      <n-input-group>
-        <n-input
-          v-model:value="formDataConfig.channel"
-          :readonly="true"
-          placeholder="编辑请点击"
-          @click="isShow = true"
-        />
-        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-      </n-input-group>
-    </n-form-item>
-  </n-form>
+  <n-form-item key="title" label="订阅数据">
+    <n-input-group>
+      <n-input
+        v-model:value="formDataConfig.channel"
+        :readonly="true"
+        placeholder="编辑请点击"
+        @click="isShow = true"
+      />
+      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
+    </n-input-group>
+  </n-form-item>
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 800px"
@@ -34,7 +32,7 @@
 </template>
 
 <script lang="ts" setup>
-import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'

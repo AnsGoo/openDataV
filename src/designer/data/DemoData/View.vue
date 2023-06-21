@@ -1,12 +1,10 @@
 <template>
-  <n-form :model="formData" size="small">
-    <n-form-item key="data" label="示例数据">
-      <n-input-group>
-        <n-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
-        <n-button type="primary" @click="isShow = true"> 预览 </n-button>
-      </n-input-group>
-    </n-form-item>
-  </n-form>
+  <n-form-item key="data" label="示例数据">
+    <n-input-group>
+      <n-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
+      <n-button type="primary" @click="isShow = true"> 预览 </n-button>
+    </n-input-group>
+  </n-form-item>
   <n-modal v-model:show="isShow">
     <n-card
       style="width: 600px"
@@ -25,7 +23,7 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import { DataType } from '@/enum/data'

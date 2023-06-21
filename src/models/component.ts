@@ -44,7 +44,7 @@ export abstract class CustomComponent {
   defaultViewType = {
     propValue: ContainerType.COLLAPSE,
     style: ContainerType.COLLAPSE,
-    data: ContainerType.FORM
+    data: ContainerType.CARD
   }
 
   // form表单中使用
