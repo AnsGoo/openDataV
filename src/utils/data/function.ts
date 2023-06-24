@@ -10,7 +10,7 @@ import type { CallbackType } from './type'
  * @param isDebug 是否提示用户异常
  */
 export function makeFunction(
-  type: ScriptType,
+  type: string,
   code: string,
   args: string[],
   isDebug?: boolean

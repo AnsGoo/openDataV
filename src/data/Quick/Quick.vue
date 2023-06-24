@@ -43,7 +43,6 @@ import {
 import StaticContent from '@/apiView/content/static/View.vue'
 import type { AfterScript, StoreStaticOption } from '@/apiView/type'
 import { StaticKey, useEventBus } from '@/bus'
-import { ScriptType } from '@/enum'
 import { message } from '@/utils/message'
 
 const Logger = console
@@ -60,7 +59,7 @@ const props = withDefaults(
         title: '',
         script: {
           code: '',
-          type: ScriptType.Javascript
+          type: 'Javascript'
         }
       }
     },
@@ -73,9 +72,8 @@ if (props.mode === 'debug') {
   })
 }
 
-const staticDataOptions = reactive<{ data: string; script: AfterScript }>({
-  data: '',
-  script: props.options.script!
+const staticDataOptions = reactive<{ data: string }>({
+  data: ''
 })
 
 const loadStaticList = async () => {

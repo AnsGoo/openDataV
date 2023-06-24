@@ -23,19 +23,8 @@
     </div>
     <div class="response">
       <n-tabs>
-        <n-tab-pane name="data" tab="脚本处理结果" display-directive="show">
-          <OCodeEditor :value="response.afterData" class="content" />
-        </n-tab-pane>
         <n-tab-pane name="origin" tab="原始数据结果" display-directive="show">
           <OCodeEditor :value="response.data" class="content" />
-        </n-tab-pane>
-        <n-tab-pane name="scripts" tab="脚本" display-directive="show">
-          <ScriptsEditor
-            :data="formData.afterScript"
-            :mode="mode"
-            class="content"
-            @update:data="afterScriptChange"
-          />
         </n-tab-pane>
       </n-tabs>
     </div>
@@ -45,12 +34,7 @@
 import { NButton, NButtonGroup, NCard, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
-import type { CallbackType } from '@/utils/data'
-import { makeFunction } from '@/utils/data'
-
-import ScriptsEditor from '../components/ScriptsEditor.vue'
-import { ScriptType } from '../const'
-import type { AfterScript, WebsocketOption } from '../type'
+import type { WebsocketOption } from '../type'
 import { Logger } from '../utils'
 
 const props = withDefaults(
@@ -63,10 +47,6 @@ const props = withDefaults(
       return {
         url: '',
         message: '',
-        afterScript: {
-          code: '',
-          type: ScriptType.Javascript
-        },
         timeout: 3000,
         isRetry: false,
         maxRetryCount: 0
@@ -80,11 +60,9 @@ const emits = defineEmits<{
   (e: 'update:options', value: WebsocketOption): void
   (e: 'change', value: WebsocketOption): void
 }>()
-let callback: CallbackType | undefined
 const formData = reactive<WebsocketOption>(props.options)
 const response = ref({
-  data: '',
-  afterData: ''
+  data: ''
 })
 let wsInstance: WebSocket
 
@@ -97,13 +75,9 @@ const connect = () => {
     Logger.info('wsOpen')
   }
   const handlerData = (message) => {
-    if (callback && callback.handler) {
-      response.value.data = message.data
-      const data = JSON.parse(message.data)
-      const afterData = callback.handler(data, {})
-      response.value.afterData = JSON.stringify(afterData, null, '\t')
-    }
+    response.value.data = message.data
   }
+
   wsInstance.onmessage = handlerData
   wsInstance.onerror = (err) => {
     Logger.error(err)
@@ -123,12 +97,6 @@ const close = () => {
 }
 
 defineExpose({ close })
-const afterScriptChange = (data: AfterScript) => {
-  formData.afterScript = data
-  callback =
-    data && data.code ? makeFunction(data.type, data.code, ['resp', 'options'], false) : undefined
-  formChange()
-}
 
 onUnmounted(() => {
   wsInstance.close()

@@ -4,6 +4,7 @@ import { h } from 'vue'
 import type { ComponentGroup } from '@/enum'
 import { ContainerType, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
+import type { BaseScript } from '@/scripts/base'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -14,7 +15,7 @@ import type {
   MetaForm
 } from '@/types/component'
 
-import type { RequestDataInstance } from './requestOption'
+import type { RequestDataInstance, Response } from './requestOption'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
@@ -37,6 +38,7 @@ export abstract class CustomComponent {
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
   callbackData?: (result: any, type?: string) => void
+  protected componentDataCallback?: (result: any, type?: string) => void
 
   // 检测变化
   propIsChange = true
@@ -62,6 +64,7 @@ export abstract class CustomComponent {
     ...this.positionStyle
   }
   dataConfig?: DataConfig
+  scriptConfig?: BaseScript
 
   protected constructor(detail: ComponentType) {
     if (detail.id) {
@@ -236,7 +239,8 @@ export abstract class CustomComponent {
       propValue: this.propValue,
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataIntegrationMode: this.dataIntegrationMode
+      dataIntegrationMode: this.dataIntegrationMode,
+      script: this.scriptConfig?.toJSON()
     }
     if (this.dataConfig) {
       component.data = {
@@ -299,6 +303,13 @@ export abstract class CustomComponent {
 
   changePropCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackProp = callback
+  }
+  afterCallbackChange(scriptHandler: BaseScript) {
+    this.scriptConfig = scriptHandler
+    if (this.dataConfig?.requestConfig && this.componentDataCallback) {
+      this.callbackData = this.buildDataCallback()
+      this.dataConfig?.requestConfig.connect!(this.callbackData)
+    }
   }
 
   // 修改样式
@@ -363,16 +374,36 @@ export abstract class CustomComponent {
     }
     this.dataConfig = dataConfig
     if (this.callbackData) {
-      await this.dataConfig?.requestConfig.connect!(this.callbackData, {
-        propvalue: this.propValue
-      })
+      await this.dataConfig?.requestConfig.connect!(this.callbackData)
     }
   }
   changeDataCallback(callback: (result: any, type?: string) => void) {
-    this.callbackData = callback
-    this.dataConfig?.requestConfig.connect!(this.callbackData, {
-      propvalue: this.propValue
-    })
+    this.componentDataCallback = callback
+    this.callbackData = this.buildDataCallback()
+    this.dataConfig?.requestConfig.connect!(this.callbackData)
+  }
+
+  buildDataCallback() {
+    return (resp: Response) => {
+      if (this.scriptConfig && this.scriptConfig.afterCallback) {
+        const afterCallback = this.scriptConfig.afterCallback
+        const { status, data } = resp
+        if (status === 'SUCCESS') {
+          try {
+            const afterData = afterCallback(data, this.propValue)
+            resp['afterData'] = afterData
+          } catch (err) {
+            resp['afterData'] = undefined
+            resp.status = 'FAILED'
+          }
+        }
+      } else {
+        resp['afterData'] = resp.data
+      }
+      if (this.componentDataCallback) {
+        this.componentDataCallback(resp)
+      }
+    }
   }
   loadDemoData() {
     const exampleData = this.exampleData

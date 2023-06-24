@@ -13,7 +13,6 @@ export interface StoreRestOption {
   headers: Recordable
   params: Recordable
   data: Recordable
-  afterScript: AfterScript
   otherConfig: {
     interval: number
     isRepeat: boolean

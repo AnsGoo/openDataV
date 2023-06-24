@@ -18,8 +18,7 @@ class DemoRequestData implements RequestDataInstance {
   public async getRespData(_?: Recordable): Promise<Response> {
     return {
       status: 'SUCCESS',
-      data: this.data,
-      afterData: this.data
+      data: this.data
     }
   }
 }

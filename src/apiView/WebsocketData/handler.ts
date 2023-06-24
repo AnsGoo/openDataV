@@ -3,7 +3,6 @@ import { cloneDeep } from 'lodash-es'
 import { Logger } from '@/apiView/utils'
 import type { DataAcceptor, RequestDataInstance, Response } from '@/models/requestOption'
 import type { CallbackType } from '@/utils/data'
-import { makeFunction } from '@/utils/data'
 
 import type { WebsocketOption } from '../type'
 
@@ -13,20 +12,10 @@ class WebsocketData implements RequestDataInstance {
   public callback?: CallbackType
   public timer: IntervalHandle = 0
   public acceptor?: DataAcceptor
-  public acceptorParams?: Recordable
   private retryCount = 0
 
   constructor(options: WebsocketOption) {
     this.options = options
-    this.callback =
-      options.afterScript && options.afterScript.code
-        ? makeFunction(
-            options.afterScript.type,
-            options.afterScript.code,
-            ['resp', 'options'],
-            false
-          )
-        : undefined
   }
   public close() {
     this.wsInstance?.close()
@@ -39,12 +28,10 @@ class WebsocketData implements RequestDataInstance {
       this.wsInstance?.send('ping')
     }
     this.timer = setInterval(handler, timeout)
-    console.log(this.timer)
   }
 
-  public async connect(acceptor: DataAcceptor, options?: Recordable) {
+  public async connect(acceptor: DataAcceptor) {
     this.acceptor = acceptor
-    this.acceptorParams = options
     await this.wsconnect()
   }
 
@@ -56,15 +43,16 @@ class WebsocketData implements RequestDataInstance {
     const handlerData = (message) => {
       const response: Response = {
         status: 'FAILED',
-        data: '',
-        afterData: ''
+        data: ''
       }
-      if (this.callback && this.callback.handler) {
+      try {
         const data = JSON.parse(message.data)
-        const afterData = this.callback.handler(data, this.acceptorParams || {})
         response.data = data
-        response.afterData = afterData
+        response.status = 'SUCCESS'
+      } catch (err: any) {
+        response.data = err.message ? err.message : err
       }
+
       if (this.acceptor) {
         this.acceptor(response)
       }

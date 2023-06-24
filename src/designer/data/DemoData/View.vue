@@ -16,7 +16,7 @@
       aria-modal="true"
       @close="isShow = false"
     >
-      <OCodeEditor v-model:value="formData.afterData" />
+      <OCodeEditor v-model:value="formData.data" />
     </n-card>
   </n-modal>
 </template>
@@ -37,9 +37,9 @@ const props = defineProps<{
 const isShow = ref<boolean>(false)
 
 const formData = reactive<{
-  afterData: string
+  data: string
 }>({
-  afterData: ''
+  data: ''
 })
 
 onMounted(async () => {
@@ -51,9 +51,9 @@ const initData = async () => {
 
   if (dataConfig && dataConfig.type === DataType.DEMO) {
     const demoRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
-    if (props.curComponent.dataConfig) {
+    if (demoRequest) {
       const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
-      formData.afterData = JSON.stringify(resp.afterData, null, '\t')
+      formData.data = JSON.stringify(resp.data, null, '\t')
     }
   } else {
     const exampleData = props.curComponent.exampleData

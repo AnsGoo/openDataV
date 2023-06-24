@@ -21,12 +21,7 @@
       closable
       @close="isShow = false"
     >
-      <StaticView
-        v-model:options="formDataConfig"
-        mode="use"
-        @channel-change="dataChangeHandler"
-        @script-change="scriptChangeHandler"
-      />
+      <StaticView v-model:options="formDataConfig" mode="use" @channel-change="dataChangeHandler" />
     </n-card>
   </n-modal>
 </template>
@@ -36,10 +31,9 @@ import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
-import type { AfterScript } from '@/types/component'
 
-import { DataType, ScriptType } from '../const'
-import type StaticRequestData from './handler'
+import { DataType } from '../const'
+import type SubRequestData from './handler'
 import DataHandler from './handler'
 import SubDataView from './SubDataView.vue'
 
@@ -60,13 +54,8 @@ const isShow = ref<boolean>(false)
 
 const formDataConfig = reactive<{
   channel: string
-  script: AfterScript
 }>({
-  channel: '',
-  script: {
-    code: '',
-    type: ScriptType.Javascript
-  }
+  channel: ''
 })
 
 onMounted(async () => {
@@ -76,18 +65,14 @@ onMounted(async () => {
 const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
   if (dataConfig && dataConfig.type === DataType.SUB) {
-    const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+    const staticRequest = props.curComponent.dataConfig?.requestConfig as SubRequestData
     const { options } = staticRequest.toJSON()
-    formDataConfig.script = options.script!
+    formDataConfig.channel = options.channel
   } else {
     const dataConfig = {
       type: DataType.SUB,
       requestConfig: new DataHandler({
-        channel: formDataConfig.channel,
-        script: {
-          code: formDataConfig.script!.code,
-          type: ScriptType.Javascript
-        }
+        channel: formDataConfig.channel
       })
     }
     await props.curComponent.changeRequestDataConfig(dataConfig)
@@ -97,8 +82,7 @@ const changeHandler = () => {
   const dataConfig = {
     type: DataType.SUB,
     requestConfig: new DataHandler({
-      channel: formDataConfig.channel,
-      script: formDataConfig.script
+      channel: formDataConfig.channel
     })
   }
   props.curComponent.changeRequestDataConfig(dataConfig)
@@ -106,11 +90,6 @@ const changeHandler = () => {
 
 const dataChangeHandler = (data) => {
   formDataConfig.channel = data
-  changeHandler()
-}
-
-const scriptChangeHandler = (script: AfterScript) => {
-  formDataConfig.script = script
   changeHandler()
 }
 

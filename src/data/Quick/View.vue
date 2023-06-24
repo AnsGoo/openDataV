@@ -21,12 +21,7 @@
       closable
       @close="isShow = false"
     >
-      <StaticContent
-        v-model:options="formDataConfig"
-        mode="use"
-        @data-change="dataChangeHandler"
-        @script-change="scriptChangeHandler"
-      />
+      <StaticContent v-model:options="formDataConfig" mode="use" @data-change="dataChangeHandler" />
     </n-card>
   </n-modal>
 </template>
@@ -35,9 +30,7 @@
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import { ScriptType } from '@/apiView/const'
 import type { CustomComponent } from '@/models'
-import type { AfterScript } from '@/types/component'
 
 import DataHandler, { QUICK_TYPE } from './handler'
 import StaticContent from './Quick.vue'
@@ -51,15 +44,10 @@ const formDataConfig = reactive<{
   id: string
   title: string
   data: string
-  script: AfterScript
 }>({
   id: '',
   title: '',
-  data: '',
-  script: {
-    code: '',
-    type: ScriptType.Javascript
-  }
+  data: ''
 })
 
 onMounted(async () => {
@@ -72,17 +60,12 @@ const initData = async () => {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
     const { options } = staticRequest.toJSON()
     formDataConfig.id = options.id
-    formDataConfig.script = options.script!
     formDataConfig.title = options.title!
   } else {
     const dataConfig = {
       type: QUICK_TYPE,
       requestConfig: new DataHandler({
-        id: formDataConfig.id,
-        script: {
-          code: formDataConfig.script!.code,
-          type: ScriptType.Javascript
-        }
+        id: formDataConfig.id
       })
     }
     await props.curComponent.changeRequestDataConfig(dataConfig)
@@ -92,8 +75,7 @@ const changeHandler = () => {
   const dataConfig = {
     type: QUICK_TYPE,
     requestConfig: new DataHandler({
-      id: formDataConfig.id,
-      script: formDataConfig.script
+      id: formDataConfig.id
     })
   }
   props.curComponent.changeRequestDataConfig(dataConfig)
@@ -102,11 +84,6 @@ const changeHandler = () => {
 const dataChangeHandler = (id: string, title: string) => {
   formDataConfig.id = id
   formDataConfig.title = title
-  changeHandler()
-}
-
-const scriptChangeHandler = (script: AfterScript) => {
-  formDataConfig.script = script
   changeHandler()
 }
 
