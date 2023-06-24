@@ -94,9 +94,10 @@
 
 <script lang="ts" setup>
 import { NAvatar, NBreadcrumb, NBreadcrumbItem, NDropdown, NTooltip } from 'naive-ui'
-import { computed, ref, unref } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
+import { useRedo } from '@/pages/redirect/useRedo'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { useUserStoreWithOut } from '@/store/modules/user'
 import { dialog, message } from '@/utils/message'
@@ -152,9 +153,8 @@ const dropdownSelect = async (key) => {
 
 // 刷新页面
 const reloadPage = async () => {
-  await router.push({
-    path: unref(route).fullPath
-  })
+  const redo = useRedo(router)
+  await redo()
 }
 
 // 退出登录

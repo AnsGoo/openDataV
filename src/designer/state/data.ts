@@ -1,21 +1,28 @@
 import { reactive } from 'vue'
 
-import RestDataPlugin from '@/apiView/DynamicData'
 import StaticDataPlugin from '@/apiView/StaticData'
-import DemoDatePlugin from '@/designer/data/DemoData'
+import SubDataPlugin from '@/apiView/SubData'
+import WebsocketDataPlugin from '@/apiView/WebsocketData'
+import QuickDataPlugin from '@/data/Quick'
+import RestDataPlugin from '@/data/Rest'
+import DemoDataPlugin from '@/designer/data/DemoData'
 
 interface DataPlugin {
   type: string
   name: string
   component: any
+  handler: any
 }
 
 class DataState {
   private state = reactive<{ plugins: Recordable<DataPlugin> }>({
     plugins: {
-      [DemoDatePlugin.type]: DemoDatePlugin,
+      [DemoDataPlugin.type]: DemoDataPlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
-      [RestDataPlugin.type]: RestDataPlugin
+      [RestDataPlugin.type]: RestDataPlugin,
+      [QuickDataPlugin.type]: QuickDataPlugin,
+      [SubDataPlugin.type]: SubDataPlugin,
+      [WebsocketDataPlugin.type]: WebsocketDataPlugin
     }
   })
 
@@ -36,7 +43,7 @@ class DataState {
     return options
   }
 
-  public getDataComponent(type: string) {
+  public getPlugin(type: string) {
     return this.plugins[type]
   }
 }

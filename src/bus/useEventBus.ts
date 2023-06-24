@@ -17,15 +17,15 @@ function useEventBus(
   key: string,
   handler: Handler<Events | string>,
   options: {
-    isAppend: boolean
-    isRegExp: boolean
+    isAppend?: boolean
+    isRegExp?: boolean
   } = {
     isAppend: false,
     isRegExp: false
   }
 ) {
   onMounted(() => {
-    const { isAppend }: { isAppend: boolean } = options
+    const { isAppend }: { isAppend?: boolean } = options
     if (isAppend) {
       const { value, isRegExp }: ChannelItem = channels.get(key) || { value: 0, isRegExp: false }
       channels.set(key, { value: value + 1, isRegExp })

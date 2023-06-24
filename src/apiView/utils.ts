@@ -44,7 +44,7 @@ export const requestOptionsToStore = (options: RestOption): StoreRestOption => {
     data: KVToRecordable(options.data),
     method: data.method,
     url: data.url,
-    afterScript: data.afterScript
+    otherConfig: data.otherConfig
   }
   return result
 }
@@ -54,9 +54,9 @@ export const storeOptionToRequestOptions = (data: StoreRestOption): RestOption =
     headers: recordabletoKV(options.headers),
     params: recordabletoKV(options.params),
     data: recordabletoKV(options.data),
-    method: data.method,
-    url: data.url,
-    afterScript: data.afterScript
+    method: options.method,
+    url: options.url,
+    otherConfig: options.otherConfig
   }
   return result
 }

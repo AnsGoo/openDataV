@@ -120,11 +120,7 @@ export default defineComponent({
       )
     }
 
-    const renderFormItem = (
-      item: MetaForm,
-      modelValue: Recordable<any>,
-      path: Array<string> = []
-    ) => {
+    const renderFormItem = (item: MetaForm, modelValue: Recordable, path: Array<string> = []) => {
       let component: {} = NInput
       switch (item.type) {
         case FormType.SWITCH:
@@ -276,7 +272,7 @@ export default defineComponent({
       }
     }
     return () => (
-      <NForm size="small" labelPlacement="top" labelAlign="left">
+      <NForm>
         {props.children.map((item) => (
           <NFormItem
             key={`${props.ukey}${item.prop}`}

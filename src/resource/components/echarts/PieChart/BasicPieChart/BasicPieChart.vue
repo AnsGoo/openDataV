@@ -6,7 +6,6 @@
 import type { EChartsOption, PieSeriesOption } from 'echarts'
 import { onMounted, ref } from 'vue'
 
-import type { DataType } from '@/enum/data'
 import { useData, useProp } from '@/models/hooks'
 import type { RequestResponse } from '@/models/type'
 
@@ -26,9 +25,8 @@ const { updateEchart, resizeHandler } = useEchart(chartEl)
 let chartData:
   | Array<{ label: string; value: number }>
   | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
-const dataChange = (resp: any, _: DataType) => {
-  console.log(resp)
-  if (resp.status >= 0) {
+const dataChange = (resp: any, _?: string) => {
+  if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)
   }
@@ -103,7 +101,6 @@ const getOption = () => {
 }
 
 const updateData = (resp: Array<{ label: string; value: number }>) => {
-  console.log(resp)
   const upperLimit = propValue.data.upperLimit
   const lowerLimit = propValue.data.lowerLimit
   const data = resp.map((ele) => {

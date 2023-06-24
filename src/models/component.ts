@@ -3,7 +3,8 @@ import { h } from 'vue'
 
 import type { ComponentGroup } from '@/enum'
 import { ContainerType, FormType } from '@/enum'
-import { DataIntegrationMode, DataType } from '@/enum/data'
+import { DataIntegrationMode } from '@/enum/data'
+import type { BaseScript } from '@/scripts/base'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -14,14 +15,12 @@ import type {
   MetaForm
 } from '@/types/component'
 
-import type { RequestData } from './requestOption'
-import { DemoRequestData, RestRequestData, StaticRequestData } from './requestOption'
+import type { RequestDataInstance, Response } from './requestOption'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
-  type: DataType
-  requestConfig: RequestData
-  otherConfig: Recordable
+  type: string
+  requestConfig: RequestDataInstance
 }
 
 export abstract class CustomComponent {
@@ -38,7 +37,8 @@ export abstract class CustomComponent {
   dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
-  callbackData?: (result: any, type: DataType) => void
+  callbackData?: (result: any, type?: string) => void
+  protected componentDataCallback?: (result: any, type?: string) => void
 
   // 检测变化
   propIsChange = true
@@ -46,7 +46,7 @@ export abstract class CustomComponent {
   defaultViewType = {
     propValue: ContainerType.COLLAPSE,
     style: ContainerType.COLLAPSE,
-    data: ContainerType.FORM
+    data: ContainerType.CARD
   }
 
   // form表单中使用
@@ -64,6 +64,7 @@ export abstract class CustomComponent {
     ...this.positionStyle
   }
   dataConfig?: DataConfig
+  scriptConfig?: BaseScript
 
   protected constructor(detail: ComponentType) {
     if (detail.id) {
@@ -238,12 +239,12 @@ export abstract class CustomComponent {
       propValue: this.propValue,
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataIntegrationMode: this.dataIntegrationMode
+      dataIntegrationMode: this.dataIntegrationMode,
+      script: this.scriptConfig?.toJSON()
     }
     if (this.dataConfig) {
       component.data = {
         type: this.dataConfig?.type,
-        otherConfig: this.dataConfig?.otherConfig,
         requestOptions: this.dataConfig?.requestConfig.toJSON()
       }
     }
@@ -295,15 +296,20 @@ export abstract class CustomComponent {
       return
     }
     updateModeValue(this._propValue, propKeys, value)
-    setTimeout(() => {
-      if (this.callbackProp) {
-        this.callbackProp(propKeys, value)
-      }
-    }, 0)
+    if (this.callbackProp) {
+      this.callbackProp(propKeys, value)
+    }
   }
 
   changePropCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackProp = callback
+  }
+  afterCallbackChange(scriptHandler: BaseScript) {
+    this.scriptConfig = scriptHandler
+    if (this.dataConfig?.requestConfig && this.componentDataCallback) {
+      this.callbackData = this.buildDataCallback()
+      this.dataConfig?.requestConfig.connect!(this.callbackData)
+    }
   }
 
   // 修改样式
@@ -361,47 +367,51 @@ export abstract class CustomComponent {
   showComponent() {
     this.display = true
   }
-  async changeRequestDataConfig(type: DataType, config: Recordable) {
-    switch (type) {
-      case DataType.STATIC:
-        this.dataConfig = {
-          type: DataType.STATIC,
-          requestConfig: new StaticRequestData(config.options),
-          otherConfig: config.otherConfig || {}
-        }
-        break
-      case DataType.REST:
-        this.dataConfig = {
-          type: DataType.REST,
-          requestConfig: new RestRequestData(config.options),
-          otherConfig: config.otherConfig || {}
-        }
-        break
-      case DataType.DEMO:
-        this.dataConfig = {
-          type: DataType.DEMO,
-          requestConfig: new DemoRequestData(config.options),
-          otherConfig: {}
-        }
-        break
+  async changeRequestDataConfig(dataConfig: DataConfig) {
+    const { requestConfig } = this.dataConfig || {}
+    if (requestConfig && requestConfig.close) {
+      requestConfig.close()
     }
+    this.dataConfig = dataConfig
     if (this.callbackData) {
-      const result = await this.dataConfig?.requestConfig?.getRespData({
-        propvalue: this.propValue
-      })
-      this.callbackData(result, this.dataConfig!.type)
+      await this.dataConfig?.requestConfig.connect!(this.callbackData)
     }
   }
-  changeDataCallback(callback: (result: any, type: DataType) => void) {
-    this.callbackData = callback
+  changeDataCallback(callback: (result: any, type?: string) => void) {
+    this.componentDataCallback = callback
+    this.callbackData = this.buildDataCallback()
+    this.dataConfig?.requestConfig.connect!(this.callbackData)
+  }
+
+  buildDataCallback() {
+    return (resp: Response) => {
+      if (this.scriptConfig && this.scriptConfig.afterCallback) {
+        const afterCallback = this.scriptConfig.afterCallback
+        const { status, data } = resp
+        if (status === 'SUCCESS') {
+          try {
+            const afterData = afterCallback(data, this.propValue)
+            resp['afterData'] = afterData
+          } catch (err) {
+            resp['afterData'] = undefined
+            resp.status = 'FAILED'
+          }
+        }
+      } else {
+        resp['afterData'] = resp.data
+      }
+      if (this.componentDataCallback) {
+        this.componentDataCallback(resp)
+      }
+    }
   }
   loadDemoData() {
     const exampleData = this.exampleData
-    this.changeRequestDataConfig(DataType.DEMO, {
-      options: {
-        data: exampleData
+    setTimeout(() => {
+      if (this.callbackData) {
+        this.callbackData({ status: 'SUCCESS', data: exampleData, afterData: exampleData }, 'DEMO')
       }
-    })
+    }, 200)
   }
   appendChild(child: CustomComponent) {
     this.subComponents.push(child)

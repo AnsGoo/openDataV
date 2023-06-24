@@ -1,5 +1,5 @@
 <template>
-  <OCodeEditor ref="cm" v-model:value="form.code" @update:code="formChange">
+  <OCodeEditor ref="cm" :value="form.code" @update:value="formChange" @change="formChange">
     <template #tool-bar>
       <div>
         <div class="script">
@@ -72,12 +72,13 @@ const savedStatus = ref<boolean>(true)
 const isShow = ref<boolean>(false)
 const props = withDefaults(
   defineProps<{
-    data: AfterScript
+    data?: AfterScript
     mode?: 'use' | 'debug' | 'view'
   }>(),
   {
     data: () => {
       return {
+        id: undefined,
         code: '',
         type: ScriptType.Javascript
       }
@@ -97,7 +98,9 @@ const formData = reactive<{
 }>({})
 
 const form = reactive(props.data)
-const formChange = () => {
+const formChange = (value: string) => {
+  form.code = value
+  emits('update:data', { code: value, type: props.data.type || ScriptType.Javascript })
   savedStatus.value = false
 }
 
@@ -201,6 +204,7 @@ const loadScriptData = async (id: string) => {
       const data: AfterScriptDetail = resp.data
       formData.id = data.id
       formData.title = data.name
+      form.id = data.id
       form.code = data.code
       form.type = data.type
       emits('change', form)

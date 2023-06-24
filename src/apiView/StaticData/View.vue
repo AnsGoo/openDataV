@@ -1,20 +1,18 @@
 <template>
-  <n-form size="small">
-    <n-form-item key="title" label="静态数据">
-      <n-input-group>
-        <n-input
-          v-model:value="formDataConfig.title"
-          :readonly="true"
-          placeholder="编辑请点击"
-          @click="isShow = true"
-        />
-        <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-      </n-input-group>
-    </n-form-item>
-  </n-form>
+  <n-form-item key="title" label="静态数据">
+    <n-input-group>
+      <n-input
+        v-model:value="formDataConfig.data"
+        :readonly="true"
+        placeholder="编辑请点击"
+        @click="isShow = true"
+      />
+      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
+    </n-input-group>
+  </n-form-item>
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
-      style="width: 600px"
+      style="width: 800px"
       title="静态数据"
       :bordered="false"
       size="small"
@@ -23,38 +21,41 @@
       closable
       @close="isShow = false"
     >
-      <Static
-        v-model:options="formDataConfig"
-        @data-change="dataChangeHandler"
-        @script-change="scriptChangeHandler"
-      />
+      <StaticView v-model:options="formDataConfig" mode="use" @data-change="dataChangeHandler" />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
-import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent, StaticRequestData } from '@/models'
-import type { AfterScript } from '@/types/component'
+import type { CustomComponent } from '@/models'
 
-import { DataType, ScriptType } from '../const'
-import Static from '../content/static'
-import type { StoreStaticOption } from '../type'
+import { DataType } from '../const'
+import StaticContent from '../content/static/View.vue'
+import type StaticRequestData from './handler'
+import DataHandler from './handler'
+
+const slots = useSlots()
+
+const StaticView = computed(() => {
+  if (slots.default) {
+    return slots.default()[0].type
+  } else {
+    return StaticContent
+  }
+})
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const isShow = ref<boolean>(false)
 
-const formDataConfig = reactive<StoreStaticOption>({
-  id: '',
-  title: '',
-  script: {
-    code: '',
-    type: ScriptType.Javascript
-  }
+const formDataConfig = reactive<{
+  data: string
+}>({
+  data: ''
 })
 
 onMounted(async () => {
@@ -66,38 +67,29 @@ const initData = async () => {
   if (dataConfig && dataConfig.type === DataType.STATIC) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
     const { options } = staticRequest.toJSON()
-    formDataConfig.id = options.id
-    formDataConfig.script = options.script!
-    formDataConfig.title = options.title!
+    formDataConfig.data = JSON.stringify(options.data, null, '\t')
   } else {
-    await props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-      options: {
-        id: formDataConfig.id,
-        script: {
-          code: formDataConfig.script!.code,
-          type: ScriptType.Javascript
-        }
-      }
-    })
+    const dataConfig = {
+      type: DataType.STATIC,
+      requestConfig: new DataHandler({
+        data: formDataConfig.data
+      })
+    }
+    await props.curComponent.changeRequestDataConfig(dataConfig)
   }
 }
 const changeHandler = () => {
-  props.curComponent.changeRequestDataConfig(DataType.STATIC, {
-    options: {
-      id: formDataConfig.id,
-      script: formDataConfig.script
-    }
-  })
+  const dataConfig = {
+    type: DataType.STATIC,
+    requestConfig: new DataHandler({
+      data: formDataConfig.data
+    })
+  }
+  props.curComponent.changeRequestDataConfig(dataConfig)
 }
 
-const dataChangeHandler = (id: string, title: string) => {
-  formDataConfig.title = title
-  formDataConfig.id = id
-  changeHandler()
-}
-
-const scriptChangeHandler = (script: AfterScript) => {
-  formDataConfig.script = script
+const dataChangeHandler = (data) => {
+  formDataConfig.data = data
   changeHandler()
 }
 

@@ -1,6 +1,6 @@
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
-import type { ComponentGroup, ContainerType, FormType, ScriptType } from '@/enum'
+import type { ComponentGroup, ContainerType, FormType } from '@/enum'
 import type { DataIntegrationMode, DataType, RequestOptions } from '@/models/requestOption'
 import type { CanvasStyleData } from '@/types/storeTypes'
 
@@ -144,8 +144,14 @@ export interface ComponentData {
 
 export interface ComponentRequestDataType {
   type: DataType
-  otherConfig: Recordable
-  requestOptions?: RequestOptions
+  otherConfig?: Recordable
+  requestOptions: RequestOptions
+}
+
+export interface ComponentScriptType {
+  type: string
+  key: string
+  [extra: string]: any
 }
 export interface ComponentDataType {
   id: string
@@ -158,6 +164,7 @@ export interface ComponentDataType {
   subComponents?: ComponentDataType[]
   data?: ComponentRequestDataType
   dataIntegrationMode: DataIntegrationMode
+  script?: ComponentScriptType
 }
 
 export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
@@ -173,7 +180,7 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
 
 export interface AfterScript {
   code: string
-  type: ScriptType
+  type: string
 }
 
 export interface ComponentItem {

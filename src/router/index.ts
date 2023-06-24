@@ -96,7 +96,7 @@ class RouteView {
     if (to.meta.ignoreAuth) {
       return true
     } else {
-      return userStore.userToken ? true : false
+      return !!userStore.userToken
     }
   }
 
@@ -166,10 +166,7 @@ class RouteView {
     const noDuplicatePaths = new Set([...childRoutes])
 
     return routes.filter((route) => {
-      if (noDuplicatePaths.has(route.path)) {
-        return false
-      }
-      return true
+      return !noDuplicatePaths.has(route.path)
     }) as unknown as AppRouteRecordRaw[]
   }
 
@@ -179,10 +176,7 @@ class RouteView {
     }
 
     const menuRoutes = routes.filter((route) => {
-      if (route.meta.hideInMenu) {
-        return false
-      }
-      return true
+      return !route.meta.hideInMenu
     })
 
     for (const item of menuRoutes) {

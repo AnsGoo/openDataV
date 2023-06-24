@@ -1,42 +1,19 @@
 import { onMounted, onUnmounted } from 'vue'
 
-import { DataType } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 
 export const useData = (
   component: CustomComponent,
-  callbackData?: (data: any, type: DataType) => void
+  callbackData?: (data: any, type?: string) => void
 ) => {
-  component.changeDataCallback(callbackData!)
-  let timer: IntervalHandle = 0
-  const pullData = async () => {
-    const requestConfig = component.dataConfig?.requestConfig
-    if (requestConfig && callbackData) {
-      const result = await component.dataConfig?.requestConfig.getRespData({
-        propvalue: component.propValue
-      })
-      if (callbackData) {
-        callbackData(result, component.dataConfig!.type)
-      }
+  onMounted(() => {
+    if (callbackData) {
+      component.changeDataCallback(callbackData)
     }
-  }
-
-  onMounted(async () => {
-    await pullData()
   })
   onUnmounted(() => {
-    if (timer) {
-      clearInterval(timer)
+    if (component.dataConfig?.requestConfig.close) {
+      component.dataConfig?.requestConfig.close()
     }
   })
-  if (!(callbackData && component.dataConfig)) {
-    return
-  }
-  if (component.dataConfig?.type === DataType.REST && component.dataConfig.otherConfig.isRepeat) {
-    if (timer) {
-      clearInterval(timer)
-    }
-    const dataConfig = component.dataConfig
-    timer = setInterval(pullData, dataConfig.otherConfig.interval || 300)
-  }
 }

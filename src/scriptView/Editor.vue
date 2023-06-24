@@ -81,7 +81,6 @@ watch(
   () => props.data,
   () => {
     if (props.data) {
-      console.log(props.data)
       form.code = props.data.code
       form.type = props.data.type
     }

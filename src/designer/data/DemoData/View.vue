@@ -1,12 +1,10 @@
 <template>
-  <n-form :model="formData" size="small">
-    <n-form-item key="data" label="示例数据">
-      <n-input-group>
-        <n-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
-        <n-button type="primary" @click="isShow = true"> 预览 </n-button>
-      </n-input-group>
-    </n-form-item>
-  </n-form>
+  <n-form-item key="data" label="示例数据">
+    <n-input-group>
+      <n-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
+      <n-button type="primary" @click="isShow = true"> 预览 </n-button>
+    </n-input-group>
+  </n-form-item>
   <n-modal v-model:show="isShow">
     <n-card
       style="width: 600px"
@@ -18,19 +16,20 @@
       aria-modal="true"
       @close="isShow = false"
     >
-      <OCodeEditor v-model:value="formData.afterData" />
+      <OCodeEditor v-model:value="formData.data" />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import { NButton, NCard, NForm, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import { DataType } from '@/enum/data'
-import type { CustomComponent, DemoRequestData } from '@/models'
-import { message } from '@/utils/message'
+import type { CustomComponent } from '@/models'
+
+import DataHandler from './handler'
 
 const props = defineProps<{
   curComponent: CustomComponent
@@ -38,9 +37,9 @@ const props = defineProps<{
 const isShow = ref<boolean>(false)
 
 const formData = reactive<{
-  afterData: string
+  data: string
 }>({
-  afterData: ''
+  data: ''
 })
 
 onMounted(async () => {
@@ -51,19 +50,20 @@ const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
 
   if (dataConfig && dataConfig.type === DataType.DEMO) {
-    const demoRequest = props.curComponent.dataConfig?.requestConfig as DemoRequestData
-    if (props.curComponent.dataConfig) {
+    const demoRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
+    if (demoRequest) {
       const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
-      formData.afterData = JSON.stringify(resp.afterData, null, '\t')
+      formData.data = JSON.stringify(resp.data, null, '\t')
     }
   } else {
-    message.info('正在使用示例数据')
     const exampleData = props.curComponent.exampleData
-    await props.curComponent.changeRequestDataConfig(DataType.DEMO, {
-      options: {
+    const dataConfig = {
+      type: DataType.DEMO,
+      requestConfig: new DataHandler({
         data: cloneDeep(exampleData)
-      }
-    })
+      })
+    }
+    await props.curComponent.changeRequestDataConfig(dataConfig)
   }
 }
 

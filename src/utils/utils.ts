@@ -2,7 +2,7 @@ import { cloneDeep, isNumber } from 'lodash-es'
 
 import type { CustomComponent } from '@/models'
 import type { Position, Vector } from '@/types/common'
-import type { DOMRectStyle, GroupStyle } from '@/types/component'
+import type { DOMRectStyle } from '@/types/component'
 
 export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))
@@ -195,37 +195,6 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-export function decomposeComponent(component: CustomComponent, parentStyle: DOMRectStyle) {
-  // 获取元素的中心点坐标
-  const groupStyle: GroupStyle = component.groupStyle!
-  const center: Vector = {
-    y: parentStyle.top + parentStyle.height / 2,
-    x: parentStyle.left + parentStyle.width / 2
-  }
-
-  if (component) {
-    const { top, left, height, width, rotate } = {
-      top: parentStyle.top + (parentStyle.height * groupStyle.gtop) / 100,
-      left: parentStyle.left + (parentStyle.width * groupStyle.gleft) / 100,
-      height: (parentStyle.height * groupStyle.gheight) / 100,
-      width: (parentStyle.width * groupStyle.gwidth) / 100,
-      rotate: mod360(parentStyle.rotate + (groupStyle.grotate || 0))
-    }
-    const point: Vector = {
-      y: top + height / 2,
-      x: left + width / 2
-    }
-
-    const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-    component.change(['position', 'top'], Math.round(afterPoint.y - height / 2), 'style')
-    component.change(['position', 'left'], Math.round(afterPoint.x - width / 2), 'style')
-    component.change(['position', 'height'], Math.round(height), 'style')
-    component.change(['position', 'width'], Math.round(width), 'style')
-    component.change(['position', 'rotate'], rotate, 'style')
-    component.groupStyle = undefined
-  }
-}
-
 export function createGroupStyle(groupComponent: CustomComponent) {
   const parentStyle: DOMRectStyle = groupComponent.positionStyle
   groupComponent.subComponents!.forEach((component) => {
@@ -268,38 +237,6 @@ export function calcComponentsRect(components: CustomComponent[]) {
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
-}
-
-// 判断是否图片，以 png/jpg/jpeg/gif/webp 结尾
-export function isImage(file) {
-  return /(png|jpg|jpeg|gif|webp)$/.test(file)
-}
-
-// 检测两个对象不同的属性值
-export const checkDiff = (obj1: Recordable, obj2: Recordable) => {
-  const result: Recordable = {}
-  if (!obj2) {
-    return obj1
-  }
-
-  Object.keys(obj1).forEach((key) => {
-    if (obj1[key] !== obj2[key]) {
-      result[key] = obj1[key]
-    }
-  })
-
-  return result
-}
-
-// 清除对象属性
-export const cleanObjectProp = (obj: Recordable, excludes: string[] = []) => {
-  Object.keys(obj).forEach((key) => {
-    if (excludes.includes(key)) {
-      return
-    }
-
-    delete obj[key]
-  })
 }
 
 // 生成随机字符串

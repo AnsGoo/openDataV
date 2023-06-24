@@ -45,8 +45,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 
-import GroupComponent from '@/components/Group/config'
-import Group from '@/components/Group/Group.vue'
+import GroupComponent from '@/designer/components/Group/config'
+import Group from '@/designer/components/Group/Group.vue'
 import Shape from '@/designer/Editor/Shape'
 import { componentList } from '@/designer/load'
 import useCanvasState from '@/designer/state/canvas'
@@ -141,7 +141,7 @@ const curComponent = computed(() => canvasState.curComponent)
 const activeKey = ref<number>(0)
 
 const isShow = (display: boolean): boolean => {
-  return !(canvasState.isEditMode && display === false)
+  return !(canvasState.isEditMode && !display)
 }
 
 const tabsClick = (index: number) => {
