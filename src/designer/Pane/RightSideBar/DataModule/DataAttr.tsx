@@ -36,7 +36,7 @@ export default defineComponent({
     const dataState = useDataState()
     const scriptState = useScriptState()
     const dataType = ref<string>(DataType.DEMO)
-    const scriptType = ref<string>('System')
+    const scriptType = ref<string | null>(null)
     watch(
       () => props.curComponent,
       async (value: CustomComponent) => {
@@ -67,6 +67,9 @@ export default defineComponent({
     }
 
     const renderScriptComponent = () => {
+      if (!scriptType.value) {
+        return
+      }
       const plugin = scriptState.getPlugin(scriptType.value)
       const PluginComponent = plugin ? plugin.component : useEmpty('未发现相应的脚本插件')
       // @ts-ignore
