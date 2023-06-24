@@ -30,7 +30,7 @@ import type { CustomComponent } from '@/models'
 import ScriptHandler from './handler'
 import ScriptEditor from './ScriptsEditor.vue'
 
-const isShow = ref<boolean>(true)
+const isShow = ref<boolean>(false)
 const scriptRef = ref<string | undefined>(undefined)
 
 const props = defineProps<{
