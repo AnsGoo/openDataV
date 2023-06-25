@@ -26,12 +26,14 @@
   </n-form-item>
   <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
     <n-card
-      style="width: 800px"
+      style="width: 600px"
       title="动态数据"
       :bordered="false"
       size="small"
+      closable
       role="dialog"
       aria-modal="true"
+      @close="isShow = false"
     >
       <RestView
         v-model:options="formData"
@@ -58,7 +60,7 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 
-import { DataType, ScriptType } from '../const'
+import { DataType } from '../const'
 import { RequestMethod } from '../content/requestEnums'
 import Rest from '../content/rest/Rest.vue'
 import type { RestOption, StoreRestOption } from '../type'
@@ -84,10 +86,6 @@ const formData = reactive<RestOption>({
   headers: [{ key: '', value: '', disable: false, id: uuid() }],
   params: [{ key: '', value: '', disable: false, id: uuid() }],
   data: [{ key: '', value: '', disable: false, id: uuid() }],
-  afterScript: {
-    code: '',
-    type: ScriptType.Javascript
-  },
   otherConfig: {
     isRepeat: false,
     interval: 1000
@@ -122,10 +120,6 @@ const initData = () => {
       headers: [{ key: '', value: '', disable: false, id: uuid() }],
       params: [{ key: '', value: '', disable: false, id: uuid() }],
       data: [{ key: '', value: '', disable: false, id: uuid() }],
-      afterScript: {
-        code: '',
-        type: ScriptType.Javascript
-      },
       otherConfig: {
         isRepeat: false,
         interval: 1000

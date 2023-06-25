@@ -1,18 +1,27 @@
 import { componentList } from '@/designer/load'
 import useDataState from '@/designer/state/data'
+import useScriptState from '@/designer/state/scripts'
 import { DataIntegrationMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
-import type { ComponentDataType, ComponentRequestDataType } from '@/types/component'
+import type {
+  ComponentDataType,
+  ComponentRequestDataType,
+  ComponentScriptType
+} from '@/types/component'
 import { calcComponentAxis } from '@/utils/utils'
 
-const componentDataHandler = (componentObj: CustomComponent, data?: ComponentRequestDataType) => {
+const buildDataHandler = (componentObj: CustomComponent, data?: ComponentRequestDataType) => {
   const dataState = useDataState()
   if (!(data && data.requestOptions)) {
     componentObj.loadDemoData()
     return
   }
-  const dataHandler = dataState.getDataComponent(data.type).handler
+  const plugin = dataState.getPlugin(data.type)
+  if (!plugin) {
+    return
+  }
+  const dataHandler = plugin.handler
   const { options } = data.requestOptions!
   const otherConfig = data.otherConfig
   if (otherConfig) {
@@ -25,6 +34,19 @@ const componentDataHandler = (componentObj: CustomComponent, data?: ComponentReq
   componentObj.changeRequestDataConfig(dataConfig)
 }
 
+const buildAfterCallback = (componentObj: CustomComponent, script?: ComponentScriptType) => {
+  if (!script) {
+    return
+  }
+  const scriptState = useScriptState()
+  const plugin = scriptState.getPlugin(script.type)
+  if (!plugin) {
+    return
+  }
+  const scriptHandler = plugin.handler
+
+  componentObj.afterCallbackChange(scriptHandler)
+}
 export function createComponent(component: ComponentDataType): any {
   if ((component.component as string) in componentList) {
     const _class = componentList[component.component as string]
@@ -35,8 +57,9 @@ export function createComponent(component: ComponentDataType): any {
     obj.dataIntegrationMode = component.dataIntegrationMode || DataIntegrationMode.SELF
     const data = component.data
     if (obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
-      componentDataHandler(obj, data)
+      buildDataHandler(obj, data)
     }
+    buildAfterCallback(obj, component.script)
     component.subComponents?.forEach((item) => {
       const subObj = createComponent(item)
       subObj.parent = obj

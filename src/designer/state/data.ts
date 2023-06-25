@@ -43,7 +43,7 @@ class DataState {
     return options
   }
 
-  public getDataComponent(type: string) {
+  public getPlugin(type: string) {
     return this.plugins[type]
   }
 }

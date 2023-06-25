@@ -272,7 +272,7 @@ export default defineComponent({
       }
     }
     return () => (
-      <NForm size="small" labelPlacement="top" labelAlign="left">
+      <NForm>
         {props.children.map((item) => (
           <NFormItem
             key={`${props.ukey}${item.prop}`}

@@ -21,12 +21,7 @@
       closable
       @close="isShow = false"
     >
-      <StaticView
-        v-model:options="formDataConfig"
-        mode="use"
-        @data-change="dataChangeHandler"
-        @script-change="scriptChangeHandler"
-      />
+      <StaticView v-model:options="formDataConfig" mode="use" @data-change="dataChangeHandler" />
     </n-card>
   </n-modal>
 </template>
@@ -36,9 +31,8 @@ import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
-import type { AfterScript } from '@/types/component'
 
-import { DataType, ScriptType } from '../const'
+import { DataType } from '../const'
 import StaticContent from '../content/static/View.vue'
 import type StaticRequestData from './handler'
 import DataHandler from './handler'
@@ -60,13 +54,8 @@ const isShow = ref<boolean>(false)
 
 const formDataConfig = reactive<{
   data: string
-  script: AfterScript
 }>({
-  data: '',
-  script: {
-    code: '',
-    type: ScriptType.Javascript
-  }
+  data: ''
 })
 
 onMounted(async () => {
@@ -78,16 +67,12 @@ const initData = async () => {
   if (dataConfig && dataConfig.type === DataType.STATIC) {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
     const { options } = staticRequest.toJSON()
-    formDataConfig.script = options.script!
+    formDataConfig.data = JSON.stringify(options.data, null, '\t')
   } else {
     const dataConfig = {
       type: DataType.STATIC,
       requestConfig: new DataHandler({
-        data: formDataConfig.data,
-        script: {
-          code: formDataConfig.script!.code,
-          type: ScriptType.Javascript
-        }
+        data: formDataConfig.data
       })
     }
     await props.curComponent.changeRequestDataConfig(dataConfig)
@@ -97,8 +82,7 @@ const changeHandler = () => {
   const dataConfig = {
     type: DataType.STATIC,
     requestConfig: new DataHandler({
-      data: formDataConfig.data,
-      script: formDataConfig.script
+      data: formDataConfig.data
     })
   }
   props.curComponent.changeRequestDataConfig(dataConfig)
@@ -106,11 +90,6 @@ const changeHandler = () => {
 
 const dataChangeHandler = (data) => {
   formDataConfig.data = data
-  changeHandler()
-}
-
-const scriptChangeHandler = (script: AfterScript) => {
-  formDataConfig.script = script
   changeHandler()
 }
 

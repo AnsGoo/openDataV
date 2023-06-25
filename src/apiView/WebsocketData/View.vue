@@ -37,6 +37,7 @@
       style="width: 800px"
       title="WS数据"
       :bordered="false"
+      closable
       size="small"
       role="dialog"
       aria-modal="true"
@@ -67,7 +68,7 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 
-import { DataType, ScriptType } from '../const'
+import { DataType } from '../const'
 import type { WebsocketOption } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
@@ -98,10 +99,6 @@ const close = () => {
 const formData = reactive<WebsocketOption>({
   url: '',
   message: '',
-  afterScript: {
-    code: '',
-    type: ScriptType.Javascript
-  },
   timeout: 3000,
   isRetry: false,
   maxRetryCount: 0
@@ -134,10 +131,6 @@ const initData = () => {
     Object.assign(formData, {
       url: '',
       message: '',
-      afterScript: {
-        code: '',
-        type: ScriptType.Javascript
-      },
       isRetry: false,
       retryCount: 0
     })

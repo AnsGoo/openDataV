@@ -48,7 +48,6 @@ import {
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
 import { StaticKey, useEventBus } from '@/bus'
-import { ScriptType } from '@/enum'
 import type { AfterScript } from '@/types/component'
 import { makeFunction } from '@/utils/data'
 import { message } from '@/utils/message'
@@ -60,12 +59,12 @@ const formData = reactive<{
   id?: string
   title: string
   code: any
-  type: ScriptType
+  type: string
 }>({
   id: '',
   title: '' || '',
   code: '',
-  type: ScriptType.Javascript
+  type: 'Javascript'
 })
 
 const params = ref<string>(JSON.stringify({}, null, '\t'))
@@ -86,7 +85,7 @@ const stdOut = ref<string>('')
 
 const run = () => {
   const afterCallback = formData.code
-    ? makeFunction(formData.type, formData.code, ['resp', 'options'], false)
+    ? makeFunction('Javascript', formData.code, ['resp', 'options'], false)
     : undefined
   if (afterCallback && afterCallback.handler) {
     try {

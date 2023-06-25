@@ -52,11 +52,10 @@ class QuickRequestData implements RequestDataInstance {
     const resp = await this.getRespData(options)
     acceptor(resp)
   }
-  public async getRespData(options?: Recordable): Promise<Response> {
+  public async getRespData(_options?: Recordable): Promise<Response> {
     const response: Response = {
       status: 'SUCCESS',
-      data: '',
-      afterData: ''
+      data: ''
     }
     if (!this.id) {
       return response
@@ -67,19 +66,10 @@ class QuickRequestData implements RequestDataInstance {
         const data: StaticDataDetail = resp.data
         this.title = data.name
         response.data = data.data
-        response.afterData = data.data
       }
     } catch (err: any) {
       response.status = 'FAILED'
       response.data = err.stack || err.message
-      response.afterData = err.stack || err.message
-    }
-    if (this.callback && this.callback.handler) {
-      try {
-        response.afterData = this.callback.handler(response.data, options || {})
-      } catch (err: any) {
-        response.afterData = err.message || err
-      }
     }
     return response
   }

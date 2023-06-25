@@ -57,22 +57,7 @@
           {{ response.status ? response.status : '' }}
         </span>
       </n-divider>
-      <n-tabs>
-        <n-tab-pane name="data" tab="脚本处理结果" display-directive="show">
-          <OCodeEditor :value="response.afterData" class="content" />
-        </n-tab-pane>
-        <n-tab-pane name="origin" tab="原始请求结果" display-directive="show">
-          <OCodeEditor :value="response.data" class="content" />
-        </n-tab-pane>
-        <n-tab-pane name="scripts" tab="脚本" display-directive="show">
-          <ScriptsEditor
-            :data="formData.afterScript"
-            :mode="mode"
-            class="content"
-            @update:data="afterScriptChange"
-          />
-        </n-tab-pane>
-      </n-tabs>
+      <OCodeEditor :value="response.data" class="content" height="400px" />
     </div>
   </n-card>
 </template>
@@ -91,13 +76,8 @@ import {
 } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import type { CallbackType } from '@/utils/data'
-import { makeFunction } from '@/utils/data'
-
-import ScriptsEditor from '../../components/ScriptsEditor.vue'
-import { ScriptType } from '../../const'
 import { useRequest } from '../../hooks/http'
-import type { AfterScript, RequestResponse, RestOption } from '../../type'
+import type { RequestResponse, RestOption } from '../../type'
 import { requestOptionsToStore, uuid } from '../../utils'
 import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
 import DynamicKVForm from './DynamicKVForm.vue'
@@ -115,10 +95,6 @@ const props = withDefaults(
         headers: [{ key: '', value: '', disable: false, id: uuid() }],
         params: [{ key: '', value: '', disable: false, id: uuid() }],
         data: [{ key: '', value: '', disable: false, id: uuid() }],
-        afterScript: {
-          code: '',
-          type: ScriptType.Javascript
-        },
         otherConfig: {
           isRepeat: false,
           interval: 1000
@@ -164,7 +140,6 @@ const emits = defineEmits<{
   (e: 'update:options', value: RestOption): void
   (e: 'change', value: RestOption): void
 }>()
-let callback: CallbackType | undefined
 interface RequestDataOption extends RestOption {
   title?: string
   id?: string
@@ -183,28 +158,16 @@ const send = async () => {
     const resp = await requestInstance.request(requestOptionsToStore(formData))
     response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
-    if (callback && callback.handler) {
-      const afterData = callback.handler(resp.data, {})
-      response.value.afterData = JSON.stringify(afterData, null, '\t')
-    }
   } catch (err: any) {
     err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})
     response.value.code = result.status
     response.value.data = err.stack || err.message
-    response.value.afterData = err.stack || err.message
   }
 }
 const formChange = () => {
   emits('change', formData)
   emits('update:options', formData)
-}
-
-const afterScriptChange = (data: AfterScript) => {
-  formData.afterScript = data
-  callback =
-    data && data.code ? makeFunction(data.type, data.code, ['resp', 'options'], false) : undefined
-  formChange()
 }
 </script>
 

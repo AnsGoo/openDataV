@@ -1,5 +1,3 @@
-import { cloneDeep } from 'lodash-es'
-
 import { eventBus, useEventBus } from '@/bus'
 import { DataType } from '@/enum/data'
 import type {
@@ -8,28 +6,17 @@ import type {
   RequestOptions,
   Response
 } from '@/models/requestOption'
-import type { AfterScript } from '@/types/component'
-import type { CallbackType } from '@/utils/data'
-import { makeFunction } from '@/utils/data'
 
 class SubRequestData implements RequestDataInstance {
-  public afterScript?: AfterScript
   public channel: string
-  public callback?: CallbackType | undefined
 
-  constructor({ channel, script }: { channel: string; script?: AfterScript }) {
+  constructor({ channel }: { channel: string }) {
     this.channel = channel
-    this.afterScript = script
-    this.callback =
-      this.afterScript && this.afterScript.code
-        ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
-        : undefined
   }
 
-  public toJSON(): RequestOptions<{ channel: string; script?: AfterScript }> {
+  public toJSON(): RequestOptions<{ channel: string }> {
     return {
       options: {
-        script: cloneDeep(this.afterScript),
         channel: this.channel
       },
       type: DataType.STATIC
@@ -40,15 +27,11 @@ class SubRequestData implements RequestDataInstance {
     eventBus.off(this.channel)
   }
 
-  public async connect(acceptor: DataAcceptor, options?: Recordable) {
+  public async connect(acceptor: DataAcceptor) {
     useEventBus(this.channel, (event) => {
       const response: Response = {
         status: 'SUCCESS',
-        data: event,
-        afterData:
-          this.callback && this.callback.handler
-            ? this.callback.handler(event, options || {})
-            : event
+        data: event
       }
       acceptor && acceptor(response, 'SUB')
     })

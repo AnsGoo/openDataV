@@ -115,7 +115,6 @@ class BasicBarChartComponent extends CustomComponent {
             defaultValue: '#00BAFF'
           }
         },
-
         {
           prop: 'xshow',
           label: 'X网格线是否显示',
