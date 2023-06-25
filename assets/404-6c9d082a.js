@@ -1,0 +1,1 @@
+import{_ as t}from"./404-ef83427e.js";import{d as _,aw as a,o as c,c as n,a as e,_ as r}from"./index-3ca9a95a.js";const p={class:"notfound"},m=_({__name:"404",setup(d){const o=a(),s=async()=>{await o.push({name:"Home"})};return(i,u)=>(c(),n("div",p,[e("div",null,[e("img",{src:t,alt:"",onClick:s})])]))}});const v=r(m,[["__scopeId","data-v-289cebe2"]]);export{v as default};
