@@ -43,3 +43,7 @@ jobs:
       # 运行构建脚本
       - name: Build frontend
         run: pnpm run build
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+
+
