@@ -1,9 +1,11 @@
-name: ci
+name: main
 
 on:
   # 每当 push 到 main 分支时触发部署
   push:
-    branches: [preview]
+    branches: [main]
+  pull_request:
+    branches: [main]
   # 手动触发部署
   workflow_dispatch:
 
@@ -42,13 +44,3 @@ jobs:
       # 运行构建脚本
       - name: Build frontend
         run: pnpm run build
-
-      - name: Deploy to GitHub Pages
-        uses: crazy-max/ghaction-github-pages@v2
-        with:
-          # 部署到 gh-pages 分支
-          target_branch: gh-pages
-          # 部署目录为Vite项目的默认输出目录
-          build_dir: ./dist
-        env:
-          GITHUB_TOKEN: ${{ secrets.OPENDATAV }}
