@@ -23,7 +23,7 @@ import type {
   SwitchFormSchema
 } from '@/types/component'
 
-import CustomItem from './customItem'
+import CustomItem from './CustomItem'
 import type { ScriptForm } from './type'
 
 export default defineComponent({

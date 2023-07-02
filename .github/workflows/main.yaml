@@ -1,9 +1,11 @@
-name: ci
+name: main
 
 on:
   # 每当 push 到 main 分支时触发部署
   push:
-    branches: [preview]
+    branches: [main]
+  pull_request:
+    branches: [main]
   # 手动触发部署
   workflow_dispatch:
 
@@ -44,11 +46,4 @@ jobs:
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.OPENDATAV }}
-          publish_dir: ./dist
-          cname: datav.byteportrait.com
-        env:
-          GITHUB_TOKEN: ${{ secrets.OPENDATAV }}
+
