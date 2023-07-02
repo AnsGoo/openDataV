@@ -24,7 +24,6 @@ jobs:
         with:
           # 选择要使用的 node 版本
           node-version: '16'
-          cache: pnpm
 
 
       - name: Install pnpm
