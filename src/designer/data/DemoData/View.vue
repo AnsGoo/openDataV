@@ -26,7 +26,6 @@ import { cloneDeep } from 'lodash-es'
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import { DataType } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 
 import DataHandler from './handler'
@@ -49,7 +48,7 @@ onMounted(async () => {
 const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
 
-  if (dataConfig && dataConfig.type === DataType.DEMO) {
+  if (dataConfig && dataConfig.type === 'DEMO') {
     const demoRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
     if (demoRequest) {
       const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
@@ -58,7 +57,7 @@ const initData = async () => {
   } else {
     const exampleData = props.curComponent.exampleData
     const dataConfig = {
-      type: DataType.DEMO,
+      type: 'DEMO',
       requestConfig: new DataHandler({
         data: cloneDeep(exampleData)
       })

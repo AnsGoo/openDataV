@@ -1,5 +1,4 @@
 import { eventBus, useEventBus } from '@/bus'
-import { DataType } from '@/enum/data'
 import type {
   DataAcceptor,
   RequestDataInstance,
@@ -19,7 +18,7 @@ class SubRequestData implements RequestDataInstance {
       options: {
         channel: this.channel
       },
-      type: DataType.STATIC
+      type: 'STATIC'
     }
   }
 

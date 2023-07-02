@@ -68,14 +68,13 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 
-import { DataType } from '../const'
 import type { WebsocketOption } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 import WebsocketView from './WebsocketView.vue'
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  curComponent?: CustomComponent
 }>()
 const slots = useSlots()
 
@@ -110,21 +109,27 @@ const changeHandler = () => {
 const setDataConfig = () => {
   if (formData.url) {
     const dataConfig = {
-      type: DataType.WS,
+      type: 'WS',
       requestConfig: new DataHandler(formData)
     }
-    props.curComponent.changeRequestDataConfig(dataConfig)
+    if (props.curComponent) {
+      props.curComponent.changeRequestDataConfig(dataConfig)
+    }
   }
 }
 
 onMounted(async () => {
-  initData()
+  if (props.curComponent) {
+    initComponentData()
+  } else {
+    initGlobalData()
+  }
 })
 
-const initData = () => {
-  const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.WS) {
-    const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
+const initComponentData = () => {
+  const dataConfig = props.curComponent!.dataConfig
+  if (dataConfig && dataConfig.type === 'WS') {
+    const restRequest = props.curComponent!.dataConfig?.requestConfig as RestRequestData
     const { options } = restRequest.toJSON()
     Object.assign(formData, options)
   } else {
@@ -137,12 +142,15 @@ const initData = () => {
     setDataConfig()
   }
 }
+const initGlobalData = () => {}
 
 watch(
   () => props.curComponent,
-  async (value: CustomComponent) => {
+  async (value: CustomComponent | undefined) => {
     if (value) {
-      initData()
+      initComponentData()
+    } else {
+      initGlobalData()
     }
   },
   { immediate: true }

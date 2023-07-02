@@ -37,10 +37,17 @@
     <n-tabs v-else type="line" animated justify-content="center">
       <n-tab-pane name="canvas" display-directive="show:lazy">
         <template #tab>
-          <x-icon name="page" />
+          <x-icon name="canvas" />
           <span v-show="!iscollapsed">画布</span>
         </template>
         <Canvas />
+      </n-tab-pane>
+      <n-tab-pane name="data" display-directive="show:lazy">
+        <template #tab>
+          <x-icon name="data" />
+          <span v-show="!iscollapsed">数据</span>
+        </template>
+        <GlobalData />
       </n-tab-pane>
     </n-tabs>
   </div>
@@ -57,7 +64,8 @@ import { computed, getCurrentInstance, h, ref } from 'vue'
 import useCanvasState from '@/designer/state/canvas'
 
 import AttrList from './AttrModule'
-import Canvas from './Canvas.vue'
+import Canvas from './CanvasModules/Canvas.vue'
+import GlobalData from './CanvasModules/GlobalData'
 import DataList from './DataModule'
 import StyleList from './StyleModule'
 // 右侧属性列表

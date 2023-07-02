@@ -21,7 +21,7 @@ import useEmpty from '@/designer/modules/Empty'
 import useDataState from '@/designer/state/data'
 import useScriptState from '@/designer/state/scripts'
 import { ContainerType } from '@/enum'
-import { DataIntegrationMode, DataType } from '@/enum/data'
+import { DataIntegrationMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 
 export default defineComponent({
@@ -35,7 +35,7 @@ export default defineComponent({
   setup(props) {
     const dataState = useDataState()
     const scriptState = useScriptState()
-    const dataType = ref<string>(DataType.DEMO)
+    const dataType = ref<string>('DEMO')
     const scriptType = ref<string | null>(null)
     watch(
       () => props.curComponent,
@@ -49,7 +49,18 @@ export default defineComponent({
       },
       { deep: true, immediate: true }
     )
+
+    const componentDataTypes = ref<Array<{ label: string; value: string }>>([])
+
     onMounted(() => {
+      const keys = Object.keys(dataState.componentPlugins)
+      keys.forEach((el) => {
+        const plugin = dataState.componentPlugins[el]
+        componentDataTypes.value.push({
+          label: plugin.name,
+          value: plugin.type
+        })
+      })
       const dataConfig = props.curComponent.dataConfig
       if (dataConfig) {
         dataType.value = dataConfig.type
@@ -87,7 +98,7 @@ export default defineComponent({
             <NSelect
               v-model:value={dataType.value}
               placeholder="请选择数据类型"
-              options={dataState.allDataType}
+              options={componentDataTypes.value}
               onUpdateValue={(type: string) => typeChanged(type)}
               clearable={true}
             />

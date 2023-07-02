@@ -7,5 +7,6 @@ export default {
   type: QUICK_TYPE,
   name: '快速数据',
   component: shallowRef(Quick),
-  handler
+  handler,
+  useTo: 'COMPONENT'
 }

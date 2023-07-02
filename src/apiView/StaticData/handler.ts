@@ -1,4 +1,3 @@
-import { DataType } from '@/enum/data'
 import type {
   DataAcceptor,
   RequestDataInstance,
@@ -19,7 +18,7 @@ class StaticRequestData implements RequestDataInstance {
       options: {
         data: this.data
       },
-      type: DataType.STATIC
+      type: 'STATIC'
     }
   }
 

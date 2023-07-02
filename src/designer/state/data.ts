@@ -12,6 +12,7 @@ interface DataPlugin {
   name: string
   component: any
   handler: any
+  useTo?: string | Array<string>
 }
 
 class DataState {
@@ -30,17 +31,30 @@ class DataState {
     return this.state.plugins
   }
 
-  get allDataType() {
-    const options: Array<{ label: string; value: string }> = []
+  get componentPlugins() {
+    const plugins: Recordable<DataPlugin> = {}
     const keys = Object.keys(this.plugins)
-    keys.forEach((el) => {
+    keys.forEach((el: string) => {
       const plugin = this.plugins[el]
-      options.push({
-        label: plugin.name,
-        value: plugin.type
-      })
+      const useTo = plugin.useTo || 'COMPONENT'
+      if (useTo === 'COMPONENT' || useTo.includes('COMPONENT')) {
+        plugins[el] = plugin
+      }
     })
-    return options
+    return plugins
+  }
+
+  get globalPlugins() {
+    const plugins: Recordable<DataPlugin> = {}
+    const keys = Object.keys(this.plugins)
+    keys.forEach((el: string) => {
+      const plugin = this.plugins[el]
+      const useTo = plugin.useTo || 'GLOBAL'
+      if (useTo === 'GLOBAL' || useTo.includes('GLOBAL')) {
+        plugins[el] = plugin
+      }
+    })
+    return plugins
   }
 
   public getPlugin(type: string) {

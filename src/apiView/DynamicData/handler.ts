@@ -2,7 +2,6 @@ import { cloneDeep } from 'lodash-es'
 
 import type { RequestInstance } from '@/apiView/hooks/http'
 import { useRequest } from '@/apiView/hooks/http'
-import { DataType } from '@/enum/data'
 import type { DataAcceptor, RequestDataInstance, Response } from '@/models/requestOption'
 import type { StoreRestOption } from '@/models/type'
 
@@ -61,7 +60,7 @@ class RestRequestData implements RequestDataInstance {
   public toJSON() {
     return {
       options: cloneDeep(this.options),
-      type: DataType.REST
+      type: 'REST'
     }
   }
 }

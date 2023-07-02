@@ -1,12 +1,12 @@
 import { shallowRef } from 'vue'
 
-import { DataType } from '../const'
 import handler from './handler'
 import WebSocket from './View.vue'
 
 export default {
-  type: DataType.WS,
+  type: 'WS',
   name: 'WS数据',
   component: shallowRef(WebSocket),
-  handler
+  handler,
+  useTo: ['COMPONENT', 'GLOBAL'] as Array<'COMPONENT' | 'GLOBAL'>
 }

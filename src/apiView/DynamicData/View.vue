@@ -60,7 +60,6 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 
-import { DataType } from '../const'
 import { RequestMethod } from '../content/requestEnums'
 import Rest from '../content/rest/Rest.vue'
 import type { RestOption, StoreRestOption } from '../type'
@@ -69,7 +68,7 @@ import type RestRequestData from './handler'
 import DataHandler from './handler'
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  curComponent?: CustomComponent
 }>()
 const slots = useSlots()
 const isShow = ref<boolean>(false)
@@ -97,20 +96,26 @@ const changeHandler = () => {
 
 const setDataConfig = () => {
   const dataConfig = {
-    type: DataType.REST,
+    type: 'REST',
     requestConfig: new DataHandler(requestOptionsToStore(formData))
   }
-  props.curComponent.changeRequestDataConfig(dataConfig)
+  if (props.curComponent) {
+    props.curComponent.changeRequestDataConfig(dataConfig)
+  }
 }
 
 onMounted(async () => {
-  initData()
+  if (props.curComponent) {
+    initComponentData()
+  } else {
+    initGlobalData()
+  }
 })
 
-const initData = () => {
-  const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.REST) {
-    const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
+const initComponentData = () => {
+  const dataConfig = props.curComponent!.dataConfig
+  if (dataConfig && dataConfig.type === 'REST') {
+    const restRequest = props.curComponent!.dataConfig?.requestConfig as RestRequestData
     const { options } = restRequest.toJSON()
     Object.assign(formData, storeOptionToRequestOptions(options as StoreRestOption))
   } else {
@@ -129,11 +134,15 @@ const initData = () => {
   }
 }
 
+const initGlobalData = () => {}
+
 watch(
   () => props.curComponent,
-  async (value: CustomComponent) => {
+  async (value: CustomComponent | undefined) => {
     if (value) {
-      initData()
+      initComponentData()
+    } else {
+      initGlobalData()
     }
   },
   { immediate: true }

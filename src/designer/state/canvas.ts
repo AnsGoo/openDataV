@@ -102,6 +102,7 @@ class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
+    globalData: [],
     scale: 1,
     canvasStyleConfig: {
       formItems: baseCanvasStyleConfig,

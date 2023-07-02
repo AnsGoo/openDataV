@@ -32,7 +32,6 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 
-import { DataType } from '../const'
 import StaticContent from '../content/static/View.vue'
 import type StaticRequestData from './handler'
 import DataHandler from './handler'
@@ -64,13 +63,13 @@ onMounted(async () => {
 
 const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.STATIC) {
+  if (dataConfig && dataConfig.type === 'STATIC') {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
     const { options } = staticRequest.toJSON()
     formDataConfig.data = JSON.stringify(options.data, null, '\t')
   } else {
     const dataConfig = {
-      type: DataType.STATIC,
+      type: 'STATIC',
       requestConfig: new DataHandler({
         data: formDataConfig.data
       })
@@ -80,7 +79,7 @@ const initData = async () => {
 }
 const changeHandler = () => {
   const dataConfig = {
-    type: DataType.STATIC,
+    type: 'STATIC',
     requestConfig: new DataHandler({
       data: formDataConfig.data
     })

@@ -32,7 +32,6 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { CustomComponent } from '@/models'
 
-import { DataType } from '../const'
 import type SubRequestData from './handler'
 import DataHandler from './handler'
 import SubDataView from './SubDataView.vue'
@@ -64,13 +63,13 @@ onMounted(async () => {
 
 const initData = async () => {
   const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.SUB) {
+  if (dataConfig && dataConfig.type === 'SUB') {
     const staticRequest = props.curComponent.dataConfig?.requestConfig as SubRequestData
     const { options } = staticRequest.toJSON()
     formDataConfig.channel = options.channel
   } else {
     const dataConfig = {
-      type: DataType.SUB,
+      type: 'SUB',
       requestConfig: new DataHandler({
         channel: formDataConfig.channel
       })
@@ -80,7 +79,7 @@ const initData = async () => {
 }
 const changeHandler = () => {
   const dataConfig = {
-    type: DataType.SUB,
+    type: 'SUB',
     requestConfig: new DataHandler({
       channel: formDataConfig.channel
     })

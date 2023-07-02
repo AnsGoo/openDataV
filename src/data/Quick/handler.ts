@@ -2,7 +2,6 @@ import { cloneDeep } from 'lodash-es'
 
 import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
-import { DataType } from '@/enum/data'
 import type {
   DataAcceptor,
   RequestDataInstance,
@@ -37,7 +36,7 @@ class QuickRequestData implements RequestDataInstance {
         script: cloneDeep(this.afterScript),
         title: this.title
       },
-      type: DataType.STATIC
+      type: 'STATIC'
     }
   }
 
