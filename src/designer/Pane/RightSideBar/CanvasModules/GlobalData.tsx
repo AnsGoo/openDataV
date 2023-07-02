@@ -26,7 +26,7 @@ const canvasState = useCanvasState()
 export default defineComponent({
   props: {},
   emits: ['change'],
-  setup(props) {
+  setup(_props) {
     const dataState = useDataState()
     const dataType = ref<string>('')
     const globalDataTypes = ref<Array<{ label: string; value: string }>>([])
