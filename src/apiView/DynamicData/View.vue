@@ -1,5 +1,5 @@
 <template>
-  <n-form-item label="动态数据" label-placement="top">
+  <n-form-item label="动态数据" label-placement="top" size="small">
     <n-input-group>
       <n-input v-model:value="formData.url" style="flex: 1" readonly>
         <template #prefix>
@@ -69,6 +69,7 @@ import DataHandler from './handler'
 
 const props = defineProps<{
   curComponent?: CustomComponent
+  index?: number
 }>()
 const slots = useSlots()
 const isShow = ref<boolean>(false)

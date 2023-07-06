@@ -13,6 +13,7 @@ interface DataPlugin {
   component: any
   handler: any
   useTo?: string | Array<string>
+  getdefaultOption?: () => any
 }
 
 class DataState {

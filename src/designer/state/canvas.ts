@@ -2,6 +2,7 @@ import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import type { LayoutData } from '@/api/pages'
+import useDataState from '@/designer/state/data'
 import { ContainerType, EditMode, FormType } from '@/enum'
 import PixelEnum from '@/enum/pixel'
 import type { CustomComponent } from '@/models'
@@ -19,6 +20,8 @@ import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '
 
 import { createComponent } from '../utils'
 import useSnapShotState from './snapshot'
+
+const dataState = useDataState()
 
 const snapShotState = useSnapShotState()
 
@@ -128,7 +131,11 @@ class CanvasState {
   get canvasStyleConfig(): CanvasStyleConfig {
     return this.state.canvasStyleConfig
   }
-  get canvasGlobalData() {
+
+  get globalData() {
+    return this.state.globalData
+  }
+  get globalOption() {
     return {
       basic: {
         width: this.canvasStyleData.width,
@@ -740,6 +747,15 @@ class CanvasState {
       }
     }
     this.saveComponentData()
+  }
+
+  appendGlobalData(dataType: string) {
+    const dataPlugin = dataState.getPlugin(dataType)
+    const defaultOption = dataPlugin.getdefaultOption ? dataPlugin.getdefaultOption() : {}
+    this.globalData.push({ type: dataType, option: defaultOption })
+  }
+  getGlobalDataOptionByIndex(index: number) {
+    return this.globalData[index]
   }
 }
 

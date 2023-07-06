@@ -8,5 +8,14 @@ export default {
   name: 'WS数据',
   component: shallowRef(WebSocket),
   handler,
-  useTo: ['COMPONENT', 'GLOBAL'] as Array<'COMPONENT' | 'GLOBAL'>
+  useTo: ['COMPONENT', 'GLOBAL'] as Array<'COMPONENT' | 'GLOBAL'>,
+  getdefaultOption: () => {
+    return {
+      url: '',
+      message: '',
+      timeout: 3000,
+      isRetry: false,
+      maxRetryCount: 0
+    }
+  }
 }

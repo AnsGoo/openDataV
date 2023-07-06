@@ -30,7 +30,7 @@ export interface EditData {
   benchmarkComponent: Optional<CustomComponent>
   scale: number
   canvasStyleConfig: CanvasStyleConfig
-  globalData: Array<any>
+  globalData: Array<{ type: string; option: any }>
 }
 export interface MenuStatus {
   menuTop: number

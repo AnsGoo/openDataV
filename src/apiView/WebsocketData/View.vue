@@ -1,5 +1,5 @@
 <template>
-  <n-form-item label="链接地址" label-placement="top">
+  <n-form-item label="链接地址" label-placement="top" size="small">
     <n-input-group>
       <n-input v-model:value="formData.url" style="flex: 1" readonly>
         <template #prefix>
@@ -41,6 +41,7 @@
       size="small"
       role="dialog"
       aria-modal="true"
+      @close="isShow = false"
     >
       <WsView
         ref="wsRef"
@@ -75,6 +76,7 @@ import WebsocketView from './WebsocketView.vue'
 
 const props = defineProps<{
   curComponent?: CustomComponent
+  index?: number
 }>()
 const slots = useSlots()
 
