@@ -316,7 +316,7 @@ export abstract class CustomComponent {
 
   // 修改样式
   changeStyle(propKeys: Array<string>, value: any) {
-    const positionKey = ['top', 'left', 'height', 'width']
+    const positionKey = ['top', 'left', 'height', 'width', 'rotate']
     let changeValue = value
     if (propKeys.length === 2 && propKeys[0] === 'position' && positionKey.includes(propKeys[1])) {
       changeValue = Math.round(value)
