@@ -15,7 +15,7 @@ import {
   NSwitch
 } from 'naive-ui'
 import type { PropType } from 'vue'
-import { defineComponent, h, reactive, ref } from 'vue'
+import { defineComponent, h, ref } from 'vue'
 
 import { FormType, GlobalColorSwatches } from '@/enum'
 import type {
@@ -69,7 +69,6 @@ export default defineComponent({
   },
   emits: ['change'],
   setup(props, { emit }) {
-    const formData = reactive<Recordable>(props.data)
     const changed = (val: any, keys: Array<string>) => {
       emit('change', keys, val)
     }
@@ -279,7 +278,7 @@ export default defineComponent({
             label={item.label}
             showLabel={isShowLabel(item.showLabel)}
           >
-            {isUndefined(formData) ? <></> : renderItem(item, formData, [props.uid])}
+            {isUndefined(props.data) ? <></> : renderItem(item, props.data, [props.uid])}
           </NFormItem>
         ))}
       </NForm>
