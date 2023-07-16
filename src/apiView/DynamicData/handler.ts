@@ -19,7 +19,6 @@ class RestRequestData implements DataInstance {
   }
 
   public async connect(acceptor: DataAcceptor) {
-    console.log(this.options)
     const { otherConfig } = this.options || {}
     if (otherConfig.isRepeat) {
       const handler = async () => {
