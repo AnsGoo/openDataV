@@ -106,8 +106,6 @@ const setDataConfig = () => {
 onMounted(async () => {
   if (props.slotter) {
     initComponentData()
-  } else {
-    initGlobalData()
   }
 })
 
