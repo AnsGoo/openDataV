@@ -18,7 +18,8 @@ onMounted(async () => {
   if (snapshot) {
     viewer.value!.setLayoutData({
       canvasData: snapshot.canvasData as ComponentDataType[],
-      canvasStyle: snapshot.canvasStyle
+      canvasStyle: snapshot.canvasStyle,
+      dataSlotters: snapshot.dataSlotters
     })
   }
 })
