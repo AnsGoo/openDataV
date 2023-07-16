@@ -242,8 +242,6 @@ export abstract class CustomComponent {
       dataIntegrationMode: this.dataIntegrationMode,
       script: this.scriptConfig?.toJSON()
     }
-
-    console.log(this.scriptConfig?.toJSON(), this.scriptConfig)
     if (this.dataConfig) {
       component.data = {
         type: this.dataConfig?.type,

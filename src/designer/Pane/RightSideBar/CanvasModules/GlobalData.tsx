@@ -174,7 +174,6 @@ export default defineComponent({
       Object.keys(dataState.plugins).length > 0 ? (
         <>
           {renderDataAppend()}
-
           {dataOptions.value.map((el, index) => renderContainer(el.type, index))}
         </>
       ) : (

@@ -9,7 +9,7 @@ import {
   NTimelineItem
 } from 'naive-ui'
 import type { PropType } from 'vue'
-import { defineComponent, reactive, watch } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 import { ContainerType } from '@/enum'
 import type { MetaContainerItem, MetaForm } from '@/types/component'
@@ -35,28 +35,35 @@ export default defineComponent({
       defalut: ContainerType.COLLAPSE
     }
   },
-  emits: ['change'],
+  emits: ['change', 'update:data'],
   setup(props, { emit }) {
-    const formData = reactive<Recordable>(props.data)
+    const formData = ref<Recordable>(props.data)
+    const change = (keys: Array<string>, val: any) => {
+      emit('change', keys, val)
+      emit('update:data', formData)
+    }
+
     watch(
       () => props.data,
       () => {
-        Object.assign(formData, props.data)
+        formData.value = props.data
       }
     )
-    const change = (keys: Array<string>, val: any) => {
-      emit('change', keys, val)
+
+    const updateForm = (prop: string, data: any) => {
+      formData.value[prop] = data
     }
 
     const renderForm = (el: MetaContainerItem) => {
-      return formData[el.prop] ? (
+      return formData.value[el.prop] ? (
         <FormAttr
           children={(el.children || []) as Array<MetaForm>}
-          data={formData[el.prop]}
+          data={formData.value[el.prop]}
           name={el.label}
           uid={el.prop}
           ukey={el.prop}
           onChange={change}
+          onUpdateData={updateForm}
         />
       ) : (
         <> {'未获取到正确的数据'}</>
