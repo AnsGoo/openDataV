@@ -29,9 +29,9 @@ const buildDataHandler = (componentObj: CustomComponent, data?: ComponentRequest
   }
   const dataConfig = {
     type: data.type,
-    requestConfig: new dataHandler(options)
+    dataInstance: new dataHandler(options)
   }
-  componentObj.changeRequestDataConfig(dataConfig)
+  componentObj.changeDataConfig(dataConfig)
 }
 
 const buildAfterCallback = (componentObj: CustomComponent, script?: ComponentScriptType) => {

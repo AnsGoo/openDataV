@@ -140,6 +140,7 @@ export type PropsType = MetaContainerItem
 export interface ComponentData {
   canvasStyle: CanvasStyleData
   canvasData: Record<string, any>[]
+  dataSlotters: Array<{ type: string; config: any }>
 }
 
 export interface ComponentRequestDataType {

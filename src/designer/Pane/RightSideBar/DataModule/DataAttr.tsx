@@ -74,7 +74,7 @@ export default defineComponent({
       const plugin = dataState.getPlugin(dataType.value)
       const DataComponent = plugin ? plugin.component : useEmpty('未发现相应的数据插件')
       // @ts-ignore
-      return <DataComponent curComponent={props.curComponent} />
+      return <DataComponent slotter={props.curComponent} />
     }
 
     const renderScriptComponent = () => {
@@ -84,7 +84,7 @@ export default defineComponent({
       const plugin = scriptState.getPlugin(scriptType.value)
       const PluginComponent = plugin ? plugin.component : useEmpty('未发现相应的脚本插件')
       // @ts-ignore
-      return <PluginComponent curComponent={props.curComponent} />
+      return <PluginComponent slotter={props.curComponent} />
     }
 
     const typeChanged = (type: string) => {

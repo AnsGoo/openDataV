@@ -15,12 +15,12 @@ import type {
   MetaForm
 } from '@/types/component'
 
-import type { RequestDataInstance, Response } from './requestOption'
+import type { DataInstance, Response } from './requestOption'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
   type: string
-  requestConfig: RequestDataInstance
+  dataInstance: DataInstance
 }
 
 export abstract class CustomComponent {
@@ -245,7 +245,7 @@ export abstract class CustomComponent {
     if (this.dataConfig) {
       component.data = {
         type: this.dataConfig?.type,
-        requestOptions: this.dataConfig?.requestConfig.toJSON()
+        requestOptions: this.dataConfig?.dataInstance.toJSON()
       }
     }
     if (this.groupStyle) {
@@ -306,9 +306,9 @@ export abstract class CustomComponent {
   }
   afterCallbackChange(scriptHandler: BaseScript) {
     this.scriptConfig = scriptHandler
-    if (this.dataConfig?.requestConfig && this.componentDataCallback) {
+    if (this.dataConfig?.dataInstance && this.componentDataCallback) {
       this.callbackData = this.buildDataCallback()
-      this.dataConfig?.requestConfig.connect!(this.callbackData)
+      this.dataConfig?.dataInstance.connect!(this.callbackData)
     }
   }
 
@@ -367,20 +367,20 @@ export abstract class CustomComponent {
   showComponent() {
     this.display = true
   }
-  async changeRequestDataConfig(dataConfig: DataConfig) {
-    const { requestConfig } = this.dataConfig || {}
-    if (requestConfig && requestConfig.close) {
-      requestConfig.close()
+  async changeDataConfig(dataConfig: DataConfig) {
+    const { dataInstance } = this.dataConfig || {}
+    if (dataInstance && dataInstance.close) {
+      dataInstance.close()
     }
     this.dataConfig = dataConfig
     if (this.callbackData) {
-      await this.dataConfig?.requestConfig.connect!(this.callbackData)
+      await this.dataConfig?.dataInstance.connect!(this.callbackData)
     }
   }
   changeDataCallback(callback: (result: any, type?: string) => void) {
     this.componentDataCallback = callback
     this.callbackData = this.buildDataCallback()
-    this.dataConfig?.requestConfig.connect!(this.callbackData)
+    this.dataConfig?.dataInstance.connect!(this.callbackData)
   }
 
   buildDataCallback() {

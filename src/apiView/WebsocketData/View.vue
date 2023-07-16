@@ -67,15 +67,13 @@ import {
 } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
-
-import type { WebsocketOption } from '../type'
+import type { Slotter, WebsocketOption } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 import WebsocketView from './WebsocketView.vue'
 
 const props = defineProps<{
-  curComponent?: CustomComponent
+  slotter: Slotter
   index?: number
 }>()
 const slots = useSlots()
@@ -112,26 +110,27 @@ const setDataConfig = () => {
   if (formData.url) {
     const dataConfig = {
       type: 'WS',
-      requestConfig: new DataHandler(formData)
+      dataInstance: new DataHandler(formData)
     }
-    if (props.curComponent) {
-      props.curComponent.changeRequestDataConfig(dataConfig)
+    if (props.slotter) {
+      props.slotter.changeDataConfig(dataConfig)
     }
   }
 }
 
 onMounted(async () => {
-  if (props.curComponent) {
+  if (props.slotter) {
     initComponentData()
-  } else {
-    initGlobalData()
   }
 })
 
 const initComponentData = () => {
-  const dataConfig = props.curComponent!.dataConfig
+  const dataConfig = props.slotter!.dataConfig
   if (dataConfig && dataConfig.type === 'WS') {
-    const restRequest = props.curComponent!.dataConfig?.requestConfig as RestRequestData
+    const restRequest = props.slotter!.dataConfig?.dataInstance as RestRequestData
+    if (!restRequest) {
+      return
+    }
     const { options } = restRequest.toJSON()
     Object.assign(formData, options)
   } else {
@@ -144,15 +143,11 @@ const initComponentData = () => {
     setDataConfig()
   }
 }
-const initGlobalData = () => {}
-
 watch(
-  () => props.curComponent,
-  async (value: CustomComponent | undefined) => {
+  () => props.slotter,
+  async (value: Slotter | undefined) => {
     if (value) {
       initComponentData()
-    } else {
-      initGlobalData()
     }
   },
   { immediate: true }

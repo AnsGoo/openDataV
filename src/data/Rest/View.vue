@@ -1,16 +1,16 @@
 <template>
-  <RestView :curComponent="curComponent">
+  <RestView :slotter="slotter">
     <DataViewSlot />
   </RestView>
 </template>
 
 <script lang="ts" setup>
 import RestView from '@/apiView/DynamicData/View.vue'
-import type { CustomComponent } from '@/models'
+import type { Slotter } from '@/apiView/type'
 
 import DataViewSlot from './DynamicExtendView.vue'
 
 defineProps<{
-  curComponent?: CustomComponent
+  slotter: Slotter
 }>()
 </script>

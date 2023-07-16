@@ -2,10 +2,10 @@ import { cloneDeep } from 'lodash-es'
 
 import type { RequestInstance } from '@/apiView/hooks/http'
 import { useRequest } from '@/apiView/hooks/http'
-import type { DataAcceptor, RequestDataInstance, Response } from '@/models/requestOption'
+import type { DataAcceptor, DataInstance, Response } from '@/models/requestOption'
 import type { StoreRestOption } from '@/models/type'
 
-class RestRequestData implements RequestDataInstance {
+class RestRequestData implements DataInstance {
   public options: StoreRestOption
   public requestInstance: RequestInstance
   public timer: IntervalHandle = 0
@@ -19,7 +19,8 @@ class RestRequestData implements RequestDataInstance {
   }
 
   public async connect(acceptor: DataAcceptor) {
-    const { otherConfig } = this.options
+    console.log(this.options)
+    const { otherConfig } = this.options || {}
     if (otherConfig.isRepeat) {
       const handler = async () => {
         const resp = await this.getRespData()
@@ -39,14 +40,14 @@ class RestRequestData implements RequestDataInstance {
       data: ''
     }
     try {
-      const requestConfig = {
+      const config = {
         url: this.options.url,
         method: this.options.method,
         headers: this.options.headers,
         params: this.options.params,
         data: this.options.data
       }
-      const resp = await this.requestInstance.request(requestConfig)
+      const resp = await this.requestInstance.request(config)
       response.status = 'SUCCESS'
       response.data = resp.data
     } catch (err: any) {

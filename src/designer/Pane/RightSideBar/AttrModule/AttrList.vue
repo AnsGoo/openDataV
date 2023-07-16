@@ -55,7 +55,6 @@ const resetFormData = () => {
   if (props.curComponent && props.curComponent.propValue) {
     Object.assign(data, props.curComponent.propValue)
   }
-  console.log(data)
   return data
 }
 </script>

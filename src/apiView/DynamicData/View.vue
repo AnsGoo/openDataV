@@ -58,17 +58,15 @@ import {
 } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
-
 import { RequestMethod } from '../content/requestEnums'
 import Rest from '../content/rest/Rest.vue'
-import type { RestOption, StoreRestOption } from '../type'
+import type { RestOption, Slotter, StoreRestOption } from '../type'
 import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 
 const props = defineProps<{
-  curComponent?: CustomComponent
+  slotter: Slotter
   index?: number
 }>()
 const slots = useSlots()
@@ -98,15 +96,15 @@ const changeHandler = () => {
 const setDataConfig = () => {
   const dataConfig = {
     type: 'REST',
-    requestConfig: new DataHandler(requestOptionsToStore(formData))
+    dataInstance: new DataHandler(requestOptionsToStore(formData))
   }
-  if (props.curComponent) {
-    props.curComponent.changeRequestDataConfig(dataConfig)
+  if (props.slotter) {
+    props.slotter.changeDataConfig(dataConfig)
   }
 }
 
 onMounted(async () => {
-  if (props.curComponent) {
+  if (props.slotter) {
     initComponentData()
   } else {
     initGlobalData()
@@ -114,9 +112,12 @@ onMounted(async () => {
 })
 
 const initComponentData = () => {
-  const dataConfig = props.curComponent!.dataConfig
+  const dataConfig = props.slotter!.dataConfig
   if (dataConfig && dataConfig.type === 'REST') {
-    const restRequest = props.curComponent!.dataConfig?.requestConfig as RestRequestData
+    const restRequest = props.slotter!.dataConfig?.dataInstance as RestRequestData
+    if (!restRequest) {
+      return
+    }
     const { options } = restRequest.toJSON()
     Object.assign(formData, storeOptionToRequestOptions(options as StoreRestOption))
   } else {
@@ -135,15 +136,11 @@ const initComponentData = () => {
   }
 }
 
-const initGlobalData = () => {}
-
 watch(
-  () => props.curComponent,
-  async (value: CustomComponent | undefined) => {
+  () => props.slotter,
+  async (value: Slotter | undefined) => {
     if (value) {
       initComponentData()
-    } else {
-      initGlobalData()
     }
   },
   { immediate: true }

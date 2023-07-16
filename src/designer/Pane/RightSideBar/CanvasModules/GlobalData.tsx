@@ -26,7 +26,6 @@ import { ContainerType } from '@/enum'
 const canvasState = useCanvasState()
 
 export default defineComponent({
-  props: {},
   emits: ['change'],
   setup(_props) {
     const dataState = useDataState()
@@ -43,28 +42,36 @@ export default defineComponent({
         })
       })
     })
-    const renderDataComponent = (dataType: string, index: number) => {
+    const renderDataComponent = (dataType: string, id: string) => {
       const plugin = dataState.getPlugin(dataType)
       const DataComponent = plugin ? plugin.component : useEmpty('未发现相应的数据插件')
-      // @ts-ignore
-      return <DataComponent index={index} />
+      const slotter = canvasState.getDataSlotter(id)
+      return <DataComponent slotter={slotter} />
     }
 
     const appendGlobalData = () => {
       if (curDataType.value) {
-        canvasState.appendGlobalData(curDataType.value)
+        canvasState.appendDataSlotter(curDataType.value)
       }
     }
 
-    const dataOptions = computed<Array<{ type: string; option: any }>>(() => canvasState.globalData)
-    const renderContainer = (dataType: string, index: number) => {
+    const dataOptions = computed<Array<{ id: string; type: string }>>(() => {
+      const keys = Object.keys(canvasState.globalSlotters)
+      return keys.map((el) => {
+        return {
+          id: el,
+          type: canvasState.getDataSlotter(el).type
+        }
+      })
+    })
+    const renderContainer = (dataType: string, id: string, index: number) => {
       const mode = canvasState.canvasStyleConfig.mode as ContainerType
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
             <NCollapse accordion={true}>
               <NCollapseItem title={`全局数据${index + 1}`} name="dataType">
-                {renderDataComponent(dataType, index)}
+                {renderDataComponent(dataType, id)}
               </NCollapseItem>
             </NCollapse>
           )
@@ -72,7 +79,7 @@ export default defineComponent({
           return (
             <NTabs type="line">
               <NTabPane tab={`全局数据${index + 1}`} name="dataType">
-                {renderDataComponent(dataType, index)}
+                {renderDataComponent(dataType, id)}
               </NTabPane>
             </NTabs>
           )
@@ -80,7 +87,7 @@ export default defineComponent({
           return (
             <>
               <NCard title={`全局数据${index + 1}`} size="small">
-                {renderDataComponent(dataType, index)}
+                {renderDataComponent(dataType, id)}
               </NCard>
             </>
           )
@@ -90,14 +97,14 @@ export default defineComponent({
               <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {`全局数据${index + 1}`}
               </NDivider>
-              {renderDataComponent(dataType, index)}
+              {renderDataComponent(dataType, id)}
             </>
           )
         case ContainerType.TIMELINE:
           return (
             <NTimeline>
               <NTimelineItem title={`全局数据${index + 1}`} type={'success'}>
-                {renderDataComponent(dataType, index)}
+                {renderDataComponent(dataType, id)}
               </NTimelineItem>
             </NTimeline>
           )
@@ -174,7 +181,7 @@ export default defineComponent({
       Object.keys(dataState.plugins).length > 0 ? (
         <>
           {renderDataAppend()}
-          {dataOptions.value.map((el, index) => renderContainer(el.type, index))}
+          {dataOptions.value.map((el, index) => renderContainer(el.type, el.id, index))}
         </>
       ) : (
         <NDescriptions>

@@ -84,11 +84,16 @@ class SnapshotState {
    * @param canvasData 组件数据
    * @param canvasStyle 画布样式
    */
-  recordSnapshot(canvasData: Array<CustomComponent>, canvasStyle: CanvasStyleData) {
+  recordSnapshot(
+    canvasData: Array<CustomComponent>,
+    canvasStyle: CanvasStyleData,
+    dataSlotters: Array<{ type: string; config: any }>
+  ) {
     // 改变值
     this.latestSnapshot = {
       canvasData: cloneDeep(canvasData),
-      canvasStyle: cloneDeep(canvasStyle)
+      canvasStyle: cloneDeep(canvasStyle),
+      dataSlotters: cloneDeep(dataSlotters)
     }
     snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot)).then(async (_) => {
       const count: number = await snapshotDb.snapshot.count()
@@ -118,12 +123,17 @@ class SnapshotState {
    * 保存记录
    * @param canvasData 组件数据
    * @param canvasStyle 组件样式
+   * @param dataSlotters  数据插槽
    */
-  saveSnapshot(canvasData: ComponentDataType[], canvasStyle: CanvasStyleData) {
+  saveSnapshot(
+    canvasData: ComponentDataType[],
+    canvasStyle: CanvasStyleData,
+    dataSlotters: Array<{ type: string; config: any }>
+  ) {
     if (this.timeHandler) {
       clearTimeout(this.timeHandler)
     }
-    this.timeHandler = setTimeout(this.recordSnapshot, 300, canvasData, canvasStyle)
+    this.timeHandler = setTimeout(this.recordSnapshot, 300, canvasData, canvasStyle, dataSlotters)
   }
 }
 
