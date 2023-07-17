@@ -1,5 +1,5 @@
 <template>
-  <n-form-item label="链接地址" label-placement="top">
+  <n-form-item label="链接地址" label-placement="top" size="small">
     <n-input-group>
       <n-input v-model:value="formData.url" style="flex: 1" readonly>
         <template #prefix>
@@ -41,6 +41,7 @@
       size="small"
       role="dialog"
       aria-modal="true"
+      @close="isShow = false"
     >
       <WsView
         ref="wsRef"
@@ -66,16 +67,14 @@ import {
 } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
-
-import { DataType } from '../const'
-import type { WebsocketOption } from '../type'
+import type { Slotter, WebsocketOption } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 import WebsocketView from './WebsocketView.vue'
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: Slotter
+  index?: number
 }>()
 const slots = useSlots()
 
@@ -110,21 +109,28 @@ const changeHandler = () => {
 const setDataConfig = () => {
   if (formData.url) {
     const dataConfig = {
-      type: DataType.WS,
-      requestConfig: new DataHandler(formData)
+      type: 'WS',
+      dataInstance: new DataHandler(formData)
     }
-    props.curComponent.changeRequestDataConfig(dataConfig)
+    if (props.slotter) {
+      props.slotter.changeDataConfig(dataConfig)
+    }
   }
 }
 
 onMounted(async () => {
-  initData()
+  if (props.slotter) {
+    initComponentData()
+  }
 })
 
-const initData = () => {
-  const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.WS) {
-    const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
+const initComponentData = () => {
+  const dataConfig = props.slotter!.dataConfig
+  if (dataConfig && dataConfig.type === 'WS') {
+    const restRequest = props.slotter!.dataConfig?.dataInstance as RestRequestData
+    if (!restRequest) {
+      return
+    }
     const { options } = restRequest.toJSON()
     Object.assign(formData, options)
   } else {
@@ -137,12 +143,11 @@ const initData = () => {
     setDataConfig()
   }
 }
-
 watch(
-  () => props.curComponent,
-  async (value: CustomComponent) => {
+  () => props.slotter,
+  async (value: Slotter | undefined) => {
     if (value) {
-      initData()
+      initComponentData()
     }
   },
   { immediate: true }

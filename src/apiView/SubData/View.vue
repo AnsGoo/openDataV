@@ -30,9 +30,8 @@
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
+import type { Slotter } from '@/apiView/type'
 
-import { DataType } from '../const'
 import type SubRequestData from './handler'
 import DataHandler from './handler'
 import SubDataView from './SubDataView.vue'
@@ -48,7 +47,7 @@ const StaticView = computed(() => {
 })
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: Slotter
 }>()
 const isShow = ref<boolean>(false)
 
@@ -63,29 +62,29 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.SUB) {
-    const staticRequest = props.curComponent.dataConfig?.requestConfig as SubRequestData
+  const dataConfig = props.slotter.dataConfig
+  if (dataConfig && dataConfig.type === 'SUB') {
+    const staticRequest = props.slotter.dataConfig?.dataInstance as SubRequestData
     const { options } = staticRequest.toJSON()
     formDataConfig.channel = options.channel
   } else {
     const dataConfig = {
-      type: DataType.SUB,
-      requestConfig: new DataHandler({
+      type: 'SUB',
+      dataInstance: new DataHandler({
         channel: formDataConfig.channel
       })
     }
-    await props.curComponent.changeRequestDataConfig(dataConfig)
+    await props.slotter.changeDataConfig(dataConfig)
   }
 }
 const changeHandler = () => {
   const dataConfig = {
-    type: DataType.SUB,
-    requestConfig: new DataHandler({
+    type: 'SUB',
+    dataInstance: new DataHandler({
       channel: formDataConfig.channel
     })
   }
-  props.curComponent.changeRequestDataConfig(dataConfig)
+  props.slotter.changeDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (data) => {
@@ -94,9 +93,9 @@ const dataChangeHandler = (data) => {
 }
 
 watch(
-  () => props.curComponent,
+  () => props.slotter,
   async () => {
-    if (props.curComponent) {
+    if (props.slotter) {
       await initData()
     }
   },

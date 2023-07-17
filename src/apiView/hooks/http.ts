@@ -1,7 +1,7 @@
 import type { Method } from 'axios'
 import Axios from 'axios'
 
-export interface requestConfig {
+export interface RequestConfig {
   method: Method
   url: string
   headers: Recordable
@@ -9,7 +9,7 @@ export interface requestConfig {
   data: Recordable
 }
 export interface RequestInstance {
-  request: (config: requestConfig) => Promise<any>
+  request: (config: RequestConfig) => Promise<any>
 }
 export const useRequest = () => {
   return Axios

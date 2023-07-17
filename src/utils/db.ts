@@ -13,7 +13,7 @@ export class SnapShotDexie extends Dexie {
   constructor() {
     super('snapshot')
     this.version(1).stores({
-      snapshot: '++id, canvasData, canvasStyle' // Primary key and indexed props
+      snapshot: '++id, canvasData, canvasStyle, dataSlotters' // Primary key and indexed props
     })
   }
 }

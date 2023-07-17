@@ -1,13 +1,7 @@
-import { DataType } from '@/enum/data'
-import type {
-  DataAcceptor,
-  RequestDataInstance,
-  RequestOptions,
-  Response
-} from '@/models/requestOption'
+import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/models/requestOption'
 import type { AfterScript } from '@/types/component'
 
-class StaticRequestData implements RequestDataInstance {
+class StaticRequestData implements DataInstance {
   public data?: any
 
   constructor({ data }: { data: string }) {
@@ -19,7 +13,7 @@ class StaticRequestData implements RequestDataInstance {
       options: {
         data: this.data
       },
-      type: DataType.STATIC
+      type: 'STATIC'
     }
   }
 

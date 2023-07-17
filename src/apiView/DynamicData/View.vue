@@ -1,5 +1,5 @@
 <template>
-  <n-form-item label="动态数据" label-placement="top">
+  <n-form-item label="动态数据" label-placement="top" size="small">
     <n-input-group>
       <n-input v-model:value="formData.url" style="flex: 1" readonly>
         <template #prefix>
@@ -58,18 +58,16 @@ import {
 } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
-
-import { DataType } from '../const'
 import { RequestMethod } from '../content/requestEnums'
 import Rest from '../content/rest/Rest.vue'
-import type { RestOption, StoreRestOption } from '../type'
+import type { RestOption, Slotter, StoreRestOption } from '../type'
 import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: Slotter
+  index?: number
 }>()
 const slots = useSlots()
 const isShow = ref<boolean>(false)
@@ -97,20 +95,27 @@ const changeHandler = () => {
 
 const setDataConfig = () => {
   const dataConfig = {
-    type: DataType.REST,
-    requestConfig: new DataHandler(requestOptionsToStore(formData))
+    type: 'REST',
+    dataInstance: new DataHandler(requestOptionsToStore(formData))
   }
-  props.curComponent.changeRequestDataConfig(dataConfig)
+  if (props.slotter) {
+    props.slotter.changeDataConfig(dataConfig)
+  }
 }
 
 onMounted(async () => {
-  initData()
+  if (props.slotter) {
+    initComponentData()
+  }
 })
 
-const initData = () => {
-  const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.REST) {
-    const restRequest = props.curComponent.dataConfig?.requestConfig as RestRequestData
+const initComponentData = () => {
+  const dataConfig = props.slotter!.dataConfig
+  if (dataConfig && dataConfig.type === 'REST') {
+    const restRequest = props.slotter!.dataConfig?.dataInstance as RestRequestData
+    if (!restRequest) {
+      return
+    }
     const { options } = restRequest.toJSON()
     Object.assign(formData, storeOptionToRequestOptions(options as StoreRestOption))
   } else {
@@ -130,10 +135,10 @@ const initData = () => {
 }
 
 watch(
-  () => props.curComponent,
-  async (value: CustomComponent) => {
+  () => props.slotter,
+  async (value: Slotter | undefined) => {
     if (value) {
-      initData()
+      initComponentData()
     }
   },
   { immediate: true }

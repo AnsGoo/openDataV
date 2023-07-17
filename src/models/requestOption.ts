@@ -15,9 +15,9 @@ export interface DemoData<T = any> {
 }
 
 export type DataAcceptor = (result: any, id?: string) => void
-interface RequestDataInstance {
+interface DataInstance {
   toJSON: () => any | undefined
   connect: (dataAcceptor: DataAcceptor) => void
   close?: () => void
 }
-export { RequestDataInstance }
+export { DataInstance }

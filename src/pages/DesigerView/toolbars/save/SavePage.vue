@@ -68,7 +68,8 @@ const handleSubmit = async (type: string) => {
     name: name,
     thumbnail: thumbnail!,
     canvasData: canvasState.layoutData,
-    canvasStyle: canvasState.canvasStyleData
+    canvasStyle: canvasState.canvasStyleData,
+    dataSlotters: canvasState.dataSlotterData
   }
 
   if (type === 'update') {

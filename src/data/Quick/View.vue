@@ -30,13 +30,13 @@
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
+import type { Slotter } from '@/apiView/type'
 
 import DataHandler, { QUICK_TYPE } from './handler'
 import StaticContent from './Quick.vue'
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: Slotter
 }>()
 const isShow = ref<boolean>(false)
 
@@ -55,30 +55,30 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const dataConfig = props.curComponent.dataConfig
+  const dataConfig = props.slotter.dataConfig
   if (dataConfig && dataConfig.type === QUICK_TYPE) {
-    const staticRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
+    const staticRequest = props.slotter.dataConfig?.dataInstance as DataHandler
     const { options } = staticRequest.toJSON()
     formDataConfig.id = options.id
     formDataConfig.title = options.title!
   } else {
     const dataConfig = {
       type: QUICK_TYPE,
-      requestConfig: new DataHandler({
+      dataInstance: new DataHandler({
         id: formDataConfig.id
       })
     }
-    await props.curComponent.changeRequestDataConfig(dataConfig)
+    await props.slotter.changeDataConfig(dataConfig)
   }
 }
 const changeHandler = () => {
   const dataConfig = {
     type: QUICK_TYPE,
-    requestConfig: new DataHandler({
+    dataInstance: new DataHandler({
       id: formDataConfig.id
     })
   }
-  props.curComponent.changeRequestDataConfig(dataConfig)
+  props.slotter.changeDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (id: string, title: string) => {
@@ -88,9 +88,9 @@ const dataChangeHandler = (id: string, title: string) => {
 }
 
 watch(
-  () => props.curComponent,
+  () => props.slotter,
   async () => {
-    if (props.curComponent) {
+    if (props.slotter) {
       await initData()
     }
   },

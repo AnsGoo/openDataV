@@ -25,7 +25,7 @@
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, ref, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
+import type { Slotter } from '@/scripts/base'
 
 import ScriptHandler from './handler'
 import ScriptEditor from './ScriptsEditor.vue'
@@ -34,12 +34,12 @@ const isShow = ref<boolean>(false)
 const scriptRef = ref<string | undefined>(undefined)
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: Slotter
 }>()
 
 const initData = async () => {
-  if (props.curComponent.scriptConfig && props.curComponent.scriptConfig.type === 'Custom') {
-    const scriptConfig = props.curComponent.scriptConfig as ScriptHandler
+  if (props.slotter.scriptConfig && props.slotter.scriptConfig.type === 'Custom') {
+    const scriptConfig = props.slotter.scriptConfig as ScriptHandler
     scriptRef.value = scriptConfig.key
   } else {
     scriptRef.value = ''
@@ -52,9 +52,9 @@ const scriptChange = (script: string) => {
 }
 
 const setComponentScript = () => {
-  if (scriptRef.value && props.curComponent) {
+  if (scriptRef.value && props.slotter) {
     const scriptHandler = new ScriptHandler(scriptRef.value)
-    props.curComponent.afterCallbackChange(scriptHandler)
+    props.slotter.afterCallbackChange(scriptHandler)
   }
 }
 onMounted(async () => {
@@ -62,8 +62,8 @@ onMounted(async () => {
 })
 
 watch(
-  () => props.curComponent,
-  (value: CustomComponent) => {
+  () => props.slotter,
+  (value: Slotter) => {
     if (value) {
       initData()
     }

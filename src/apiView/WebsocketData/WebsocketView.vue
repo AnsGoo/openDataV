@@ -41,6 +41,7 @@ const props = withDefaults(
   defineProps<{
     options?: WebsocketOption
     mode?: 'debug' | 'use'
+    index?: number
   }>(),
   {
     options: () => {
@@ -66,22 +67,24 @@ const response = ref({
 })
 let wsInstance: WebSocket
 
-const connect = () => {
+const close = () => {
   if (wsInstance) {
     wsInstance.close()
   }
+}
+
+const connect = () => {
+  close()
   wsInstance = new WebSocket(formData.url)
   wsInstance.onopen = () => {
     Logger.info('wsOpen')
   }
-  const handlerData = (message) => {
+  wsInstance.onmessage = (message) => {
     response.value.data = message.data
   }
-
-  wsInstance.onmessage = handlerData
   wsInstance.onerror = (err) => {
     Logger.error(err)
-    wsInstance.close()
+    close()
   }
 }
 const send = () => {
@@ -92,14 +95,10 @@ const formChange = () => {
   emits('update:options', formData)
 }
 
-const close = () => {
-  wsInstance.close()
-}
-
 defineExpose({ close })
 
 onUnmounted(() => {
-  wsInstance.close()
+  close()
 })
 </script>
 

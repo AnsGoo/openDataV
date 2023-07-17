@@ -12,8 +12,8 @@ export const useData = (
     }
   })
   onUnmounted(() => {
-    if (component.dataConfig?.requestConfig.close) {
-      component.dataConfig?.requestConfig.close()
+    if (component.dataConfig?.dataInstance.close) {
+      component.dataConfig?.dataInstance.close()
     }
   })
 }

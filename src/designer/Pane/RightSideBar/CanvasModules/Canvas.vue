@@ -16,7 +16,7 @@ const canvasState = useCanvasState()
 const config = computed<Array<MetaContainerItem>>(() => canvasState.canvasStyleConfig.formItems!)
 const mode = computed<ContainerType>(() => canvasState.canvasStyleConfig.mode!)
 
-const formData = ref<Recordable>(canvasState.canvasGlobalData)
+const formData = ref<Recordable>(canvasState.globalOption)
 const changed = (keys: Array<string>, val: any) => {
   canvasState.setCanvasStyle(keys, val)
 }

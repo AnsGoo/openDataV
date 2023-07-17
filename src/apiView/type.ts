@@ -1,4 +1,6 @@
-import type { AxiosResponse, Method } from 'axios'
+import type { Method } from 'axios'
+
+import type { DataInstance } from '@/models/requestOption'
 
 export interface AfterScript {
   id?: string
@@ -56,10 +58,16 @@ export interface RequestResponse {
   headers?: Recordable<string>
   [key: string]: any
 }
-
-export declare type FinallyResponse<T> = AxiosResponse<T> & { afterData: any }
-
 export interface CallbackType {
   handler?: (resp: any, options: Recordable) => any
   error?: Error
+}
+
+export interface DataConfig {
+  type: string
+  dataInstance: DataInstance
+}
+export interface Slotter {
+  dataConfig: DataConfig
+  changeDataConfig: (config: DataConfig) => void
 }

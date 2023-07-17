@@ -10,3 +10,8 @@ export interface BaseScript {
   toJSON: () => ComponentScriptType | undefined
   afterCallback?: (data: any, propValue: Recordable) => any
 }
+
+export interface Slotter {
+  afterCallbackChange: (handler: BaseScript) => void
+  scriptConfig: BaseScript
+}

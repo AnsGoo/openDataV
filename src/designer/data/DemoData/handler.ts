@@ -1,6 +1,6 @@
-import type { DataAcceptor, RequestDataInstance, Response } from '@/models/requestOption'
+import type { DataAcceptor, DataInstance, Response } from '@/models/requestOption'
 
-class DemoRequestData implements RequestDataInstance {
+class DemoRequestData implements DataInstance {
   public data: any
 
   constructor({ data }: { data: any }) {

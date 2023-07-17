@@ -30,9 +30,8 @@
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
+import type { Slotter } from '@/apiView/type'
 
-import { DataType } from '../const'
 import StaticContent from '../content/static/View.vue'
 import type StaticRequestData from './handler'
 import DataHandler from './handler'
@@ -48,7 +47,7 @@ const StaticView = computed(() => {
 })
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: Slotter
 }>()
 const isShow = ref<boolean>(false)
 
@@ -63,29 +62,29 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const dataConfig = props.curComponent.dataConfig
-  if (dataConfig && dataConfig.type === DataType.STATIC) {
-    const staticRequest = props.curComponent.dataConfig?.requestConfig as StaticRequestData
+  const dataConfig = props.slotter.dataConfig
+  if (dataConfig && dataConfig.type === 'STATIC') {
+    const staticRequest = props.slotter.dataConfig?.dataInstance as StaticRequestData
     const { options } = staticRequest.toJSON()
     formDataConfig.data = JSON.stringify(options.data, null, '\t')
   } else {
     const dataConfig = {
-      type: DataType.STATIC,
-      requestConfig: new DataHandler({
+      type: 'STATIC',
+      dataInstance: new DataHandler({
         data: formDataConfig.data
       })
     }
-    await props.curComponent.changeRequestDataConfig(dataConfig)
+    await props.slotter.changeDataConfig(dataConfig)
   }
 }
 const changeHandler = () => {
   const dataConfig = {
-    type: DataType.STATIC,
-    requestConfig: new DataHandler({
+    type: 'STATIC',
+    dataInstance: new DataHandler({
       data: formDataConfig.data
     })
   }
-  props.curComponent.changeRequestDataConfig(dataConfig)
+  props.slotter.changeDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (data) => {
@@ -94,9 +93,9 @@ const dataChangeHandler = (data) => {
 }
 
 watch(
-  () => props.curComponent,
+  () => props.slotter,
   async () => {
-    if (props.curComponent) {
+    if (props.slotter) {
       await initData()
     }
   },

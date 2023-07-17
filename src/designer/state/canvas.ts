@@ -2,9 +2,12 @@ import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import type { LayoutData } from '@/api/pages'
+import { eventBus } from '@/bus'
+import { DataSlotter } from '@/designer/state/slotter'
 import { ContainerType, EditMode, FormType } from '@/enum'
 import PixelEnum from '@/enum/pixel'
 import type { CustomComponent } from '@/models'
+import type { DataInstance } from '@/models/requestOption'
 import { buildModeValue, updateModeValue } from '@/models/utils'
 import type { Position, Vector } from '@/types/common'
 import type {
@@ -18,7 +21,10 @@ import { message } from '@/utils/message'
 import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
 
 import { createComponent } from '../utils'
+import useDataState from './data'
 import useSnapShotState from './snapshot'
+
+const dataState = useDataState()
 
 const snapShotState = useSnapShotState()
 
@@ -102,6 +108,7 @@ class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
+    globalSlotters: {},
     scale: 1,
     canvasStyleConfig: {
       formItems: baseCanvasStyleConfig,
@@ -127,7 +134,11 @@ class CanvasState {
   get canvasStyleConfig(): CanvasStyleConfig {
     return this.state.canvasStyleConfig
   }
-  get canvasGlobalData() {
+
+  get globalSlotters() {
+    return this.state.globalSlotters
+  }
+  get globalOption() {
     return {
       basic: {
         width: this.canvasStyleData.width,
@@ -243,6 +254,22 @@ class CanvasState {
 
     if (data.canvasStyle) {
       this.canvasStyleData = data.canvasStyle
+    }
+    if (data.dataSlotters) {
+      const keys = Object.keys(this.globalSlotters)
+      keys.forEach((el) => {
+        this.remveDataSlotter(el)
+      })
+      data.dataSlotters.forEach((el) => {
+        const plugin = dataState.getPlugin(el.type)
+        if (plugin) {
+          const { options } = el.config!
+          const dataInstance = new plugin.handler(options)
+          this.appendDataSlotter(el.type, dataInstance)
+        } else {
+          console.log(`${el.type}插件不存在`)
+        }
+      })
     }
   }
   setCanvasStyle(keys: Array<string>, val: any) {
@@ -630,7 +657,9 @@ class CanvasState {
   saveComponentData() {
     window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
     new Promise((resolve) => {
-      resolve(snapShotState.saveSnapshot(this.layoutData, this.canvasStyleData))
+      resolve(
+        snapShotState.saveSnapshot(this.layoutData, this.canvasStyleData, this.dataSlotterData)
+      )
     })
   }
   cutComponent(index: number, parent: Optional<CustomComponent>): Optional<CustomComponent> {
@@ -739,6 +768,45 @@ class CanvasState {
       }
     }
     this.saveComponentData()
+  }
+
+  appendDataSlotter(dataType: string, dataInstance?: DataInstance) {
+    const acceptor = (result: any) => {
+      eventBus.emit('globalData', result)
+    }
+    const slotter = new DataSlotter({ type: dataType, acceptor, dataInstance })
+    this.globalSlotters[uuid()] = slotter
+  }
+
+  remveDataSlotter(id: string) {
+    const slotter = this.globalSlotters[id]
+    if (!slotter) {
+      return
+    }
+    if (slotter.dataInstance && slotter.dataInstance.close) {
+      slotter.dataInstance.close
+    }
+    delete this.state.globalSlotters[id]
+  }
+  getDataSlotter(id: string) {
+    return this.globalSlotters[id]
+  }
+
+  get dataSlotterData() {
+    const keys = Object.keys(this.globalSlotters)
+
+    const dataSlotters: Array<{ type: string; config: any }> = []
+    keys.forEach((el) => {
+      const slotter = this.getDataSlotter(el)
+      if (!slotter) {
+        return
+      }
+      dataSlotters.push({
+        type: slotter.type,
+        config: slotter.dataInstance ? slotter.dataInstance.toJSON() : undefined
+      })
+    })
+    return dataSlotters
   }
 }
 

@@ -1,3 +1,4 @@
+import type { DataSlotter } from '@/designer/state/slotter'
 import type { ContainerType, EditMode } from '@/enum'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
@@ -30,8 +31,8 @@ export interface EditData {
   benchmarkComponent: Optional<CustomComponent>
   scale: number
   canvasStyleConfig: CanvasStyleConfig
+  globalSlotters: Recordable<DataSlotter>
 }
-
 export interface MenuStatus {
   menuTop: number
   menuLeft: number
