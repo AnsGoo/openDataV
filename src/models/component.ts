@@ -324,7 +324,7 @@ export abstract class CustomComponent {
       this.positionStyle[propKeys[1]] = changeValue
     }
     this.styleIsChange = true
-    const curObj = getObjProp(this.styleFormValue, propKeys, 0, false) as MetaForm
+    const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
     const objProps = curObj && (curObj.props || curObj.componentOptions)
     if (objProps) {
       objProps.defaultValue = value
