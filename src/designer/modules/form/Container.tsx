@@ -24,6 +24,11 @@ export default defineComponent({
       type: String as PropType<ContainerType>,
       required: false,
       defalut: ContainerType.COLLAPSE
+    },
+    flat: {
+      type: Boolean as PropType<boolean>,
+      required: false,
+      defalut: false
     }
   },
   emits: ['change', 'update:data'],
@@ -46,10 +51,12 @@ export default defineComponent({
     }
 
     const renderForm = (el: MetaContainerItem) => {
-      return formData.value[el.prop] ? (
+      const modeValue = props.flat ? formData.value : formData.value[el.prop]
+      const children = (el.children || []) as Array<MetaForm>
+      return modeValue ? (
         <FormAttr
-          children={(el.children || []) as Array<MetaForm>}
-          data={formData.value[el.prop]}
+          children={children}
+          data={modeValue}
           name={el.label}
           uid={el.prop}
           ukey={el.prop}
