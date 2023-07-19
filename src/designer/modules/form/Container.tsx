@@ -1,13 +1,4 @@
-import {
-  NCard,
-  NCollapse,
-  NCollapseItem,
-  NDivider,
-  NTabPane,
-  NTabs,
-  NTimeline,
-  NTimelineItem
-} from 'naive-ui'
+import { NCard, NCollapse, NCollapseItem, NDivider, NTimeline, NTimelineItem } from 'naive-ui'
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 
@@ -83,24 +74,12 @@ export default defineComponent({
               })}
             </NCollapse>
           )
-        case ContainerType.TABS:
-          return (
-            <NTabs type="line">
-              {containerItems.map((el) => {
-                return (
-                  <NTabPane key={el.prop} tab={el.label} name={el.prop}>
-                    {renderForm(el)}
-                  </NTabPane>
-                )
-              })}
-            </NTabs>
-          )
         case ContainerType.CARD:
           return (
             <>
               {containerItems.map((el) => {
                 return (
-                  <NCard title={el.label} size="small">
+                  <NCard title={el.label} size="small" style={{ marginBottom: '0.25rem' }}>
                     {renderForm(el)}
                   </NCard>
                 )
@@ -109,7 +88,7 @@ export default defineComponent({
           )
         case ContainerType.FORM:
           return (
-            <>
+            <div style={{ padding: '0 1rem' }}>
               {containerItems.map((el) => {
                 return (
                   <>
@@ -123,7 +102,7 @@ export default defineComponent({
                   </>
                 )
               })}
-            </>
+            </div>
           )
         case ContainerType.TIMELINE:
           return (

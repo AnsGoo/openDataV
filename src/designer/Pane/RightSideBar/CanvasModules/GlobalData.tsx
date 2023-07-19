@@ -11,8 +11,6 @@ import {
   NFormItem,
   NInputGroup,
   NSelect,
-  NTabPane,
-  NTabs,
   NTimeline,
   NTimelineItem
 } from 'naive-ui'
@@ -66,6 +64,7 @@ export default defineComponent({
     })
     const renderContainer = (dataType: string, id: string, index: number) => {
       const mode = canvasState.canvasStyleConfig.mode as ContainerType
+      // let mode = ContainerType.TIMELINE
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
@@ -75,30 +74,26 @@ export default defineComponent({
               </NCollapseItem>
             </NCollapse>
           )
-        case ContainerType.TABS:
-          return (
-            <NTabs type="line">
-              <NTabPane tab={`全局数据${index + 1}`} name="dataType">
-                {renderDataComponent(dataType, id)}
-              </NTabPane>
-            </NTabs>
-          )
         case ContainerType.CARD:
           return (
             <>
-              <NCard title={`全局数据${index + 1}`} size="small">
+              <NCard
+                title={`全局数据${index + 1}`}
+                size="small"
+                style={{ marginBottom: '0.25rem' }}
+              >
                 {renderDataComponent(dataType, id)}
               </NCard>
             </>
           )
         case ContainerType.FORM:
           return (
-            <>
+            <div style={{ padding: '0 1rem' }}>
               <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {`全局数据${index + 1}`}
               </NDivider>
               {renderDataComponent(dataType, id)}
-            </>
+            </div>
           )
         case ContainerType.TIMELINE:
           return (
@@ -142,30 +137,22 @@ export default defineComponent({
               </NCollapseItem>
             </NCollapse>
           )
-        case ContainerType.TABS:
-          return (
-            <NTabs type="line">
-              <NTabPane tab="添加数据" name="dataType">
-                {renderDataSelect()}
-              </NTabPane>
-            </NTabs>
-          )
         case ContainerType.CARD:
           return (
             <>
-              <NCard title="添加数据" size="small">
+              <NCard title="添加数据" size="small" style={{ marginBottom: '0.25rem' }}>
                 {renderDataSelect()}
               </NCard>
             </>
           )
         case ContainerType.FORM:
           return (
-            <>
+            <div style={{ padding: '0 1rem' }}>
               <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {'添加数据'}
               </NDivider>
               {renderDataSelect()}
-            </>
+            </div>
           )
         case ContainerType.TIMELINE:
           return (

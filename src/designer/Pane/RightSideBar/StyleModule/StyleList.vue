@@ -1,24 +1,22 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
-  <div class="attr-list">
-    <n-collapse accordion>
-      <n-collapse-item
-        v-for="{ label, prop, children } in styleKeys"
-        :key="`${curComponent.id}${prop}`"
-        :title="label"
-        :name="prop"
-      >
-        <FormAttr
-          :children="children"
-          :data="formData"
-          :name="label"
-          :uid="prop"
-          :ukey="curComponent.id"
-          @change="changed"
-        />
-      </n-collapse-item>
-    </n-collapse>
-  </div>
+  <n-collapse accordion>
+    <n-collapse-item
+      v-for="{ label, prop, children } in styleKeys"
+      :key="`${curComponent.id}${prop}`"
+      :title="label"
+      :name="prop"
+    >
+      <FormAttr
+        :children="children"
+        :data="formData"
+        :name="label"
+        :uid="prop"
+        :ukey="curComponent.id"
+        @change="changed"
+      />
+    </n-collapse-item>
+  </n-collapse>
 </template>
 
 <script setup lang="ts">
@@ -85,12 +83,3 @@ watch(
   { deep: true }
 )
 </script>
-
-<style scoped>
-.attr-list {
-  @apply overflow-auto p-1 pt-0 h-full;
-
-  backdrop-filter: blur(50px);
-  margin-right: 10px;
-}
-</style>

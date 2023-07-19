@@ -19,7 +19,7 @@ const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const canvasState = useCanvasState()
-const mode = computed<ContainerType>(() => props.curComponent.defaultViewType.style)
+const mode = computed<ContainerType>(() => props.curComponent.defaultViewType)
 
 const formData = ref<ComponentStyle>({ ...props.curComponent.style })
 const styleKeys = computed<Array<MetaContainerItem>>(() => {
