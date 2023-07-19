@@ -324,14 +324,13 @@ export abstract class CustomComponent {
       this.positionStyle[propKeys[1]] = changeValue
     }
     this.styleIsChange = true
-    const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
-    const objProps = curObj.props || curObj.componentOptions
+    const curObj = getObjProp(this.styleFormValue, propKeys, 0, false) as MetaForm
+    const objProps = curObj && (curObj.props || curObj.componentOptions)
     if (objProps) {
       objProps.defaultValue = value
     }
-    if (this.callbackStyle) this.callbackStyle(propKeys, value)
 
-    // this.extraStyle[prop] = value
+    if (this.callbackStyle) this.callbackStyle(propKeys, value)
   }
 
   changeStyleCallback(callback: (propKeys: Array<string>, value: any) => void) {

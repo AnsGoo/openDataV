@@ -352,6 +352,9 @@ export const stylePropToCss = (key: string, value: any): Recordable => {
             backgroundImage: `linear-gradient(${value.angle}deg, ${value.color1}, ${value.color2})`
           }
         : {}
+    case 'background': {
+      return backgroundToCss(value)
+    }
     default:
       return { [key]: value }
   }
