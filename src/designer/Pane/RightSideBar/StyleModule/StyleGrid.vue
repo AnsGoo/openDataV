@@ -48,9 +48,7 @@ watch(
   () => props.curComponent.id,
   () => {
     if (props.curComponent && props.curComponent.id) {
-      console.log(props.curComponent.style)
       formData.value = cloneDeep(props.curComponent.style)
-      console.log(formData.value)
     }
   },
   { immediate: true, deep: true }
