@@ -10,10 +10,6 @@ export interface RequestOptions<T = RequestOption> {
   type: string
 }
 
-export interface DemoData<T = any> {
-  data: T
-}
-
 export type DataAcceptor = (result: any, id?: string) => void
 interface DataInstance {
   toJSON: () => any | undefined

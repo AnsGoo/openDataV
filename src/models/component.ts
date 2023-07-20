@@ -4,7 +4,6 @@ import { h } from 'vue'
 import type { ComponentGroup } from '@/enum'
 import { ContainerType, FormType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
-import type { BaseScript } from '@/scripts/base'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -15,7 +14,7 @@ import type {
   MetaForm
 } from '@/types/component'
 
-import type { DataInstance, Response } from './requestOption'
+import type { BaseScript, DataInstance, Response } from './type'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
