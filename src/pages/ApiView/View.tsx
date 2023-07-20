@@ -1,7 +1,7 @@
 import { defineComponent } from 'vue'
 
-import Rest from '@/apiView/content/rest'
-import Static from '@/apiView/content/static'
+import Rest from '@/apiView/rest/Rest.vue'
+import Static from '@/apiView/static/DataView.vue'
 
 export default defineComponent({
   props: {

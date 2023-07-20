@@ -32,7 +32,7 @@ import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { Slotter } from '@/apiView/type'
 
-import StaticContent from '../content/static/View.vue'
+import StaticContent from './DataView.vue'
 import type StaticRequestData from './handler'
 import DataHandler from './handler'
 

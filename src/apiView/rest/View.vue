@@ -58,12 +58,13 @@ import {
 } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import { RequestMethod } from '../content/requestEnums'
-import Rest from '../content/rest/Rest.vue'
 import type { RestOption, Slotter, StoreRestOption } from '../type'
-import { requestOptionsToStore, storeOptionToRequestOptions, uuid } from '../utils'
+import { uuid } from '../utils'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
+import { RequestMethod } from './requestEnums'
+import Rest from './Rest.vue'
+import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
 
 const props = defineProps<{
   slotter: Slotter

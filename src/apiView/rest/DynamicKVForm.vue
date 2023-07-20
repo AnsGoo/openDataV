@@ -50,7 +50,7 @@
 import { NButton, NDivider, NInput, NInputGroup } from 'naive-ui'
 import { ref, watch } from 'vue'
 
-import { uuid } from '../../utils'
+import { uuid } from '../utils'
 import type { KV } from './type'
 
 const props = withDefaults(defineProps<{ value: Array<KV>; title: string; options?: string[] }>(), {

@@ -39,7 +39,7 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
-import StaticContent from '@/apiView/content/static/View.vue'
+import StaticContent from '@/apiView/static/DataView.vue'
 import type { StoreStaticOption } from '@/apiView/type'
 import { StaticKey, useEventBus } from '@/bus'
 import { message } from '@/utils/message'
