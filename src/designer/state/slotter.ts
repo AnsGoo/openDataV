@@ -1,5 +1,5 @@
 import type { DataConfig } from '@/apiView/type'
-import type { DataAcceptor } from '@/models/requestOption'
+import type { DataAcceptor } from '@/models/type'
 
 interface DataInstance {
   toJSON: () => any | undefined

@@ -3,7 +3,6 @@
     :title="formData.title"
     :options="staticDataOptions"
     :mode="mode"
-    @script-change="scriptChangeHandler"
     @save="handleSaveOrUpdate"
   >
     <template #data-select>
@@ -40,10 +39,11 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
-import StaticContent from '@/apiView/content/static/View.vue'
-import type { AfterScript, StoreStaticOption } from '@/apiView/type'
+import StaticContent from '@/apiView/static/DataView.vue'
 import { StaticKey, useEventBus } from '@/bus'
 import { message } from '@/utils/message'
+
+import type { StoreStaticOption } from './type'
 
 const Logger = console
 const staticDataList = ref<Array<SelectOption>>([])
@@ -104,7 +104,6 @@ const formData = reactive<{
 
 const emits = defineEmits<{
   (e: 'dataChange', id: string, title: string): void
-  (e: 'scriptChange', script: AfterScript): void
 }>()
 
 const clear = () => {
@@ -125,10 +124,6 @@ const dataChangeHandler = async (id: string) => {
     formData.originData = ''
   }
   emits('dataChange', formData.id!, formData.title)
-}
-
-const scriptChangeHandler = (script: AfterScript) => {
-  emits('scriptChange', script)
 }
 
 const loadStaticData = async (id: string): Promise<StaticDataDetail | undefined> => {

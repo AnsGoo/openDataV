@@ -1,4 +1,4 @@
-export interface ComponentScriptType {
+export interface ScriptOption {
   type: string
   key: string
   [extra: string]: any
@@ -7,7 +7,7 @@ export interface ComponentScriptType {
 export interface BaseScript {
   type: string
   key: string
-  toJSON: () => ComponentScriptType | undefined
+  toJSON: () => ScriptOption | undefined
   afterCallback?: (data: any, propValue: Recordable) => any
 }
 

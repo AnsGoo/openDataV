@@ -76,11 +76,12 @@ import {
 } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import { useRequest } from '../../hooks/http'
-import type { RequestResponse, RestOption } from '../../type'
-import { requestOptionsToStore, uuid } from '../../utils'
-import { RequestHeaderEnum, RequestMethod } from '../requestEnums'
+import { useRequest } from '../hooks/http'
+import { uuid } from '../utils'
 import DynamicKVForm from './DynamicKVForm.vue'
+import { RequestHeaderEnum, RequestMethod } from './requestEnums'
+import type { RequestResponse, RestOption } from './type'
+import { requestOptionsToStore } from './utils'
 
 const props = withDefaults(
   defineProps<{

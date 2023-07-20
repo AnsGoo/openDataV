@@ -3,7 +3,8 @@ import type { ContainerType, EditMode } from '@/enum'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
 import type { MetaContainerItem } from '@/types/component'
-import type { StoreComponentData } from '@/utils/db'
+
+import type { StoreComponentData } from '../designer/db'
 
 export interface CanvasStyleData {
   width: number

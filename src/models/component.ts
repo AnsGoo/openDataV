@@ -3,8 +3,7 @@ import { h } from 'vue'
 
 import type { ComponentGroup } from '@/enum'
 import { ContainerType, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
-import type { BaseScript } from '@/scripts/base'
+import { DataMode } from '@/enum/data'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -15,7 +14,7 @@ import type {
   MetaForm
 } from '@/types/component'
 
-import type { DataInstance, Response } from './requestOption'
+import type { BaseScript, DataInstance, Response } from './type'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
@@ -34,7 +33,7 @@ export abstract class CustomComponent {
   display = true
   show = true
   active = false
-  dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
+  dataMode: DataMode = DataMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
   callbackData?: (result: any, type?: string) => void
@@ -77,7 +76,7 @@ export abstract class CustomComponent {
     }
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
-    this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
+    this.dataMode = detail.dataMode || DataMode.SELF
   }
 
   get propFromValue(): MetaContainerItem[] {
@@ -238,7 +237,7 @@ export abstract class CustomComponent {
       propValue: this.propValue,
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataIntegrationMode: this.dataIntegrationMode,
+      dataMode: this.dataMode,
       script: this.scriptConfig?.toJSON()
     }
     if (this.dataConfig) {

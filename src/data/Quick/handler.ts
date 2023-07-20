@@ -1,34 +1,22 @@
-import { cloneDeep } from 'lodash-es'
-
 import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/models/requestOption'
-import type { StoreStaticOption } from '@/models/type'
-import type { AfterScript } from '@/types/component'
-import type { CallbackType } from '@/utils/data'
-import { makeFunction } from '@/utils/data'
+import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/apiView/type'
+
+import type { StoreStaticOption } from './type'
 
 const QUICK_TYPE = 'QUICK'
 class QuickRequestData implements DataInstance {
   public id?: string
-  public afterScript?: AfterScript
   public title?: string
-  public callback?: CallbackType
 
-  constructor({ id, script }: { id: string | undefined; script?: AfterScript }) {
+  constructor({ id }: { id: string | undefined }) {
     this.id = id
-    this.afterScript = script
-    this.callback =
-      this.afterScript && this.afterScript.code
-        ? makeFunction(this.afterScript.type, this.afterScript.code, ['resp', 'options'], false)
-        : undefined
   }
 
   public toJSON(): RequestOptions<StoreStaticOption> {
     return {
       options: {
         id: this.id || '',
-        script: cloneDeep(this.afterScript),
         title: this.title
       },
       type: 'STATIC'

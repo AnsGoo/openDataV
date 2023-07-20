@@ -1,7 +1,7 @@
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
 import type { ComponentGroup, ContainerType, FormType } from '@/enum'
-import type { DataIntegrationMode, DataType, RequestOptions } from '@/models/requestOption'
+import type { DataMode, DataType, RequestOptions } from '@/models/type'
 import type { CanvasStyleData } from '@/types/storeTypes'
 
 export interface GroupStyle {
@@ -143,13 +143,13 @@ export interface ComponentData {
   dataSlotters: Array<{ type: string; config: any }>
 }
 
-export interface ComponentRequestDataType {
+export interface DataOption {
   type: DataType
   otherConfig?: Recordable
   requestOptions: RequestOptions
 }
 
-export interface ComponentScriptType {
+export interface ScriptOption {
   type: string
   key: string
   [extra: string]: any
@@ -163,9 +163,9 @@ export interface ComponentDataType {
   style: Record<string, string | number | boolean>
   propValue: Record<string, any>
   subComponents?: ComponentDataType[]
-  data?: ComponentRequestDataType
-  dataIntegrationMode: DataIntegrationMode
-  script?: ComponentScriptType
+  data?: DataOption
+  dataMode: DataMode
+  script?: ScriptOption
 }
 
 export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
@@ -173,12 +173,11 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   id?: string
   width?: number
   height?: number
-  dataIntegrationMode?: DataIntegrationMode
+  dataMode?: DataMode
 }
 
 export interface AfterScript {
   code: string
-  type: string
 }
 
 export interface ComponentItem {

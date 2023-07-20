@@ -7,7 +7,7 @@ import { DataSlotter } from '@/designer/state/slotter'
 import { ContainerType, EditMode, FormType } from '@/enum'
 import PixelEnum from '@/enum/pixel'
 import type { CustomComponent } from '@/models'
-import type { DataInstance } from '@/models/requestOption'
+import type { DataInstance } from '@/models/type'
 import { buildModeValue, updateModeValue } from '@/models/utils'
 import type { Position, Vector } from '@/types/common'
 import type {
@@ -18,9 +18,16 @@ import type {
 } from '@/types/component'
 import type { CanvasStyleConfig, CanvasStyleData, EditData } from '@/types/storeTypes'
 import { message } from '@/utils/message'
-import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
 
-import { createComponent } from '../utils'
+import {
+  calcComponentsRect,
+  createComponent,
+  mod360,
+  rotatePoint,
+  swap,
+  toPercent,
+  uuid
+} from '../utils'
 import useDataState from './data'
 import useSnapShotState from './snapshot'
 

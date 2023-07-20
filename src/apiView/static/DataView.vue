@@ -18,7 +18,6 @@
 import { NCard } from 'naive-ui'
 import { computed, ref } from 'vue'
 
-import type { AfterScript } from '../../type'
 import StaticDataView from './StaticDataView.vue'
 
 const props = withDefaults(
@@ -41,7 +40,7 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<{
-  (e: 'update:options', value: { script?: AfterScript; data: string }): void
+  (e: 'update:options', value: { data: string }): void
   (e: 'dataChange', value: string): void
 }>()
 

@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataInstance, Response } from '@/models/requestOption'
+import type { DataAcceptor, DataInstance, Response } from '@/models/type'
 
 class DemoRequestData implements DataInstance {
   public data: any

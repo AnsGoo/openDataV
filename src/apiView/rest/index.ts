@@ -1,8 +1,8 @@
 import { shallowRef } from 'vue'
 
-import { RequestMethod } from '../content/requestEnums'
 import { uuid } from '../utils'
 import handler from './handler'
+import { RequestMethod } from './requestEnums'
 import Rest from './View.vue'
 
 export default {

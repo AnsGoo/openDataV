@@ -1,8 +1,8 @@
 import { reactive } from 'vue'
 
-import StaticDataPlugin from '@/apiView/StaticData'
-import SubDataPlugin from '@/apiView/SubData'
-import WebsocketDataPlugin from '@/apiView/WebsocketData'
+import StaticDataPlugin from '@/apiView/static'
+import SubDataPlugin from '@/apiView/sub'
+import WebsocketDataPlugin from '@/apiView/websocket'
 import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
 import DemoDataPlugin from '@/designer/data/DemoData'

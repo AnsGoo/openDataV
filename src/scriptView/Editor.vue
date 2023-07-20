@@ -1,5 +1,5 @@
 <template>
-  <OCodeEditor ref="cm" v-model:value="form.code" @update:value="formChange">
+  <OCodeEditor ref="cm" v-model:value="form" @update:value="formChange">
     <template #tool-bar>
       <div>
         <div class="buttons">
@@ -19,26 +19,19 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 
 import type { CodemirrorOption } from '@/components/CodeEditor/type'
-import { ScriptType } from '@/enum'
-import type { AfterScript } from '@/types/component'
 
 const savedStatus = ref<boolean>(true)
 const props = withDefaults(
   defineProps<{
-    data: AfterScript
+    value: string
     config?: CodemirrorOption
     mode?: 'use' | 'debug'
   }>(),
   {
-    data: () => {
-      return {
-        code: '',
-        type: ScriptType.Javascript
-      }
-    },
+    data: '',
     config: () => {
       return {
         height: '600px',
@@ -53,14 +46,14 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<{
-  (e: 'update:data', value: AfterScript): void
-  (e: 'change', value: AfterScript): void
+  (e: 'update:value', value: string): void
+  (e: 'change', value: string): void
 }>()
 
-const form = reactive(props.data)
+const form = ref<string>(props.value)
 const formChange = () => {
-  emits('update:data', form)
-  emits('change', form)
+  emits('update:value', form.value)
+  emits('change', form.value)
 }
 
 const cm = ref<HTMLElement | null>(null) as any
@@ -78,11 +71,10 @@ const handleUndo = () => {
 }
 
 watch(
-  () => props.data,
+  () => props.value,
   () => {
-    if (props.data) {
-      form.code = props.data.code
-      form.type = props.data.type
+    if (props.value) {
+      form.value = props.value
     }
   }
 )

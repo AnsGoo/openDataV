@@ -36,18 +36,13 @@ import {
   updateRestDataApi
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
-import { RequestMethod } from '@/apiView/content/requestEnums'
-import Rest from '@/apiView/content/rest/Rest.vue'
 import { useRequest } from '@/apiView/hooks/http'
 import useDataSnapShot from '@/apiView/hooks/snapshot'
-import type { RequestResponse, RestOption } from '@/apiView/type'
-import {
-  KVToRecordable,
-  Logger,
-  recordabletoKV,
-  requestOptionsToStore,
-  uuid
-} from '@/apiView/utils'
+import { RequestMethod } from '@/apiView/rest/requestEnums'
+import Rest from '@/apiView/rest/Rest.vue'
+import type { RequestResponse, RestOption } from '@/apiView/rest/type'
+import { KVToRecordable, recordabletoKV, requestOptionsToStore } from '@/apiView/rest/utils'
+import { Logger, uuid } from '@/apiView/utils'
 import { StaticKey, useEventBus } from '@/bus'
 
 const getEmptyParams = () => {

@@ -24,7 +24,8 @@ import { eventBus, StaticKey } from '@/bus'
 import useCanvasState from '@/designer/state/canvas'
 import type { CustomComponent } from '@/models'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { diffIndex } from '@/utils/utils'
+
+import { diffIndex } from '../../../utils'
 
 const props = withDefaults(
   defineProps<{

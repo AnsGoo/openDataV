@@ -1,5 +1,4 @@
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/models/requestOption'
-import type { AfterScript } from '@/types/component'
+import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/apiView/type'
 
 class StaticRequestData implements DataInstance {
   public data?: any
@@ -8,7 +7,7 @@ class StaticRequestData implements DataInstance {
     this.data = data
   }
 
-  public toJSON(): RequestOptions<{ data: string; script?: AfterScript }> {
+  public toJSON(): RequestOptions<{ data: string }> {
     return {
       options: {
         data: this.data
