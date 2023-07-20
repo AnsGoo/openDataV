@@ -9,8 +9,6 @@ import {
   NForm,
   NFormItem,
   NSelect,
-  NTabPane,
-  NTabs,
   NTimeline,
   NTimelineItem
 } from 'naive-ui'
@@ -124,7 +122,7 @@ export default defineComponent({
       )
     }
     const renderContainer = () => {
-      const mode = props.curComponent.defaultViewType.data as ContainerType
+      const mode = props.curComponent.defaultViewType as ContainerType
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
@@ -137,31 +135,20 @@ export default defineComponent({
               </NCollapseItem>
             </NCollapse>
           )
-        case ContainerType.TABS:
-          return (
-            <NTabs type="line">
-              <NTabPane tab="数据选择" name="dataType">
-                {renderData()}
-              </NTabPane>
-              <NTabPane tab="脚本配置" name="scriptOptions">
-                {renderScript()}
-              </NTabPane>
-            </NTabs>
-          )
         case ContainerType.CARD:
           return (
             <>
-              <NCard title="数据选择" size="small">
+              <NCard title="数据选择" size="small" style={{ marginBottom: '0.25rem' }}>
                 {renderData()}
               </NCard>
-              <NCard title="脚本配置" size="small">
+              <NCard title="脚本配置" size="small" style={{ marginBottom: '0.25rem' }}>
                 {renderScript()}
               </NCard>
             </>
           )
         case ContainerType.FORM:
           return (
-            <>
+            <div style={{ padding: '0 1rem' }}>
               <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {'数据选择'}
               </NDivider>
@@ -170,7 +157,7 @@ export default defineComponent({
                 {'脚本配置'}
               </NDivider>
               {renderScript()}
-            </>
+            </div>
           )
         case ContainerType.TIMELINE:
           return (

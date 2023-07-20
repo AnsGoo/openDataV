@@ -141,7 +141,6 @@ export enum FormType {
 }
 export enum ContainerType {
   FORM = 'Form',
-  TABS = 'Tabs',
   COLLAPSE = 'Collapse',
   CARD = 'Card',
   TIMELINE = 'Timeline'

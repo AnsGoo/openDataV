@@ -174,9 +174,6 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   width?: number
   height?: number
   dataIntegrationMode?: DataIntegrationMode
-  defaultViewType?: {
-    [T: 'propValue' | 'style' | 'data']: ContainerType
-  }
 }
 
 export interface AfterScript {

@@ -1,7 +1,5 @@
 <template>
-  <div class="attr-list">
-    <Container :config="config" :data="formData" :mode="mode" @change="changed" />
-  </div>
+  <Container :config="config" :data="formData" :mode="mode" @change="changed" />
 </template>
 import Container from '@/designer/modules/form/Container'
 <script setup lang="ts">
@@ -21,11 +19,3 @@ const changed = (keys: Array<string>, val: any) => {
   canvasState.setCanvasStyle(keys, val)
 }
 </script>
-
-<style scoped>
-.attr-list {
-  @apply overflow-auto p-1 pt-0 h-full;
-  backdrop-filter: blur(50px);
-  margin-right: 10px;
-}
-</style>

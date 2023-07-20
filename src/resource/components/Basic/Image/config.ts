@@ -19,7 +19,7 @@ class ImageComponent extends CustomComponent {
   _style: MetaContainerItem[] = [
     {
       label: '背景设置',
-      prop: 'background',
+      prop: 'back',
       children: [
         {
           prop: 'background',

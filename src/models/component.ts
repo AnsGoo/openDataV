@@ -43,11 +43,7 @@ export abstract class CustomComponent {
   // 检测变化
   propIsChange = true
   styleIsChange = true
-  defaultViewType = {
-    propValue: ContainerType.COLLAPSE,
-    style: ContainerType.COLLAPSE,
-    data: ContainerType.CARD
-  }
+  defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
   _prop: MetaContainerItem[] = []
@@ -82,7 +78,6 @@ export abstract class CustomComponent {
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
     this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
-    Object.assign(this.defaultViewType, detail.defaultViewType || {})
   }
 
   get propFromValue(): MetaContainerItem[] {
@@ -193,6 +188,10 @@ export abstract class CustomComponent {
       this.propIsChange = false
     }
     return this._propValue
+  }
+
+  setViewType(viewType: ContainerType) {
+    this.defaultViewType = viewType
   }
 
   get style(): ComponentStyle {
@@ -308,7 +307,11 @@ export abstract class CustomComponent {
     this.scriptConfig = scriptHandler
     if (this.dataConfig?.dataInstance && this.componentDataCallback) {
       this.callbackData = this.buildDataCallback()
-      this.dataConfig?.dataInstance.connect!(this.callbackData)
+      const { dataInstance } = this.dataConfig || {}
+      if (dataInstance && dataInstance.close) {
+        dataInstance.close()
+        dataInstance.connect!(this.callbackData)
+      }
     }
   }
 
@@ -322,13 +325,12 @@ export abstract class CustomComponent {
     }
     this.styleIsChange = true
     const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
-    const objProps = curObj.props || curObj.componentOptions
+    const objProps = curObj && (curObj.props || curObj.componentOptions)
     if (objProps) {
       objProps.defaultValue = value
     }
-    if (this.callbackStyle) this.callbackStyle(propKeys, value)
 
-    // this.extraStyle[prop] = value
+    if (this.callbackStyle) this.callbackStyle(propKeys, value)
   }
 
   changeStyleCallback(callback: (propKeys: Array<string>, value: any) => void) {
@@ -380,7 +382,11 @@ export abstract class CustomComponent {
   changeDataCallback(callback: (result: any, type?: string) => void) {
     this.componentDataCallback = callback
     this.callbackData = this.buildDataCallback()
-    this.dataConfig?.dataInstance.connect!(this.callbackData)
+    const { dataInstance } = this.dataConfig || {}
+    if (dataInstance && dataInstance.close) {
+      dataInstance.close()
+      dataInstance.connect!(this.callbackData)
+    }
   }
 
   buildDataCallback() {

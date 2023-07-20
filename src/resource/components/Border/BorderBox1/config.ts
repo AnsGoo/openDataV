@@ -1,4 +1,4 @@
-import { ComponentGroup, ContainerType, FormType } from '@/enum'
+import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
 import type { MetaContainerItem } from '@/types/component'
 
@@ -11,10 +11,7 @@ class BorderBoxComponent extends CustomComponent {
       name: name ? name : '1#边框',
       id,
       width: 200,
-      height: 200,
-      defaultViewType: {
-        propValue: ContainerType.CARD
-      }
+      height: 200
     })
   }
 

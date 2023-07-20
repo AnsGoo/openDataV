@@ -1,3 +1,3 @@
-import StyleList from './StyleList.vue'
+import StyleGrid from './StyleGrid.vue'
 
-export default StyleList
+export default StyleGrid

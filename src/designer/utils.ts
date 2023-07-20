@@ -1,6 +1,8 @@
 import { componentList } from '@/designer/load'
+import useCanvasState from '@/designer/state/canvas'
 import useDataState from '@/designer/state/data'
 import useScriptState from '@/designer/state/scripts'
+import { ContainerType } from '@/enum'
 import { DataIntegrationMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
@@ -65,6 +67,9 @@ export function createComponent(component: ComponentDataType): any {
       subObj.parent = obj
       obj.subComponents.push(subObj)
     })
+    const canvasState = useCanvasState()
+    const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
+    obj.setViewType(viewType)
     return obj
   }
 }

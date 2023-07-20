@@ -1,8 +1,6 @@
 <!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
-  <div class="attr-list">
-    <Container :config="styleKeys" :data="formData" :mode="mode" @change="changed" />
-  </div>
+  <Container :config="styleKeys" :data="formData" :mode="mode" :flat="true" @change="changed" />
 </template>
 
 <script setup lang="ts">
@@ -19,7 +17,8 @@ const props = defineProps<{
   curComponent: CustomComponent
 }>()
 const canvasState = useCanvasState()
-const mode = computed<ContainerType>(() => props.curComponent.defaultViewType.style)
+const mode = computed<ContainerType>(() => props.curComponent.defaultViewType)
+const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
 
 const formData = ref<ComponentStyle>({ ...props.curComponent.style })
 const styleKeys = computed<Array<MetaContainerItem>>(() => {
@@ -32,7 +31,6 @@ const styleKeys = computed<Array<MetaContainerItem>>(() => {
 // 样式页面改变，修改当前组件的样式：curComponent.style
 const changed = debounce((keys: Array<string>, val: any) => {
   if (props.curComponent) {
-    const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
     if (keys[0] === 'position' && locationKeys.includes(keys[1])) {
       const parentComponent = props.curComponent.parent
       // key as 'top' | 'left' | 'width' | 'height' | 'rotate'

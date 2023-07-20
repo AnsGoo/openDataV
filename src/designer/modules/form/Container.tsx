@@ -1,13 +1,4 @@
-import {
-  NCard,
-  NCollapse,
-  NCollapseItem,
-  NDivider,
-  NTabPane,
-  NTabs,
-  NTimeline,
-  NTimelineItem
-} from 'naive-ui'
+import { NCard, NCollapse, NCollapseItem, NDivider, NTimeline, NTimelineItem } from 'naive-ui'
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 
@@ -33,6 +24,11 @@ export default defineComponent({
       type: String as PropType<ContainerType>,
       required: false,
       defalut: ContainerType.COLLAPSE
+    },
+    flat: {
+      type: Boolean as PropType<boolean>,
+      required: false,
+      defalut: false
     }
   },
   emits: ['change', 'update:data'],
@@ -55,10 +51,12 @@ export default defineComponent({
     }
 
     const renderForm = (el: MetaContainerItem) => {
-      return formData.value[el.prop] ? (
+      const modeValue = props.flat ? formData.value : formData.value[el.prop]
+      const children = (el.children || []) as Array<MetaForm>
+      return modeValue ? (
         <FormAttr
-          children={(el.children || []) as Array<MetaForm>}
-          data={formData.value[el.prop]}
+          children={children}
+          data={modeValue}
           name={el.label}
           uid={el.prop}
           ukey={el.prop}
@@ -83,24 +81,12 @@ export default defineComponent({
               })}
             </NCollapse>
           )
-        case ContainerType.TABS:
-          return (
-            <NTabs type="line">
-              {containerItems.map((el) => {
-                return (
-                  <NTabPane key={el.prop} tab={el.label} name={el.prop}>
-                    {renderForm(el)}
-                  </NTabPane>
-                )
-              })}
-            </NTabs>
-          )
         case ContainerType.CARD:
           return (
             <>
               {containerItems.map((el) => {
                 return (
-                  <NCard title={el.label} size="small">
+                  <NCard title={el.label} size="small" style={{ marginBottom: '0.25rem' }}>
                     {renderForm(el)}
                   </NCard>
                 )
@@ -109,7 +95,7 @@ export default defineComponent({
           )
         case ContainerType.FORM:
           return (
-            <>
+            <div style={{ padding: '0 1rem' }}>
               {containerItems.map((el) => {
                 return (
                   <>
@@ -123,7 +109,7 @@ export default defineComponent({
                   </>
                 )
               })}
-            </>
+            </div>
           )
         case ContainerType.TIMELINE:
           return (
