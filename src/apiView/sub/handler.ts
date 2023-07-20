@@ -1,5 +1,5 @@
+import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/apiView/type'
 import { eventBus, useEventBus } from '@/bus'
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/models/requestOption'
 
 class SubRequestData implements DataInstance {
   public channel: string

@@ -2,8 +2,9 @@ import { cloneDeep } from 'lodash-es'
 
 import type { RequestInstance } from '@/apiView/hooks/http'
 import { useRequest } from '@/apiView/hooks/http'
-import type { DataAcceptor, DataInstance, Response } from '@/models/requestOption'
-import type { StoreRestOption } from '@/models/type'
+import type { DataAcceptor, DataInstance, Response } from '@/apiView/type'
+
+import type { StoreRestOption } from './type'
 
 class RestRequestData implements DataInstance {
   public options: StoreRestOption
