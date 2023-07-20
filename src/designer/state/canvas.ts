@@ -7,7 +7,7 @@ import { DataSlotter } from '@/designer/state/slotter'
 import { ContainerType, EditMode, FormType } from '@/enum'
 import PixelEnum from '@/enum/pixel'
 import type { CustomComponent } from '@/models'
-import type { DataInstance } from '@/models/requestOption'
+import type { DataInstance } from '@/models/type'
 import { buildModeValue, updateModeValue } from '@/models/utils'
 import type { Position, Vector } from '@/types/common'
 import type {
