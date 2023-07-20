@@ -1,7 +1,8 @@
 import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
-import type { StoreStaticOption } from '@/apiView/static/type'
 import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/apiView/type'
+
+import type { StoreStaticOption } from './type'
 
 const QUICK_TYPE = 'QUICK'
 class QuickRequestData implements DataInstance {
