@@ -1,4 +1,4 @@
-import type { ComponentScriptType } from '@/scripts/base'
+import type { ScriptOption } from '@/scripts/base'
 
 export interface RequestResponse<T> {
   status: 'SUCCESS' | 'FAILED'
@@ -20,6 +20,6 @@ export interface Response {
 export interface BaseScript {
   type: string
   key: string
-  toJSON: () => ComponentScriptType | undefined
+  toJSON: () => ScriptOption | undefined
   afterCallback?: (data: any, propValue: Recordable) => any
 }

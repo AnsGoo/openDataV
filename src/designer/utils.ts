@@ -8,18 +8,13 @@ import { ContainerType } from '@/enum'
 import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { Position, Vector } from '@/types/common'
-import type {
-  ComponentDataType,
-  ComponentRequestDataType,
-  ComponentScriptType,
-  DOMRectStyle
-} from '@/types/component'
+import type { ComponentDataType, DataOption, DOMRectStyle, ScriptOption } from '@/types/component'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
 }
 
-const buildDataHandler = (componentObj: CustomComponent, data?: ComponentRequestDataType) => {
+const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
   const dataState = useDataState()
   if (!(data && data.requestOptions)) {
     componentObj.loadDemoData()
@@ -42,7 +37,7 @@ const buildDataHandler = (componentObj: CustomComponent, data?: ComponentRequest
   componentObj.changeDataConfig(dataConfig)
 }
 
-const buildAfterCallback = (componentObj: CustomComponent, script?: ComponentScriptType) => {
+const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption) => {
   if (!script) {
     return
   }
