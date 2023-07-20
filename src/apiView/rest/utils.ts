@@ -1,7 +1,8 @@
 import { cloneDeep } from 'lodash-es'
 
-import type { KV, RestOption, StoreRestOption } from '@/apiView/type'
 import { uuid } from '@/apiView/utils'
+
+import type { KV, RestOption, StoreRestOption } from './type'
 
 export const KVToRecordable = (values: Array<KV>): Recordable => {
   const data = {}

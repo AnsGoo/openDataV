@@ -67,9 +67,10 @@ import {
 } from 'naive-ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { Slotter, WebsocketOption } from '../type'
+import type { Slotter } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
+import type { WebsocketOption } from './type'
 import WebsocketView from './WebsocketView.vue'
 
 const props = defineProps<{

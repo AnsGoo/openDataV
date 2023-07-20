@@ -34,8 +34,8 @@
 import { NButton, NButtonGroup, NCard, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
-import type { WebsocketOption } from '../type'
 import { Logger } from '../utils'
+import type { WebsocketOption } from './type'
 
 const props = withDefaults(
   defineProps<{

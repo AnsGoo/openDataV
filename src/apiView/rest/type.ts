@@ -25,3 +25,15 @@ export interface RequestResponse {
   headers?: Recordable<string>
   [key: string]: any
 }
+
+export interface RestOption {
+  method: Method
+  url: string
+  headers: Array<KV>
+  params: Array<KV>
+  data: Array<KV>
+  otherConfig: {
+    isRepeat: boolean
+    interval: number
+  }
+}
