@@ -58,10 +58,6 @@ export interface RequestResponse {
   headers?: Recordable<string>
   [key: string]: any
 }
-export interface CallbackType {
-  handler?: (resp: any, options: Recordable) => any
-  error?: Error
-}
 
 export interface DataConfig {
   type: string

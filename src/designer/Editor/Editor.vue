@@ -65,10 +65,16 @@ import { DataIntegrationMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import type { Position, Vector } from '@/types/common'
-import { backgroundToCss, filterStyle, getComponentShapeStyle, Logger, uuid } from '@/utils/utils'
 
 import { componentList } from '../load'
-import { createComponent } from '../utils'
+import {
+  backgroundToCss,
+  createComponent,
+  filterStyle,
+  getComponentShapeStyle,
+  Logger,
+  uuid
+} from '../utils'
 
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()

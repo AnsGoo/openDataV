@@ -18,7 +18,8 @@ import { StaticKey, useEventBus } from '@/bus'
 import useCanvasState from '@/designer/state/canvas'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
-import { calcComponentAxis } from '@/utils/utils'
+
+import { calcComponentAxis } from '../utils'
 
 const canvasState = useCanvasState()
 const linesRef = ref<Array<any>>([])

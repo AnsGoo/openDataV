@@ -2,14 +2,12 @@ import { cloneDeep } from 'lodash-es'
 
 import { Logger } from '@/apiView/utils'
 import type { DataAcceptor, DataInstance, Response } from '@/models/requestOption'
-import type { CallbackType } from '@/utils/data'
 
 import type { WebsocketOption } from '../type'
 
 class WebsocketData implements DataInstance {
   public options: WebsocketOption
   public wsInstance?: WebSocket
-  public callback?: CallbackType
   public timer: IntervalHandle = 0
   public acceptor?: DataAcceptor
   private retryCount = 0

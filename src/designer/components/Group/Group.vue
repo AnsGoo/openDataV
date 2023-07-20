@@ -41,10 +41,10 @@ import { computed, inject } from 'vue'
 import { channels, eventBus } from '@/bus'
 import type { CustomComponent } from '@/models'
 import type { HooksType } from '@/models/hooks/type'
-import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '@/utils/utils'
 
 import Shape from '../../Editor/Shape'
 import useCanvasState from '../../state/canvas'
+import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '../../utils'
 
 const props = defineProps<{
   component: CustomComponent

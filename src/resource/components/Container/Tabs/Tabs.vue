@@ -50,16 +50,16 @@ import Group from '@/designer/components/Group/Group.vue'
 import Shape from '@/designer/Editor/Shape'
 import { componentList } from '@/designer/load'
 import useCanvasState from '@/designer/state/canvas'
-import { DataIntegrationMode } from '@/enum/data'
-import type { CustomComponent } from '@/models'
-import { useProp } from '@/models/hooks'
 import {
   filterStyle,
   getComponentStyle,
   getInnerComponentShapeStyle,
   toPercent,
   uuid
-} from '@/utils/utils'
+} from '@/designer/utils'
+import { DataIntegrationMode } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
 
 import type TabsComponent from './config'
 import type { Tabs } from './type'

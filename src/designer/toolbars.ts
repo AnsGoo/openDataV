@@ -2,9 +2,10 @@ import useCanvasState from '@/designer/state/canvas'
 import useSnapShotState from '@/designer/state/snapshot'
 import type { ComponentDataType } from '@/types/component'
 import type { CanvasStyleData } from '@/types/storeTypes'
-import type { StoreComponentData } from '@/utils/db'
 import { message } from '@/utils/message'
-import { exportRaw, importRaw } from '@/utils/utils'
+
+import type { StoreComponentData } from './db'
+import { exportRaw, importRaw } from './utils'
 
 const snapShotState = useSnapShotState()
 // 状态管理

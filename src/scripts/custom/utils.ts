@@ -1,6 +1,4 @@
-import { ScriptType } from '@/enum'
-
-import type { CallbackType } from './type'
+import type { CallbackType } from '../type'
 
 /**
  * 创建函数
@@ -16,7 +14,7 @@ export function makeFunction(
   isDebug?: boolean
 ): CallbackType | undefined {
   switch (type) {
-    case ScriptType.Javascript:
+    case 'Javascript':
       return makeJavaScriptsFunction(code, args, isDebug)
   }
 }

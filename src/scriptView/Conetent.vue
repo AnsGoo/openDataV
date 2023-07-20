@@ -48,8 +48,8 @@ import {
 } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
 import { StaticKey, useEventBus } from '@/bus'
+import { makeFunction } from '@/scripts/custom/utils'
 import type { AfterScript } from '@/types/component'
-import { makeFunction } from '@/utils/data'
 import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 

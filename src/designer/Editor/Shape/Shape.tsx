@@ -9,9 +9,9 @@ import type { CustomComponent } from '@/models'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import type { Vector } from '@/types/common'
 import type { ComponentStyle } from '@/types/component'
-import { stretchedComponents } from '@/utils/component'
-import { copyText, Logger, mod360, throttleFrame } from '@/utils/utils'
 
+import { stretchedComponents } from '../../component'
+import { copyText, Logger, mod360, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
 
 export default defineComponent({

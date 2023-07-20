@@ -4,9 +4,13 @@ import { componentList } from '@/designer/load'
 import type { CustomComponent } from '@/models'
 import type { Position } from '@/types/common'
 import type { AreaData } from '@/types/storeTypes'
-import { calcComponentsRect, createGroupStyle, getComponentRealRect } from '@/utils/utils'
 
-import { getSelectComponents } from '../utils'
+import {
+  calcComponentsRect,
+  createGroupStyle,
+  getComponentRealRect,
+  getSelectComponents
+} from '../utils'
 import useCanvasState from './canvas'
 
 const canvasState = useCanvasState()
