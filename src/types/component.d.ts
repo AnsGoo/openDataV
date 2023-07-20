@@ -1,7 +1,7 @@
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
 import type { ComponentGroup, ContainerType, FormType } from '@/enum'
-import type { DataIntegrationMode, DataType, RequestOptions } from '@/models/requestOption'
+import type { DataMode, DataType, RequestOptions } from '@/models/requestOption'
 import type { CanvasStyleData } from '@/types/storeTypes'
 
 export interface GroupStyle {
@@ -164,7 +164,7 @@ export interface ComponentDataType {
   propValue: Record<string, any>
   subComponents?: ComponentDataType[]
   data?: ComponentRequestDataType
-  dataIntegrationMode: DataIntegrationMode
+  dataMode: DataMode
   script?: ComponentScriptType
 }
 
@@ -173,7 +173,7 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   id?: string
   width?: number
   height?: number
-  dataIntegrationMode?: DataIntegrationMode
+  dataMode?: DataMode
 }
 
 export interface AfterScript {

@@ -19,7 +19,7 @@ import useEmpty from '@/designer/modules/Empty'
 import useDataState from '@/designer/state/data'
 import useScriptState from '@/designer/state/scripts'
 import { ContainerType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 
 export default defineComponent({
@@ -173,7 +173,7 @@ export default defineComponent({
       }
     }
     return () =>
-      props.curComponent.dataIntegrationMode === DataIntegrationMode.UNIVERSAL ? (
+      props.curComponent.dataMode === DataMode.UNIVERSAL ? (
         renderContainer()
       ) : (
         <NDescriptions>

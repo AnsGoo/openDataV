@@ -12,7 +12,7 @@
 import { NSelect } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import { SYS_FONT_WEIGHT } from '@/enum/font'
+import { SYS_FONT_WEIGHT } from './enum'
 
 const props = withDefaults(
   defineProps<{

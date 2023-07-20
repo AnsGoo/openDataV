@@ -5,7 +5,7 @@ import useCanvasState from '@/designer/state/canvas'
 import useDataState from '@/designer/state/data'
 import useScriptState from '@/designer/state/scripts'
 import { ContainerType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { Position, Vector } from '@/types/common'
 import type {
@@ -62,9 +62,9 @@ export function createComponent(component: ComponentDataType): any {
     obj.groupStyle = component.groupStyle
     obj.setPropValue({ propValue: component.propValue })
     obj.setStyleValue({ style: component.style })
-    obj.dataIntegrationMode = component.dataIntegrationMode || DataIntegrationMode.SELF
+    obj.dataMode = component.dataMode || DataMode.SELF
     const data = component.data
-    if (obj.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+    if (obj.dataMode === DataMode.UNIVERSAL) {
       buildDataHandler(obj, data)
     }
     buildAfterCallback(obj, component.script)

@@ -61,7 +61,7 @@ import useActionState from '@/designer/state/actions'
 import useCanvasState from '@/designer/state/canvas'
 import useClipBoardState from '@/designer/state/clipBoard'
 import { EditMode } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 import type { Position, Vector } from '@/types/common'
@@ -237,7 +237,7 @@ const handleDrop = async (e) => {
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
     const component: CustomComponent = new componentList[componentName]()
-    if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+    if (component.dataMode === DataMode.UNIVERSAL) {
       component.loadDemoData()
     }
 

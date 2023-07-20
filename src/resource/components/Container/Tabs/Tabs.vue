@@ -57,7 +57,7 @@ import {
   toPercent,
   uuid
 } from '@/designer/utils'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import { useProp } from '@/models/hooks'
 
@@ -181,7 +181,7 @@ const handleDrop = async (e) => {
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
     const component: CustomComponent = new componentList[componentName]()
-    if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+    if (component.dataMode === DataMode.UNIVERSAL) {
       component.loadDemoData()
     }
     const { top, left } = document.querySelector('#editor')!.getBoundingClientRect()

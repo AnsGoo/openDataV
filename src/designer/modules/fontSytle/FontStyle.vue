@@ -12,7 +12,7 @@
 import { NSelect } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import { SYS_FONTS } from '@/enum/font'
+import { SYS_FONTS } from './enum'
 
 const props = withDefaults(
   defineProps<{

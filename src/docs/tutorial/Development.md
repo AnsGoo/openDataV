@@ -51,7 +51,7 @@
  * {width}: 组件初始化长度
  * {height}: 组件初始化高度
  * {icon? }: 组件图标
- * {dataIntegrationMode? }: 数据接入模式
+ * {DataMode? }: 数据接入模式
  */
 
 class StaticTextComponent extends CustomComponent {
@@ -64,7 +64,7 @@ class StaticTextComponent extends CustomComponent {
       width: 150,
       height: 20,
       icon,
-      dataIntegrationMode: DataIntegrationMode.SELF
+      dataMode: DataMode.SELF
     })
   }
 }
@@ -79,7 +79,7 @@ class StaticTextComponent extends CustomComponent {
 > - `width`: 组件初始化长度
 > - `height`: 组件初始化高度
 > - `icon? `: 组件图标
-> - `dataIntegrationMode? `: 数据接入模式
+> - `DataMode? `: 数据接入模式
 
 
 除过需要继承`CustomComponent` 抽象类外，还需要重新定义`_prop`和`_style`属性，
@@ -360,7 +360,7 @@ const { propValue } = useProp<StaticTextType>(props.component, propValueChange)
 
 ## 数据
 
-组件配置项对象在有一个`dataIntegrationMode` 数据接入模式的属性，他定义了组件可以从那里接入数据
+组件配置项对象在有一个`DataMode` 数据接入模式的属性，他定义了组件可以从那里接入数据
 
 接入模式分为三类：
 
