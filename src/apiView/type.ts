@@ -2,12 +2,6 @@ import type { Method } from 'axios'
 
 import type { DataInstance } from '@/models/requestOption'
 
-export interface AfterScript {
-  id?: string
-  code: string
-  type: string
-}
-
 export interface KV {
   key: string
   value: string

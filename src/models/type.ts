@@ -1,7 +1,5 @@
 import type { Method } from 'axios'
 
-import type { AfterScript } from '@/apiView/type'
-
 export interface RequestResponse<T> {
   status: 'SUCCESS' | 'FAILED'
   data: any
@@ -22,5 +20,4 @@ export interface StoreRestOption {
 export interface StoreStaticOption {
   id: string
   title?: string
-  script?: AfterScript
 }

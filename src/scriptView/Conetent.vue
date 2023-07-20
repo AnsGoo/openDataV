@@ -20,7 +20,7 @@
     <n-card>
       <n-tabs>
         <n-tab-pane name="脚本">
-          <Editor :data="formData" class="content" @update:data="scriptChangeHandler" />
+          <Editor :value="formData.code" class="content" @update:value="scriptChangeHandler" />
         </n-tab-pane>
         <n-tab-pane name="入参">
           <OCodeEditor v-model:value="params" @update:value="paramsChange" />
@@ -49,32 +49,27 @@ import {
 import type { AfterScriptDetail } from '@/api/data/type'
 import { StaticKey, useEventBus } from '@/bus'
 import { makeFunction } from '@/scripts/custom/utils'
-import type { AfterScript } from '@/types/component'
 import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
 import Editor from './Editor.vue'
 
 const formData = reactive<{
-  id?: string
+  id: string
   title: string
-  code: any
-  type: string
+  code: string
 }>({
   id: '',
-  title: '' || '',
-  code: '',
-  type: 'Javascript'
+  title: '',
+  code: ''
 })
-
 const params = ref<string>(JSON.stringify({}, null, '\t'))
 const paramsChange = (content: string) => {
   params.value = content
 }
 
-const scriptChangeHandler = async (script: AfterScript) => {
-  formData.code = script.code
-  formData.type = script.type
+const scriptChangeHandler = async (code: string) => {
+  formData.code = code
 }
 
 useEventBus(StaticKey.SRCIPT_KEY, async (id) => {
@@ -94,7 +89,7 @@ const run = () => {
       stdOut.value = err.message || err
     }
   } else {
-    stdOut.value = JSON.stringify(formData.code, null, '\t')
+    stdOut.value = JSON.stringify(params.value, null, '\t')
   }
 }
 
@@ -104,10 +99,8 @@ const loadAfterScript = async (id: string) => {
     if (resp.status === 200) {
       const data = resp.data
       formData.id = data.id
-      formData.id = data.id
       formData.title = data.name
       formData.code = data.code
-      formData.type = data.type
     }
   } catch (err: any) {
     Logger.log(err || err.message)
@@ -117,15 +110,13 @@ const handleSave = async () => {
   try {
     const resp = await createAfterScriptApi({
       code: formData.code,
-      name: formData.title || '未命名',
-      type: formData.type
+      name: formData.title || '未命名'
     })
     if (resp.status === 201) {
       const data = resp.data as AfterScriptDetail
       formData.id = data.id
       formData.title = data.name
       formData.code = data.code
-      formData.type = data.type
       Logger.info('数据保存成功')
     } else {
       message.warning('数据保存失败')
@@ -135,11 +126,13 @@ const handleSave = async () => {
   }
 }
 const handleUpdate = async () => {
+  if (!formData.id) {
+    return
+  }
   try {
-    const resp = await updateAfterScriptApi(formData.id!, {
+    const resp = await updateAfterScriptApi(formData.id, {
       code: formData.code,
-      name: formData.title || '未命名',
-      type: formData.type
+      name: formData.title || '未命名'
     })
     if (resp.status === 200) {
       Logger.info('数据更新成功')

@@ -178,7 +178,6 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
 
 export interface AfterScript {
   code: string
-  type: string
 }
 
 export interface ComponentItem {

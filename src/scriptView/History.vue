@@ -13,7 +13,7 @@
             <div class="rest-detail">
               <div>
                 <n-gradient-text type="success" style="font-weight: 800">
-                  {{ item.type === ScriptType.Javascript ? 'JS' : 'Py' }}
+                  {{ 'JS' }}
                 </n-gradient-text>
                 {{ item.name }}
               </div>
@@ -31,7 +31,6 @@ import { onMounted, ref } from 'vue'
 import { getAfterScriptListApi } from '@/api/data/afterScript'
 import type { AfterScriptDetail } from '@/api/data/type'
 import { eventBus, StaticKey } from '@/bus'
-import { ScriptType } from '@/enum'
 import { Logger } from '@/utils/utils'
 
 const dataList = ref<AfterScriptDetail[]>([])

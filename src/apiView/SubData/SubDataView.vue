@@ -15,8 +15,6 @@
 import { NCard, NForm, NFormItem, NInput } from 'naive-ui'
 import { ref } from 'vue'
 
-import type { AfterScript } from '../type'
-
 const props = withDefaults(
   defineProps<{
     options?: {
@@ -37,9 +35,8 @@ const props = withDefaults(
 )
 const channel = ref<string>(props.options.channel)
 const emits = defineEmits<{
-  (e: 'update:options', value: { script?: AfterScript; data: string }): void
+  (e: 'update:options', value: { data: string }): void
   (e: 'channelChange', value: string): void
-  (e: 'scriptChange', script: AfterScript): void
 }>()
 const channelChange = (value: string) => {
   channel.value = value
