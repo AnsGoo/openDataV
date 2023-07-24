@@ -2,8 +2,8 @@ import { NCard, NCollapse, NCollapseItem, NDivider, NTimeline, NTimelineItem } f
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 
+import type { MetaContainerItem, MetaForm } from '@/designer/type'
 import { ContainerType } from '@/enum'
-import type { MetaContainerItem, MetaForm } from '@/types/component'
 
 import FormAttr from './FormAttr'
 

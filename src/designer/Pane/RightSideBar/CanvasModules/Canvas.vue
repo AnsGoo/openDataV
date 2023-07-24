@@ -7,8 +7,8 @@ import { computed, ref } from 'vue'
 
 import Container from '@/designer/modules/form/Container'
 import useCanvasState from '@/designer/state/canvas'
+import type { MetaContainerItem } from '@/designer/type'
 import type { ContainerType } from '@/enum'
-import type { MetaContainerItem } from '@/types/component'
 
 const canvasState = useCanvasState()
 const config = computed<Array<MetaContainerItem>>(() => canvasState.canvasStyleConfig.formItems!)

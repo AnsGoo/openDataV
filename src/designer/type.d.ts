@@ -1,8 +1,30 @@
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
+import type { CanvasStyleData } from '@/designer/state/type'
 import type { ComponentGroup, ContainerType, FormType } from '@/enum'
 import type { DataMode, DataType, RequestOptions } from '@/models/type'
-import type { CanvasStyleData } from '@/types/storeTypes'
+
+export interface Vector {
+  x: number
+  y: number
+}
+
+export interface DOMRectStyle {
+  width: number
+  height: number
+  left: number
+  top: number
+  rotate: number
+}
+
+export type Position = Omit<DOMRectStyle, 'rotate'>
+
+export interface Location {
+  right: number
+  left: number
+  top: number
+  bottom: number
+}
 
 export interface GroupStyle {
   gwidth: number
@@ -175,11 +197,6 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   height?: number
   dataMode?: DataMode
 }
-
-export interface AfterScript {
-  code: string
-}
-
 export interface ComponentItem {
   label: string
   icon: string

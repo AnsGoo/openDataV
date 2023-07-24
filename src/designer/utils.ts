@@ -4,11 +4,12 @@ import { componentList } from '@/designer/load'
 import useCanvasState from '@/designer/state/canvas'
 import useDataState from '@/designer/state/data'
 import useScriptState from '@/designer/state/scripts'
+import type { Location, Vector } from '@/designer/type'
 import { ContainerType } from '@/enum'
 import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
-import type { Position, Vector } from '@/types/common'
-import type { ComponentDataType, DataOption, DOMRectStyle, ScriptOption } from '@/types/component'
+
+import type { ComponentDataType, DataOption, DOMRectStyle, ScriptOption } from './type'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
@@ -87,9 +88,14 @@ export function getComponentIndexById(id: string, parent: CustomComponent) {
  *@return {components: CustomComponent[], rect: Position} components 所有组件， minRect 最小区域
  */
 export const getSelectComponents = (
-  rect: Position,
+  rect: Location,
   componentData: CustomComponent[]
-): { components: Array<CustomComponent>; rect: Position } | undefined => {
+):
+  | {
+      components: Array<CustomComponent>
+      rect: { left: number; right: number; top: number; bottom: number }
+    }
+  | undefined => {
   const selectedComponents: Array<CustomComponent> = []
   const leftSet: Set<number> = new Set()
   const topSet: Set<number> = new Set()
@@ -100,7 +106,7 @@ export const getSelectComponents = (
   componentData.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
     const { width, height, left, top, rotate } = component.style
-    const componentRect: Position = calcComponentAxis({
+    const componentRect: Location = calcComponentAxis({
       width,
       height,
       left,
@@ -217,7 +223,7 @@ export function calcComponentsRect(components: CustomComponent[]) {
   components.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
     const style: DOMRectStyle = component.positionStyle
-    const componentRect: Position = calcComponentAxis(style)
+    const componentRect: Location = calcComponentAxis(style)
     leftSet.add(componentRect.left)
     topSet.add(componentRect.top)
     rightSet.add(componentRect.right)
@@ -236,7 +242,7 @@ export function calcComponentsRect(components: CustomComponent[]) {
  * @param style 组件在画布中的位置
  * @returns 组件坐标
  */
-export function calcComponentAxis(style: DOMRectStyle): Position {
+export function calcComponentAxis(style: DOMRectStyle): Location {
   const leftUpPoint: Vector = { x: style.left, y: style.top }
   const rightUpPoint: Vector = { x: style.left + style.width, y: style.top }
   const rightDownPoint: Vector = { x: style.left + style.width, y: style.top + style.height }

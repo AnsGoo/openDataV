@@ -14,8 +14,8 @@ import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
 import { createComponent } from '@/designer/utils'
 import type { CustomComponent } from '@/models'
 import hooks from '@/models/hooks'
-import type { CanvasStyleData } from '@/types/storeTypes'
 
+import type { CanvasStyleData } from '../../state/type'
 import { backgroundToCss, filterStyle, pageScale } from '../../utils'
 
 provide('HOOKS', readonly(hooks))

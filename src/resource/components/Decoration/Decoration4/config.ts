@@ -1,6 +1,6 @@
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Decoration4'
 class DecorationComponent extends CustomComponent {

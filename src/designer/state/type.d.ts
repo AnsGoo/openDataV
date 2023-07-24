@@ -1,10 +1,8 @@
+import type { StoreComponentData } from '@/designer/db'
 import type { DataSlotter } from '@/designer/state/slotter'
+import type { MetaContainerItem, Position } from '@/designer/type'
 import type { ContainerType, EditMode } from '@/enum'
 import type { CustomComponent } from '@/models'
-import type { Position } from '@/types/common'
-import type { MetaContainerItem } from '@/types/component'
-
-import type { StoreComponentData } from '../designer/db'
 
 export interface CanvasStyleData {
   width: number
@@ -17,8 +15,7 @@ export interface CanvasStyleConfig {
   formItems?: Array<MetaContainerItem>
   mode?: ContainerType
 }
-
-export interface EditData {
+export interface CanvasData {
   name: string
   thumbnail: string
   editMode: EditMode
@@ -34,16 +31,6 @@ export interface EditData {
   canvasStyleConfig: CanvasStyleConfig
   globalSlotters: Recordable<DataSlotter>
 }
-export interface MenuStatus {
-  menuTop: number
-  menuLeft: number
-  menuShow?: boolean
-}
-
-export interface CopyItem {
-  copyData: Optional<CustomComponent>
-  isCut: boolean
-}
 
 export interface SnapData {
   snapshotMax: number
@@ -52,13 +39,24 @@ export interface SnapData {
   cursor: number
 }
 
-export interface AreaData {
+export interface CanvasStyleData {
+  width: number
+  height: number
+  background: any
+  extraAttrs?: any
+}
+
+export interface CanvasStyleConfig {
+  formItems?: Array<MetaContainerItem>
+  mode?: ContainerType
+}
+
+export interface CopyItem {
+  copyData: Optional<CustomComponent>
+  isCut: boolean
+}
+export interface SelectedAreaData {
   style: Position
   components: CustomComponent[]
   ids: Set
-}
-
-export interface UserInfo {
-  username: string
-  token: string | undefined
 }

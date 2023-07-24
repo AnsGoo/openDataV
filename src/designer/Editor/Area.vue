@@ -19,15 +19,14 @@ import { computed, onUnmounted, watch } from 'vue'
 import useActionState from '@/designer/state/actions'
 import useCanvasState from '@/designer/state/canvas'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { Position } from '@/types/common'
 
 const actionState = useActionState()
 const canvasState = useCanvasState()
 const hidden = computed<boolean>(() => actionState.hidden)
-const left = computed<Position>(() => actionState.style.left)
-const top = computed<Position>(() => actionState.style.top)
-const width = computed<Position>(() => actionState.style.width)
-const height = computed<Position>(() => actionState.style.height)
+const left = computed<number>(() => actionState.style.left)
+const top = computed<number>(() => actionState.style.top)
+const width = computed<number>(() => actionState.style.width)
+const height = computed<number>(() => actionState.style.height)
 
 const stopWatch: WatchStopHandle = watch(
   () => canvasState.curComponent,

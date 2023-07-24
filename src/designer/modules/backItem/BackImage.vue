@@ -44,7 +44,7 @@ import type { SelectOption } from 'naive-ui'
 import { NForm, NFormItem, NInput, NSelect } from 'naive-ui'
 import { computed } from 'vue'
 
-import type { BackgroundImage } from '@/types/common'
+import type { BackgroundImage } from './type'
 
 const props = defineProps<{
   value: BackgroundImage

@@ -1,10 +1,10 @@
 import useCanvasState from '@/designer/state/canvas'
 import useSnapShotState from '@/designer/state/snapshot'
-import type { ComponentDataType } from '@/types/component'
-import type { CanvasStyleData } from '@/types/storeTypes'
+import type { ComponentDataType } from '@/designer/type'
 import { message } from '@/utils/message'
 
 import type { StoreComponentData } from './db'
+import type { CanvasStyleData } from './state/type'
 import { exportRaw, importRaw } from './utils'
 
 const snapShotState = useSnapShotState()
