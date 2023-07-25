@@ -151,6 +151,6 @@ const collapsedTabPane = (key: string) => {
 .attr-list {
   @apply overflow-auto p-1 pt-0 h-full;
   backdrop-filter: blur(50px);
-  margin-right: 10px;
+  //margin-right: 10px;
 }
 </style>

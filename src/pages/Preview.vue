@@ -8,7 +8,7 @@ import { onMounted, ref } from 'vue'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Previewer } from '@/designer'
 import useSnapShotState from '@/designer/state/snapshot'
-import type { ComponentDataType } from '@/types/component'
+import type { ComponentDataType } from '@/designer/type'
 
 const viewer = ref<InstanceType<typeof Previewer> | null>(null)
 const snapShotState = useSnapShotState()

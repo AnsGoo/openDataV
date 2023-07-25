@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 
 import store from '@/store'
-import type { UserInfo } from '@/types/storeTypes'
+import type { UserInfo } from '@/types/user'
 import { getStorageItem, removeStorageItem, setStorageItem } from '@/utils/storage'
 
 const useUserStore = defineStore({

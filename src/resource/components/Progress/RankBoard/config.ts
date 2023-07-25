@@ -1,9 +1,9 @@
 import { h } from 'vue'
 
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
 import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'ScrollRankingBoard'
 class RankBoardComponent extends CustomComponent {

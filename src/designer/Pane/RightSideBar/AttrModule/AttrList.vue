@@ -7,9 +7,9 @@ import { computed } from 'vue'
 
 import Container from '@/designer/modules/form/Container'
 import useCanvasState from '@/designer/state/canvas'
+import type { MetaContainerItem } from '@/designer/type'
 import type { ContainerType } from '@/enum'
 import type { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 const props = defineProps<{
   curComponent: CustomComponent

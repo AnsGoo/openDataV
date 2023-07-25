@@ -1,7 +1,7 @@
+import type { ComponentItem } from '@/designer/type'
 import type { GroupType } from '@/enum'
 import { ComponentGroupList } from '@/enum'
 import { NothingLayout } from '@/layout'
-import type { ComponentItem } from '@/types/component'
 import { camel2snake } from '@/utils/utils'
 
 const getComponents = () => {

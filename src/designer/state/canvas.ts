@@ -4,19 +4,19 @@ import { reactive } from 'vue'
 import type { LayoutData } from '@/api/pages'
 import { eventBus } from '@/bus'
 import { DataSlotter } from '@/designer/state/slotter'
+import type { CanvasData } from '@/designer/state/type'
+import type {
+  ComponentDataType,
+  DOMRectStyle,
+  GroupStyle,
+  MetaContainerItem,
+  Vector
+} from '@/designer/type'
 import { ContainerType, EditMode, FormType } from '@/enum'
 import PixelEnum from '@/enum/pixel'
 import type { CustomComponent } from '@/models'
 import type { DataInstance } from '@/models/type'
 import { buildModeValue, updateModeValue } from '@/models/utils'
-import type { Position, Vector } from '@/types/common'
-import type {
-  ComponentDataType,
-  DOMRectStyle,
-  GroupStyle,
-  MetaContainerItem
-} from '@/types/component'
-import type { CanvasStyleConfig, CanvasStyleData, EditData } from '@/types/storeTypes'
 import { message } from '@/utils/message'
 
 import {
@@ -30,6 +30,7 @@ import {
 } from '../utils'
 import useDataState from './data'
 import useSnapShotState from './snapshot'
+import type { CanvasStyleConfig, CanvasStyleData } from './type'
 
 const dataState = useDataState()
 
@@ -103,7 +104,7 @@ const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
 }
 
 class CanvasState {
-  public state = reactive<EditData>({
+  public state = reactive<CanvasData>({
     name: '',
     thumbnail: '',
     editMode: EditMode.PREVIEW,
@@ -352,7 +353,7 @@ class CanvasState {
    * @returns
    */
   syncComponentLocation(
-    position: Position,
+    position: Partial<DOMRectStyle>,
     parentComponent?: CustomComponent,
     isSave = true
   ): void {
@@ -360,7 +361,7 @@ class CanvasState {
       return
     }
     const styleKeys = ['top', 'left', 'width', 'height', 'rotate']
-    const ablePosition: Position = {}
+    const ablePosition: Partial<DOMRectStyle> = {}
     styleKeys.forEach((el) => {
       if (position[el] != undefined) {
         ablePosition[el] = position[el]

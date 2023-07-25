@@ -17,7 +17,6 @@ import {
 import type { PropType } from 'vue'
 import { defineComponent, h, ref, watch } from 'vue'
 
-import { FormType, GlobalColorSwatches } from '@/enum'
 import type {
   CustomFormSchema,
   FormItemProps,
@@ -28,7 +27,8 @@ import type {
   RadioFormSchema,
   SelectFormSchema,
   SwitchFormSchema
-} from '@/types/component'
+} from '@/designer/type'
+import { FormType, GlobalColorSwatches } from '@/enum'
 
 import ArrayItem from '../arrayItem'
 import BackItem from '../backItem'

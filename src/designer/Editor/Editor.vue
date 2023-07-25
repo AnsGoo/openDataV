@@ -60,11 +60,11 @@ import Shape from '@/designer/Editor/Shape'
 import useActionState from '@/designer/state/actions'
 import useCanvasState from '@/designer/state/canvas'
 import useClipBoardState from '@/designer/state/clipBoard'
+import type { Location, Vector } from '@/designer/type'
 import { EditMode } from '@/enum'
 import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { Position, Vector } from '@/types/common'
 
 import { componentList } from '../load'
 import {
@@ -218,7 +218,7 @@ const handleMouseDown = (e: MouseEvent) => {
       return
     }
 
-    const selectedRect: Position = {
+    const selectedRect: Location = {
       left: Math.round(actionState.style.left),
       top: Math.round(actionState.style.top),
       right: actionState.style.left + actionState.style.width,
