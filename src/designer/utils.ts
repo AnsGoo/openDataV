@@ -362,8 +362,8 @@ export const uuid = (hasHyphen?: string) => {
  * @param excludes 剔除条件
  * @returns css
  */
-export function excludeStyle(style: Recordable, excludes: Array<string> = []) {
-  let result: Recordable<string> = {}
+export function excludeStyle(style: Record<string, any>, excludes: Array<string> = []) {
+  let result: Record<string, string> = {}
   Object.keys(style).forEach((key) => {
     if (!excludes.includes(key)) {
       const css = stylePropToCss(key, style[key])
@@ -380,8 +380,8 @@ export function excludeStyle(style: Recordable, excludes: Array<string> = []) {
  * @param filters 过滤条件
  * @returns css
  */
-export function filterStyle(style: Recordable, filters: Array<string> = []) {
-  let result: Recordable<string> = {}
+export function filterStyle(style: Record<string, any>, filters: Array<string> = []) {
+  let result: Record<string, any> = {}
   Object.keys(style).forEach((key) => {
     if (filters.includes(key)) {
       const css = stylePropToCss(key, style[key])
@@ -397,7 +397,7 @@ export function filterStyle(style: Recordable, filters: Array<string> = []) {
  * @returns css
  */
 
-export const getGroupStyle = (style: Recordable) => {
+export const getGroupStyle = (style: Record<string, any>) => {
   const filters = ['gtop', 'gheight', 'gwidth', 'gleft', 'grotate']
   return filterStyle(style, filters)
 }
@@ -452,7 +452,7 @@ export const getInnerComponentShapeStyle = (component: CustomComponent) => {
   }
 }
 
-export const stylePropToCss = (key: string, value: any): Recordable => {
+export const stylePropToCss = (key: string, value: any): Record<string, any> => {
   switch (key) {
     case 'gwidth':
     case 'gheight':

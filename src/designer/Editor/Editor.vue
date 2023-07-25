@@ -132,7 +132,7 @@ const componentData = computed(() => {
 const canvasStyleData = computed(() => canvasState.canvasStyleData)
 const curComponent = computed(() => canvasState.curComponent)
 
-const bgStyle = computed<Recordable<string>>(() => {
+const bgStyle = computed<Record<string, string>>(() => {
   const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,

@@ -21,7 +21,7 @@ export function makeFunction(
 
 function makeJavaScriptsFunction(code: string, args: string[], _isDebug?: boolean): CallbackType {
   try {
-    const handler = new Function(...args, code) as (resp: any, options: Recordable) => any
+    const handler = new Function(...args, code) as (resp: any, options: Record<string, any>) => any
     return { handler }
   } catch (err: any) {
     return { error: err }

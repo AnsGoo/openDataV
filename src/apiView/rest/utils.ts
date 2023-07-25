@@ -4,7 +4,7 @@ import { uuid } from '@/apiView/utils'
 
 import type { KV, RestOption, StoreRestOption } from './type'
 
-export const KVToRecordable = (values: Array<KV>): Recordable => {
+export const KVToRecordable = (values: Array<KV>): Record<string, any> => {
   const data = {}
   for (const i of values) {
     if (i.key && !i.disable) {
@@ -14,7 +14,7 @@ export const KVToRecordable = (values: Array<KV>): Recordable => {
   return data
 }
 
-export const recordabletoKV = (data: Recordable): Array<KV> => {
+export const recordabletoKV = (data: Record<string, any>): Array<KV> => {
   return Object.keys(data).map((el) => {
     return {
       key: el,

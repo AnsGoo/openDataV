@@ -26,11 +26,11 @@ const canvasStyle = ref<CanvasStyleData>({
   height: 0,
   background: { backgroundColor: '#272e3b' }
 })
-const bgStyle = computed<Recordable<string>>(() => {
+const bgStyle = computed<Record<string, string>>(() => {
   return backgroundToCss(canvasStyle.value.background)
 })
 
-const screenStyle = computed<Recordable<string>>(() => {
+const screenStyle = computed<Record<string, string>>(() => {
   const style = {
     ...canvasStyle.value
   }

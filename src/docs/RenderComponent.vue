@@ -40,8 +40,8 @@ const props = withDefaults(
   defineProps<{
     config: new (id?: string, name?: string) => CustomComponent
     component: ConcreteComponent
-    propValue: Recordable
-    style: Recordable
+    propValue: Record<string, any>
+    style: Record<string, any>
     title: string
     mode?: 'view' | 'debug' | 'use'
   }>(),

@@ -36,7 +36,7 @@ export default defineComponent({
       required: true
     },
     data: {
-      type: Object as PropType<Recordable>,
+      type: Object as PropType<Record<string, any>>,
       required: true
     }
   },
@@ -50,7 +50,7 @@ export default defineComponent({
         return <> </>
       }
       const itemOptions = (item.props || {}) as FormItemProps
-      const options: Recordable[] =
+      const options: Record<string, any>[] =
         (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
 
       /**

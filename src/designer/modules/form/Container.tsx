@@ -17,7 +17,7 @@ export default defineComponent({
       required: true
     },
     data: {
-      type: Object as PropType<Recordable>,
+      type: Object as PropType<Record<string, any>>,
       required: true
     },
     mode: {
@@ -33,7 +33,7 @@ export default defineComponent({
   },
   emits: ['change', 'update:data'],
   setup(props, { emit }) {
-    const formData = ref<Recordable>(props.data)
+    const formData = ref<Record<string, any>>(props.data)
     const change = (keys: Array<string>, val: any) => {
       emit('change', keys, val)
       emit('update:data', formData)

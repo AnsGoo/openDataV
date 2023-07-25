@@ -18,7 +18,7 @@ export type AppRouteRecordRaw = RouteRecordRaw & {
   component?: Component | string
   components?: Component
   children?: AppRouteRecordRaw[]
-  props?: Recordable
+  props?: Record<string, any>
   fullPath?: string
 }
 

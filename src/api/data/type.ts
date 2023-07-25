@@ -16,9 +16,9 @@ export interface StaticDataDetail {
 export interface RestDataDetail {
   method: Method
   url: string
-  headers: Recordable
-  params: Recordable
-  data: Recordable
+  headers: Record<string, any>
+  params: Record<string, any>
+  data: Record<string, any>
   afterScript?: AfterScript
   readonly id: string
   name: string

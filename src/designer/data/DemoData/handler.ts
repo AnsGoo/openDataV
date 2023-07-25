@@ -10,12 +10,12 @@ class DemoRequestData implements DataInstance {
     return undefined
   }
 
-  public async connect(acceptor: DataAcceptor, options?: Recordable) {
+  public async connect(acceptor: DataAcceptor, options?: Record<string, any>) {
     const resp = await this.getRespData(options)
     acceptor(resp)
   }
 
-  public async getRespData(_?: Recordable): Promise<Response> {
+  public async getRespData(_?: Record<string, any>): Promise<Response> {
     return {
       status: 'SUCCESS',
       data: this.data

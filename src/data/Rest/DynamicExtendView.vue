@@ -99,7 +99,7 @@ const clear = () => {
   formData.url = ''
 }
 interface ErrorResponse extends Error {
-  config: Recordable
+  config: Record<string, any>
   code?: number | undefined
   response: AxiosResponse
   isAxiosError: boolean
@@ -116,7 +116,7 @@ interface ErrorResponse extends Error {
     columnNumber?: string
     stack?: string
     // Axios
-    config: Recordable
+    config: Record<string, any>
     code?: number
     status?: number
   }

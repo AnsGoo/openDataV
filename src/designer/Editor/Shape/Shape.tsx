@@ -373,7 +373,7 @@ export default defineComponent({
         { start: 248, end: 293, cursor: 'sw' },
         { start: 293, end: 338, cursor: 'w' }
       ]
-      const initialAngle: Recordable<number> = {
+      const initialAngle: Record<string, number> = {
         // 每个点对应的初始角度
         lt: 0,
         t: 45,

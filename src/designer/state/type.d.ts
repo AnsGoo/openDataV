@@ -29,7 +29,7 @@ export interface CanvasData {
   benchmarkComponent: Optional<CustomComponent>
   scale: number
   canvasStyleConfig: CanvasStyleConfig
-  globalSlotters: Recordable<DataSlotter>
+  globalSlotters: Record<string, DataSlotter>
 }
 
 export interface SnapData {

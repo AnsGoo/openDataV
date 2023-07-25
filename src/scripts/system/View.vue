@@ -50,7 +50,7 @@ const scriptOptions = computed<Array<SelectOption>>(() => {
 })
 
 const extendParamItems = ref<Array<ScriptForm>>([])
-const extendParam = ref<Recordable<any>>({})
+const extendParam = ref<Record<string, any>>({})
 const scriptRef = ref<string | null>(null)
 
 const extendParamChange = (_key: string, _value: any) => {

@@ -161,7 +161,7 @@ const content = computed<InstanceType<typeof GroupComponent>>(() => {
 
 // const content = ref<InstanceType<typeof GroupComponent>>()
 
-const labelStyle = computed<Recordable>(() => {
+const labelStyle = computed<Record<string, any>>(() => {
   return {
     [propValue.label.mode === 'horizontal' ? 'height' : 'width']: `${propValue.style.height}px`,
     color: propValue.style.color,
