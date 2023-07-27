@@ -3,6 +3,7 @@ import { reactive } from 'vue'
 
 import type { LayoutData } from '@/api/pages'
 import { eventBus } from '@/bus'
+import { EditMode } from '@/designer/const'
 import { DataSlotter } from '@/designer/state/slotter'
 import type { CanvasData } from '@/designer/state/type'
 import type {
@@ -12,7 +13,7 @@ import type {
   MetaContainerItem,
   Vector
 } from '@/designer/type'
-import { ContainerType, EditMode, FormType } from '@/enum'
+import { ContainerType, FormType } from '@/enum'
 import PixelEnum from '@/enum/pixel'
 import type { CustomComponent } from '@/models'
 import type { DataInstance } from '@/models/type'

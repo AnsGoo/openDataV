@@ -1,7 +1,8 @@
+import type { EditMode } from '@/designer/const'
 import type { StoreComponentData } from '@/designer/db'
 import type { DataSlotter } from '@/designer/state/slotter'
 import type { MetaContainerItem, Position } from '@/designer/type'
-import type { ContainerType, EditMode } from '@/enum'
+import type { ContainerType } from '@/enum'
 import type { CustomComponent } from '@/models'
 
 export interface CanvasStyleData {

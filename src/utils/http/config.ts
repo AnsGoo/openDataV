@@ -1,7 +1,4 @@
 import type { AxiosRequestConfig, Canceler } from 'axios'
-
-import { ContentTypeEnum } from '@/enum'
-
 /**
  * 默认配置
  */
@@ -9,7 +6,7 @@ export const defaultConfig: AxiosRequestConfig = {
   baseURL: import.meta.env.VITE_APP_BASE_URL ? import.meta.env.VITE_APP_BASE_URL : '',
   //10秒超时
   timeout: 10000,
-  headers: { 'Content-Type': ContentTypeEnum.JSON }
+  headers: { 'Content-Type': 'application/json;charset=UTF-8' }
 }
 
 export function httpConfig(config?: AxiosRequestConfig): AxiosRequestConfig {
