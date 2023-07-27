@@ -32,7 +32,7 @@ export const getObjProp = (
  */
 export const buildModeValue = (
   formItems: Array<MetaForm> | Array<MetaContainerItem>,
-  modelValue: Record<string, string>
+  modelValue: Record<string, any>
 ) => {
   formItems.forEach((el) => {
     if (el.children) {
