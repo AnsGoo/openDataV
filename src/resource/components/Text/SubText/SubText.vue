@@ -30,7 +30,7 @@ const resizeHandler = (entry: ResizeObserverEntry) => {
 }
 
 const dataHandler = (event) => {
-  const item: Recordable = event as Recordable
+  const item: Record<string, any> = event as Record<string, any>
   if (propValue.base.tag && item[propValue.base.tag] !== undefined) {
     customeText.value = item[propValue.base.tag]
   }

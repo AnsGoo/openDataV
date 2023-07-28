@@ -35,7 +35,7 @@ import SimpleLayerItem from './SimpleLayerItem.vue'
 const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()
 
-const iconMap: Recordable<string> = {}
+const iconMap: Record<string, string> = {}
 ComponentGroupList.map((ele) => {
   iconMap[ele.key] = ele.icon
 })

@@ -114,7 +114,7 @@ const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
 })
 const requestHeaderOptions = Object.keys(RequestHeaderEnum)
 interface ErrorResponse extends Error {
-  config: Recordable
+  config: Record<string, any>
   code?: number | undefined
   response: AxiosResponse
   isAxiosError: boolean
@@ -131,7 +131,7 @@ interface ErrorResponse extends Error {
     columnNumber?: string
     stack?: string
     // Axios
-    config: Recordable
+    config: Record<string, any>
     code?: number
     status?: number
   }

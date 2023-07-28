@@ -1,16 +1,3 @@
-/*
-这里记录通用的枚举类型
-*/
-
-export enum ContentTypeEnum {
-  // json
-  JSON = 'application/json;charset=UTF-8',
-  // form-data qs
-  FORM_URLENCODED = 'application/x-www-form-urlencoded;charset=UTF-8',
-  // form-data  upload
-  FORM_DATA = 'multipart/form-data;charset=UTF-8'
-}
-
 export enum TokenStorage {
   LOCALSTORAGE = 'localStorage',
   SESSIONSTORAGE = 'sessionStorage',
@@ -28,12 +15,6 @@ export enum NoAuth {
 }
 
 export const LOGIN_URL = '/login'
-
-export enum EditMode {
-  EDIT = 'edit',
-  PREVIEW = 'preview',
-  VIEW = 'view'
-}
 
 export class GroupType {
   public name: string
@@ -145,21 +126,4 @@ export enum ContainerType {
   CARD = 'Card',
   TIMELINE = 'Timeline'
 }
-
-export enum EChartTypeEnum {
-  // 折线图
-  LINE = 'line',
-  // 柱状图
-  BAR = 'bar',
-  // 饼图
-  PIE = 'pie'
-}
-
-export enum ScriptType {
-  // json
-  Python = 'Python',
-  // form-data qs
-  Javascript = 'Javascript'
-}
-
 export const GlobalColorSwatches = ['#FFFFFF', '#18A058', '#2080F0', '#F0A020', '#D03050FF']

@@ -11,7 +11,7 @@ interface ScriptPlugin {
 }
 
 class ScriptState {
-  private state = reactive<{ plugins: Recordable<ScriptPlugin> }>({
+  private state = reactive<{ plugins: Record<string, ScriptPlugin> }>({
     plugins: {
       [SystemScriptPlugin.type]: SystemScriptPlugin,
       [CustomScriptPlugin.type]: CustomScriptPlugin

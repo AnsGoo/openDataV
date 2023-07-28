@@ -11,7 +11,7 @@ export interface ChannelItem {
 
 const channels: Map<string, ChannelItem> = new Map()
 
-type Events = Recordable
+type Events = Record<string, any>
 
 function useEventBus(
   key: string,

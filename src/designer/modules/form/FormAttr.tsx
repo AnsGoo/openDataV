@@ -63,13 +63,13 @@ export default defineComponent({
       required: true
     },
     data: {
-      type: Object as PropType<Recordable>,
+      type: Object as PropType<Record<string, any>>,
       required: true
     }
   },
   emits: ['change', 'updateData'],
   setup(props, { emit }) {
-    const formData = ref<Recordable>(props.data)
+    const formData = ref<Record<string, any>>(props.data)
     watch(
       () => props.data,
       () => {
@@ -82,7 +82,7 @@ export default defineComponent({
     }
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const isShow = ref<boolean>(false)
-    const renderModal = (item: MetaForm, modelValue: Recordable, path: Array<string>) => {
+    const renderModal = (item: MetaForm, modelValue: Record<string, any>, path: Array<string>) => {
       const options = ((item || {}).props || {}) as ModalFormSchema
       return (
         <>
@@ -127,7 +127,11 @@ export default defineComponent({
       )
     }
 
-    const renderFormItem = (item: MetaForm, modelValue: Recordable, path: Array<string> = []) => {
+    const renderFormItem = (
+      item: MetaForm,
+      modelValue: Record<string, any>,
+      path: Array<string> = []
+    ) => {
       let component: {} = NInput
       switch (item.type) {
         case FormType.SWITCH:
@@ -159,7 +163,7 @@ export default defineComponent({
         return <> </>
       }
       const itemOptions = (item.props || item.componentOptions || {}) as FormItemProps
-      const options: Recordable[] =
+      const options: Record<string, any>[] =
         (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
 
       /**

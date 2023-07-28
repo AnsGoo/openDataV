@@ -165,16 +165,14 @@ const previewIcon = (icon: string | undefined) => {
   align-content: flex-start;
 
   .card {
-    @apply p-2;
-    width: max(10vw, 160px);
+    @apply p-2 w-64;
     transition: all 0.3s ease;
     transform-origin: center;
   }
 }
 
 .options {
-  padding: 5px 5px 5px 5px;
-  @apply flex justify-between items-center;
+  @apply flex justify-between items-center p-2;
 }
 :deep(.n-card__action) {
   padding: 0;

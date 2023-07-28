@@ -32,7 +32,7 @@ export const getObjProp = (
  */
 export const buildModeValue = (
   formItems: Array<MetaForm> | Array<MetaContainerItem>,
-  modelValue: Recordable
+  modelValue: Record<string, any>
 ) => {
   formItems.forEach((el) => {
     if (el.children) {
@@ -51,7 +51,11 @@ export const buildModeValue = (
  * @param keys 属性路径
  * @param value 属性值
  */
-export const updateModeValue = (modelValue: Recordable, keys: Array<string>, value: any) => {
+export const updateModeValue = (
+  modelValue: Record<string, any>,
+  keys: Array<string>,
+  value: any
+) => {
   keys.reduce((acc, cur, i) => {
     return (acc[cur] = i === keys.length - 1 ? value : acc[cur] || {})
     // 根据递归创建空对象，直到是最后一个属性并赋值
@@ -60,7 +64,7 @@ export const updateModeValue = (modelValue: Recordable, keys: Array<string>, val
 
 export const updateFormItemsValue = (
   formItems: Array<MetaForm> | Array<MetaContainerItem>,
-  modelValue: Recordable
+  modelValue: Record<string, any>
 ) => {
   formItems.forEach((item) => {
     if (item.children) {

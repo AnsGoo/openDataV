@@ -10,9 +10,9 @@ export interface KV {
 export interface StoreRestOption {
   method: Method
   url: string
-  headers: Recordable
-  params: Recordable
-  data: Recordable
+  headers: Record<string, any>
+  params: Record<string, any>
+  data: Record<string, any>
   otherConfig: {
     isRepeat: boolean
     interval: number
@@ -22,7 +22,7 @@ export interface StoreRestOption {
 export interface RequestResponse {
   status: number
   data: string
-  headers?: Recordable<string>
+  headers?: Record<string, string>
   [key: string]: any
 }
 

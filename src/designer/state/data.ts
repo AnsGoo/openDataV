@@ -17,7 +17,7 @@ interface DataPlugin {
 }
 
 class DataState {
-  private state = reactive<{ plugins: Recordable<DataPlugin> }>({
+  private state = reactive<{ plugins: Record<string, DataPlugin> }>({
     plugins: {
       [DemoDataPlugin.type]: DemoDataPlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
@@ -33,7 +33,7 @@ class DataState {
   }
 
   get componentPlugins() {
-    const plugins: Recordable<DataPlugin> = {}
+    const plugins: Record<string, DataPlugin> = {}
     const keys = Object.keys(this.plugins)
     keys.forEach((el: string) => {
       const plugin = this.plugins[el]
@@ -46,7 +46,7 @@ class DataState {
   }
 
   get globalPlugins() {
-    const plugins: Recordable<DataPlugin> = {}
+    const plugins: Record<string, DataPlugin> = {}
     const keys = Object.keys(this.plugins)
     keys.forEach((el: string) => {
       const plugin = this.plugins[el]

@@ -34,9 +34,12 @@ class RouteView {
 
   // 动态获取 modules 目录下的所有 .ts 文件生成基础路由
   private createBasicRoutes = (): AppRouteRecordRaw[] => {
-    const moduleFiles: Recordable<{ [key: string]: any }> = import.meta.glob('./modules/**/*.ts', {
-      eager: true
-    })
+    const moduleFiles: Record<string, { [key: string]: any }> = import.meta.glob(
+      './modules/**/*.ts',
+      {
+        eager: true
+      }
+    )
     const routeModuleList: AppRouteRecordRaw[] = []
     Object.keys(moduleFiles).forEach((key) => {
       const mod: { [key: string]: any } = moduleFiles[key].default || {}

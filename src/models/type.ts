@@ -21,5 +21,5 @@ export interface BaseScript {
   type: string
   key: string
   toJSON: () => ScriptOption | undefined
-  afterCallback?: (data: any, propValue: Recordable) => any
+  afterCallback?: (data: any, propValue: Record<string, any>) => any
 }

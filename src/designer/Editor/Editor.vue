@@ -52,6 +52,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
+import { EditMode } from '@/designer/const'
 import Area from '@/designer/Editor/Area.vue'
 import Grid from '@/designer/Editor/Grid.vue'
 import MarkLine from '@/designer/Editor/MarkLine.vue'
@@ -61,7 +62,6 @@ import useActionState from '@/designer/state/actions'
 import useCanvasState from '@/designer/state/canvas'
 import useClipBoardState from '@/designer/state/clipBoard'
 import type { Location, Vector } from '@/designer/type'
-import { EditMode } from '@/enum'
 import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
@@ -132,7 +132,7 @@ const componentData = computed(() => {
 const canvasStyleData = computed(() => canvasState.canvasStyleData)
 const curComponent = computed(() => canvasState.curComponent)
 
-const bgStyle = computed<Recordable<string>>(() => {
+const bgStyle = computed<Record<string, string>>(() => {
   const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,

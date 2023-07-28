@@ -30,11 +30,11 @@ class QuickRequestData implements DataInstance {
     return JSON.parse(data)
   }
 
-  public async connect(acceptor: DataAcceptor, options?: Recordable) {
+  public async connect(acceptor: DataAcceptor, options?: Record<string, any>) {
     const resp = await this.getRespData(options)
     acceptor(resp)
   }
-  public async getRespData(_options?: Recordable): Promise<Response> {
+  public async getRespData(_options?: Record<string, any>): Promise<Response> {
     const response: Response = {
       status: 'SUCCESS',
       data: ''

@@ -40,7 +40,7 @@ import PixelEnum from '@/enum/pixel'
 import BackItem from '../../modules/backItem'
 import type { CanvasStyleData } from '../../state/type'
 
-const pixels = computed<Recordable<string>[]>(() => {
+const pixels = computed<Record<string, string>[]>(() => {
   return [
     { label: '本设备', value: `${window.screen.width}X${window.screen.height}` },
     ...PixelEnum

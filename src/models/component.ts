@@ -47,14 +47,14 @@ export abstract class CustomComponent {
   // form表单中使用
   _prop: MetaContainerItem[] = []
   _style: MetaContainerItem[] = []
-  extraStyle: Recordable<string | number | boolean> = {}
+  extraStyle: Record<string, string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
   parent?: CustomComponent
   subComponents: CustomComponent[] = []
 
-  _propValue: Recordable = {}
+  _propValue: Record<string, any> = {}
   _styleValue: ComponentStyle = {
     ...this.positionStyle
   }
@@ -195,7 +195,7 @@ export abstract class CustomComponent {
 
   get style(): ComponentStyle {
     if (this.styleIsChange) {
-      const customStyle: Recordable[] = []
+      const customStyle: Record<string, any>[] = []
       this.styleFormValue.forEach((item) => {
         ;(item.children || []).forEach((obj) => {
           const objProps = obj.props || obj.componentOptions
@@ -223,7 +223,7 @@ export abstract class CustomComponent {
   }
 
   // 自定义样式编辑框数据处理
-  styleToCss(_: Recordable[]): Nullable<Recordable> {
+  styleToCss(_: Record<string, any>[]): Nullable<Record<string, any>> {
     return null
   }
 

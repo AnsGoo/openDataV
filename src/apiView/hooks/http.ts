@@ -4,9 +4,9 @@ import Axios from 'axios'
 export interface RequestConfig {
   method: Method
   url: string
-  headers: Recordable
-  params: Recordable
-  data: Recordable
+  headers: Record<string, any>
+  params: Record<string, any>
+  data: Record<string, any>
 }
 export interface RequestInstance {
   request: (config: RequestConfig) => Promise<any>

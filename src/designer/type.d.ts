@@ -167,7 +167,7 @@ export interface ComponentData {
 
 export interface DataOption {
   type: DataType
-  otherConfig?: Recordable
+  otherConfig?: Record<string, any>
   requestOptions: RequestOptions
 }
 
