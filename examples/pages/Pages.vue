@@ -165,7 +165,7 @@ const previewIcon = (icon: string | undefined) => {
   align-content: flex-start;
 
   .card {
-    @apply p-2 w-64;
+    @apply p-2 w-60;
     transition: all 0.3s ease;
     transform-origin: center;
   }
@@ -186,7 +186,7 @@ const previewIcon = (icon: string | undefined) => {
 }
 
 .thumbnail-image {
-  width: 15vw;
+  width: 14vw;
   height: 16vh;
 }
 </style>

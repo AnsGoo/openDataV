@@ -6,9 +6,9 @@
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "serve": "pnpm build && vite preview",
-    "lint": "eslint --ext .js,.ts,.vue,.tsx src/",
+    "lint": "eslint --ext .js,.ts,.vue,.tsx src/ examples/ docs/ resource/",
     "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
-    "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/",
+    "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/ examples/ docs/ resource/",
     "prepare": "husky install",
     "reinstall": "rimraf pnpm-lock.yaml && rimraf src/**/node_modules && rimraf node_modules && pnpm bootstrap"
   },

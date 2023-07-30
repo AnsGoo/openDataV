@@ -177,7 +177,7 @@ const requestInstance = useRequest()
 const send = async () => {
   try {
     const resp = await requestInstance.request(requestOptionsToStore(formData))
-    response.value.code = resp.status
+    response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
 
     response.value.headers = resp.headers
@@ -185,7 +185,7 @@ const send = async () => {
   } catch (err: any) {
     err as ErrorResponse
     const result = err.response || (err.toJSON ? err.toJSON() : {})
-    response.value.code = result.status
+    response.value.status = result.status
     response.value.data = err.stack || err.message
     response.value.headers = result.headers || result?.config?.headers || {}
   }
