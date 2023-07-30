@@ -1,11 +1,10 @@
+import StaticDataPlugin from 'open-data-v/apiView/static'
+import SubDataPlugin from 'open-data-v/apiView/sub'
+import WebsocketDataPlugin from 'open-data-v/apiView/websocket'
+import QuickDataPlugin from 'open-data-v/data/Quick'
+import RestDataPlugin from 'open-data-v/data/Rest'
+import DemoDataPlugin from 'open-data-v/designer/data/DemoData'
 import { reactive } from 'vue'
-
-import StaticDataPlugin from '@/apiView/static'
-import SubDataPlugin from '@/apiView/sub'
-import WebsocketDataPlugin from '@/apiView/websocket'
-import QuickDataPlugin from '@/data/Quick'
-import RestDataPlugin from '@/data/Rest'
-import DemoDataPlugin from '@/designer/data/DemoData'
 
 interface DataPlugin {
   type: string

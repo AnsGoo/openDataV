@@ -7,13 +7,13 @@
 </template>
 
 <script setup lang="ts">
+import ComponentWrapper from 'open-data-v/designer/Editor/ComponentWrapper.vue'
+import { createComponent } from 'open-data-v/designer/utils'
+import type { CustomComponent } from 'open-data-v/models'
+import hooks from 'open-data-v/models/hooks'
 import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '@/api/pages'
-import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
-import { createComponent } from '@/designer/utils'
-import type { CustomComponent } from '@/models'
-import hooks from '@/models/hooks'
 
 import type { CanvasStyleData } from '../../state/type'
 import { backgroundToCss, filterStyle, pageScale } from '../../utils'

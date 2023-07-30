@@ -23,9 +23,8 @@
 
 <script setup lang="ts">
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import type { Slotter } from 'open-data-v/scripts/base'
 import { onMounted, ref, watch } from 'vue'
-
-import type { Slotter } from '@/scripts/base'
 
 import ScriptHandler from './handler'
 import ScriptEditor from './ScriptsEditor.vue'

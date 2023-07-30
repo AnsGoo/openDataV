@@ -13,9 +13,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/types'
 import { computed, onMounted, ref } from 'vue'
-
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 
 import type { PaletteType } from '../index-types'
 

@@ -1,0 +1,14 @@
+{
+  "name": "progress",
+  "version": "1.0.0",
+  "description": "进度条组件",
+  "main": "index.ts",
+  "scripts": {},
+  "keywords": [
+    "OpenDataV"
+  ],
+  "author": "chenghaiwen",
+  "license": "Apache-2.0",
+  "dependencies": {},
+  "devDependencies": {}
+}

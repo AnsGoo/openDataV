@@ -1,6 +1,5 @@
+import RestDataPlugin from 'open-data-v/apiView/rest'
 import { shallowRef } from 'vue'
-
-import RestDataPlugin from '@/apiView/rest'
 
 import DataView from './View.vue'
 

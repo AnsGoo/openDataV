@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from '@/models'
+import type { CustomComponent } from 'open-data-v/models'
 
 import { getComponentStyle } from '../utils'
 

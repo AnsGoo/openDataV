@@ -1,13 +1,12 @@
 import { cloneDeep, isNumber } from 'lodash-es'
-
-import { componentList } from '@/designer/load'
-import useCanvasState from '@/designer/state/canvas'
-import useDataState from '@/designer/state/data'
-import useScriptState from '@/designer/state/scripts'
-import type { Location, Vector } from '@/designer/type'
-import { ContainerType } from '@/enum'
-import { DataMode } from '@/enum/data'
-import type { CustomComponent } from '@/models'
+import { componentList } from 'open-data-v/designer/load'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import useDataState from 'open-data-v/designer/state/data'
+import useScriptState from 'open-data-v/designer/state/scripts'
+import type { Location, Vector } from 'open-data-v/designer/type'
+import { ContainerType } from 'open-data-v/enum'
+import { DataMode } from 'open-data-v/enum/data'
+import type { CustomComponent } from 'open-data-v/models'
 
 import type { ComponentDataType, DataOption, DOMRectStyle, ScriptOption } from './type'
 

@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/apiView/type'
+import type { DataAcceptor, DataInstance, RequestOptions, Response } from 'open-data-v/apiView/type'
 
 class StaticRequestData implements DataInstance {
   public data?: any

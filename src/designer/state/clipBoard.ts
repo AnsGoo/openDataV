@@ -1,7 +1,6 @@
 import { cloneDeep } from 'lodash-es'
+import type { CustomComponent } from 'open-data-v/models'
 import { reactive } from 'vue'
-
-import type { CustomComponent } from '@/models'
 
 import { copyText, uuid } from '../utils'
 import useCanvasState from './canvas'

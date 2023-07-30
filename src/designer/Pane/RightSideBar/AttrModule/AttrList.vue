@@ -3,13 +3,12 @@
 </template>
 
 <script setup lang="ts">
+import Container from 'open-data-v/designer/modules/form/Container'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { MetaContainerItem } from 'open-data-v/designer/type'
+import type { ContainerType } from 'open-data-v/enum'
+import type { CustomComponent } from 'open-data-v/models'
 import { computed } from 'vue'
-
-import Container from '@/designer/modules/form/Container'
-import useCanvasState from '@/designer/state/canvas'
-import type { MetaContainerItem } from '@/designer/type'
-import type { ContainerType } from '@/enum'
-import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
   curComponent: CustomComponent

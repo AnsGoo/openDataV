@@ -28,9 +28,8 @@
 
 <script lang="ts" setup>
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import type { Slotter } from 'open-data-v/apiView/type'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
-
-import type { Slotter } from '@/apiView/type'
 
 import type SubRequestData from './handler'
 import DataHandler from './handler'

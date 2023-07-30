@@ -1,7 +1,7 @@
-import useCanvasState from '@/designer/state/canvas'
-import useSnapShotState from '@/designer/state/snapshot'
-import type { ComponentDataType } from '@/designer/type'
-import { message } from '@/utils/message'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import useSnapShotState from 'open-data-v/designer/state/snapshot'
+import type { ComponentDataType } from 'open-data-v/designer/type'
+import { message } from 'open-data-v/utils/message'
 
 import type { StoreComponentData } from './db'
 import type { CanvasStyleData } from './state/type'

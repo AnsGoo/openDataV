@@ -1,0 +1,34 @@
+@primaryColor: #2d8cf0;
+@primaryColorHover: #57a3f3;
+@header-height: 64px;
+@footer-height: 70px;
+
+button.realbutton {
+  border: 0 transparent;
+  background-color: transparent;
+  box-shadow:2px 2px 4px 0 gray;
+
+  &:focus,
+  &:hover {
+    color: black;
+    background-color: transparent;
+    box-shadow: 2px 2px 4px 3px gray;
+  }
+
+  &:active {
+    color: black;
+    border: 0 transparent;
+    background-color: transparent;
+    box-shadow:inset 2px 2px 4px gray;
+  }
+}
+
+.noEvent {
+  pointer-events: none;
+}
+
+.dialog-style-custom {
+  .el-dialog__body {
+    padding-bottom: 0 !important;
+  }
+}

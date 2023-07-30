@@ -1,4 +1,4 @@
-import type { CustomComponent } from '@/models'
+import type { CustomComponent } from 'open-data-v/models'
 
 export const useProp = <T>(
   component: CustomComponent,

@@ -19,11 +19,10 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-
-import { eventBus, StaticKey } from '@/bus'
-import useCanvasState from '@/designer/state/canvas'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import { eventBus, StaticKey } from 'open-data-v/bus'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { CustomComponent } from 'open-data-v/models'
+import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/types'
 
 import { diffIndex } from '../../../utils'
 

@@ -36,11 +36,10 @@
 </template>
 
 <script setup lang="ts">
+import { channels, eventBus } from 'open-data-v/bus'
+import type { CustomComponent } from 'open-data-v/models'
+import type { HooksType } from 'open-data-v/models/hooks/type'
 import { computed, inject } from 'vue'
-
-import { channels, eventBus } from '@/bus'
-import type { CustomComponent } from '@/models'
-import type { HooksType } from '@/models/hooks/type'
 
 import Shape from '../../Editor/Shape'
 import useCanvasState from '../../state/canvas'

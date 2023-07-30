@@ -1,5 +1,5 @@
-import type { DataType } from '@/enum/data'
-import type { CustomComponent } from '@/models'
+import type { DataType } from 'open-data-v/enum/data'
+import type { CustomComponent } from 'open-data-v/models'
 
 export interface HooksType {
   useProp: <T>(

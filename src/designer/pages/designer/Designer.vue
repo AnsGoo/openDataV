@@ -56,12 +56,12 @@
 
 <script setup lang="ts">
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import hooks from 'open-data-v/models/hooks'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '@/api/pages'
 import type { ToolBarItemType } from '@/components/ToolBar'
-import useCanvasState from '@/designer/state/canvas'
-import hooks from '@/models/hooks'
 
 import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'

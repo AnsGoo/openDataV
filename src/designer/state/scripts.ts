@@ -1,7 +1,6 @@
+import CustomScriptPlugin from 'open-data-v/scripts/custom'
+import SystemScriptPlugin from 'open-data-v/scripts/system'
 import { reactive } from 'vue'
-
-import CustomScriptPlugin from '@/scripts/custom'
-import SystemScriptPlugin from '@/scripts/system'
 
 interface ScriptPlugin {
   type: string

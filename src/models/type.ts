@@ -1,4 +1,4 @@
-import type { ScriptOption } from '@/scripts/base'
+import type { ScriptOption } from 'open-data-v/scripts/base'
 
 export interface RequestResponse<T> {
   status: 'SUCCESS' | 'FAILED'
