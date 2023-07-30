@@ -95,7 +95,7 @@ onUnmounted(() => {
 .home > :deep(.n-layout-scroll-container:first-child) {
   @apply flex flex-col h-screen;
   .header {
-    @apply h-10;
+    @apply h-12;
   }
 }
 </style>
