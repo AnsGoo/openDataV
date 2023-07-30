@@ -60,15 +60,21 @@ import Shape from '@/designer/Editor/Shape'
 import useActionState from '@/designer/state/actions'
 import useCanvasState from '@/designer/state/canvas'
 import useClipBoardState from '@/designer/state/clipBoard'
+import type { Location, Vector } from '@/designer/type'
 import { EditMode } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { Position, Vector } from '@/types/common'
-import { backgroundToCss, filterStyle, getComponentShapeStyle, Logger, uuid } from '@/utils/utils'
 
 import { componentList } from '../load'
-import { createComponent } from '../utils'
+import {
+  backgroundToCss,
+  createComponent,
+  filterStyle,
+  getComponentShapeStyle,
+  Logger,
+  uuid
+} from '../utils'
 
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
@@ -212,7 +218,7 @@ const handleMouseDown = (e: MouseEvent) => {
       return
     }
 
-    const selectedRect: Position = {
+    const selectedRect: Location = {
       left: Math.round(actionState.style.left),
       top: Math.round(actionState.style.top),
       right: actionState.style.left + actionState.style.width,
@@ -231,7 +237,7 @@ const handleDrop = async (e) => {
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
     const component: CustomComponent = new componentList[componentName]()
-    if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+    if (component.dataMode === DataMode.UNIVERSAL) {
       component.loadDemoData()
     }
 

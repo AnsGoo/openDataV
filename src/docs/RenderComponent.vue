@@ -33,8 +33,8 @@ import { NCard, NTabPane, NTabs } from 'naive-ui'
 import type { ComponentOptions, ConcreteComponent } from 'vue'
 import { computed, h, reactive } from 'vue'
 
+import { getComponentStyle, uuid } from '@/designer/utils'
 import type { CustomComponent } from '@/models'
-import { getComponentStyle, uuid } from '@/utils/utils'
 
 const props = withDefaults(
   defineProps<{

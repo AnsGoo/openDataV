@@ -1,7 +1,7 @@
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'BasicBarChart'
 class BasicBarChartComponent extends CustomComponent {
@@ -14,7 +14,7 @@ class BasicBarChartComponent extends CustomComponent {
       width: 500,
       height: 170,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataMode: DataMode.UNIVERSAL
     })
   }
 

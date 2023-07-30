@@ -50,16 +50,16 @@ import Group from '@/designer/components/Group/Group.vue'
 import Shape from '@/designer/Editor/Shape'
 import { componentList } from '@/designer/load'
 import useCanvasState from '@/designer/state/canvas'
-import { DataIntegrationMode } from '@/enum/data'
-import type { CustomComponent } from '@/models'
-import { useProp } from '@/models/hooks'
 import {
   filterStyle,
   getComponentStyle,
   getInnerComponentShapeStyle,
   toPercent,
   uuid
-} from '@/utils/utils'
+} from '@/designer/utils'
+import { DataMode } from '@/enum/data'
+import type { CustomComponent } from '@/models'
+import { useProp } from '@/models/hooks'
 
 import type TabsComponent from './config'
 import type { Tabs } from './type'
@@ -181,7 +181,7 @@ const handleDrop = async (e) => {
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
     const component: CustomComponent = new componentList[componentName]()
-    if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+    if (component.dataMode === DataMode.UNIVERSAL) {
       component.loadDemoData()
     }
     const { top, left } = document.querySelector('#editor')!.getBoundingClientRect()

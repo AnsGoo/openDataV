@@ -1,9 +1,9 @@
 import { h } from 'vue'
 
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'ScrollRankingBoard'
 class RankBoardComponent extends CustomComponent {
@@ -16,7 +16,7 @@ class RankBoardComponent extends CustomComponent {
       width: 800,
       height: 400,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataMode: DataMode.UNIVERSAL
     })
   }
 

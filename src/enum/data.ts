@@ -1,11 +1,4 @@
-export enum DataType {
-  STATIC = 'STATIC',
-  REST = 'REST',
-  REALTIME = 'REALTIME',
-  DEMO = 'DEMO'
-}
-
-export enum DataIntegrationMode {
+export enum DataMode {
   SELF = 'SELF',
   UNIVERSAL = 'UNIVERSAL',
   GLOBAL = 'GLOBAL'

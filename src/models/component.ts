@@ -1,10 +1,6 @@
 import { cloneDeep } from 'lodash-es'
 import { h } from 'vue'
 
-import type { ComponentGroup } from '@/enum'
-import { ContainerType, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
-import type { BaseScript } from '@/scripts/base'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -13,14 +9,17 @@ import type {
   GroupStyle,
   MetaContainerItem,
   MetaForm
-} from '@/types/component'
+} from '@/designer/type'
+import type { ComponentGroup } from '@/enum'
+import { ContainerType, FormType } from '@/enum'
+import { DataMode } from '@/enum/data'
 
-import type { RequestDataInstance, Response } from './requestOption'
+import type { BaseScript, DataInstance, Response } from './type'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
   type: string
-  requestConfig: RequestDataInstance
+  dataInstance: DataInstance
 }
 
 export abstract class CustomComponent {
@@ -34,7 +33,7 @@ export abstract class CustomComponent {
   display = true
   show = true
   active = false
-  dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
+  dataMode: DataMode = DataMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
   callbackData?: (result: any, type?: string) => void
@@ -43,11 +42,7 @@ export abstract class CustomComponent {
   // 检测变化
   propIsChange = true
   styleIsChange = true
-  defaultViewType = {
-    propValue: ContainerType.COLLAPSE,
-    style: ContainerType.COLLAPSE,
-    data: ContainerType.CARD
-  }
+  defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
   _prop: MetaContainerItem[] = []
@@ -81,8 +76,7 @@ export abstract class CustomComponent {
     }
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
-    this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
-    Object.assign(this.defaultViewType, detail.defaultViewType || {})
+    this.dataMode = detail.dataMode || DataMode.SELF
   }
 
   get propFromValue(): MetaContainerItem[] {
@@ -195,6 +189,10 @@ export abstract class CustomComponent {
     return this._propValue
   }
 
+  setViewType(viewType: ContainerType) {
+    this.defaultViewType = viewType
+  }
+
   get style(): ComponentStyle {
     if (this.styleIsChange) {
       const customStyle: Recordable[] = []
@@ -239,13 +237,13 @@ export abstract class CustomComponent {
       propValue: this.propValue,
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataIntegrationMode: this.dataIntegrationMode,
+      dataMode: this.dataMode,
       script: this.scriptConfig?.toJSON()
     }
     if (this.dataConfig) {
       component.data = {
         type: this.dataConfig?.type,
-        requestOptions: this.dataConfig?.requestConfig.toJSON()
+        requestOptions: this.dataConfig?.dataInstance.toJSON()
       }
     }
     if (this.groupStyle) {
@@ -306,15 +304,19 @@ export abstract class CustomComponent {
   }
   afterCallbackChange(scriptHandler: BaseScript) {
     this.scriptConfig = scriptHandler
-    if (this.dataConfig?.requestConfig && this.componentDataCallback) {
+    if (this.dataConfig?.dataInstance && this.componentDataCallback) {
       this.callbackData = this.buildDataCallback()
-      this.dataConfig?.requestConfig.connect!(this.callbackData)
+      const { dataInstance } = this.dataConfig || {}
+      if (dataInstance && dataInstance.close) {
+        dataInstance.close()
+        dataInstance.connect!(this.callbackData)
+      }
     }
   }
 
   // 修改样式
   changeStyle(propKeys: Array<string>, value: any) {
-    const positionKey = ['top', 'left', 'height', 'width']
+    const positionKey = ['top', 'left', 'height', 'width', 'rotate']
     let changeValue = value
     if (propKeys.length === 2 && propKeys[0] === 'position' && positionKey.includes(propKeys[1])) {
       changeValue = Math.round(value)
@@ -322,13 +324,12 @@ export abstract class CustomComponent {
     }
     this.styleIsChange = true
     const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
-    const objProps = curObj.props || curObj.componentOptions
+    const objProps = curObj && (curObj.props || curObj.componentOptions)
     if (objProps) {
       objProps.defaultValue = value
     }
-    if (this.callbackStyle) this.callbackStyle(propKeys, value)
 
-    // this.extraStyle[prop] = value
+    if (this.callbackStyle) this.callbackStyle(propKeys, value)
   }
 
   changeStyleCallback(callback: (propKeys: Array<string>, value: any) => void) {
@@ -367,20 +368,24 @@ export abstract class CustomComponent {
   showComponent() {
     this.display = true
   }
-  async changeRequestDataConfig(dataConfig: DataConfig) {
-    const { requestConfig } = this.dataConfig || {}
-    if (requestConfig && requestConfig.close) {
-      requestConfig.close()
+  async changeDataConfig(dataConfig: DataConfig) {
+    const { dataInstance } = this.dataConfig || {}
+    if (dataInstance && dataInstance.close) {
+      dataInstance.close()
     }
     this.dataConfig = dataConfig
     if (this.callbackData) {
-      await this.dataConfig?.requestConfig.connect!(this.callbackData)
+      await this.dataConfig?.dataInstance.connect!(this.callbackData)
     }
   }
   changeDataCallback(callback: (result: any, type?: string) => void) {
     this.componentDataCallback = callback
     this.callbackData = this.buildDataCallback()
-    this.dataConfig?.requestConfig.connect!(this.callbackData)
+    const { dataInstance } = this.dataConfig || {}
+    if (dataInstance && dataInstance.close) {
+      dataInstance.close()
+      dataInstance.connect!(this.callbackData)
+    }
   }
 
   buildDataCallback() {

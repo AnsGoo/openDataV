@@ -26,7 +26,7 @@ import type { SelectOption } from 'naive-ui'
 import { NButton, NCard, NFormItem, NInputGroup, NModal, NSelect } from 'naive-ui'
 import { computed, onMounted, ref, watch } from 'vue'
 
-import type { CustomComponent } from '@/models'
+import type { Slotter } from '@/scripts/base'
 import type { ScriptForm } from '@/scripts/system/type'
 
 import DynamicForm from './DynamicFormItem'
@@ -34,7 +34,7 @@ import ScriptHandler from './handler'
 import funcs from './scripts'
 
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: Slotter
 }>()
 const isShow = ref<boolean>(false)
 
@@ -70,15 +70,15 @@ onMounted(async () => {
   await initData()
 })
 const setComponentScript = () => {
-  if (scriptRef.value && props.curComponent) {
+  if (scriptRef.value && props.slotter) {
     const scriptHandler = new ScriptHandler(scriptRef.value, extendParam.value)
-    props.curComponent.afterCallbackChange(scriptHandler)
+    props.slotter.afterCallbackChange(scriptHandler)
   }
 }
 
 const initData = async () => {
-  if (props.curComponent.scriptConfig && props.curComponent.scriptConfig.type === 'System') {
-    const scriptConfig = props.curComponent.scriptConfig as ScriptHandler
+  if (props.slotter.scriptConfig && props.slotter.scriptConfig.type === 'System') {
+    const scriptConfig = props.slotter.scriptConfig as ScriptHandler
     const key = scriptConfig.key
     scriptRef.value = key
     extendParamItems.value = funcs[key]?.extendParams || []
@@ -91,8 +91,8 @@ const initData = async () => {
 }
 
 watch(
-  () => props.curComponent,
-  (value: CustomComponent) => {
+  () => props.slotter,
+  (value: Slotter) => {
     if (value) {
       initData()
     }

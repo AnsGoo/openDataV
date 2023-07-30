@@ -7,7 +7,7 @@
     <n-layout has-sider class="main">
       <n-layout-sider
         class="left"
-        width="200"
+        width="15rem"
         :collapsed="collapsedLeft"
         :native-scrollbar="false"
         bordered
@@ -29,11 +29,10 @@
         <Canvas />
         <n-layout-sider
           class="right"
-          width="240"
+          width="20rem"
           :collapsed="collapsedRight"
           :native-scrollbar="false"
           bordered
-          :collapsed-width="35"
           collapse-mode="width"
           show-trigger="arrow-circle"
           @collapse="collapsedRight = true"
@@ -95,13 +94,8 @@ onUnmounted(() => {
 <style scoped lang="less">
 .home > :deep(.n-layout-scroll-container:first-child) {
   @apply flex flex-col h-screen;
-
   .header {
-    height: 5vh;
-  }
-
-  .main {
-    flex: 1;
+    @apply h-10;
   }
 }
 </style>

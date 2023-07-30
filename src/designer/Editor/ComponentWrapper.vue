@@ -10,7 +10,8 @@
 
 <script setup lang="ts">
 import type { CustomComponent } from '@/models'
-import { getComponentStyle } from '@/utils/utils'
+
+import { getComponentStyle } from '../utils'
 
 defineProps<{ component: CustomComponent }>()
 </script>

@@ -16,9 +16,10 @@ import { reactive, ref } from 'vue'
 
 import { StaticKey, useEventBus } from '@/bus'
 import useCanvasState from '@/designer/state/canvas'
+import type { Location } from '@/designer/type'
 import type { CustomComponent } from '@/models'
-import type { Position } from '@/types/common'
-import { calcComponentAxis } from '@/utils/utils'
+
+import { calcComponentAxis } from '../utils'
 
 const canvasState = useCanvasState()
 const linesRef = ref<Array<any>>([])
@@ -71,7 +72,7 @@ const showLine = (isDownward, isRightward) => {
       left: myleft,
       right: myright,
       bottom: mybottom
-    }: Position = calcComponentAxis(canvasState.curComponent.positionStyle)
+    }: Location = calcComponentAxis(canvasState.curComponent.positionStyle)
     const curComponentHalfwidth = (myright - myleft) / 2
     const curComponentHalfHeight = (mybottom - mytop) / 2
 

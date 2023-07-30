@@ -1,11 +1,12 @@
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
+import type { ComponentDataType } from '@/designer/type'
 import type { CustomComponent } from '@/models'
-import type { ComponentDataType } from '@/types/component'
-import type { CanvasStyleData, SnapData } from '@/types/storeTypes'
-import type { StoreComponentData } from '@/utils/db'
-import { snapshotDb } from '@/utils/db'
+
+import type { StoreComponentData } from '../db'
+import { snapshotDb } from '../db'
+import type { CanvasStyleData, SnapData } from './type'
 
 class SnapshotState {
   public state = reactive<SnapData>({
@@ -84,11 +85,16 @@ class SnapshotState {
    * @param canvasData 组件数据
    * @param canvasStyle 画布样式
    */
-  recordSnapshot(canvasData: Array<CustomComponent>, canvasStyle: CanvasStyleData) {
+  recordSnapshot(
+    canvasData: Array<CustomComponent>,
+    canvasStyle: CanvasStyleData,
+    dataSlotters: Array<{ type: string; config: any }>
+  ) {
     // 改变值
     this.latestSnapshot = {
       canvasData: cloneDeep(canvasData),
-      canvasStyle: cloneDeep(canvasStyle)
+      canvasStyle: cloneDeep(canvasStyle),
+      dataSlotters: cloneDeep(dataSlotters)
     }
     snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot)).then(async (_) => {
       const count: number = await snapshotDb.snapshot.count()
@@ -118,12 +124,17 @@ class SnapshotState {
    * 保存记录
    * @param canvasData 组件数据
    * @param canvasStyle 组件样式
+   * @param dataSlotters  数据插槽
    */
-  saveSnapshot(canvasData: ComponentDataType[], canvasStyle: CanvasStyleData) {
+  saveSnapshot(
+    canvasData: ComponentDataType[],
+    canvasStyle: CanvasStyleData,
+    dataSlotters: Array<{ type: string; config: any }>
+  ) {
     if (this.timeHandler) {
       clearTimeout(this.timeHandler)
     }
-    this.timeHandler = setTimeout(this.recordSnapshot, 300, canvasData, canvasStyle)
+    this.timeHandler = setTimeout(this.recordSnapshot, 300, canvasData, canvasStyle, dataSlotters)
   }
 }
 

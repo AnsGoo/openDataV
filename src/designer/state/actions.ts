@@ -1,18 +1,22 @@
 import { reactive } from 'vue'
 
 import { componentList } from '@/designer/load'
+import type { Location, Position } from '@/designer/type'
 import type { CustomComponent } from '@/models'
-import type { Position } from '@/types/common'
-import type { AreaData } from '@/types/storeTypes'
-import { calcComponentsRect, createGroupStyle, getComponentRealRect } from '@/utils/utils'
 
-import { getSelectComponents } from '../utils'
+import {
+  calcComponentsRect,
+  createGroupStyle,
+  getComponentRealRect,
+  getSelectComponents
+} from '../utils'
 import useCanvasState from './canvas'
+import type { SelectedAreaData } from './type'
 
 const canvasState = useCanvasState()
 
 class ActionState {
-  public state = reactive<AreaData>({
+  public state = reactive<SelectedAreaData>({
     style: {
       top: 0,
       left: 0,
@@ -61,7 +65,7 @@ class ActionState {
    * 给定区域获取该区域的组件
    * @param position
    */
-  setSelectComponents(position: Position) {
+  setSelectComponents(position: Location) {
     const { components, rect } = getSelectComponents(position, canvasState.componentData) || {}
     if (components && rect) {
       this.style.left = rect.left

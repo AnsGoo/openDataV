@@ -1,7 +1,7 @@
-import { ComponentGroup, ContainerType, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import type { MetaContainerItem } from '@/designer/type'
+import { ComponentGroup, FormType } from '@/enum'
+import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'StereoscopicBarChart'
 class StereoscopicBarChartComponent extends CustomComponent {
@@ -14,10 +14,7 @@ class StereoscopicBarChartComponent extends CustomComponent {
       width: 500,
       height: 170,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL,
-      defaultViewType: {
-        propValue: ContainerType.FORM
-      }
+      dataMode: DataMode.UNIVERSAL
     })
   }
 

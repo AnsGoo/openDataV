@@ -1,5 +1,5 @@
-import type { ComponentDataType } from '@/types/component'
-import type { CanvasStyleData } from '@/types/storeTypes'
+import type { CanvasStyleData } from '@/designer/state/type'
+import type { ComponentDataType } from '@/designer/type'
 
 export interface LayoutData {
   id?: string
@@ -11,6 +11,7 @@ export interface LayoutData {
   canvasData: ComponentDataType[]
   canvasStyle: CanvasStyleData
   isPublish?: boolean
+  dataSlotters: Array<{ type: string; config: any }>
 }
 
 export type SimpleLayoutData = Omit<LayoutData, 'canvasStyle' | 'canvasData'>

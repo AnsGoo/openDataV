@@ -1,7 +1,7 @@
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Group'
 class GroupComponent extends CustomComponent {
@@ -14,7 +14,7 @@ class GroupComponent extends CustomComponent {
       id,
       width: 200,
       height: 200,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataMode: DataMode.UNIVERSAL
     })
   }
 

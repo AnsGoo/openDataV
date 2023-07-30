@@ -1,6 +1,6 @@
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'Image'
 class ImageComponent extends CustomComponent {
@@ -19,7 +19,7 @@ class ImageComponent extends CustomComponent {
   _style: MetaContainerItem[] = [
     {
       label: '背景设置',
-      prop: 'background',
+      prop: 'back',
       children: [
         {
           prop: 'background',

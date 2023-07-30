@@ -1,9 +1,9 @@
 import { h } from 'vue'
 
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 export const componentName = 'MapChart'
 class MapChartComponent extends CustomComponent {
@@ -16,7 +16,7 @@ class MapChartComponent extends CustomComponent {
       width: 490,
       height: 408,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataMode: DataMode.UNIVERSAL
     })
   }
 

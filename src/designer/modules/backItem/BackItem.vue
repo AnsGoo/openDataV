@@ -26,11 +26,11 @@ import { NColorPicker, NSelect, NSpace } from 'naive-ui'
 import { onMounted, ref } from 'vue'
 
 import { GlobalColorSwatches } from '@/enum'
-import type { BackgroundColor, BackgroundImage } from '@/types/common'
 
 import LinearGradient from '../linearGradient'
 import type { Gradient } from '../linearGradient/type'
 import BackImage from './BackImage.vue'
+import type { BackgroundColor, BackgroundImage } from './type'
 
 const props = defineProps<{
   value: BackgroundColor | Gradient | BackgroundImage

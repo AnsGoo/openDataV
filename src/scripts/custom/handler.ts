@@ -1,6 +1,5 @@
-import { makeFunction } from '@/utils/data'
-
 import type { BaseScript } from '../base'
+import { makeFunction } from './utils'
 
 class CustomScript implements BaseScript {
   public type = 'Custom'

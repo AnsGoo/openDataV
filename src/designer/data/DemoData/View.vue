@@ -26,13 +26,17 @@ import { cloneDeep } from 'lodash-es'
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
-import { DataType } from '@/enum/data'
-import type { CustomComponent } from '@/models'
+import type { Slotter } from '@/apiView/type'
 
 import DataHandler from './handler'
 
+interface CutomeSlotter extends Slotter {
+  exampleData: any
+  propValue: any
+}
+
 const props = defineProps<{
-  curComponent: CustomComponent
+  slotter: CutomeSlotter
 }>()
 const isShow = ref<boolean>(false)
 
@@ -47,29 +51,29 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const dataConfig = props.curComponent.dataConfig
+  const dataConfig = props.slotter.dataConfig
 
-  if (dataConfig && dataConfig.type === DataType.DEMO) {
-    const demoRequest = props.curComponent.dataConfig?.requestConfig as DataHandler
+  if (dataConfig && dataConfig.type === 'DEMO') {
+    const demoRequest = props.slotter.dataConfig?.dataInstance as DataHandler
     if (demoRequest) {
-      const resp = await demoRequest.getRespData({ propValue: props.curComponent.propValue })
+      const resp = await demoRequest.getRespData({ propValue: props.slotter.propValue })
       formData.data = JSON.stringify(resp.data, null, '\t')
     }
   } else {
-    const exampleData = props.curComponent.exampleData
+    const exampleData = props.slotter.exampleData
     const dataConfig = {
-      type: DataType.DEMO,
-      requestConfig: new DataHandler({
+      type: 'DEMO',
+      dataInstance: new DataHandler({
         data: cloneDeep(exampleData)
       })
     }
-    await props.curComponent.changeRequestDataConfig(dataConfig)
+    await props.slotter.changeDataConfig(dataConfig)
   }
 }
 
 watch(
-  () => props.curComponent,
-  (value: CustomComponent) => {
+  () => props.slotter,
+  (value) => {
     if (value) {
       initData()
     }

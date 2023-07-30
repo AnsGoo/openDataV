@@ -9,8 +9,6 @@ import {
   NForm,
   NFormItem,
   NSelect,
-  NTabPane,
-  NTabs,
   NTimeline,
   NTimelineItem
 } from 'naive-ui'
@@ -21,7 +19,7 @@ import useEmpty from '@/designer/modules/Empty'
 import useDataState from '@/designer/state/data'
 import useScriptState from '@/designer/state/scripts'
 import { ContainerType } from '@/enum'
-import { DataIntegrationMode, DataType } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import type { CustomComponent } from '@/models'
 
 export default defineComponent({
@@ -35,7 +33,7 @@ export default defineComponent({
   setup(props) {
     const dataState = useDataState()
     const scriptState = useScriptState()
-    const dataType = ref<string>(DataType.DEMO)
+    const dataType = ref<string>('DEMO')
     const scriptType = ref<string | null>(null)
     watch(
       () => props.curComponent,
@@ -49,7 +47,18 @@ export default defineComponent({
       },
       { deep: true, immediate: true }
     )
+
+    const componentDataTypes = ref<Array<{ label: string; value: string }>>([])
+
     onMounted(() => {
+      const keys = Object.keys(dataState.componentPlugins)
+      keys.forEach((el) => {
+        const plugin = dataState.componentPlugins[el]
+        componentDataTypes.value.push({
+          label: plugin.name,
+          value: plugin.type
+        })
+      })
       const dataConfig = props.curComponent.dataConfig
       if (dataConfig) {
         dataType.value = dataConfig.type
@@ -63,7 +72,7 @@ export default defineComponent({
       const plugin = dataState.getPlugin(dataType.value)
       const DataComponent = plugin ? plugin.component : useEmpty('未发现相应的数据插件')
       // @ts-ignore
-      return <DataComponent curComponent={props.curComponent} />
+      return <DataComponent slotter={props.curComponent} />
     }
 
     const renderScriptComponent = () => {
@@ -73,7 +82,7 @@ export default defineComponent({
       const plugin = scriptState.getPlugin(scriptType.value)
       const PluginComponent = plugin ? plugin.component : useEmpty('未发现相应的脚本插件')
       // @ts-ignore
-      return <PluginComponent curComponent={props.curComponent} />
+      return <PluginComponent slotter={props.curComponent} />
     }
 
     const typeChanged = (type: string) => {
@@ -87,7 +96,7 @@ export default defineComponent({
             <NSelect
               v-model:value={dataType.value}
               placeholder="请选择数据类型"
-              options={dataState.allDataType}
+              options={componentDataTypes.value}
               onUpdateValue={(type: string) => typeChanged(type)}
               clearable={true}
             />
@@ -113,7 +122,7 @@ export default defineComponent({
       )
     }
     const renderContainer = () => {
-      const mode = props.curComponent.defaultViewType.data as ContainerType
+      const mode = props.curComponent.defaultViewType as ContainerType
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
@@ -126,31 +135,20 @@ export default defineComponent({
               </NCollapseItem>
             </NCollapse>
           )
-        case ContainerType.TABS:
-          return (
-            <NTabs type="line">
-              <NTabPane tab="数据选择" name="dataType">
-                {renderData()}
-              </NTabPane>
-              <NTabPane tab="脚本配置" name="scriptOptions">
-                {renderScript()}
-              </NTabPane>
-            </NTabs>
-          )
         case ContainerType.CARD:
           return (
             <>
-              <NCard title="数据选择" size="small">
+              <NCard title="数据选择" size="small" style={{ marginBottom: '0.25rem' }}>
                 {renderData()}
               </NCard>
-              <NCard title="脚本配置" size="small">
+              <NCard title="脚本配置" size="small" style={{ marginBottom: '0.25rem' }}>
                 {renderScript()}
               </NCard>
             </>
           )
         case ContainerType.FORM:
           return (
-            <>
+            <div style={{ padding: '0 1rem' }}>
               <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {'数据选择'}
               </NDivider>
@@ -159,7 +157,7 @@ export default defineComponent({
                 {'脚本配置'}
               </NDivider>
               {renderScript()}
-            </>
+            </div>
           )
         case ContainerType.TIMELINE:
           return (
@@ -175,7 +173,7 @@ export default defineComponent({
       }
     }
     return () =>
-      props.curComponent.dataIntegrationMode === DataIntegrationMode.UNIVERSAL ? (
+      props.curComponent.dataMode === DataMode.UNIVERSAL ? (
         renderContainer()
       ) : (
         <NDescriptions>

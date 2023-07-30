@@ -1,5 +1,5 @@
 import { ComponentGroup } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
 
 export const componentName = 'ComChart'
@@ -13,7 +13,7 @@ class ComChartComponent extends CustomComponent {
       width: 500,
       height: 170,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataMode: DataMode.UNIVERSAL
     })
   }
 }

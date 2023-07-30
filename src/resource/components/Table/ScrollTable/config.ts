@@ -1,9 +1,9 @@
 import { h, shallowRef } from 'vue'
 
+import type { MetaContainerItem } from '@/designer/type'
 import { ComponentGroup, FormType } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
+import { DataMode } from '@/enum/data'
 import { CustomComponent } from '@/models'
-import type { MetaContainerItem } from '@/types/component'
 
 import ScrollTableForm from './Form.vue'
 
@@ -18,7 +18,7 @@ class ScrollTableComponent extends CustomComponent {
       width: 400,
       height: 100,
       icon,
-      dataIntegrationMode: DataIntegrationMode.UNIVERSAL
+      dataMode: DataMode.UNIVERSAL
     })
   }
 

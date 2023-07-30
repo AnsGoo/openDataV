@@ -1,6 +1,8 @@
 import type { Method } from 'axios'
 
-import type { AfterScript } from '@/types/component'
+export interface AfterScript {
+  code: string
+}
 
 export interface StaticDataDetail {
   readonly id: string
