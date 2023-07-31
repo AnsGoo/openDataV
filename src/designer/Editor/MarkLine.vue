@@ -12,12 +12,11 @@
 </template>
 
 <script setup lang="ts">
+import { StaticKey, useEventBus } from 'open-data-v/bus'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { Location } from 'open-data-v/designer/type'
+import type { CustomComponent } from 'open-data-v/models'
 import { reactive, ref } from 'vue'
-
-import { StaticKey, useEventBus } from '@/bus'
-import useCanvasState from '@/designer/state/canvas'
-import type { Location } from '@/designer/type'
-import type { CustomComponent } from '@/models'
 
 import { calcComponentAxis } from '../utils'
 

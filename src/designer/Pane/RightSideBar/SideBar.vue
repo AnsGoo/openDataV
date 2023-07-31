@@ -69,9 +69,8 @@
 <script setup lang="ts">
 import type { MenuOption } from 'naive-ui'
 import { NMenu, NTabPane, NTabs } from 'naive-ui'
+import useCanvasState from 'open-data-v/designer/state/canvas'
 import { computed, getCurrentInstance, h, ref } from 'vue'
-
-import useCanvasState from '@/designer/state/canvas'
 
 import AttrList from './AttrModule'
 import Canvas from './CanvasModules/Canvas.vue'

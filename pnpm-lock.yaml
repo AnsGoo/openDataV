@@ -47,6 +47,7 @@ importers:
       mockjs: ^1.1.0
       naive-ui: ^2.34.4
       nprogress: ^0.2.0
+      open-data-v: ./src
       pinia: ^2.1.6
       postcss: ^8.4.27
       postcss-html: ^1.5.0
@@ -115,6 +116,7 @@ importers:
       husky: 7.0.4
       less: 4.1.3
       mockjs: 1.1.0
+      open-data-v: link:src
       postcss: 8.4.27
       postcss-html: 1.5.0
       postcss-less: 6.0.0_postcss@8.4.27
@@ -129,16 +131,16 @@ importers:
       vue-eslint-parser: 7.11.0_eslint@7.32.0
       vue-tsc: 1.8.6_typescript@4.9.5
 
-  src/resource/components/Basic/Image:
+  resource/components/Basic/Image:
     specifiers: {}
 
-  src/resource/components/Basic/Video/FlvVideo:
+  resource/components/Basic/Video/FlvVideo:
     specifiers:
       flv.js: ^1.6.2
     dependencies:
       flv.js: 1.6.2
 
-  src/resource/components/Border:
+  resource/components/Border:
     specifiers:
       '@types/tinycolor2': ^1.4.3
       tinycolor2: ^1.4.2
@@ -147,58 +149,58 @@ importers:
     devDependencies:
       '@types/tinycolor2': 1.4.3
 
-  src/resource/components/Border/BorderBox1:
+  resource/components/Border/BorderBox1:
     specifiers: {}
 
-  src/resource/components/Border/BorderBox2:
+  resource/components/Border/BorderBox2:
     specifiers: {}
 
-  src/resource/components/Border/BorderBox3:
+  resource/components/Border/BorderBox3:
     specifiers: {}
 
-  src/resource/components/Border/BorderBox4:
+  resource/components/Border/BorderBox4:
     specifiers: {}
 
-  src/resource/components/Border/BorderBox5:
+  resource/components/Border/BorderBox5:
     specifiers: {}
 
-  src/resource/components/Border/BorderBox6:
+  resource/components/Border/BorderBox6:
     specifiers: {}
 
-  src/resource/components/Container/Tabs:
+  resource/components/Container/Tabs:
     specifiers: {}
 
-  src/resource/components/Decoration/Decoration1:
+  resource/components/Decoration/Decoration1:
     specifiers: {}
 
-  src/resource/components/Decoration/Decoration2:
+  resource/components/Decoration/Decoration2:
     specifiers: {}
 
-  src/resource/components/Decoration/Decoration3:
+  resource/components/Decoration/Decoration3:
     specifiers: {}
 
-  src/resource/components/Decoration/Decoration4:
+  resource/components/Decoration/Decoration4:
     specifiers: {}
 
-  src/resource/components/Gauge/Gauge1:
+  resource/components/Gauge/Gauge1:
     specifiers: {}
 
-  src/resource/components/Progress/Progress:
+  resource/components/Progress/Progress:
     specifiers: {}
 
-  src/resource/components/Progress/RankBoard:
+  resource/components/Progress/RankBoard:
     specifiers: {}
 
-  src/resource/components/Table:
+  resource/components/Table:
     specifiers: {}
 
-  src/resource/components/Text:
+  resource/components/Text:
     specifiers:
       dayjs: ^1.11.5
     dependencies:
       dayjs: 1.11.7
 
-  src/resource/components/echarts:
+  resource/components/echarts:
     specifiers:
       echarts: ^5.3.3
       echarts-liquidfill: ^3.1.0

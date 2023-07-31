@@ -14,12 +14,11 @@ import {
   NTimeline,
   NTimelineItem
 } from 'naive-ui'
+import useEmpty from 'open-data-v/designer/modules/Empty'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import useDataState from 'open-data-v/designer/state/data'
+import { ContainerType } from 'open-data-v/enum'
 import { computed, defineComponent, onMounted, ref } from 'vue'
-
-import useEmpty from '@/designer/modules/Empty'
-import useCanvasState from '@/designer/state/canvas'
-import useDataState from '@/designer/state/data'
-import { ContainerType } from '@/enum'
 
 const canvasState = useCanvasState()
 

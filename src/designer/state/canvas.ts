@@ -1,24 +1,24 @@
 import { cloneDeep } from 'lodash-es'
-import { reactive } from 'vue'
-
-import type { LayoutData } from '@/api/pages'
-import { eventBus } from '@/bus'
-import { EditMode } from '@/designer/const'
-import { DataSlotter } from '@/designer/state/slotter'
-import type { CanvasData } from '@/designer/state/type'
+import { eventBus } from 'open-data-v/bus'
+import { EditMode } from 'open-data-v/designer/const'
+import { DataSlotter } from 'open-data-v/designer/state/slotter'
+import type { CanvasData } from 'open-data-v/designer/state/type'
 import type {
   ComponentDataType,
   DOMRectStyle,
   GroupStyle,
   MetaContainerItem,
   Vector
-} from '@/designer/type'
-import { ContainerType, FormType } from '@/enum'
-import PixelEnum from '@/enum/pixel'
-import type { CustomComponent } from '@/models'
-import type { DataInstance } from '@/models/type'
-import { buildModeValue, updateModeValue } from '@/models/utils'
-import { message } from '@/utils/message'
+} from 'open-data-v/designer/type'
+import { ContainerType, FormType } from 'open-data-v/enum'
+import PixelEnum from 'open-data-v/enum/pixel'
+import type { CustomComponent } from 'open-data-v/models'
+import type { DataInstance } from 'open-data-v/models/type'
+import { buildModeValue, updateModeValue } from 'open-data-v/models/utils'
+import { message } from 'open-data-v/utils/message'
+import { reactive } from 'vue'
+
+import type { LayoutData } from '@/api/pages'
 
 import {
   calcComponentsRect,

@@ -1,6 +1,5 @@
+import type { CustomComponent } from 'open-data-v/models'
 import { onMounted, onUnmounted } from 'vue'
-
-import type { CustomComponent } from '@/models'
 
 export const useData = (
   component: CustomComponent,

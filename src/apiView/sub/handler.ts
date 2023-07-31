@@ -1,5 +1,5 @@
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from '@/apiView/type'
-import { eventBus, useEventBus } from '@/bus'
+import type { DataAcceptor, DataInstance, RequestOptions, Response } from 'open-data-v/apiView/type'
+import { eventBus, useEventBus } from 'open-data-v/bus'
 
 class SubRequestData implements DataInstance {
   public channel: string

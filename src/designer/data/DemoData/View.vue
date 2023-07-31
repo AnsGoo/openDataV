@@ -24,9 +24,8 @@
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import type { Slotter } from 'open-data-v/apiView/type'
 import { onMounted, reactive, ref, watch } from 'vue'
-
-import type { Slotter } from '@/apiView/type'
 
 import DataHandler from './handler'
 

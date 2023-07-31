@@ -14,9 +14,6 @@ import {
   NSelect,
   NSwitch
 } from 'naive-ui'
-import type { PropType } from 'vue'
-import { defineComponent, h, ref, watch } from 'vue'
-
 import type {
   CustomFormSchema,
   FormItemProps,
@@ -27,8 +24,10 @@ import type {
   RadioFormSchema,
   SelectFormSchema,
   SwitchFormSchema
-} from '@/designer/type'
-import { FormType, GlobalColorSwatches } from '@/enum'
+} from 'open-data-v/designer/type'
+import { FormType, GlobalColorSwatches } from 'open-data-v/enum'
+import type { PropType } from 'vue'
+import { defineComponent, h, ref, watch } from 'vue'
 
 import ArrayItem from '../arrayItem'
 import BackItem from '../backItem'

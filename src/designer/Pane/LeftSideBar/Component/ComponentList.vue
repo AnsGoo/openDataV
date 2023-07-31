@@ -7,12 +7,11 @@
 <script setup lang="ts">
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
+import { componentList } from 'open-data-v/designer/load'
+import type { GroupType } from 'open-data-v/enum'
+import { ComponentGroupList } from 'open-data-v/enum'
+import type { CustomComponent } from 'open-data-v/models'
 import { computed, getCurrentInstance, h } from 'vue'
-
-import { componentList } from '@/designer/load'
-import type { GroupType } from '@/enum'
-import { ComponentGroupList } from '@/enum'
-import type { CustomComponent } from '@/models'
 
 import ComponentItem from './ComponentItem.vue'
 

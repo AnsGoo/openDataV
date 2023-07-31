@@ -50,21 +50,20 @@
 </template>
 
 <script setup lang="ts">
+import { EditMode } from 'open-data-v/designer/const'
+import Area from 'open-data-v/designer/Editor/Area.vue'
+import Grid from 'open-data-v/designer/Editor/Grid.vue'
+import MarkLine from 'open-data-v/designer/Editor/MarkLine.vue'
+import Ruler from 'open-data-v/designer/Editor/Ruler.vue'
+import Shape from 'open-data-v/designer/Editor/Shape'
+import useActionState from 'open-data-v/designer/state/actions'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import useClipBoardState from 'open-data-v/designer/state/clipBoard'
+import type { Location, Vector } from 'open-data-v/designer/type'
+import { DataMode } from 'open-data-v/enum/data'
+import type { CustomComponent } from 'open-data-v/models'
+import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/types'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
-
-import { EditMode } from '@/designer/const'
-import Area from '@/designer/Editor/Area.vue'
-import Grid from '@/designer/Editor/Grid.vue'
-import MarkLine from '@/designer/Editor/MarkLine.vue'
-import Ruler from '@/designer/Editor/Ruler.vue'
-import Shape from '@/designer/Editor/Shape'
-import useActionState from '@/designer/state/actions'
-import useCanvasState from '@/designer/state/canvas'
-import useClipBoardState from '@/designer/state/clipBoard'
-import type { Location, Vector } from '@/designer/type'
-import { DataMode } from '@/enum/data'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 
 import { componentList } from '../load'
 import {

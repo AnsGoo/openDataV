@@ -1,7 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-
-import type { DataAcceptor, DataInstance, Response } from '@/apiView/type'
-import { Logger } from '@/apiView/utils'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/apiView/type'
+import { Logger } from 'open-data-v/apiView/utils'
 
 import type { WebsocketOption } from './type'
 

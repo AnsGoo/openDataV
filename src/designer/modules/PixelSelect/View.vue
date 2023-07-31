@@ -31,11 +31,10 @@
 
 <script setup lang="ts">
 import { NColorPicker, NFormItem, NInput, NInputNumber, NSelect } from 'naive-ui'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import { FormType } from 'open-data-v/enum'
+import PixelEnum from 'open-data-v/enum/pixel'
 import { computed, ref } from 'vue'
-
-import useCanvasState from '@/designer/state/canvas'
-import { FormType } from '@/enum'
-import PixelEnum from '@/enum/pixel'
 
 import BackItem from '../../modules/backItem'
 import type { CanvasStyleData } from '../../state/type'

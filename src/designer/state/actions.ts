@@ -1,8 +1,7 @@
+import { componentList } from 'open-data-v/designer/load'
+import type { Location, Position } from 'open-data-v/designer/type'
+import type { CustomComponent } from 'open-data-v/models'
 import { reactive } from 'vue'
-
-import { componentList } from '@/designer/load'
-import type { Location, Position } from '@/designer/type'
-import type { CustomComponent } from '@/models'
 
 import {
   calcComponentsRect,

@@ -1,14 +1,13 @@
 <template>
   <Container :config="config" :data="formData" :mode="mode" @change="changed" />
 </template>
-import Container from '@/designer/modules/form/Container'
+import Container from 'open-data-v/designer/modules/form/Container'
 <script setup lang="ts">
+import Container from 'open-data-v/designer/modules/form/Container'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { MetaContainerItem } from 'open-data-v/designer/type'
+import type { ContainerType } from 'open-data-v/enum'
 import { computed, ref } from 'vue'
-
-import Container from '@/designer/modules/form/Container'
-import useCanvasState from '@/designer/state/canvas'
-import type { MetaContainerItem } from '@/designer/type'
-import type { ContainerType } from '@/enum'
 
 const canvasState = useCanvasState()
 const config = computed<Array<MetaContainerItem>>(() => canvasState.canvasStyleConfig.formItems!)

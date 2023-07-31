@@ -31,9 +31,8 @@
 <script lang="ts" setup>
 import { isNumber } from 'lodash-es'
 import { NInput, NSpace } from 'naive-ui'
+import { message } from 'open-data-v/utils/message'
 import { nextTick, reactive, ref } from 'vue'
-
-import { message } from '@/utils/message'
 
 const props = withDefaults(
   defineProps<{
