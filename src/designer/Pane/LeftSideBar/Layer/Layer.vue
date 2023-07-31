@@ -27,8 +27,7 @@ import type { CustomComponent } from 'open-data-v/models'
 import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/types'
 import { computed, h, ref, watch } from 'vue'
 
-import { uuid } from '@/utils/utils'
-
+import { uuid } from '../../../utils'
 import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'
 
