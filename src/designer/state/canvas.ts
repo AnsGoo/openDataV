@@ -18,8 +18,6 @@ import { buildModeValue, updateModeValue } from 'open-data-v/models/utils'
 import { message } from 'open-data-v/utils/message'
 import { reactive } from 'vue'
 
-import type { LayoutData } from '@/api/pages'
-
 import {
   calcComponentsRect,
   createComponent,
@@ -31,7 +29,7 @@ import {
 } from '../utils'
 import useDataState from './data'
 import useSnapShotState from './snapshot'
-import type { CanvasStyleConfig, CanvasStyleData } from './type'
+import type { CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
 
 const dataState = useDataState()
 

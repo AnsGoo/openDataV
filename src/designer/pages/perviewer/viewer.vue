@@ -13,9 +13,7 @@ import type { CustomComponent } from 'open-data-v/models'
 import hooks from 'open-data-v/models/hooks'
 import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
 
-import type { LayoutData } from '@/api/pages'
-
-import type { CanvasStyleData } from '../../state/type'
+import type { CanvasStyleData, LayoutData } from '../../state/type'
 import { backgroundToCss, filterStyle, pageScale } from '../../utils'
 
 provide('HOOKS', readonly(hooks))
