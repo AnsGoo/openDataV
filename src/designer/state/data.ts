@@ -4,9 +4,6 @@ import WebsocketDataPlugin from 'open-data-v/apiView/websocket'
 import DemoDataPlugin from 'open-data-v/designer/data/DemoData'
 import { reactive } from 'vue'
 
-import QuickDataPlugin from '@/data/Quick'
-import RestDataPlugin from '@/data/Rest'
-
 interface DataPlugin {
   type: string
   name: string
@@ -21,8 +18,6 @@ class DataState {
     plugins: {
       [DemoDataPlugin.type]: DemoDataPlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
-      [RestDataPlugin.type]: RestDataPlugin,
-      [QuickDataPlugin.type]: QuickDataPlugin,
       [SubDataPlugin.type]: SubDataPlugin,
       [WebsocketDataPlugin.type]: WebsocketDataPlugin
     }
@@ -60,6 +55,14 @@ class DataState {
 
   public getPlugin(type: string) {
     return this.plugins[type]
+  }
+
+  public loadPlugins(plugins: Array<DataPlugin>) {
+    plugins.forEach((el) => {
+      if (!this.plugins[el.type]) {
+        this.plugins[el.type] = el
+      }
+    })
   }
 }
 
