@@ -116,6 +116,7 @@ class CanvasState {
     ids: new Set(),
     benchmarkComponent: undefined,
     globalSlotters: {},
+    darkTheme: true,
     scale: 1,
     canvasStyleConfig: {
       formItems: baseCanvasStyleConfig,
@@ -140,6 +141,14 @@ class CanvasState {
 
   get canvasStyleConfig(): CanvasStyleConfig {
     return this.state.canvasStyleConfig
+  }
+
+  get darkTheme(): boolean {
+    return this.state.darkTheme
+  }
+
+  set darkTheme(value: boolean) {
+    this.state.darkTheme = value
   }
 
   get globalSlotters() {

@@ -29,6 +29,7 @@ export interface CanvasData {
   ids: Set<string>
   benchmarkComponent: Optional<CustomComponent>
   scale: number
+  darkTheme: boolean
   canvasStyleConfig: CanvasStyleConfig
   globalSlotters: Record<string, DataSlotter>
 }

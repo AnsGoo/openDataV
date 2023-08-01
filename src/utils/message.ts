@@ -1,12 +1,11 @@
 import type { ConfigProviderProps } from 'naive-ui'
 import { createDiscreteApi, darkTheme, lightTheme } from 'naive-ui'
+import useCanvasState from 'open-data-v/designer/state/canvas'
 import { computed } from 'vue'
 
-import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
-
-const projectStore = useProjectSettingStoreWithOut()
+const canvasState = useCanvasState()
 const configProviderPropsRef = computed<ConfigProviderProps>(() => ({
-  theme: !projectStore.darkTheme ? lightTheme : darkTheme
+  theme: !canvasState.darkTheme ? lightTheme : darkTheme
 }))
 const { message, dialog, notification, loadingBar } = createDiscreteApi(
   ['message', 'dialog', 'notification', 'loadingBar'],
