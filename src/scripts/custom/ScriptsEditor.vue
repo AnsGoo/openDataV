@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
-import { Logger } from '@/utils/utils'
+const Logger = console
 
 const savedStatus = ref<boolean>(true)
 const props = withDefaults(

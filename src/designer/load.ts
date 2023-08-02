@@ -3,9 +3,9 @@ import type { CustomComponent } from 'open-data-v/models'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
-import { Logger } from '@/utils/utils'
-
 import Group from './components/Group'
+
+const Logger = console
 
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}

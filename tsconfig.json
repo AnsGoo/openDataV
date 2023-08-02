@@ -24,7 +24,7 @@
     "noUnusedLocals": false, // 检查只声明、未使用的局部变量(只提示不报错)
     "noUnusedParameters": true, // 检查未使用的函数参数(只提示不报错)
     "removeComments": true, // 移除代码中的注释
-    "typeRoots":["node_modules/@types", "examples/types", "examples/types/*.d.ts", "src/**/*.d.ts"], // 将这些文件夹下的包自动导入 TypeScript 声明
+    "typeRoots":["node_modules/@types", "src/**/*.d.ts", "examples/**/*.d.ts"], // 将这些文件夹下的包自动导入 TypeScript 声明
     "baseUrl": ".",
     "paths": {
       "@/*": ["./examples/*"],
