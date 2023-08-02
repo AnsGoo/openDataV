@@ -1,7 +1,7 @@
+import { eventBus } from 'open-data-v/bus'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import useSnapShotState from 'open-data-v/designer/state/snapshot'
 import type { ComponentDataType } from 'open-data-v/designer/type'
-import { message } from 'open-data-v/utils/message'
 
 import type { StoreComponentData } from './db'
 import type { CanvasStyleData } from './state/type'
@@ -19,7 +19,7 @@ const undo = async () => {
       dataSlotters: snapshot.dataSlotters
     })
   } else {
-    message.warning('没有快照了')
+    eventBus.emit('stdout', { type: 'warn', message: '没有快照了', form: 'handle' })
   }
 }
 
@@ -32,7 +32,7 @@ const recoveryDraft = async () => {
       dataSlotters: snapshot.dataSlotters
     })
   } else {
-    message.warning('没有快照了')
+    eventBus.emit('stdout', { type: 'warn', message: '没有快照了', from: 'handle' })
   }
 }
 const setShowEm = () => {

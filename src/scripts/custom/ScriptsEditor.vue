@@ -18,9 +18,8 @@
 </template>
 
 <script lang="ts" setup>
+import { eventBus } from 'open-data-v/bus'
 import { onMounted, ref } from 'vue'
-
-const Logger = console
 
 const savedStatus = ref<boolean>(true)
 const props = withDefaults(
@@ -49,7 +48,7 @@ const handleSubmit = () => {
   emits('change', props.code)
   emits('update:code', props.code)
   savedStatus.value = true
-  Logger.info('保存成功')
+  eventBus.emit('stdout', { type: 'info', message: '保存成功', from: 'handle' })
 }
 
 onMounted(async () => {})

@@ -590,4 +590,3 @@ export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
     return false
   }
 }
-export const Logger = console

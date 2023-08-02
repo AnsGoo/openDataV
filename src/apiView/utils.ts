@@ -1,5 +1,3 @@
-export const Logger = console
-
 export const uuid = (hasHyphen?: string) => {
   return (
     hasHyphen ? 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx' : 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'

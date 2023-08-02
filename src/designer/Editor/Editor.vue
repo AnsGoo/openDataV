@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import { eventBus } from 'open-data-v/bus'
 import { EditMode } from 'open-data-v/designer/const'
 import Area from 'open-data-v/designer/Editor/Area.vue'
 import Grid from 'open-data-v/designer/Editor/Grid.vue'
@@ -71,7 +72,6 @@ import {
   createComponent,
   filterStyle,
   getComponentShapeStyle,
-  Logger,
   uuid
 } from '../utils'
 
@@ -110,14 +110,14 @@ const contextmenus = (): ContextmenuItem[] => {
 }
 
 onMounted(() => {
-  Logger.log('进入编辑模式')
+  eventBus.emit('stdout', { type: 'info', message: '进入编辑模式', from: 'system' })
   canvasState.setEditMode(EditMode.EDIT)
   document.addEventListener('paste', pasteComponent)
   document.addEventListener('copy', copyComponent)
 })
 
 onUnmounted(() => {
-  Logger.log('进入预览模式')
+  eventBus.emit('stdout', { type: 'info', message: '进入预览模式', from: 'system' })
   canvasState.setEditMode(EditMode.PREVIEW)
   document.removeEventListener('paste', pasteComponent)
   document.removeEventListener('copy', copyComponent)

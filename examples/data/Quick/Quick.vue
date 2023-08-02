@@ -32,7 +32,6 @@ import type { SelectOption } from 'naive-ui'
 import { NButton, NInput, NInputGroup, NSelect } from 'naive-ui'
 import StaticContent from 'open-data-v/apiView/static/DataView.vue'
 import { StaticKey, useEventBus } from 'open-data-v/bus'
-import { message } from 'open-data-v/utils/message'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import type { StaticDataDetail } from '@/api/data'
@@ -42,6 +41,7 @@ import {
   getStaticDataListApi,
   updateStaticDataApi
 } from '@/api/data'
+import { message } from '@/utils/message'
 
 import type { StoreStaticOption } from './type'
 
@@ -149,7 +149,7 @@ const handleSave = async () => {
       formData.title = data.name
       formData.originData = data.data
       staticDataOptions.data = JSON.stringify(data.data, null, '\t')
-      Logger.info('数据保存成功')
+      message.info('数据保存成功')
       await loadStaticList()
     } else {
       message.warning('数据保存失败')
@@ -166,7 +166,7 @@ const handleUpdate = async () => {
       name: formData.title || '未命名'
     })
     if (resp.status === 200) {
-      Logger.info('数据更新成功')
+      message.info('数据更新成功')
       await loadStaticList()
     } else {
       message.warning('数据更新失败')

@@ -31,7 +31,6 @@
 <script lang="ts" setup>
 import { isNumber } from 'lodash-es'
 import { NInput, NSpace } from 'naive-ui'
-import { message } from 'open-data-v/utils/message'
 import { nextTick, reactive, ref } from 'vue'
 
 const props = withDefaults(
@@ -62,13 +61,11 @@ arrayValue.splice(0, props.value.length, ...props.value)
 
 const handleAdd = () => {
   if (!newValue.value.trim()) {
-    message.warning('请输入数据')
     return
   }
 
   const { maxItem } = props
   if (isNumber(maxItem) && arrayValue.length >= maxItem) {
-    message.warning(`最多 ${maxItem} 个输入框，添加失败`)
     return
   }
 
@@ -83,7 +80,6 @@ const handleAdd = () => {
 const handleDelete = (index: number) => {
   // minItem 有默认值，默认值为数值，不用再判断
   if (arrayValue.length <= props.minItem) {
-    message.warning(`最少 ${props.minItem} 个输入框，删除失败`)
     return
   }
   arrayValue.splice(index, 1)

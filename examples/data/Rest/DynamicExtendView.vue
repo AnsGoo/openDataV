@@ -37,7 +37,7 @@ import {
   recordabletoKV,
   requestOptionsToStore
 } from 'open-data-v/apiView/rest/utils'
-import { Logger, uuid } from 'open-data-v/apiView/utils'
+import { uuid } from 'open-data-v/apiView/utils'
 import { StaticKey, useEventBus } from 'open-data-v/bus'
 import { onMounted, reactive, ref } from 'vue'
 
@@ -48,6 +48,7 @@ import {
   updateRestDataApi
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
+import { message } from '@/utils/message'
 
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
@@ -218,12 +219,12 @@ const handleSave = async () => {
       const data: RestDataDetail = resp.data
       formData.id = data.id!
       formData.title = data.name
-      Logger.info('数据保存成功')
+      message.info('数据保存成功')
     } else {
-      Logger.warn('数据保存失败')
+      message.warning('数据保存失败')
     }
   } catch (err) {
-    Logger.warn('数据保存失败')
+    message.warning('数据保存失败')
   }
 }
 const handleUpdate = async () => {
@@ -240,12 +241,12 @@ const handleUpdate = async () => {
       params: params
     })
     if (resp.status === 200) {
-      Logger.info('数据更新成功')
+      message.info('数据更新成功')
     } else {
-      Logger.warn('数据更新失败')
+      message.warning('数据更新失败')
     }
   } catch (err) {
-    Logger.warn('数据更新失败')
+    message.warning('数据更新失败')
   }
 }
 
