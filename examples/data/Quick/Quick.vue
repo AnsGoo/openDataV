@@ -149,7 +149,7 @@ const handleSave = async () => {
       formData.title = data.name
       formData.originData = data.data
       staticDataOptions.data = JSON.stringify(data.data, null, '\t')
-      Logger.info('数据保存成功')
+      message.info('数据保存成功')
       await loadStaticList()
     } else {
       message.warning('数据保存失败')
@@ -166,7 +166,7 @@ const handleUpdate = async () => {
       name: formData.title || '未命名'
     })
     if (resp.status === 200) {
-      Logger.info('数据更新成功')
+      message.info('数据更新成功')
       await loadStaticList()
     } else {
       message.warning('数据更新失败')
