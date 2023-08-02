@@ -4,7 +4,8 @@
 
 <script setup lang="ts">
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Designer } from 'open-data-v/designer'
+import { useEventBus } from 'open-data-v/bus'
+import type { Designer } from 'open-data-v/designer'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import useDataState from 'open-data-v/designer/state/data'
 import { onMounted, ref, watch } from 'vue'
@@ -15,6 +16,28 @@ import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
 import useToolBars from '@/pages/DesigerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
+import { message } from '@/utils/message'
+
+useEventBus('stdout', (event) => {
+  const stdout = event as { type: string; from: string; message: any }
+  if (stdout.from === 'handle') {
+    let callback = message.info
+    if (stdout.type === 'error') {
+      callback = message.error
+    } else if (stdout.type === 'warn') {
+      callback = message.warning
+    }
+    callback(stdout.message)
+  } else {
+    let callback = console.info
+    if (stdout.type === 'error') {
+      callback = console.error
+    } else if (stdout.type === 'warn') {
+      callback = console.warn
+    }
+    callback(stdout.message)
+  }
+})
 
 const canvasState = useCanvasState()
 const dataState = useDataState()

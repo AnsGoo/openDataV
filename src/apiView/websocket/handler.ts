@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash-es'
 import type { DataAcceptor, DataInstance, Response } from 'open-data-v/apiView/type'
-import { Logger } from 'open-data-v/apiView/utils'
+import { eventBus } from 'open-data-v/bus'
 
 import type { WebsocketOption } from './type'
 
@@ -35,7 +35,7 @@ class WebsocketData implements DataInstance {
   private async wsconnect() {
     this.wsInstance = new WebSocket(this.options.url)
     this.wsInstance.addEventListener('open', () => {
-      Logger.info('wsOpen')
+      eventBus.emit('stdout', { type: 'info', message: 'wsOpen', from: 'data' })
     })
     const handlerData = (message) => {
       const response: Response = {
@@ -56,7 +56,7 @@ class WebsocketData implements DataInstance {
     }
     this.wsInstance.addEventListener('message', handlerData)
     this.wsInstance.addEventListener('error', (err) => {
-      Logger.error(err)
+      eventBus.emit('stdout', { type: 'info', message: err, from: 'data' })
       if (!this.options.isRetry) {
         return
       }

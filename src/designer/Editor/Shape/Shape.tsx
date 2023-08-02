@@ -9,7 +9,7 @@ import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 
 import { stretchedComponents } from '../../component'
-import { copyText, Logger, mod360, throttleFrame } from '../../utils'
+import { copyText, mod360, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
 
 export default defineComponent({
@@ -135,7 +135,7 @@ export default defineComponent({
     const errorInfo = ref<string>('')
 
     onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: string) => {
-      Logger.log(err)
+      eventBus.emit('stdout', { type: 'error', message: err, from: 'system' })
       if (info === 'render function') {
         if (canvasState.isEditMode) {
           if (instance) {

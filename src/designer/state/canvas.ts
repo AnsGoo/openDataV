@@ -15,7 +15,6 @@ import PixelEnum from 'open-data-v/enum/pixel'
 import type { CustomComponent } from 'open-data-v/models'
 import type { DataInstance } from 'open-data-v/models/type'
 import { buildModeValue, updateModeValue } from 'open-data-v/models/utils'
-import { message } from 'open-data-v/utils/message'
 import { reactive } from 'vue'
 
 import {
@@ -583,7 +582,7 @@ class CanvasState {
       swap(componentData, index, index - 1)
       this.saveComponentData()
     } else {
-      message.info('图层已经到底了')
+      eventBus.emit('stdout', { type: 'info', message: '图层已经到底了', from: 'handle' })
     }
   }
   /**
@@ -602,7 +601,7 @@ class CanvasState {
       swap(componentData, index, index + 1)
       this.saveComponentData()
     } else {
-      message.info('图层已经到顶了')
+      eventBus.emit('stdout', { type: 'info', message: '图层已经到顶了', from: 'handle' })
     }
   }
 
@@ -622,7 +621,7 @@ class CanvasState {
       componentData.push(myComponments[0])
       this.saveComponentData()
     } else {
-      message.info('图层已经到顶了')
+      eventBus.emit('stdout', { type: 'info', message: '图层已经到顶了', from: 'handle' })
     }
   }
   /**
@@ -641,7 +640,7 @@ class CanvasState {
       componentData.unshift(myComponments[0])
       this.saveComponentData()
     } else {
-      message.info('图层已经到底了')
+      eventBus.emit('stdout', { type: 'info', message: '图层已经到底了', from: 'handle' })
     }
   }
   /**

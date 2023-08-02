@@ -1,12 +1,10 @@
 import { NSpin } from 'naive-ui'
+import { eventBus } from 'open-data-v/bus'
 import type { CustomComponent } from 'open-data-v/models'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
 import Group from './components/Group'
-
-const Logger = console
-
 // 编辑器左侧组件列表
 const componentList: Record<string, any> = {}
 
@@ -45,7 +43,11 @@ const useLoadComponent = () => {
           })
           app.component(componentOptions.componentName, asyncComp)
         } else {
-          Logger.error(`${key} is not a valid component`)
+          eventBus.emit('stdout', {
+            type: 'error',
+            message: `${key} is not a valid component`,
+            from: 'sysem'
+          })
         }
       })
     }
