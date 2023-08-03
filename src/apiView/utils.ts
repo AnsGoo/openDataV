@@ -1,4 +1,6 @@
-export const uuid = (hasHyphen?: string) => {
+import { Logger } from '../bus'
+
+const uuid = (hasHyphen?: string) => {
   return (
     hasHyphen ? 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx' : 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'
   ).replace(/[xy]/g, function (c) {
@@ -7,3 +9,7 @@ export const uuid = (hasHyphen?: string) => {
     return v.toString(16)
   })
 }
+
+const dataLogger = new Logger('data')
+
+export { dataLogger, uuid }

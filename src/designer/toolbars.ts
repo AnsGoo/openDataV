@@ -1,11 +1,10 @@
-import { eventBus } from 'open-data-v/bus'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import useSnapShotState from 'open-data-v/designer/state/snapshot'
 import type { ComponentDataType } from 'open-data-v/designer/type'
 
 import type { StoreComponentData } from './db'
 import type { CanvasStyleData } from './state/type'
-import { exportRaw, importRaw } from './utils'
+import { exportRaw, handleLogger, importRaw } from './utils'
 
 const snapShotState = useSnapShotState()
 // 状态管理
@@ -19,7 +18,7 @@ const undo = async () => {
       dataSlotters: snapshot.dataSlotters
     })
   } else {
-    eventBus.emit('stdout', { type: 'warn', message: '没有快照了', form: 'handle' })
+    handleLogger.warn('没有快照了')
   }
 }
 
@@ -32,7 +31,7 @@ const recoveryDraft = async () => {
       dataSlotters: snapshot.dataSlotters
     })
   } else {
-    eventBus.emit('stdout', { type: 'warn', message: '没有快照了', from: 'handle' })
+    handleLogger.warn('没有快照了')
   }
 }
 const setShowEm = () => {

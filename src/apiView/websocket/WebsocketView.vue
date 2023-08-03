@@ -32,7 +32,7 @@
 </template>
 <script setup lang="ts">
 import { NButton, NButtonGroup, NCard, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
-import { eventBus } from 'open-data-v/bus'
+import { dataLogger } from 'open-data-v/apiView/utils'
 import { onUnmounted, reactive, ref } from 'vue'
 
 import type { WebsocketOption } from './type'
@@ -77,13 +77,13 @@ const connect = () => {
   close()
   wsInstance = new WebSocket(formData.url)
   wsInstance.onopen = () => {
-    eventBus.emit('stdout', { type: 'info', message: 'wsOpen', form: 'data' })
+    dataLogger.info('wsOpen')
   }
   wsInstance.onmessage = (message) => {
     response.value.data = message.data
   }
-  wsInstance.onerror = (err) => {
-    eventBus.emit('stdout', { type: 'error', message: err, from: 'data' })
+  wsInstance.onerror = (_err) => {
+    dataLogger.error('wsClose')
     close()
   }
 }
