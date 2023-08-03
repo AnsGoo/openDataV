@@ -10,6 +10,7 @@ import type {
   MetaContainerItem,
   Vector
 } from 'open-data-v/designer/type'
+import { handleLogger } from 'open-data-v/designer/utils'
 import { ContainerType, FormType } from 'open-data-v/enum'
 import PixelEnum from 'open-data-v/enum/pixel'
 import type { CustomComponent } from 'open-data-v/models'
@@ -582,7 +583,7 @@ class CanvasState {
       swap(componentData, index, index - 1)
       this.saveComponentData()
     } else {
-      eventBus.emit('stdout', { type: 'info', message: '图层已经到底了', from: 'handle' })
+      handleLogger.warn('图层已经到底了')
     }
   }
   /**
@@ -601,7 +602,7 @@ class CanvasState {
       swap(componentData, index, index + 1)
       this.saveComponentData()
     } else {
-      eventBus.emit('stdout', { type: 'info', message: '图层已经到顶了', from: 'handle' })
+      handleLogger.warn('图层已经到顶了')
     }
   }
 
@@ -621,7 +622,7 @@ class CanvasState {
       componentData.push(myComponments[0])
       this.saveComponentData()
     } else {
-      eventBus.emit('stdout', { type: 'info', message: '图层已经到顶了', from: 'handle' })
+      handleLogger.warn('图层已经到顶了')
     }
   }
   /**
@@ -640,7 +641,7 @@ class CanvasState {
       componentData.unshift(myComponments[0])
       this.saveComponentData()
     } else {
-      eventBus.emit('stdout', { type: 'info', message: '图层已经到底了', from: 'handle' })
+      handleLogger.warn('图层已经到底了')
     }
   }
   /**

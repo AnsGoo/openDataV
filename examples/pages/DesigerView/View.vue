@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
+import { StaticKey, useEventBus } from 'open-data-v/bus'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { useEventBus } from 'open-data-v/bus'
-import type { Designer } from 'open-data-v/designer'
+import { Designer } from 'open-data-v/designer'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import useDataState from 'open-data-v/designer/state/data'
 import { onMounted, ref, watch } from 'vue'
@@ -18,9 +18,9 @@ import useToolBars from '@/pages/DesigerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
 
-useEventBus('stdout', (event) => {
-  const stdout = event as { type: string; from: string; message: any }
-  if (stdout.from === 'handle') {
+useEventBus(StaticKey.STDOUT, (event) => {
+  const stdout = event as { type: string; name: string; message: any }
+  if (stdout.name === 'handle') {
     let callback = message.info
     if (stdout.type === 'error') {
       callback = message.error

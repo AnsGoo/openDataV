@@ -1,4 +1,5 @@
 import { cloneDeep, isNumber } from 'lodash-es'
+import { Logger } from 'open-data-v/bus'
 import { componentList } from 'open-data-v/designer/load'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import useDataState from 'open-data-v/designer/state/data'
@@ -590,3 +591,6 @@ export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
     return false
   }
 }
+
+export const handleLogger = new Logger('handle')
+export const systemLogger = new Logger('system')

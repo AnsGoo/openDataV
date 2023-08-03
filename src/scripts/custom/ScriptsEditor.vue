@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { eventBus } from 'open-data-v/bus'
+import { handleLogger } from 'open-data-v/designer/utils'
 import { onMounted, ref } from 'vue'
 
 const savedStatus = ref<boolean>(true)
@@ -48,7 +48,7 @@ const handleSubmit = () => {
   emits('change', props.code)
   emits('update:code', props.code)
   savedStatus.value = true
-  eventBus.emit('stdout', { type: 'info', message: '保存成功', from: 'handle' })
+  handleLogger.success('图层已经到底了')
 }
 
 onMounted(async () => {})
