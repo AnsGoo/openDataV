@@ -3,6 +3,8 @@ import { shallowRef } from 'vue'
 import { uuid } from '../utils'
 import handler from './handler'
 import { RequestMethod } from './requestEnums'
+import RestContent from './Rest.vue'
+import { KVToRecordable, recordabletoKV, requestOptionsToStore } from './utils'
 import Rest from './View.vue'
 
 export default {
@@ -25,3 +27,4 @@ export default {
     }
   }
 }
+export { KVToRecordable, recordabletoKV, RequestMethod, requestOptionsToStore, RestContent }

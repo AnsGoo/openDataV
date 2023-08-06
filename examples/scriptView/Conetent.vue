@@ -39,7 +39,7 @@
 
 <script lang="ts" setup>
 import { NButton, NButtonGroup, NCard, NDivider, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
-import { StaticKey, useEventBus } from 'open-data-v/bus'
+import { StaticKey, useEventBus } from 'open-data-v'
 import { makeFunction } from 'open-data-v/scripts/custom/utils'
 import { reactive, ref } from 'vue'
 

@@ -30,8 +30,8 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 import { NButton, NInput, NInputGroup, NSelect } from 'naive-ui'
+import { StaticKey, useEventBus } from 'open-data-v'
 import StaticContent from 'open-data-v/apiView/static/DataView.vue'
-import { StaticKey, useEventBus } from 'open-data-v/bus'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import type { StaticDataDetail } from '@/api/data'

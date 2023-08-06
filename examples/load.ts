@@ -1,5 +1,5 @@
-import useCanvasState from 'open-data-v/designer/state/canvas'
-import type { BaseComponent } from 'open-data-v/models/component'
+import type { BaseComponent } from 'open-data-v'
+import { useCanvasState } from 'open-data-v'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 

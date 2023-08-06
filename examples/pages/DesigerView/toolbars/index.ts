@@ -1,10 +1,4 @@
-import {
-  exportCanvas,
-  importCanvas,
-  recoveryDraft,
-  setShowEm,
-  undo
-} from 'open-data-v/designer/toolbars'
+import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from 'open-data-v'
 import { h } from 'vue'
 import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 

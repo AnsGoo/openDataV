@@ -3,18 +3,16 @@
 </template>
 
 <script setup lang="ts">
+import type { ComponentDataType } from 'open-data-v'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Previewer } from 'open-data-v/designer'
-import useDataState from 'open-data-v/designer/state/data'
-import useSnapShotState from 'open-data-v/designer/state/snapshot'
-import type { ComponentDataType } from 'open-data-v/designer/type'
+import { Previewer, useDataState, useSnapshotState } from 'open-data-v'
 import { onMounted, ref } from 'vue'
 
 import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
 
 const viewer = ref<InstanceType<typeof Previewer> | null>(null)
-const snapShotState = useSnapShotState()
+const snapShotState = useSnapshotState()
 
 const dataState = useDataState()
 dataState.loadPlugins([QuickDataPlugin, RestDataPlugin])

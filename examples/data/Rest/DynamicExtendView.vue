@@ -27,8 +27,8 @@
 import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
+import { StaticKey, useEventBus } from 'open-data-v'
 import { useRequest } from 'open-data-v/apiView/hooks/http'
-import useDataSnapShot from 'open-data-v/apiView/hooks/snapshot'
 import { RequestMethod } from 'open-data-v/apiView/rest/requestEnums'
 import Rest from 'open-data-v/apiView/rest/Rest.vue'
 import type { RequestResponse, RestOption } from 'open-data-v/apiView/rest/type'
@@ -38,7 +38,6 @@ import {
   requestOptionsToStore
 } from 'open-data-v/apiView/rest/utils'
 import { uuid } from 'open-data-v/apiView/utils'
-import { StaticKey, useEventBus } from 'open-data-v/bus'
 import { onMounted, reactive, ref } from 'vue'
 
 import {
@@ -132,7 +131,6 @@ if (props.mode === 'debug') {
     await loadRestData(id as string)
     await send()
   })
-  snapShot = useDataSnapShot('REST', true)
 }
 
 const loadRestData = async (id: string) => {

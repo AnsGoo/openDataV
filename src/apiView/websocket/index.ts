@@ -1,12 +1,14 @@
 import { shallowRef } from 'vue'
 
 import handler from './handler'
-import WebSocket from './View.vue'
+import WebSocketPane from './Pane.vue'
+import type WebsocketOption from './type'
+import WebSocketContent from './WebsocketView.vue'
 
 export default {
   type: 'WS',
   name: 'WS数据',
-  component: shallowRef(WebSocket),
+  component: shallowRef(WebSocketPane),
   handler,
   useTo: ['COMPONENT', 'GLOBAL'] as Array<'COMPONENT' | 'GLOBAL'>,
   getdefaultOption: () => {
@@ -19,3 +21,7 @@ export default {
     }
   }
 }
+
+export { handler, WebSocketContent, WebSocketPane }
+
+export type { WebsocketOption }

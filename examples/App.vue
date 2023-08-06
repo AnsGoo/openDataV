@@ -2,7 +2,7 @@
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { NGlobalStyle, NLoadingBarProvider } from 'naive-ui'
-import useCanvasState from 'open-data-v/designer/state/canvas'
+import { useCanvasState } from 'open-data-v'
 import { computed, provide, readonly, ref } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
 

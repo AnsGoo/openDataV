@@ -1,6 +1,6 @@
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Axios from 'axios'
-import useCanvasState from 'open-data-v/designer/state/canvas'
+import { useCanvasState } from 'open-data-v'
 
 import { useUserStoreWithOut } from '@/store/modules/user'
 import type { ResultType } from '@/utils/http/config'
