@@ -139,6 +139,6 @@ class SnapshotState {
 
 const snapshotState = new SnapshotState()
 // Need to be used outside the setup
-export default function useCanvasState() {
+export default function useSnapshotState() {
   return snapshotState
 }

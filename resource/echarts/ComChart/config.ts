@@ -1,6 +1,4 @@
-import { ComponentGroup } from 'open-data-v/enum'
-import { DataMode } from 'open-data-v/enum/data'
-import { CustomComponent } from 'open-data-v/models'
+import { ComponentGroup, CustomComponent, DataMode } from 'open-data-v'
 
 export const componentName = 'ComChart'
 class ComChartComponent extends CustomComponent {

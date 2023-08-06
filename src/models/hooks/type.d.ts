@@ -1,4 +1,4 @@
-import type { DataType } from 'open-data-v/enum/data'
+import type { DataType } from 'open-data-v/enum'
 import type { CustomComponent } from 'open-data-v/models'
 
 export interface HooksType {

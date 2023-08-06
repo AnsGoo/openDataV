@@ -9,8 +9,7 @@ import type {
   MetaForm
 } from 'open-data-v/designer/type'
 import type { ComponentGroup } from 'open-data-v/enum'
-import { ContainerType, FormType } from 'open-data-v/enum'
-import { DataMode } from 'open-data-v/enum/data'
+import { ContainerType, DataMode, FormType } from 'open-data-v/enum'
 import { h } from 'vue'
 
 import type { BaseScript, DataInstance, Response } from './type'

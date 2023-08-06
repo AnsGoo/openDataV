@@ -1,6 +1,5 @@
-import type { MetaContainerItem } from 'open-data-v/designer/type'
-import { ComponentGroup, FormType } from 'open-data-v/enum'
-import { CustomComponent } from 'open-data-v/models'
+import type { MetaContainerItem } from 'open-data-v'
+import { ComponentGroup, CustomComponent, FormType } from 'open-data-v'
 
 export const componentName = 'Image'
 class ImageComponent extends CustomComponent {

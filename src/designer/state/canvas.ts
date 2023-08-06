@@ -11,8 +11,7 @@ import type {
   Vector
 } from 'open-data-v/designer/type'
 import { handleLogger } from 'open-data-v/designer/utils'
-import { ContainerType, FormType } from 'open-data-v/enum'
-import PixelEnum from 'open-data-v/enum/pixel'
+import { ContainerType, FormType, PixelEnum } from 'open-data-v/enum'
 import type { CustomComponent } from 'open-data-v/models'
 import type { BaseComponent } from 'open-data-v/models/component'
 import type { DataInstance } from 'open-data-v/models/type'

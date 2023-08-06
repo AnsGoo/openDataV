@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import dayjs from 'dayjs'
-import { useProp } from 'open-data-v/models/hooks'
+import { useProp } from 'open-data-v'
 import { onMounted, onUnmounted, ref } from 'vue'
 
 import type DateTextComponent from './config'

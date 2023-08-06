@@ -1,7 +1,5 @@
-import type { MetaContainerItem } from 'open-data-v/designer/type'
-import { ComponentGroup, FormType } from 'open-data-v/enum'
-import { DataMode } from 'open-data-v/enum/data'
-import { CustomComponent } from 'open-data-v/models'
+import type { MetaContainerItem } from 'open-data-v'
+import { ComponentGroup, CustomComponent, DataMode, FormType } from 'open-data-v'
 import { h, shallowRef } from 'vue'
 
 import ScrollTableForm from './Form.vue'

@@ -5,8 +5,8 @@
 <script setup lang="ts">
 import type { CustomSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { graphic } from 'echarts'
-import { useData, useProp } from 'open-data-v/models/hooks'
-import type { RequestResponse } from 'open-data-v/models/type'
+import type { RequestResponse } from 'open-data-v'
+import { useData, useProp } from 'open-data-v'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../../hooks'

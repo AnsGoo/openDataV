@@ -83,10 +83,8 @@
 </template>
 
 <script setup lang="ts">
-import { useEventBus } from 'open-data-v/bus'
-import useCanvasState from 'open-data-v/designer/state/canvas'
-import type { CustomComponent } from 'open-data-v/models'
-import { useProp } from 'open-data-v/models/hooks'
+import type { CustomComponent } from 'open-data-v'
+import { useCanvasState, useEventBus, useProp } from 'open-data-v'
 import { onMounted, ref } from 'vue'
 
 import { http } from '@/utils/http'

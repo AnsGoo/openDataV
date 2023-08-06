@@ -81,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from 'open-data-v/models/hooks'
+import { useProp } from 'open-data-v'
 import { ref } from 'vue'
 
 import type DecorationComponent from './config'
