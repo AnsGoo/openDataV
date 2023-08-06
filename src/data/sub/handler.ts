@@ -1,4 +1,4 @@
-import { eventBus, useEventBus } from 'open-data-v/models/bus'
+import { eventBus, useEventBus } from 'open-data-v/models'
 
 import type { DataAcceptor, DataInstance, RequestOptions, Response } from '../type'
 
