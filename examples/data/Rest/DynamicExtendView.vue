@@ -28,16 +28,12 @@ import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
 import { StaticKey, useEventBus } from 'open-data-v'
-import { useRequest } from 'open-data-v/apiView/hooks/http'
-import { RequestMethod } from 'open-data-v/apiView/rest/requestEnums'
-import Rest from 'open-data-v/apiView/rest/Rest.vue'
-import type { RequestResponse, RestOption } from 'open-data-v/apiView/rest/type'
-import {
-  KVToRecordable,
-  recordabletoKV,
-  requestOptionsToStore
-} from 'open-data-v/apiView/rest/utils'
-import { uuid } from 'open-data-v/apiView/utils'
+import { useRequest } from 'open-data-v/data/hooks/http'
+import { RequestMethod } from 'open-data-v/data/rest/requestEnums'
+import Rest from 'open-data-v/data/rest/Rest.vue'
+import type { RequestResponse, RestOption } from 'open-data-v/data/rest/type'
+import { KVToRecordable, recordabletoKV, requestOptionsToStore } from 'open-data-v/data/rest/utils'
+import { uuid } from 'open-data-v/data/utils'
 import { onMounted, reactive, ref } from 'vue'
 
 import {

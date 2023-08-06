@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash-es'
-import { uuid } from 'open-data-v/apiView/utils'
+import { uuid } from 'open-data-v/data/utils'
 
 import type { KV, RestOption, StoreRestOption } from './type'
 

@@ -1,5 +1,5 @@
-import Rest from 'open-data-v/apiView/rest/Rest.vue'
-import Static from 'open-data-v/apiView/static/DataView.vue'
+import Rest from 'open-data-v/data/rest/Rest.vue'
+import Static from 'open-data-v/data/static/DataView.vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({

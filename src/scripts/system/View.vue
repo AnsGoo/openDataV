@@ -24,10 +24,10 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 import { NButton, NCard, NFormItem, NInputGroup, NModal, NSelect } from 'naive-ui'
-import type { Slotter } from 'open-data-v/scripts/base'
 import type { ScriptForm } from 'open-data-v/scripts/system/type'
 import { computed, onMounted, ref, watch } from 'vue'
 
+import type { Slotter } from '../type'
 import DynamicForm from './DynamicFormItem'
 import ScriptHandler from './handler'
 import funcs from './scripts'

@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from 'open-data-v/apiView/type'
+import type { DataAcceptor, DataInstance, RequestOptions, Response } from 'open-data-v/data/type'
 
 import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'

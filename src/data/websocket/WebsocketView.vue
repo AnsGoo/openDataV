@@ -32,7 +32,7 @@
 </template>
 <script setup lang="ts">
 import { NButton, NButtonGroup, NCard, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
-import { dataLogger } from 'open-data-v/apiView/utils'
+import { dataLogger } from 'open-data-v/data/utils'
 import { onUnmounted, reactive, ref } from 'vue'
 
 import type { WebsocketOption } from './type'

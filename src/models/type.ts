@@ -1,4 +1,4 @@
-import type { ScriptOption } from 'open-data-v/scripts/base'
+import type { ScriptOption } from 'open-data-v/scripts'
 
 export type DataAcceptor = (result: any, id?: string) => void
 export interface DataInstance {

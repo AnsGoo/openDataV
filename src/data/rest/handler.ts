@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash-es'
-import type { RequestInstance } from 'open-data-v/apiView/hooks/http'
-import { useRequest } from 'open-data-v/apiView/hooks/http'
-import type { DataAcceptor, DataInstance, Response } from 'open-data-v/apiView/type'
+import type { RequestInstance } from 'open-data-v/data/hooks/http'
+import { useRequest } from 'open-data-v/data/hooks/http'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/data/type'
 
 import type { StoreRestOption } from './type'
 

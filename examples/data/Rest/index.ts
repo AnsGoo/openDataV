@@ -1,6 +1,6 @@
-import handler from 'open-data-v/apiView/rest/handler'
-import { RequestMethod } from 'open-data-v/apiView/rest/requestEnums'
-import { uuid } from 'open-data-v/apiView/utils'
+import handler from 'open-data-v/data/rest/handler'
+import { RequestMethod } from 'open-data-v/data/rest/requestEnums'
+import { uuid } from 'open-data-v/data/utils'
 import { shallowRef } from 'vue'
 
 import DataView from './View.vue'
