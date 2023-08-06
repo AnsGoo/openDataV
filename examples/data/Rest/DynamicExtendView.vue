@@ -33,7 +33,6 @@ import { RequestMethod } from 'open-data-v/data/rest/requestEnums'
 import Rest from 'open-data-v/data/rest/Rest.vue'
 import type { RequestResponse, RestOption } from 'open-data-v/data/rest/type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from 'open-data-v/data/rest/utils'
-import { uuid } from 'open-data-v/data/utils'
 import { onMounted, reactive, ref } from 'vue'
 
 import {
@@ -44,6 +43,7 @@ import {
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import { message } from '@/utils/message'
+import { uuid } from '@/utils/utils'
 
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]

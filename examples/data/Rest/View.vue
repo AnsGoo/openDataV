@@ -5,8 +5,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { Slotter } from 'open-data-v/data'
 import RestView from 'open-data-v/data/rest/View.vue'
-import type { Slotter } from 'open-data-v/data/type'
 
 import DataViewSlot from './DynamicExtendView.vue'
 
