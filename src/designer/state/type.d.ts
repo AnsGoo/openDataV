@@ -4,6 +4,7 @@ import type { DataSlotter } from 'open-data-v/designer/state/slotter'
 import type { ComponentDataType, MetaContainerItem, Position } from 'open-data-v/designer/type'
 import type { ContainerType } from 'open-data-v/enum'
 import type { CustomComponent } from 'open-data-v/models'
+import type { BaseComponent } from 'open-data-v/models/component'
 
 export interface CanvasStyleData {
   width: number
@@ -32,6 +33,7 @@ export interface CanvasData {
   darkTheme: boolean
   canvasStyleConfig: CanvasStyleConfig
   globalSlotters: Record<string, DataSlotter>
+  components: Record<string, BaseComponent>
 }
 
 export interface SnapData {

@@ -1,6 +1,5 @@
 import { cloneDeep, isNumber } from 'lodash-es'
 import { Logger } from 'open-data-v/bus'
-import { componentList } from 'open-data-v/designer/load'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import useDataState from 'open-data-v/designer/state/data'
 import useScriptState from 'open-data-v/designer/state/scripts'
@@ -52,28 +51,28 @@ const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption
   componentObj.afterCallbackChange(scriptHandler)
 }
 export function createComponent(component: ComponentDataType): any {
-  if ((component.component as string) in componentList) {
-    const _class = componentList[component.component as string]
-    const obj: CustomComponent = new _class(component.id, component.name, component.icon)
-    obj.groupStyle = component.groupStyle
-    obj.setPropValue({ propValue: component.propValue })
-    obj.setStyleValue({ style: component.style })
-    obj.dataMode = component.dataMode || DataMode.SELF
-    const data = component.data
-    if (obj.dataMode === DataMode.UNIVERSAL) {
-      buildDataHandler(obj, data)
-    }
-    buildAfterCallback(obj, component.script)
-    component.subComponents?.forEach((item) => {
-      const subObj = createComponent(item)
-      subObj.parent = obj
-      obj.subComponents.push(subObj)
-    })
-    const canvasState = useCanvasState()
-    const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
-    obj.setViewType(viewType)
-    return obj
+  const canvasState = useCanvasState()
+  const components = canvasState.components
+  const _class = components[component.component as string]
+  const obj = new _class(component.id, component.name, component.icon)
+  obj.groupStyle = component.groupStyle
+  obj.setPropValue({ propValue: component.propValue })
+  obj.setStyleValue({ style: component.style })
+  obj.dataMode = component.dataMode || DataMode.SELF
+  const data = component.data
+  if (obj.dataMode === DataMode.UNIVERSAL) {
+    buildDataHandler(obj, data)
   }
+  buildAfterCallback(obj, component.script)
+  component.subComponents?.forEach((item) => {
+    const subObj = createComponent(item)
+    subObj.parent = obj
+    obj.subComponents.push(subObj)
+  })
+
+  const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
+  obj.setViewType(viewType)
+  return obj
 }
 
 export function getComponentIndexById(id: string, parent: CustomComponent) {
