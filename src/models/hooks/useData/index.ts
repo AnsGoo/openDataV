@@ -1,6 +1,6 @@
 import { onMounted, onUnmounted } from 'vue'
 
-import type { CustomComponent } from '../../type'
+import type { CustomComponent } from '../../component'
 
 export const useData = (
   component: CustomComponent,

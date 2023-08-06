@@ -1,4 +1,4 @@
-import type { CustomComponent } from '../../type'
+import type { CustomComponent } from '../../component'
 
 export const useProp = <T>(
   component: CustomComponent,

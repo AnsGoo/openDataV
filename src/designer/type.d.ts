@@ -1,6 +1,6 @@
 import type { ComponentGroup, ContainerType, FormType } from 'open-data-v/designer/enum'
 import type { CanvasStyleData } from 'open-data-v/designer/state/type'
-import type { DataMode, DataType, RequestOptions } from 'open-data-v/models/type'
+import type { DataMode, DataType, RequestOptions } from 'open-data-v/models'
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
 export interface Vector {

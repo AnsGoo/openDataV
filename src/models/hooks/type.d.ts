@@ -1,6 +1,6 @@
 import type { CustomComponent } from './models'
 
-export interface Hooks {
+interface Hooks {
   useProp: <T>(
     component: CustomComponent<T>,
     callbackProp?: (prop: string, key: string, value: any) => void,
@@ -10,3 +10,5 @@ export interface Hooks {
   }
   useData: (component: CustomComponent, callbackProp?: (resp: any, _: string) => void) => void
 }
+
+export type { Hooks }
