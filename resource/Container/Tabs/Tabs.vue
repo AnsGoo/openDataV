@@ -46,7 +46,6 @@
 import GroupComponent from 'open-data-v/designer/components/Group/config'
 import Group from 'open-data-v/designer/components/Group/Group.vue'
 import Shape from 'open-data-v/designer/Editor/Shape'
-import { componentList } from 'open-data-v/designer/load'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import {
   filterStyle,
@@ -179,7 +178,7 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component: CustomComponent = new componentList[componentName]()
+    const component: CustomComponent = new canvasState.components[componentName]()
     if (component.dataMode === DataMode.UNIVERSAL) {
       component.loadDemoData()
     }

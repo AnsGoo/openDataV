@@ -1,4 +1,3 @@
-import { componentList } from 'open-data-v/designer/load'
 import type { Location, Position } from 'open-data-v/designer/type'
 import type { CustomComponent } from 'open-data-v/models'
 import { reactive } from 'vue'
@@ -139,7 +138,8 @@ class ActionState {
     if (this.style.width === 0) {
       this.style = { ...this.style, ...calcComponentsRect(this.components) }
     }
-    const GroupClass = componentList['Group']
+    const components = canvasState.components
+    const GroupClass = components['Group']
     const groupComponent: CustomComponent = new GroupClass()
     for (const prop in this.style) {
       groupComponent.change(['position', prop], this.style[prop], 'style')

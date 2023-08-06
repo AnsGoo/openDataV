@@ -131,16 +131,16 @@ importers:
       vue-eslint-parser: 7.11.0_eslint@7.32.0
       vue-tsc: 1.8.8_typescript@4.9.5
 
-  resource/components/Basic/Image:
+  resource/Basic/Image:
     specifiers: {}
 
-  resource/components/Basic/Video/FlvVideo:
+  resource/Basic/Video/FlvVideo:
     specifiers:
       flv.js: ^1.6.2
     dependencies:
       flv.js: 1.6.2
 
-  resource/components/Border:
+  resource/Border:
     specifiers:
       '@types/tinycolor2': ^1.4.3
       tinycolor2: ^1.4.2
@@ -149,64 +149,64 @@ importers:
     devDependencies:
       '@types/tinycolor2': 1.4.3
 
-  resource/components/Border/BorderBox1:
+  resource/Border/BorderBox1:
     specifiers: {}
 
-  resource/components/Border/BorderBox2:
+  resource/Border/BorderBox2:
     specifiers: {}
 
-  resource/components/Border/BorderBox3:
+  resource/Border/BorderBox3:
     specifiers: {}
 
-  resource/components/Border/BorderBox4:
+  resource/Border/BorderBox4:
     specifiers: {}
 
-  resource/components/Border/BorderBox5:
+  resource/Border/BorderBox5:
     specifiers: {}
 
-  resource/components/Border/BorderBox6:
+  resource/Border/BorderBox6:
     specifiers: {}
 
-  resource/components/Container/Tabs:
+  resource/Container/Tabs:
     specifiers: {}
 
-  resource/components/Decoration/Decoration1:
+  resource/Decoration/Decoration1:
     specifiers: {}
 
-  resource/components/Decoration/Decoration2:
+  resource/Decoration/Decoration2:
     specifiers: {}
 
-  resource/components/Decoration/Decoration3:
+  resource/Decoration/Decoration3:
     specifiers: {}
 
-  resource/components/Decoration/Decoration4:
+  resource/Decoration/Decoration4:
     specifiers: {}
 
-  resource/components/Gauge/Gauge1:
+  resource/Gauge/Gauge1:
     specifiers: {}
 
-  resource/components/Progress/Progress:
+  resource/Progress/Progress:
     specifiers: {}
 
-  resource/components/Progress/RankBoard:
+  resource/Progress/RankBoard:
     specifiers: {}
 
-  resource/components/Table:
+  resource/Table:
     specifiers: {}
 
-  resource/components/Text:
+  resource/Text:
     specifiers:
       dayjs: ^1.11.5
     dependencies:
-      dayjs: 1.11.7
+      dayjs: 1.11.9
 
-  resource/components/echarts:
+  resource/echarts:
     specifiers:
       echarts: ^5.3.3
       echarts-liquidfill: ^3.1.0
     dependencies:
-      echarts: 5.4.2
-      echarts-liquidfill: 3.1.0_echarts@5.4.2
+      echarts: 5.4.3
+      echarts-liquidfill: 3.1.0_echarts@5.4.3
 
 packages:
 
@@ -1908,8 +1908,8 @@ packages:
       '@babel/runtime': 7.22.6
     dev: false
 
-  /dayjs/1.11.7:
-    resolution: {integrity: sha512-+Yw9U6YO5TQohxLcIkrXBeY73WP3ejHWVvx8XCk3gxvQDCTEmS48ZrSZCKciI7Bhl/uCMyxYtE9UqRILmFphkQ==}
+  /dayjs/1.11.9:
+    resolution: {integrity: sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==}
     dev: false
 
   /de-indent/1.0.2:
@@ -2039,19 +2039,19 @@ packages:
       domhandler: 5.0.3
     dev: true
 
-  /echarts-liquidfill/3.1.0_echarts@5.4.2:
+  /echarts-liquidfill/3.1.0_echarts@5.4.3:
     resolution: {integrity: sha512-5Dlqs/jTsdTUAsd+K5LPLLTgrbbNORUSBQyk8PSy1Mg2zgHDWm83FmvA4s0ooNepCJojFYRITTQ4GU1UUSKYLw==}
     peerDependencies:
       echarts: ^5.0.1
     dependencies:
-      echarts: 5.4.2
+      echarts: 5.4.3
     dev: false
 
-  /echarts/5.4.2:
-    resolution: {integrity: sha512-2W3vw3oI2tWJdyAz+b8DuWS0nfXtSDqlDmqgin/lfzbkB01cuMEN66KWBlmur3YMp5nEDEEt5s23pllnAzB4EA==}
+  /echarts/5.4.3:
+    resolution: {integrity: sha512-mYKxLxhzy6zyTi/FaEbJMOZU1ULGEQHaeIeuMR5L+JnJTpz+YR03mnnpBhbR4+UYJAgiXgpyTVLffPAjOTLkZA==}
     dependencies:
       tslib: 2.3.0
-      zrender: 5.4.3
+      zrender: 5.4.4
     dev: false
 
   /ee-first/1.1.1:
@@ -5024,8 +5024,8 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  /zrender/5.4.3:
-    resolution: {integrity: sha512-DRUM4ZLnoaT0PBVvGBDO9oWIDBKFdAVieNWxWwK0niYzJCMwGchRk21/hsE+RKkIveH3XHCyvXcJDkgLVvfizQ==}
+  /zrender/5.4.4:
+    resolution: {integrity: sha512-0VxCNJ7AGOMCWeHVyTrGzUgrK4asT4ml9PEkeGirAkKNYXYzoPJCLvmyfdoOXcjTHPs10OZVMfD1Rwg16AZyYw==}
     dependencies:
       tslib: 2.3.0
     dev: false

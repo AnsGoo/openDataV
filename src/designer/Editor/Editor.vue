@@ -66,7 +66,6 @@ import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
 import { systemLogger } from '../../designer/utils'
-import { componentList } from '../load'
 import {
   backgroundToCss,
   createComponent,
@@ -78,6 +77,8 @@ import {
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
 const canvasState = useCanvasState()
+
+const components = canvasState.components
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
@@ -235,7 +236,7 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component: CustomComponent = new componentList[componentName]()
+    const component: CustomComponent = new components[componentName]()
     if (component.dataMode === DataMode.UNIVERSAL) {
       component.loadDemoData()
     }

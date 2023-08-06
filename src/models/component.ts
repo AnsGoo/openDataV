@@ -21,7 +21,7 @@ interface DataConfig {
   dataInstance: DataInstance
 }
 
-export abstract class CustomComponent {
+export class CustomComponent {
   id: string
   component: string
   group: ComponentGroup
@@ -60,7 +60,7 @@ export abstract class CustomComponent {
   dataConfig?: DataConfig
   scriptConfig?: BaseScript
 
-  protected constructor(detail: ComponentType) {
+  constructor(detail: ComponentType) {
     if (detail.id) {
       this.id = detail.id
     } else {
@@ -424,3 +424,5 @@ export abstract class CustomComponent {
     this.subComponents[index] = child
   }
 }
+
+export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }

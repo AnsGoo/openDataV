@@ -48,7 +48,6 @@ const props = withDefaults(
     mode: 'debug'
   }
 )
-// const componentInstance = new props.config(uuid())
 const form = reactive<{
   propValue: string
   style: string

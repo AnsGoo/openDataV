@@ -14,6 +14,7 @@ import { handleLogger } from 'open-data-v/designer/utils'
 import { ContainerType, FormType } from 'open-data-v/enum'
 import PixelEnum from 'open-data-v/enum/pixel'
 import type { CustomComponent } from 'open-data-v/models'
+import type { BaseComponent } from 'open-data-v/models/component'
 import type { DataInstance } from 'open-data-v/models/type'
 import { buildModeValue, updateModeValue } from 'open-data-v/models/utils'
 import { reactive } from 'vue'
@@ -115,6 +116,7 @@ class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
+    components: {},
     globalSlotters: {},
     darkTheme: true,
     scale: 1,
@@ -147,8 +149,12 @@ class CanvasState {
     return this.state.darkTheme
   }
 
-  set darkTheme(value: boolean) {
-    this.state.darkTheme = value
+  get components() {
+    return this.state.components
+  }
+
+  public loadComponent(name: string, component: BaseComponent) {
+    this.state.components[name] = component
   }
 
   get globalSlotters() {
