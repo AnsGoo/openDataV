@@ -1,11 +1,5 @@
 import type { ScriptOption } from 'open-data-v/scripts/base'
 
-export interface RequestResponse<T> {
-  status: 'SUCCESS' | 'FAILED'
-  data: any
-  afterData: T
-}
-
 export type DataAcceptor = (result: any, id?: string) => void
 export interface DataInstance {
   toJSON: () => any | undefined

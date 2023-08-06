@@ -4,19 +4,8 @@ import Group from 'open-data-v/designer/components/Group'
 import Shape from 'open-data-v/designer/Editor/Shape'
 import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/types'
 
-import {
-  KVToRecordable,
-  recordabletoKV,
-  RequestMethod,
-  requestOptionsToStore,
-  RestContent,
-  RestDataPlugin,
-  StaticContent,
-  StaticDataPlugin,
-  SubDataPlugin,
-  WebsocketDataPlugin
-} from './apiView'
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from './apiView/type'
+import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './apiView'
+import type { DataAcceptor, DataInstance, Response } from './apiView/type'
 import { eventBus, StaticKey, useEventBus } from './bus'
 import { Designer, Previewer } from './designer'
 import DemoDataPlugin from './designer/data/DemoData'
@@ -32,27 +21,25 @@ import {
 } from './designer/state'
 import type { CanvasStyleData } from './designer/state/type'
 import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from './designer/toolbars'
-import type { ComponentDataType, MetaContainerItem } from './designer/type'
+import type { ComponentDataType, ComponentItem, MetaContainerItem } from './designer/type'
 import { ComponentGroup, DataMode, FormType } from './enum'
 import { CustomComponent } from './models'
 import type { BaseComponent } from './models/component'
 import { useData, useProp } from './models/hooks'
+import type { HooksType } from './models/hooks/type'
 import Directive from './plugins/directive'
-import type { HooksType, RequestResponse } from './types'
 
 export type {
   BaseComponent,
   CanvasStyleData,
   ComponentDataType,
+  ComponentItem,
   ContextmenuItem,
   DataAcceptor,
   DataInstance,
   HooksType,
   MetaContainerItem,
-  RequestOptions,
-  RequestResponse,
   Response,
-  RestOption,
   Slotter
 }
 
@@ -69,17 +56,11 @@ export {
   FormType,
   Group,
   importCanvas,
-  KVToRecordable,
   Previewer,
-  recordabletoKV,
   recoveryDraft,
-  RequestMethod,
-  requestOptionsToStore,
-  RestContent,
   RestDataPlugin,
   setShowEm,
   Shape,
-  StaticContent,
   StaticDataPlugin,
   StaticKey,
   SubDataPlugin,

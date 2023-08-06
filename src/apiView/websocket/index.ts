@@ -2,7 +2,7 @@ import { shallowRef } from 'vue'
 
 import handler from './handler'
 import WebSocketPane from './Pane.vue'
-import type WebsocketOption from './type'
+import type { WebsocketOption } from './type'
 import WebSocketContent from './WebsocketView.vue'
 
 export default {
