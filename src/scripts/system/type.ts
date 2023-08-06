@@ -1,5 +1,4 @@
-import type { FormItemProps } from 'open-data-v/designer/type'
-import type { FormType } from 'open-data-v/enum'
+import type { FormItemProps, FormType } from 'open-data-v/models'
 import type { ConcreteComponent } from 'vue'
 
 export interface ScriptForm {

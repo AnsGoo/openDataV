@@ -14,6 +14,7 @@ import {
   NSelect,
   NSwitch
 } from 'naive-ui'
+import { FormType, GlobalColorSwatches } from 'open-data-v/designer/enum'
 import type {
   CustomFormSchema,
   FormItemProps,
@@ -25,7 +26,6 @@ import type {
   SelectFormSchema,
   SwitchFormSchema
 } from 'open-data-v/designer/type'
-import { FormType, GlobalColorSwatches } from 'open-data-v/enum'
 import type { PropType } from 'vue'
 import { defineComponent, h, ref, watch } from 'vue'
 

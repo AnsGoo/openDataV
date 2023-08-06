@@ -49,9 +49,8 @@
 </template>
 <script setup lang="ts">
 import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
-import useDataSnapShot from 'open-data-v/apiView/hooks/snapshot'
-import { eventBus, StaticKey } from 'open-data-v/bus'
-import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from 'open-data-v'
+import { eventBus, StaticKey } from 'open-data-v'
 import { onMounted, ref } from 'vue'
 
 import { deleteRestDataApi, getRestDataListApi } from '@/api/data'
@@ -60,7 +59,6 @@ import { message } from '@/utils/message'
 import { Logger } from '@/utils/utils'
 
 const dataList = ref<RestDataDetail[]>([])
-const snapShot = useDataSnapShot('REST', true)
 const dataHistory = ref<RestDataDetail[]>([])
 
 const loadStaticList = async () => {
@@ -77,14 +75,8 @@ const loadStaticList = async () => {
 const selectDataItem = (id: string) => {
   eventBus.emit(StaticKey.REST_KEY, id)
 }
-const getHistory = async () => {
-  const data = await snapShot.list()
-  dataHistory.value = data.map((el) => el.data)
-}
-
 onMounted(async () => {
   await loadStaticList()
-  await getHistory()
 })
 
 const removeData = async (id: string) => {
@@ -97,11 +89,6 @@ const removeData = async (id: string) => {
   } catch (err) {
     return undefined
   }
-}
-
-const clearSnapshot = async () => {
-  await snapShot.clear()
-  await getHistory()
 }
 
 const dataListContextMenus = (id: string): Optional<ContextmenuItem[]> => {
@@ -119,7 +106,7 @@ const dataHistoryContextMenus = (_: string): Optional<ContextmenuItem[]> => {
     {
       text: '清除',
       subText: '',
-      handler: () => clearSnapshot()
+      handler: () => {}
     }
   ]
 }

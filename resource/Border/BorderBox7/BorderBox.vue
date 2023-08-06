@@ -218,7 +218,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from 'open-data-v/models/hooks'
+import { useProp } from 'open-data-v'
 import TinyColor2 from 'tinycolor2'
 import { computed, ref } from 'vue'
 

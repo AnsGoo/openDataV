@@ -36,9 +36,9 @@
 </template>
 
 <script setup lang="ts">
-import { channels, eventBus } from 'open-data-v/bus'
 import type { CustomComponent } from 'open-data-v/models'
-import type { HooksType } from 'open-data-v/models/hooks/type'
+import { channels, eventBus } from 'open-data-v/models/bus'
+import type { Hooks } from 'open-data-v/models/hooks/type'
 import { computed, inject } from 'vue'
 
 import Shape from '../../Editor/Shape'
@@ -67,7 +67,7 @@ const dataChange = (resp: any, _?: string) => {
     }
   }
 }
-const { useData } = inject<HooksType>('HOOKS') || {}
+const { useData } = inject<Hooks>('HOOKS') || {}
 
 if (useData) {
   useData(props.component, dataChange)

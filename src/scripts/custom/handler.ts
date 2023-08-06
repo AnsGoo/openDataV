@@ -1,4 +1,4 @@
-import type { BaseScript } from '../base'
+import type { BaseScript } from '../type'
 import { makeFunction } from './utils'
 
 class CustomScript implements BaseScript {

@@ -4,8 +4,7 @@
 
 <script setup lang="ts">
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
-import type { HooksType } from 'open-data-v/models/hooks/type'
-import type { RequestResponse } from 'open-data-v/models/type'
+import type { Hooks, RequestResponse } from 'open-data-v'
 import { inject, onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'
@@ -18,7 +17,7 @@ let globalOption: EChartsOption
 const props = defineProps<{
   component: BasicLineChartComponent
 }>()
-const { useProp, useData } = inject<HooksType>('HOOKS') || {}
+const { useProp, useData } = inject<Hooks>('HOOKS') || {}
 
 let chartData:
   | Array<{ label: string; value: number }>

@@ -3,11 +3,8 @@
 </template>
 
 <script setup lang="ts">
-import { StaticKey, useEventBus } from 'open-data-v/bus'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Designer } from 'open-data-v/designer'
-import useCanvasState from 'open-data-v/designer/state/canvas'
-import useDataState from 'open-data-v/designer/state/data'
+import { Designer, StaticKey, useCanvasState, useDataState, useEventBus } from 'open-data-v'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 

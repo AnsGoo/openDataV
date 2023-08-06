@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-import { eventBus } from 'open-data-v/bus'
 import { EditMode } from 'open-data-v/designer/const'
+import { ContainerType, FormType, PixelEnum } from 'open-data-v/designer/enum'
 import { DataSlotter } from 'open-data-v/designer/state/slotter'
 import type { CanvasData } from 'open-data-v/designer/state/type'
 import type {
@@ -11,12 +11,8 @@ import type {
   Vector
 } from 'open-data-v/designer/type'
 import { handleLogger } from 'open-data-v/designer/utils'
-import { ContainerType, FormType } from 'open-data-v/enum'
-import PixelEnum from 'open-data-v/enum/pixel'
-import type { CustomComponent } from 'open-data-v/models'
-import type { BaseComponent } from 'open-data-v/models/component'
-import type { DataInstance } from 'open-data-v/models/type'
-import { buildModeValue, updateModeValue } from 'open-data-v/models/utils'
+import type { BaseComponent, CustomComponent, DataInstance } from 'open-data-v/models'
+import { buildModeValue, eventBus, updateModeValue } from 'open-data-v/models'
 import { reactive } from 'vue'
 
 import {

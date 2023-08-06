@@ -1,4 +1,4 @@
-import type { DataConfig } from 'open-data-v/apiView/type'
+import type { DataConfig } from 'open-data-v/data/type'
 import type { DataAcceptor } from 'open-data-v/models/type'
 
 interface DataInstance {

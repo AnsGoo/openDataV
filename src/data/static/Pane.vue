@@ -1,8 +1,8 @@
 <template>
-  <n-form-item key="title" label="订阅数据">
+  <n-form-item key="title" label="静态数据">
     <n-input-group>
       <n-input
-        v-model:value="formDataConfig.channel"
+        v-model:value="formDataConfig.data"
         :readonly="true"
         placeholder="编辑请点击"
         @click="isShow = true"
@@ -13,7 +13,7 @@
   <n-modal v-model:show="isShow" display-directive="show">
     <n-card
       style="width: 800px"
-      title="订阅通道"
+      title="静态数据"
       :bordered="false"
       size="small"
       role="dialog"
@@ -21,19 +21,19 @@
       closable
       @close="isShow = false"
     >
-      <StaticView v-model:options="formDataConfig" mode="use" @channel-change="dataChangeHandler" />
+      <StaticView v-model:options="formDataConfig" mode="use" @data-change="dataChangeHandler" />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import type { Slotter } from 'open-data-v/apiView/type'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type SubRequestData from './handler'
+import type { Slotter } from '../type'
+import StaticContent from './DataView.vue'
+import type StaticRequestData from './handler'
 import DataHandler from './handler'
-import SubDataView from './SubDataView.vue'
 
 const slots = useSlots()
 
@@ -41,7 +41,7 @@ const StaticView = computed(() => {
   if (slots.default) {
     return slots.default()[0].type
   } else {
-    return SubDataView
+    return StaticContent
   }
 })
 
@@ -51,9 +51,9 @@ const props = defineProps<{
 const isShow = ref<boolean>(false)
 
 const formDataConfig = reactive<{
-  channel: string
+  data: string
 }>({
-  channel: ''
+  data: ''
 })
 
 onMounted(async () => {
@@ -62,15 +62,15 @@ onMounted(async () => {
 
 const initData = async () => {
   const dataConfig = props.slotter.dataConfig
-  if (dataConfig && dataConfig.type === 'SUB') {
-    const staticRequest = props.slotter.dataConfig?.dataInstance as SubRequestData
+  if (dataConfig && dataConfig.type === 'STATIC') {
+    const staticRequest = props.slotter.dataConfig?.dataInstance as StaticRequestData
     const { options } = staticRequest.toJSON()
-    formDataConfig.channel = options.channel
+    formDataConfig.data = JSON.stringify(options.data, null, '\t')
   } else {
     const dataConfig = {
-      type: 'SUB',
+      type: 'STATIC',
       dataInstance: new DataHandler({
-        channel: formDataConfig.channel
+        data: formDataConfig.data
       })
     }
     await props.slotter.changeDataConfig(dataConfig)
@@ -78,16 +78,16 @@ const initData = async () => {
 }
 const changeHandler = () => {
   const dataConfig = {
-    type: 'SUB',
+    type: 'STATIC',
     dataInstance: new DataHandler({
-      channel: formDataConfig.channel
+      data: formDataConfig.data
     })
   }
   props.slotter.changeDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (data) => {
-  formDataConfig.channel = data
+  formDataConfig.data = data
   changeHandler()
 }
 

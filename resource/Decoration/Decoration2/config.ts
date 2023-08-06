@@ -1,6 +1,5 @@
-import type { MetaContainerItem } from 'open-data-v/designer/type'
-import { ComponentGroup, FormType } from 'open-data-v/enum'
-import { CustomComponent } from 'open-data-v/models'
+import type { MetaContainerItem } from 'open-data-v'
+import { ComponentGroup, CustomComponent, FormType } from 'open-data-v'
 import { h } from 'vue'
 
 export const componentName = 'Decoration2'

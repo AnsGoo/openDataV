@@ -27,18 +27,12 @@
 import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
-import { useRequest } from 'open-data-v/apiView/hooks/http'
-import useDataSnapShot from 'open-data-v/apiView/hooks/snapshot'
-import { RequestMethod } from 'open-data-v/apiView/rest/requestEnums'
-import Rest from 'open-data-v/apiView/rest/Rest.vue'
-import type { RequestResponse, RestOption } from 'open-data-v/apiView/rest/type'
-import {
-  KVToRecordable,
-  recordabletoKV,
-  requestOptionsToStore
-} from 'open-data-v/apiView/rest/utils'
-import { uuid } from 'open-data-v/apiView/utils'
-import { StaticKey, useEventBus } from 'open-data-v/bus'
+import { StaticKey, useEventBus } from 'open-data-v'
+import { useRequest } from 'open-data-v/data/hooks/http'
+import { RequestMethod } from 'open-data-v/data/rest/requestEnums'
+import Rest from 'open-data-v/data/rest/Rest.vue'
+import type { RequestResponse, RestOption } from 'open-data-v/data/rest/type'
+import { KVToRecordable, recordabletoKV, requestOptionsToStore } from 'open-data-v/data/rest/utils'
 import { onMounted, reactive, ref } from 'vue'
 
 import {
@@ -49,6 +43,7 @@ import {
 } from '@/api/data'
 import type { RestDataDetail } from '@/api/data/type'
 import { message } from '@/utils/message'
+import { uuid } from '@/utils/utils'
 
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
@@ -132,7 +127,6 @@ if (props.mode === 'debug') {
     await loadRestData(id as string)
     await send()
   })
-  snapShot = useDataSnapShot('REST', true)
 }
 
 const loadRestData = async (id: string) => {

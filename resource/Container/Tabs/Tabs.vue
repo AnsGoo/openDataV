@@ -13,7 +13,7 @@
       </div>
     </div>
     <div v-if="!editMode" ref="content" class="tabs-content">
-      <Group
+      <GroupView
         :id="'component' + content.id"
         class="component"
         :style="getComponentStyle(content)"
@@ -32,7 +32,7 @@
         :isInner="true"
         :index="activeKey"
       >
-        <Group
+        <GroupView
           :id="'component' + content.id"
           class="component"
           :style="getInnerComponentShapeStyle(content)"
@@ -43,10 +43,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import GroupComponent from 'open-data-v/designer/components/Group/config'
-import Group from 'open-data-v/designer/components/Group/Group.vue'
-import Shape from 'open-data-v/designer/Editor/Shape'
-import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { CustomComponent } from 'open-data-v'
+import { DataMode, Group, Shape, useCanvasState, useProp } from 'open-data-v'
 import {
   filterStyle,
   getComponentStyle,
@@ -54,13 +52,13 @@ import {
   toPercent,
   uuid
 } from 'open-data-v/designer/utils'
-import { DataMode } from 'open-data-v/enum/data'
-import type { CustomComponent } from 'open-data-v/models'
-import { useProp } from 'open-data-v/models/hooks'
 import { computed, ref, watch } from 'vue'
 
 import type TabsComponent from './config'
 import type { Tabs } from './type'
+
+const GroupComponent = Group.config
+const GroupView = Group.config
 
 const props = defineProps<{
   component: TabsComponent

@@ -1,4 +1,4 @@
-import type { BaseScript } from '../base'
+import type { BaseScript } from '../type'
 import funcs from './scripts'
 
 class SystemScript implements BaseScript {

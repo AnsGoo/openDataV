@@ -1,6 +1,6 @@
 import { cloneDeep } from 'lodash-es'
-import { uuid } from 'open-data-v/apiView/utils'
 
+import { uuid } from '../utils'
 import type { KV, RestOption, StoreRestOption } from './type'
 
 export const KVToRecordable = (values: Array<KV>): Record<string, any> => {

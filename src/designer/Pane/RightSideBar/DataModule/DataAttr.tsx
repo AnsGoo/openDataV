@@ -12,11 +12,10 @@ import {
   NTimeline,
   NTimelineItem
 } from 'naive-ui'
+import { ContainerType, DataMode } from 'open-data-v/designer/enum'
 import useEmpty from 'open-data-v/designer/modules/Empty'
 import useDataState from 'open-data-v/designer/state/data'
 import useScriptState from 'open-data-v/designer/state/scripts'
-import { ContainerType } from 'open-data-v/enum'
-import { DataMode } from 'open-data-v/enum/data'
 import type { CustomComponent } from 'open-data-v/models'
 import type { PropType } from 'vue'
 import { defineComponent, onMounted, ref, watch } from 'vue'

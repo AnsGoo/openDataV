@@ -53,9 +53,8 @@
 </template>
 
 <script setup lang="ts">
-import { useEventBus } from 'open-data-v/bus'
-import type { CustomComponent } from 'open-data-v/models'
-import { useProp } from 'open-data-v/models/hooks'
+import type { CustomComponent } from 'open-data-v'
+import { useEventBus, useProp } from 'open-data-v'
 import { computed, onMounted, ref } from 'vue'
 
 import { http } from '@/utils/http'

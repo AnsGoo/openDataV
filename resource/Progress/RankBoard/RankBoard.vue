@@ -19,9 +19,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { CustomComponent } from 'open-data-v/models'
-import { useData, useProp } from 'open-data-v/models/hooks'
-import type { RequestResponse } from 'open-data-v/models/type'
+import type { CustomComponent, RequestResponse } from 'open-data-v'
+import { useData, useProp } from 'open-data-v'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import type { RankBoard } from './type'

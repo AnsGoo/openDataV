@@ -1,4 +1,4 @@
-import { FormType } from 'open-data-v/enum'
+import { FormType } from 'open-data-v/models'
 
 const filterValue = {
   key: 'filterValue',

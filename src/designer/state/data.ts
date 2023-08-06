@@ -1,6 +1,6 @@
-import StaticDataPlugin from 'open-data-v/apiView/static'
-import SubDataPlugin from 'open-data-v/apiView/sub'
-import WebsocketDataPlugin from 'open-data-v/apiView/websocket'
+import StaticDataPlugin from 'open-data-v/data/static'
+import SubDataPlugin from 'open-data-v/data/sub'
+import WebsocketDataPlugin from 'open-data-v/data/websocket'
 import DemoDataPlugin from 'open-data-v/designer/data/DemoData'
 import { reactive } from 'vue'
 

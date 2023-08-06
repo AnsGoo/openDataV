@@ -3,7 +3,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useData } from 'open-data-v/models/hooks'
+import { useData } from 'open-data-v'
 import { ref } from 'vue'
 
 import { useEchart } from '../hooks'
