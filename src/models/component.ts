@@ -1,4 +1,6 @@
 import { cloneDeep } from 'lodash-es'
+import type { ComponentGroup } from 'open-data-v/designer/enum'
+import { ContainerType, DataMode, FormType } from 'open-data-v/designer/enum'
 import type {
   ComponentDataType,
   ComponentStyle,
@@ -8,8 +10,6 @@ import type {
   MetaContainerItem,
   MetaForm
 } from 'open-data-v/designer/type'
-import type { ComponentGroup } from 'open-data-v/enum'
-import { ContainerType, DataMode, FormType } from 'open-data-v/enum'
 import { h } from 'vue'
 
 import type { BaseScript, DataInstance, Response } from './type'

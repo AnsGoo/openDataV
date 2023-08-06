@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
+import type { ContainerType } from 'open-data-v/designer/enum'
 import Container from 'open-data-v/designer/modules/form/Container'
 import useCanvasState from 'open-data-v/designer/state/canvas'
 import type { MetaContainerItem } from 'open-data-v/designer/type'
-import type { ContainerType } from 'open-data-v/enum'
 import type { CustomComponent } from 'open-data-v/models'
 import { computed } from 'vue'
 

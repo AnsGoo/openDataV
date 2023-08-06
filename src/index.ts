@@ -2,14 +2,16 @@ import { useRequest } from 'open-data-v/data/hooks/http'
 import type { Slotter } from 'open-data-v/data/type'
 import Group from 'open-data-v/designer/components/Group'
 import Shape from 'open-data-v/designer/Editor/Shape'
-import type { ContextmenuItem } from 'open-data-v/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
+import { eventBus, StaticKey, useEventBus } from 'open-data-v/models/bus'
 
-import { eventBus, StaticKey, useEventBus } from './bus'
 import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './data'
 import type { DataAcceptor, DataInstance, Response } from './data/type'
 import { Designer, Previewer } from './designer'
 import DemoDataPlugin from './designer/data/DemoData'
+import { ComponentGroup, DataMode, FormType } from './designer/enum'
 import useComponetPlugin from './designer/loadPlugin'
+import Directive from './designer/plugins/directive'
 import {
   DataSlotter,
   useActionState,
@@ -22,12 +24,8 @@ import {
 import type { CanvasStyleData } from './designer/state/type'
 import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from './designer/toolbars'
 import type { ComponentDataType, ComponentItem, MetaContainerItem } from './designer/type'
-import { ComponentGroup, DataMode, FormType } from './enum'
-import { CustomComponent } from './models'
-import type { BaseComponent } from './models/component'
-import { useData, useProp } from './models/hooks'
-import type { HooksType } from './models/hooks/type'
-import Directive from './plugins/directive'
+import type { BaseComponent, Hooks } from './models'
+import { CustomComponent, useData, useProp } from './models'
 
 export type {
   BaseComponent,
@@ -37,7 +35,7 @@ export type {
   ContextmenuItem,
   DataAcceptor,
   DataInstance,
-  HooksType,
+  Hooks,
   MetaContainerItem,
   Response,
   Slotter

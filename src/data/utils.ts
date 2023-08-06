@@ -1,4 +1,4 @@
-import { Logger } from '../bus'
+import { Logger } from 'open-data-v/models/bus'
 
 const uuid = (hasHyphen?: string) => {
   return (

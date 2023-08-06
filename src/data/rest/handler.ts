@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash-es'
-import type { RequestInstance } from 'open-data-v/data/hooks/http'
-import { useRequest } from 'open-data-v/data/hooks/http'
-import type { DataAcceptor, DataInstance, Response } from 'open-data-v/data/type'
 
+import type { RequestInstance } from '../hooks/http'
+import { useRequest } from '../hooks/http'
+import type { DataAcceptor, DataInstance, Response } from '../type'
 import type { StoreRestOption } from './type'
 
 class RestRequestData implements DataInstance {

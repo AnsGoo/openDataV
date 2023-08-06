@@ -1,7 +1,6 @@
-import type { DataType } from 'open-data-v/enum'
-import type { CustomComponent } from 'open-data-v/models'
+import type { CustomComponent } from './models'
 
-export interface HooksType {
+export interface Hooks {
   useProp: <T>(
     component: CustomComponent<T>,
     callbackProp?: (prop: string, key: string, value: any) => void,
@@ -9,5 +8,5 @@ export interface HooksType {
   ) => {
     propValue: any
   }
-  useData: (component: CustomComponent, callbackProp?: (resp: any, _: DataType) => void) => void
+  useData: (component: CustomComponent, callbackProp?: (resp: any, _: string) => void) => void
 }

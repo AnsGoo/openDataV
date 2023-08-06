@@ -18,8 +18,9 @@
 </template>
 
 <script lang="ts" setup>
-import { handleLogger } from 'open-data-v/designer/utils'
 import { onMounted, ref } from 'vue'
+
+import { scriptLogger } from '../utils'
 
 const savedStatus = ref<boolean>(true)
 const props = withDefaults(
@@ -48,7 +49,7 @@ const handleSubmit = () => {
   emits('change', props.code)
   emits('update:code', props.code)
   savedStatus.value = true
-  handleLogger.success('图层已经到底了')
+  scriptLogger.success('图层已经到底了')
 }
 
 onMounted(async () => {})

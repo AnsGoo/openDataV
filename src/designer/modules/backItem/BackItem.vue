@@ -23,7 +23,7 @@
 import { isNumber } from 'lodash-es'
 import type { SelectOption } from 'naive-ui'
 import { NColorPicker, NSelect, NSpace } from 'naive-ui'
-import { GlobalColorSwatches } from 'open-data-v/enum'
+import { GlobalColorSwatches } from 'open-data-v/designer/enum'
 import { onMounted, ref } from 'vue'
 
 import LinearGradient from '../linearGradient'
