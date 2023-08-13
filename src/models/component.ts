@@ -34,6 +34,10 @@ export class CustomComponent {
   show = true
   active = false
   dataMode: DataMode = DataMode.SELF
+  /**
+   * @deprecated dataIntegrationMode 即将弃用，建议使用 dataMode
+   */
+  dataIntegrationMode: DataMode = DataMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
   callbackData?: (result: any, type?: string) => void
@@ -76,7 +80,7 @@ export class CustomComponent {
     }
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
-    this.dataMode = detail.dataMode || DataMode.SELF
+    this.dataMode = detail.dataMode || detail.dataIntegrationMode || DataMode.SELF
   }
 
   get propFromValue(): MetaContainerItem[] {
@@ -237,7 +241,7 @@ export class CustomComponent {
       propValue: this.propValue,
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataMode: this.dataMode,
+      dataMode: this.dataMode || this.dataIntegrationMode,
       script: this.scriptConfig?.toJSON()
     }
     if (this.dataConfig) {

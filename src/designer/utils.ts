@@ -59,7 +59,7 @@ export function createComponent(component: ComponentDataType): any {
   obj.setStyleValue({ style: component.style })
   obj.dataMode = component.dataMode || DataMode.SELF
   const data = component.data
-  if (obj.dataMode === DataMode.UNIVERSAL) {
+  if (obj.dataMode || obj.dataIntegrationMode === DataMode.UNIVERSAL) {
     buildDataHandler(obj, data)
   }
   buildAfterCallback(obj, component.script)

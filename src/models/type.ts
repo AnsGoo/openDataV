@@ -138,6 +138,10 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
   width?: number
   height?: number
   dataMode?: DataMode
+  /**
+   * deprecated: 即将废弃，请使用 dataMode 属性
+   */
+  dataIntegrationMode?: DataMode
 }
 interface CustomContainerProps {
   componentType: string | ConcreteComponent
