@@ -421,11 +421,11 @@ class CanvasState {
       }
       this.curComponent.groupStyle = gStyle
       for (const key in newStyle) {
-        this.curComponent.change(['position', key], newStyle[key], 'style')
+        this.curComponent.changeStyle(['position', key], newStyle[key])
       }
     } else {
       for (const key in ablePosition) {
-        this.curComponent.change(['position', key], ablePosition[key], 'style')
+        this.curComponent.changeStyle(['position', key], ablePosition[key])
       }
     }
 
@@ -463,11 +463,13 @@ class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.change(['position', 'top'], Math.round(afterPoint.y - height / 2), 'style')
-      el.change(['position', 'left'], Math.round(afterPoint.x - width / 2), 'style')
-      el.change(['position', 'height'], Math.round(height), 'style')
-      el.change(['position', 'width'], Math.round(width), 'style')
-      el.change(['position', 'rotate'], rotate, 'style')
+      el.changeStyle(['position'], {
+        top: Math.round(afterPoint.y - height / 2),
+        left: Math.round(afterPoint.x - width / 2),
+        height: Math.round(height),
+        width: Math.round(width),
+        rotate: rotate
+      })
     })
   }
 
@@ -524,7 +526,7 @@ class CanvasState {
     if (!curComponent || !curComponent.propValue) {
       return
     }
-    curComponent.change(keys, value, 'propValue')
+    curComponent.changeProp(keys, value)
     this.saveComponentData()
   }
   /**
@@ -546,7 +548,7 @@ class CanvasState {
     ) {
       this.curComponent.groupStyle[keys[1]] = value
     } else {
-      this.curComponent.change(keys, value, 'style')
+      this.curComponent.changeStyle(keys, value)
     }
     this.saveComponentData()
   }
@@ -734,7 +736,7 @@ class CanvasState {
       } else {
         const newGroupStyle = { ...parentStyle, top, left, height, width }
         for (const key in newGroupStyle) {
-          parentComponent.change(['position', key], newGroupStyle[key], 'style')
+          parentComponent.changeStyle(['position', key], newGroupStyle[key])
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
           el.groupStyle = {

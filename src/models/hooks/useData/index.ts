@@ -8,7 +8,7 @@ export const useData = (
 ) => {
   onMounted(() => {
     if (callbackData) {
-      component.changeDataCallback(callbackData)
+      component.setDataChangeCallback(callbackData)
     }
   })
   onUnmounted(() => {

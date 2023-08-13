@@ -6,11 +6,11 @@ export const useProp = <T>(
   callbackStyle?: (propKeys: Array<string>, value: any) => any
 ): { component: CustomComponent; propValue: T } => {
   if (callbackProp) {
-    component.changePropCallback(callbackProp)
+    component.setPropChangeCallback(callbackProp)
   }
 
   if (callbackStyle) {
-    component.changeStyleCallback(callbackStyle)
+    component.setStyleChangeCallback(callbackStyle)
   }
   return { component: component, propValue: component.propValue as unknown as T }
 }
