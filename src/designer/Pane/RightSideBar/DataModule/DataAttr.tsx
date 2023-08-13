@@ -171,7 +171,8 @@ export default defineComponent({
       }
     }
     return () =>
-      props.curComponent.dataMode === DataMode.UNIVERSAL ? (
+      props.curComponent.dataMode ||
+      props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL ? (
         renderContainer()
       ) : (
         <NDescriptions>

@@ -1,12 +1,15 @@
+import type { BaseScript } from 'open-data-v/scripts'
 import CustomScriptPlugin from 'open-data-v/scripts/custom'
 import SystemScriptPlugin from 'open-data-v/scripts/system'
 import { reactive } from 'vue'
+
+type ScriptHandler = { new (key: string, ...args: any): BaseScript }
 
 interface ScriptPlugin {
   type: string
   name: string
   component: any
-  handler: any
+  handler: ScriptHandler
 }
 
 class ScriptState {
