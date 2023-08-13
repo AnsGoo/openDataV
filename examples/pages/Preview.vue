@@ -19,6 +19,7 @@ dataState.loadPlugins([QuickDataPlugin, RestDataPlugin])
 
 onMounted(async () => {
   const snapshot = await snapShotState.latestRecord()
+  console.log(snapshot)
   if (snapshot) {
     viewer.value!.setLayoutData({
       canvasData: snapshot.canvasData as ComponentDataType[],

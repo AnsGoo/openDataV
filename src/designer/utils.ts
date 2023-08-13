@@ -45,8 +45,8 @@ const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption
   if (!plugin) {
     return
   }
-  const scriptHandler = plugin.handler
-
+  const scriptHandlerClasss = plugin.handler
+  const scriptHandler = new scriptHandlerClasss(script.key)
   componentObj.afterCallbackChange(scriptHandler)
 }
 export function createComponent(component: ComponentDataType): any {

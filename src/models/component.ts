@@ -382,10 +382,13 @@ export class CustomComponent {
     this.componentDataCallback = callback
     this.callbackData = this.buildDataCallback()
     const { dataInstance } = this.dataConfig || {}
-    if (dataInstance && dataInstance.close) {
-      dataInstance.close()
-      dataInstance.connect!(this.callbackData)
+    if (!dataInstance) {
+      return
     }
+    if (dataInstance.close) {
+      dataInstance.close()
+    }
+    dataInstance.connect!(this.callbackData)
   }
 
   buildDataCallback() {
