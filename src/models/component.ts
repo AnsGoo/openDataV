@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isNumber } from 'lodash-es'
 import { h } from 'vue'
 
 import type { ComponentGroup } from './enums'
@@ -283,13 +283,13 @@ export class CustomComponent {
     }
   }
 
-  change(propKeys: Array<string>, value: any, from: 'style' | 'propValue' | 'data') {
-    if (from === 'propValue') {
-      this.changeProp(propKeys, value)
-    } else if (from === 'style') {
-      this.changeStyle(propKeys, value)
-    }
-  }
+  // change(propKeys: Array<string>, value: any, from: 'style' | 'propValue' | 'data') {
+  //   if (from === 'propValue') {
+  //     this.changeProp(propKeys, value)
+  //   } else if (from === 'style') {
+  //     this.changeStyle(propKeys, value)
+  //   }
+  // }
   // 修改属性
   changeProp(propKeys: Array<string>, value: string | number | boolean | any) {
     this.propIsChange = true
@@ -303,7 +303,7 @@ export class CustomComponent {
     }
   }
 
-  changePropCallback(callback: (propKeys: Array<string>, value: any) => void) {
+  setPropChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackProp = callback
   }
   afterCallbackChange(scriptHandler: BaseScript) {
@@ -322,9 +322,18 @@ export class CustomComponent {
   changeStyle(propKeys: Array<string>, value: any) {
     const positionKey = ['top', 'left', 'height', 'width', 'rotate']
     let changeValue = value
-    if (propKeys.length === 2 && propKeys[0] === 'position' && positionKey.includes(propKeys[1])) {
-      changeValue = Math.round(value)
-      this.positionStyle[propKeys[1]] = changeValue
+    if (propKeys[0] === 'position') {
+      if ((propKeys.length === 2, positionKey.includes(propKeys[1]))) {
+        changeValue = Math.round(value)
+        this.positionStyle[propKeys[1]] = changeValue
+      } else if (propKeys.length === 1) {
+        positionKey.forEach((el) => {
+          if (!isNumber(value[el])) {
+            return
+          }
+          this.positionStyle[el] = value[el]
+        })
+      }
     }
     this.styleIsChange = true
     const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
@@ -336,7 +345,7 @@ export class CustomComponent {
     if (this.callbackStyle) this.callbackStyle(propKeys, value)
   }
 
-  changeStyleCallback(callback: (propKeys: Array<string>, value: any) => void) {
+  setStyleChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackStyle = callback
   }
 
@@ -361,16 +370,10 @@ export class CustomComponent {
     })
   }
   /**
-   * 隐藏组件
+   * 设置组件的可见性
    */
-  hiddenComponent() {
-    this.display = false
-  }
-  /**
-   * 显示组件
-   */
-  showComponent() {
-    this.display = true
+  setVisible(visible: boolean) {
+    this.display = visible
   }
   async changeDataConfig(dataConfig: DataConfig) {
     const { dataInstance } = this.dataConfig || {}
@@ -382,7 +385,7 @@ export class CustomComponent {
       await this.dataConfig?.dataInstance.connect!(this.callbackData)
     }
   }
-  changeDataCallback(callback: (result: any, type?: string) => void) {
+  setDataChangeCallback(callback: (result: any, type?: string) => void) {
     this.componentDataCallback = callback
     this.callbackData = this.buildDataCallback()
     const { dataInstance } = this.dataConfig || {}

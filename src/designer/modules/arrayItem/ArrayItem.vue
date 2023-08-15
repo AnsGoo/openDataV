@@ -1,9 +1,10 @@
 <template>
-  <n-space vertical>
-    <n-space v-for="(_, index) in arrayValue" :key="index" :wrap="false">
+  <div class="container">
+    <div v-for="(_, index) in arrayValue" :key="index" class="item">
       <n-input
         v-model:value="arrayValue[index]"
         type="text"
+        style="width: 100%"
         placeholder="请输入数据"
         @change="handleChange(index)"
       />
@@ -14,8 +15,8 @@
         color="#F76560"
         @click="handleDelete(index)"
       />
-    </n-space>
-    <n-space v-if="type === 'dynamic'" :wrap="false">
+    </div>
+    <div v-if="type === 'dynamic'" class="item">
       <n-input
         ref="addInputEl"
         v-model:value="newValue"
@@ -24,13 +25,13 @@
         @keypress.enter="handleAdd"
       />
       <XIcon name="add" color="#4CD263" :size="18" @click="handleAdd" />
-    </n-space>
-  </n-space>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { isNumber } from 'lodash-es'
-import { NInput, NSpace } from 'naive-ui'
+import { NInput } from 'naive-ui'
 import { nextTick, reactive, ref } from 'vue'
 
 const props = withDefaults(
@@ -95,4 +96,11 @@ const handleChange = (index: number) => {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.container {
+  @apply flex-col;
+  .item {
+    @apply flex flex-row p-1 items-center;
+  }
+}
+</style>

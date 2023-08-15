@@ -164,14 +164,14 @@ const hidden = (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
   const component = canvasState.getComponentByIndex(indexes)
-  if (component) component.hiddenComponent()
+  if (component) component.setVisible(false)
 }
 
 const display = (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
   const component = canvasState.getComponentByIndex(indexes)
-  if (component) component.showComponent()
+  if (component) component.setVisible(true)
 }
 const cut = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))

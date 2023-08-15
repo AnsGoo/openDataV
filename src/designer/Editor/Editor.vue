@@ -159,8 +159,8 @@ const pasteComponent = (event: ClipboardEvent) => {
     try {
       const component: CustomComponent = createComponent(JSON.parse(textData))
       if (component) {
-        component.change(['position', 'top'], component.positionStyle.top + 10, 'style')
-        component.change(['position', 'left'], component.positionStyle.left + 10, 'style')
+        component.changeStyle(['position', 'top'], component.positionStyle.top + 10)
+        component.changeStyle(['position', 'left'], component.positionStyle.left + 10)
         component.id = uuid()
         clipBoardState.copy(component)
         event.preventDefault()
@@ -244,8 +244,8 @@ const handleDrop = async (e) => {
     const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
     const y = (e.pageY - editorRectInfo.top) / canvasState.scale
     const x = (e.pageX - editorRectInfo.left) / canvasState.scale
-    component.change(['position', 'top'], y, 'style')
-    component.change(['position', 'left'], x, 'style')
+    component.changeStyle(['position', 'top'], y)
+    component.changeStyle(['position', 'left'], x)
     canvasState.appendComponent(component)
   }
 }
