@@ -4,29 +4,31 @@ import { ComponentGroup, ContainerType, DataMode, FormType, GlobalColorSwatches 
 import type { Hooks } from './hooks'
 import { useData, useProp } from './hooks'
 import type {
-  ArrayFormSchema,
+  ArrayProps,
   BaseComponent,
-  BaseFormSchema,
+  BaseFormProps,
   BaseScript,
   ComponentDataType,
   ComponentStyle,
   ComponentType,
   ContainerItemProps,
-  CustomFormSchema,
+  CustomProps,
   DataAcceptor,
   DataInstance,
+  DataOption,
   DOMRectStyle,
   FormItemProps,
-  InputFormSchema,
-  InputNumberFormSchema,
+  InputNumberProps,
+  InputProps,
   MetaContainerItem,
   MetaForm,
-  ModalFormSchema,
-  RadioFormSchema,
+  ModalProps,
+  RadioProps,
   Response,
   ResponseData,
-  SelectFormSchema,
-  SwitchFormSchema
+  ScriptOption,
+  SelectProps,
+  SwitchProps
 } from './type'
 import { buildModeValue, updateModeValue } from './utils'
 
@@ -49,28 +51,30 @@ export {
   useProp
 }
 export type {
-  ArrayFormSchema,
+  ArrayProps,
   BaseComponent,
-  BaseFormSchema,
+  BaseFormProps,
   BaseScript,
   ComponentDataType,
   ComponentStyle,
   ComponentType,
   ContainerItemProps,
-  CustomFormSchema,
+  CustomProps,
   DataAcceptor,
   DataInstance,
+  DataOption,
   DOMRectStyle,
   FormItemProps,
   Hooks,
-  InputFormSchema,
-  InputNumberFormSchema,
+  InputNumberProps,
+  InputProps,
   MetaContainerItem,
   MetaForm,
-  ModalFormSchema,
-  RadioFormSchema,
+  ModalProps,
+  RadioProps,
   Response,
   ResponseData,
-  SelectFormSchema,
-  SwitchFormSchema
+  ScriptOption,
+  SelectProps,
+  SwitchProps
 }

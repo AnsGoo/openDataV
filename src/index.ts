@@ -1,3 +1,4 @@
+import type { MetaContainerItem } from 'open-data-v/base'
 import { useRequest } from 'open-data-v/data/hooks/http'
 
 import type { BaseComponent, Hooks } from './base'
@@ -12,13 +13,7 @@ import {
 } from './base'
 import type { DataAcceptor, DataInstance, Response, Slotter } from './data'
 import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './data'
-import type {
-  CanvasStyleData,
-  ComponentDataType,
-  ComponentItem,
-  ContextmenuItem,
-  MetaContainerItem
-} from './designer'
+import type { CanvasStyleData, ComponentDataType, ComponentItem, ContextmenuItem } from './designer'
 import {
   DataMode,
   DataSlotter,

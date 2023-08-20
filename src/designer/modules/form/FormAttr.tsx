@@ -14,18 +14,18 @@ import {
   NSelect,
   NSwitch
 } from 'naive-ui'
-import { FormType } from 'open-data-v/base'
 import type {
-  CustomFormSchema,
+  CustomProps,
   FormItemProps,
-  InputFormSchema,
-  InputNumberFormSchema,
+  InputNumberProps,
+  InputProps,
   MetaForm,
-  ModalFormSchema,
-  RadioFormSchema,
-  SelectFormSchema,
-  SwitchFormSchema
-} from 'open-data-v/designer'
+  ModalProps,
+  RadioProps,
+  SelectProps,
+  SwitchProps
+} from 'open-data-v/base'
+import { FormType } from 'open-data-v/base'
 import type { PropType } from 'vue'
 import { defineComponent, h, ref, watch } from 'vue'
 
@@ -83,7 +83,7 @@ export default defineComponent({
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const isShow = ref<boolean>(false)
     const renderModal = (item: MetaForm, modelValue: Record<string, any>, path: Array<string>) => {
-      const options = ((item || {}).props || {}) as ModalFormSchema
+      const options = ((item || {}).props || {}) as ModalProps
       return (
         <>
           <NInputGroup>
@@ -164,7 +164,7 @@ export default defineComponent({
       }
       const itemOptions = (item.props || item.componentOptions || {}) as FormItemProps
       const options: Record<string, any>[] =
-        (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
+        (itemOptions as SelectProps | RadioProps | SwitchProps)?.options || []
 
       /**
        * 获取设置的值
@@ -224,8 +224,8 @@ export default defineComponent({
               precision={precision}
               clearable={true}
               v-slots={{
-                prefix: (itemOptions as InputNumberFormSchema).prefix,
-                suffix: (itemOptions as InputNumberFormSchema).suffix
+                prefix: (itemOptions as InputNumberProps).prefix,
+                suffix: (itemOptions as InputNumberProps).suffix
               }}
             />
           )
@@ -262,8 +262,8 @@ export default defineComponent({
             <CustomItem
               v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
-              component={(itemOptions as CustomFormSchema).componentType}
-              args={(itemOptions as CustomFormSchema).args}
+              component={(itemOptions as CustomProps).componentType}
+              args={(itemOptions as CustomProps).args}
             />
           )
         default:
@@ -275,8 +275,8 @@ export default defineComponent({
               readonly={itemOptions!.editable === false}
               disabled={itemOptions!.disabled}
               v-slots={{
-                prefix: (itemOptions as InputFormSchema).prefix,
-                suffix: (itemOptions as InputFormSchema).suffix
+                prefix: (itemOptions as InputProps).prefix,
+                suffix: (itemOptions as InputProps).suffix
               }}
             />
           )

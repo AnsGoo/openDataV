@@ -208,6 +208,26 @@ importers:
       echarts: 5.4.3
       echarts-liquidfill: 3.1.0_echarts@5.4.3
 
+  src/base:
+    specifiers:
+      lodash-es: ^4.17.21
+      mitt: ^3.0.1
+    dependencies:
+      lodash-es: 4.17.21
+      mitt: 3.0.1
+
+  src/data:
+    specifiers:
+      lodash-es: ^4.17.21
+    dependencies:
+      lodash-es: 4.17.21
+
+  src/scripts:
+    specifiers:
+      lodash-es: ^4.17.21
+    dependencies:
+      lodash-es: 4.17.21
+
 packages:
 
   /@aashutoshrathi/word-wrap/1.2.6:
