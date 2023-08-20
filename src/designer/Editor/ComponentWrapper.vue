@@ -9,8 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from '@/models'
-import { getComponentStyle } from '@/utils/utils'
+import type { CustomComponent } from 'open-data-v/models'
+
+import { getComponentStyle } from '../utils'
 
 defineProps<{ component: CustomComponent }>()
 </script>

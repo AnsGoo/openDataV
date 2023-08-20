@@ -1,11 +1,10 @@
 import { cloneDeep } from 'lodash-es'
+import type { CustomComponent } from 'open-data-v/models'
 import { reactive } from 'vue'
 
-import type { CustomComponent } from '@/models'
-import type { CopyItem } from '@/types/storeTypes'
-import { copyText, uuid } from '@/utils/utils'
-
+import { copyText, uuid } from '../utils'
 import useCanvasState from './canvas'
+import type { CopyItem } from './type'
 
 class ClipBoardState {
   public state = reactive<CopyItem>({
@@ -41,11 +40,11 @@ class ClipBoardState {
     const canvasState = useCanvasState()
 
     if (isMouse) {
-      this.copyData.change(['position', 'top'], y!, 'style')
-      this.copyData.change(['position', 'left'], x!, 'style')
+      this.copyData.changeStyle(['position', 'top'], y!)
+      this.copyData.changeStyle(['position', 'left'], x!)
     } else {
-      this.copyData.change(['position', 'top'], (this.copyData.style.top as number) + 10, 'style')
-      this.copyData.change(['position', 'left'], (this.copyData.style.left as number) + 10, 'style')
+      this.copyData.changeStyle(['position', 'top'], (this.copyData.style.top as number) + 10)
+      this.copyData.changeStyle(['position', 'left'], (this.copyData.style.left as number) + 10)
     }
 
     const data = cloneDeep(this.copyData)

@@ -1,30 +1,28 @@
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isNumber } from 'lodash-es'
 import { h } from 'vue'
 
-import type { ComponentGroup } from '@/enum'
-import { ContainerType, FormType } from '@/enum'
-import { DataIntegrationMode, DataType } from '@/enum/data'
+import type { ComponentGroup } from './enums'
+import { ContainerType, DataMode, FormType } from './enums'
 import type {
+  BaseScript,
   ComponentDataType,
   ComponentStyle,
   ComponentType,
+  DataInstance,
   DOMRectStyle,
   GroupStyle,
   MetaContainerItem,
-  MetaForm
-} from '@/types/component'
-
-import type { RequestData } from './requestOption'
-import { DemoRequestData, RestRequestData, StaticRequestData } from './requestOption'
+  MetaForm,
+  Response
+} from './type'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
 interface DataConfig {
-  type: DataType
-  requestConfig: RequestData
-  otherConfig: Recordable
+  type: string
+  dataInstance: DataInstance
 }
 
-export abstract class CustomComponent {
+export class CustomComponent {
   id: string
   component: string
   group: ComponentGroup
@@ -35,37 +33,39 @@ export abstract class CustomComponent {
   display = true
   show = true
   active = false
-  dataIntegrationMode: DataIntegrationMode = DataIntegrationMode.SELF
+  dataMode: DataMode = DataMode.SELF
+  /**
+   * @deprecated dataIntegrationMode 即将弃用，建议使用 dataMode
+   */
+  dataIntegrationMode: DataMode = DataMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any) => void
   callbackStyle?: (propKeys: Array<string>, value: any) => void
-  callbackData?: (result: any, type: DataType) => void
+  callbackData?: (result: any, type?: string) => void
+  protected componentDataCallback?: (result: any, type?: string) => void
 
   // 检测变化
   propIsChange = true
   styleIsChange = true
-  defaultViewType = {
-    propValue: ContainerType.COLLAPSE,
-    style: ContainerType.COLLAPSE,
-    data: ContainerType.FORM
-  }
+  defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
   _prop: MetaContainerItem[] = []
   _style: MetaContainerItem[] = []
-  extraStyle: Recordable<string | number | boolean> = {}
+  extraStyle: Record<string, string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
   parent?: CustomComponent
   subComponents: CustomComponent[] = []
 
-  _propValue: Recordable = {}
+  _propValue: Record<string, any> = {}
   _styleValue: ComponentStyle = {
     ...this.positionStyle
   }
   dataConfig?: DataConfig
+  scriptConfig?: BaseScript
 
-  protected constructor(detail: ComponentType) {
+  constructor(detail: ComponentType) {
     if (detail.id) {
       this.id = detail.id
     } else {
@@ -80,8 +80,7 @@ export abstract class CustomComponent {
     }
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
-    this.dataIntegrationMode = detail.dataIntegrationMode || DataIntegrationMode.SELF
-    Object.assign(this.defaultViewType, detail.defaultViewType || {})
+    this.dataMode = detail.dataMode || detail.dataIntegrationMode || DataMode.SELF
   }
 
   get propFromValue(): MetaContainerItem[] {
@@ -194,9 +193,13 @@ export abstract class CustomComponent {
     return this._propValue
   }
 
+  setViewType(viewType: ContainerType) {
+    this.defaultViewType = viewType
+  }
+
   get style(): ComponentStyle {
     if (this.styleIsChange) {
-      const customStyle: Recordable[] = []
+      const customStyle: Record<string, any>[] = []
       this.styleFormValue.forEach((item) => {
         ;(item.children || []).forEach((obj) => {
           const objProps = obj.props || obj.componentOptions
@@ -224,7 +227,7 @@ export abstract class CustomComponent {
   }
 
   // 自定义样式编辑框数据处理
-  styleToCss(_: Recordable[]): Nullable<Recordable> {
+  styleToCss(_: Record<string, any>[]): Nullable<Record<string, any>> {
     return null
   }
 
@@ -238,13 +241,13 @@ export abstract class CustomComponent {
       propValue: this.propValue,
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataIntegrationMode: this.dataIntegrationMode
+      dataMode: this.dataMode || this.dataIntegrationMode,
+      script: this.scriptConfig?.toJSON()
     }
     if (this.dataConfig) {
       component.data = {
         type: this.dataConfig?.type,
-        otherConfig: this.dataConfig?.otherConfig,
-        requestOptions: this.dataConfig?.requestConfig.toJSON()
+        requestOptions: this.dataConfig?.dataInstance.toJSON()
       }
     }
     if (this.groupStyle) {
@@ -280,13 +283,13 @@ export abstract class CustomComponent {
     }
   }
 
-  change(propKeys: Array<string>, value: any, from: 'style' | 'propValue' | 'data') {
-    if (from === 'propValue') {
-      this.changeProp(propKeys, value)
-    } else if (from === 'style') {
-      this.changeStyle(propKeys, value)
-    }
-  }
+  // change(propKeys: Array<string>, value: any, from: 'style' | 'propValue' | 'data') {
+  //   if (from === 'propValue') {
+  //     this.changeProp(propKeys, value)
+  //   } else if (from === 'style') {
+  //     this.changeStyle(propKeys, value)
+  //   }
+  // }
   // 修改属性
   changeProp(propKeys: Array<string>, value: string | number | boolean | any) {
     this.propIsChange = true
@@ -295,37 +298,54 @@ export abstract class CustomComponent {
       return
     }
     updateModeValue(this._propValue, propKeys, value)
-    setTimeout(() => {
-      if (this.callbackProp) {
-        this.callbackProp(propKeys, value)
-      }
-    }, 0)
+    if (this.callbackProp) {
+      this.callbackProp(propKeys, value)
+    }
   }
 
-  changePropCallback(callback: (propKeys: Array<string>, value: any) => void) {
+  setPropChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackProp = callback
+  }
+  afterCallbackChange(scriptHandler: BaseScript) {
+    this.scriptConfig = scriptHandler
+    if (this.dataConfig?.dataInstance && this.componentDataCallback) {
+      this.callbackData = this.buildDataCallback()
+      const { dataInstance } = this.dataConfig || {}
+      if (dataInstance && dataInstance.close) {
+        dataInstance.close()
+        dataInstance.connect!(this.callbackData)
+      }
+    }
   }
 
   // 修改样式
   changeStyle(propKeys: Array<string>, value: any) {
-    const positionKey = ['top', 'left', 'height', 'width']
+    const positionKey = ['top', 'left', 'height', 'width', 'rotate']
     let changeValue = value
-    if (propKeys.length === 2 && propKeys[0] === 'position' && positionKey.includes(propKeys[1])) {
-      changeValue = Math.round(value)
-      this.positionStyle[propKeys[1]] = changeValue
+    if (propKeys[0] === 'position') {
+      if ((propKeys.length === 2, positionKey.includes(propKeys[1]))) {
+        changeValue = Math.round(value)
+        this.positionStyle[propKeys[1]] = changeValue
+      } else if (propKeys.length === 1) {
+        positionKey.forEach((el) => {
+          if (!isNumber(value[el])) {
+            return
+          }
+          this.positionStyle[el] = value[el]
+        })
+      }
     }
     this.styleIsChange = true
     const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
-    const objProps = curObj.props || curObj.componentOptions
+    const objProps = curObj && (curObj.props || curObj.componentOptions)
     if (objProps) {
       objProps.defaultValue = value
     }
-    if (this.callbackStyle) this.callbackStyle(propKeys, value)
 
-    // this.extraStyle[prop] = value
+    if (this.callbackStyle) this.callbackStyle(propKeys, value)
   }
 
-  changeStyleCallback(callback: (propKeys: Array<string>, value: any) => void) {
+  setStyleChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackStyle = callback
   }
 
@@ -350,58 +370,63 @@ export abstract class CustomComponent {
     })
   }
   /**
-   * 隐藏组件
+   * 设置组件的可见性
    */
-  hiddenComponent() {
-    this.display = false
+  setVisible(visible: boolean) {
+    this.display = visible
   }
-  /**
-   * 显示组件
-   */
-  showComponent() {
-    this.display = true
-  }
-  async changeRequestDataConfig(type: DataType, config: Recordable) {
-    switch (type) {
-      case DataType.STATIC:
-        this.dataConfig = {
-          type: DataType.STATIC,
-          requestConfig: new StaticRequestData(config.options),
-          otherConfig: config.otherConfig || {}
-        }
-        break
-      case DataType.REST:
-        this.dataConfig = {
-          type: DataType.REST,
-          requestConfig: new RestRequestData(config.options),
-          otherConfig: config.otherConfig || {}
-        }
-        break
-      case DataType.DEMO:
-        this.dataConfig = {
-          type: DataType.DEMO,
-          requestConfig: new DemoRequestData(config.options),
-          otherConfig: {}
-        }
-        break
+  async changeDataConfig(dataConfig: DataConfig) {
+    const { dataInstance } = this.dataConfig || {}
+    if (dataInstance && dataInstance.close) {
+      dataInstance.close()
     }
+    this.dataConfig = dataConfig
     if (this.callbackData) {
-      const result = await this.dataConfig?.requestConfig?.getRespData({
-        propvalue: this.propValue
-      })
-      this.callbackData(result, this.dataConfig!.type)
+      await this.dataConfig?.dataInstance.connect!(this.callbackData)
     }
   }
-  changeDataCallback(callback: (result: any, type: DataType) => void) {
-    this.callbackData = callback
+  setDataChangeCallback(callback: (result: any, type?: string) => void) {
+    this.componentDataCallback = callback
+    this.callbackData = this.buildDataCallback()
+    const { dataInstance } = this.dataConfig || {}
+    if (!dataInstance) {
+      return
+    }
+    if (dataInstance.close) {
+      dataInstance.close()
+    }
+    dataInstance.connect!(this.callbackData)
+  }
+
+  buildDataCallback() {
+    return (resp: Response) => {
+      if (this.scriptConfig && this.scriptConfig.afterCallback) {
+        const afterCallback = this.scriptConfig.afterCallback
+        const { status, data } = resp
+        if (status === 'SUCCESS') {
+          try {
+            const afterData = afterCallback(data, this.propValue)
+            resp['afterData'] = afterData
+          } catch (err) {
+            resp['afterData'] = undefined
+            resp.status = 'FAILED'
+          }
+        }
+      } else {
+        resp['afterData'] = resp.data
+      }
+      if (this.componentDataCallback) {
+        this.componentDataCallback(resp)
+      }
+    }
   }
   loadDemoData() {
     const exampleData = this.exampleData
-    this.changeRequestDataConfig(DataType.DEMO, {
-      options: {
-        data: exampleData
+    setTimeout(() => {
+      if (this.callbackData) {
+        this.callbackData({ status: 'SUCCESS', data: exampleData, afterData: exampleData }, 'DEMO')
       }
-    })
+    }, 200)
   }
   appendChild(child: CustomComponent) {
     this.subComponents.push(child)
@@ -410,3 +435,5 @@ export abstract class CustomComponent {
     this.subComponents[index] = child
   }
 }
+
+export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }

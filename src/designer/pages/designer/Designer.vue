@@ -7,7 +7,7 @@
     <n-layout has-sider class="main">
       <n-layout-sider
         class="left"
-        width="200"
+        width="15rem"
         :collapsed="collapsedLeft"
         :native-scrollbar="false"
         bordered
@@ -29,11 +29,10 @@
         <Canvas />
         <n-layout-sider
           class="right"
-          width="240"
+          width="20rem"
           :collapsed="collapsedRight"
           :native-scrollbar="false"
           bordered
-          :collapsed-width="35"
           collapse-mode="width"
           show-trigger="arrow-circle"
           @collapse="collapsedRight = true"
@@ -57,13 +56,12 @@
 
 <script setup lang="ts">
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import type { ToolBarItemType } from 'open-data-v/designer/components/ToolBar'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import hooks from 'open-data-v/models/hooks'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 
-import type { LayoutData } from '@/api/pages'
-import type { ToolBarItemType } from '@/components/ToolBar'
-import useCanvasState from '@/designer/state/canvas'
-import hooks from '@/models/hooks'
-
+import type { LayoutData } from '../../../designer/state/type'
 import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'
 import ToolBar from '../../Pane/Toolbar'
@@ -95,13 +93,8 @@ onUnmounted(() => {
 <style scoped lang="less">
 .home > :deep(.n-layout-scroll-container:first-child) {
   @apply flex flex-col h-screen;
-
   .header {
-    height: 5vh;
-  }
-
-  .main {
-    flex: 1;
+    @apply h-12;
   }
 }
 </style>

@@ -1,21 +1,25 @@
+import StaticDataPlugin from 'open-data-v/data/static'
+import SubDataPlugin from 'open-data-v/data/sub'
+import WebsocketDataPlugin from 'open-data-v/data/websocket'
+import DemoDataPlugin from 'open-data-v/designer/data/DemoData'
 import { reactive } from 'vue'
-
-import RestDataPlugin from '@/apiView/DynamicData'
-import StaticDataPlugin from '@/apiView/StaticData'
-import DemoDatePlugin from '@/designer/data/DemoData'
 
 interface DataPlugin {
   type: string
   name: string
   component: any
+  handler: any
+  useTo?: string | Array<string>
+  getdefaultOption?: () => any
 }
 
 class DataState {
-  private state = reactive<{ plugins: Recordable<DataPlugin> }>({
+  private state = reactive<{ plugins: Record<string, DataPlugin> }>({
     plugins: {
-      [DemoDatePlugin.type]: DemoDatePlugin,
+      [DemoDataPlugin.type]: DemoDataPlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
-      [RestDataPlugin.type]: RestDataPlugin
+      [SubDataPlugin.type]: SubDataPlugin,
+      [WebsocketDataPlugin.type]: WebsocketDataPlugin
     }
   })
 
@@ -23,21 +27,42 @@ class DataState {
     return this.state.plugins
   }
 
-  get allDataType() {
-    const options: Array<{ label: string; value: string }> = []
+  get componentPlugins() {
+    const plugins: Record<string, DataPlugin> = {}
     const keys = Object.keys(this.plugins)
-    keys.forEach((el) => {
+    keys.forEach((el: string) => {
       const plugin = this.plugins[el]
-      options.push({
-        label: plugin.name,
-        value: plugin.type
-      })
+      const useTo = plugin.useTo || 'COMPONENT'
+      if (useTo === 'COMPONENT' || useTo.includes('COMPONENT')) {
+        plugins[el] = plugin
+      }
     })
-    return options
+    return plugins
   }
 
-  public getDataComponent(type: string) {
+  get globalPlugins() {
+    const plugins: Record<string, DataPlugin> = {}
+    const keys = Object.keys(this.plugins)
+    keys.forEach((el: string) => {
+      const plugin = this.plugins[el]
+      const useTo = plugin.useTo || 'GLOBAL'
+      if (useTo === 'GLOBAL' || useTo.includes('GLOBAL')) {
+        plugins[el] = plugin
+      }
+    })
+    return plugins
+  }
+
+  public getPlugin(type: string) {
     return this.plugins[type]
+  }
+
+  public loadPlugins(plugins: Array<DataPlugin>) {
+    plugins.forEach((el) => {
+      if (!this.plugins[el.type]) {
+        this.plugins[el.type] = el
+      }
+    })
   }
 }
 

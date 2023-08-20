@@ -50,29 +50,35 @@
 </template>
 
 <script setup lang="ts">
+import { EditMode } from 'open-data-v/designer/const'
+import Area from 'open-data-v/designer/Editor/Area.vue'
+import Grid from 'open-data-v/designer/Editor/Grid.vue'
+import MarkLine from 'open-data-v/designer/Editor/MarkLine.vue'
+import Ruler from 'open-data-v/designer/Editor/Ruler.vue'
+import Shape from 'open-data-v/designer/Editor/Shape'
+import { DataMode } from 'open-data-v/designer/enum'
+import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
+import useActionState from 'open-data-v/designer/state/actions'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import useClipBoardState from 'open-data-v/designer/state/clipBoard'
+import type { Location, Vector } from 'open-data-v/designer/type'
+import type { CustomComponent } from 'open-data-v/models'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
-import Area from '@/designer/Editor/Area.vue'
-import Grid from '@/designer/Editor/Grid.vue'
-import MarkLine from '@/designer/Editor/MarkLine.vue'
-import Ruler from '@/designer/Editor/Ruler.vue'
-import Shape from '@/designer/Editor/Shape'
-import useActionState from '@/designer/state/actions'
-import useCanvasState from '@/designer/state/canvas'
-import useClipBoardState from '@/designer/state/clipBoard'
-import { EditMode } from '@/enum'
-import { DataIntegrationMode } from '@/enum/data'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import type { Position, Vector } from '@/types/common'
-import { backgroundToCss, filterStyle, getComponentShapeStyle, Logger, uuid } from '@/utils/utils'
-
-import { componentList } from '../load'
-import { createComponent } from '../utils'
+import { systemLogger } from '../../designer/utils'
+import {
+  backgroundToCss,
+  createComponent,
+  filterStyle,
+  getComponentShapeStyle,
+  uuid
+} from '../utils'
 
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
 const canvasState = useCanvasState()
+
+const components = canvasState.components
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
@@ -105,14 +111,14 @@ const contextmenus = (): ContextmenuItem[] => {
 }
 
 onMounted(() => {
-  Logger.log('进入编辑模式')
+  systemLogger.debug('进入编辑模式')
   canvasState.setEditMode(EditMode.EDIT)
   document.addEventListener('paste', pasteComponent)
   document.addEventListener('copy', copyComponent)
 })
 
 onUnmounted(() => {
-  Logger.log('进入预览模式')
+  systemLogger.debug('进入预览模式')
   canvasState.setEditMode(EditMode.PREVIEW)
   document.removeEventListener('paste', pasteComponent)
   document.removeEventListener('copy', copyComponent)
@@ -126,7 +132,7 @@ const componentData = computed(() => {
 const canvasStyleData = computed(() => canvasState.canvasStyleData)
 const curComponent = computed(() => canvasState.curComponent)
 
-const bgStyle = computed<Recordable<string>>(() => {
+const bgStyle = computed<Record<string, string>>(() => {
   const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,
@@ -153,8 +159,8 @@ const pasteComponent = (event: ClipboardEvent) => {
     try {
       const component: CustomComponent = createComponent(JSON.parse(textData))
       if (component) {
-        component.change(['position', 'top'], component.positionStyle.top + 10, 'style')
-        component.change(['position', 'left'], component.positionStyle.left + 10, 'style')
+        component.changeStyle(['position', 'top'], component.positionStyle.top + 10)
+        component.changeStyle(['position', 'left'], component.positionStyle.left + 10)
         component.id = uuid()
         clipBoardState.copy(component)
         event.preventDefault()
@@ -212,7 +218,7 @@ const handleMouseDown = (e: MouseEvent) => {
       return
     }
 
-    const selectedRect: Position = {
+    const selectedRect: Location = {
       left: Math.round(actionState.style.left),
       top: Math.round(actionState.style.top),
       right: actionState.style.left + actionState.style.width,
@@ -230,16 +236,16 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component: CustomComponent = new componentList[componentName]()
-    if (component.dataIntegrationMode === DataIntegrationMode.UNIVERSAL) {
+    const component: CustomComponent = new components[componentName]()
+    if (component.dataMode === DataMode.UNIVERSAL) {
       component.loadDemoData()
     }
 
     const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
     const y = (e.pageY - editorRectInfo.top) / canvasState.scale
     const x = (e.pageX - editorRectInfo.left) / canvasState.scale
-    component.change(['position', 'top'], y, 'style')
-    component.change(['position', 'left'], x, 'style')
+    component.changeStyle(['position', 'top'], y)
+    component.changeStyle(['position', 'left'], x)
     canvasState.appendComponent(component)
   }
 }

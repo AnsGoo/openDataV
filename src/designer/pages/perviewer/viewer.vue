@@ -7,15 +7,14 @@
 </template>
 
 <script setup lang="ts">
+import ComponentWrapper from 'open-data-v/designer/Editor/ComponentWrapper.vue'
+import { createComponent } from 'open-data-v/designer/utils'
+import type { CustomComponent } from 'open-data-v/models'
+import hooks from 'open-data-v/models/hooks'
 import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
 
-import type { LayoutData } from '@/api/pages'
-import ComponentWrapper from '@/designer/Editor/ComponentWrapper.vue'
-import { createComponent } from '@/designer/utils'
-import type { CustomComponent } from '@/models'
-import hooks from '@/models/hooks'
-import type { CanvasStyleData } from '@/types/storeTypes'
-import { backgroundToCss, filterStyle, pageScale } from '@/utils/utils'
+import type { CanvasStyleData, LayoutData } from '../../state/type'
+import { backgroundToCss, filterStyle, pageScale } from '../../utils'
 
 provide('HOOKS', readonly(hooks))
 
@@ -25,11 +24,11 @@ const canvasStyle = ref<CanvasStyleData>({
   height: 0,
   background: { backgroundColor: '#272e3b' }
 })
-const bgStyle = computed<Recordable<string>>(() => {
+const bgStyle = computed<Record<string, string>>(() => {
   return backgroundToCss(canvasStyle.value.background)
 })
 
-const screenStyle = computed<Recordable<string>>(() => {
+const screenStyle = computed<Record<string, string>>(() => {
   const style = {
     ...canvasStyle.value
   }

@@ -1,24 +1,34 @@
 import { cloneDeep } from 'lodash-es'
-import { reactive } from 'vue'
-
-import type { LayoutData } from '@/api/pages'
-import { ContainerType, EditMode, FormType } from '@/enum'
-import PixelEnum from '@/enum/pixel'
-import type { CustomComponent } from '@/models'
-import { buildModeValue, updateModeValue } from '@/models/utils'
-import type { Position, Vector } from '@/types/common'
+import { EditMode } from 'open-data-v/designer/const'
+import { ContainerType, FormType, PixelEnum } from 'open-data-v/designer/enum'
+import { DataSlotter } from 'open-data-v/designer/state/slotter'
+import type { CanvasData } from 'open-data-v/designer/state/type'
 import type {
   ComponentDataType,
   DOMRectStyle,
   GroupStyle,
-  MetaContainerItem
-} from '@/types/component'
-import type { CanvasStyleConfig, CanvasStyleData, EditData } from '@/types/storeTypes'
-import { message } from '@/utils/message'
-import { calcComponentsRect, mod360, rotatePoint, swap, toPercent, uuid } from '@/utils/utils'
+  MetaContainerItem,
+  Vector
+} from 'open-data-v/designer/type'
+import { handleLogger } from 'open-data-v/designer/utils'
+import type { BaseComponent, CustomComponent, DataInstance } from 'open-data-v/models'
+import { buildModeValue, eventBus, updateModeValue } from 'open-data-v/models'
+import { reactive } from 'vue'
 
-import { createComponent } from '../utils'
+import {
+  calcComponentsRect,
+  createComponent,
+  mod360,
+  rotatePoint,
+  swap,
+  toPercent,
+  uuid
+} from '../utils'
+import useDataState from './data'
 import useSnapShotState from './snapshot'
+import type { CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
+
+const dataState = useDataState()
 
 const snapShotState = useSnapShotState()
 
@@ -90,7 +100,7 @@ const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
 }
 
 class CanvasState {
-  public state = reactive<EditData>({
+  public state = reactive<CanvasData>({
     name: '',
     thumbnail: '',
     editMode: EditMode.PREVIEW,
@@ -102,6 +112,9 @@ class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
+    components: {},
+    globalSlotters: {},
+    darkTheme: true,
     scale: 1,
     canvasStyleConfig: {
       formItems: baseCanvasStyleConfig,
@@ -127,7 +140,23 @@ class CanvasState {
   get canvasStyleConfig(): CanvasStyleConfig {
     return this.state.canvasStyleConfig
   }
-  get canvasGlobalData() {
+
+  get darkTheme(): boolean {
+    return this.state.darkTheme
+  }
+
+  get components() {
+    return this.state.components
+  }
+
+  public loadComponent(name: string, component: BaseComponent) {
+    this.state.components[name] = component
+  }
+
+  get globalSlotters() {
+    return this.state.globalSlotters
+  }
+  get globalOption() {
     return {
       basic: {
         width: this.canvasStyleData.width,
@@ -243,6 +272,22 @@ class CanvasState {
     if (data.canvasStyle) {
       this.canvasStyleData = data.canvasStyle
     }
+    if (data.dataSlotters) {
+      const keys = Object.keys(this.globalSlotters)
+      keys.forEach((el) => {
+        this.remveDataSlotter(el)
+      })
+      data.dataSlotters.forEach((el) => {
+        const plugin = dataState.getPlugin(el.type)
+        if (plugin) {
+          const { options } = el.config!
+          const dataInstance = new plugin.handler(options)
+          this.appendDataSlotter(el.type, dataInstance)
+        } else {
+          console.log(`${el.type}插件不存在`)
+        }
+      })
+    }
   }
   setCanvasStyle(keys: Array<string>, val: any) {
     if (keys.length === 2 && keys[0] === 'basic') {
@@ -317,7 +362,7 @@ class CanvasState {
    * @returns
    */
   syncComponentLocation(
-    position: Position,
+    position: Partial<DOMRectStyle>,
     parentComponent?: CustomComponent,
     isSave = true
   ): void {
@@ -325,7 +370,7 @@ class CanvasState {
       return
     }
     const styleKeys = ['top', 'left', 'width', 'height', 'rotate']
-    const ablePosition: Position = {}
+    const ablePosition: Partial<DOMRectStyle> = {}
     styleKeys.forEach((el) => {
       if (position[el] != undefined) {
         ablePosition[el] = position[el]
@@ -375,11 +420,11 @@ class CanvasState {
       }
       this.curComponent.groupStyle = gStyle
       for (const key in newStyle) {
-        this.curComponent.change(['position', key], newStyle[key], 'style')
+        this.curComponent.changeStyle(['position', key], newStyle[key])
       }
     } else {
       for (const key in ablePosition) {
-        this.curComponent.change(['position', key], ablePosition[key], 'style')
+        this.curComponent.changeStyle(['position', key], ablePosition[key])
       }
     }
 
@@ -417,11 +462,13 @@ class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.change(['position', 'top'], Math.round(afterPoint.y - height / 2), 'style')
-      el.change(['position', 'left'], Math.round(afterPoint.x - width / 2), 'style')
-      el.change(['position', 'height'], Math.round(height), 'style')
-      el.change(['position', 'width'], Math.round(width), 'style')
-      el.change(['position', 'rotate'], rotate, 'style')
+      el.changeStyle(['position'], {
+        top: Math.round(afterPoint.y - height / 2),
+        left: Math.round(afterPoint.x - width / 2),
+        height: Math.round(height),
+        width: Math.round(width),
+        rotate: rotate
+      })
     })
   }
 
@@ -469,7 +516,6 @@ class CanvasState {
   }
   /**
    * 设置当前组件的PropValue
-   * @param prop 组名
    * @param keys 属性组
    * @param value 值
    * @returns
@@ -479,12 +525,12 @@ class CanvasState {
     if (!curComponent || !curComponent.propValue) {
       return
     }
-    curComponent.change(keys, value, 'propValue')
+    curComponent.changeProp(keys, value)
     this.saveComponentData()
   }
   /**
    * 设置当前组件的样式
-   * @param key 属性
+   * @param keys
    * @param value 值
    * @returns
    */
@@ -501,7 +547,7 @@ class CanvasState {
     ) {
       this.curComponent.groupStyle[keys[1]] = value
     } else {
-      this.curComponent.change(keys, value, 'style')
+      this.curComponent.changeStyle(keys, value)
     }
     this.saveComponentData()
   }
@@ -539,7 +585,7 @@ class CanvasState {
       swap(componentData, index, index - 1)
       this.saveComponentData()
     } else {
-      message.info('图层已经到底了')
+      handleLogger.warn('图层已经到底了')
     }
   }
   /**
@@ -558,7 +604,7 @@ class CanvasState {
       swap(componentData, index, index + 1)
       this.saveComponentData()
     } else {
-      message.info('图层已经到顶了')
+      handleLogger.warn('图层已经到顶了')
     }
   }
 
@@ -578,7 +624,7 @@ class CanvasState {
       componentData.push(myComponments[0])
       this.saveComponentData()
     } else {
-      message.info('图层已经到顶了')
+      handleLogger.warn('图层已经到顶了')
     }
   }
   /**
@@ -597,7 +643,7 @@ class CanvasState {
       componentData.unshift(myComponments[0])
       this.saveComponentData()
     } else {
-      message.info('图层已经到底了')
+      handleLogger.warn('图层已经到底了')
     }
   }
   /**
@@ -629,7 +675,9 @@ class CanvasState {
   saveComponentData() {
     window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
     new Promise((resolve) => {
-      resolve(snapShotState.saveSnapshot(this.layoutData, this.canvasStyleData))
+      resolve(
+        snapShotState.saveSnapshot(this.layoutData, this.canvasStyleData, this.dataSlotterData)
+      )
     })
   }
   cutComponent(index: number, parent: Optional<CustomComponent>): Optional<CustomComponent> {
@@ -686,17 +734,16 @@ class CanvasState {
       } else {
         const newGroupStyle = { ...parentStyle, top, left, height, width }
         for (const key in newGroupStyle) {
-          parentComponent.change(['position', key], newGroupStyle[key], 'style')
+          parentComponent.changeStyle(['position', key], newGroupStyle[key])
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
-          const gStyle = {
+          el.groupStyle = {
             gleft: toPercent((el.positionStyle.left - newGroupStyle.left) / newGroupStyle.width),
             gtop: toPercent((el.positionStyle.top - newGroupStyle.top) / newGroupStyle.height),
             gwidth: toPercent(el.positionStyle.width / newGroupStyle.width),
             gheight: toPercent(el.positionStyle.height / newGroupStyle.height),
             grotate: el.positionStyle.rotate
           }
-          el.groupStyle = gStyle
         })
         if (parentComponent.parent) {
           this.resizeAutoComponent(parentComponent.parent)
@@ -739,6 +786,45 @@ class CanvasState {
       }
     }
     this.saveComponentData()
+  }
+
+  appendDataSlotter(dataType: string, dataInstance?: DataInstance) {
+    const acceptor = (result: any) => {
+      eventBus.emit('globalData', result)
+    }
+    const slotter = new DataSlotter({ type: dataType, acceptor, dataInstance })
+    this.globalSlotters[uuid()] = slotter
+  }
+
+  remveDataSlotter(id: string) {
+    const slotter = this.globalSlotters[id]
+    if (!slotter) {
+      return
+    }
+    if (slotter.dataInstance && slotter.dataInstance.close) {
+      slotter.dataInstance.close
+    }
+    delete this.state.globalSlotters[id]
+  }
+  getDataSlotter(id: string) {
+    return this.globalSlotters[id]
+  }
+
+  get dataSlotterData() {
+    const keys = Object.keys(this.globalSlotters)
+
+    const dataSlotters: Array<{ type: string; config: any }> = []
+    keys.forEach((el) => {
+      const slotter = this.getDataSlotter(el)
+      if (!slotter) {
+        return
+      }
+      dataSlotters.push({
+        type: slotter.type,
+        config: slotter.dataInstance ? slotter.dataInstance.toJSON() : undefined
+      })
+    })
+    return dataSlotters
   }
 }
 

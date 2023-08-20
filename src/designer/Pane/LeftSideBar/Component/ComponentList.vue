@@ -7,22 +7,23 @@
 <script setup lang="ts">
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
+import type { GroupType } from 'open-data-v/designer/enum'
+import { ComponentGroupList } from 'open-data-v/designer/enum'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { CustomComponent } from 'open-data-v/models'
 import { computed, getCurrentInstance, h } from 'vue'
-
-import { componentList } from '@/designer/load'
-import type { GroupType } from '@/enum'
-import { ComponentGroupList } from '@/enum'
-import type { CustomComponent } from '@/models'
 
 import ComponentItem from './ComponentItem.vue'
 
+const canvasState = useCanvasState()
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 
 const menuOptions = computed<MenuOption[]>(() => {
+  const components = canvasState.components
   const groups: { group: string; component: CustomComponent[] } | {} = {}
-  Object.keys(componentList).forEach((key) => {
-    const component: CustomComponent = new componentList[key]()
+  Object.keys(components).forEach((key) => {
+    const component: CustomComponent = new components[key]()
     const group = component.group
     if (!group || !component.show) {
       return

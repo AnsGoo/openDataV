@@ -14,10 +14,7 @@ import {
   NSelect,
   NSwitch
 } from 'naive-ui'
-import type { PropType } from 'vue'
-import { defineComponent, h, reactive, ref } from 'vue'
-
-import { FormType, GlobalColorSwatches } from '@/enum'
+import { FormType, GlobalColorSwatches } from 'open-data-v/designer/enum'
 import type {
   CustomFormSchema,
   FormItemProps,
@@ -28,7 +25,9 @@ import type {
   RadioFormSchema,
   SelectFormSchema,
   SwitchFormSchema
-} from '@/types/component'
+} from 'open-data-v/designer/type'
+import type { PropType } from 'vue'
+import { defineComponent, h, ref, watch } from 'vue'
 
 import ArrayItem from '../arrayItem'
 import BackItem from '../backItem'
@@ -63,19 +62,26 @@ export default defineComponent({
       required: true
     },
     data: {
-      type: Object as PropType<Recordable>,
+      type: Object as PropType<Record<string, any>>,
       required: true
     }
   },
-  emits: ['change'],
+  emits: ['change', 'updateData'],
   setup(props, { emit }) {
-    const formData = reactive<Recordable>(props.data)
+    const formData = ref<Record<string, any>>(props.data)
+    watch(
+      () => props.data,
+      () => {
+        formData.value = props.data
+      }
+    )
     const changed = (val: any, keys: Array<string>) => {
       emit('change', keys, val)
+      emit('updateData', props.ukey, formData)
     }
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const isShow = ref<boolean>(false)
-    const renderModal = (item: MetaForm, modelValue: Recordable, path: Array<string>) => {
+    const renderModal = (item: MetaForm, modelValue: Record<string, any>, path: Array<string>) => {
       const options = ((item || {}).props || {}) as ModalFormSchema
       return (
         <>
@@ -122,7 +128,7 @@ export default defineComponent({
 
     const renderFormItem = (
       item: MetaForm,
-      modelValue: Recordable<any>,
+      modelValue: Record<string, any>,
       path: Array<string> = []
     ) => {
       let component: {} = NInput
@@ -156,7 +162,7 @@ export default defineComponent({
         return <> </>
       }
       const itemOptions = (item.props || item.componentOptions || {}) as FormItemProps
-      const options: Recordable[] =
+      const options: Record<string, any>[] =
         (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
 
       /**
@@ -276,14 +282,14 @@ export default defineComponent({
       }
     }
     return () => (
-      <NForm size="small" labelPlacement="top" labelAlign="left">
+      <NForm>
         {props.children.map((item) => (
           <NFormItem
             key={`${props.ukey}${item.prop}`}
             label={item.label}
             showLabel={isShowLabel(item.showLabel)}
           >
-            {isUndefined(formData) ? <></> : renderItem(item, formData, [props.uid])}
+            {isUndefined(formData.value) ? <></> : renderItem(item, formData.value, [props.uid])}
           </NFormItem>
         ))}
       </NForm>

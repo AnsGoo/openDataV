@@ -19,23 +19,22 @@
 import { cloneDeep } from 'lodash-es'
 import type { MenuOption } from 'naive-ui'
 import { NDescriptions, NDescriptionsItem, NEmpty, NMenu } from 'naive-ui'
+import { ComponentGroup, ComponentGroupList } from 'open-data-v/designer/enum'
+import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import useClipBoardState from 'open-data-v/designer/state/clipBoard'
+import type { CustomComponent } from 'open-data-v/models'
+import { useEventBus } from 'open-data-v/models/bus'
 import { computed, h, ref, watch } from 'vue'
 
-import { useEventBus } from '@/bus'
-import useCanvasState from '@/designer/state/canvas'
-import useClipBoardState from '@/designer/state/clipBoard'
-import { ComponentGroup, ComponentGroupList } from '@/enum'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { uuid } from '@/utils/utils'
-
+import { uuid } from '../../../utils'
 import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'
 
 const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()
 
-const iconMap: Recordable<string> = {}
+const iconMap: Record<string, string> = {}
 ComponentGroupList.map((ele) => {
   iconMap[ele.key] = ele.icon
 })
@@ -165,14 +164,14 @@ const hidden = (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
   const component = canvasState.getComponentByIndex(indexes)
-  if (component) component.hiddenComponent()
+  if (component) component.setVisible(false)
 }
 
 const display = (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
   const component = canvasState.getComponentByIndex(indexes)
-  if (component) component.showComponent()
+  if (component) component.setVisible(true)
 }
 const cut = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))

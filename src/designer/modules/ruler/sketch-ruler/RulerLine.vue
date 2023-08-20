@@ -13,9 +13,8 @@
   </div>
 </template>
 <script lang="ts" setup>
+import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
 import { computed, onMounted, ref } from 'vue'
-
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
 
 import type { PaletteType } from '../index-types'
 
@@ -70,8 +69,7 @@ const handleDown = (e: MouseEvent) => {
   emit('onMouseDown')
   const onMove = (e: MouseEvent) => {
     const currentD = props.vertical ? e.clientY : e.clientX
-    const newValue = Math.round(initValue + (currentD - startD) / props.scale!)
-    startValue.value = newValue
+    startValue.value = Math.round(initValue + (currentD - startD) / props.scale!)
   }
   const onEnd = () => {
     emit('onRelease', startValue.value, props.index)

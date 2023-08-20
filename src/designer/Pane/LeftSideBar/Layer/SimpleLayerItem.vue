@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
-import { eventBus, StaticKey } from '@/bus'
-import useCanvasState from '@/designer/state/canvas'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
+import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { CustomComponent } from 'open-data-v/models'
+import { eventBus, StaticKey } from 'open-data-v/models/bus'
 
 const props = withDefaults(
   defineProps<{
@@ -70,9 +70,7 @@ const calcDragIndex = (fromIndex: string, toIndex: string): string => {
   const toIndexs: number[] = toIndex.split('-').map((el: string) => parseInt(el))
   const fromLength: number = fromIndexs.length
   for (let i = 0; i < fromLength; i++) {
-    if (fromIndexs[i] === toIndexs[i]) {
-      continue
-    } else if (fromIndexs[i] > toIndexs[i]) {
+    if (fromIndexs[i] > toIndexs[i]) {
       return toIndex
     } else if (fromIndexs[i] < toIndexs[i]) {
       if (i + 1 == fromLength) {
