@@ -148,6 +148,10 @@ class CanvasState {
     this.state.darkTheme = darkTheme
   }
 
+  set darkTheme(isDark: boolean) {
+    this.state.darkTheme = isDark
+  }
+
   get components() {
     return this.state.components
   }
@@ -205,11 +209,10 @@ class CanvasState {
     this.state.isClickComponent = isClickComponent
   }
 
-  // @ts-ignore
   get curComponent(): Optional<CustomComponent> {
     return this.state.curComponent
   }
-  set curComponent(curComponent: CustomComponent) {
+  set curComponent(curComponent: Optional<CustomComponent>) {
     this.state.curComponent = curComponent
   }
 
@@ -567,7 +570,6 @@ class CanvasState {
    */
   clearCanvas(): void {
     this.componentData = []
-    // @ts-ignore
     this.curComponent = undefined
     this.isClickComponent = false
     this.isShowEm = false

@@ -21,7 +21,7 @@ import type { MenuItem } from './type'
 const router = useRouter()
 withDefaults(
   defineProps<{
-    menus: Array<MenuItem>
+    menus: MenuItem[]
   }>(),
   {
     menus: () => []
