@@ -8,15 +8,14 @@
 
 <script setup lang="ts">
 import Wrapper from 'open-data-v/designer/Editor/Wrapper.vue'
-import { createComponent } from 'open-data-v/designer/utils'
 import type { CustomComponent } from 'open-data-v/models'
-import hooks from 'open-data-v/models/hooks'
+import { useData, useProp } from 'open-data-v/models'
 import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { CanvasStyleData, LayoutData } from '../../state/type'
-import { backgroundToCss, filterStyle, pageScale } from '../../utils'
+import { backgroundToCss, createComponent, filterStyle, pageScale } from '../../utils'
 
-provide('HOOKS', readonly(hooks))
+provide('HOOKS', readonly({ useData, useProp }))
 
 const componentData = ref<Array<CustomComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({

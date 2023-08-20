@@ -1,5 +1,6 @@
 import { isUndefined } from 'lodash-es'
-import type { MetaContainerItem, MetaForm } from 'open-data-v/designer/type'
+
+import type { MetaContainerItem, MetaForm } from './type'
 
 export const uuid = (hasHyphen?: string) => {
   return (

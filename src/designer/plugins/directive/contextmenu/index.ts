@@ -2,6 +2,7 @@ import type { Directive, DirectiveBinding } from 'vue'
 import { createVNode, render } from 'vue'
 
 import ContextmenuComponent from './ContextMenu.vue'
+import type { ContextmenuItem } from './types'
 
 const CTX_CONTEXTMENU_HANDLER = 'CTX_CONTEXTMENU_HANDLER'
 
@@ -64,3 +65,5 @@ const ContextmenuDirective: Directive = {
 }
 
 export default ContextmenuDirective
+
+export type { ContextmenuItem }

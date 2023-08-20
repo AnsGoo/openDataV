@@ -10,7 +10,6 @@ import type {
   MetaContainerItem
 } from './designer'
 import {
-  ComponentGroup,
   DataMode,
   DataSlotter,
   DemoDataPlugin,
@@ -34,7 +33,15 @@ import {
   useSnapshotState
 } from './designer'
 import type { BaseComponent, Hooks } from './models'
-import { CustomComponent, eventBus, StaticKey, useData, useEventBus, useProp } from './models'
+import {
+  ComponentGroup,
+  CustomComponent,
+  eventBus,
+  StaticKey,
+  useData,
+  useEventBus,
+  useProp
+} from './models'
 
 export type {
   BaseComponent,

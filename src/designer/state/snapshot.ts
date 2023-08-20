@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash-es'
-import type { ComponentDataType } from 'open-data-v/designer/type'
+import type { ComponentDataType } from 'open-data-v/designer'
 import type { CustomComponent } from 'open-data-v/models'
 import { reactive } from 'vue'
 

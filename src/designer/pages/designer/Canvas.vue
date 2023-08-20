@@ -47,7 +47,7 @@ import {
   NSpace,
   useThemeVars
 } from 'naive-ui'
-import useCanvasState from 'open-data-v/designer/state/canvas'
+import { useCanvasState } from 'open-data-v/designer'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import Editor from '../../Editor'

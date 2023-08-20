@@ -1,5 +1,11 @@
 import { ComponentGroup } from 'open-data-v/models'
 
+export enum EditMode {
+  EDIT = 'edit',
+  PREVIEW = 'preview',
+  VIEW = 'view'
+}
+
 export const PixelEnum = [
   { label: '4K', value: '3840X2160' },
   { label: '2k', value: '2048X1080' },

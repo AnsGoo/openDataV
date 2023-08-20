@@ -38,8 +38,7 @@
 </template>
 
 <script lang="ts" setup>
-/* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
+import type { ContextmenuItem } from 'open-data-v/designer'
 import { computed, ref } from 'vue'
 
 import type { PaletteType, ShadowType } from '../index-types'
