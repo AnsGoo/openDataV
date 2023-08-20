@@ -5,8 +5,8 @@
 <script setup lang="ts">
 import type { CustomSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { graphic } from 'echarts'
-import type { RequestResponse } from 'open-data-v'
 import { useData, useProp } from 'open-data-v'
+import type { ResponseData } from 'open-data-v/scripts'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../../hooks'
@@ -20,8 +20,8 @@ const props = defineProps<{
 }>()
 let chartData:
   | Array<{ label: string; value: number }>
-  | RequestResponse<{ label: string; value: number }[]>['afterData'] = []
-const dataChange = (resp: RequestResponse<Array<{ label: string; value: number }>>, _?: string) => {
+  | ResponseData<{ label: string; value: number }[]>['afterData'] = []
+const dataChange = (resp: ResponseData<Array<{ label: string; value: number }>>, _?: string) => {
   if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)
@@ -34,7 +34,7 @@ const propValueChange = () => {
   updateData(chartData)
 }
 
-const chartEl = ref<ElRef>()
+const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
 const { propValue } = useProp<StereoscopicBarChart>(props.component, propValueChange)
 
