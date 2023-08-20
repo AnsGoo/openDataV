@@ -19,7 +19,6 @@
           <n-li
             v-for="item in dataHistory"
             :key="item.id"
-            v-contextmenu="() => dataHistoryContextMenus(item.id)"
             class="data-item"
             @click="selectDataItem(item.id)"
             ><n-space>{{ item.name }}</n-space></n-li
