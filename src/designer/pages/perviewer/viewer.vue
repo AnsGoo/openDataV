@@ -1,13 +1,13 @@
 <template>
   <div class="bg" :style="bgStyle">
     <div ref="screen" :style="screenStyle" class="screen">
-      <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
+      <Wrapper v-for="item in componentData" :key="item.id" :component="item" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ComponentWrapper from 'open-data-v/designer/Editor/ComponentWrapper.vue'
+import Wrapper from 'open-data-v/designer/Editor/Wrapper.vue'
 import { createComponent } from 'open-data-v/designer/utils'
 import type { CustomComponent } from 'open-data-v/models'
 import hooks from 'open-data-v/models/hooks'
