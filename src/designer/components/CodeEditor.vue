@@ -22,13 +22,12 @@ import { NInput } from 'naive-ui'
 
 withDefaults(
   defineProps<{
-    value?: string
+    value: string
     height?: string
     disabled?: boolean
     mode?: 'debug' | 'use'
   }>(),
   {
-    value: '',
     height: '600px',
     disabled: false,
     mode: 'use'

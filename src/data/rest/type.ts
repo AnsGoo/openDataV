@@ -19,9 +19,9 @@ export interface StoreRestOption {
   }
 }
 
-export interface RequestResponse {
+export interface RequestResponse<T = string> {
   status: number
-  data: string
+  data: T
   headers?: Record<string, string>
   [key: string]: any
 }

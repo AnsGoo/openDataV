@@ -4,35 +4,35 @@
       <n-input
         :value="data.backgroundImage"
         placeholder="请输入图片地址"
-        @update:value="(value:string) => handleChange(value, 'backgroundImage')"
+        @update:value="(val: string) => handleChange(val, 'backgroundImage')"
       />
     </n-form-item>
     <n-form-item label="填充">
       <n-select
         :value="data.backgroundRepeat"
         :options="repeatOptions"
-        @update:value="(value:string) => handleChange(value, 'backgroundRepeat')"
+        @update:value="(val:string) => handleChange(val, 'backgroundRepeat')"
       />
     </n-form-item>
     <n-form-item label="附着">
       <n-select
         :value="data.backgroundAttachment"
         :options="attachmentOptions"
-        @update:value="(value:string) => handleChange(value, 'backgroundAttachment')"
+        @update:value="(val: string) => handleChange(val, 'backgroundAttachment')"
       />
     </n-form-item>
     <n-form-item label="位置">
       <n-select
         :value="data.backgroundPosition"
         :options="positionOptions"
-        @update:value="(value:string) => handleChange(value, 'backgroundPosition')"
+        @update:value="(val:string) => handleChange(val, 'backgroundPosition')"
       />
     </n-form-item>
     <n-form-item label="尺寸">
       <n-select
         :value="data.backgroundSize"
         :options="sizeOptions"
-        @update:value="(value:string) => handleChange(value, 'backgroundSize')"
+        @update:value="(val: string) => handleChange(val, 'backgroundSize')"
       />
     </n-form-item>
   </n-form>

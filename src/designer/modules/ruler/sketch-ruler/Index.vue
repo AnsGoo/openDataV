@@ -10,7 +10,7 @@
       :canvas-width="width"
       :is-show-refer-line="isShowReferLine"
       :thick="thick"
-      :ratio="ratio"
+      :ratio="ratio ?? 0"
       :start="startX"
       :select-start="shadow?.x || 0"
       :select-length="shadow?.width || 0"
@@ -27,7 +27,7 @@
       :canvas-width="width"
       :is-show-refer-line="isShowReferLine"
       :thick="thick"
-      :ratio="ratio"
+      :ratio="ratio ?? 0"
       :start="startY"
       :select-start="shadow?.y || 0"
       :select-length="shadow?.height || 0"
@@ -72,9 +72,7 @@ const VRulerWrapperRef = ref<InstanceType<typeof RulerWrapper> | null>(null)
 const HRulerWrapperRef = ref<InstanceType<typeof RulerWrapper> | null>(null)
 const isShowReferLine = ref<boolean>(true)
 const clearLines = () => {
-  // @ts-ignore
   VRulerWrapperRef.value?.clearLines()
-  // @ts-ignore
   HRulerWrapperRef.value?.clearLines()
   isShowReferLine.value = true
 }
@@ -102,7 +100,7 @@ const ruleContextMenus = (): ContextmenuItem[] => {
   ]
 }
 // 这里处理默认值,因为直接写在props的default里面时,可能某些属性用户未必会传,那么这里要做属性合并,防止属性丢失
-const paletteCpu = computed(() => {
+const paletteCpu = computed<PaletteType>(() => {
   function merge(obj: { [key: string]: any }, o: { [key: string]: any }) {
     Object.keys(obj).forEach((key) => {
       if (key && obj.hasOwnProperty(key)) {
