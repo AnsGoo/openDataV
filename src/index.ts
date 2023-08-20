@@ -1,5 +1,15 @@
 import { useRequest } from 'open-data-v/data/hooks/http'
 
+import type { BaseComponent, Hooks } from './base'
+import {
+  ComponentGroup,
+  CustomComponent,
+  eventBus,
+  StaticKey,
+  useData,
+  useEventBus,
+  useProp
+} from './base'
 import type { DataAcceptor, DataInstance, Response, Slotter } from './data'
 import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './data'
 import type {
@@ -31,16 +41,6 @@ import {
   useScriptState,
   useSnapshotState
 } from './designer'
-import type { BaseComponent, Hooks } from './models'
-import {
-  ComponentGroup,
-  CustomComponent,
-  eventBus,
-  StaticKey,
-  useData,
-  useEventBus,
-  useProp
-} from './models'
 
 export type {
   BaseComponent,

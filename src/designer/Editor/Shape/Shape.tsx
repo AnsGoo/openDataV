@@ -1,7 +1,7 @@
+import type { CustomComponent } from 'open-data-v/base'
+import { eventBus, StaticKey } from 'open-data-v/base'
 import type { ComponentStyle, ContextmenuItem, Vector } from 'open-data-v/designer'
 import { useActionState, useCanvasState, useClipBoardState } from 'open-data-v/designer'
-import type { CustomComponent } from 'open-data-v/models'
-import { eventBus, StaticKey } from 'open-data-v/models'
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 

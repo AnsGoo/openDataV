@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { CustomComponent } from 'open-data-v/base'
+import { eventBus, StaticKey } from 'open-data-v/base'
 import type { ContextmenuItem } from 'open-data-v/designer'
 import { useCanvasState } from 'open-data-v/designer'
-import type { CustomComponent } from 'open-data-v/models'
-import { eventBus, StaticKey } from 'open-data-v/models'
 
 const props = withDefaults(
   defineProps<{

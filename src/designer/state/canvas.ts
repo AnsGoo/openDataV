@@ -1,4 +1,12 @@
 import { cloneDeep } from 'lodash-es'
+import type { BaseComponent, CustomComponent, DataInstance } from 'open-data-v/base'
+import {
+  buildModeValue,
+  ContainerType,
+  eventBus,
+  FormType,
+  updateModeValue
+} from 'open-data-v/base'
 import type {
   CanvasData,
   ComponentDataType,
@@ -8,14 +16,6 @@ import type {
   Vector
 } from 'open-data-v/designer'
 import { DataSlotter, EditMode, handleLogger, PixelEnum } from 'open-data-v/designer'
-import type { BaseComponent, CustomComponent, DataInstance } from 'open-data-v/models'
-import {
-  buildModeValue,
-  ContainerType,
-  eventBus,
-  FormType,
-  updateModeValue
-} from 'open-data-v/models'
 import { reactive } from 'vue'
 
 import {

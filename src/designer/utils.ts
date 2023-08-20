@@ -1,8 +1,8 @@
 import { cloneDeep, isNumber } from 'lodash-es'
+import type { CustomComponent } from 'open-data-v/base'
+import { ContainerType, DataMode, Logger } from 'open-data-v/base'
 import type { Location, Vector } from 'open-data-v/designer'
 import { useCanvasState, useDataState, useScriptState } from 'open-data-v/designer'
-import type { CustomComponent } from 'open-data-v/models'
-import { ContainerType, DataMode, Logger } from 'open-data-v/models'
 
 import type { ComponentDataType, DataOption, DOMRectStyle, ScriptOption } from './type'
 

@@ -14,6 +14,7 @@ import {
   NSelect,
   NSwitch
 } from 'naive-ui'
+import { FormType } from 'open-data-v/base'
 import type {
   CustomFormSchema,
   FormItemProps,
@@ -25,7 +26,6 @@ import type {
   SelectFormSchema,
   SwitchFormSchema
 } from 'open-data-v/designer'
-import { FormType } from 'open-data-v/models'
 import type { PropType } from 'vue'
 import { defineComponent, h, ref, watch } from 'vue'
 

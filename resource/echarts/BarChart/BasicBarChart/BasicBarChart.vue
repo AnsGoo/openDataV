@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
-import type { Hooks, ResponseData } from 'open-data-v/models'
+import type { Hooks, ResponseData } from 'open-data-v/base'
 import { inject, onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'

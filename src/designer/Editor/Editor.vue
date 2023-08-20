@@ -50,6 +50,7 @@
 </template>
 
 <script setup lang="ts">
+import type { CustomComponent } from 'open-data-v/base'
 import type { ContextmenuItem, Location, Vector } from 'open-data-v/designer'
 import {
   DataMode,
@@ -63,7 +64,6 @@ import Grid from 'open-data-v/designer/Editor/Grid.vue'
 import MarkLine from 'open-data-v/designer/Editor/MarkLine.vue'
 import Ruler from 'open-data-v/designer/Editor/Ruler.vue'
 import Shape from 'open-data-v/designer/Editor/Shape'
-import type { CustomComponent } from 'open-data-v/models'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
 import { systemLogger } from '../../designer/utils'

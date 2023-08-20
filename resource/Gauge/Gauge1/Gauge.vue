@@ -83,8 +83,8 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from 'open-data-v/models'
-import { useEventBus, useProp } from 'open-data-v/models'
+import type { CustomComponent } from 'open-data-v/base'
+import { useEventBus, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import { http } from '@/utils/http'

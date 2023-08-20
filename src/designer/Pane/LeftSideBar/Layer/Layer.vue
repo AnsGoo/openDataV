@@ -19,10 +19,10 @@
 import { cloneDeep } from 'lodash-es'
 import type { MenuOption } from 'naive-ui'
 import { NDescriptions, NDescriptionsItem, NEmpty, NMenu } from 'naive-ui'
+import type { CustomComponent } from 'open-data-v/base'
+import { ComponentGroup, useEventBus } from 'open-data-v/base'
 import type { ContextmenuItem } from 'open-data-v/designer'
 import { ComponentGroupList, useCanvasState, useClipBoardState } from 'open-data-v/designer'
-import type { CustomComponent } from 'open-data-v/models'
-import { ComponentGroup, useEventBus } from 'open-data-v/models'
 import { computed, h, ref, watch } from 'vue'
 
 import { uuid } from '../../../utils'

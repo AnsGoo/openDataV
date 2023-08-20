@@ -1,4 +1,4 @@
-import { ComponentGroup } from 'open-data-v/models'
+import { ComponentGroup } from 'open-data-v/base'
 
 export enum EditMode {
   EDIT = 'edit',

@@ -7,9 +7,9 @@
 <script setup lang="ts">
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
+import type { CustomComponent } from 'open-data-v/base'
 import type { GroupType } from 'open-data-v/designer'
 import { ComponentGroupList, useCanvasState } from 'open-data-v/designer'
-import type { CustomComponent } from 'open-data-v/models'
 import { computed, getCurrentInstance, h } from 'vue'
 
 import ComponentItem from './ComponentItem.vue'

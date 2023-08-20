@@ -5,7 +5,7 @@ import type {
   DataType,
   FormType,
   RequestOptions
-} from 'open-data-v/models'
+} from 'open-data-v/base'
 import type { Component, ConcreteComponent, VNode } from 'vue'
 
 import type { CanvasStyleData } from './state/type'

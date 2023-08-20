@@ -1,5 +1,5 @@
-import type { MetaContainerItem } from 'open-data-v/models'
-import { ComponentGroup, CustomComponent, DataMode, FormType } from 'open-data-v/models'
+import type { MetaContainerItem } from 'open-data-v/base'
+import { ComponentGroup, CustomComponent, DataMode, FormType } from 'open-data-v/base'
 
 export const componentName = 'StereoscopicBarChart'
 class StereoscopicBarChartComponent extends CustomComponent {

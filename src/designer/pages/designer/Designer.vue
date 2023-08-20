@@ -56,9 +56,9 @@
 
 <script setup lang="ts">
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import { useData, useProp } from 'open-data-v/base'
 import type { ToolBarItemType } from 'open-data-v/designer'
 import { useCanvasState } from 'open-data-v/designer'
-import { useData, useProp } from 'open-data-v/models'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '../../../designer/state/type'
