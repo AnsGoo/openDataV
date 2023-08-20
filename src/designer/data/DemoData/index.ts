@@ -1,12 +1,12 @@
 import { shallowRef } from 'vue'
 
 import DemoRequestData from './handler'
-import Demo from './View.vue'
+import DemoPane from './Pane.vue'
 
 export default {
   type: 'DEMO',
   name: '示例数据',
-  component: shallowRef(Demo),
+  component: shallowRef(DemoPane),
   handler: DemoRequestData,
   useTo: 'COMPONENT'
 }

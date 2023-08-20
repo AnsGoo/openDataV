@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import { useEventBus, useProp } from 'open-data-v'
+import { useEventBus, useProp } from 'open-data-v/models'
 import { onMounted, ref } from 'vue'
 
 import { http } from '@/utils/http'

@@ -1,5 +1,5 @@
-import type { MetaContainerItem } from 'open-data-v'
-import { ComponentGroup, CustomComponent, FormType } from 'open-data-v'
+import type { MetaContainerItem } from 'open-data-v/models'
+import { ComponentGroup, CustomComponent, FormType } from 'open-data-v/models'
 import { h } from 'vue'
 
 export const componentName = 'StaticText'

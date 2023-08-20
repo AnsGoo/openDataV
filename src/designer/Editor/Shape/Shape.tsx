@@ -1,10 +1,7 @@
-import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
-import useActionState from 'open-data-v/designer/state/actions'
-import useCanvasState from 'open-data-v/designer/state/canvas'
-import useClipBoardState from 'open-data-v/designer/state/clipBoard'
-import type { ComponentStyle, Vector } from 'open-data-v/designer/type'
+import type { ComponentStyle, ContextmenuItem, Vector } from 'open-data-v/designer'
+import { useActionState, useCanvasState, useClipBoardState } from 'open-data-v/designer'
 import type { CustomComponent } from 'open-data-v/models'
-import { eventBus, StaticKey } from 'open-data-v/models/bus'
+import { eventBus, StaticKey } from 'open-data-v/models'
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 

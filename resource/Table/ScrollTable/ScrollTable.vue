@@ -49,9 +49,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { CustomComponent } from 'open-data-v'
-import { useData, useProp } from 'open-data-v'
-import type { ResponseData } from 'open-data-v/scripts'
+import type { CustomComponent, ResponseData } from 'open-data-v/models'
+import { useData, useProp } from 'open-data-v/models'
 import { computed, ref } from 'vue'
 
 import type { ScrollTableType } from './type'

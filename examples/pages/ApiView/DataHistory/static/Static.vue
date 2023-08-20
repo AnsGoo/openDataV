@@ -19,7 +19,6 @@
           <n-li
             v-for="item in dataHistory"
             :key="item.id"
-            v-contextmenu="() => dataHistoryContextMenus(item.id)"
             class="data-item"
             @click="selectDataItem(item.id)"
             ><n-space>{{ item.name }}</n-space></n-li
@@ -81,10 +80,6 @@ const dataListContextMenus = (id: string): Optional<ContextmenuItem[]> => {
       handler: () => removeData(id)
     }
   ]
-}
-
-const dataHistoryContextMenus = (_: string): Optional<ContextmenuItem[]> => {
-  return []
 }
 </script>
 <style lang="less">

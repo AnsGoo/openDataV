@@ -43,8 +43,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { CustomComponent } from 'open-data-v'
-import { DataMode, Group, Shape, useCanvasState, useProp } from 'open-data-v'
+import { Group, Shape, useCanvasState } from 'open-data-v'
 import {
   filterStyle,
   getComponentStyle,
@@ -52,6 +51,8 @@ import {
   toPercent,
   uuid
 } from 'open-data-v/designer/utils'
+import type { CustomComponent } from 'open-data-v/models'
+import { DataMode, useProp } from 'open-data-v/models'
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
 
 import type TabsComponent from './config'

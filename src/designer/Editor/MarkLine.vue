@@ -12,8 +12,8 @@
 </template>
 
 <script setup lang="ts">
-import useCanvasState from 'open-data-v/designer/state/canvas'
-import type { Location } from 'open-data-v/designer/type'
+import type { Location } from 'open-data-v/designer'
+import { useCanvasState } from 'open-data-v/designer'
 import type { CustomComponent } from 'open-data-v/models'
 import { StaticKey, useEventBus } from 'open-data-v/models'
 import { reactive, ref } from 'vue'

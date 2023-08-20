@@ -19,7 +19,7 @@ export interface StoreRestOption {
   }
 }
 
-export interface RequestResponse<T = string> {
+export interface RestResponse<T = string> {
   status: number
   data: T
   headers?: Record<string, string>

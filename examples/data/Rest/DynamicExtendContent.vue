@@ -1,5 +1,5 @@
 <template>
-  <Rest v-model:options="formData" @update:rest-options="formChange" @change="formChange">
+  <RestContent v-model:options="formData" @update:rest-options="formChange" @change="formChange">
     <template #data-select>
       <n-select
         :options="restDataList"
@@ -21,7 +21,7 @@
         </n-button-group>
       </n-space>
     </template>
-  </Rest>
+  </RestContent>
 </template>
 <script setup lang="ts">
 import type { AxiosResponse } from 'axios'
@@ -29,10 +29,14 @@ import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
 import { StaticKey, useEventBus } from 'open-data-v'
 import { useRequest } from 'open-data-v/data/hooks/http'
-import { RequestMethod } from 'open-data-v/data/rest/requestEnums'
-import Rest from 'open-data-v/data/rest/Rest.vue'
-import type { RequestResponse, RestOption } from 'open-data-v/data/rest/type'
-import { KVToRecordable, recordabletoKV, requestOptionsToStore } from 'open-data-v/data/rest/utils'
+import type { RestOption, RestResponse } from 'open-data-v/data/rest'
+import {
+  KVToRecordable,
+  recordabletoKV,
+  RequestMethod,
+  requestOptionsToStore,
+  RestContent
+} from 'open-data-v/data/rest'
 import { onMounted, reactive, ref } from 'vue'
 
 import {
@@ -163,7 +167,7 @@ interface RequestDataOption extends RestOption {
   id?: string
 }
 const formData = reactive<RequestDataOption>(props.options)
-const response = ref<RequestResponse>({
+const response = ref<RestResponse>({
   status: 0,
   data: '',
   headers: {}

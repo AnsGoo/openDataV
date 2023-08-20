@@ -27,9 +27,9 @@
     "typeRoots":["node_modules/@types", "src/**/*.d.ts", "examples/**/*.d.ts"], // 将这些文件夹下的包自动导入 TypeScript 声明
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./examples/*"],
-      "open-data-v/*": ["./src/*"],
-      "docs/*": ["./docs/*"]
+      "@/*": ["examples/*"],
+      "open-data-v/*": ["src/*"],
+      "docs/*": ["docs/*"]
     }
   },
   "include": [

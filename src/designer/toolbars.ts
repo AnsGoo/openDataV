@@ -1,9 +1,8 @@
-import useCanvasState from 'open-data-v/designer/state/canvas'
-import useSnapShotState from 'open-data-v/designer/state/snapshot'
-import type { ComponentDataType } from 'open-data-v/designer/type'
-
 import type { StoreComponentData } from './db'
+import useCanvasState from './state/canvas'
+import useSnapShotState from './state/snapshot'
 import type { CanvasStyleData } from './state/type'
+import type { ComponentDataType } from './type'
 import { exportRaw, handleLogger, importRaw } from './utils'
 
 const snapShotState = useSnapShotState()

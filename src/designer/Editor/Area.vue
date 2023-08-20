@@ -13,9 +13,8 @@
 </template>
 
 <script setup lang="ts">
-import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
-import useActionState from 'open-data-v/designer/state/actions'
-import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { ContextmenuItem } from 'open-data-v/designer'
+import { useActionState, useCanvasState } from 'open-data-v/designer'
 import type { WatchStopHandle } from 'vue'
 import { computed, onUnmounted, watch } from 'vue'
 

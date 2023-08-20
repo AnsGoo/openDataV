@@ -23,9 +23,9 @@
 import { isNumber } from 'lodash-es'
 import type { SelectOption } from 'naive-ui'
 import { NColorPicker, NSelect, NSpace } from 'naive-ui'
-import { GlobalColorSwatches } from 'open-data-v/designer/enum'
 import { onMounted, ref } from 'vue'
 
+import { GlobalColorSwatches } from '../enum'
 import LinearGradient from '../linearGradient'
 import type { Gradient } from '../linearGradient/type'
 import BackImage from './BackImage.vue'

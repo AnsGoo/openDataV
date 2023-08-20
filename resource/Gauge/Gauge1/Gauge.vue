@@ -83,15 +83,14 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from 'open-data-v'
-import { useCanvasState, useEventBus, useProp } from 'open-data-v'
+import type { CustomComponent } from 'open-data-v/models'
+import { useEventBus, useProp } from 'open-data-v/models'
 import { onMounted, ref } from 'vue'
 
 import { http } from '@/utils/http'
 
 import type { Gauge } from './type'
 
-const canvasState = useCanvasState()
 const props = defineProps<{
   component: CustomComponent
 }>()
@@ -143,9 +142,6 @@ const initData = async () => {
     } catch (err: any) {
       console.log(err.message || err)
     }
-  }
-  if (canvasState.isEditMode) {
-    dataValue.value = Number((Math.random() * 100).toFixed(2))
   }
 }
 

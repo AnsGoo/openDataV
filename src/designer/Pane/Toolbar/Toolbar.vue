@@ -5,9 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import type { ToolBarItemType } from 'open-data-v/designer/components/ToolBar'
-import { ToolBar } from 'open-data-v/designer/components/ToolBar'
-import useCanvasState from 'open-data-v/designer/state/canvas'
+import type { ToolBarItemType } from 'open-data-v/designer'
+import { ToolBar, useCanvasState } from 'open-data-v/designer'
 
 const canvasState = useCanvasState()
 
