@@ -52,13 +52,13 @@ import {
   toPercent,
   uuid
 } from 'open-data-v/designer/utils'
-import { computed, ref, watch } from 'vue'
+import { computed, defineAsyncComponent, ref, watch } from 'vue'
 
 import type TabsComponent from './config'
 import type { Tabs } from './type'
 
 const GroupComponent = Group.config
-const GroupView = Group.config
+const GroupView = defineAsyncComponent(Group.component)
 
 const props = defineProps<{
   component: TabsComponent
@@ -68,6 +68,7 @@ const canvasState = useCanvasState()
 const editMode = computed<boolean>(() => canvasState.isEditMode)
 const { propValue } = useProp<Tabs>(props.component)
 const labels = computed<Array<string>>(() => {
+  console.log(propValue)
   return propValue.label.items || []
 })
 
@@ -82,15 +83,19 @@ watch(
       if (!props.component.subComponents[i]) {
         const groupConfig = new GroupComponent(uuid())
         if (mode === 'horizontal') {
-          groupConfig.change(['position', 'top'], top + labelHeight, 'style')
-          groupConfig.change(['position', 'left'], left, 'style')
-          groupConfig.change(['position', 'width'], width, 'style')
-          groupConfig.change(['position', 'height'], height - labelHeight, 'style')
+          groupConfig.changeStyle(['position'], {
+            top: top + labelHeight,
+            left: left,
+            width: width,
+            height: height - labelHeight
+          })
         } else {
-          groupConfig.change(['position', 'top'], top, 'style')
-          groupConfig.change(['position', 'left'], left + labelHeight, 'style')
-          groupConfig.change(['position', 'width'], width - labelHeight, 'style')
-          groupConfig.change(['position', 'height'], height, 'style')
+          groupConfig.changeStyle(['position'], {
+            top: top,
+            left: left + labelHeight,
+            width: width - labelHeight,
+            height: height
+          })
         }
         groupConfig.parent = props.component
         groupConfig.groupStyle = {
@@ -104,11 +109,11 @@ watch(
       } else {
         const groupConfig = props.component.subComponents[i]
         if (mode === 'horizontal') {
-          groupConfig.change(['position', 'top'], top + labelHeight, 'style')
-          groupConfig.change(['position', 'left'], left, 'style')
+          groupConfig.changeStyle(['position', 'top'], top + labelHeight)
+          groupConfig.changeStyle(['position', 'left'], left)
         } else {
-          groupConfig.change(['position', 'top'], top, 'style')
-          groupConfig.change(['position', 'left'], left + labelHeight, 'style')
+          groupConfig.changeStyle(['position', 'top'], top)
+          groupConfig.changeStyle(['position', 'left'], left + labelHeight)
         }
         groupConfig.groupStyle = {
           gleft: toPercent((groupConfig.positionStyle.left - left) / width),
@@ -152,6 +157,7 @@ const modeStyle = computed<string>(() => {
 })
 const contentRef = ref<HTMLElement | null>(null)
 const content = computed<InstanceType<typeof GroupComponent>>(() => {
+  console.log(props.component.subComponents[activeKey.value])
   return props.component.subComponents[activeKey.value]
 })
 
@@ -184,8 +190,8 @@ const handleDrop = async (e) => {
     const y = (e.pageY - top) / canvasState.scale
     const x = (e.pageX - left) / canvasState.scale
     const parentStyle = props.component.subComponents[activeKey.value].style
-    component.change(['position', 'top'], y, 'style')
-    component.change(['position', 'left'], x, 'style')
+    component.changeStyle(['position', 'top'], y)
+    component.changeStyle(['position', 'left'], x)
     component.groupStyle = {
       gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
       gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),
