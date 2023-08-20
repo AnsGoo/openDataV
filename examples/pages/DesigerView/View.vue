@@ -16,6 +16,7 @@ import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
 
 useEventBus(StaticKey.STDOUT, (event) => {
+  console.log(event)
   const stdout = event as { type: string; name: string; message: any }
   if (stdout.name === 'handle') {
     let callback = message.info

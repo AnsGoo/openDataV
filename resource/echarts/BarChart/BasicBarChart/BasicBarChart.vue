@@ -4,7 +4,8 @@
 
 <script setup lang="ts">
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
-import type { Hooks, RequestResponse } from 'open-data-v'
+import type { Hooks } from 'open-data-v'
+import type { ResponseData } from 'open-data-v/scripts'
 import { inject, onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'
@@ -21,7 +22,7 @@ const { useProp, useData } = inject<Hooks>('HOOKS') || {}
 
 let chartData:
   | Array<{ label: string; value: number }>
-  | RequestResponse<Array<{ label: string; value: number }>>['afterData'] = []
+  | ResponseData<Array<{ label: string; value: number }>>['afterData'] = []
 
 const dataChange = (resp: any, _?: string) => {
   if (resp.status === 'SUCCESS') {
