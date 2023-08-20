@@ -1,6 +1,5 @@
 import type { BaseScript } from 'open-data-v/scripts'
-import CustomScriptPlugin from 'open-data-v/scripts/custom'
-import SystemScriptPlugin from 'open-data-v/scripts/system'
+import { CustomScriptPlugin, SystemScriptPlugin } from 'open-data-v/scripts'
 import { reactive } from 'vue'
 
 type ScriptHandler = { new (key: string, ...args: any): BaseScript }
