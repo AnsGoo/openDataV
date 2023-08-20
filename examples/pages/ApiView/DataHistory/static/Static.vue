@@ -81,10 +81,6 @@ const dataListContextMenus = (id: string): Optional<ContextmenuItem[]> => {
     }
   ]
 }
-
-const dataHistoryContextMenus = (_: string): Optional<ContextmenuItem[]> => {
-  return []
-}
 </script>
 <style lang="less">
 .data-item {

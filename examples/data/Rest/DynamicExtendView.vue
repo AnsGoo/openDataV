@@ -45,8 +45,6 @@ import type { RestDataDetail } from '@/api/data/type'
 import { message } from '@/utils/message'
 import { Logger, uuid } from '@/utils/utils'
 
-const Logger = console
-
 const getEmptyParams = () => {
   return [{ key: '', value: '', disable: false, id: uuid() }]
 }
