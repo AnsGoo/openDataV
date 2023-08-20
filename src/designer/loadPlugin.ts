@@ -1,9 +1,9 @@
 import { NSpin } from 'naive-ui'
-import useCanvasState from 'open-data-v/designer/state/canvas'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
 import Group from './components/Group'
+import useCanvasState from './state/canvas'
 
 const canvasState = useCanvasState()
 

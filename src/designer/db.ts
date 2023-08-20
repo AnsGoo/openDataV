@@ -1,6 +1,7 @@
 import type { Table } from 'dexie'
 import Dexie from 'dexie'
-import type { ComponentData } from 'open-data-v/designer/type'
+
+import type { ComponentData } from './type'
 
 export interface StoreComponentData extends ComponentData {
   id?: number

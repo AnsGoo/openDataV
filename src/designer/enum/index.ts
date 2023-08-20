@@ -1,3 +1,5 @@
+import { ComponentGroup } from 'open-data-v/models'
+
 export const PixelEnum = [
   { label: '4K', value: '3840X2160' },
   { label: '2k', value: '2048X1080' },
@@ -37,40 +39,6 @@ export class GroupType {
       key: this.key
     }
   }
-}
-
-export enum ComponentGroup {
-  // 基础组件
-  BASIC = 'BASIC',
-  // 边框
-  BORDER = 'BORDER',
-  // 装饰
-  DECORATION = 'DECORATION',
-  // 折线图
-  LINE = 'LINE',
-  // 柱状图
-  BAR = 'BAR',
-  // 百分比图
-  PIE = 'PIE',
-  // 地图
-  MAP = 'MAP',
-  // 仪表盘
-  GAUGE = 'GAUGE',
-  // 定制组件
-  CUSTOM = 'CUSTOM',
-  TEXT = 'TEXT',
-  BUTTON = 'BUTTON',
-  // 表格
-  TABLE = 'TABLE',
-
-  // 其他组件
-  NAVIFATION = 'NAVIFATION',
-  PROGERSS = 'PROGERSS',
-  THERMOMETER = 'THERMOMETER',
-  // 其他组件
-  OTHER = 'OTHER',
-  // 容器组件
-  CONTAINER = 'CONTAINER'
 }
 
 export const ComponentGroupList: GroupType[] = [
