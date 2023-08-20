@@ -17,8 +17,8 @@ import type {
   RadioFormSchema,
   SelectFormSchema,
   SwitchFormSchema
-} from 'open-data-v/models'
-import { FormType, GlobalColorSwatches } from 'open-data-v/models'
+} from 'open-data-v/base'
+import { FormType, GlobalColorSwatches } from 'open-data-v/base'
 import type { PropType } from 'vue'
 import { defineComponent, h } from 'vue'
 

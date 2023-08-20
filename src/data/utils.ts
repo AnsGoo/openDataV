@@ -1,4 +1,4 @@
-import { Logger } from 'open-data-v/models'
+import { Logger } from 'open-data-v/base'
 
 const uuid = (hasHyphen?: string) => {
   return (

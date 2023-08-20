@@ -218,7 +218,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from 'open-data-v/models'
+import { useProp } from 'open-data-v/base'
 import TinyColor2 from 'tinycolor2'
 import { computed, ref } from 'vue'
 

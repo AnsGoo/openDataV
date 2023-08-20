@@ -2,8 +2,8 @@
   <Container :config="config" :data="formData" :mode="mode" @change="changed" />
 </template>
 <script setup lang="ts">
+import type { ContainerType, MetaContainerItem } from 'open-data-v/base'
 import { Container, useCanvasState } from 'open-data-v/designer'
-import type { ContainerType, MetaContainerItem } from 'open-data-v/models'
 import { computed } from 'vue'
 
 const canvasState = useCanvasState()

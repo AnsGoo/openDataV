@@ -7,9 +7,9 @@
 </template>
 
 <script setup lang="ts">
+import type { CustomComponent } from 'open-data-v/base'
+import { useData, useProp } from 'open-data-v/base'
 import Wrapper from 'open-data-v/designer/Editor/Wrapper.vue'
-import type { CustomComponent } from 'open-data-v/models'
-import { useData, useProp } from 'open-data-v/models'
 import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { CanvasStyleData, LayoutData } from '../../state/type'

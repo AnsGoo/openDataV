@@ -5,8 +5,8 @@
 <script lang="ts" setup>
 import 'echarts-liquidfill'
 
-import type { ResponseData } from 'open-data-v/models'
-import { useData, useProp } from 'open-data-v/models'
+import type { ResponseData } from 'open-data-v/base'
+import { useData, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'

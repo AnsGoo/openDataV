@@ -11,7 +11,7 @@
 
 <script lang="ts" setup>
 import flvjs from 'flv.js'
-import { useProp } from 'open-data-v/models'
+import { useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import type FlvVideoComponent from './config'

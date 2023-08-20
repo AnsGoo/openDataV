@@ -1,5 +1,5 @@
+import type { CustomComponent } from 'open-data-v/base'
 import type { Location, Position } from 'open-data-v/designer'
-import type { CustomComponent } from 'open-data-v/models'
 import { reactive } from 'vue'
 
 import {
