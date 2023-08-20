@@ -1,6 +1,6 @@
 <template>
   <div v-if="!editMode" class="group">
-    <template v-for="item in component.subComponents" :key="item.id">
+    <template v-for="item in component.subComponents || []" :key="item.id">
       <component
         :is="item.component"
         :id="'component' + item.id"
@@ -11,7 +11,7 @@
     </template>
   </div>
   <div v-else class="group" :class="{ dotted: isActive }">
-    <template v-for="(item, i) in component.subComponents" :key="item.id">
+    <template v-for="(item, i) in component.subComponents || []" :key="item.id">
       <Shape
         v-if="isShow(item.display)"
         :id="'shape' + item.id"

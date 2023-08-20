@@ -1,3 +1,5 @@
+import type { Response } from 'open-data-v/data'
+
 export interface CallbackType {
   handler?: (resp: any, options: Record<string, any>) => any
   error?: Error
@@ -18,4 +20,8 @@ export interface BaseScript {
 export interface Slotter {
   afterCallbackChange: (handler: BaseScript) => void
   scriptConfig: BaseScript
+}
+
+export interface ResponseData<T = any> extends Response {
+  afterData: T
 }

@@ -19,8 +19,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { CustomComponent, RequestResponse } from 'open-data-v'
+import type { CustomComponent } from 'open-data-v'
 import { useData, useProp } from 'open-data-v'
+import type { ResponseData } from 'open-data-v/scripts'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 import type { RankBoard } from './type'
@@ -31,7 +32,7 @@ const props = defineProps<{
 
 const dataSource = ref<
   | Array<{ label: string; value: number }>
-  | RequestResponse<Array<{ label: string; value: number }>>['afterData']
+  | ResponseData<Array<{ label: string; value: number }>>['afterData']
 >([])
 const dataChange = (resp: any, _?: string) => {
   if (resp.status === 'SUCCESS') {

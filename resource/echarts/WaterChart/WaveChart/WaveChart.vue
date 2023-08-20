@@ -5,8 +5,8 @@
 <script lang="ts" setup>
 import 'echarts-liquidfill'
 
-import type { RequestResponse } from 'open-data-v'
 import { useData, useProp } from 'open-data-v'
+import type { ResponseData } from 'open-data-v/scripts'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'
@@ -19,7 +19,7 @@ const props = defineProps<{
 
 const chartEl = ref<ElRef>(null)
 const { updateEchart, resizeHandler } = useEchart(chartEl)
-const chartData = ref<number | RequestResponse<number>['afterData']>(0)
+const chartData = ref<number | ResponseData<number>['afterData']>(0)
 const dataChange = (resp: any, _?: string) => {
   if (resp.status === 'SUCCESS') {
     chartData.value = resp.afterData

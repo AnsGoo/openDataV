@@ -49,8 +49,9 @@
 </template>
 
 <script lang="ts" setup>
-import type { CustomComponent, RequestResponse } from 'open-data-v'
+import type { CustomComponent } from 'open-data-v'
 import { useData, useProp } from 'open-data-v'
+import type { ResponseData } from 'open-data-v/scripts'
 import { computed, ref } from 'vue'
 
 import type { ScrollTableType } from './type'
@@ -69,7 +70,7 @@ const resizeHandler = (entry: ResizeObserverEntry) => {
 
 const tableData = ref<
   | Array<{ label: string; value: number }>
-  | RequestResponse<Array<{ label: string; value: number }>>['afterData']
+  | ResponseData<Array<{ label: string; value: number }>>['afterData']
 >([])
 const dataChange = (resp: any, _?: string) => {
   if (resp.status === 'SUCCESS') {
