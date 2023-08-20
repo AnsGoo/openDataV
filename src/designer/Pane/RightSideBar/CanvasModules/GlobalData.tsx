@@ -14,7 +14,8 @@ import {
   NTimeline,
   NTimelineItem
 } from 'naive-ui'
-import { ContainerType, useCanvasState, useDataState, useEmpty } from 'open-data-v/designer'
+import { useCanvasState, useDataState, useEmpty } from 'open-data-v/designer'
+import { ContainerType } from 'open-data-v/models'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
 const canvasState = useCanvasState()

@@ -1,6 +1,5 @@
 import type { MetaContainerItem } from 'open-data-v/designer'
-import { DataMode, FormType } from 'open-data-v/designer'
-import { ComponentGroup, CustomComponent } from 'open-data-v/models'
+import { ComponentGroup, CustomComponent, DataMode, FormType } from 'open-data-v/models'
 
 export const componentName = 'Group'
 class GroupComponent extends CustomComponent {

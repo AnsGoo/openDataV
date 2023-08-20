@@ -3,15 +3,7 @@ import { CodeEditor, Group, ToolBar, ToolBarItem, XIcon } from './components'
 import DemoDataPlugin from './data/DemoData'
 import type { StoreComponentData } from './db'
 import Shape from './Editor/Shape'
-import {
-  ComponentGroupList,
-  ContainerType,
-  DataMode,
-  EditMode,
-  FormType,
-  GroupType,
-  PixelEnum
-} from './enum'
+import { ComponentGroupList, DataMode, EditMode, GroupType, PixelEnum } from './enum'
 import useComponentPlugin from './loadPlugin'
 import useEmpty from './modules/Empty'
 import Container from './modules/form/Container'
@@ -56,7 +48,6 @@ export {
   CodeEditor,
   ComponentGroupList,
   Container,
-  ContainerType,
   createComponent,
   DataMode,
   DataSlotter,
@@ -65,7 +56,6 @@ export {
   Directive,
   EditMode,
   exportCanvas,
-  FormType,
   Group,
   GroupType,
   handleLogger,

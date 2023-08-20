@@ -1,6 +1,6 @@
 import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './bus'
 import { CustomComponent } from './component'
-import { ComponentGroup, DataMode, FormType, GlobalColorSwatches } from './enums'
+import { ComponentGroup, ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
 import type { Hooks } from './hooks'
 import { useData, useProp } from './hooks'
 import type {
@@ -24,6 +24,7 @@ import type {
   ModalFormSchema,
   RadioFormSchema,
   Response,
+  ResponseData,
   SelectFormSchema,
   SwitchFormSchema
 } from './type'
@@ -33,6 +34,7 @@ export {
   buildModeValue,
   channels,
   ComponentGroup,
+  ContainerType,
   CustomComponent,
   DataMode,
   eventBus,
@@ -68,6 +70,7 @@ export type {
   ModalFormSchema,
   RadioFormSchema,
   Response,
+  ResponseData,
   SelectFormSchema,
   SwitchFormSchema
 }

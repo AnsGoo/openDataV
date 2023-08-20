@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from 'open-data-v'
+import type { CustomComponent } from 'open-data-v/models'
 
 defineProps<{
   component: CustomComponent

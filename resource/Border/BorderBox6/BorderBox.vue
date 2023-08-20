@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useProp } from 'open-data-v'
+import { useProp } from 'open-data-v/models'
 import { ref } from 'vue'
 
 import type BorderBoxComponent from './config'

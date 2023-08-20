@@ -24,9 +24,9 @@
 
 <script setup lang="ts">
 import { NColorPicker, NSlider } from 'naive-ui'
-import { GlobalColorSwatches } from 'open-data-v/designer/enum'
 import { ref } from 'vue'
 
+import { GlobalColorSwatches } from '../enum'
 import type { Gradient } from './type'
 
 const props = withDefaults(

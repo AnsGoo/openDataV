@@ -193,3 +193,7 @@ export interface MetaContainerItem {
  */
 export type PropsType = MetaContainerItem
 export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }
+
+export interface ResponseData<T = any> extends Response {
+  afterData: T
+}
