@@ -1,31 +1,40 @@
 import { useRequest } from 'open-data-v/data/hooks/http'
-import type { Slotter } from 'open-data-v/data/type'
-import Group from 'open-data-v/designer/components/Group'
-import Shape from 'open-data-v/designer/Editor/Shape'
-import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/contextmenu/types'
-import { eventBus, StaticKey, useEventBus } from 'open-data-v/models/bus'
 
+import type { DataAcceptor, DataInstance, Response, Slotter } from './data'
 import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './data'
-import type { DataAcceptor, DataInstance, RequestResponse, Response } from './data/type'
-import { Designer, Previewer } from './designer'
-import DemoDataPlugin from './designer/data/DemoData'
-import { ComponentGroup, DataMode, FormType } from './designer/enum'
-import useComponentPlugin from './designer/loadPlugin'
-import Directive from './designer/plugins/directive'
+import type {
+  CanvasStyleData,
+  ComponentDataType,
+  ComponentItem,
+  ContextmenuItem,
+  MetaContainerItem
+} from './designer'
 import {
+  ComponentGroup,
+  DataMode,
   DataSlotter,
+  DemoDataPlugin,
+  Designer,
+  Directive,
+  exportCanvas,
+  FormType,
+  Group,
+  importCanvas,
+  Previewer,
+  recoveryDraft,
+  setShowEm,
+  Shape,
+  undo,
   useActionState,
   useCanvasState,
   useClipBoardState,
+  useComponentPlugin,
   useDataState,
   useScriptState,
   useSnapshotState
-} from './designer/state'
-import type { CanvasStyleData } from './designer/state/type'
-import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from './designer/toolbars'
-import type { ComponentDataType, ComponentItem, MetaContainerItem } from './designer/type'
+} from './designer'
 import type { BaseComponent, Hooks } from './models'
-import { CustomComponent, useData, useProp } from './models'
+import { CustomComponent, eventBus, StaticKey, useData, useEventBus, useProp } from './models'
 
 export type {
   BaseComponent,
@@ -37,7 +46,6 @@ export type {
   DataInstance,
   Hooks,
   MetaContainerItem,
-  RequestResponse,
   Response,
   Slotter
 }

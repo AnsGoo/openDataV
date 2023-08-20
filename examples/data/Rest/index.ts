@@ -1,5 +1,4 @@
-import handler from 'open-data-v/data/rest/handler'
-import { RequestMethod } from 'open-data-v/data/rest/requestEnums'
+import { handler, RequestMethod } from 'open-data-v/data/rest'
 import { shallowRef } from 'vue'
 
 import { uuid } from '@/utils/utils'

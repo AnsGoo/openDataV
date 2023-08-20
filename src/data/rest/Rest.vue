@@ -80,7 +80,7 @@ import { useRequest } from '../hooks/http'
 import { uuid } from '../utils'
 import DynamicKVForm from './DynamicKVForm.vue'
 import { RequestHeaderEnum, RequestMethod } from './requestEnums'
-import type { RequestResponse, RestOption } from './type'
+import type { RestOption, RestResponse } from './type'
 import { requestOptionsToStore } from './utils'
 
 const props = withDefaults(
@@ -146,7 +146,7 @@ interface RequestDataOption extends RestOption {
   id?: string
 }
 const formData = reactive<RequestDataOption>(props.options)
-const response = ref<RequestResponse>({
+const response = ref<RestResponse>({
   status: 0,
   data: '',
   afterData: '',
