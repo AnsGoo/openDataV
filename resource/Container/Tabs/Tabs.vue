@@ -68,7 +68,6 @@ const canvasState = useCanvasState()
 const editMode = computed<boolean>(() => canvasState.isEditMode)
 const { propValue } = useProp<Tabs>(props.component)
 const labels = computed<Array<string>>(() => {
-  console.log(propValue)
   return propValue.label.items || []
 })
 
@@ -157,7 +156,6 @@ const modeStyle = computed<string>(() => {
 })
 const contentRef = ref<HTMLElement | null>(null)
 const content = computed<InstanceType<typeof GroupComponent>>(() => {
-  console.log(props.component.subComponents[activeKey.value])
   return props.component.subComponents[activeKey.value]
 })
 
