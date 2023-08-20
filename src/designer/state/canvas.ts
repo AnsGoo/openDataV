@@ -145,6 +145,10 @@ class CanvasState {
     return this.state.darkTheme
   }
 
+  set darkTheme(isDark: boolean) {
+    this.state.darkTheme = isDark
+  }
+
   get components() {
     return this.state.components
   }

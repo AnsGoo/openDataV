@@ -12,7 +12,7 @@
     "esModuleInterop": true,
     "lib": ["esnext", "dom"],
     "allowJs": true,
-    "types": ["vite/client","naive-ui/volar"],
+    "types": ["vite/client"],
     "checkJs": true,
     "outDir": "./dist",
     "skipLibCheck": true,
