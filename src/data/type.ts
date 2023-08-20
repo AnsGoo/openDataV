@@ -1,3 +1,5 @@
+export * from './rest/type'
+
 export interface DataConfig {
   type: string
   dataInstance: DataInstance

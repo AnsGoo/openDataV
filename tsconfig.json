@@ -32,6 +32,11 @@
       "docs/*": ["./docs/*"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue", "mock/*", "examples/*", "examples/**/*/d.ts","docs/*"],
+  "include": [
+    "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue",
+    "resource/**/*.ts", "resource/**/*.d.ts", "resource/**/*.tsx", "resource/**/*.vue",
+    "examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue",
+    "mock/*", "docs/*"
+  ],
   "exclude": ["**/node_modules/**", "dist", "**/*.js"]
 }

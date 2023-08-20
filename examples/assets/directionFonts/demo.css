@@ -439,7 +439,6 @@ code[class*="language-"] ::selection {
 }
 
 @media print {
-
   code[class*="language-"],
   pre[class*="language-"] {
     text-shadow: none;

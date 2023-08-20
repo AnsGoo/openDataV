@@ -6,11 +6,11 @@ import type { ContextmenuItem } from 'open-data-v/designer/plugins/directive/con
 import { eventBus, StaticKey, useEventBus } from 'open-data-v/models/bus'
 
 import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './data'
-import type { DataAcceptor, DataInstance, Response } from './data/type'
+import type { DataAcceptor, DataInstance, RequestResponse, Response } from './data/type'
 import { Designer, Previewer } from './designer'
 import DemoDataPlugin from './designer/data/DemoData'
 import { ComponentGroup, DataMode, FormType } from './designer/enum'
-import useComponetPlugin from './designer/loadPlugin'
+import useComponentPlugin from './designer/loadPlugin'
 import Directive from './designer/plugins/directive'
 import {
   DataSlotter,
@@ -37,6 +37,7 @@ export type {
   DataInstance,
   Hooks,
   MetaContainerItem,
+  RequestResponse,
   Response,
   Slotter
 }
@@ -66,7 +67,7 @@ export {
   useActionState,
   useCanvasState,
   useClipBoardState,
-  useComponetPlugin,
+  useComponentPlugin,
   useData,
   useDataState,
   useEventBus,
