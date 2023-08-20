@@ -3,7 +3,7 @@ import { shallowRef } from 'vue'
 
 import { uuid } from '@/utils/utils'
 
-import DataView from './View.vue'
+import DataView from './Pane.vue'
 
 export default {
   type: 'REST',

@@ -63,7 +63,7 @@ import { uuid } from '../utils'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 import { RequestMethod } from './requestEnums'
-import Rest from './Rest.vue'
+import Rest from './RestDataView.vue'
 import type { RestOption, StoreRestOption } from './type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
 

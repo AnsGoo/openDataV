@@ -4,7 +4,7 @@ import { uuid } from '../utils'
 import handler from './handler'
 import RestPane from './Pane.vue'
 import { RequestMethod } from './requestEnums'
-import RestContent from './Rest.vue'
+import RestContent from './RestDataView.vue'
 import type { RestOption, RestResponse } from './type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from './utils'
 
