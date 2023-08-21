@@ -1,0 +1,8 @@
+import{d as w,v,e as H,y as b,B as k,o as t,c as r,u as a,n as c,F as d,f as i,s as C,a as B,_ as S}from"./index-70139cdd.js";import{u as T}from"./index-3c321de0.js";import{u as D}from"./index-76257893.js";const L={class:"dv-scroll-board"},z=["innerHTML"],I=["innerHTML"],M=w({__name:"ScrollTable",props:{component:{}},setup(m){const h=m,{propValue:e}=D(h.component),u=v(0),g=s=>{const{height:n}=s.contentRect;u.value=n},_=v([]),f=(s,n)=>{s.status==="SUCCESS"&&(_.value=s.afterData)};T(h.component,f);const x=H(()=>_.value.map((s,n)=>({rowIndex:n,ceils:Object.values(s)})));return(s,n)=>{const y=b("resize");return k((t(),r("div",L,[a(e).header.header.length?(t(),r("div",{key:0,class:"header",style:c(`background-color: ${a(e).header.headerBGC};`)},[(t(!0),r(d,null,i(a(e).header.header,(o,l)=>(t(),r("div",{key:`${o}${l}`,class:"header-item",style:c(`
+          height: ${a(e).header.headerHeight}px;
+          line-height: ${a(e).header.headerHeight}px;
+        `),innerHTML:o},null,12,z))),128))],4)):C("",!0),B("div",{class:"rows",style:c({height:`${u.value-(a(e).header.header.length?a(e).header.headerHeight:0)}px`})},[(t(!0),r(d,null,i(x.value,(o,l)=>(t(),r("div",{key:o.rowIndex,class:"row-item",style:c(`
+          height: ${a(e).rows.data.height}px;
+          line-height: ${a(e).rows.data.height}px;
+          background-color: ${a(e).rows.data[o.rowIndex%2===0?"evenRowBGC":"oddRowBGC"]};
+        `)},[(t(!0),r(d,null,i(o.ceils,(p,$)=>(t(),r("div",{key:`${p}${l}${$}`,class:"ceil",innerHTML:p},null,8,I))),128))],4))),128))],4)])),[[y,g]])}}});const E=S(M,[["__scopeId","data-v-49cad42a"]]);export{E as default};
