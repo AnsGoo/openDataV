@@ -5,8 +5,8 @@
 
 <script setup lang="ts">
 import { cloneDeep, debounce } from 'lodash-es'
-import type { ContainerType, CustomComponent } from 'open-data-v/base'
-import type { ComponentStyle, MetaContainerItem } from 'open-data-v/designer'
+import type { ContainerType, CustomComponent, MetaContainerItem } from 'open-data-v/base'
+import type { ComponentStyle } from 'open-data-v/designer'
 import { Container, useCanvasState } from 'open-data-v/designer'
 import { computed, ref, watch } from 'vue'
 

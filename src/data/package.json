@@ -1,7 +1,7 @@
 {
-  "name": "@open-data-v/script",
+  "name": "@open-data-v/data",
   "version": "0.0.1",
-  "description": "script for open-data-v",
+  "description": "data for open-data-v",
   "main": "index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

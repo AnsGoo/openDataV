@@ -1,5 +1,10 @@
 import { cloneDeep } from 'lodash-es'
-import type { BaseComponent, CustomComponent, DataInstance } from 'open-data-v/base'
+import type {
+  BaseComponent,
+  CustomComponent,
+  DataInstance,
+  MetaContainerItem
+} from 'open-data-v/base'
 import {
   buildModeValue,
   ContainerType,
@@ -12,7 +17,6 @@ import type {
   ComponentDataType,
   DOMRectStyle,
   GroupStyle,
-  MetaContainerItem,
   Vector
 } from 'open-data-v/designer'
 import { DataSlotter, EditMode, handleLogger, PixelEnum } from 'open-data-v/designer'

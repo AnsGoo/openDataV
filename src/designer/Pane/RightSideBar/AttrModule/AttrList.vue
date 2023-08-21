@@ -3,8 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ContainerType, CustomComponent } from 'open-data-v/base'
-import type { MetaContainerItem } from 'open-data-v/designer'
+import type { ContainerType, CustomComponent, MetaContainerItem } from 'open-data-v/base'
 import { Container, useCanvasState } from 'open-data-v/designer'
 import { computed } from 'vue'
 
