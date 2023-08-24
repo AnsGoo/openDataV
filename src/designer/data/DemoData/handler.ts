@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataInstance, Response } from 'open-data-v/models/type'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 
 class DemoRequestData implements DataInstance {
   public data: any

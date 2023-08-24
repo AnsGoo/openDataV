@@ -1,22 +1,21 @@
 <template>
   <div class="bg" :style="bgStyle">
     <div ref="screen" :style="screenStyle" class="screen">
-      <ComponentWrapper v-for="item in componentData" :key="item.id" :component="item" />
+      <Wrapper v-for="item in componentData" :key="item.id" :component="item" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import ComponentWrapper from 'open-data-v/designer/Editor/ComponentWrapper.vue'
-import { createComponent } from 'open-data-v/designer/utils'
-import type { CustomComponent } from 'open-data-v/models'
-import hooks from 'open-data-v/models/hooks'
+import type { CustomComponent } from 'open-data-v/base'
+import { useData, useProp } from 'open-data-v/base'
+import Wrapper from 'open-data-v/designer/Editor/Wrapper.vue'
 import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { CanvasStyleData, LayoutData } from '../../state/type'
-import { backgroundToCss, filterStyle, pageScale } from '../../utils'
+import { backgroundToCss, createComponent, filterStyle, pageScale } from '../../utils'
 
-provide('HOOKS', readonly(hooks))
+provide('HOOKS', readonly({ useData, useProp }))
 
 const componentData = ref<Array<CustomComponent>>([])
 const canvasStyle = ref<CanvasStyleData>({

@@ -1,5 +1,5 @@
-import Rest from 'open-data-v/data/rest/Rest.vue'
-import Static from 'open-data-v/data/static/DataView.vue'
+import { RestContent } from 'open-data-v/data/rest'
+import { StaticContent } from 'open-data-v/data/static'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -12,9 +12,9 @@ export default defineComponent({
   setup(props) {
     return () => {
       if (props.active == 'REST') {
-        return <Rest mode="debug" />
+        return <RestContent mode="debug" />
       } else if (props.active == 'STATIC') {
-        return <Static mode="debug" />
+        return <StaticContent mode="debug" />
       }
     }
   }

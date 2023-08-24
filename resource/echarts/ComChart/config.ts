@@ -1,4 +1,4 @@
-import { ComponentGroup, CustomComponent, DataMode } from 'open-data-v'
+import { ComponentGroup, CustomComponent, DataMode } from 'open-data-v/base'
 
 export const componentName = 'ComChart'
 class ComChartComponent extends CustomComponent {

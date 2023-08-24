@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from 'open-data-v'
+import { useProp } from 'open-data-v/base'
 import { computed, ref } from 'vue'
 
 import type BorderImageComponent from '../config'

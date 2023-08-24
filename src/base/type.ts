@@ -33,7 +33,7 @@ export interface Response {
   data: any
 }
 
-interface ScriptOption {
+export interface ScriptOption {
   type: string
   key: string
   [extra: string]: any
@@ -46,7 +46,7 @@ export interface BaseScript {
   afterCallback?: (data: any, propValue: Record<string, any>) => any
 }
 
-export interface BaseFormSchema {
+export interface BaseFormProps {
   editable?: boolean
   disabled?: boolean
   required?: boolean
@@ -54,12 +54,12 @@ export interface BaseFormSchema {
   placeholder?: string
 }
 
-export interface InputFormSchema extends BaseFormSchema {
+export interface InputProps extends BaseFormProps {
   prefix?: () => VNode
   suffix?: () => VNode
 }
 
-export interface InputNumberFormSchema extends BaseFormSchema {
+export interface InputNumberProps extends BaseFormProps {
   min: number
   max: number
   step: number
@@ -68,25 +68,25 @@ export interface InputNumberFormSchema extends BaseFormSchema {
   precision?: number
 }
 
-export interface SelectFormSchema extends BaseFormSchema {
+export interface SelectProps extends BaseFormProps {
   options: Array<{ label: string; value: string | number }>
 }
 
-export interface ModalFormSchema extends BaseFormSchema {
+export interface ModalProps extends BaseFormProps {
   context: any
   buttonText: string
   size: 'small'
   bordered: boolean
 }
-export type RadioFormSchema = SelectFormSchema
-export type SwitchFormSchema = SelectFormSchema
+export type RadioProps = SelectProps
+export type SwitchProps = SelectProps
 
-export interface CustomFormSchema extends BaseFormSchema {
+export interface CustomProps extends BaseFormProps {
   componentType: string | ConcreteComponent
   args: any
 }
 
-export interface ArrayFormSchema extends BaseFormSchema {
+export interface ArrayProps extends BaseFormProps {
   count: number
   type: 'static' | 'dynamic'
   maxItem?: number
@@ -150,15 +150,15 @@ interface CustomContainerProps {
 
 export type ContainerItemProps = CollapseProps | TabsProps | FormProps | CustomContainerProps
 export type FormItemProps =
-  | InputFormSchema
-  | InputNumberFormSchema
-  | CustomFormSchema
-  | ArrayFormSchema
-  | BaseFormSchema
-  | SwitchFormSchema
-  | SelectFormSchema
-  | RadioFormSchema
-  | ModalFormSchema
+  | InputProps
+  | InputNumberProps
+  | CustomProps
+  | ArrayProps
+  | BaseFormProps
+  | SwitchProps
+  | SelectProps
+  | RadioProps
+  | ModalProps
 
 export interface MetaForm {
   label: string
@@ -193,3 +193,7 @@ export interface MetaContainerItem {
  */
 export type PropsType = MetaContainerItem
 export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }
+
+export interface ResponseData<T = any> extends Response {
+  afterData: T
+}

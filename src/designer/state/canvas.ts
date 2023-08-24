@@ -1,18 +1,25 @@
 import { cloneDeep } from 'lodash-es'
-import { EditMode } from 'open-data-v/designer/const'
-import { ContainerType, FormType, PixelEnum } from 'open-data-v/designer/enum'
-import { DataSlotter } from 'open-data-v/designer/state/slotter'
-import type { CanvasData } from 'open-data-v/designer/state/type'
 import type {
+  BaseComponent,
+  CustomComponent,
+  DataInstance,
+  MetaContainerItem
+} from 'open-data-v/base'
+import {
+  buildModeValue,
+  ContainerType,
+  eventBus,
+  FormType,
+  updateModeValue
+} from 'open-data-v/base'
+import type {
+  CanvasData,
   ComponentDataType,
   DOMRectStyle,
   GroupStyle,
-  MetaContainerItem,
   Vector
-} from 'open-data-v/designer/type'
-import { handleLogger } from 'open-data-v/designer/utils'
-import type { BaseComponent, CustomComponent, DataInstance } from 'open-data-v/models'
-import { buildModeValue, eventBus, updateModeValue } from 'open-data-v/models'
+} from 'open-data-v/designer'
+import { DataSlotter, EditMode, handleLogger, PixelEnum } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
 import {
@@ -144,7 +151,6 @@ class CanvasState {
   get darkTheme(): boolean {
     return this.state.darkTheme
   }
-
   set darkTheme(isDark: boolean) {
     this.state.darkTheme = isDark
   }

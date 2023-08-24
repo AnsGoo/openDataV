@@ -1,7 +1,7 @@
-import type { ComponentGroup, ContainerType, FormType } from 'open-data-v/designer/enum'
-import type { CanvasStyleData } from 'open-data-v/designer/state/type'
-import type { DataMode, DataType, RequestOptions } from 'open-data-v/models'
-import type { Component, ConcreteComponent, VNode } from 'vue'
+import type { ComponentGroup, DataMode } from 'open-data-v/base'
+import type { Component } from 'vue'
+
+import type { CanvasStyleData } from './state/type'
 
 export interface Vector {
   x: number
@@ -45,136 +45,12 @@ export interface ComponentStyle extends DOMRectStyle {
   [propName: string]: string | number | boolean
 }
 
-export interface BaseFormSchema {
-  editable?: boolean
-  disabled?: boolean
-  required?: boolean
-  defaultValue: string | number | boolean | any
-  placeholder?: string
-}
-
-export interface InputFormSchema extends BaseFormSchema {
-  prefix?: () => VNode
-  suffix?: () => VNode
-}
-
-export interface InputNumberFormSchema extends BaseFormSchema {
-  min: number
-  max: number
-  step: number
-  prefix?: () => VNode
-  suffix?: () => VNode
-  precision?: number
-}
-
-export interface SelectFormSchema extends BaseFormSchema {
-  options: Array<{ label: string; value: string | number }>
-}
-
-export interface ModalFormSchema extends BaseFormSchema {
-  context: any
-  buttonText: string
-  size: 'small'
-  bordered: boolean
-}
-export type RadioFormSchema = SelectFormSchema
-export type SwitchFormSchema = SelectFormSchema
-
-export interface CustomFormSchema extends BaseFormSchema {
-  componentType: string | ConcreteComponent
-  args: any
-}
-
-interface ArrayFormSchema extends BaseFormSchema {
-  count: number
-  type: 'static' | 'dynamic'
-  maxItem?: number
-  minItem?: number
-}
-
-interface CollapseProps {
-  accordion?: boolean
-}
-
-interface TabsProps {
-  type?: 'bar' | 'line' | 'card' | 'segment'
-  justifyContent?: 'space-between' | 'space-around' | 'space-evenly' | 'start' | 'center' | 'end'
-  prefix?: () => VNode
-  suffix?: () => VNode
-}
-
-interface FormProps {
-  labelPlacement?: 'left' | 'top'
-  labelWidth?: number | string | 'auto'
-}
-
-interface CustomContainerProps {
-  componentType: string | ConcreteComponent
-  args: any
-}
-
-export type ContainerItemProps = CollapseProps | TabsProps | FormProps | CustomContainerProps
-export type FormItemProps =
-  | InputFormSchema
-  | InputNumberFormSchema
-  | CustomFormSchema
-  | ArrayFormSchema
-  | BaseFormSchema
-  | SwitchFormSchema
-  | SelectFormSchema
-  | RadioFormSchema
-  | ModalFormSchema
-
-export interface MetaForm {
-  label: string
-  prop: string
-  type?: FormType
-  component?: string | ConcreteComponent
-  showLabel?: boolean
-  /**
-   * @deprecated componentOptions即将弃用，建议使用props
-   */
-  componentOptions?: FormItemProps
-  props?: FormItemProps
-  children?: MetaForm[]
-}
-
-export interface MetaContainerItem {
-  label: string
-  prop: string
-  showLabel?: boolean
-  type?: ContainerType
-  component?: string | ConcreteComponent
-  /**
-   * @deprecated componentOptions即将弃用，建议使用props
-   */
-  componentOptions?: ContainerItemProps
-  props?: ContainerItemProps
-  children: MetaForm[]
-}
-
-/**
- * @deprecated PropsType 类型即将废弃，建议使用 MetaContainerItem
- */
-export type PropsType = MetaContainerItem
-
 export interface ComponentData {
   canvasStyle: CanvasStyleData
   canvasData: Record<string, any>[]
   dataSlotters: Array<{ type: string; config: any }>
 }
 
-export interface DataOption {
-  type: DataType
-  otherConfig?: Record<string, any>
-  requestOptions: RequestOptions
-}
-
-export interface ScriptOption {
-  type: string
-  key: string
-  [extra: string]: any
-}
 export interface ComponentDataType {
   id: string
   name: string

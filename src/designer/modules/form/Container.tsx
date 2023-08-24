@@ -1,6 +1,6 @@
 import { NCard, NCollapse, NCollapseItem, NDivider, NTimeline, NTimelineItem } from 'naive-ui'
-import { ContainerType } from 'open-data-v/designer/enum'
-import type { MetaContainerItem, MetaForm } from 'open-data-v/designer/type'
+import type { MetaContainerItem, MetaForm } from 'open-data-v/base'
+import { ContainerType } from 'open-data-v/base'
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 

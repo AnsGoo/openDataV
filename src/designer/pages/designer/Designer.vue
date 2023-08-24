@@ -56,9 +56,9 @@
 
 <script setup lang="ts">
 import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
-import type { ToolBarItemType } from 'open-data-v/designer/components/ToolBar'
-import useCanvasState from 'open-data-v/designer/state/canvas'
-import hooks from 'open-data-v/models/hooks'
+import { useData, useProp } from 'open-data-v/base'
+import type { ToolBarItemType } from 'open-data-v/designer'
+import { useCanvasState } from 'open-data-v/designer'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '../../../designer/state/type'
@@ -79,7 +79,7 @@ const canvasState = useCanvasState()
 
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
-provide('HOOKS', readonly(hooks))
+provide('HOOKS', readonly({ useProp, useData }))
 const setLayoutData = (data: LayoutData) => {
   canvasState.setLayoutData(data)
 }

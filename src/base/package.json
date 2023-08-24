@@ -1,0 +1,21 @@
+{
+  "name": "@open-data-v/base",
+  "version": "0.0.1",
+  "description": "base for open-data-v",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "open-data-v"
+  ],
+  "author": "ansgoo",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "mitt": "^3.0.1",
+    "lodash-es": "^4.17.21"
+  },
+  "peerDependencies ": {
+    "vue": "^3.3.4"
+  }
+}

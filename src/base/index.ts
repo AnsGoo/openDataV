@@ -1,31 +1,34 @@
 import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './bus'
 import { CustomComponent } from './component'
-import { ComponentGroup, DataMode, FormType, GlobalColorSwatches } from './enums'
+import { ComponentGroup, ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
 import type { Hooks } from './hooks'
 import { useData, useProp } from './hooks'
 import type {
-  ArrayFormSchema,
+  ArrayProps,
   BaseComponent,
-  BaseFormSchema,
+  BaseFormProps,
   BaseScript,
   ComponentDataType,
   ComponentStyle,
   ComponentType,
   ContainerItemProps,
-  CustomFormSchema,
+  CustomProps,
   DataAcceptor,
   DataInstance,
+  DataOption,
   DOMRectStyle,
   FormItemProps,
-  InputFormSchema,
-  InputNumberFormSchema,
+  InputNumberProps,
+  InputProps,
   MetaContainerItem,
   MetaForm,
-  ModalFormSchema,
-  RadioFormSchema,
+  ModalProps,
+  RadioProps,
   Response,
-  SelectFormSchema,
-  SwitchFormSchema
+  ResponseData,
+  ScriptOption,
+  SelectProps,
+  SwitchProps
 } from './type'
 import { buildModeValue, updateModeValue } from './utils'
 
@@ -33,6 +36,7 @@ export {
   buildModeValue,
   channels,
   ComponentGroup,
+  ContainerType,
   CustomComponent,
   DataMode,
   eventBus,
@@ -47,27 +51,30 @@ export {
   useProp
 }
 export type {
-  ArrayFormSchema,
+  ArrayProps,
   BaseComponent,
-  BaseFormSchema,
+  BaseFormProps,
   BaseScript,
   ComponentDataType,
   ComponentStyle,
   ComponentType,
   ContainerItemProps,
-  CustomFormSchema,
+  CustomProps,
   DataAcceptor,
   DataInstance,
+  DataOption,
   DOMRectStyle,
   FormItemProps,
   Hooks,
-  InputFormSchema,
-  InputNumberFormSchema,
+  InputNumberProps,
+  InputProps,
   MetaContainerItem,
   MetaForm,
-  ModalFormSchema,
-  RadioFormSchema,
+  ModalProps,
+  RadioProps,
   Response,
-  SelectFormSchema,
-  SwitchFormSchema
+  ResponseData,
+  ScriptOption,
+  SelectProps,
+  SwitchProps
 }

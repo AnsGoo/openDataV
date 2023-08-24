@@ -1,9 +1,13 @@
-import type { EditMode } from 'open-data-v/designer/const'
-import type { StoreComponentData } from 'open-data-v/designer/db'
-import type { ContainerType } from 'open-data-v/designer/enum'
-import type { DataSlotter } from 'open-data-v/designer/state/slotter'
-import type { ComponentDataType, MetaContainerItem, Position } from 'open-data-v/designer/type'
-import type { BaseComponent, CustomComponent } from 'open-data-v/models'
+import type { BaseComponent, CustomComponent } from 'open-data-v/base'
+import type {
+  ComponentDataType,
+  ContainerType,
+  DataSlotter,
+  EditMode,
+  MetaContainerItem,
+  Position,
+  StoreComponentData
+} from 'open-data-v/designer'
 
 export interface CanvasStyleData {
   width: number

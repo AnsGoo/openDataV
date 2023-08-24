@@ -1,4 +1,4 @@
-import type { CustomComponent } from './models'
+import type { CustomComponent } from './base'
 
 interface Hooks {
   useProp: <T>(

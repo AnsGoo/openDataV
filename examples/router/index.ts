@@ -25,7 +25,7 @@ class RouteView {
 
   // 根据环境变量中的配置生成路由模式
   private createHistory = (): RouterHistory => {
-    if (import.meta.env.VITE_ROUER_MODE === RouteMode.HISTORY) {
+    if (import.meta.env.VITE_ROUTER_MODE === RouteMode.HISTORY) {
       return createWebHistory()
     } else {
       return createWebHashHistory()

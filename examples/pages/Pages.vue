@@ -53,7 +53,7 @@
 <script setup lang="ts">
 import type { DropdownOption } from 'naive-ui'
 import { NButton, NCard, NDropdown, NEllipsis, NTooltip } from 'naive-ui'
-import XIcon from 'open-data-v/designer/components/xicon/XIcon.vue'
+import { XIcon } from 'open-data-v/designer'
 import { h, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
