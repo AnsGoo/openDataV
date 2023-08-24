@@ -2,18 +2,13 @@
   <div
     v-contextmenu.stop="contextmenus"
     draggable="true"
+    class="layer"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
   >
-    <div v-if="component.component === 'Group'" class="layer">
-      <span v-show="mode === 'expand'">{{ component.name || '分组' }}</span>
-      <x-icon :name="toggleIcon(component.display)" :size="18" />
-    </div>
-    <div v-else class="layer">
-      <span v-show="mode === 'expand'">{{ component.name }}</span>
-      <x-icon :name="toggleIcon(component.display)" :size="18" />
-    </div>
+    <span v-show="mode === 'expand'">{{ component.name }}</span>
+    <x-icon :name="toggleIcon(component.display)" :size="18" />
   </div>
 </template>
 
