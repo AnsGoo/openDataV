@@ -1,5 +1,4 @@
 import type { BaseScript } from 'open-data-v/scripts'
-import { CustomScriptPlugin, SystemScriptPlugin } from 'open-data-v/scripts'
 import { reactive } from 'vue'
 
 type ScriptHandler = { new (key: string, ...args: any): BaseScript }
@@ -13,10 +12,7 @@ interface ScriptPlugin {
 
 class ScriptState {
   private state = reactive<{ plugins: Record<string, ScriptPlugin> }>({
-    plugins: {
-      [SystemScriptPlugin.type]: SystemScriptPlugin,
-      [CustomScriptPlugin.type]: CustomScriptPlugin
-    }
+    plugins: {}
   })
 
   get plugins() {
@@ -38,6 +34,14 @@ class ScriptState {
 
   public getPlugin(type: string) {
     return this.plugins[type]
+  }
+
+  public loadPlugins(plugins: Array<ScriptPlugin>) {
+    plugins.forEach((el) => {
+      if (!this.plugins[el.type]) {
+        this.plugins[el.type] = el
+      }
+    })
   }
 }
 

@@ -1,4 +1,5 @@
-import type { CanvasStyleData, ComponentDataType } from 'open-data-v'
+import type { ComponentDataType } from 'open-data-v/base'
+import type { CanvasStyleData } from 'open-data-v/designer'
 
 export interface LayoutData {
   id?: string

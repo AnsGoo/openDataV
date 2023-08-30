@@ -27,7 +27,7 @@
 import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
-import { StaticKey, useEventBus } from 'open-data-v'
+import { StaticKey, useEventBus } from 'open-data-v/base'
 import { useRequest } from 'open-data-v/data/hooks/http'
 import type { RestOption, RestResponse } from 'open-data-v/data/rest'
 import {

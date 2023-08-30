@@ -3,7 +3,7 @@ import '@/css/index.less'
 import '@/css/font.less'
 import '@/assets/directionFonts/iconfont.css'
 
-import { Directive, useComponentPlugin } from 'open-data-v'
+import { Directive, useComponentPlugin } from 'open-data-v/designer'
 import { createApp } from 'vue'
 
 import router from '@/router'

@@ -49,8 +49,8 @@
 </template>
 <script setup lang="ts">
 import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
-import type { ContextmenuItem } from 'open-data-v'
-import { eventBus, StaticKey } from 'open-data-v'
+import { eventBus, StaticKey } from 'open-data-v/base'
+import type { ContextmenuItem } from 'open-data-v/designer'
 import { onMounted, ref } from 'vue'
 
 import { deleteRestDataApi, getRestDataListApi } from '@/api/data'

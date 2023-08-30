@@ -1,4 +1,4 @@
-import type { ComponentItem } from 'open-data-v'
+import type { ComponentItem } from 'open-data-v/designer'
 
 import type { GroupType } from '@/enum'
 import { ComponentGroupList } from '@/enum'
