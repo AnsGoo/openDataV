@@ -1,14 +1,4 @@
 import { isUndefined } from 'lodash-es'
-import {
-  NColorPicker,
-  NFormItem,
-  NInput,
-  NInputNumber,
-  NRadio,
-  NRadioGroup,
-  NSelect,
-  NSwitch
-} from 'naive-ui'
 import type {
   CustomProps,
   FormItemProps,
@@ -19,6 +9,16 @@ import type {
   SwitchProps
 } from 'open-data-v/base'
 import { FormType, GlobalColorSwatches } from 'open-data-v/base'
+import {
+  OColorPicker,
+  OFormItem,
+  OInput,
+  OInputNumber,
+  ORadio,
+  ORadioGroup,
+  OSelect,
+  OSwitch
+} from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, h } from 'vue'
 
@@ -27,7 +27,7 @@ import type { ScriptForm } from './type'
 
 export default defineComponent({
   components: {
-    NSwitch
+    OSwitch
   },
   props: {
     items: {
@@ -65,7 +65,7 @@ export default defineComponent({
       switch (item.type) {
         case FormType.COLOR:
           return (
-            <NColorPicker
+            <OColorPicker
               v-model:value={modelValue[item.prop]}
               swatches={GlobalColorSwatches}
               modes={['hex', 'rgb', 'hsl']}
@@ -74,7 +74,7 @@ export default defineComponent({
           )
         case FormType.SELECT:
           return (
-            <NSelect
+            <OSelect
               v-model:value={modelValue[item.prop]}
               placeholder={item.label}
               onUpdateValue={(event) => changed(event, item.prop)}
@@ -84,17 +84,17 @@ export default defineComponent({
           )
         case FormType.RADIO:
           return (
-            <NRadioGroup
+            <ORadioGroup
               v-model:value={modelValue[item.prop]}
               name={item.prop}
               onUpdateValue={(event) => changed(event, item.prop)}
             >
               {options.map((op) => (
-                <NRadio value={op.value} key={op.value}>
+                <ORadio value={op.value} key={op.value}>
                   {op.label}
-                </NRadio>
+                </ORadio>
               ))}
-            </NRadioGroup>
+            </ORadioGroup>
           )
         case FormType.NUMBER:
           const numberMax: number = getOptionsValue<number>('max', 9999999999)
@@ -102,7 +102,7 @@ export default defineComponent({
           const precision: number | undefined = getOptionsValue<number>('precision', undefined)
 
           return (
-            <NInputNumber
+            <OInputNumber
               v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, item.prop)}
               max={numberMax}
@@ -116,7 +116,7 @@ export default defineComponent({
             />
           )
         case FormType.SWITCH:
-          return h(NSwitch, {
+          return h(OSwitch, {
             value: modelValue[item.prop],
             onUpdateValue: (value) => {
               modelValue[item.prop] = value
@@ -134,7 +134,7 @@ export default defineComponent({
           )
         default:
           return (
-            <NInput
+            <OInput
               clearable
               v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, item.prop)}
@@ -151,9 +151,9 @@ export default defineComponent({
     return () => (
       <>
         {props.items.map((item) => (
-          <NFormItem key={`${item.prop}`} label={item.label}>
+          <OFormItem key={`${item.prop}`} label={item.label}>
             {isUndefined(props.data) ? <></> : renderItem(item, props.data)}
-          </NFormItem>
+          </OFormItem>
         ))}
       </>
     )

@@ -1,12 +1,12 @@
-import { NDescriptions, NDescriptionsItem, NEmpty } from 'naive-ui'
+import { ODescriptions, ODescriptionsItem, OEmpty } from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent } from 'vue'
 
 const Empty = defineComponent({
   components: {
-    NDescriptions,
-    NDescriptionsItem,
-    NEmpty
+    ODescriptions,
+    ODescriptionsItem,
+    OEmpty
   },
   props: {
     desc: {
@@ -17,11 +17,11 @@ const Empty = defineComponent({
 
   setup(props) {
     return () => (
-      <NDescriptions class="placeholder">
-        <NDescriptionsItem>
-          <NEmpty description={props.desc} />
-        </NDescriptionsItem>
-      </NDescriptions>
+      <ODescriptions class="placeholder">
+        <ODescriptionsItem>
+          <OEmpty description={props.desc} />
+        </ODescriptionsItem>
+      </ODescriptions>
     )
   }
 })

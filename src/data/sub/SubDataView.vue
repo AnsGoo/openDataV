@@ -1,18 +1,18 @@
 <template>
-  <n-card>
+  <o-card>
     <div class="static-data">
       <slot name="data-select"></slot>
     </div>
-    <n-form>
-      <n-form-item key="channel" label="数据通道">
-        <n-input v-model:value="channel" @update:value="channelChange" />
-      </n-form-item>
-    </n-form>
-  </n-card>
+    <o-form>
+      <o-form-item key="channel" label="数据通道">
+        <o-input v-model:value="channel" @update:value="channelChange" />
+      </o-form-item>
+    </o-form>
+  </o-card>
 </template>
 
 <script lang="ts" setup>
-import { NCard, NForm, NFormItem, NInput } from 'naive-ui'
+import { OCard, OForm, OFormItem, OInput } from 'open-data-v/ui'
 import { ref } from 'vue'
 
 const props = withDefaults(

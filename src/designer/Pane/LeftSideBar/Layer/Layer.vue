@@ -1,28 +1,28 @@
 <template>
   <div>
-    <n-menu
+    <o-menu
       v-if="componentData.length > 0"
       :options="menuOptions"
       :root-indent="1"
       :indent="12"
       @update:value="handleSelect"
     />
-    <n-descriptions v-else class="placeholder">
-      <n-descriptions-item>
-        <n-empty description="画布为空" />
-      </n-descriptions-item>
-    </n-descriptions>
+    <o-descriptions v-else class="placeholder">
+      <o-descriptions-item>
+        <o-empty description="画布为空" />
+      </o-descriptions-item>
+    </o-descriptions>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import type { MenuOption } from 'naive-ui'
-import { NDescriptions, NDescriptionsItem, NEmpty, NMenu } from 'naive-ui'
 import type { CustomComponent } from 'open-data-v/base'
 import { ComponentGroup, useEventBus } from 'open-data-v/base'
 import type { ContextmenuItem } from 'open-data-v/designer'
 import { ComponentGroupList, useCanvasState, useClipBoardState } from 'open-data-v/designer'
+import type { MenuOption } from 'open-data-v/ui'
+import { ODescriptions, ODescriptionsItem, OEmpty, OMenu } from 'open-data-v/ui'
 import { computed, h, ref, watch } from 'vue'
 
 import { uuid } from '../../../utils'

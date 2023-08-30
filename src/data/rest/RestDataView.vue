@@ -1,26 +1,26 @@
 <template>
-  <n-card>
+  <o-card>
     <div class="rest-data">
       <slot name="data-select"></slot>
     </div>
     <div class="api">
-      <n-select
+      <o-select
         v-model:value="formData['method']"
         :options="requestMethodOptions"
         class="method"
         :show-arrow="true"
         @update-value="formChange"
       />
-      <n-input v-model:value="formData['url']" class="url" @update-value="formChange" />
-      <n-space>
-        <n-button-group class="send">
-          <n-button type="primary" @click="send">调试</n-button>
-        </n-button-group>
-      </n-space>
+      <o-input v-model:value="formData['url']" class="url" @update-value="formChange" />
+      <o-space>
+        <o-button-group class="send">
+          <o-button type="primary" @click="send">调试</o-button>
+        </o-button-group>
+      </o-space>
     </div>
     <div class="config">
-      <n-tabs type="line" animated>
-        <n-tab-pane name="query" tab="请求参数" display-directive="show">
+      <o-tabs type="line" animated>
+        <o-tab-pane name="query" tab="请求参数" display-directive="show">
           <div class="params">
             <DynamicKVForm
               v-model:value="formData['params']"
@@ -28,8 +28,8 @@
               @update:value="formChange"
             />
           </div>
-        </n-tab-pane>
-        <n-tab-pane name="data" tab="请求体" display-directive="show">
+        </o-tab-pane>
+        <o-tab-pane name="data" tab="请求体" display-directive="show">
           <div class="headers">
             <DynamicKVForm
               v-model:value="formData['data']"
@@ -37,8 +37,8 @@
               @update:value="formChange"
             />
           </div>
-        </n-tab-pane>
-        <n-tab-pane name="headers" tab="请求头" display-directive="show">
+        </o-tab-pane>
+        <o-tab-pane name="headers" tab="请求头" display-directive="show">
           <div class="headers">
             <DynamicKVForm
               v-model:value="formData['headers']"
@@ -47,33 +47,33 @@
               @update:value="formChange"
             />
           </div>
-        </n-tab-pane>
-      </n-tabs>
+        </o-tab-pane>
+      </o-tabs>
     </div>
     <div class="response">
-      <n-divider title-placement="left">
+      <o-divider title-placement="left">
         请求响应
         <span :class="['resp-code', response.status >= 400 ? 'resp-fail' : 'resp-success']">
           {{ response.status ? response.status : '' }}
         </span>
-      </n-divider>
+      </o-divider>
       <OCodeEditor :value="response.data" class="content" height="400px" />
     </div>
-  </n-card>
+  </o-card>
 </template>
 <script setup lang="ts">
 import type { AxiosResponse } from 'axios'
 import {
-  NButton,
-  NButtonGroup,
-  NCard,
-  NDivider,
-  NInput,
-  NSelect,
-  NSpace,
-  NTabPane,
-  NTabs
-} from 'naive-ui'
+  OButton,
+  OButtonGroup,
+  OCard,
+  ODivider,
+  OInput,
+  OSelect,
+  OSpace,
+  OTabPane,
+  OTabs
+} from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
 import { useRequest } from '../hooks/http'

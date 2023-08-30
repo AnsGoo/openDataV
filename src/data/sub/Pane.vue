@@ -1,17 +1,17 @@
 <template>
-  <n-form-item key="title" label="订阅数据">
-    <n-input-group>
-      <n-input
+  <o-form-item key="title" label="订阅数据">
+    <o-input-group>
+      <o-input
         v-model:value="formDataConfig.channel"
         :readonly="true"
         placeholder="编辑请点击"
         @click="isShow = true"
       />
-      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-    </n-input-group>
-  </n-form-item>
-  <n-modal v-model:show="isShow" display-directive="show">
-    <n-card
+      <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
+    </o-input-group>
+  </o-form-item>
+  <o-modal v-model:show="isShow" display-directive="show">
+    <o-card
       style="width: 800px"
       title="订阅通道"
       :bordered="false"
@@ -22,12 +22,12 @@
       @close="isShow = false"
     >
       <StaticView v-model:options="formDataConfig" mode="use" @channel-change="dataChangeHandler" />
-    </n-card>
-  </n-modal>
+    </o-card>
+  </o-modal>
 </template>
 
 <script lang="ts" setup>
-import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import { OButton, OCard, OFormItem, OInput, OInputGroup, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { Slotter } from '../type'
