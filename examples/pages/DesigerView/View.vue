@@ -4,7 +4,15 @@
 
 <script setup lang="ts">
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Designer, StaticKey, useCanvasState, useDataState, useEventBus } from 'open-data-v'
+import {
+  Designer,
+  StaticKey,
+  useCanvasState,
+  useDataState,
+  useEventBus,
+  useScriptState
+} from 'open-data-v'
+import { CustomScriptPlugin, SystemScriptPlugin } from 'open-data-v/scripts'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -14,6 +22,9 @@ import RestDataPlugin from '@/data/Rest'
 import useToolBars from '@/pages/DesigerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
+
+const scriptState = useScriptState()
+scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])
 
 useEventBus(StaticKey.STDOUT, (event) => {
   console.log(event)
