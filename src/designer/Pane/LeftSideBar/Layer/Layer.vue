@@ -1,41 +1,38 @@
 <template>
   <div>
-    <n-menu
+    <o-menu
       v-if="componentData.length > 0"
       :options="menuOptions"
       :root-indent="1"
       :indent="12"
       @update:value="handleSelect"
     />
-    <n-descriptions v-else class="placeholder">
-      <n-descriptions-item>
-        <n-empty description="画布为空" />
-      </n-descriptions-item>
-    </n-descriptions>
+    <o-descriptions v-else class="placeholder">
+      <o-descriptions-item>
+        <o-empty description="画布为空" />
+      </o-descriptions-item>
+    </o-descriptions>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import type { MenuOption } from 'naive-ui'
-import { NDescriptions, NDescriptionsItem, NEmpty, NMenu } from 'naive-ui'
+import type { CustomComponent } from 'open-data-v/base'
+import { ComponentGroup, useEventBus } from 'open-data-v/base'
+import type { ContextmenuItem } from 'open-data-v/designer'
+import { ComponentGroupList, useCanvasState, useClipBoardState } from 'open-data-v/designer'
+import type { MenuOption } from 'open-data-v/ui'
+import { ODescriptions, ODescriptionsItem, OEmpty, OMenu } from 'open-data-v/ui'
 import { computed, h, ref, watch } from 'vue'
 
-import { useEventBus } from '@/bus'
-import useCanvasState from '@/designer/state/canvas'
-import useClipBoardState from '@/designer/state/clipBoard'
-import { ComponentGroup, ComponentGroupList } from '@/enum'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-import { uuid } from '@/utils/utils'
-
+import { uuid } from '../../../utils'
 import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'
 
 const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()
 
-const iconMap: Recordable<string> = {}
+const iconMap: Record<string, string> = {}
 ComponentGroupList.map((ele) => {
   iconMap[ele.key] = ele.icon
 })
@@ -165,14 +162,14 @@ const hidden = (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
   const component = canvasState.getComponentByIndex(indexes)
-  if (component) component.hiddenComponent()
+  if (component) component.setVisible(false)
 }
 
 const display = (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
   const component = canvasState.getComponentByIndex(indexes)
-  if (component) component.showComponent()
+  if (component) component.setVisible(true)
 }
 const cut = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))

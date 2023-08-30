@@ -1,5 +1,5 @@
 <template>
-  <n-tabs
+  <o-tabs
     v-if="!iscollapsed"
     v-model:value="activeKey"
     type="line"
@@ -12,22 +12,22 @@
       }
     "
   >
-    <n-tab-pane name="components" display-directive="show:lazy">
+    <o-tab-pane name="components" display-directive="show:lazy">
       <template #tab>
         <x-icon name="components" />
         <span>组件</span>
       </template>
       <ComponentList />
-    </n-tab-pane>
-    <n-tab-pane name="layer" display-directive="show:lazy">
+    </o-tab-pane>
+    <o-tab-pane name="layer" display-directive="show:lazy">
       <template #tab>
         <x-icon name="layers" />
         <span>图层</span>
       </template>
       <Layer />
-    </n-tab-pane>
-  </n-tabs>
-  <n-tabs
+    </o-tab-pane>
+  </o-tabs>
+  <o-tabs
     v-else
     v-model:value="activeKey"
     type="line"
@@ -36,23 +36,23 @@
     justify-content="center"
     @update:value="collapsedTabPane"
   >
-    <n-tab-pane v-if="activeKey === 'components'" name="components" display-directive="show:lazy">
+    <o-tab-pane v-if="activeKey === 'components'" name="components" display-directive="show:lazy">
       <template #tab>
         <x-icon name="components" @click="switchTab('layer')" />
       </template>
       <ComponentList />
-    </n-tab-pane>
-    <n-tab-pane v-else-if="activeKey === 'layer'" name="layer" display-directive="show:lazy">
+    </o-tab-pane>
+    <o-tab-pane v-else-if="activeKey === 'layer'" name="layer" display-directive="show:lazy">
       <template #tab>
         <x-icon name="layers" @click="switchTab('components')" />
       </template>
       <Layer />
-    </n-tab-pane>
-  </n-tabs>
+    </o-tab-pane>
+  </o-tabs>
 </template>
 
 <script lang="ts" setup>
-import { NTabPane, NTabs } from 'naive-ui'
+import { OTabPane, OTabs } from 'open-data-v/ui'
 import { ref } from 'vue'
 
 import ComponentList from './Component/ComponentList.vue'

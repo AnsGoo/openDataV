@@ -1,8 +1,7 @@
 import { cloneDeep } from 'lodash-es'
+import type { CustomComponent } from 'open-data-v/base'
+import type { ComponentDataType } from 'open-data-v/designer'
 import { reactive } from 'vue'
-
-import type { ComponentDataType } from '@/designer/type'
-import type { CustomComponent } from '@/models'
 
 import type { StoreComponentData } from '../db'
 import { snapshotDb } from '../db'
@@ -23,11 +22,10 @@ class SnapshotState {
     this.state.latestSnapshot = snapshot
   }
 
-  get timeHandler(): TimeoutHandle {
-    // @ts-ignore
+  get timeHandler(): TimeoutHandle | undefined {
     return this.state.timeHandler
   }
-  set timeHandler(timeHandler: TimeoutHandle) {
+  set timeHandler(timeHandler: TimeoutHandle | undefined) {
     this.state.timeHandler = timeHandler
   }
 
@@ -108,7 +106,6 @@ class SnapshotState {
       if (snapshot) {
         this.cursor = snapshot.id!
       }
-      // @ts-ignore
       this.timeHandler = undefined
     })
   }
@@ -117,7 +114,6 @@ class SnapshotState {
    */
   async clearSnapshot() {
     await snapshotDb.snapshot.clear()
-    // @ts-ignore
     this.latestSnapshot = undefined
   }
   /**
@@ -140,6 +136,6 @@ class SnapshotState {
 
 const snapshotState = new SnapshotState()
 // Need to be used outside the setup
-export default function useCanvasState() {
+export default function useSnapshotState() {
   return snapshotState
 }

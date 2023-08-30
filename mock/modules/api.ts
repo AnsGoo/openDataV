@@ -1,6 +1,6 @@
 import { Random } from 'mockjs'
-import dataDict from './data'
-import { Covid19Data } from './data'
+
+import dataDict, { Covid19Data } from './data'
 
 const restData = [
   {
@@ -88,7 +88,6 @@ export default [
       const result: any[] = []
       Object.keys(dataDict).forEach((key: string) => {
         const data = dataDict[key]
-        // @ts-ignore
         result.push({
           id: key,
           name: data.name,

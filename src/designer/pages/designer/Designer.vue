@@ -1,11 +1,11 @@
 <template>
-  <n-layout class="home">
-    <n-layout-header class="header">
+  <o-layout class="home">
+    <o-layout-header class="header">
       <ToolBar :toolbars="toolbars" />
-    </n-layout-header>
+    </o-layout-header>
     <!-- 左侧组件列表 -->
-    <n-layout has-sider class="main">
-      <n-layout-sider
+    <o-layout has-sider class="main">
+      <o-layout-sider
         class="left"
         width="15rem"
         :collapsed="collapsedLeft"
@@ -24,10 +24,10 @@
             }
           "
         />
-      </n-layout-sider>
-      <n-layout has-sider sider-placement="right">
+      </o-layout-sider>
+      <o-layout has-sider sider-placement="right">
         <Canvas />
-        <n-layout-sider
+        <o-layout-sider
           class="right"
           width="20rem"
           :collapsed="collapsedRight"
@@ -46,23 +46,22 @@
               }
             "
           />
-        </n-layout-sider>
-      </n-layout>
+        </o-layout-sider>
+      </o-layout>
 
       <!-- 右侧属性列表 -->
-    </n-layout>
-  </n-layout>
+    </o-layout>
+  </o-layout>
 </template>
 
 <script setup lang="ts">
-import { NLayout, NLayoutHeader, NLayoutSider } from 'naive-ui'
+import { useData, useProp } from 'open-data-v/base'
+import type { ToolBarItemType } from 'open-data-v/designer'
+import { useCanvasState } from 'open-data-v/designer'
+import { OLayout, OLayoutHeader, OLayoutSider } from 'open-data-v/ui'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 
-import type { LayoutData } from '@/api/pages'
-import type { ToolBarItemType } from '@/components/ToolBar'
-import useCanvasState from '@/designer/state/canvas'
-import hooks from '@/models/hooks'
-
+import type { LayoutData } from '../../../designer/state/type'
 import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'
 import ToolBar from '../../Pane/Toolbar'
@@ -80,7 +79,7 @@ const canvasState = useCanvasState()
 
 const collapsedLeft = ref(false)
 const collapsedRight = ref(false)
-provide('HOOKS', readonly(hooks))
+provide('HOOKS', readonly({ useProp, useData }))
 const setLayoutData = (data: LayoutData) => {
   canvasState.setLayoutData(data)
 }
@@ -92,10 +91,10 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
-.home > :deep(.n-layout-scroll-container:first-child) {
+.home > :deep(.o-layout-scroll-container:first-child) {
   @apply flex flex-col h-screen;
   .header {
-    @apply h-10;
+    @apply h-12;
   }
 }
 </style>

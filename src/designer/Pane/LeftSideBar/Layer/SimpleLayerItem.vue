@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
-import { eventBus, StaticKey } from '@/bus'
-import useCanvasState from '@/designer/state/canvas'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
+import type { CustomComponent } from 'open-data-v/base'
+import { eventBus, StaticKey } from 'open-data-v/base'
+import type { ContextmenuItem } from 'open-data-v/designer'
+import { useCanvasState } from 'open-data-v/designer'
 
 const props = withDefaults(
   defineProps<{

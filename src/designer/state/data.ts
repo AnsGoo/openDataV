@@ -1,11 +1,6 @@
+import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from 'open-data-v/data'
+import { DemoDataPlugin } from 'open-data-v/designer'
 import { reactive } from 'vue'
-
-import StaticDataPlugin from '@/apiView/static'
-import SubDataPlugin from '@/apiView/sub'
-import WebsocketDataPlugin from '@/apiView/websocket'
-import QuickDataPlugin from '@/data/Quick'
-import RestDataPlugin from '@/data/Rest'
-import DemoDataPlugin from '@/designer/data/DemoData'
 
 interface DataPlugin {
   type: string
@@ -17,12 +12,10 @@ interface DataPlugin {
 }
 
 class DataState {
-  private state = reactive<{ plugins: Recordable<DataPlugin> }>({
+  private state = reactive<{ plugins: Record<string, DataPlugin> }>({
     plugins: {
       [DemoDataPlugin.type]: DemoDataPlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
-      [RestDataPlugin.type]: RestDataPlugin,
-      [QuickDataPlugin.type]: QuickDataPlugin,
       [SubDataPlugin.type]: SubDataPlugin,
       [WebsocketDataPlugin.type]: WebsocketDataPlugin
     }
@@ -33,7 +26,7 @@ class DataState {
   }
 
   get componentPlugins() {
-    const plugins: Recordable<DataPlugin> = {}
+    const plugins: Record<string, DataPlugin> = {}
     const keys = Object.keys(this.plugins)
     keys.forEach((el: string) => {
       const plugin = this.plugins[el]
@@ -46,7 +39,7 @@ class DataState {
   }
 
   get globalPlugins() {
-    const plugins: Recordable<DataPlugin> = {}
+    const plugins: Record<string, DataPlugin> = {}
     const keys = Object.keys(this.plugins)
     keys.forEach((el: string) => {
       const plugin = this.plugins[el]
@@ -60,6 +53,14 @@ class DataState {
 
   public getPlugin(type: string) {
     return this.plugins[type]
+  }
+
+  public loadPlugins(plugins: Array<DataPlugin>) {
+    plugins.forEach((el) => {
+      if (!this.plugins[el.type]) {
+        this.plugins[el.type] = el
+      }
+    })
   }
 }
 

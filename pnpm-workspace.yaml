@@ -1,2 +1,4 @@
 packages:
-  - src/resource/components/**
+  - src/*
+  - examples/*
+  - resource/**

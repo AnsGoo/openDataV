@@ -1,23 +1,26 @@
 import { cloneDeep } from 'lodash-es'
-import { reactive } from 'vue'
-
-import type { LayoutData } from '@/api/pages'
-import { eventBus } from '@/bus'
-import { DataSlotter } from '@/designer/state/slotter'
-import type { CanvasData } from '@/designer/state/type'
 import type {
+  BaseComponent,
+  CustomComponent,
+  DataInstance,
+  MetaContainerItem
+} from 'open-data-v/base'
+import {
+  buildModeValue,
+  ContainerType,
+  eventBus,
+  FormType,
+  updateModeValue
+} from 'open-data-v/base'
+import type {
+  CanvasData,
   ComponentDataType,
   DOMRectStyle,
   GroupStyle,
-  MetaContainerItem,
   Vector
-} from '@/designer/type'
-import { ContainerType, EditMode, FormType } from '@/enum'
-import PixelEnum from '@/enum/pixel'
-import type { CustomComponent } from '@/models'
-import type { DataInstance } from '@/models/type'
-import { buildModeValue, updateModeValue } from '@/models/utils'
-import { message } from '@/utils/message'
+} from 'open-data-v/designer'
+import { DataSlotter, EditMode, handleLogger, PixelEnum } from 'open-data-v/designer'
+import { reactive } from 'vue'
 
 import {
   calcComponentsRect,
@@ -30,7 +33,7 @@ import {
 } from '../utils'
 import useDataState from './data'
 import useSnapShotState from './snapshot'
-import type { CanvasStyleConfig, CanvasStyleData } from './type'
+import type { CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
 
 const dataState = useDataState()
 
@@ -116,7 +119,9 @@ class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
+    components: {},
     globalSlotters: {},
+    darkTheme: true,
     scale: 1,
     canvasStyleConfig: {
       formItems: baseCanvasStyleConfig,
@@ -141,6 +146,21 @@ class CanvasState {
 
   get canvasStyleConfig(): CanvasStyleConfig {
     return this.state.canvasStyleConfig
+  }
+
+  get darkTheme(): boolean {
+    return this.state.darkTheme
+  }
+  set darkTheme(isDark: boolean) {
+    this.state.darkTheme = isDark
+  }
+
+  get components() {
+    return this.state.components
+  }
+
+  public loadComponent(name: string, component: BaseComponent) {
+    this.state.components[name] = component
   }
 
   get globalSlotters() {
@@ -192,11 +212,10 @@ class CanvasState {
     this.state.isClickComponent = isClickComponent
   }
 
-  // @ts-ignore
   get curComponent(): Optional<CustomComponent> {
     return this.state.curComponent
   }
-  set curComponent(curComponent: CustomComponent) {
+  set curComponent(curComponent: Optional<CustomComponent>) {
     this.state.curComponent = curComponent
   }
 
@@ -411,11 +430,11 @@ class CanvasState {
       }
       this.curComponent.groupStyle = gStyle
       for (const key in newStyle) {
-        this.curComponent.change(['position', key], newStyle[key], 'style')
+        this.curComponent.changeStyle(['position', key], newStyle[key])
       }
     } else {
       for (const key in ablePosition) {
-        this.curComponent.change(['position', key], ablePosition[key], 'style')
+        this.curComponent.changeStyle(['position', key], ablePosition[key])
       }
     }
 
@@ -453,11 +472,13 @@ class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.change(['position', 'top'], Math.round(afterPoint.y - height / 2), 'style')
-      el.change(['position', 'left'], Math.round(afterPoint.x - width / 2), 'style')
-      el.change(['position', 'height'], Math.round(height), 'style')
-      el.change(['position', 'width'], Math.round(width), 'style')
-      el.change(['position', 'rotate'], rotate, 'style')
+      el.changeStyle(['position'], {
+        top: Math.round(afterPoint.y - height / 2),
+        left: Math.round(afterPoint.x - width / 2),
+        height: Math.round(height),
+        width: Math.round(width),
+        rotate: rotate
+      })
     })
   }
 
@@ -514,7 +535,7 @@ class CanvasState {
     if (!curComponent || !curComponent.propValue) {
       return
     }
-    curComponent.change(keys, value, 'propValue')
+    curComponent.changeProp(keys, value)
     this.saveComponentData()
   }
   /**
@@ -536,7 +557,7 @@ class CanvasState {
     ) {
       this.curComponent.groupStyle[keys[1]] = value
     } else {
-      this.curComponent.change(keys, value, 'style')
+      this.curComponent.changeStyle(keys, value)
     }
     this.saveComponentData()
   }
@@ -552,7 +573,6 @@ class CanvasState {
    */
   clearCanvas(): void {
     this.componentData = []
-    // @ts-ignore
     this.curComponent = undefined
     this.isClickComponent = false
     this.isShowEm = false
@@ -575,7 +595,7 @@ class CanvasState {
       swap(componentData, index, index - 1)
       this.saveComponentData()
     } else {
-      message.info('图层已经到底了')
+      handleLogger.warn('图层已经到底了')
     }
   }
   /**
@@ -594,7 +614,7 @@ class CanvasState {
       swap(componentData, index, index + 1)
       this.saveComponentData()
     } else {
-      message.info('图层已经到顶了')
+      handleLogger.warn('图层已经到顶了')
     }
   }
 
@@ -614,7 +634,7 @@ class CanvasState {
       componentData.push(myComponments[0])
       this.saveComponentData()
     } else {
-      message.info('图层已经到顶了')
+      handleLogger.warn('图层已经到顶了')
     }
   }
   /**
@@ -633,7 +653,7 @@ class CanvasState {
       componentData.unshift(myComponments[0])
       this.saveComponentData()
     } else {
-      message.info('图层已经到底了')
+      handleLogger.warn('图层已经到底了')
     }
   }
   /**
@@ -724,7 +744,7 @@ class CanvasState {
       } else {
         const newGroupStyle = { ...parentStyle, top, left, height, width }
         for (const key in newGroupStyle) {
-          parentComponent.change(['position', key], newGroupStyle[key], 'style')
+          parentComponent.changeStyle(['position', key], newGroupStyle[key])
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
           el.groupStyle = {

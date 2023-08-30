@@ -1,7 +1,5 @@
+import type { FormItemProps, FormType } from 'open-data-v/base'
 import type { ConcreteComponent } from 'vue'
-
-import type { FormItemProps } from '@/designer/type'
-import type { FormType } from '@/enum'
 
 export interface ScriptForm {
   label: string

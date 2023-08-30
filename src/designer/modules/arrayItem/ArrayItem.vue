@@ -1,9 +1,10 @@
 <template>
-  <n-space vertical>
-    <n-space v-for="(_, index) in arrayValue" :key="index" :wrap="false">
-      <n-input
+  <div class="container">
+    <div v-for="(_, index) in arrayValue" :key="index" class="item">
+      <o-input
         v-model:value="arrayValue[index]"
         type="text"
+        style="width: 100%"
         placeholder="请输入数据"
         @change="handleChange(index)"
       />
@@ -14,9 +15,9 @@
         color="#F76560"
         @click="handleDelete(index)"
       />
-    </n-space>
-    <n-space v-if="type === 'dynamic'" :wrap="false">
-      <n-input
+    </div>
+    <div v-if="type === 'dynamic'" class="item">
+      <o-input
         ref="addInputEl"
         v-model:value="newValue"
         type="text"
@@ -24,16 +25,14 @@
         @keypress.enter="handleAdd"
       />
       <XIcon name="add" color="#4CD263" :size="18" @click="handleAdd" />
-    </n-space>
-  </n-space>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { isNumber } from 'lodash-es'
-import { NInput, NSpace } from 'naive-ui'
+import { OInput } from 'open-data-v/ui'
 import { nextTick, reactive, ref } from 'vue'
-
-import { message } from '@/utils/message'
 
 const props = withDefaults(
   defineProps<{
@@ -63,13 +62,11 @@ arrayValue.splice(0, props.value.length, ...props.value)
 
 const handleAdd = () => {
   if (!newValue.value.trim()) {
-    message.warning('请输入数据')
     return
   }
 
   const { maxItem } = props
   if (isNumber(maxItem) && arrayValue.length >= maxItem) {
-    message.warning(`最多 ${maxItem} 个输入框，添加失败`)
     return
   }
 
@@ -84,7 +81,6 @@ const handleAdd = () => {
 const handleDelete = (index: number) => {
   // minItem 有默认值，默认值为数值，不用再判断
   if (arrayValue.length <= props.minItem) {
-    message.warning(`最少 ${props.minItem} 个输入框，删除失败`)
     return
   }
   arrayValue.splice(index, 1)
@@ -100,4 +96,11 @@ const handleChange = (index: number) => {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.container {
+  @apply flex-col;
+  .item {
+    @apply flex flex-row p-1 items-center;
+  }
+}
+</style>

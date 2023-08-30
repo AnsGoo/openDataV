@@ -1,8 +1,13 @@
-import type { StoreComponentData } from '@/designer/db'
-import type { DataSlotter } from '@/designer/state/slotter'
-import type { MetaContainerItem, Position } from '@/designer/type'
-import type { ContainerType, EditMode } from '@/enum'
-import type { CustomComponent } from '@/models'
+import type { BaseComponent, CustomComponent } from 'open-data-v/base'
+import type {
+  ComponentDataType,
+  ContainerType,
+  DataSlotter,
+  EditMode,
+  MetaContainerItem,
+  Position,
+  StoreComponentData
+} from 'open-data-v/designer'
 
 export interface CanvasStyleData {
   width: number
@@ -28,8 +33,10 @@ export interface CanvasData {
   ids: Set<string>
   benchmarkComponent: Optional<CustomComponent>
   scale: number
+  darkTheme: boolean
   canvasStyleConfig: CanvasStyleConfig
-  globalSlotters: Recordable<DataSlotter>
+  globalSlotters: Record<string, DataSlotter>
+  components: Record<string, BaseComponent>
 }
 
 export interface SnapData {
@@ -59,4 +66,13 @@ export interface SelectedAreaData {
   style: Position
   components: CustomComponent[]
   ids: Set
+}
+
+export interface LayoutData {
+  name?: string
+  thumbnail?: string
+  canvasData: ComponentDataType[]
+  canvasStyle: CanvasStyleData
+  isPublish?: boolean
+  dataSlotters: Array<{ type: string; config: any }>
 }

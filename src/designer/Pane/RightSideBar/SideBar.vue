@@ -1,6 +1,6 @@
 <template>
   <div v-if="!iscollapsed">
-    <n-tabs
+    <o-tabs
       v-if="curComponent"
       v-model:value="activeKey"
       type="line"
@@ -12,7 +12,7 @@
         }
       "
     >
-      <n-tab-pane name="style" display-directive="show:lazy">
+      <o-tab-pane name="style" display-directive="show:lazy">
         <template #tab>
           <x-icon name="textStyle" />
           <span v-show="!iscollapsed">样式</span>
@@ -20,8 +20,8 @@
         <div class="attr-list">
           <StyleList :curComponent="curComponent" />
         </div>
-      </n-tab-pane>
-      <n-tab-pane name="attr" display-directive="show:lazy">
+      </o-tab-pane>
+      <o-tab-pane name="attr" display-directive="show:lazy">
         <template #tab>
           <x-icon name="attr" />
           <span v-show="!iscollapsed">属性</span>
@@ -29,8 +29,8 @@
         <div class="attr-list">
           <AttrList :curComponent="curComponent" />
         </div>
-      </n-tab-pane>
-      <n-tab-pane name="data" display-directive="show:lazy">
+      </o-tab-pane>
+      <o-tab-pane name="data" display-directive="show:lazy">
         <template #tab>
           <x-icon name="data" />
           <span v-show="!iscollapsed">数据</span>
@@ -38,10 +38,10 @@
         <div class="attr-list">
           <DataList :curComponent="curComponent" />
         </div>
-      </n-tab-pane>
-    </n-tabs>
-    <n-tabs v-else type="line" animated justify-content="center">
-      <n-tab-pane name="canvas" display-directive="show:lazy">
+      </o-tab-pane>
+    </o-tabs>
+    <o-tabs v-else type="line" animated justify-content="center">
+      <o-tab-pane name="canvas" display-directive="show:lazy">
         <template #tab>
           <x-icon name="canvas" />
           <span v-show="!iscollapsed">画布</span>
@@ -49,8 +49,8 @@
         <div class="attr-list">
           <Canvas />
         </div>
-      </n-tab-pane>
-      <n-tab-pane name="data" display-directive="show:lazy">
+      </o-tab-pane>
+      <o-tab-pane name="data" display-directive="show:lazy">
         <template #tab>
           <x-icon name="data" />
           <span v-show="!iscollapsed">数据</span>
@@ -58,20 +58,19 @@
         <div class="attr-list">
           <GlobalData />
         </div>
-      </n-tab-pane>
-    </n-tabs>
+      </o-tab-pane>
+    </o-tabs>
   </div>
   <div v-else>
-    <n-menu :options="menuOptions" />
+    <o-menu :options="menuOptions" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { MenuOption } from 'naive-ui'
-import { NMenu, NTabPane, NTabs } from 'naive-ui'
+import { useCanvasState } from 'open-data-v/designer'
+import type { MenuOption } from 'open-data-v/ui'
+import { OMenu, OTabPane, OTabs } from 'open-data-v/ui'
 import { computed, getCurrentInstance, h, ref } from 'vue'
-
-import useCanvasState from '@/designer/state/canvas'
 
 import AttrList from './AttrModule'
 import Canvas from './CanvasModules/Canvas.vue'

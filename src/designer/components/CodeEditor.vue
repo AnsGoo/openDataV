@@ -4,7 +4,7 @@
       <slot name="tool-bar"> </slot>
     </div>
     <div class="main" :style="{ maxHeight: height }">
-      <n-input
+      <o-input
         :value="value"
         type="textarea"
         :style="{ height }"
@@ -18,17 +18,16 @@
 </template>
 
 <script setup lang="ts">
-import { NInput } from 'naive-ui'
+import { OInput } from 'open-data-v/ui'
 
 withDefaults(
   defineProps<{
-    value?: string
+    value: string
     height?: string
     disabled?: boolean
     mode?: 'debug' | 'use'
   }>(),
   {
-    value: '',
     height: '600px',
     disabled: false,
     mode: 'use'

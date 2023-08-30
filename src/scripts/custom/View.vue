@@ -1,12 +1,12 @@
 <template>
-  <n-form-item key="data" label="自定义脚本">
-    <n-input-group>
-      <n-input :value="scriptRef" />
-      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-    </n-input-group>
-  </n-form-item>
-  <n-modal v-model:show="isShow">
-    <n-card
+  <o-form-item key="data" label="自定义脚本">
+    <o-input-group>
+      <o-input :value="scriptRef" />
+      <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
+    </o-input-group>
+  </o-form-item>
+  <o-modal v-model:show="isShow">
+    <o-card
       style="width: 600px"
       title="自定义脚本"
       :bordered="false"
@@ -17,16 +17,15 @@
       @close="isShow = false"
     >
       <ScriptEditor v-model:code="scriptRef" @change="scriptChange" />
-    </n-card>
-  </n-modal>
+    </o-card>
+  </o-modal>
 </template>
 
 <script setup lang="ts">
-import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import { OButton, OCard, OFormItem, OInput, OInputGroup, OModal } from 'open-data-v/ui'
 import { onMounted, ref, watch } from 'vue'
 
-import type { Slotter } from '@/scripts/base'
-
+import type { Slotter } from '../type'
 import ScriptHandler from './handler'
 import ScriptEditor from './ScriptsEditor.vue'
 

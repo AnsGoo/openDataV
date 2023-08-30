@@ -1,11 +1,9 @@
-import useCanvasState from '@/designer/state/canvas'
-import useSnapShotState from '@/designer/state/snapshot'
-import type { ComponentDataType } from '@/designer/type'
-import { message } from '@/utils/message'
-
 import type { StoreComponentData } from './db'
+import useCanvasState from './state/canvas'
+import useSnapShotState from './state/snapshot'
 import type { CanvasStyleData } from './state/type'
-import { exportRaw, importRaw } from './utils'
+import type { ComponentDataType } from './type'
+import { exportRaw, handleLogger, importRaw } from './utils'
 
 const snapShotState = useSnapShotState()
 // 状态管理
@@ -19,7 +17,7 @@ const undo = async () => {
       dataSlotters: snapshot.dataSlotters
     })
   } else {
-    message.warning('没有快照了')
+    handleLogger.warn('没有快照了')
   }
 }
 
@@ -32,7 +30,7 @@ const recoveryDraft = async () => {
       dataSlotters: snapshot.dataSlotters
     })
   } else {
-    message.warning('没有快照了')
+    handleLogger.warn('没有快照了')
   }
 }
 const setShowEm = () => {

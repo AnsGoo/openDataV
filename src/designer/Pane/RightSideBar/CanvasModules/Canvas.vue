@@ -1,20 +1,16 @@
 <template>
   <Container :config="config" :data="formData" :mode="mode" @change="changed" />
 </template>
-import Container from '@/designer/modules/form/Container'
 <script setup lang="ts">
-import { computed, ref } from 'vue'
-
-import Container from '@/designer/modules/form/Container'
-import useCanvasState from '@/designer/state/canvas'
-import type { MetaContainerItem } from '@/designer/type'
-import type { ContainerType } from '@/enum'
+import type { ContainerType, MetaContainerItem } from 'open-data-v/base'
+import { Container, useCanvasState } from 'open-data-v/designer'
+import { computed } from 'vue'
 
 const canvasState = useCanvasState()
 const config = computed<Array<MetaContainerItem>>(() => canvasState.canvasStyleConfig.formItems!)
 const mode = computed<ContainerType>(() => canvasState.canvasStyleConfig.mode!)
 
-const formData = ref<Recordable>(canvasState.globalOption)
+const formData = computed<Record<string, any>>(() => canvasState.globalOption)
 const changed = (keys: Array<string>, val: any) => {
   canvasState.setCanvasStyle(keys, val)
 }

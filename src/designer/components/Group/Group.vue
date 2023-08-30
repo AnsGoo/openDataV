@@ -1,6 +1,6 @@
 <template>
   <div v-if="!editMode" class="group">
-    <template v-for="item in component.subComponents" :key="item.id">
+    <template v-for="item in component.subComponents || []" :key="item.id">
       <component
         :is="item.component"
         :id="'component' + item.id"
@@ -11,7 +11,7 @@
     </template>
   </div>
   <div v-else class="group" :class="{ dotted: isActive }">
-    <template v-for="(item, i) in component.subComponents" :key="item.id">
+    <template v-for="(item, i) in component.subComponents || []" :key="item.id">
       <Shape
         v-if="isShow(item.display)"
         :id="'shape' + item.id"
@@ -36,11 +36,9 @@
 </template>
 
 <script setup lang="ts">
+import type { CustomComponent, Hooks } from 'open-data-v/base'
+import { channels, eventBus } from 'open-data-v/base'
 import { computed, inject } from 'vue'
-
-import { channels, eventBus } from '@/bus'
-import type { CustomComponent } from '@/models'
-import type { HooksType } from '@/models/hooks/type'
 
 import Shape from '../../Editor/Shape'
 import useCanvasState from '../../state/canvas'
@@ -68,7 +66,7 @@ const dataChange = (resp: any, _?: string) => {
     }
   }
 }
-const { useData } = inject<HooksType>('HOOKS') || {}
+const { useData } = inject<Hooks>('HOOKS') || {}
 
 if (useData) {
   useData(props.component, dataChange)

@@ -1,15 +1,10 @@
 import { cloneDeep, isNumber } from 'lodash-es'
+import type { CustomComponent, DataOption, ScriptOption } from 'open-data-v/base'
+import { ContainerType, DataMode, Logger } from 'open-data-v/base'
+import type { Location, Vector } from 'open-data-v/designer'
+import { useCanvasState, useDataState, useScriptState } from 'open-data-v/designer'
 
-import { componentList } from '@/designer/load'
-import useCanvasState from '@/designer/state/canvas'
-import useDataState from '@/designer/state/data'
-import useScriptState from '@/designer/state/scripts'
-import type { Location, Vector } from '@/designer/type'
-import { ContainerType } from '@/enum'
-import { DataMode } from '@/enum/data'
-import type { CustomComponent } from '@/models'
-
-import type { ComponentDataType, DataOption, DOMRectStyle, ScriptOption } from './type'
+import type { ComponentDataType, DOMRectStyle } from './type'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
@@ -47,33 +42,33 @@ const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption
   if (!plugin) {
     return
   }
-  const scriptHandler = plugin.handler
-
+  const scriptHandlerClasss = plugin.handler
+  const scriptHandler = new scriptHandlerClasss(script.key)
   componentObj.afterCallbackChange(scriptHandler)
 }
 export function createComponent(component: ComponentDataType): any {
-  if ((component.component as string) in componentList) {
-    const _class = componentList[component.component as string]
-    const obj: CustomComponent = new _class(component.id, component.name, component.icon)
-    obj.groupStyle = component.groupStyle
-    obj.setPropValue({ propValue: component.propValue })
-    obj.setStyleValue({ style: component.style })
-    obj.dataMode = component.dataMode || DataMode.SELF
-    const data = component.data
-    if (obj.dataMode === DataMode.UNIVERSAL) {
-      buildDataHandler(obj, data)
-    }
-    buildAfterCallback(obj, component.script)
-    component.subComponents?.forEach((item) => {
-      const subObj = createComponent(item)
-      subObj.parent = obj
-      obj.subComponents.push(subObj)
-    })
-    const canvasState = useCanvasState()
-    const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
-    obj.setViewType(viewType)
-    return obj
+  const canvasState = useCanvasState()
+  const components = canvasState.components
+  const _class = components[component.component as string]
+  const obj = new _class(component.id, component.name, component.icon)
+  obj.groupStyle = component.groupStyle
+  obj.setPropValue({ propValue: component.propValue })
+  obj.setStyleValue({ style: component.style })
+  obj.dataMode = component.dataMode || DataMode.SELF
+  const data = component.data
+  if (obj.dataMode || obj.dataIntegrationMode === DataMode.UNIVERSAL) {
+    buildDataHandler(obj, data)
   }
+  buildAfterCallback(obj, component.script)
+  component.subComponents?.forEach((item) => {
+    const subObj = createComponent(item)
+    subObj.parent = obj
+    obj.subComponents.push(subObj)
+  })
+
+  const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
+  obj.setViewType(viewType)
+  return obj
 }
 
 export function getComponentIndexById(id: string, parent: CustomComponent) {
@@ -362,8 +357,8 @@ export const uuid = (hasHyphen?: string) => {
  * @param excludes 剔除条件
  * @returns css
  */
-export function excludeStyle(style: Recordable, excludes: Array<string> = []) {
-  let result: Recordable<string> = {}
+export function excludeStyle(style: Record<string, any>, excludes: Array<string> = []) {
+  let result: Record<string, string> = {}
   Object.keys(style).forEach((key) => {
     if (!excludes.includes(key)) {
       const css = stylePropToCss(key, style[key])
@@ -380,8 +375,8 @@ export function excludeStyle(style: Recordable, excludes: Array<string> = []) {
  * @param filters 过滤条件
  * @returns css
  */
-export function filterStyle(style: Recordable, filters: Array<string> = []) {
-  let result: Recordable<string> = {}
+export function filterStyle(style: Record<string, any>, filters: Array<string> = []) {
+  let result: Record<string, any> = {}
   Object.keys(style).forEach((key) => {
     if (filters.includes(key)) {
       const css = stylePropToCss(key, style[key])
@@ -397,7 +392,7 @@ export function filterStyle(style: Recordable, filters: Array<string> = []) {
  * @returns css
  */
 
-export const getGroupStyle = (style: Recordable) => {
+export const getGroupStyle = (style: Record<string, any>) => {
   const filters = ['gtop', 'gheight', 'gwidth', 'gleft', 'grotate']
   return filterStyle(style, filters)
 }
@@ -452,7 +447,7 @@ export const getInnerComponentShapeStyle = (component: CustomComponent) => {
   }
 }
 
-export const stylePropToCss = (key: string, value: any): Recordable => {
+export const stylePropToCss = (key: string, value: any): Record<string, any> => {
   switch (key) {
     case 'gwidth':
     case 'gheight':
@@ -591,4 +586,6 @@ export const diffIndex = (fromIndex: string, toIndex: string): boolean => {
     return false
   }
 }
-export const Logger = console
+
+export const handleLogger = new Logger('handle')
+export const systemLogger = new Logger('system')

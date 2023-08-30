@@ -20,7 +20,7 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
 
-import { Logger } from '@/utils/utils'
+import { scriptLogger } from '../utils'
 
 const savedStatus = ref<boolean>(true)
 const props = withDefaults(
@@ -49,7 +49,7 @@ const handleSubmit = () => {
   emits('change', props.code)
   emits('update:code', props.code)
   savedStatus.value = true
-  Logger.info('保存成功')
+  scriptLogger.success('图层已经到底了')
 }
 
 onMounted(async () => {})

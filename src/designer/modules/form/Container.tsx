@@ -1,9 +1,8 @@
-import { NCard, NCollapse, NCollapseItem, NDivider, NTimeline, NTimelineItem } from 'naive-ui'
+import type { MetaContainerItem, MetaForm } from 'open-data-v/base'
+import { ContainerType } from 'open-data-v/base'
+import { OCard, OCollapse, OCollapseItem, ODivider, OTimeline, OTimelineItem } from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
-
-import type { MetaContainerItem, MetaForm } from '@/designer/type'
-import { ContainerType } from '@/enum'
 
 import FormAttr from './FormAttr'
 
@@ -17,7 +16,7 @@ export default defineComponent({
       required: true
     },
     data: {
-      type: Object as PropType<Recordable>,
+      type: Object as PropType<Record<string, any>>,
       required: true
     },
     mode: {
@@ -33,7 +32,7 @@ export default defineComponent({
   },
   emits: ['change', 'update:data'],
   setup(props, { emit }) {
-    const formData = ref<Recordable>(props.data)
+    const formData = ref<Record<string, any>>(props.data)
     const change = (keys: Array<string>, val: any) => {
       emit('change', keys, val)
       emit('update:data', formData)
@@ -71,24 +70,24 @@ export default defineComponent({
       switch (props.mode) {
         case ContainerType.COLLAPSE:
           return (
-            <NCollapse accordion={true}>
+            <OCollapse accordion={true}>
               {containerItems.map((el) => {
                 return (
-                  <NCollapseItem key={el.prop} title={el.label} name={el.prop}>
+                  <OCollapseItem key={el.prop} title={el.label} name={el.prop}>
                     {renderForm(el)}
-                  </NCollapseItem>
+                  </OCollapseItem>
                 )
               })}
-            </NCollapse>
+            </OCollapse>
           )
         case ContainerType.CARD:
           return (
             <>
               {containerItems.map((el) => {
                 return (
-                  <NCard title={el.label} size="small" style={{ marginBottom: '0.25rem' }}>
+                  <OCard title={el.label} size="small" style={{ marginBottom: '0.25rem' }}>
                     {renderForm(el)}
-                  </NCard>
+                  </OCard>
                 )
               })}
             </>
@@ -99,12 +98,12 @@ export default defineComponent({
               {containerItems.map((el) => {
                 return (
                   <>
-                    <NDivider
+                    <ODivider
                       title-placement="left"
                       style={{ marginTop: '0px', marginBottom: '0px' }}
                     >
                       {el.label}
-                    </NDivider>
+                    </ODivider>
                     {renderForm(el)}
                   </>
                 )
@@ -113,15 +112,15 @@ export default defineComponent({
           )
         case ContainerType.TIMELINE:
           return (
-            <NTimeline>
+            <OTimeline>
               {containerItems.map((el) => {
                 return (
-                  <NTimelineItem key={el.prop} title={el.label} type={'success'}>
+                  <OTimelineItem key={el.prop} title={el.label} type={'success'}>
                     {renderForm(el)}
-                  </NTimelineItem>
+                  </OTimelineItem>
                 )
               })}
-            </NTimeline>
+            </OTimeline>
           )
       }
     }

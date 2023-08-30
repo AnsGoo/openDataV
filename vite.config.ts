@@ -1,10 +1,10 @@
-import type { UserConfigExport, ConfigEnv, ProxyOptions } from 'vite'
-import { loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import MarkDownPlugin from 'vite-plugin-vue-markdown'
-import { viteMockServe } from 'vite-plugin-mock'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
+import type { ConfigEnv, ProxyOptions, UserConfigExport } from 'vite'
+import { loadEnv } from 'vite'
+import { viteMockServe } from 'vite-plugin-mock'
+import MarkDownPlugin from 'vite-plugin-vue-markdown'
 
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
@@ -49,10 +49,12 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
     resolve: {
       alias: {
         // 路径别名
-        '@': resolve(__dirname, 'src')
+        '@': resolve(__dirname, 'examples'),
+        'open-data-v': resolve(__dirname, 'src'),
+        docs: resolve(__dirname, 'docs')
       },
       // 使用路径别名时想要省略的后缀名，官方不建议将.vue文件省略后缀
-      extensions: ['.js', '.ts']
+      extensions: ['.js', '.ts', '.tsx', '.jsx']
     },
     server: {
       // 是否开启 https
@@ -75,7 +77,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       preprocessorOptions: {
         less: {
           modifyVars: {
-            hack: `true; @import (reference) "${resolve('src/css/index.less')}";`
+            hack: `true; @import (reference) "${resolve('examples/css/index.less')}";`
           },
           javascriptEnabled: true
         }

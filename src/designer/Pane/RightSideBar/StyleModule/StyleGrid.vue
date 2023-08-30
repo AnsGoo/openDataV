@@ -5,13 +5,10 @@
 
 <script setup lang="ts">
 import { cloneDeep, debounce } from 'lodash-es'
+import type { ContainerType, CustomComponent, MetaContainerItem } from 'open-data-v/base'
+import type { ComponentStyle } from 'open-data-v/designer'
+import { Container, useCanvasState } from 'open-data-v/designer'
 import { computed, ref, watch } from 'vue'
-
-import Container from '@/designer/modules/form/Container'
-import useCanvasState from '@/designer/state/canvas'
-import type { ComponentStyle, MetaContainerItem } from '@/designer/type'
-import type { ContainerType } from '@/enum'
-import type { CustomComponent } from '@/models'
 
 const props = defineProps<{
   curComponent: CustomComponent

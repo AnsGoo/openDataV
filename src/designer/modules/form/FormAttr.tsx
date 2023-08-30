@@ -1,38 +1,38 @@
 import { isUndefined } from 'lodash-es'
+import type {
+  CustomProps,
+  FormItemProps,
+  InputNumberProps,
+  InputProps,
+  MetaForm,
+  ModalProps,
+  RadioProps,
+  SelectProps,
+  SwitchProps
+} from 'open-data-v/base'
+import { FormType } from 'open-data-v/base'
 import {
-  NButton,
-  NCard,
-  NColorPicker,
-  NForm,
-  NFormItem,
-  NInput,
-  NInputGroup,
-  NInputNumber,
-  NModal,
-  NRadio,
-  NRadioGroup,
-  NSelect,
-  NSwitch
-} from 'naive-ui'
+  OButton,
+  OCard,
+  OColorPicker,
+  OForm,
+  OFormItem,
+  OInput,
+  OInputGroup,
+  OInputNumber,
+  OModal,
+  ORadio,
+  ORadioGroup,
+  OSelect,
+  OSwitch
+} from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, h, ref, watch } from 'vue'
-
-import type {
-  CustomFormSchema,
-  FormItemProps,
-  InputFormSchema,
-  InputNumberFormSchema,
-  MetaForm,
-  ModalFormSchema,
-  RadioFormSchema,
-  SelectFormSchema,
-  SwitchFormSchema
-} from '@/designer/type'
-import { FormType, GlobalColorSwatches } from '@/enum'
 
 import ArrayItem from '../arrayItem'
 import BackItem from '../backItem'
 import CustomItem from '../customItem'
+import { GlobalColorSwatches } from '../enum'
 import FontStyle from '../fontSytle'
 import FontWeight from '../fontWeight'
 import LinearGradient from '../linearGradient'
@@ -42,7 +42,7 @@ export default defineComponent({
     FontStyle,
     FontWeight,
     LinearGradient,
-    NSwitch,
+    OSwitch,
     BackItem
   },
   props: {
@@ -63,13 +63,13 @@ export default defineComponent({
       required: true
     },
     data: {
-      type: Object as PropType<Recordable>,
+      type: Object as PropType<Record<string, any>>,
       required: true
     }
   },
   emits: ['change', 'updateData'],
   setup(props, { emit }) {
-    const formData = ref<Recordable>(props.data)
+    const formData = ref<Record<string, any>>(props.data)
     watch(
       () => props.data,
       () => {
@@ -82,23 +82,23 @@ export default defineComponent({
     }
     const isShowLabel = (showLabel?: boolean) => showLabel !== false
     const isShow = ref<boolean>(false)
-    const renderModal = (item: MetaForm, modelValue: Recordable, path: Array<string>) => {
-      const options = ((item || {}).props || {}) as ModalFormSchema
+    const renderModal = (item: MetaForm, modelValue: Record<string, any>, path: Array<string>) => {
+      const options = ((item || {}).props || {}) as ModalProps
       return (
         <>
-          <NInputGroup>
-            <NInput
+          <OInputGroup>
+            <OInput
               readonly={true}
               onClick={() => (isShow.value = true)}
               placeholder={options.placeholder}
               value={JSON.stringify(modelValue)}
             />
-            <NButton type="primary" onClick={() => (isShow.value = true)}>
+            <OButton type="primary" onClick={() => (isShow.value = true)}>
               {options.buttonText}
-            </NButton>
-          </NInputGroup>
-          <NModal v-model:show={isShow.value} displayDirective="show">
-            <NCard
+            </OButton>
+          </OInputGroup>
+          <OModal v-model:show={isShow.value} displayDirective="show">
+            <OCard
               title={item.label || ''}
               style="width: 600px"
               size={options.size || 'small'}
@@ -108,30 +108,34 @@ export default defineComponent({
               closable={true}
               onClose={() => (isShow.value = false)}
             >
-              <NForm size="small" labelPlacement="left" labelAlign="left">
+              <OForm size="small" labelPlacement="left" labelAlign="left">
                 {(item.children || []).map((el) => {
                   return (
-                    <NFormItem
+                    <OFormItem
                       key={`${props.ukey}${item.prop}${el.prop}`}
                       label={el.label}
                       showLabel={isShowLabel(el.showLabel)}
                     >
                       {renderItem(el, modelValue, path)}
-                    </NFormItem>
+                    </OFormItem>
                   )
                 })}
-              </NForm>
-            </NCard>
-          </NModal>
+              </OForm>
+            </OCard>
+          </OModal>
         </>
       )
     }
 
-    const renderFormItem = (item: MetaForm, modelValue: Recordable, path: Array<string> = []) => {
-      let component: {} = NInput
+    const renderFormItem = (
+      item: MetaForm,
+      modelValue: Record<string, any>,
+      path: Array<string> = []
+    ) => {
+      let component: {} = OInput
       switch (item.type) {
         case FormType.SWITCH:
-          component = NSwitch
+          component = OSwitch
           break
         case FormType.FONT_STYLE:
           component = FontStyle
@@ -159,8 +163,8 @@ export default defineComponent({
         return <> </>
       }
       const itemOptions = (item.props || item.componentOptions || {}) as FormItemProps
-      const options: Recordable[] =
-        (itemOptions as SelectFormSchema | RadioFormSchema | SwitchFormSchema)?.options || []
+      const options: Record<string, any>[] =
+        (itemOptions as SelectProps | RadioProps | SwitchProps)?.options || []
 
       /**
        * 获取设置的值
@@ -175,7 +179,7 @@ export default defineComponent({
       switch (item.type) {
         case FormType.COLOR:
           return (
-            <NColorPicker
+            <OColorPicker
               v-model:value={modelValue[item.prop]}
               swatches={GlobalColorSwatches}
               modes={['hex', 'rgb', 'hsl']}
@@ -184,7 +188,7 @@ export default defineComponent({
           )
         case FormType.SELECT:
           return (
-            <NSelect
+            <OSelect
               v-model:value={modelValue[item.prop]}
               placeholder={item.label}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
@@ -194,17 +198,17 @@ export default defineComponent({
           )
         case FormType.RADIO:
           return (
-            <NRadioGroup
+            <ORadioGroup
               v-model:value={modelValue[item.prop]}
               name={props.uid}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
             >
               {options.map((op) => (
-                <NRadio value={op.value} key={op.value}>
+                <ORadio value={op.value} key={op.value}>
                   {op.label}
-                </NRadio>
+                </ORadio>
               ))}
-            </NRadioGroup>
+            </ORadioGroup>
           )
         case FormType.NUMBER:
           const numberMax: number = getOptionsValue<number>('max', 9999999999)
@@ -212,7 +216,7 @@ export default defineComponent({
           const precision: number | undefined = getOptionsValue<number>('precision', undefined)
 
           return (
-            <NInputNumber
+            <OInputNumber
               v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
               max={numberMax}
@@ -220,8 +224,8 @@ export default defineComponent({
               precision={precision}
               clearable={true}
               v-slots={{
-                prefix: (itemOptions as InputNumberFormSchema).prefix,
-                suffix: (itemOptions as InputNumberFormSchema).suffix
+                prefix: (itemOptions as InputNumberProps).prefix,
+                suffix: (itemOptions as InputNumberProps).suffix
               }}
             />
           )
@@ -258,38 +262,38 @@ export default defineComponent({
             <CustomItem
               v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
-              component={(itemOptions as CustomFormSchema).componentType}
-              args={(itemOptions as CustomFormSchema).args}
+              component={(itemOptions as CustomProps).componentType}
+              args={(itemOptions as CustomProps).args}
             />
           )
         default:
           return (
-            <NInput
+            <OInput
               clearable
               v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
               readonly={itemOptions!.editable === false}
               disabled={itemOptions!.disabled}
               v-slots={{
-                prefix: (itemOptions as InputFormSchema).prefix,
-                suffix: (itemOptions as InputFormSchema).suffix
+                prefix: (itemOptions as InputProps).prefix,
+                suffix: (itemOptions as InputProps).suffix
               }}
             />
           )
       }
     }
     return () => (
-      <NForm>
+      <OForm>
         {props.children.map((item) => (
-          <NFormItem
+          <OFormItem
             key={`${props.ukey}${item.prop}`}
             label={item.label}
             showLabel={isShowLabel(item.showLabel)}
           >
             {isUndefined(formData.value) ? <></> : renderItem(item, formData.value, [props.uid])}
-          </NFormItem>
+          </OFormItem>
         ))}
-      </NForm>
+      </OForm>
     )
   }
 })

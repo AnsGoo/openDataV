@@ -1,28 +1,28 @@
 <template>
   <div class="components">
-    <n-menu :options="menuOptions" :accordion="false" />
+    <o-menu :options="menuOptions" :accordion="false" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { MenuOption } from 'naive-ui'
-import { NMenu } from 'naive-ui'
+import type { CustomComponent } from 'open-data-v/base'
+import type { GroupType } from 'open-data-v/designer'
+import { ComponentGroupList, useCanvasState } from 'open-data-v/designer'
+import type { MenuOption } from 'open-data-v/ui'
+import { OMenu } from 'open-data-v/ui'
 import { computed, getCurrentInstance, h } from 'vue'
-
-import { componentList } from '@/designer/load'
-import type { GroupType } from '@/enum'
-import { ComponentGroupList } from '@/enum'
-import type { CustomComponent } from '@/models'
 
 import ComponentItem from './ComponentItem.vue'
 
+const canvasState = useCanvasState()
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 
 const menuOptions = computed<MenuOption[]>(() => {
+  const components = canvasState.components
   const groups: { group: string; component: CustomComponent[] } | {} = {}
-  Object.keys(componentList).forEach((key) => {
-    const component: CustomComponent = new componentList[key]()
+  Object.keys(components).forEach((key) => {
+    const component: CustomComponent = new components[key]()
     const group = component.group
     if (!group || !component.show) {
       return

@@ -1,13 +1,13 @@
-import type { BaseScript } from '../base'
+import type { BaseScript } from '../type'
 import funcs from './scripts'
 
 class SystemScript implements BaseScript {
   public type = 'System'
   public key: string
-  public extendParams: Recordable
-  public afterCallback?: (data: any, propValue: Recordable) => any
+  public extendParams: Record<string, any>
+  public afterCallback?: (data: any, propValue: Record<string, any>) => any
 
-  constructor(key: string, extendParams: Recordable = {}) {
+  constructor(key: string, extendParams: Record<string, any> = {}) {
     this.key = key
     this.extendParams = extendParams
     this.buildAfterCallback()
@@ -18,7 +18,8 @@ class SystemScript implements BaseScript {
     if (!fun) {
       return
     }
-    this.afterCallback = (data: any, _propValue: Recordable) => fun.func(data, this.extendParams)
+    this.afterCallback = (data: any, _propValue: Record<string, any>) =>
+      fun.func(data, this.extendParams)
   }
   public getFuncs() {
     return funcs

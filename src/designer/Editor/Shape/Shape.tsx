@@ -1,16 +1,12 @@
+import type { CustomComponent } from 'open-data-v/base'
+import { eventBus, StaticKey } from 'open-data-v/base'
+import type { ComponentStyle, ContextmenuItem, Vector } from 'open-data-v/designer'
+import { useActionState, useCanvasState, useClipBoardState } from 'open-data-v/designer'
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 
-import { eventBus, StaticKey } from '@/bus'
-import useActionState from '@/designer/state/actions'
-import useCanvasState from '@/designer/state/canvas'
-import useClipBoardState from '@/designer/state/clipBoard'
-import type { ComponentStyle, Vector } from '@/designer/type'
-import type { CustomComponent } from '@/models'
-import type { ContextmenuItem } from '@/plugins/directive/contextmenu/types'
-
 import { stretchedComponents } from '../../component'
-import { copyText, Logger, mod360, throttleFrame } from '../../utils'
+import { copyText, mod360, systemLogger, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
 
 export default defineComponent({
@@ -136,7 +132,7 @@ export default defineComponent({
     const errorInfo = ref<string>('')
 
     onErrorCaptured((err: Error, instance: ComponentPublicInstance | null, info: string) => {
-      Logger.log(err)
+      systemLogger.error(err.message)
       if (info === 'render function') {
         if (canvasState.isEditMode) {
           if (instance) {
@@ -373,7 +369,7 @@ export default defineComponent({
         { start: 248, end: 293, cursor: 'sw' },
         { start: 293, end: 338, cursor: 'w' }
       ]
-      const initialAngle: Recordable<number> = {
+      const initialAngle: Record<string, number> = {
         // 每个点对应的初始角度
         lt: 0,
         t: 45,
