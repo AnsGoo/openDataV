@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentDataType } from 'open-data-v'
+import type { ComponentDataType } from 'open-data-v/base'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Previewer, useDataState, useScriptState, useSnapshotState } from 'open-data-v/designer'
 import { CustomScriptPlugin, SystemScriptPlugin } from 'open-data-v/scripts'
