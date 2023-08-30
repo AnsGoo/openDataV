@@ -1,31 +1,31 @@
 <template>
-  <n-form-item label="动态数据" label-placement="top" size="small">
-    <n-input-group>
-      <n-input v-model:value="formData.url" style="flex: 1" readonly>
+  <o-form-item label="动态数据" label-placement="top" size="small">
+    <o-input-group>
+      <o-input v-model:value="formData.url" style="flex: 1" readonly>
         <template #prefix>
-          <n-gradient-text type="success" style="font-weight: 800">
+          <o-gradient-text type="success" style="font-weight: 800">
             {{ formData.method }}
-          </n-gradient-text>
+          </o-gradient-text>
         </template>
-      </n-input>
-      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-    </n-input-group>
-  </n-form-item>
-  <n-form-item label="是否重复" label-placement="top">
-    <n-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
-  </n-form-item>
-  <n-form-item v-if="formData.otherConfig.isRepeat" label="请求间隔" label-placement="top">
-    <n-input-number
+      </o-input>
+      <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
+    </o-input-group>
+  </o-form-item>
+  <o-form-item label="是否重复" label-placement="top">
+    <o-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
+  </o-form-item>
+  <o-form-item v-if="formData.otherConfig.isRepeat" label="请求间隔" label-placement="top">
+    <o-input-number
       v-model:value="formData.otherConfig.interval"
       :min="300"
       :step="100"
       @update:value="changeHandler"
     >
       <template #suffix> ms </template>
-    </n-input-number>
-  </n-form-item>
-  <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
-    <n-card
+    </o-input-number>
+  </o-form-item>
+  <o-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
+    <o-card
       style="width: 600px"
       title="动态数据"
       :bordered="false"
@@ -40,22 +40,22 @@
         @update:options="changeHandler"
         @change="changeHandler"
       />
-    </n-card>
-  </n-modal>
+    </o-card>
+  </o-modal>
 </template>
 
 <script lang="ts" setup>
 import {
-  NButton,
-  NCard,
-  NFormItem,
-  NGradientText,
-  NInput,
-  NInputGroup,
-  NInputNumber,
-  NModal,
-  NSwitch
-} from 'naive-ui'
+  OButton,
+  OCard,
+  OFormItem,
+  OGradientText,
+  OInput,
+  OInputGroup,
+  OInputNumber,
+  OModal,
+  OSwitch
+} from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { Slotter } from '../type'

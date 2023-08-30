@@ -1,53 +1,53 @@
 <template>
-  <n-layout ref="centerCanvas" v-resize="editorWindowResizeHandler">
+  <o-layout ref="centerCanvas" v-resize="editorWindowResizeHandler">
     <!-- 中间画布 -->
-    <n-layout-content class="content">
-      <n-scrollbar x-scrollable :style="scrollbarStyle">
+    <o-layout-content class="content">
+      <o-scrollbar x-scrollable :style="scrollbarStyle">
         <Editor />
-      </n-scrollbar>
-    </n-layout-content>
-    <n-layout-footer position="absolute" class="footer">
-      <n-space justify="end" align="center" style="height: 100%; margin-right: 5px">
-        <n-el
+      </o-scrollbar>
+    </o-layout-content>
+    <o-layout-footer position="absolute" class="footer">
+      <o-space justify="end" align="center" style="height: 100%; margin-right: 5px">
+        <o-el
           tag="span"
           :style="{ color: primaryColor, transition: `all 0.3s ${cubicBezierEaseInOut}` }"
         >
           画布缩放:
-        </n-el>
-        <n-slider
+        </o-el>
+        <o-slider
           :value="sliderValue"
           :min="10"
           :max="200"
           style="width: 120px"
           @update:value="handleScale"
         />
-        <n-select
+        <o-select
           :value="selectValue"
           :options="options"
           size="tiny"
           style="width: 90px"
           @update:value="handleScale"
         />
-      </n-space>
-    </n-layout-footer>
-  </n-layout>
+      </o-space>
+    </o-layout-footer>
+  </o-layout>
 </template>
 
 <script lang="ts" setup>
 import { debounce } from 'lodash-es'
-import type { SelectOption } from 'naive-ui'
-import {
-  NEl,
-  NLayout,
-  NLayoutContent,
-  NLayoutFooter,
-  NScrollbar,
-  NSelect,
-  NSlider,
-  NSpace,
-  useThemeVars
-} from 'naive-ui'
+import { useThemeVars } from 'naive-ui'
 import { useCanvasState } from 'open-data-v/designer'
+import type { SelectOption } from 'open-data-v/ui'
+import {
+  OEl,
+  OLayout,
+  OLayoutContent,
+  OLayoutFooter,
+  OScrollbar,
+  OSelect,
+  OSlider,
+  OSpace
+} from 'open-data-v/ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import Editor from '../../Editor'
@@ -146,7 +146,7 @@ onBeforeUnmount(() => {
 .content {
   box-shadow: inset 0 0 3px black;
 
-  :deep(.n-scrollbar-content) {
+  :deep(.o-scrollbar-content) {
     transform-origin: left top;
     transform: scale(v-bind(scaleValue));
     transition: all 0.3s;

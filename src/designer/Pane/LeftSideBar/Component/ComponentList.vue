@@ -1,15 +1,15 @@
 <template>
   <div class="components">
-    <n-menu :options="menuOptions" :accordion="false" />
+    <o-menu :options="menuOptions" :accordion="false" />
   </div>
 </template>
 
 <script setup lang="ts">
-import type { MenuOption } from 'naive-ui'
-import { NMenu } from 'naive-ui'
 import type { CustomComponent } from 'open-data-v/base'
 import type { GroupType } from 'open-data-v/designer'
 import { ComponentGroupList, useCanvasState } from 'open-data-v/designer'
+import type { MenuOption } from 'open-data-v/ui'
+import { OMenu } from 'open-data-v/ui'
 import { computed, getCurrentInstance, h } from 'vue'
 
 import ComponentItem from './ComponentItem.vue'

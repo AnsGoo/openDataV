@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-for="(_, index) in arrayValue" :key="index" class="item">
-      <n-input
+      <o-input
         v-model:value="arrayValue[index]"
         type="text"
         style="width: 100%"
@@ -17,7 +17,7 @@
       />
     </div>
     <div v-if="type === 'dynamic'" class="item">
-      <n-input
+      <o-input
         ref="addInputEl"
         v-model:value="newValue"
         type="text"
@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { isNumber } from 'lodash-es'
-import { NInput } from 'naive-ui'
+import { OInput } from 'open-data-v/ui'
 import { nextTick, reactive, ref } from 'vue'
 
 const props = withDefaults(

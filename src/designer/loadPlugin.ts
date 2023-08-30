@@ -1,4 +1,4 @@
-import { NSpin } from 'naive-ui'
+import { OSpin } from 'open-data-v/ui'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
@@ -24,7 +24,7 @@ const useComponetPlugin = ({
 
   const groupComp = defineAsyncComponent({
     loader: Group.component,
-    loadingComponent: NSpin,
+    loadingComponent: OSpin,
     delay: 200,
     timeout: 3000
   })

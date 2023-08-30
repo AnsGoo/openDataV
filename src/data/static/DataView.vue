@@ -1,5 +1,5 @@
 <template>
-  <n-card>
+  <o-card>
     <div class="static-data">
       <slot name="data-select"></slot>
     </div>
@@ -11,11 +11,11 @@
       :error="errMessage"
       @update:data="originDataChange"
     />
-  </n-card>
+  </o-card>
 </template>
 
 <script lang="ts" setup>
-import { NCard } from 'naive-ui'
+import { OCard } from 'open-data-v/ui'
 import { computed, ref } from 'vue'
 
 import StaticDataView from './StaticDataView.vue'

@@ -1,17 +1,17 @@
 <template>
   <div class="header">
-    <n-divider title-placement="left" style="width: 50%">
+    <o-divider title-placement="left" style="width: 50%">
       {{ title }}
-    </n-divider>
-    <n-divider title-placement="right" style="width: 50%">
+    </o-divider>
+    <o-divider title-placement="right" style="width: 50%">
       <x-icon name="add" color="#18A058" class="action" @click="addParams()" />
       <x-icon name="clear" color="#F76560" class="action" @click="clearParams()" />
       <x-icon name="edit" color="#2080F0" class="action" @click="editParams()" />
-    </n-divider>
+    </o-divider>
   </div>
   <div v-for="(item, index) in formData" :key="item.id">
-    <n-input-group class="param-item">
-      <n-input
+    <o-input-group class="param-item">
+      <o-input
         style="width: 50%"
         size="small"
         :input-props="{
@@ -22,7 +22,7 @@
         :placeholder="`参数${index + 1}`"
         @update:value="(value) => changed(index, 'key', value)"
       />
-      <n-input
+      <o-input
         style="width: 50%"
         size="small"
         :value="formData[index]['value']"
@@ -30,24 +30,24 @@
         :placeholder="`值${index + 1}`"
         @update:value="(value) => changed(index, 'value', value)"
       />
-      <n-button size="small" @click="disableParams(index)">
+      <o-button size="small" @click="disableParams(index)">
         <template #icon>
           <x-icon
             :name="item.disable ? 'close' : 'check'"
             :color="item.disable ? '#333639' : '#2080F0'"
           />
         </template>
-      </n-button>
-      <n-button size="small" @click="removeParams(index)">
+      </o-button>
+      <o-button size="small" @click="removeParams(index)">
         <template #icon>
           <x-icon name="delete" color="#F76560" />
         </template>
-      </n-button>
-    </n-input-group>
+      </o-button>
+    </o-input-group>
   </div>
 </template>
 <script lang="ts" setup>
-import { NButton, NDivider, NInput, NInputGroup } from 'naive-ui'
+import { OButton, ODivider, OInput, OInputGroup } from 'open-data-v/ui'
 import { ref, watch } from 'vue'
 
 import { uuid } from '../utils'
