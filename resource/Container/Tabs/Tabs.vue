@@ -43,9 +43,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { Group, Shape, useCanvasState } from 'open-data-v'
 import type { CustomComponent } from 'open-data-v/base'
 import { DataMode, useProp } from 'open-data-v/base'
+import { Group, Shape, useCanvasState } from 'open-data-v/designer'
 import {
   filterStyle,
   getComponentStyle,
