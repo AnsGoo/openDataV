@@ -172,7 +172,7 @@ const handleChange = (value: string, type: string) => {
   width: auto;
 }
 
-:deep(.o-form-item .o-form-item-feedback-wrapper) {
+:deep(.n-form-item .n-form-item-feedback-wrapper) {
   --n-feedback-height: 10px;
 }
 </style>

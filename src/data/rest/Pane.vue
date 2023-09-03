@@ -3,9 +3,9 @@
     <o-input-group>
       <o-input v-model:value="formData.url" style="flex: 1" readonly>
         <template #prefix>
-          <o-gradient-text type="success" style="font-weight: 800">
+          <span class="success-text" style="font-weight: 800">
             {{ formData.method }}
-          </o-gradient-text>
+          </span>
         </template>
       </o-input>
       <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
@@ -49,7 +49,6 @@ import {
   OButton,
   OCard,
   OFormItem,
-  OGradientText,
   OInput,
   OInputGroup,
   OInputNumber,
@@ -147,4 +146,8 @@ watch(
 )
 </script>
 
-<style lang="less" scoped></style>
+<style lang="less" scoped>
+.success-text {
+  color: #18a058;
+}
+</style>

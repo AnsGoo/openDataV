@@ -13,7 +13,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { getPageApi } from '@/api/pages'
 import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
-import useToolBars from '@/pages/DesigerView/toolbars'
+import useToolBars from '@/pages/DesignerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
 
