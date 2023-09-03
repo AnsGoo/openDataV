@@ -2,7 +2,7 @@
   <o-layout ref="centerCanvas" v-resize="editorWindowResizeHandler">
     <!-- 中间画布 -->
     <o-layout-content class="content">
-      <o-scrollbar x-scrollable :style="scrollbarStyle">
+      <o-scrollbar x-scrollable class="x-scrollable" :style="scrollbarStyle">
         <Editor />
       </o-scrollbar>
     </o-layout-content>
@@ -145,8 +145,7 @@ onBeforeUnmount(() => {
 <style lang="less" scoped>
 .content {
   box-shadow: inset 0 0 3px black;
-
-  :deep(.o-scrollbar-content) {
+  :deep(.n-scrollbar-content) {
     transform-origin: left top;
     transform: scale(v-bind(scaleValue));
     transition: all 0.3s;
