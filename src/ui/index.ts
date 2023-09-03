@@ -12,7 +12,6 @@ import {
   NEmpty,
   NForm,
   NFormItem,
-  NGradientText,
   NInput,
   NInputGroup,
   NInputNumber,
@@ -75,8 +74,6 @@ const OCollapseItem = NCollapseItem
 const ODivider = NDivider
 const OSpin = NSpin
 const OTooltip = NTooltip
-
-const OGradientText = NGradientText
 const OButtonGroup = NButtonGroup
 export default {
   OInput: OInput,
@@ -114,7 +111,6 @@ export default {
   ODivider: NDivider,
   OSpin: NSpin,
   OTooltip: NTooltip,
-  OGradientText: NGradientText,
   OButtonGroup: NButtonGroup
 }
 
@@ -134,7 +130,6 @@ export {
   OEmpty,
   OForm,
   OFormItem,
-  OGradientText,
   OInput,
   OInputGroup,
   OInputNumber,
