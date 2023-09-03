@@ -91,7 +91,7 @@ onUnmounted(() => {
 </script>
 
 <style scoped lang="less">
-.home > :deep(.o-layout-scroll-container:first-child) {
+.home > :deep(.n-layout-scroll-container:first-child) {
   @apply flex flex-col h-screen;
   .header {
     @apply h-12;
