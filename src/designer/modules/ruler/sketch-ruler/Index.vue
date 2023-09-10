@@ -143,7 +143,7 @@ const paletteCpu = computed<PaletteType>(() => {
 <style lang="less">
 .style-ruler {
   position: absolute;
-  z-index: 3; /* 需要比resizer高 */
+  //z-index: 3; /* 需要比resizer高 */
   width: 100%; /* scrollbar width */
   height: 100%;
   overflow: hidden;

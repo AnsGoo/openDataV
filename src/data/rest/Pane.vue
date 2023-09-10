@@ -3,7 +3,7 @@
     <o-input-group>
       <o-input v-model:value="formData.url" style="flex: 1" readonly>
         <template #prefix>
-          <span class="success-text" style="font-weight: 800">
+          <span class="accent-green-500" style="font-weight: 800">
             {{ formData.method }}
           </span>
         </template>
@@ -145,9 +145,3 @@ watch(
   { immediate: true }
 )
 </script>
-
-<style lang="less" scoped>
-.success-text {
-  color: #18a058;
-}
-</style>

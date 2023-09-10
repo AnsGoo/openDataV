@@ -3,20 +3,23 @@
     <div class="rest-data">
       <slot name="data-select"></slot>
     </div>
-    <div class="api">
-      <o-select
-        v-model:value="formData['method']"
-        :options="requestMethodOptions"
-        class="method"
-        :show-arrow="true"
-        @update-value="formChange"
-      />
-      <o-input v-model:value="formData['url']" class="url" @update-value="formChange" />
-      <o-space>
+    <div class="flex flex-row mt-1">
+      <div class="w-1/4">
+        <o-select
+          v-model:value="formData['method']"
+          :options="requestMethodOptions"
+          :show-arrow="true"
+          @update-value="formChange"
+        />
+      </div>
+      <div class="flex-1">
+        <o-input v-model:value="formData['url']" @update-value="formChange" />
+      </div>
+      <div>
         <o-button-group class="send">
           <o-button type="primary" @click="send">调试</o-button>
         </o-button-group>
-      </o-space>
+      </div>
     </div>
     <div class="config">
       <o-tabs type="line" animated>
@@ -70,7 +73,6 @@ import {
   ODivider,
   OInput,
   OSelect,
-  OSpace,
   OTabPane,
   OTabs
 } from 'open-data-v/ui'
@@ -173,26 +175,6 @@ const formChange = () => {
 </script>
 
 <style scoped lang="less">
-.rest-data {
-  display: flex;
-  margin-bottom: 5px;
-  .selected {
-    flex: 4;
-  }
-  .title {
-    flex: 8;
-  }
-}
-.api {
-  display: flex;
-  .method {
-    min-width: 110px;
-    flex: 8;
-  }
-  .url {
-    flex: 90;
-  }
-}
 .response {
   .resp-fail {
     color: #f76560;

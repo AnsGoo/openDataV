@@ -1,21 +1,10 @@
 <template>
-  <o-layout class="home">
-    <o-layout-header class="header">
+  <div class="main h-fit flex-col flex flex-nowrap">
+    <div class="w-full h-14 align-middle">
       <ToolBar :toolbars="toolbars" />
-    </o-layout-header>
-    <!-- 左侧组件列表 -->
-    <o-layout has-sider class="main">
-      <o-layout-sider
-        class="left"
-        width="15rem"
-        :collapsed="collapsedLeft"
-        :native-scrollbar="false"
-        bordered
-        collapse-mode="width"
-        show-trigger
-        @collapse="collapsedLeft = true"
-        @expand="collapsedLeft = false"
-      >
+    </div>
+    <div class="content flex flex-nowrap flex-row">
+      <div class="left">
         <LeftSideBar
           v-model:iscollapsed="collapsedLeft"
           @update:iscollapsed="
@@ -24,41 +13,25 @@
             }
           "
         />
-      </o-layout-sider>
-      <o-layout has-sider sider-placement="right">
-        <Canvas />
-        <o-layout-sider
-          class="right"
-          width="20rem"
-          :collapsed="collapsedRight"
-          :native-scrollbar="false"
-          bordered
-          collapse-mode="width"
-          show-trigger="arrow-circle"
-          @collapse="collapsedRight = true"
-          @expand="collapsedRight = false"
-        >
-          <RightSideBar
-            v-model:iscollapsed="collapsedRight"
-            @update:iscollapsed="
-              (value) => {
-                collapsedRight = value
-              }
-            "
-          />
-        </o-layout-sider>
-      </o-layout>
-
-      <!-- 右侧属性列表 -->
-    </o-layout>
-  </o-layout>
+      </div>
+      <Canvas class="canvas" />
+      <div class="right">
+        <RightSideBar
+          v-model:iscollapsed="collapsedRight"
+          @update:iscollapsed="
+            (value) => {
+              collapsedRight = value
+            }
+          "
+        />
+      </div>
+    </div>
+  </div>
 </template>
-
 <script setup lang="ts">
 import { useData, useProp } from 'open-data-v/base'
 import type { ToolBarItemType } from 'open-data-v/designer'
 import { useCanvasState } from 'open-data-v/designer'
-import { OLayout, OLayoutHeader, OLayoutSider } from 'open-data-v/ui'
 import { onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '../../../designer/state/type'
@@ -89,12 +62,23 @@ onUnmounted(() => {
   canvasState.clearCanvas()
 })
 </script>
-
 <style scoped lang="less">
-.home > :deep(.n-layout-scroll-container:first-child) {
-  @apply flex flex-col h-screen;
-  .header {
-    @apply h-12;
+.main {
+  .content {
+    width: 100vw;
+    height: calc(95vh - 40px);
+    .canvas {
+      width: calc(100% - 28vw);
+    }
+    .left {
+      width: 14vw;
+      min-width: 35px;
+      height: 100%;
+    }
+    .right {
+      width: 14vw;
+      height: 100%;
+    }
   }
 }
 </style>

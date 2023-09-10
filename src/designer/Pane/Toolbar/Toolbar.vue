@@ -1,5 +1,5 @@
 <template>
-  <ToolBar v-if="toolbars.length > 0" :bars="toolbars">
+  <ToolBar v-if="toolbars.length > 0" :bars="toolbars" class="w-full">
     <div class="tool-bar-title">{{ canvasState.name }}</div>
   </ToolBar>
 </template>
