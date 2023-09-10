@@ -37,7 +37,7 @@ import { onUnmounted, provide, readonly, ref } from 'vue'
 import type { LayoutData } from '../../../designer/state/type'
 import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'
-import ToolBar from '../../Pane/Toolbar'
+import ToolBar from '../../Pane/Toolsbar'
 import Canvas from './Canvas.vue'
 
 withDefaults(

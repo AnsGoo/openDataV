@@ -117,11 +117,11 @@ function setScaleByWheel(e: WheelEvent) {
 }
 
 onMounted(() => {
-  centerCanvas.value?.$el?.addEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value?.addEventListener('wheel', setScaleByWheel, false)
 })
 
 onBeforeUnmount(() => {
-  centerCanvas.value?.$el?.removeEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value?.removeEventListener('wheel', setScaleByWheel, false)
 })
 </script>
 
