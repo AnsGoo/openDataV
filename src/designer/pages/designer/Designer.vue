@@ -75,10 +75,10 @@ onUnmounted(() => {
   canvasState.clearCanvas()
 })
 const leftWidth = computed<string>(() => (collapsedLeft.value ? '18rem' : '4rem'))
-const leftDreiction = computed<string>(() => (collapsedLeft.value ? 'left' : 'right'))
+const leftDreiction = computed<'left' | 'right'>(() => (collapsedLeft.value ? 'left' : 'right'))
 
 const rightWidth = computed<string>(() => (collapsedRight.value ? '18rem' : '4rem'))
-const rightDreiction = computed<string>(() => (collapsedRight.value ? 'right' : 'left'))
+const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 'right' : 'left'))
 
 const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${rightWidth.value})`)
 </script>
