@@ -1,6 +1,6 @@
 <template>
   <div class="components">
-    <o-menu :options="menuOptions" :accordion="false" />
+    <o-menu :options="menuOptions" :accordion="false" :collapsed="!iscollapsed" />
   </div>
 </template>
 
@@ -13,6 +13,15 @@ import { OMenu } from 'open-data-v/ui'
 import { computed, getCurrentInstance, h } from 'vue'
 
 import ComponentItem from './ComponentItem.vue'
+
+withDefaults(
+  defineProps<{
+    iscollapsed?: boolean
+  }>(),
+  {
+    iscollapsed: true
+  }
+)
 
 const canvasState = useCanvasState()
 const instance = getCurrentInstance()

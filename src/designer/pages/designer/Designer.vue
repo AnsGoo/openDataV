@@ -1,71 +1,57 @@
 <template>
-  <o-layout class="home">
-    <o-layout-header class="header">
+  <div class="main h-fit flex-col flex flex-nowrap">
+    <div class="top w-full h-14 align-middle">
       <ToolBar :toolbars="toolbars" />
-    </o-layout-header>
-    <!-- 左侧组件列表 -->
-    <o-layout has-sider class="main">
-      <o-layout-sider
-        class="left"
-        width="15rem"
-        :collapsed="collapsedLeft"
-        :native-scrollbar="false"
-        bordered
-        collapse-mode="width"
-        show-trigger
-        @collapse="collapsedLeft = true"
-        @expand="collapsedLeft = false"
-      >
+    </div>
+    <div class="content flex flex-nowrap flex-row">
+      <div class="left">
+        <Toggle
+          :direction="leftDreiction"
+          :x="leftWidth"
+          location="left"
+          @click="collapsedLeft = !collapsedLeft"
+        />
         <LeftSideBar
-          v-model:iscollapsed="collapsedLeft"
+          :iscollapsed="collapsedLeft"
           @update:iscollapsed="
             (value) => {
               collapsedLeft = value
             }
           "
         />
-      </o-layout-sider>
-      <o-layout has-sider sider-placement="right">
-        <Canvas />
-        <o-layout-sider
-          class="right"
-          width="20rem"
-          :collapsed="collapsedRight"
-          :native-scrollbar="false"
-          bordered
-          collapse-mode="width"
-          show-trigger="arrow-circle"
-          @collapse="collapsedRight = true"
-          @expand="collapsedRight = false"
-        >
-          <RightSideBar
-            v-model:iscollapsed="collapsedRight"
-            @update:iscollapsed="
-              (value) => {
-                collapsedRight = value
-              }
-            "
-          />
-        </o-layout-sider>
-      </o-layout>
-
-      <!-- 右侧属性列表 -->
-    </o-layout>
-  </o-layout>
+      </div>
+      <Canvas class="canvas" />
+      <div class="right">
+        <Toggle
+          :x="rightWidth"
+          location="right"
+          :direction="rightDreiction"
+          @click="collapsedRight = !collapsedRight"
+        />
+        <RightSideBar
+          v-model:iscollapsed="collapsedRight"
+          @update:iscollapsed="
+            (value) => {
+              collapsedRight = value
+            }
+          "
+        />
+      </div>
+    </div>
+  </div>
 </template>
-
 <script setup lang="ts">
 import { useData, useProp } from 'open-data-v/base'
 import type { ToolBarItemType } from 'open-data-v/designer'
 import { useCanvasState } from 'open-data-v/designer'
-import { OLayout, OLayoutHeader, OLayoutSider } from 'open-data-v/ui'
-import { onUnmounted, provide, readonly, ref } from 'vue'
+import { computed, onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '../../../designer/state/type'
 import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'
-import ToolBar from '../../Pane/Toolbar'
+import ToolBar from '../../Pane/Toolsbar'
 import Canvas from './Canvas.vue'
+import Toggle from './toggle.vue'
 
 withDefaults(
   defineProps<{
@@ -77,8 +63,8 @@ withDefaults(
 )
 const canvasState = useCanvasState()
 
-const collapsedLeft = ref(false)
-const collapsedRight = ref(false)
+const collapsedLeft = ref(true)
+const collapsedRight = ref(true)
 provide('HOOKS', readonly({ useProp, useData }))
 const setLayoutData = (data: LayoutData) => {
   canvasState.setLayoutData(data)
@@ -88,13 +74,33 @@ defineExpose({ setLayoutData })
 onUnmounted(() => {
   canvasState.clearCanvas()
 })
-</script>
+const leftWidth = computed<string>(() => (collapsedLeft.value ? '18rem' : '4rem'))
+const leftDreiction = computed<'left' | 'right'>(() => (collapsedLeft.value ? 'left' : 'right'))
 
+const rightWidth = computed<string>(() => (collapsedRight.value ? '18rem' : '4rem'))
+const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 'right' : 'left'))
+
+const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${rightWidth.value})`)
+</script>
 <style scoped lang="less">
-.home > :deep(.n-layout-scroll-container:first-child) {
-  @apply flex flex-col h-screen;
-  .header {
-    @apply h-12;
+.main {
+  .top {
+    border-bottom: 1px solid;
+  }
+  .content {
+    width: 100vw;
+    height: calc(95vh - 4rem);
+    .canvas {
+      width: v-bind(canvasWidth);
+    }
+    .left {
+      width: v-bind(leftWidth);
+      height: 100%;
+    }
+    .right {
+      width: v-bind(rightWidth);
+      height: 100%;
+    }
   }
 }
 </style>

@@ -1,19 +1,13 @@
 <template>
-  <o-layout ref="centerCanvas" v-resize="editorWindowResizeHandler">
-    <!-- 中间画布 -->
-    <o-layout-content class="content">
-      <o-scrollbar x-scrollable class="x-scrollable" :style="scrollbarStyle">
-        <Editor />
-      </o-scrollbar>
-    </o-layout-content>
-    <o-layout-footer position="absolute" class="footer">
-      <o-space justify="end" align="center" style="height: 100%; margin-right: 5px">
-        <o-el
-          tag="span"
-          :style="{ color: primaryColor, transition: `all 0.3s ${cubicBezierEaseInOut}` }"
-        >
-          画布缩放:
-        </o-el>
+  <div ref="centerCanvas" class="middle">
+    <div class="canvas overflow-auto">
+      <div class="edit" :style="scrollbarStyle">
+        <Editor v-resize="editorWindowResizeHandler" />
+      </div>
+    </div>
+    <div class="flex flex-row justify-end items-center ml-0.5 w-full">
+      <div class="flex-nowrap flex">
+        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }"> 缩放: </span>
         <o-slider
           :value="sliderValue"
           :min="10"
@@ -28,9 +22,9 @@
           style="width: 90px"
           @update:value="handleScale"
         />
-      </o-space>
-    </o-layout-footer>
-  </o-layout>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -38,23 +32,13 @@ import { debounce } from 'lodash-es'
 import { useThemeVars } from 'naive-ui'
 import { useCanvasState } from 'open-data-v/designer'
 import type { SelectOption } from 'open-data-v/ui'
-import {
-  OEl,
-  OLayout,
-  OLayoutContent,
-  OLayoutFooter,
-  OScrollbar,
-  OSelect,
-  OSlider,
-  OSpace
-} from 'open-data-v/ui'
+import { OSelect, OSlider } from 'open-data-v/ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import Editor from '../../Editor'
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)
-const toolBarHeight = ref<number>(35)
 
 const sliderValue = ref<number>(100)
 const selectValue = ref<string>('100%')
@@ -84,7 +68,7 @@ const options: SelectOption[] = [
 ]
 
 const themeVars = useThemeVars()
-const { primaryColor, cubicBezierEaseInOut } = themeVars.value
+const { cubicBezierEaseInOut } = themeVars.value
 
 const scrollbarStyle = computed(() => {
   return {
@@ -96,7 +80,7 @@ const scrollbarStyle = computed(() => {
 const editorWindowResizeHandler = (entry: ResizeObserverEntry) => {
   const { width, height } = entry.contentRect
   windowWidth.value = width
-  windowHeight.value = height - toolBarHeight.value
+  windowHeight.value = height - 100
 }
 
 const handleScale = (value: number) => {
@@ -111,7 +95,7 @@ const changeScale = debounce((value: number) => {
 }, 300)
 
 // region 按住 alt 或 command + 滚轮缩放
-const centerCanvas = ref()
+const centerCanvas = ref<HTMLDivElement | null>(null)
 function setScaleByWheel(e: WheelEvent) {
   const max = 200
   const min = 10
@@ -133,26 +117,49 @@ function setScaleByWheel(e: WheelEvent) {
 }
 
 onMounted(() => {
-  centerCanvas.value.$el!.addEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value?.addEventListener('wheel', setScaleByWheel, false)
 })
 
 onBeforeUnmount(() => {
-  centerCanvas.value.$el!.removeEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value?.removeEventListener('wheel', setScaleByWheel, false)
 })
-// endregion
 </script>
 
-<style lang="less" scoped>
-.content {
-  box-shadow: inset 0 0 3px black;
-  :deep(.n-scrollbar-content) {
+<style scoped lang="less">
+.middle {
+  .canvas {
+    height: calc(95vh - 40px);
+  }
+  .canvas ::-webkit-scrollbar-track-piece {
+    background-color: #b8b8b8;
+    -webkit-border-radius: 0;
+  }
+  .canvas::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  .canvas::-webkit-scrollbar-track {
+    border-radius: 100vh;
+    background: #0000;
+  }
+  .canvas::-webkit-scrollbar-thumb {
+    height: 10vh;
+    background-color: #b8b8b880;
+    -webkit-border-radius: 6px;
+    outline-offset: -2px;
+    -moz-opacity: 0.5;
+    border-radius: 100vh;
+    opacity: 0.1;
+  }
+  .canvas::-webkit-scrollbar-thumb:hover {
+    height: 10vh;
+    background-color: #878987;
+    -webkit-border-radius: 6px;
+  }
+  :deep(.edit) {
     transform-origin: left top;
     transform: scale(v-bind(scaleValue));
     transition: all 0.3s;
   }
-}
-
-.footer {
-  height: v-bind('toolBarHeight + "px"');
 }
 </style>
