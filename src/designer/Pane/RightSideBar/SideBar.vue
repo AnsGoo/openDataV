@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!iscollapsed">
+  <div v-if="iscollapsed">
     <o-tabs
       v-if="curComponent"
       v-model:value="activeKey"
@@ -62,7 +62,7 @@
     </o-tabs>
   </div>
   <div v-else>
-    <o-menu :options="menuOptions" />
+    <o-menu :options="menuOptions" :collapsed="!iscollapsed" />
   </div>
 </template>
 
@@ -134,7 +134,17 @@ const menuOptions = computed<MenuOption[]>(() => {
         key: '1',
         icon: () =>
           h(XIcon, {
-            name: 'page'
+            name: 'page',
+            onClick: () => collapsedTabPane('canvas')
+          })
+      },
+      {
+        label: '数据',
+        key: '2',
+        icon: () =>
+          h(XIcon, {
+            name: 'data',
+            onClick: () => collapsedTabPane('data')
           })
       }
     ]
@@ -150,6 +160,5 @@ const collapsedTabPane = (key: string) => {
 .attr-list {
   @apply overflow-auto p-1 pt-0 h-full;
   backdrop-filter: blur(50px);
-  //margin-right: 10px;
 }
 </style>

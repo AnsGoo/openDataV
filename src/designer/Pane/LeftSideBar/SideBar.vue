@@ -1,6 +1,6 @@
 <template>
   <o-tabs
-    v-if="!iscollapsed"
+    v-if="iscollapsed"
     v-model:value="activeKey"
     type="line"
     animated
@@ -40,7 +40,7 @@
       <template #tab>
         <x-icon name="components" @click="switchTab('layer')" />
       </template>
-      <ComponentList />
+      <ComponentList :iscollapsed="iscollapsed" />
     </o-tab-pane>
     <o-tab-pane v-else-if="activeKey === 'layer'" name="layer" display-directive="show:lazy">
       <template #tab>

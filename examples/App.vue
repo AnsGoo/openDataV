@@ -1,6 +1,4 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import { NGlobalStyle, NLoadingBarProvider } from 'naive-ui'
 import { computed, provide, readonly } from 'vue'
 import { RouterView, useRouter } from 'vue-router'
@@ -28,6 +26,5 @@ body,
 #app {
   height: 100vh;
   width: 100vw;
-  // overflow: hidden;
 }
 </style>
