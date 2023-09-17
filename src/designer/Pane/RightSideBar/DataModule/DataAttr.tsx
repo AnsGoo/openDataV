@@ -5,10 +5,7 @@ import {
   OCard,
   OCollapse,
   OCollapseItem,
-  ODescriptions,
-  ODescriptionsItem,
   ODivider,
-  OEmpty,
   OForm,
   OFormItem,
   OSelect,
@@ -169,15 +166,8 @@ export default defineComponent({
       }
     }
     return () =>
-      props.curComponent.dataMode ||
-      props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL ? (
-        renderContainer()
-      ) : (
-        <ODescriptions>
-          <ODescriptionsItem>
-            <OEmpty description="未发现数据配置项"></OEmpty>
-          </ODescriptionsItem>
-        </ODescriptions>
-      )
+      props.curComponent.dataMode || props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL
+        ? renderContainer()
+        : useEmpty('未发现数据配置项')
   }
 })

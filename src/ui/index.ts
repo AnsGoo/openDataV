@@ -5,10 +5,7 @@ import {
   NCollapse,
   NCollapseItem,
   NColorPicker,
-  NDescriptions,
-  NDescriptionsItem,
   NDivider,
-  NEmpty,
   NForm,
   NFormItem,
   NInput,
@@ -35,9 +32,6 @@ const OInput = NInput
 const OSelect = NSelect
 const OTabPane = NTabPane
 const OTabs = NTabs
-const ODescriptions = NDescriptions
-const ODescriptionsItem = NDescriptionsItem
-const OEmpty = NEmpty
 const OMenu = NMenu
 const OForm = NForm
 const OFormItem = NFormItem
@@ -65,9 +59,6 @@ export default {
   OSelect: NSelect,
   OTabPane: NTabPane,
   OTabs: NTabs,
-  ODescriptions: NDescriptions,
-  ODescriptionsItem: NDescriptionsItem,
-  OEmpty: NEmpty,
   OMenu: NMenu,
   OForm: NForm,
   OFormItem: NFormItem,
@@ -99,10 +90,7 @@ export {
   OCollapse,
   OCollapseItem,
   OColorPicker,
-  ODescriptions,
-  ODescriptionsItem,
   ODivider,
-  OEmpty,
   OForm,
   OFormItem,
   OInput,
