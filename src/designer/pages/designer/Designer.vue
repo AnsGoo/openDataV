@@ -51,7 +51,7 @@ import LeftSideBar from '../../Pane/LeftSideBar'
 import RightSideBar from '../../Pane/RightSideBar'
 import ToolBar from '../../Pane/Toolsbar'
 import Canvas from './Canvas.vue'
-import Toggle from './toggle.vue'
+import Toggle from './Toggle.vue'
 
 withDefaults(
   defineProps<{
