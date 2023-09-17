@@ -5,10 +5,7 @@ import {
   OCard,
   OCollapse,
   OCollapseItem,
-  ODescriptions,
-  ODescriptionsItem,
   ODivider,
-  OEmpty,
   OForm,
   OFormItem,
   OInputGroup,
@@ -168,11 +165,7 @@ export default defineComponent({
           {dataOptions.value.map((el, index) => renderContainer(el.type, el.id, index))}
         </>
       ) : (
-        <ODescriptions>
-          <ODescriptionsItem>
-            <OEmpty description="未发现任何全局数据插件"></OEmpty>
-          </ODescriptionsItem>
-        </ODescriptions>
+        useEmpty('未发现任何全局数据插件')
       )
   }
 })

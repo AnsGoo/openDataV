@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-full">
     <o-menu
       v-if="componentData.length > 0"
       :options="menuOptions"
@@ -8,11 +8,7 @@
       :collapsed="!iscollapsed"
       @update:value="handleSelect"
     />
-    <o-descriptions v-else class="placeholder">
-      <o-descriptions-item>
-        <o-empty description="画布为空" />
-      </o-descriptions-item>
-    </o-descriptions>
+    <LayerEmpty />
   </div>
 </template>
 
@@ -21,9 +17,14 @@ import { cloneDeep } from 'lodash-es'
 import type { CustomComponent } from 'open-data-v/base'
 import { ComponentGroup } from 'open-data-v/base'
 import type { ContextmenuItem } from 'open-data-v/designer'
-import { ComponentGroupList, useCanvasState, useClipBoardState } from 'open-data-v/designer'
+import {
+  ComponentGroupList,
+  useCanvasState,
+  useClipBoardState,
+  useEmpty
+} from 'open-data-v/designer'
 import type { MenuOption } from 'open-data-v/ui'
-import { ODescriptions, ODescriptionsItem, OEmpty, OMenu } from 'open-data-v/ui'
+import { OMenu } from 'open-data-v/ui'
 import { computed, h, ref, watch } from 'vue'
 
 import { uuid } from '../../../utils'
@@ -32,6 +33,8 @@ import SimpleLayerItem from './SimpleLayerItem.vue'
 
 const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()
+
+const LayerEmpty = useEmpty()
 
 const iconMap: Record<string, string> = {}
 ComponentGroupList.map((ele) => {
