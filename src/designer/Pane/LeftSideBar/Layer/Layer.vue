@@ -1,15 +1,14 @@
 <template>
-  <div class="h-full">
-    <o-menu
-      v-if="componentData.length > 0"
-      :options="menuOptions"
-      :root-indent="1"
-      :indent="12"
-      :collapsed="!iscollapsed"
-      @update:value="handleSelect"
-    />
-    <LayerEmpty v-else />
-  </div>
+  <o-menu
+    v-if="componentData.length > 0"
+    class="h-full o-scroll overflow-auto"
+    :options="menuOptions"
+    :root-indent="1"
+    :indent="12"
+    :collapsed="!iscollapsed"
+    @update:value="handleSelect"
+  />
+  <LayerEmpty v-else />
 </template>
 
 <script lang="ts" setup>
@@ -271,3 +270,6 @@ watch(
   }
 )
 </script>
+<style scoped lang="less">
+@import 'open-data-v/css/index.less';
+</style>

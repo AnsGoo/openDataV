@@ -1,7 +1,10 @@
 <template>
-  <div class="select-none">
-    <o-menu :options="menuOptions" :accordion="false" :collapsed="!iscollapsed" />
-  </div>
+  <o-menu
+    :options="menuOptions"
+    :accordion="false"
+    :collapsed="!iscollapsed"
+    class="h-full o-scroll overflow-auto"
+  />
 </template>
 
 <script setup lang="ts">
@@ -71,3 +74,6 @@ const handleDragStart = (e) => {
   e.dataTransfer.setData('componentName', e.target.dataset.component)
 }
 </script>
+<style scoped lang="less">
+@import 'open-data-v/css/index.less';
+</style>
