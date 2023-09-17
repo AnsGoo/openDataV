@@ -52,5 +52,6 @@ const right = computed<string>(() =>
   margin: 0 auto;
   text-align: center;
   font-weight: bold;
+  box-shadow: 0 2px 4px 0px rgba(0, 0, 0, 0.06);
 }
 </style>
