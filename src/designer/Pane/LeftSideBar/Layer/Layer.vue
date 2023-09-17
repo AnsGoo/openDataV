@@ -5,6 +5,7 @@
       :options="menuOptions"
       :root-indent="1"
       :indent="12"
+      :collapsed="!iscollapsed"
       @update:value="handleSelect"
     />
     <o-descriptions v-else class="placeholder">
@@ -18,7 +19,7 @@
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
 import type { CustomComponent } from 'open-data-v/base'
-import { ComponentGroup, useEventBus } from 'open-data-v/base'
+import { ComponentGroup } from 'open-data-v/base'
 import type { ContextmenuItem } from 'open-data-v/designer'
 import { ComponentGroupList, useCanvasState, useClipBoardState } from 'open-data-v/designer'
 import type { MenuOption } from 'open-data-v/ui'
@@ -36,22 +37,18 @@ const iconMap: Record<string, string> = {}
 ComponentGroupList.map((ele) => {
   iconMap[ele.key] = ele.icon
 })
+withDefaults(
+  defineProps<{
+    iscollapsed?: boolean
+  }>(),
+  {
+    iscollapsed: true
+  }
+)
 
 const componentData = computed(() => canvasState.componentData)
 
-const menu = ref<ElRef<any>>(null)
-const activeKey = ref<string>('')
-const open = (event: any) => {
-  const index = event as string
-  activeKey.value = index
-  if (menu.value && menu.value.open) {
-    menu.value.open(index)
-  }
-}
-useEventBus('ActiveMenu', open)
-
 const handleSelect = (key: string) => {
-  activeKey.value = key
   const indexes: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
   if (activedComponent) {

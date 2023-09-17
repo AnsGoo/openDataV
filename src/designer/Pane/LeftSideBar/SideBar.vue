@@ -46,7 +46,7 @@
       <template #tab>
         <x-icon name="layers" @click="switchTab('components')" />
       </template>
-      <Layer />
+      <Layer :iscollapsed="iscollapsed" />
     </o-tab-pane>
   </o-tabs>
 </template>
