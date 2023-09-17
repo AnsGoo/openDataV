@@ -1,6 +1,6 @@
 <template>
   <div ref="centerCanvas" class="middle">
-    <div class="canvas overflow-auto">
+    <div class="canvas o-scroll overflow-auto">
       <div class="edit" :style="scrollbarStyle">
         <Editor v-resize="editorWindowResizeHandler" />
       </div>
@@ -126,35 +126,10 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="less">
+@import 'open-data-v/css/index.less';
 .middle {
   .canvas {
-    height: calc(95vh - 40px);
-  }
-  .canvas ::-webkit-scrollbar-track-piece {
-    background-color: #b8b8b8;
-    -webkit-border-radius: 0;
-  }
-  .canvas::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
-  }
-  .canvas::-webkit-scrollbar-track {
-    border-radius: 100vh;
-    background: #0000;
-  }
-  .canvas::-webkit-scrollbar-thumb {
-    height: 10vh;
-    background-color: #b8b8b880;
-    -webkit-border-radius: 6px;
-    outline-offset: -2px;
-    -moz-opacity: 0.5;
-    border-radius: 100vh;
-    opacity: 0.1;
-  }
-  .canvas::-webkit-scrollbar-thumb:hover {
-    height: 10vh;
-    background-color: #878987;
-    -webkit-border-radius: 6px;
+    height: 100%;
   }
   :deep(.edit) {
     transform-origin: left top;

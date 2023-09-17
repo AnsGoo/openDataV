@@ -1,6 +1,7 @@
-import { RestContent } from 'open-data-v/data/rest'
-import { StaticContent } from 'open-data-v/data/static'
 import { defineComponent } from 'vue'
+
+import StaticContent from '@/data/Quick/Content.vue'
+import RestContent from '@/data/Rest/DynamicExtendContent.vue'
 
 export default defineComponent({
   props: {

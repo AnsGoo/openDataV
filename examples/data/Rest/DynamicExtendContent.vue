@@ -1,25 +1,27 @@
 <template>
   <RestContent v-model:options="formData" @update:rest-options="formChange" @change="formChange">
     <template #data-select>
-      <n-select
-        :options="restDataList"
-        :value="formData.id"
-        class="selected"
-        clearable
-        placeholder="请选择数据"
-        @update:value="selectedChange"
-        @clear="clear"
-      />
-      <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
-        <template #prefix>
-          <x-icon name="api" />
-        </template>
-      </n-input>
-      <n-space v-if="mode === 'debug'">
-        <n-button-group class="save">
-          <n-button @click="formData.id ? handleUpdate() : handleSave()">保存</n-button>
-        </n-button-group>
-      </n-space>
+      <div class="flex flex-nowrap flex-row">
+        <n-select
+          :options="restDataList"
+          :value="formData.id"
+          class="selected"
+          clearable
+          placeholder="请选择数据"
+          @update:value="selectedChange"
+          @clear="clear"
+        />
+        <n-input v-if="mode === 'debug'" v-model:value="formData.title" class="title">
+          <template #prefix>
+            <x-icon name="api" />
+          </template>
+        </n-input>
+        <n-space v-if="mode === 'debug'">
+          <n-button-group class="save">
+            <n-button @click="formData.id ? handleUpdate() : handleSave()">保存</n-button>
+          </n-button-group>
+        </n-space>
+      </div>
     </template>
   </RestContent>
 </template>
