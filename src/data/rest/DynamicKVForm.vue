@@ -1,6 +1,6 @@
 <template>
   <div class="header flex flex-row flex-nowrap">
-    <o-divider title-placement="left" style="width: 50%">
+    <o-divider title-placement="left" class="w-1/2">
       {{ title }}
     </o-divider>
     <o-divider title-placement="right" style="width: 50%">
@@ -12,7 +12,7 @@
   <div v-for="(item, index) in formData" :key="item.id">
     <o-input-group class="mb-0.5">
       <o-input
-        class="w-0.5"
+        class="w-1/2"
         size="small"
         :input-props="{
           autocomplete: 'disabled'
@@ -23,7 +23,7 @@
         @update:value="(value) => changed(index, 'key', value)"
       />
       <o-input
-        class="w-0.5"
+        class="w-1/2"
         size="small"
         :value="formData[index]['value']"
         :allow-input="noSideSpace"

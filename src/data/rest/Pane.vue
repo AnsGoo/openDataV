@@ -1,7 +1,7 @@
 <template>
   <o-form-item label="动态数据" label-placement="top" size="small">
     <o-input-group>
-      <o-input v-model:value="formData.url" style="flex: 1" readonly>
+      <o-input v-model:value="formData.url" readonly>
         <template #prefix>
           <span class="accent-green-500" style="font-weight: 800">
             {{ formData.method }}
@@ -26,7 +26,7 @@
   </o-form-item>
   <o-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
     <o-card
-      style="width: 600px"
+      class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
       title="动态数据"
       :bordered="false"
       size="small"

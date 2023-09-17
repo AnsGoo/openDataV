@@ -12,34 +12,30 @@
           @update-value="formChange"
         />
       </div>
-      <div class="flex-1">
+      <div class="w-3/4">
         <o-input v-model:value="formData['url']" @update-value="formChange" />
       </div>
       <div>
-        <o-button-group class="send">
+        <o-button-group>
           <o-button type="primary" @click="send">调试</o-button>
         </o-button-group>
       </div>
     </div>
-    <div class="config">
+    <div>
       <o-tabs type="line" animated>
         <o-tab-pane name="query" tab="请求参数" display-directive="show">
-          <div class="params">
-            <DynamicKVForm
-              v-model:value="formData['params']"
-              title="请求参数"
-              @update:value="formChange"
-            />
-          </div>
+          <DynamicKVForm
+            v-model:value="formData['params']"
+            title="请求参数"
+            @update:value="formChange"
+          />
         </o-tab-pane>
         <o-tab-pane name="data" tab="请求体" display-directive="show">
-          <div class="headers">
-            <DynamicKVForm
-              v-model:value="formData['data']"
-              title="请求体"
-              @update:value="formChange"
-            />
-          </div>
+          <DynamicKVForm
+            v-model:value="formData['data']"
+            title="请求体"
+            @update:value="formChange"
+          />
         </o-tab-pane>
         <o-tab-pane name="headers" tab="请求头" display-directive="show">
           <div class="headers">
@@ -60,7 +56,7 @@
           {{ response.status ? response.status : '' }}
         </span>
       </o-divider>
-      <OCodeEditor :value="response.data" class="content" height="400px" />
+      <OCodeEditor :value="response.data" height="400px" />
     </div>
   </o-card>
 </template>

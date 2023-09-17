@@ -1,30 +1,30 @@
 <template>
   <o-card>
-    <div class="flex">
+    <div class="flex flex-col flex-nowrap">
       <slot name="data-select"></slot>
     </div>
-    <div class="flex flex-row">
+    <div class="flex flex-row flex-nowrap">
       <o-input v-model:value="formData['url']" class="flex-1" @update-value="formChange" />
       <div>
-        <o-button-group class="send">
+        <o-button-group>
           <o-button type="primary" @click="connect">链接</o-button>
           <o-button @click="send">发送</o-button>
         </o-button-group>
       </div>
     </div>
-    <div class="config">
+    <div>
       <o-tabs type="line" animated>
         <o-tab-pane name="query" tab="消息" display-directive="show">
-          <div class="params">
+          <div>
             <OCodeEditor v-model:value="formData.message" class="content" height="100px" />
           </div>
         </o-tab-pane>
       </o-tabs>
     </div>
-    <div class="response">
+    <div>
       <o-tabs>
         <o-tab-pane name="origin" tab="原始数据结果" display-directive="show">
-          <OCodeEditor :value="response.data" class="content" />
+          <OCodeEditor :value="response.data" />
         </o-tab-pane>
       </o-tabs>
     </div>

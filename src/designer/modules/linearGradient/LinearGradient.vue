@@ -1,5 +1,5 @@
 <template>
-  <div class="linear-gradient">
+  <div class="w-full">
     <o-slider
       v-model:value="linearGradient.angle"
       :step="5"
@@ -58,9 +58,3 @@ const changed = () => {
   emits('update:value', linearGradient.value)
 }
 </script>
-
-<style scoped lang="less">
-.linear-gradient {
-  width: 100%;
-}
-</style>

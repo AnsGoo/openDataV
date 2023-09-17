@@ -100,7 +100,7 @@ export default defineComponent({
           <OModal v-model:show={isShow.value} displayDirective="show">
             <OCard
               title={item.label || ''}
-              style="width: 600px"
+              class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
               size={options.size || 'small'}
               role="dialog"
               aria-modal={true}

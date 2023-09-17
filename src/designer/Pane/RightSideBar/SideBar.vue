@@ -17,7 +17,7 @@
           <x-icon name="textStyle" />
           <span v-show="!iscollapsed">样式</span>
         </template>
-        <div class="attr-list">
+        <div class="attr-list o-scroll">
           <StyleList :curComponent="curComponent" />
         </div>
       </o-tab-pane>
@@ -26,7 +26,7 @@
           <x-icon name="attr" />
           <span v-show="!iscollapsed">属性</span>
         </template>
-        <div class="attr-list">
+        <div class="attr-list o-scroll">
           <AttrList :curComponent="curComponent" />
         </div>
       </o-tab-pane>
@@ -35,7 +35,7 @@
           <x-icon name="data" />
           <span v-show="!iscollapsed">数据</span>
         </template>
-        <div class="attr-list">
+        <div class="attr-list o-scroll">
           <DataList :curComponent="curComponent" />
         </div>
       </o-tab-pane>
@@ -62,7 +62,11 @@
     </o-tabs>
   </div>
   <div v-else>
-    <o-menu :options="menuOptions" :collapsed="!iscollapsed" />
+    <o-menu
+      :options="menuOptions"
+      :collapsed="!iscollapsed"
+      class="h-full o-scroll overflow-auto"
+    />
   </div>
 </template>
 
@@ -157,8 +161,10 @@ const collapsedTabPane = (key: string) => {
 }
 </script>
 <style scoped>
+@import 'open-data-v/css/index.less';
 .attr-list {
-  @apply overflow-auto p-1 pt-0 h-full;
+  @apply overflow-auto p-1 pt-0;
   backdrop-filter: blur(50px);
+  height: calc(90vh - 28px);
 }
 </style>

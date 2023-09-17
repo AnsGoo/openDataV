@@ -17,14 +17,14 @@
         <x-icon name="components" />
         <span>组件</span>
       </template>
-      <ComponentList />
+      <ComponentList class="components" />
     </o-tab-pane>
     <o-tab-pane name="layer" display-directive="show:lazy">
       <template #tab>
         <x-icon name="layers" />
         <span>图层</span>
       </template>
-      <Layer />
+      <Layer class="layers" />
     </o-tab-pane>
   </o-tabs>
   <o-tabs
@@ -40,7 +40,7 @@
       <template #tab>
         <x-icon name="components" @click="switchTab('layer')" />
       </template>
-      <ComponentList :iscollapsed="iscollapsed" />
+      <ComponentList :iscollapsed="iscollapsed" class="h-full components" />
     </o-tab-pane>
     <o-tab-pane v-else-if="activeKey === 'layer'" name="layer" display-directive="show:lazy">
       <template #tab>
@@ -77,3 +77,11 @@ const switchTab = (key: string) => {
   activeKey.value = key
 }
 </script>
+<style scoped lang="less">
+.components {
+  height: calc(90vh - 28px);
+}
+.layers {
+  height: calc(90vh - 28px);
+}
+</style>

@@ -1,7 +1,6 @@
-import type { ComponentItem } from 'open-data-v/designer'
+import type { ComponentItem, GroupType } from 'open-data-v/designer'
+import { ComponentGroupList } from 'open-data-v/designer'
 
-import type { GroupType } from '@/enum'
-import { ComponentGroupList } from '@/enum'
 import { NothingLayout } from '@/layout'
 import { camel2snake } from '@/utils/utils'
 

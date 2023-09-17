@@ -1,12 +1,11 @@
 <template>
   <o-card>
-    <div class="static-data">
+    <div>
       <slot name="data-select"></slot>
     </div>
     <StaticDataView
       :data="originData"
       :title="title"
-      class="content"
       :mode="mode"
       :error="errMessage"
       @update:data="originDataChange"

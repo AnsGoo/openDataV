@@ -1,9 +1,9 @@
 <template>
   <o-form-item label="链接地址" label-placement="top" size="small">
     <o-input-group>
-      <o-input v-model:value="formData.url" style="flex: 1" readonly>
+      <o-input v-model:value="formData.url" readonly>
         <template #prefix>
-          <span class="success-text" style="font-weight: 800">
+          <span class="accent-green-500 font-extrabold">
             {{ formData.url.includes(':') ? formData.url.split(':')[0] : '' }}
           </span>
         </template>
@@ -34,7 +34,7 @@
   </o-form-item>
   <o-modal v-model:show="isShow" display-directive="show" :on-after-leave="close">
     <o-card
-      style="width: 800px"
+      class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
       title="WS数据"
       :bordered="false"
       closable
@@ -153,9 +153,3 @@ watch(
   { immediate: true }
 )
 </script>
-
-<style lang="less" scoped>
-.success-text {
-  color: #18a058;
-}
-</style>
