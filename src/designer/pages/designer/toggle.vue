@@ -1,5 +1,5 @@
 <template>
-  <span class="relative toggle z-50"> {{ viewSymbol }} </span>
+  <span class="absolute toggle z-50"> {{ viewSymbol }} </span>
 </template>
 
 <script setup lang="ts">
