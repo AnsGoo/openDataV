@@ -8,7 +8,7 @@
       :collapsed="!iscollapsed"
       @update:value="handleSelect"
     />
-    <LayerEmpty />
+    <LayerEmpty v-else />
   </div>
 </template>
 

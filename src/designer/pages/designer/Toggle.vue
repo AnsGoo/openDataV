@@ -20,7 +20,6 @@ const props = withDefaults(
   }
 )
 const viewSymbol = computed<string>(() => {
-  console.log(props.location, props.direction)
   if (props.location === 'left') {
     return props.direction === 'left' ? '<' : '>'
   } else {
