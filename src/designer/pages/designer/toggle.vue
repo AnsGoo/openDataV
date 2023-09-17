@@ -30,6 +30,8 @@ const right = computed<string>(() => (props.location === 'right' ? `0` : 'unset'
 </script>
 <style scoped lang="less">
 .toggle {
+  transition-property: left, right;
+  transition-duration: 0.5s;
   top: v-bind(top);
   left: v-bind(left);
   right: v-bind(right);

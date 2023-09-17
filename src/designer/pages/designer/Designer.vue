@@ -91,13 +91,19 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
     width: 100vw;
     height: calc(95vh - 4rem);
     .canvas {
+      transition-property: width;
+      transition-duration: 0.5s;
       width: v-bind(canvasWidth);
     }
     .left {
+      transition-property: width;
+      transition-duration: 0.5s;
       width: v-bind(leftWidth);
       height: 100%;
     }
     .right {
+      transition-property: width;
+      transition-duration: 0.5s;
       width: v-bind(rightWidth);
       height: 100%;
     }

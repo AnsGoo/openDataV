@@ -134,7 +134,7 @@ const menuOptions = computed<MenuOption[]>(() => {
         key: '1',
         icon: () =>
           h(XIcon, {
-            name: 'page',
+            name: 'canvas',
             onClick: () => collapsedTabPane('canvas')
           })
       },
@@ -152,7 +152,7 @@ const menuOptions = computed<MenuOption[]>(() => {
 })
 
 const collapsedTabPane = (key: string) => {
-  emits('update:iscollapsed', false)
+  emits('update:iscollapsed', true)
   activeKey.value = key
 }
 </script>
