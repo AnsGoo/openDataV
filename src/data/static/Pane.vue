@@ -12,7 +12,7 @@
   </o-form-item>
   <o-modal v-model:show="isShow" display-directive="show">
     <o-card
-      style="width: 800px"
+      class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
       title="静态数据"
       :bordered="false"
       size="small"

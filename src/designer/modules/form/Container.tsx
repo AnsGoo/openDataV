@@ -85,7 +85,7 @@ export default defineComponent({
             <>
               {containerItems.map((el) => {
                 return (
-                  <OCard title={el.label} size="small" style={{ marginBottom: '0.25rem' }}>
+                  <OCard title={el.label} size="small" class="mb-1">
                     {renderForm(el)}
                   </OCard>
                 )
@@ -94,7 +94,7 @@ export default defineComponent({
           )
         case ContainerType.FORM:
           return (
-            <div style={{ padding: '0 1rem' }}>
+            <div class="p-2">
               {containerItems.map((el) => {
                 return (
                   <>

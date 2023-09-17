@@ -64,10 +64,3 @@ watch(
   { deep: true }
 )
 </script>
-
-<style scoped>
-.attr-list {
-  @apply overflow-auto p-1 pt-0 h-full;
-  backdrop-filter: blur(50px);
-}
-</style>

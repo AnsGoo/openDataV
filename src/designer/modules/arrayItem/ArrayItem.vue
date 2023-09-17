@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <div v-for="(_, index) in arrayValue" :key="index" class="item">
+  <div class="flex-col flex">
+    <div v-for="(_, index) in arrayValue" :key="index" class="flex flex-row p-1 items-center">
       <o-input
         v-model:value="arrayValue[index]"
         type="text"
@@ -16,7 +16,7 @@
         @click="handleDelete(index)"
       />
     </div>
-    <div v-if="type === 'dynamic'" class="item">
+    <div v-if="type === 'dynamic'" class="flex flex-row p-1 items-center">
       <o-input
         ref="addInputEl"
         v-model:value="newValue"
@@ -95,12 +95,3 @@ const handleChange = (index: number) => {
   emits('updateValue', arrayValue)
 }
 </script>
-
-<style lang="less" scoped>
-.container {
-  @apply flex-col;
-  .item {
-    @apply flex flex-row p-1 items-center;
-  }
-}
-</style>

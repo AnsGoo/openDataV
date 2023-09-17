@@ -1,5 +1,5 @@
 <template>
-  <div class="components">
+  <div class="select-none">
     <o-menu :options="menuOptions" :accordion="false" :collapsed="!iscollapsed" />
   </div>
 </template>
@@ -71,9 +71,3 @@ const handleDragStart = (e) => {
   e.dataTransfer.setData('componentName', e.target.dataset.component)
 }
 </script>
-
-<style scoped>
-.components {
-  user-select: none;
-}
-</style>
