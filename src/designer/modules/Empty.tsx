@@ -11,9 +11,14 @@ const Empty = defineComponent({
 
   setup(props) {
     return () => (
-      <div class="flex flex-row h-full justify-center">
+      <div class="flex flex-row h-full justify-center p-1.5 text-xl">
         {props.desc ? (
-          <div class="h-full text-gray-700"> {props.desc}</div>
+          <div
+            class="h-full text-gray-700 break-words align-middle text-center"
+            style={{ overflowWrap: 'anywhere' }}
+          >
+            {props.desc}
+          </div>
         ) : (
           <svg
             viewBox="0 0 1024 1024"
