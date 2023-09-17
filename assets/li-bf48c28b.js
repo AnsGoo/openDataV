@@ -1,0 +1,5 @@
+import{a1 as d,d as i,v as g,I as c,bY as p,bZ as s,Y as r,bA as t}from"./index-10d63009.js";const b=Object.assign(Object.assign({},d.props),{trigger:String,xScrollable:Boolean,onScroll:Function,size:Number}),v=i({name:"Scrollbar",props:b,setup(){const l=g(null);return Object.assign(Object.assign({},{scrollTo:(...n)=>{var o;(o=l.value)===null||o===void 0||o.scrollTo(n[0],n[1])},scrollBy:(...n)=>{var o;(o=l.value)===null||o===void 0||o.scrollBy(n[0],n[1])}}),{scrollbarInstRef:l})},render(){return c(p,Object.assign({ref:"scrollbarInstRef"},this.$props),this.$slots)}}),f=v,e=s("li",{transition:"color .3s var(--n-bezier)",lineHeight:"var(--n-line-height)",margin:"var(--n-li-margin)",marginBottom:0,color:"var(--n-text-color)"}),a=[s("&:first-child",`
+ margin-top: 0;
+ `),s("&:last-child",`
+ margin-bottom: 0;
+ `)],h=s([r("ol",{fontSize:"var(--n-font-size)",padding:"var(--n-ol-padding)"},[t("align-text",{paddingLeft:0}),e,a]),r("ul",{fontSize:"var(--n-font-size)",padding:"var(--n-ul-padding)"},[t("align-text",{paddingLeft:0}),e,a])]),S=i({name:"Li",render(){return c("li",null,this.$slots)}});export{S as N,f as a,h as s};
