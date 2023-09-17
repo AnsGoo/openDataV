@@ -3,7 +3,7 @@
     :options="menuOptions"
     :accordion="false"
     :collapsed="!iscollapsed"
-    class="h-full o-scroll overflow-auto"
+    class="h-full o-scroll overflow-auto select-none"
   />
 </template>
 
