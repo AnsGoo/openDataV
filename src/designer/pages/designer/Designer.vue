@@ -4,7 +4,7 @@
       <ToolBar :toolbars="toolbars" />
     </div>
     <div class="content flex flex-nowrap flex-row">
-      <div class="left">
+      <div class="left o-scroll">
         <Toggle
           :direction="leftDreiction"
           :x="leftWidth"
@@ -21,7 +21,7 @@
         />
       </div>
       <Canvas class="canvas" />
-      <div class="right">
+      <div class="right o-scroll">
         <Toggle
           :x="rightWidth"
           location="right"
@@ -83,13 +83,14 @@ const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 
 const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${rightWidth.value})`)
 </script>
 <style scoped lang="less">
+@import 'open-data-v/css/index.less';
 .main {
   .top {
     border-bottom: 1px solid;
   }
   .content {
     width: 100vw;
-    height: calc(95vh - 4rem);
+    height: calc(95vh - 2rem);
     .canvas {
       transition-property: width;
       transition-duration: 0.5s;
@@ -99,13 +100,15 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
       transition-property: width;
       transition-duration: 0.5s;
       width: v-bind(leftWidth);
-      height: 100%;
+      overflow-y: auto;
+      overflow-x: hidden;
     }
     .right {
       transition-property: width;
       transition-duration: 0.5s;
       width: v-bind(rightWidth);
       height: 100%;
+      overflow: auto;
     }
   }
 }

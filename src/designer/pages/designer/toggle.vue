@@ -20,13 +20,20 @@ const props = withDefaults(
   }
 )
 const viewSymbol = computed<string>(() => {
-  return props.location === 'left' && props.direction === 'left' ? '<' : '>'
+  console.log(props.location, props.direction)
+  if (props.location === 'left') {
+    return props.direction === 'left' ? '<' : '>'
+  } else {
+    return props.direction === 'left' ? '<' : '>'
+  }
 })
 const top = computed<string>(() => props.y || '50%')
 const left = computed<string>(() =>
   props.location === 'left' ? `calc(${props.x} - 10px)` : 'unset'
 )
-const right = computed<string>(() => (props.location === 'right' ? `0` : 'unset'))
+const right = computed<string>(() =>
+  props.location === 'right' ? `calc(${props.x} - 10px)` : 'unset'
+)
 </script>
 <style scoped lang="less">
 .toggle {
@@ -36,7 +43,6 @@ const right = computed<string>(() => (props.location === 'right' ? `0` : 'unset'
   left: v-bind(left);
   right: v-bind(right);
   border: 1px solid;
-  background-color: #48484e;
   width: 20px;
   height: 20px;
   border-radius: 10px;

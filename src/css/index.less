@@ -1,0 +1,37 @@
+.o-scroll {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    cursor: pointer;
+  }
+  &::-webkit-scrollbar-track-piece {
+    background-color: #0000;
+    -webkit-border-radius: 0;
+  }
+  &::-webkit-scrollbar-track {
+    border-radius: 50vh;
+    background-color: #0000;
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 1vh;
+    width: 1vh;
+    background-color: #b8b8b880;
+    -webkit-border-radius: 6px;
+    border-radius: 100vh;
+    opacity: 0.1;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    height: 10vh;
+    background-color: #878987;
+    -webkit-border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+
+  &::-webkit-scrollbar-corner {
+    display: none;
+  }
+
+}
