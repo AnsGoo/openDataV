@@ -28,7 +28,7 @@ const props = withDefaults(
   }
 )
 const getIconColor = () => {
-  return darkTheme.value ? '#eeeee' : '#333'
+  return darkTheme.value ? '#eeee' : '#333'
 }
 const iconColor = computed<string>(() => (props.color ? props.color : getIconColor()))
 const IconComponet = computed<Component>(() => {
