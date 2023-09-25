@@ -146,7 +146,7 @@ onBeforeUnmount(() => {
 .content {
   box-shadow: inset 0 0 3px black;
 
-  :deep(.n-scrollbar-content) {
+  :deep(.n-scrollbar-content):has(div[id='editor']) {
     transform-origin: left top;
     transform: scale(v-bind(scaleValue));
     transition: all 0.3s;
