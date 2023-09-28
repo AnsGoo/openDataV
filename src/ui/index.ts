@@ -1,11 +1,9 @@
 import {
   NButton,
   NButtonGroup,
-  NCard,
   NCollapse,
   NCollapseItem,
   NColorPicker,
-  NDivider,
   NForm,
   NFormItem,
   NInput,
@@ -17,15 +15,16 @@ import {
   NRadioGroup,
   NSelect,
   NSlider,
-  NSpin,
   NSwitch,
   NTabPane,
   NTabs,
   NTimeline,
-  NTimelineItem,
-  NTooltip
+  NTimelineItem
 } from 'naive-ui'
 
+import Card from './Card'
+import Divider from './Divider'
+import Tooltip from './Tooltip'
 import type { MenuOption, SelectOption } from './type'
 
 const OInput = NInput
@@ -37,7 +36,7 @@ const OForm = NForm
 const OFormItem = NFormItem
 const OColorPicker = NColorPicker
 const OButton = NButton
-const OCard = NCard
+const OCard = Card
 const OInputGroup = NInputGroup
 const OInputNumber = NInputNumber
 const OModal = NModal
@@ -48,38 +47,11 @@ const OTimeline = NTimeline
 const OTimelineItem = NTimelineItem
 const OCollapse = NCollapse
 const OCollapseItem = NCollapseItem
-const ODivider = NDivider
-const OSpin = NSpin
-const OTooltip = NTooltip
+const ODivider = Divider
+const OTooltip = Tooltip
 const OButtonGroup = NButtonGroup
 
 const OSlider = NSlider
-export default {
-  OInput: OInput,
-  OSelect: NSelect,
-  OTabPane: NTabPane,
-  OTabs: NTabs,
-  OMenu: NMenu,
-  OForm: NForm,
-  OFormItem: NFormItem,
-  OColorPicker: NColorPicker,
-  OButton: OButton,
-  OCard: OCard,
-  OInputGroup: OInputGroup,
-  OInputNumber: OInputNumber,
-  OModal: OModal,
-  ORadio: NRadio,
-  ORadioGroup: NRadioGroup,
-  OSwitch: NSwitch,
-  OTimeline: NTimeline,
-  OTimelineItem: NTimelineItem,
-  OCollapse: NCollapse,
-  OCollapseItem: NCollapseItem,
-  ODivider: NDivider,
-  OSpin: NSpin,
-  OTooltip: NTooltip,
-  OButtonGroup: NButtonGroup
-}
 
 export type { MenuOption, SelectOption }
 
@@ -102,7 +74,6 @@ export {
   ORadioGroup,
   OSelect,
   OSlider,
-  OSpin,
   OSwitch,
   OTabPane,
   OTabs,

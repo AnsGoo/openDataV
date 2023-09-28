@@ -1,5 +1,5 @@
 <template>
-  <span class="absolute toggle z-50"> {{ viewSymbol }} </span>
+  <span class="absolute toggle z-50 bg-gray-100 dark:bg-stone-700"> {{ viewSymbol }} </span>
 </template>
 
 <script setup lang="ts">

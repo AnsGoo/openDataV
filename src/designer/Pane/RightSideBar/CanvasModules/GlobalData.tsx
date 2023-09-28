@@ -71,11 +71,7 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard
-                title={`全局数据${index + 1}`}
-                size="small"
-                style={{ marginBottom: '0.25rem' }}
-              >
+              <OCard title={`全局数据${index + 1}`} style={{ marginBottom: '0.25rem' }}>
                 {renderDataComponent(dataType, id)}
               </OCard>
             </>
@@ -134,7 +130,7 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard title="添加数据" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="添加数据" style={{ marginBottom: '0.25rem' }}>
                 {renderDataSelect()}
               </OCard>
             </>

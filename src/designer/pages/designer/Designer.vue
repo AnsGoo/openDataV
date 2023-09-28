@@ -20,7 +20,7 @@
           "
         />
       </div>
-      <Canvas class="canvas" />
+      <Canvas class="canvas border border-gray-500" />
       <div class="right o-scroll">
         <Toggle
           :x="rightWidth"

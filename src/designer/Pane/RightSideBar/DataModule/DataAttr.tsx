@@ -131,10 +131,10 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard title="数据选择" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="数据选择" style={{ marginBottom: '0.25rem' }}>
                 {renderData()}
               </OCard>
-              <OCard title="脚本配置" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="脚本配置" style={{ marginBottom: '0.25rem' }}>
                 {renderScript()}
               </OCard>
             </>
