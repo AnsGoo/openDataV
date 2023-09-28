@@ -15,7 +15,6 @@ import {
   NRadioGroup,
   NSelect,
   NSlider,
-  NSpin,
   NSwitch,
   NTabPane,
   NTabs,
@@ -49,7 +48,6 @@ const OTimelineItem = NTimelineItem
 const OCollapse = NCollapse
 const OCollapseItem = NCollapseItem
 const ODivider = Divider
-const OSpin = NSpin
 const OTooltip = NTooltip
 const OButtonGroup = NButtonGroup
 
@@ -76,7 +74,6 @@ export {
   ORadioGroup,
   OSelect,
   OSlider,
-  OSpin,
   OSwitch,
   OTabPane,
   OTabs,
