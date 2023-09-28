@@ -43,6 +43,10 @@
               </NCard>
               <NCard title="内容自定义" class="m-5 w-1/2">
                 <Card title="我的内容特别好看">
+                  <template #header>
+                    <XIcon :size="24" name="api" />
+                    <div class="inline-block">我是头部，我可以自定义</div>
+                  </template>
                   <div>
                     <img
                       src="https://s2.loli.net/2022/10/31/QJhdabXU5fOsBzj.png"

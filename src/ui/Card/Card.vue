@@ -1,7 +1,7 @@
 <template>
   <div
     :class="[
-      'flex flex-col flex-nowrap  m-2.5 p-2  rounded border-gray-300',
+      'flex flex-col flex-nowrap  m-1.5 p-2  rounded  dark:border-gray-700 border-gray-200',
       bordered ? 'border' : 'border-0'
     ]"
   >
