@@ -14,7 +14,7 @@ const Empty = defineComponent({
       <div class="flex flex-row h-full justify-center p-1.5 text-xl">
         {props.desc ? (
           <div
-            class="h-full text-gray-700 break-words align-middle text-center"
+            class="h-full text-gray-700 break-all align-middle text-center"
             style={{ overflowWrap: 'anywhere' }}
           >
             {props.desc}
