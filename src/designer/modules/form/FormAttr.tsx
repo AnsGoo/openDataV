@@ -101,10 +101,7 @@ export default defineComponent({
             <OCard
               title={item.label || ''}
               class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
-              aria-modal={true}
               bordered={options.bordered || false}
-              closable={true}
-              onClose={() => (isShow.value = false)}
             >
               <OForm size="small" labelPlacement="left" labelAlign="left">
                 {(item.children || []).map((el) => {
