@@ -19,12 +19,12 @@ import {
   NTabPane,
   NTabs,
   NTimeline,
-  NTimelineItem,
-  NTooltip
+  NTimelineItem
 } from 'naive-ui'
 
 import Card from './Card'
 import Divider from './Divider'
+import Tooltip from './Tooltip'
 import type { MenuOption, SelectOption } from './type'
 
 const OInput = NInput
@@ -48,7 +48,7 @@ const OTimelineItem = NTimelineItem
 const OCollapse = NCollapse
 const OCollapseItem = NCollapseItem
 const ODivider = Divider
-const OTooltip = NTooltip
+const OTooltip = Tooltip
 const OButtonGroup = NButtonGroup
 
 const OSlider = NSlider

@@ -85,7 +85,7 @@ export default defineComponent({
             <>
               {containerItems.map((el) => {
                 return (
-                  <OCard title={el.label} size="small" class="mb-1">
+                  <OCard title={el.label} class="mb-1">
                     {renderForm(el)}
                   </OCard>
                 )
