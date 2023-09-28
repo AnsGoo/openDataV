@@ -7,7 +7,6 @@
       :data="originData"
       :title="title"
       :mode="mode"
-      :error="errMessage"
       @update:data="originDataChange"
     />
   </o-card>

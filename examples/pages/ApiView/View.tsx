@@ -3,11 +3,13 @@ import { defineComponent } from 'vue'
 import StaticContent from '@/data/Quick/Content.vue'
 import RestContent from '@/data/Rest/DynamicExtendContent.vue'
 
+import UIView from '../UIView.vue'
+
 export default defineComponent({
   props: {
     active: {
       type: String,
-      default: 'REST'
+      default: 'UI'
     }
   },
   setup(props) {
@@ -16,6 +18,8 @@ export default defineComponent({
         return <RestContent mode="debug" />
       } else if (props.active == 'STATIC') {
         return <StaticContent mode="debug" />
+      } else {
+        return <UIView />
       }
     }
   }

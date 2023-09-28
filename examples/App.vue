@@ -9,6 +9,7 @@ import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 const projectStore = useProjectSettingStoreWithOut()
 provide('DarkTheme', readonly(computed(() => projectStore.darkTheme)))
 const { currentRoute } = useRouter()
+document.documentElement.classList.add('dark')
 </script>
 
 <template>
