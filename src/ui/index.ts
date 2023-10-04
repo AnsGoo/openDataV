@@ -1,6 +1,4 @@
 import {
-  NButton,
-  NButtonGroup,
   NCollapse,
   NCollapseItem,
   NColorPicker,
@@ -22,6 +20,7 @@ import {
   NTimelineItem
 } from 'naive-ui'
 
+import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import Divider from './Divider'
 import Tooltip from './Tooltip'
@@ -35,7 +34,7 @@ const OMenu = NMenu
 const OForm = NForm
 const OFormItem = NFormItem
 const OColorPicker = NColorPicker
-const OButton = NButton
+const OButton = Button
 const OCard = Card
 const OInputGroup = NInputGroup
 const OInputNumber = NInputNumber
@@ -49,7 +48,7 @@ const OCollapse = NCollapse
 const OCollapseItem = NCollapseItem
 const ODivider = Divider
 const OTooltip = Tooltip
-const OButtonGroup = NButtonGroup
+const OButtonGroup = ButtonGroup
 
 const OSlider = NSlider
 

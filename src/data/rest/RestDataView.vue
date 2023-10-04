@@ -16,9 +16,7 @@
         <o-input v-model:value="formData['url']" @update-value="formChange" />
       </div>
       <div>
-        <o-button-group>
-          <o-button type="primary" @click="send">调试</o-button>
-        </o-button-group>
+        <o-button type="primary" @click="send">调试</o-button>
       </div>
     </div>
     <div>
@@ -62,16 +60,7 @@
 </template>
 <script setup lang="ts">
 import type { AxiosResponse } from 'axios'
-import {
-  OButton,
-  OButtonGroup,
-  OCard,
-  ODivider,
-  OInput,
-  OSelect,
-  OTabPane,
-  OTabs
-} from 'open-data-v/ui'
+import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
 import { useRequest } from '../hooks/http'

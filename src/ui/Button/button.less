@@ -1,0 +1,106 @@
+@primaryColor: #1989fa;
+@successColor: #07c160;
+@dangerColor: #ee0a24;
+@warningColor: #ff976a;
+
+@borderColor: #dcdee0;
+@backgroundColor:#fff;
+@textColor:#323233;
+@textColor5: #fff;
+
+.BBT(@border,@background,@color){
+  border-color: @border;
+  background-color: @background;
+  color: @color;
+}
+.BBTLighten(@color,@num,@num2) {
+  border-color: lighten(@color, @num);
+  background-color: lighten(@color, @num2);
+  color: @color;
+}
+.o-btn {
+  display: inline-block;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: center;
+  box-sizing: border-box;
+  outline: none;
+  padding: 0 20px;
+  border-radius: 2px;
+  font-size: 14px;
+  transition: .2s;
+  user-select: none;
+  height: 34px;
+  line-height: 34px;
+  &:hover {
+    opacity: .8;
+  }
+  &.disabled {cursor: not-allowed;opacity: 0.5}
+  &.is-round {border-radius: 18px;
+    &.large {border-radius: 20px}
+    &.small {border-radius: 16px}
+    &.mini {border-radius: 14px}
+  }
+  &.is-circle {border-radius: 50%;height: 36px;padding: 0;width: 36px;
+    &.large {width: 40px;height: 40px}
+    &.small {width: 32px;height: 32px}
+    &.mini {width: 28px;height: 28px}
+  }
+  /*以上为默认*/
+  /*要对每种type定义不同的状态，如type=primary*/
+  &.o-btn-primary {
+ .BBT(@primaryColor, @primaryColor, @textColor5);
+    &.is-plain {
+    .BBTLighten(@primaryColor, 30, 42);
+      &:hover {
+      .BBT(@primaryColor, @primaryColor, @textColor5);
+      }
+    }
+  }
+  &.o-btn-success {
+  .BBT(@successColor, @successColor, @textColor5);
+    &.is-plain {
+    .BBTLighten(@successColor, 30, 58);
+      &:hover {
+      .BBT(@successColor, @successColor, @textColor5);
+      }
+    }
+  }
+  &.o-btn-warning {
+  .BBT(@warningColor, @warningColor, @textColor5);
+    &.is-plain {
+    .BBTLighten(@warningColor, 10, 26);
+      &:hover {
+      .BBT(@warningColor, @warningColor, @textColor5);
+      }
+    }
+  }
+  &.o-btn-danger {
+  .BBT(@dangerColor, @dangerColor, @textColor5);
+    &.is-plain {
+    .BBTLighten(@dangerColor, 30, 46);
+      &:hover {
+      .BBT(@dangerColor, @dangerColor, @textColor5);
+      }
+    }
+  }
+  &.o-btn-text {
+    //文字链接按钮
+    border: 0;padding: 0;height: auto;line-height: normal;
+  }
+  // 尺寸大小
+  &.large {padding: 0 20px;border-radius: 4px;font-size: 14px;height: 40px;line-height: 40px}
+  &.small {padding: 0 5px;border-radius: 3px;font-size: 12px;height: 32px;line-height: 32px}
+  &.mini {padding: 0 15px;border-radius: 4px;font-size: 12px;height: 28px;line-height: 28px}
+  /*+ .-btn{margin-left: 10px}*/
+  + .o-btn {margin-left: 10px}
+  // loading动画
+  .icon-loading {margin: 0 2px 0 0;position: relative;top: -2px;
+    &:before {animation: iconLoading 2s linear infinite;display: block}
+  }
+}
+#ns(btn-group) {}
+@keyframes iconLoading {
+  0% {transform: rotate(0)}
+  100% {transform: rotate(360deg)}
+}

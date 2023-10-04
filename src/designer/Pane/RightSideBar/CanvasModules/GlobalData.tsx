@@ -98,7 +98,7 @@ export default defineComponent({
 
     const renderDataSelect = () => {
       return (
-        <OForm size="small" labelPlacement="top" labelAlign="left">
+        <OForm labelPlacement="top" labelAlign="left">
           <OFormItem key="dataType" label="数据类型">
             <OInputGroup>
               <OSelect
