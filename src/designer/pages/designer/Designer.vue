@@ -100,15 +100,14 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
       transition-property: width;
       transition-duration: 0.5s;
       width: v-bind(leftWidth);
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden;
     }
     .right {
       transition-property: width;
       transition-duration: 0.5s;
       width: v-bind(rightWidth);
       height: 100%;
-      overflow: auto;
+      overflow: hidden;
     }
   }
 }
