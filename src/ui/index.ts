@@ -1,6 +1,4 @@
 import {
-  NCollapse,
-  NCollapseItem,
   NColorPicker,
   NForm,
   NFormItem,
@@ -22,6 +20,7 @@ import {
 
 import { Button, ButtonGroup } from './Button'
 import Card from './Card'
+import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
 import Tooltip from './Tooltip'
 import type { MenuOption, SelectOption } from './type'
@@ -44,8 +43,8 @@ const ORadioGroup = NRadioGroup
 const OSwitch = NSwitch
 const OTimeline = NTimeline
 const OTimelineItem = NTimelineItem
-const OCollapse = NCollapse
-const OCollapseItem = NCollapseItem
+const OCollapse = Collapse
+const OCollapseItem = CollapsePanel
 const ODivider = Divider
 const OTooltip = Tooltip
 const OButtonGroup = ButtonGroup

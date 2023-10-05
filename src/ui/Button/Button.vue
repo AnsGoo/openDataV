@@ -60,9 +60,7 @@ const classStyle = computed(() => {
     'is-circle': props.circle || groupConfig.plain,
     ['o-btn-' + (props.type || 'default')]: true
   }
-  console.log(props.bordered)
   if (!props.bordered) {
-    console.log('-------')
     classes['o-btn-bordered'] = true
   }
   return classes
