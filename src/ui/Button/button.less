@@ -1,7 +1,7 @@
-@primaryColor: #1989fa;
-@successColor: #07c160;
-@dangerColor: #ee0a24;
-@warningColor: #ff976a;
+@primaryColor: #2080f0;
+@successColor: #18a058;
+@dangerColor: #d03050;
+@warningColor: #f0a020;
 
 @borderColor: #dcdee0;
 @backgroundColor:#fff;
@@ -26,12 +26,13 @@
   box-sizing: border-box;
   outline: none;
   padding: 0 20px;
-  border-radius: 2px;
+  border-radius: 3px;
   font-size: 14px;
   transition: .2s;
   user-select: none;
   height: 34px;
   line-height: 34px;
+  border: 1px solid @borderColor;
   &:hover {
     opacity: .8;
   }
@@ -70,17 +71,20 @@
   .BBT(@warningColor, @warningColor, @textColor5);
     &.is-plain {
     .BBTLighten(@warningColor, 10, 26);
-      &:hover {
-      .BBT(@warningColor, @warningColor, @textColor5);
-      }
+        &:hover {
+        .BBT(@warningColor, @warningColor, @textColor5);
+        }
     }
   }
+  &.o-btn-bordered {
+    border: none;
+  }
   &.o-btn-danger {
-  .BBT(@dangerColor, @dangerColor, @textColor5);
+    .BBT(@dangerColor, @dangerColor, @textColor5);
     &.is-plain {
-    .BBTLighten(@dangerColor, 30, 46);
+      .BBTLighten(@dangerColor, 30, 46);
       &:hover {
-      .BBT(@dangerColor, @dangerColor, @textColor5);
+        .BBT(@dangerColor, @dangerColor, @textColor5);
       }
     }
   }
@@ -92,15 +96,5 @@
   &.large {padding: 0 20px;border-radius: 4px;font-size: 14px;height: 40px;line-height: 40px}
   &.small {padding: 0 5px;border-radius: 3px;font-size: 12px;height: 32px;line-height: 32px}
   &.mini {padding: 0 15px;border-radius: 4px;font-size: 12px;height: 28px;line-height: 28px}
-  /*+ .-btn{margin-left: 10px}*/
-  + .o-btn {margin-left: 10px}
-  // loading动画
-  .icon-loading {margin: 0 2px 0 0;position: relative;top: -2px;
-    &:before {animation: iconLoading 2s linear infinite;display: block}
-  }
 }
-#ns(btn-group) {}
-@keyframes iconLoading {
-  0% {transform: rotate(0)}
-  100% {transform: rotate(360deg)}
-}
+
