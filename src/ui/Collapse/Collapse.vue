@@ -22,8 +22,6 @@ const emits = defineEmits<{
 }>()
 
 const provideChangePanel = (v: boolean) => {
-  /*console.log(v)
-      console.log('provideChangePanel')*/
   emits('change', v)
 }
 provide(`OChangePanel`, provideChangePanel)

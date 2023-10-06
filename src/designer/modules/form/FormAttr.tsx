@@ -97,16 +97,8 @@ export default defineComponent({
               {options.buttonText}
             </OButton>
           </OInputGroup>
-          <OModal
-            v-model:show={isShow.value}
-            displayDirective="show"
-            class={['dark:bg-gray-800', 'bg-gray-100']}
-          >
-            <OCard
-              title={item.label || ''}
-              class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
-              bordered={options.bordered || false}
-            >
+          <OModal v-model:show={isShow.value} class={['dark:bg-gray-800', 'bg-gray-100']}>
+            <OCard title={item.label || ''} bordered={options.bordered || false}>
               <OForm size="small" labelPlacement="left" labelAlign="left">
                 {(item.children || []).map((el) => {
                   return (

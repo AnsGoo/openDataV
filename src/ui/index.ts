@@ -6,7 +6,6 @@ import {
   NInputGroup,
   NInputNumber,
   NMenu,
-  NModal,
   NRadio,
   NRadioGroup,
   NSelect
@@ -16,6 +15,7 @@ import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
+import Modal from './Modal'
 import Slider from './Slider'
 import Switch from './Switch'
 import { TabPane, Tabs } from './Tabs'
@@ -34,7 +34,7 @@ const OButton = Button
 const OCard = Card
 const OInputGroup = NInputGroup
 const OInputNumber = NInputNumber
-const OModal = NModal
+const OModal = Modal
 const ORadio = NRadio
 const ORadioGroup = NRadioGroup
 const OSwitch = Switch
