@@ -85,9 +85,6 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
 <style scoped lang="less">
 @import 'open-data-v/css/index.less';
 .main {
-  .top {
-    border-bottom: 1px solid;
-  }
   .content {
     width: 100vw;
     height: calc(95vh - 2rem);

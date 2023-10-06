@@ -9,8 +9,7 @@ import {
   NModal,
   NRadio,
   NRadioGroup,
-  NSelect,
-  NSwitch
+  NSelect
 } from 'naive-ui'
 
 import { Button, ButtonGroup } from './Button'
@@ -18,6 +17,7 @@ import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
 import Slider from './Slider'
+import Switch from './Switch'
 import { TabPane, Tabs } from './Tabs'
 import Tooltip from './Tooltip'
 import type { MenuOption, SelectOption } from './type'
@@ -37,7 +37,7 @@ const OInputNumber = NInputNumber
 const OModal = NModal
 const ORadio = NRadio
 const ORadioGroup = NRadioGroup
-const OSwitch = NSwitch
+const OSwitch = Switch
 const OCollapse = Collapse
 const OCollapseItem = CollapsePanel
 const ODivider = Divider
