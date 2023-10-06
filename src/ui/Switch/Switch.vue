@@ -7,7 +7,6 @@
       disabled: disabled,
       [size as string]: size
     }"
-    :style="style"
     @click="click"
   >
     <i :class="`o-switch-inner`"></i>
@@ -24,11 +23,8 @@ const props = withDefaults(
   defineProps<{
     value?: string | number | boolean
     disabled?: boolean
-    activeColor?: string // 打开时的颜色
-    closeColor?: string // 关闭时的颜色
     activeValue?: string | number // switch 打开时的值
     closeValue?: string | number // switch 关闭时的值
-    beforeChange?: Function
     size?: string
   }>(),
   {
@@ -51,28 +47,8 @@ const status = computed(() => {
     return props.value
   }
 })
-const style = computed(() => {
-  let elStyle = {}
-  if (props.value && props.activeColor) {
-    // 打开状态，并设置了打开时的颜色
-    elStyle = {
-      borderColor: props.activeColor,
-      backgroundColor: props.activeColor
-    }
-  }
-  if (!props.value && props.closeColor) {
-    elStyle = {
-      borderColor: props.closeColor,
-      backgroundColor: props.closeColor
-    }
-  }
-  return elStyle
-})
 const click = () => {
   if (!props.disabled) {
-    if (props.beforeChange && !props.beforeChange()) {
-      return
-    }
     let checked
     if (!status.value) {
       if (props.activeValue) {
