@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import { computed, inject, onMounted, useSlots } from 'vue'
 
-import CollapseTransition from '../Transition/Transition.vue'
+import CollapseTransition from '../Transition'
 
 const props = withDefaults(
   defineProps<{

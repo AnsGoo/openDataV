@@ -8,9 +8,7 @@ import {
   ODivider,
   OForm,
   OFormItem,
-  OSelect,
-  OTimeline,
-  OTimelineItem
+  OSelect
 } from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, onMounted, ref, watch } from 'vue'
@@ -151,17 +149,6 @@ export default defineComponent({
               </ODivider>
               {renderScript()}
             </div>
-          )
-        case ContainerType.TIMELINE:
-          return (
-            <OTimeline>
-              <OTimelineItem title="数据选择" type={'success'}>
-                {renderData()}
-              </OTimelineItem>
-              <OTimelineItem title="脚本配置" type={'success'}>
-                {renderScript()}
-              </OTimelineItem>
-            </OTimeline>
           )
       }
     }

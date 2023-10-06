@@ -9,9 +9,7 @@ import {
   OForm,
   OFormItem,
   OInputGroup,
-  OSelect,
-  OTimeline,
-  OTimelineItem
+  OSelect
 } from 'open-data-v/ui'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
@@ -85,14 +83,6 @@ export default defineComponent({
               {renderDataComponent(dataType, id)}
             </div>
           )
-        case ContainerType.TIMELINE:
-          return (
-            <OTimeline>
-              <OTimelineItem title={`全局数据${index + 1}`} type={'success'}>
-                {renderDataComponent(dataType, id)}
-              </OTimelineItem>
-            </OTimeline>
-          )
       }
     }
 
@@ -143,14 +133,6 @@ export default defineComponent({
               </ODivider>
               {renderDataSelect()}
             </div>
-          )
-        case ContainerType.TIMELINE:
-          return (
-            <OTimeline>
-              <OTimelineItem title="添加数据" type={'success'}>
-                {renderDataSelect()}
-              </OTimelineItem>
-            </OTimeline>
           )
       }
     }

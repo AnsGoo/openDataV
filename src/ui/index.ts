@@ -10,25 +10,22 @@ import {
   NRadio,
   NRadioGroup,
   NSelect,
-  NSlider,
-  NSwitch,
-  NTabPane,
-  NTabs,
-  NTimeline,
-  NTimelineItem
+  NSwitch
 } from 'naive-ui'
 
 import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
+import Slider from './Slider'
+import { TabPane, Tabs } from './Tabs'
 import Tooltip from './Tooltip'
 import type { MenuOption, SelectOption } from './type'
 
 const OInput = NInput
 const OSelect = NSelect
-const OTabPane = NTabPane
-const OTabs = NTabs
+const OTabPane = TabPane
+const OTabs = Tabs
 const OMenu = NMenu
 const OForm = NForm
 const OFormItem = NFormItem
@@ -41,15 +38,13 @@ const OModal = NModal
 const ORadio = NRadio
 const ORadioGroup = NRadioGroup
 const OSwitch = NSwitch
-const OTimeline = NTimeline
-const OTimelineItem = NTimelineItem
 const OCollapse = Collapse
 const OCollapseItem = CollapsePanel
 const ODivider = Divider
 const OTooltip = Tooltip
 const OButtonGroup = ButtonGroup
 
-const OSlider = NSlider
+const OSlider = Slider
 
 export type { MenuOption, SelectOption }
 
@@ -75,7 +70,5 @@ export {
   OSwitch,
   OTabPane,
   OTabs,
-  OTimeline,
-  OTimelineItem,
   OTooltip
 }

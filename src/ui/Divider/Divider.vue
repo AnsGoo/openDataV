@@ -6,8 +6,8 @@
     <div
       :class="[
         titlePlacement === 'left' ? 'w-1/5' : titlePlacement === 'center' ? 'w-1/2' : 'w-full',
-        'bg-stone-700',
-        'dark:bg-gray-700',
+        'bg-zinc-200',
+        'dark:bg-zinc-500',
         'border-0'
       ]"
       style="height: 1px"
@@ -16,8 +16,8 @@
     <div
       :class="[
         titlePlacement === 'right' ? 'w-1/5' : titlePlacement === 'center' ? 'w-1/2' : 'w-full',
-        'bg-stone-700',
-        'dark:bg-gray-700',
+        'bg-zinc-200',
+        'dark:bg-zinc-500',
         'border-0'
       ]"
       style="height: 1px"
@@ -26,7 +26,7 @@
 
   <div
     v-else
-    class="bg-stone-700 dark:bg-gray-700 border-0 inline-block align-middle h-4 mr-1 ml-1"
+    class="bg-zinc-200 dark:bg-zinc-500 border-0 inline-block align-middle h-4 mr-1 ml-1"
     style="width: 1px"
   ></div>
 </template>

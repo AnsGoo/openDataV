@@ -20,22 +20,22 @@
       </div>
     </div>
     <div>
-      <o-tabs type="line" animated>
-        <o-tab-pane name="query" tab="请求参数" display-directive="show">
+      <o-tabs value="query" justify-content="flex-start">
+        <o-tab-pane name="query" label="请求参数">
           <DynamicKVForm
             v-model:value="formData['params']"
             title="请求参数"
             @update:value="formChange"
           />
         </o-tab-pane>
-        <o-tab-pane name="data" tab="请求体" display-directive="show">
+        <o-tab-pane name="data" label="请求体">
           <DynamicKVForm
             v-model:value="formData['data']"
             title="请求体"
             @update:value="formChange"
           />
         </o-tab-pane>
-        <o-tab-pane name="headers" tab="请求头" display-directive="show">
+        <o-tab-pane name="headers" label="请求头">
           <div class="headers">
             <DynamicKVForm
               v-model:value="formData['headers']"

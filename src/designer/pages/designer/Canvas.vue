@@ -6,14 +6,15 @@
       </div>
     </div>
     <div class="flex flex-row justify-end items-center ml-0.5 w-full">
-      <div class="flex-nowrap flex">
+      <div class="flex-nowrap flex items-center">
         <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }"> 缩放: </span>
+
         <o-slider
           :value="sliderValue"
           :min="10"
           :max="200"
           style="width: 120px"
-          @update:value="handleScale"
+          @update:value="(value) => handleScale(value as number)"
         />
         <o-select
           :value="selectValue"
@@ -83,7 +84,7 @@ const editorWindowResizeHandler = (entry: ResizeObserverEntry) => {
   windowHeight.value = height - 100
 }
 
-const handleScale = (value: number) => {
+const handleScale = (value: number): void => {
   selectValue.value = `${value}%`
   sliderValue.value = value
   changeScale(sliderValue.value)
