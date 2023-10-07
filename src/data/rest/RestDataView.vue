@@ -16,28 +16,26 @@
         <o-input v-model:value="formData['url']" @update-value="formChange" />
       </div>
       <div>
-        <o-button-group>
-          <o-button type="primary" @click="send">调试</o-button>
-        </o-button-group>
+        <o-button type="primary" @click="send">调试</o-button>
       </div>
     </div>
     <div>
-      <o-tabs type="line" animated>
-        <o-tab-pane name="query" tab="请求参数" display-directive="show">
+      <o-tabs value="query" justify-content="flex-start">
+        <o-tab-pane name="query" label="请求参数">
           <DynamicKVForm
             v-model:value="formData['params']"
             title="请求参数"
             @update:value="formChange"
           />
         </o-tab-pane>
-        <o-tab-pane name="data" tab="请求体" display-directive="show">
+        <o-tab-pane name="data" label="请求体">
           <DynamicKVForm
             v-model:value="formData['data']"
             title="请求体"
             @update:value="formChange"
           />
         </o-tab-pane>
-        <o-tab-pane name="headers" tab="请求头" display-directive="show">
+        <o-tab-pane name="headers" label="请求头">
           <div class="headers">
             <DynamicKVForm
               v-model:value="formData['headers']"
@@ -62,16 +60,7 @@
 </template>
 <script setup lang="ts">
 import type { AxiosResponse } from 'axios'
-import {
-  OButton,
-  OButtonGroup,
-  OCard,
-  ODivider,
-  OInput,
-  OSelect,
-  OTabPane,
-  OTabs
-} from 'open-data-v/ui'
+import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
 import { useRequest } from '../hooks/http'

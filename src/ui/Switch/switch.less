@@ -1,0 +1,78 @@
+
+@primaryColor: #2080f0;
+@borderColor: #dcdee0;
+@backgroundColor:#fff;
+
+.o-switch {
+  @height: 22px;
+  display: inline-block;
+  box-sizing: border-box;
+  height: @height;
+  min-width: 44px;
+  vertical-align: middle;
+  border-radius: 20px;
+  background: #ccc;
+  cursor: pointer;
+  transition: all 1s;
+  user-select: none;
+  position: relative;
+  .o-switch-inner {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 0px;
+    top: 0px;
+    border-radius: 50%;
+    background-color: @backgroundColor;
+    cursor: pointer;
+    transition: all .5s;
+    display: block;}
+  .switch-text {
+    text-align: right;
+    display: block;
+    padding: 0 5px;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    transition: all .3s
+  }
+  &.switch-checked {
+    background: @primaryColor;
+    .o-switch-inner {
+      left: 23px;
+    }
+    .switch-text {
+      text-align: left
+    }
+  }
+  &.disabled {
+    opacity: 1;
+    cursor: not-allowed
+  }
+  &.large {
+    height: 24px;
+    .o-switch-inner {
+      top: 2px;
+    }
+  }
+  &.small {
+    height: 18px;
+    min-width: 40px;
+    .o-switch-inner {
+      height: 14px;
+      width: 14px;}
+  }
+  &.mini {
+    height: 16px;
+    min-width: 32px;
+    &.switch-checked {
+      .o-switch-inner {
+        left: 16px;
+      }
+    }
+    .o-switch-inner {
+      height: 12px;
+      width: 12px;
+    }
+  }
+}

@@ -46,7 +46,7 @@ export class CustomComponent {
   // 检测变化
   propIsChange = true
   styleIsChange = true
-  defaultViewType: ContainerType = ContainerType.CARD
+  defaultViewType: ContainerType = ContainerType.COLLAPSE
 
   // form表单中使用
   _prop: MetaContainerItem[] = []

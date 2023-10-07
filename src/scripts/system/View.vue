@@ -8,7 +8,6 @@
   <DynamicForm v-model:data="extendParam" :items="extendParamItems" @change="extendParamChange" />
   <o-modal v-model:show="isShow">
     <o-card
-      style="width: 600px"
       title="文档"
       :bordered="false"
       size="small"

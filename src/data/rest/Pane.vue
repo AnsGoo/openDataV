@@ -24,9 +24,8 @@
       <template #suffix> ms </template>
     </o-input-number>
   </o-form-item>
-  <o-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
+  <o-modal v-model:show="isShow" :beforeClose="changeHandler">
     <o-card
-      class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
       title="动态数据"
       :bordered="false"
       size="small"

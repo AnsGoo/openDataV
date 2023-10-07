@@ -12,26 +12,16 @@
         </o-button-group>
       </div>
     </div>
-    <div>
-      <o-tabs type="line" animated>
-        <o-tab-pane name="query" tab="消息" display-directive="show">
-          <div>
-            <OCodeEditor v-model:value="formData.message" class="content" height="100px" />
-          </div>
-        </o-tab-pane>
-      </o-tabs>
-    </div>
-    <div>
-      <o-tabs>
-        <o-tab-pane name="origin" tab="原始数据结果" display-directive="show">
-          <OCodeEditor :value="response.data" />
-        </o-tab-pane>
-      </o-tabs>
-    </div>
+    <o-card name="query" title="消息">
+      <OCodeEditor v-model:value="formData.message" height="100px" />
+    </o-card>
+    <o-card name="origin" title="原始数据结果">
+      <OCodeEditor :value="response.data" />
+    </o-card>
   </o-card>
 </template>
 <script setup lang="ts">
-import { OButton, OButtonGroup, OCard, OInput, OTabPane, OTabs } from 'open-data-v/ui'
+import { OButton, OButtonGroup, OCard, OInput } from 'open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
 import { dataLogger } from '../utils'

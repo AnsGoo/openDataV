@@ -10,9 +10,8 @@
       <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
     </o-input-group>
   </o-form-item>
-  <o-modal v-model:show="isShow" display-directive="show">
+  <o-modal v-model:show="isShow">
     <o-card
-      class="lg:w-1/3 md:w-1/3 xl:w-1/3 sm:w-full"
       title="订阅通道"
       :bordered="false"
       size="small"

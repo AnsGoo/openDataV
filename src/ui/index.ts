@@ -1,8 +1,4 @@
 import {
-  NButton,
-  NButtonGroup,
-  NCollapse,
-  NCollapseItem,
   NColorPicker,
   NForm,
   NFormItem,
@@ -10,48 +6,45 @@ import {
   NInputGroup,
   NInputNumber,
   NMenu,
-  NModal,
   NRadio,
   NRadioGroup,
-  NSelect,
-  NSlider,
-  NSwitch,
-  NTabPane,
-  NTabs,
-  NTimeline,
-  NTimelineItem
+  NSelect
 } from 'naive-ui'
 
+import { Button, ButtonGroup } from './Button'
 import Card from './Card'
+import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
+import Modal from './Modal'
+import Slider from './Slider'
+import Switch from './Switch'
+import { TabPane, Tabs } from './Tabs'
 import Tooltip from './Tooltip'
 import type { MenuOption, SelectOption } from './type'
 
 const OInput = NInput
 const OSelect = NSelect
-const OTabPane = NTabPane
-const OTabs = NTabs
+const OTabPane = TabPane
+const OTabs = Tabs
 const OMenu = NMenu
 const OForm = NForm
 const OFormItem = NFormItem
 const OColorPicker = NColorPicker
-const OButton = NButton
+const OButton = Button
 const OCard = Card
 const OInputGroup = NInputGroup
 const OInputNumber = NInputNumber
-const OModal = NModal
+const OModal = Modal
 const ORadio = NRadio
 const ORadioGroup = NRadioGroup
-const OSwitch = NSwitch
-const OTimeline = NTimeline
-const OTimelineItem = NTimelineItem
-const OCollapse = NCollapse
-const OCollapseItem = NCollapseItem
+const OSwitch = Switch
+const OCollapse = Collapse
+const OCollapseItem = CollapsePanel
 const ODivider = Divider
 const OTooltip = Tooltip
-const OButtonGroup = NButtonGroup
+const OButtonGroup = ButtonGroup
 
-const OSlider = NSlider
+const OSlider = Slider
 
 export type { MenuOption, SelectOption }
 
@@ -77,7 +70,5 @@ export {
   OSwitch,
   OTabPane,
   OTabs,
-  OTimeline,
-  OTimelineItem,
   OTooltip
 }

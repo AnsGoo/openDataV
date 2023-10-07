@@ -85,9 +85,6 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
 <style scoped lang="less">
 @import 'open-data-v/css/index.less';
 .main {
-  .top {
-    border-bottom: 1px solid;
-  }
   .content {
     width: 100vw;
     height: calc(95vh - 2rem);
@@ -100,15 +97,14 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
       transition-property: width;
       transition-duration: 0.5s;
       width: v-bind(leftWidth);
-      overflow-y: auto;
-      overflow-x: hidden;
+      overflow: hidden;
     }
     .right {
       transition-property: width;
       transition-duration: 0.5s;
       width: v-bind(rightWidth);
       height: 100%;
-      overflow: auto;
+      overflow: hidden;
     }
   }
 }
