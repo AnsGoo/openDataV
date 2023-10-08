@@ -5,16 +5,11 @@ import {
   OCard,
   OCollapse,
   OCollapseItem,
-  ODescriptions,
-  ODescriptionsItem,
   ODivider,
-  OEmpty,
   OForm,
   OFormItem,
   OInputGroup,
-  OSelect,
-  OTimeline,
-  OTimelineItem
+  OSelect
 } from 'open-data-v/ui'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
@@ -74,11 +69,7 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard
-                title={`全局数据${index + 1}`}
-                size="small"
-                style={{ marginBottom: '0.25rem' }}
-              >
+              <OCard title={`全局数据${index + 1}`} style={{ marginBottom: '0.25rem' }}>
                 {renderDataComponent(dataType, id)}
               </OCard>
             </>
@@ -92,20 +83,12 @@ export default defineComponent({
               {renderDataComponent(dataType, id)}
             </div>
           )
-        case ContainerType.TIMELINE:
-          return (
-            <OTimeline>
-              <OTimelineItem title={`全局数据${index + 1}`} type={'success'}>
-                {renderDataComponent(dataType, id)}
-              </OTimelineItem>
-            </OTimeline>
-          )
       }
     }
 
     const renderDataSelect = () => {
       return (
-        <OForm size="small" labelPlacement="top" labelAlign="left">
+        <OForm labelPlacement="top" labelAlign="left">
           <OFormItem key="dataType" label="数据类型">
             <OInputGroup>
               <OSelect
@@ -137,7 +120,7 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard title="添加数据" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="添加数据" style={{ marginBottom: '0.25rem' }}>
                 {renderDataSelect()}
               </OCard>
             </>
@@ -151,14 +134,6 @@ export default defineComponent({
               {renderDataSelect()}
             </div>
           )
-        case ContainerType.TIMELINE:
-          return (
-            <OTimeline>
-              <OTimelineItem title="添加数据" type={'success'}>
-                {renderDataSelect()}
-              </OTimelineItem>
-            </OTimeline>
-          )
       }
     }
     return () =>
@@ -168,11 +143,7 @@ export default defineComponent({
           {dataOptions.value.map((el, index) => renderContainer(el.type, el.id, index))}
         </>
       ) : (
-        <ODescriptions>
-          <ODescriptionsItem>
-            <OEmpty description="未发现任何全局数据插件"></OEmpty>
-          </ODescriptionsItem>
-        </ODescriptions>
+        useEmpty('未发现任何全局数据插件')
       )
   }
 })

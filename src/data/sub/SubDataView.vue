@@ -1,6 +1,6 @@
 <template>
   <o-card>
-    <div class="static-data">
+    <div>
       <slot name="data-select"></slot>
     </div>
     <o-form>

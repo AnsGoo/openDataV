@@ -1,9 +1,8 @@
 <template>
-  <o-tooltip>
-    <template #trigger>
-      <o-button quaternary size="small" :title="label" @click="action"> <IconComponent /></o-button>
-    </template>
-    <span>{{ label }}</span>
+  <o-tooltip :content="label">
+    <o-button :bordered="false" size="small" :title="label" @click="action">
+      <IconComponent
+    /></o-button>
   </o-tooltip>
   <o-divider v-if="divider" vertical />
 </template>

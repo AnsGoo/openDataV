@@ -84,9 +84,3 @@ const calcDragIndex = (fromIndex: string, toIndex: string): string => {
   return toIndex
 }
 </script>
-
-<style lang="less" scoped>
-.iconfont {
-  @apply mr-1 text-xl;
-}
-</style>

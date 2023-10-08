@@ -1,59 +1,74 @@
 <template>
-  <div v-if="!iscollapsed">
+  <div v-if="iscollapsed">
     <o-tabs
       v-if="curComponent"
       v-model:value="activeKey"
-      type="line"
-      animated
-      justify-content="center"
       @update:value="
         (key) => {
           activeKey = key
         }
       "
     >
-      <o-tab-pane name="style" display-directive="show:lazy">
-        <template #tab>
-          <x-icon name="textStyle" />
-          <span v-show="!iscollapsed">样式</span>
+      <o-tab-pane name="style">
+        <template #label>
+          <div class="flex-nowrap flex flex-row items-center">
+            <x-icon name="textStyle" class="inline-block" />
+            <span v-show="iscollapsed" class="inline-block">样式</span>
+          </div>
         </template>
-        <div class="attr-list">
+        <div class="attr-list o-scroll">
           <StyleList :curComponent="curComponent" />
         </div>
       </o-tab-pane>
-      <o-tab-pane name="attr" display-directive="show:lazy">
-        <template #tab>
-          <x-icon name="attr" />
-          <span v-show="!iscollapsed">属性</span>
+      <o-tab-pane name="attr">
+        <template #label>
+          <div class="flex-nowrap flex flex-row items-center">
+            <x-icon name="attr" class="inline-block" />
+            <span v-show="iscollapsed" class="inline-block">属性</span>
+          </div>
         </template>
-        <div class="attr-list">
+        <div class="attr-list o-scroll">
           <AttrList :curComponent="curComponent" />
         </div>
       </o-tab-pane>
-      <o-tab-pane name="data" display-directive="show:lazy">
-        <template #tab>
-          <x-icon name="data" />
-          <span v-show="!iscollapsed">数据</span>
+      <o-tab-pane name="data">
+        <template #label>
+          <div class="flex-nowrap flex flex-row items-center">
+            <x-icon name="data" class="inline-block" />
+            <span v-show="iscollapsed" class="inline-block">数据</span>
+          </div>
         </template>
-        <div class="attr-list">
+        <div class="attr-list o-scroll">
           <DataList :curComponent="curComponent" />
         </div>
       </o-tab-pane>
     </o-tabs>
-    <o-tabs v-else type="line" animated justify-content="center">
-      <o-tab-pane name="canvas" display-directive="show:lazy">
-        <template #tab>
-          <x-icon name="canvas" />
-          <span v-show="!iscollapsed">画布</span>
+    <o-tabs
+      v-else
+      v-model:value="canvasActiveKey"
+      @update:value="
+        (key) => {
+          canvasActiveKey = key
+        }
+      "
+    >
+      <o-tab-pane name="canvas">
+        <template #label>
+          <div class="flex-nowrap flex flex-row items-center">
+            <x-icon name="canvas" />
+            <span v-show="iscollapsed">画布</span>
+          </div>
         </template>
         <div class="attr-list">
           <Canvas />
         </div>
       </o-tab-pane>
-      <o-tab-pane name="data" display-directive="show:lazy">
-        <template #tab>
-          <x-icon name="data" />
-          <span v-show="!iscollapsed">数据</span>
+      <o-tab-pane name="data">
+        <template #label>
+          <div class="flex-nowrap flex flex-row items-center">
+            <x-icon name="data" />
+            <span v-show="iscollapsed">数据</span>
+          </div>
         </template>
         <div class="attr-list">
           <GlobalData />
@@ -62,7 +77,11 @@
     </o-tabs>
   </div>
   <div v-else>
-    <o-menu :options="menuOptions" />
+    <o-menu
+      :options="menuOptions"
+      :collapsed="!iscollapsed"
+      class="h-full o-scroll overflow-auto"
+    />
   </div>
 </template>
 
@@ -96,6 +115,8 @@ const emits = defineEmits<{
 }>()
 
 const curComponent = computed(() => canvasState.curComponent)
+
+const canvasActiveKey = ref<string>('canvas')
 const menuOptions = computed<MenuOption[]>(() => {
   if (canvasState.curComponent) {
     return [
@@ -134,7 +155,17 @@ const menuOptions = computed<MenuOption[]>(() => {
         key: '1',
         icon: () =>
           h(XIcon, {
-            name: 'page'
+            name: 'canvas',
+            onClick: () => collapsedTabPane('canvas')
+          })
+      },
+      {
+        label: '数据',
+        key: '2',
+        icon: () =>
+          h(XIcon, {
+            name: 'data',
+            onClick: () => collapsedTabPane('data')
           })
       }
     ]
@@ -142,14 +173,15 @@ const menuOptions = computed<MenuOption[]>(() => {
 })
 
 const collapsedTabPane = (key: string) => {
-  emits('update:iscollapsed', false)
+  emits('update:iscollapsed', true)
   activeKey.value = key
 }
 </script>
 <style scoped>
+@import 'open-data-v/css/index.less';
 .attr-list {
-  @apply overflow-auto p-1 pt-0 h-full;
+  @apply overflow-auto p-1 pt-0;
   backdrop-filter: blur(50px);
-  //margin-right: 10px;
+  height: calc(90vh - 28px);
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
-  <div class="header">
-    <o-divider title-placement="left" style="width: 50%">
+  <div class="header flex flex-row flex-nowrap">
+    <o-divider title-placement="left" class="w-1/2">
       {{ title }}
     </o-divider>
     <o-divider title-placement="right" style="width: 50%">
@@ -10,9 +10,9 @@
     </o-divider>
   </div>
   <div v-for="(item, index) in formData" :key="item.id">
-    <o-input-group class="param-item">
+    <o-input-group class="mb-0.5">
       <o-input
-        style="width: 50%"
+        class="w-1/2"
         size="small"
         :input-props="{
           autocomplete: 'disabled'
@@ -23,7 +23,7 @@
         @update:value="(value) => changed(index, 'key', value)"
       />
       <o-input
-        style="width: 50%"
+        class="w-1/2"
         size="small"
         :value="formData[index]['value']"
         :allow-input="noSideSpace"
@@ -116,20 +116,10 @@ watch(
 )
 </script>
 <style lang="less" scoped>
-:deep(.n-divider:not(.n-divider--vertical)) {
-  margin-top: 5px;
-  margin-bottom: 5px;
-}
-
-.header {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  .action {
-    &:hover {
-      scale: 1.2;
-    }
-    transition: transform 1s ease-in-out;
+.action {
+  &:hover {
+    scale: 1.2;
   }
+  transition: transform 2s ease-in-out;
 }
 </style>

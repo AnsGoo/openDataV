@@ -1,6 +1,6 @@
 import type { MetaContainerItem, MetaForm } from 'open-data-v/base'
 import { ContainerType } from 'open-data-v/base'
-import { OCard, OCollapse, OCollapseItem, ODivider, OTimeline, OTimelineItem } from 'open-data-v/ui'
+import { OCard, OCollapse, OCollapseItem, ODivider } from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 
@@ -85,7 +85,7 @@ export default defineComponent({
             <>
               {containerItems.map((el) => {
                 return (
-                  <OCard title={el.label} size="small" style={{ marginBottom: '0.25rem' }}>
+                  <OCard title={el.label} class="mb-1">
                     {renderForm(el)}
                   </OCard>
                 )
@@ -94,7 +94,7 @@ export default defineComponent({
           )
         case ContainerType.FORM:
           return (
-            <div style={{ padding: '0 1rem' }}>
+            <div class="p-2">
               {containerItems.map((el) => {
                 return (
                   <>
@@ -109,18 +109,6 @@ export default defineComponent({
                 )
               })}
             </div>
-          )
-        case ContainerType.TIMELINE:
-          return (
-            <OTimeline>
-              {containerItems.map((el) => {
-                return (
-                  <OTimelineItem key={el.prop} title={el.label} type={'success'}>
-                    {renderForm(el)}
-                  </OTimelineItem>
-                )
-              })}
-            </OTimeline>
           )
       }
     }

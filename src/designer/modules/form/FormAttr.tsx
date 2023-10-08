@@ -97,17 +97,8 @@ export default defineComponent({
               {options.buttonText}
             </OButton>
           </OInputGroup>
-          <OModal v-model:show={isShow.value} displayDirective="show">
-            <OCard
-              title={item.label || ''}
-              style="width: 600px"
-              size={options.size || 'small'}
-              role="dialog"
-              aria-modal={true}
-              bordered={options.bordered || false}
-              closable={true}
-              onClose={() => (isShow.value = false)}
-            >
+          <OModal v-model:show={isShow.value} class={['dark:bg-gray-800', 'bg-gray-100']}>
+            <OCard title={item.label || ''} bordered={options.bordered || false}>
               <OForm size="small" labelPlacement="left" labelAlign="left">
                 {(item.children || []).map((el) => {
                   return (

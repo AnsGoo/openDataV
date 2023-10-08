@@ -3,42 +3,39 @@
     <div class="rest-data">
       <slot name="data-select"></slot>
     </div>
-    <div class="api">
-      <o-select
-        v-model:value="formData['method']"
-        :options="requestMethodOptions"
-        class="method"
-        :show-arrow="true"
-        @update-value="formChange"
-      />
-      <o-input v-model:value="formData['url']" class="url" @update-value="formChange" />
-      <o-space>
-        <o-button-group class="send">
-          <o-button type="primary" @click="send">调试</o-button>
-        </o-button-group>
-      </o-space>
+    <div class="flex flex-row mt-1">
+      <div class="w-1/4">
+        <o-select
+          v-model:value="formData['method']"
+          :options="requestMethodOptions"
+          :show-arrow="true"
+          @update-value="formChange"
+        />
+      </div>
+      <div class="w-3/4">
+        <o-input v-model:value="formData['url']" @update-value="formChange" />
+      </div>
+      <div>
+        <o-button type="primary" @click="send">调试</o-button>
+      </div>
     </div>
-    <div class="config">
-      <o-tabs type="line" animated>
-        <o-tab-pane name="query" tab="请求参数" display-directive="show">
-          <div class="params">
-            <DynamicKVForm
-              v-model:value="formData['params']"
-              title="请求参数"
-              @update:value="formChange"
-            />
-          </div>
+    <div>
+      <o-tabs value="query" justify-content="flex-start">
+        <o-tab-pane name="query" label="请求参数">
+          <DynamicKVForm
+            v-model:value="formData['params']"
+            title="请求参数"
+            @update:value="formChange"
+          />
         </o-tab-pane>
-        <o-tab-pane name="data" tab="请求体" display-directive="show">
-          <div class="headers">
-            <DynamicKVForm
-              v-model:value="formData['data']"
-              title="请求体"
-              @update:value="formChange"
-            />
-          </div>
+        <o-tab-pane name="data" label="请求体">
+          <DynamicKVForm
+            v-model:value="formData['data']"
+            title="请求体"
+            @update:value="formChange"
+          />
         </o-tab-pane>
-        <o-tab-pane name="headers" tab="请求头" display-directive="show">
+        <o-tab-pane name="headers" label="请求头">
           <div class="headers">
             <DynamicKVForm
               v-model:value="formData['headers']"
@@ -57,23 +54,13 @@
           {{ response.status ? response.status : '' }}
         </span>
       </o-divider>
-      <OCodeEditor :value="response.data" class="content" height="400px" />
+      <OCodeEditor :value="response.data" height="400px" />
     </div>
   </o-card>
 </template>
 <script setup lang="ts">
 import type { AxiosResponse } from 'axios'
-import {
-  OButton,
-  OButtonGroup,
-  OCard,
-  ODivider,
-  OInput,
-  OSelect,
-  OSpace,
-  OTabPane,
-  OTabs
-} from 'open-data-v/ui'
+import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
 import { useRequest } from '../hooks/http'
@@ -173,26 +160,6 @@ const formChange = () => {
 </script>
 
 <style scoped lang="less">
-.rest-data {
-  display: flex;
-  margin-bottom: 5px;
-  .selected {
-    flex: 4;
-  }
-  .title {
-    flex: 8;
-  }
-}
-.api {
-  display: flex;
-  .method {
-    min-width: 110px;
-    flex: 8;
-  }
-  .url {
-    flex: 90;
-  }
-}
 .response {
   .resp-fail {
     color: #f76560;

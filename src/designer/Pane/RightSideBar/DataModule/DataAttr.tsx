@@ -5,15 +5,10 @@ import {
   OCard,
   OCollapse,
   OCollapseItem,
-  ODescriptions,
-  ODescriptionsItem,
   ODivider,
-  OEmpty,
   OForm,
   OFormItem,
-  OSelect,
-  OTimeline,
-  OTimelineItem
+  OSelect
 } from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, onMounted, ref, watch } from 'vue'
@@ -134,10 +129,10 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard title="数据选择" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="数据选择" style={{ marginBottom: '0.25rem' }}>
                 {renderData()}
               </OCard>
-              <OCard title="脚本配置" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="脚本配置" style={{ marginBottom: '0.25rem' }}>
                 {renderScript()}
               </OCard>
             </>
@@ -155,29 +150,11 @@ export default defineComponent({
               {renderScript()}
             </div>
           )
-        case ContainerType.TIMELINE:
-          return (
-            <OTimeline>
-              <OTimelineItem title="数据选择" type={'success'}>
-                {renderData()}
-              </OTimelineItem>
-              <OTimelineItem title="脚本配置" type={'success'}>
-                {renderScript()}
-              </OTimelineItem>
-            </OTimeline>
-          )
       }
     }
     return () =>
-      props.curComponent.dataMode ||
-      props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL ? (
-        renderContainer()
-      ) : (
-        <ODescriptions>
-          <ODescriptionsItem>
-            <OEmpty description="未发现数据配置项"></OEmpty>
-          </ODescriptionsItem>
-        </ODescriptions>
-      )
+      props.curComponent.dataMode || props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL
+        ? renderContainer()
+        : useEmpty('未发现数据配置项')
   }
 })

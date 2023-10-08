@@ -7,7 +7,6 @@
   </o-form-item>
   <o-modal v-model:show="isShow">
     <o-card
-      style="width: 600px"
       title="示例数据"
       :bordered="false"
       size="small"

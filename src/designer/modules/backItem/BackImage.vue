@@ -166,13 +166,3 @@ const handleChange = (value: string, type: string) => {
   emits('update:value', background)
 }
 </script>
-
-<style lang="less" scoped>
-:deep(.n-upload) {
-  width: auto;
-}
-
-:deep(.n-form-item .n-form-item-feedback-wrapper) {
-  --n-feedback-height: 10px;
-}
-</style>

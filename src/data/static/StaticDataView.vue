@@ -8,18 +8,20 @@
     @change="codeChange"
   >
     <template #tool-bar>
-      <div class="buttons">
-        <x-icon class="item button" name="save" @click="handleSave" />
+      <div class="buttons flex flex-nowrap flex-row m-1">
+        <x-icon class="block ml-0.5 mr-0.5 hover:scale-110" name="save" @click="handleSave" />
       </div>
     </template>
     <template #footer>
-      <div class="footer">
-        <div class="left">
+      <div class="flex-row flex flex-nowrap justify-between">
+        <div class="flex flex-nowrap flex-row align-middle items-center">
           <span v-if="error" class="err-message"> 异常信息：{{ error }}</span>
-          <span v-else class="info-message">{{ title ? `数据名称：${title}` : '' }}</span>
+          <span v-else class="info-message decoration-current">{{
+            title ? `数据名称：${title}` : ''
+          }}</span>
         </div>
-        <div class="right">
-          <div :class="['saved-status', savedStatus ? 'save' : 'unsave']">
+        <div class="flex flex-nowrap flex-row justify-end align-middle items-center">
+          <div :class="['saved-status', 'decoration-current', savedStatus ? 'save' : 'unsave']">
             {{ savedStatus ? '已保存' : '未保存' }}
           </div>
           <div class="lang">JSON</div>
@@ -72,62 +74,21 @@ const handleSave = () => {
 }
 </script>
 <style lang="less" scoped>
-.buttons {
-  display: flex;
-  .item {
-    display: block;
-    margin-left: 5px;
-    margin-right: 5px;
-    &.data {
-      width: 120px;
-    }
-    &.button {
-      &:hover {
-        transform: scale(1.5);
-      }
-    }
-  }
+.err-message {
+  color: #d03050;
 }
-.footer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: center;
-  align-content: center;
-  div {
-    margin-left: 5px;
-    font-weight: 800;
-    padding: 0 2px;
-    border-radius: 2px;
+.info-message {
+  color: #2080f0;
+}
+.lang {
+  background-color: #2080f0;
+}
+.saved-status {
+  &.save {
+    background-color: #18a058;
   }
-  .left {
-    .err-message {
-      color: #d03050;
-    }
-    .info-message {
-      color: #2080f0;
-    }
-  }
-  .right {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: flex-end;
-    align-items: center;
-    align-content: center;
-    color: #ffff;
-    .lang {
-      background-color: #2080f0;
-    }
-    .saved-status {
-      &.save {
-        background-color: #18a058;
-      }
-      &.unsave {
-        background-color: #d03050;
-      }
-    }
+  &.unsave {
+    background-color: #d03050;
   }
 }
 </style>

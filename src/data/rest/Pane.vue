@@ -1,9 +1,9 @@
 <template>
   <o-form-item label="动态数据" label-placement="top" size="small">
     <o-input-group>
-      <o-input v-model:value="formData.url" style="flex: 1" readonly>
+      <o-input v-model:value="formData.url" readonly>
         <template #prefix>
-          <span class="success-text" style="font-weight: 800">
+          <span class="accent-green-500" style="font-weight: 800">
             {{ formData.method }}
           </span>
         </template>
@@ -24,9 +24,8 @@
       <template #suffix> ms </template>
     </o-input-number>
   </o-form-item>
-  <o-modal v-model:show="isShow" display-directive="show" :on-after-leave="changeHandler">
+  <o-modal v-model:show="isShow" :beforeClose="changeHandler">
     <o-card
-      style="width: 600px"
       title="动态数据"
       :bordered="false"
       size="small"
@@ -145,9 +144,3 @@ watch(
   { immediate: true }
 )
 </script>
-
-<style lang="less" scoped>
-.success-text {
-  color: #18a058;
-}
-</style>

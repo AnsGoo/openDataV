@@ -1,4 +1,3 @@
-<!-- TODO: 这个页面后续将用 JSX 重构 -->
 <template>
   <Container :config="styleKeys" :data="formData" :mode="mode" :flat="true" @change="changed" />
 </template>
@@ -65,12 +64,3 @@ watch(
   { deep: true }
 )
 </script>
-
-<style scoped>
-.attr-list {
-  @apply overflow-auto p-1 pt-0 h-full;
-
-  backdrop-filter: blur(50px);
-  margin-right: 10px;
-}
-</style>
