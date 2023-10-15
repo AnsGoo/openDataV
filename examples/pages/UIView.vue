@@ -59,6 +59,34 @@
             </div>
           </NCard>
         </n-tab-pane>
+        <n-tab-pane name="radio" tab="单选框">
+          <NCard title="卡片" class="m-5">
+            <div class="flex flex-row w-full">
+              <NCard title="基础" class="m-5 w-1/2">
+                <Radio value="M" label="男" :model-value="radioGroupValue" />
+                <Radio :model-value="radioGroupValue" value="F" label="女" />
+              </NCard>
+              <NCard title="标题自定义" class="m-5 w-1/2">
+                <RadioGroup
+                  v-model:value="radioGroupValue"
+                  :options="[
+                    {
+                      value: 'M',
+                      label: '男'
+                    },
+                    {
+                      value: 'F',
+                      label: '女'
+                    }
+                  ]"
+                />
+              </NCard>
+              <NCard title="内容自定义" class="m-5 w-1/2">
+                <Input v-model:value="inputValue" type="password">选择颜色</Input>
+              </NCard>
+            </div>
+          </NCard>
+        </n-tab-pane>
       </n-tabs>
     </n-layout>
   </n-layout>
@@ -68,10 +96,15 @@
 import { NCard, NLayout, NLayoutHeader, NTabPane, NTabs } from 'naive-ui'
 import Card from 'open-data-v/ui/Card'
 import Diveider from 'open-data-v/ui/Divider'
-import { getCurrentInstance } from 'vue'
+import { Input } from 'open-data-v/ui/Input'
+import { Radio, RadioGroup } from 'open-data-v/ui/Radio'
+import { getCurrentInstance, ref } from 'vue'
 
 import ToolBar from '@/pages/ApiView/ToolBar'
 
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
+const radioGroupValue = ref<string>('M')
+
+const inputValue = ref<string>('12312312')
 </script>

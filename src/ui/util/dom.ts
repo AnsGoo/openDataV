@@ -10,7 +10,6 @@ interface Offset {
   top: number
 }
 const getOffset = (el: HTMLElement): Offset => {
-  // console.log(el)
   // 返回元素偏移位置
   /*if (!el) {
     return
