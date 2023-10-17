@@ -191,7 +191,6 @@ export default defineComponent({
           return (
             <ORadioGroup
               v-model:value={modelValue[item.prop]}
-              name={props.uid}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
             >
               {options.map((op) => (
