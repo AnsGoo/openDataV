@@ -1,9 +1,16 @@
 <template>
-  <span class="absolute toggle z-50 bg-gray-100 dark:bg-stone-700"> {{ viewSymbol }} </span>
+  <span class="absolute toggle z-50 bg-gray-100 dark:bg-stone-700">
+    <CheveronRight v-if="viewSymbol === 'left'" />
+    <CheveronLeft v-else />
+  </span>
 </template>
 
 <script setup lang="ts">
+import { OIcon } from 'open-data-v/ui'
 import { computed } from 'vue'
+
+const CheveronRight = OIcon.CheveronRight
+const CheveronLeft = OIcon.CheveronLeft
 
 const props = withDefaults(
   defineProps<{
@@ -21,9 +28,9 @@ const props = withDefaults(
 )
 const viewSymbol = computed<string>(() => {
   if (props.location === 'left') {
-    return props.direction === 'left' ? '<' : '>'
+    return props.direction === 'left' ? 'left' : 'right'
   } else {
-    return props.direction === 'left' ? '<' : '>'
+    return props.direction === 'left' ? 'left' : 'right'
   }
 })
 const top = computed<string>(() => props.y || '50%')

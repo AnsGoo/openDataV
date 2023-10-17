@@ -77,18 +77,22 @@
     </o-tabs>
   </div>
   <div v-else>
-    <o-menu
-      :options="menuOptions"
-      :collapsed="!iscollapsed"
-      class="h-full o-scroll overflow-auto"
-    />
+    <div
+      v-for="(item, index) in menuOptions"
+      :key="index"
+      class="h-full o-scroll overflow-auto flex flex-nowrap flex-col hover:scale-110"
+    >
+      <div class="m-2 text-center">
+        <component :is="item.icon" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useCanvasState } from 'open-data-v/designer'
 import type { MenuOption } from 'open-data-v/ui'
-import { OMenu, OTabPane, OTabs } from 'open-data-v/ui'
+import { OTabPane, OTabs } from 'open-data-v/ui'
 import { computed, getCurrentInstance, h, ref } from 'vue'
 
 import AttrList from './AttrModule'

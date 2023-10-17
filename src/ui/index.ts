@@ -4,6 +4,7 @@ import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
+import Icon from './Icon'
 import { Input } from './Input'
 import Modal from './Modal'
 import { Radio, RadioGroup } from './Radio'
@@ -36,6 +37,7 @@ const OTooltip = Tooltip
 const OButtonGroup = ButtonGroup
 
 const OSlider = Slider
+const OIcon = Icon
 
 export type { MenuOption, SelectOption }
 
@@ -49,6 +51,7 @@ export {
   ODivider,
   OForm,
   OFormItem,
+  OIcon,
   OInput,
   OInputGroup,
   OInputNumber,
