@@ -91,7 +91,6 @@
 
 <script setup lang="ts">
 import { useCanvasState } from 'open-data-v/designer'
-import type { MenuOption } from 'open-data-v/ui'
 import { OTabPane, OTabs } from 'open-data-v/ui'
 import { computed, getCurrentInstance, h, ref } from 'vue'
 
@@ -121,7 +120,7 @@ const emits = defineEmits<{
 const curComponent = computed(() => canvasState.curComponent)
 
 const canvasActiveKey = ref<string>('canvas')
-const menuOptions = computed<MenuOption[]>(() => {
+const menuOptions = computed(() => {
   if (canvasState.curComponent) {
     return [
       {

@@ -1,5 +1,5 @@
 <template>
-  <transition
+  <Transition
     name="menu"
     @before-enter="beforeEvent"
     @after-enter="afterEvent"
@@ -26,12 +26,12 @@
         <span class="menu-title">
           <i v-if="item.icon" class="icon">
             <component
-              :is="item.icon()"
+              :is="item.icon!()"
               :disabled="!(layer === 0 && !item.children && menuProps.collapsed)"
           /></i>
           <span v-if="isString(item.label())" class="name">{{ item.label() }}</span>
           <span v-else class="name"><component :is="item.label()" /></span>
-          <i v-if="item.children?.length > 0" class="icon-arrow"><ChevronDown /></i>
+          <i v-if="(item.children || []).length > 0" class="icon-arrow"><ChevronDown /></i>
         </span>
         <MenuLi
           v-if="item.children"
@@ -43,7 +43,7 @@
         />
       </li>
     </ul>
-  </transition>
+  </Transition>
 </template>
 
 <script lang="ts" setup>
@@ -51,12 +51,12 @@ import { isString } from 'lodash-es'
 import { inject } from 'vue'
 
 import { ChevronDown } from '../Icon'
-import type { Items } from './types'
+import type { MenuOption } from './types'
 
 withDefaults(
   defineProps<{
-    items: Items[]
-    itemUl?: Items
+    items: MenuOption[]
+    itemUl?: MenuOption
     layer?: number
   }>(),
   {
@@ -64,8 +64,8 @@ withDefaults(
   }
 )
 const emits = defineEmits<{
-  (e: 'click', item: Items): void
-  (e: 'select', item: Items): void
+  (e: 'click', item: MenuOption): void
+  (e: 'select', item: MenuOption): void
 }>()
 // 处理所有展开的项
 const visibleList: any = inject(`OMenuVisibleList`, [])
@@ -74,17 +74,17 @@ const menuVisibleListChange: any = inject(`OMenuVisibleListChange`)
 const selectedKey = inject(`OMenuSelectKey`, '')
 const selectedKeyChange: any = inject(`OMenuSelectKeyChange`)
 const menuProps: any = inject(`OMenuProps`, {})
-const mouseenter = (item: Items) => {
+const mouseenter = (item: MenuOption) => {
   if (item.children && item?.children.length > 0) {
     onMouseEvent(item, true)
   }
 }
-const mouseleave = (item: Items) => {
+const mouseleave = (item: MenuOption) => {
   if (item.children && item?.children.length > 0) {
     onMouseEvent(item, false)
   }
 }
-const onMouseEvent = (item: Items, add: boolean) => {
+const onMouseEvent = (item: MenuOption, add: boolean) => {
   if (
     (menuProps.trigger === 'hover' && menuProps.mode === 'horizontal') ||
     (menuProps.mode === 'vertical' && menuProps.collapsed)
@@ -92,7 +92,7 @@ const onMouseEvent = (item: Items, add: boolean) => {
     pushOrSplice(item, add)
   }
 }
-const click = (item: Items, evt: MouseEvent) => {
+const click = (item: MenuOption, evt: MouseEvent) => {
   if (item.disabled) {
     return
   }
@@ -107,7 +107,7 @@ const click = (item: Items, evt: MouseEvent) => {
   emits('click', item)
   evt.stopPropagation()
 }
-const pushOrSplice = (item: Items, add: boolean) => {
+const pushOrSplice = (item: MenuOption, add: boolean) => {
   if (item.disabled) {
     return
   }
@@ -120,29 +120,29 @@ const pushOrSplice = (item: Items, add: boolean) => {
     menuVisibleListChange && menuVisibleListChange(item.key, add)
   }
 }
-const getUlHeight = (item?: Items) => {
+const getUlHeight = (item?: MenuOption) => {
   if (item && item.children) {
     return item.children.length * menuProps.liHeight + (item.childHeight || 0)
   }
   return null
 }
-const select = (item: Items) => {
+const select = (item: MenuOption) => {
   emits('select', item)
 }
-const clickEmit = (item: Items) => {
+const clickEmit = (item: MenuOption) => {
   emits('click', item)
 }
 // 高度展开动画
-const beforeEvent = (node: HTMLElement) => {
-  const height = node.getAttribute('data-height')
+const beforeEvent = (el): void => {
+  const height = el.getAttribute('data-height')
   if (height) {
-    node.style.height = height + 'px'
-    node.style.overflow = 'hidden'
+    el.style.height = height + 'px'
+    el.style.overflow = 'hidden'
   }
 }
-const afterEvent = (node: HTMLElement) => {
-  node.style.height = ''
-  node.style.overflow = ''
+const afterEvent = (el): void => {
+  el.style.height = ''
+  el.style.overflow = ''
 }
 </script>
 <style lang="less" scoped>

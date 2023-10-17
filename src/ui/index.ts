@@ -6,6 +6,7 @@ import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
 import Icon from './Icon'
 import { Input } from './Input'
+import type { MenuOption } from './Menu'
 import { Menu } from './Menu'
 import Modal from './Modal'
 import { Radio, RadioGroup } from './Radio'
@@ -13,7 +14,7 @@ import Slider from './Slider'
 import Switch from './Switch'
 import { TabPane, Tabs } from './Tabs'
 import Tooltip from './Tooltip'
-import type { MenuOption, SelectOption } from './type'
+import type { SelectOption } from './type'
 
 const OInput = Input
 const OSelect = NSelect

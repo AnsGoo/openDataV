@@ -15,12 +15,12 @@
 import { onBeforeUnmount, onMounted, provide, ref } from 'vue'
 
 import MenuLi from './MenuLi.vue'
-import type { Items } from './types'
+import type { MenuOption } from './types'
 
 const props = withDefaults(
   defineProps<{
     mode?: 'horizontal' | 'vertical'
-    options: Items[]
+    options: MenuOption[]
     trigger?: 'hover' | 'click' // 子菜单打开的触发方式，只在 mode 为 horizontal 时有效
     theme?: 'light' | 'dark'
     liHeight?: number // 子菜单项高，仅在mode为vertical时，用于计算高度平滑动画效果
@@ -41,8 +41,8 @@ const props = withDefaults(
   }
 )
 const emits = defineEmits<{
-  (e: 'click', item: Items): void
-  (e: 'select', item: Items): void
+  (e: 'click', item: MenuOption): void
+  (e: 'select', item: MenuOption): void
 }>()
 provide(`OMenuProps`, props)
 // 展开的项集合
@@ -67,10 +67,10 @@ const slideUp = () => {
   visibleList.value = []
   selectKey.value = ''
 }
-const click = (item: Items) => {
+const click = (item: MenuOption) => {
   emits('click', item)
 }
-const select = (item: Items) => {
+const select = (item: MenuOption) => {
   emits('select', item)
 }
 onMounted(() => {
