@@ -1,6 +1,6 @@
 <template>
   <span class="absolute toggle z-50 bg-gray-100 dark:bg-stone-700">
-    <CheveronRight v-if="viewSymbol === 'left'" />
+    <CheveronRight v-if="viewSymbol === 'right'" />
     <CheveronLeft v-else />
   </span>
 </template>
