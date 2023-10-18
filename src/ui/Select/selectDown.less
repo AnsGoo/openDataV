@@ -1,0 +1,181 @@
+@placeholder:#969799;
+@disabledOpacity: 0.5;
+@primaryColor: #2080f0;
+.o-select-down {
+  display: inline-block;
+  position: relative;
+  min-width: 150px;
+  height: 34px;
+  @apply w-full;
+  .select-control {
+    position: relative;
+    .group-icon {
+      display: flex;
+      position: absolute;
+      right: 0;top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      transition: all .3s;
+      height: 20px;
+      text-align: center;
+      line-height: 30px;
+      align-items: center;
+      justify-content: center;
+      i {
+        margin-right: 6px;
+        font-size: 14px;
+        transition: all .3s}
+      .down {
+        transform: translateY(0) rotate(-180deg)
+      }
+      .icon-close {opacity: 0}
+    }
+    &:hover {
+      .icon-close {opacity: 1}
+    }
+    > input {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      height: 34px;
+      @apply w-full dark:bg-zinc-800 bg-white px-2;
+      &::placeholder {
+        color: @placeholder
+      }
+    }
+    //预留方向icon位置
+  }
+  &.disabled {
+    cursor: not-allowed;
+    .icon-close {
+      display: none
+    }
+    .group-icon i {
+      opacity: @disabledOpacity
+    }
+    input {cursor: not-allowed}
+  }
+  .multiple-text {
+    height: auto;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    padding-right: 25px;
+    ul {
+      &:empty:before {
+        content: attr(placeholder);
+        color: @placeholder}
+    }
+    &.large {min-height: 40px; }
+    &.small {min-height: 32px;}
+    &.mini {min-height: 28px}
+    ul {display: flex;flex-wrap: wrap;align-items: center;}
+    li {margin-right: 10px;
+      &:last-child {margin-right: 0}
+      i {margin-left: 5px;font-size: 14px;}
+    }
+    .input {flex: 2}
+    input {
+      width: 100%;
+      outline: none;
+      border: 0;
+      display: inline-block;
+      height: 26px;
+      line-height: 26px;
+    }
+  }
+  &.is-down {
+    .multiple-text, .select-control input, .select-range {
+      border-color: @primaryColor;
+      transition: all .3s;}
+  }
+  .select-range {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-right: 25px;
+    input {
+      height: 100%;
+      border: 0;
+      outline: none;
+      flex: 2;
+      width: 100%
+    }
+    span {padding: 0 10px;}
+  }
+}
+.o-select-down-pane {
+  position: absolute;left: 0;
+  @apply w-full dark:bg-zinc-800 bg-white box-border rounded;
+  box-sizing: border-box;
+  min-width: 100%;
+  z-index: 50;
+  display: inline-block;
+  box-shadow: 0 0 12px rgba(0, 0, 0, .12);
+  .down-arrow {
+    position: absolute;
+    display: block;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px;
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, .03));
+    left: 30px;top: -5px;
+    border-top-width: 0;
+    @apply border-b-gray-300 dark:border-b-0;
+    &:before {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 0;
+      height: 0;
+      border-color: transparent;
+      border-style: solid;
+      border-width: 5px;
+      border-top-width: 0;
+      @apply border-b-white dark:border-b-zinc-800;
+      top: 1px;left: -5px}
+    &.is-range {
+      left: 50%;transform: translateX(-50%);
+    }
+  }
+  &.top {
+    .down-arrow {top: auto;bottom: -5px;transform: rotate(180deg)}
+  }
+  // 滚动条
+  .scroll-pane{
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+      position: relative;
+      z-index: 100;
+      @apply bg-gray-100 opacity-5;
+    }
+    &::-webkit-scrollbar-thumb {
+      @apply bg-gray-100 opacity-5;
+      background-clip: padding-box;
+      min-height: 28px;
+      -webkit-border-radius: 5px;
+      -moz-border-radius: 5px;
+      border-radius: 5px;}
+    &::-webkit-scrollbar-corner {
+      @apply bg-gray-100 opacity-5;
+    }
+  }
+}
+/*transition通用下拉动画 select dataPicker……*/
+.slide-toggle-enter-active { animation: slideDown .3s; transform-origin: center top }
+.slide-toggle-leave-active { animation: slideUp .3s; transform-origin: center top }
+.top .slide-toggle-enter-active, .top .slide-toggle-leave-active {
+  transform-origin: center bottom;
+}
+.slide-toggle-top-enter-active { animation: slideDown .3s; transform-origin: center bottom }
+.slide-toggle-top-leave-active { animation: slideUp .3s; transform-origin: center bottom }
+@keyframes slideDown {
+  0% { opacity: 0; transform: scaleY(0) translate(10px,0) }
+}
+@keyframes slideUp {
+  100% { opacity: 0; transform: scaleY(0) translate(-10px,0)}
+}

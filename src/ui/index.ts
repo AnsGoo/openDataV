@@ -15,9 +15,9 @@ import Switch from './Switch'
 import { TabPane, Tabs } from './Tabs'
 import Tooltip from './Tooltip'
 import type { SelectOption } from './type'
-
+import { Select } from './Select'
 const OInput = Input
-const OSelect = NSelect
+const OSelect = Select
 const OTabPane = TabPane
 const OTabs = Tabs
 const OMenu = Menu
