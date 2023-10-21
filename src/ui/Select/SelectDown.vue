@@ -352,5 +352,5 @@ const setValue = (val: string[]) => {
 defineExpose({ slideUp, setValue })
 </script>
 <style>
-@import "selectDown.less";
+@import 'selectDown.less';
 </style>

@@ -16,40 +16,41 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref } from 'vue'
-  withDefaults(
-    defineProps<{
-      type?: string
-      closable?: boolean
-      color?: string
-      borderColor?: string
-      bgColor?: string
-      size?: string
-    }>(),
-    {
-      type: '',
-      closable: false,
-      color: '',
-      borderColor: '',
-      bgColor: '',
-      size: ''
-    }
-  )
+import { ref } from 'vue'
 
-  const emits = defineEmits<{
-    (e: 'click'): void
-    (e: 'close'): void
-  }>()
+withDefaults(
+  defineProps<{
+    type?: string
+    closable?: boolean
+    color?: string
+    borderColor?: string
+    bgColor?: string
+    size?: string
+  }>(),
+  {
+    type: '',
+    closable: false,
+    color: '',
+    borderColor: '',
+    bgColor: '',
+    size: ''
+  }
+)
 
-  const visible = ref<boolean>(true)
-  const closeClick = () => {
-    visible.value = false
-    emits('close')
-  }
-  const click = () => {
-    emits('click')
-  }
+const emits = defineEmits<{
+  (e: 'click'): void
+  (e: 'close'): void
+}>()
+
+const visible = ref<boolean>(true)
+const closeClick = () => {
+  visible.value = false
+  emits('close')
+}
+const click = () => {
+  emits('click')
+}
 </script>
-<style lang='less' scoped>
-@import "tag.less";
+<style lang="less" scoped>
+@import 'tag.less';
 </style>

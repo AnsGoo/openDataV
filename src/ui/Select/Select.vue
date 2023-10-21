@@ -367,9 +367,7 @@ onMounted(() => {
 })
 
 defineExpose({ slideUp })
-
 </script>
-<style lang='less' scoped>
-@import "select.less";
-
+<style lang="less" scoped>
+@import 'select.less';
 </style>

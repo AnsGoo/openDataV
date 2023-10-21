@@ -106,7 +106,7 @@ const inputHandler = (e: Event) => {
   controlChangeEvent(value, 'change')
 }
 const clearValue = () => {
-  if(props.disabled || props.readonly){
+  if (props.disabled || props.readonly) {
     return
   }
   emits('update:value', '')
