@@ -125,6 +125,9 @@ watch(
   () => {
     optionsList.value = JSON.parse(JSON.stringify(props.options))
     setFirstText()
+  },
+  {
+    deep: true
   }
 )
 const { optionsKey } = toRefs(props)

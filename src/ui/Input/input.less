@@ -14,13 +14,13 @@
 @borderRadius: 2px;
 
 .o-form-input {
-  @apply w-full dark:bg-zinc-800 bg-white box-border rounded px-2;
-  display: inline-block;
-  position: relative;
+  @apply w-full dark:bg-zinc-800 bg-white px-2  border border-solid border-gray-300 dark:border-0 relative inline-block;
   .suffix-icon, .prefix-icon {
     position: absolute;
     right: 5px;top: 50%;
     transform: translateY(-50%);
+    height: 34px;
+    box-sizing: content-box;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -62,7 +62,8 @@
       @apply border border-gray-300 dark:border-0;
       display: flex;
       align-items: center;
-      padding: 0 5px;}
+      padding: 0 5px;
+    }
     .prepend {
       border-radius: 3px 0 0 3px;
       border-right: none;
@@ -76,16 +77,10 @@
   }
 }
 .o-input-control {
-  @apply border border-gray-300 dark:border-0;
-  height: 36px;
-  line-height: 36px;
-  background: transparent;
-  outline: none;
+  @apply bg-transparent overflow-hidden outline-none box-border w-full h-full ;
+  line-height: 34px;
   padding: 0 10px;
   font-size: 14px;
-  overflow: hidden;
-  box-sizing: border-box;
-  width: 100%;
   transition: all .3s;
   &:hover {
     opacity: .7

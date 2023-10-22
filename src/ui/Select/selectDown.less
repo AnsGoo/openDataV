@@ -2,11 +2,9 @@
 @disabledOpacity: 0.5;
 @primaryColor: #2080f0;
 .o-select-down {
-  display: inline-block;
-  position: relative;
+  @apply w-full dark:bg-zinc-800 bg-white border border-solid border-gray-300 dark:border-0 relative;
   min-width: 150px;
-  height: 34px;
-  @apply w-full;
+  height: 35px;
   .select-control {
     position: relative;
     .group-icon {
@@ -42,6 +40,10 @@
       &::placeholder {
         color: @placeholder
       }
+      &:focus-visible {
+        outline: 0;
+        color: @primaryColor;
+      }
     }
     //预留方向icon位置
   }
@@ -53,7 +55,9 @@
     .group-icon i {
       opacity: @disabledOpacity
     }
-    input {cursor: not-allowed}
+    input {
+      cursor: not-allowed
+    }
   }
   .multiple-text {
     height: auto;
@@ -126,10 +130,10 @@
   }
 }
 .o-select-down-pane {
-  position: absolute;left: 0;
-  @apply w-full dark:bg-zinc-800 bg-white box-border rounded;
+  @apply w-full dark:bg-zinc-800 bg-white box-border rounded fixed;
+  top:124px;
   box-sizing: border-box;
-  min-width: 100%;
+  width: 100%;
   z-index: 50;
   display: inline-block;
   box-shadow: 0 0 12px rgba(0, 0, 0, .12);
@@ -155,14 +159,18 @@
       border-style: solid;
       border-width: 5px;
       border-top-width: 0;
-      @apply border-b-white dark:border-b-zinc-800;
+      @apply border-b-zinc-50 dark:border-b-zinc-500;
       top: 1px;left: -5px}
     &.is-range {
       left: 50%;transform: translateX(-50%);
     }
   }
   &.top {
-    .down-arrow {top: auto;bottom: -5px;transform: rotate(180deg)}
+    .down-arrow {
+      top: auto;
+      bottom: -5px;
+      transform: rotate(180deg)
+    }
   }
   // 滚动条
   .scroll-pane{
@@ -171,15 +179,15 @@
       height: 8px;
       position: relative;
       z-index: 100;
-      @apply bg-gray-100 opacity-5;
+      @apply bg-zinc-50 dark:bg-zinc-500 opacity-60;
     }
     &::-webkit-scrollbar-thumb {
-      @apply bg-gray-100 opacity-5;
+      @apply bg-zinc-300 opacity-5 dark:bg-zinc-200;
       background-clip: padding-box;
-      min-height: 28px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;}
+      min-height: 5px;
+      height: 5px;
+      border-radius: 5px;
+    }
     &::-webkit-scrollbar-corner {
       @apply bg-gray-100 opacity-5;
     }

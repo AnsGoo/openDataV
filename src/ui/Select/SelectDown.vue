@@ -81,7 +81,7 @@
         <i :class="{ down: state.visible && !fixedIcon, [`icon-${icon}`]: true }"></i>
       </span>
     </div>
-    <transition :name="state.direction2 === 2 ? 'slide-toggle-top' : 'slide-toggle'">
+    <OTransition :name="state.direction2 === 2 ? 'slide-toggle-top' : 'slide-toggle'">
       <div
         v-show="state.visible"
         ref="selectDown"
@@ -97,7 +97,7 @@
         </div>
         <span class="down-arrow" :class="{ 'is-range': isRange }"></span>
       </div>
-    </transition>
+    </OTransition>
   </div>
 </template>
 
@@ -106,6 +106,7 @@ import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } 
 
 import { Close } from '../Icon'
 import Tag from '../Tag/Tag.vue'
+import { Transition as OTransition } from '../Transition'
 import { getOffset, getWindow } from '../util/dom'
 
 const props = withDefaults(
@@ -163,7 +164,7 @@ const state = reactive({
   visible: false,
   appendStyle: {
     top: '',
-    minWidth: '',
+    width: '',
     bottom: '',
     left: ''
   },
@@ -271,7 +272,7 @@ const setAppendToBodyStyle = () => {
     const ww = getWindow()
     state.appendStyle = {
       bottom: 'auto',
-      minWidth: offset.width + 'px',
+      width: offset.width + 'px',
       left: offset.left + 'px',
       top: offset.top + offset.height + 8 + 'px'
     }
@@ -281,8 +282,10 @@ const setAppendToBodyStyle = () => {
       state.appendStyle.bottom = ww.height - offset.top + 'px'
     }
   } else {
-    state.appendStyle.top = offset.height + 8 + 'px'
+    console.log(offset)
+    state.appendStyle.top = offset.height * 4 + 'px'
     state.appendStyle.bottom = 'auto'
+    state.appendStyle.width = offset.width + 'px'
     if (state.direction2 === 2) {
       // 向上
       state.appendStyle.top = 'auto'
