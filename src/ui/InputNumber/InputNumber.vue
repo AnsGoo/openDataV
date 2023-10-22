@@ -44,11 +44,13 @@ const props = withDefaults(
     placeholder?: string
     readOnly?: boolean
     size?: string
+    clearable?: boolean
   }>(),
   {
     value: 0,
     step: 1, // 每次增加或减少的数
-    readOnly: false
+    readOnly: false,
+    clearable: false
   }
 )
 

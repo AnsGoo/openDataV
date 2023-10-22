@@ -98,15 +98,12 @@ export default defineComponent({
         case FormType.NUMBER:
           const numberMax: number = getOptionsValue<number>('max', 9999999999)
           const numberMin: number = getOptionsValue<number>('min', -9999999999)
-          const precision: number | undefined = getOptionsValue<number>('precision', undefined)
-
           return (
             <OInputNumber
               v-model:value={modelValue[item.prop]}
               onUpdateValue={(event) => changed(event, item.prop)}
               max={numberMax}
               min={numberMin}
-              precision={precision}
               clearable={true}
               v-slots={{
                 prefix: (itemOptions as InputNumberProps).prefix,

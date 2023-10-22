@@ -67,15 +67,33 @@
         content: attr(placeholder);
         color: @placeholder}
     }
-    &.large {min-height: 40px; }
-    &.small {min-height: 32px;}
-    &.mini {min-height: 28px}
-    ul {display: flex;flex-wrap: wrap;align-items: center;}
-    li {margin-right: 10px;
-      &:last-child {margin-right: 0}
-      i {margin-left: 5px;font-size: 14px;}
+    &.large {
+      min-height: 40px;
     }
-    .input {flex: 2}
+    &.small {
+      min-height: 32px;
+    }
+    &.mini {
+      min-height: 28px
+    }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    li {
+      margin-right: 10px;
+      &:last-child {
+        margin-right: 0
+      }
+      i {
+        margin-left: 5px;
+        font-size: 14px;
+      }
+    }
+    .input {
+      flex: 2
+    }
     input {
       width: 100%;
       outline: none;
@@ -102,7 +120,9 @@
       flex: 2;
       width: 100%
     }
-    span {padding: 0 10px;}
+    span {
+      padding: 0 10px;
+    }
   }
 }
 .o-select-down-pane {
@@ -166,16 +186,32 @@
   }
 }
 /*transition通用下拉动画 select dataPicker……*/
-.slide-toggle-enter-active { animation: slideDown .3s; transform-origin: center top }
-.slide-toggle-leave-active { animation: slideUp .3s; transform-origin: center top }
-.top .slide-toggle-enter-active, .top .slide-toggle-leave-active {
-  transform-origin: center bottom;
+.slide-toggle-enter-active {
+  animation: slideDown .3s;
+  transform-origin: center top
 }
-.slide-toggle-top-enter-active { animation: slideDown .3s; transform-origin: center bottom }
-.slide-toggle-top-leave-active { animation: slideUp .3s; transform-origin: center bottom }
+.slide-toggle-leave-active {
+  animation: slideUp .3s;
+  transform-origin: center top
+}
+.top .slide-toggle-enter-active, .top .slide-toggle-leave-active {
+  transform-origin: center top;
+}
+.slide-toggle-top-enter-active {
+  animation: slideDown .3s;
+  transform-origin: center top
+}
+.slide-toggle-top-leave-active {
+  animation: slideUp .3s;
+  transform-origin: center top
+}
 @keyframes slideDown {
-  0% { opacity: 0; transform: scaleY(0) translate(10px,0) }
+  0% {
+    opacity: 0;
+    transform: scaleY(0) translate(-10px,0) }
 }
 @keyframes slideUp {
-  100% { opacity: 0; transform: scaleY(0) translate(-10px,0)}
+  100% {
+    opacity: 0;
+    transform: scaleY(0) translate(-0px,0)}
 }

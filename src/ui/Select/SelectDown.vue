@@ -75,12 +75,9 @@
         @keyup.enter="keyupEnter"
       />
       <span class="group-icon">
-        <i
-          v-if="clear && modelValue.length > 0"
-          class="icon-close"
-          title="清空"
-          @click="clearClick"
-        ></i>
+        <i v-if="clearable && value.length > 0" class="icon-close" title="清空" @click="clearClick"
+          ><Close
+        /></i>
         <i :class="{ down: state.visible && !fixedIcon, [`icon-${icon}`]: true }"></i>
       </span>
     </div>
@@ -107,16 +104,17 @@
 <script lang="ts" setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 
+import { Close } from '../Icon'
 import Tag from '../Tag/Tag.vue'
 import { getOffset, getWindow } from '../util/dom'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: string[] | number[]
+    value: any
     width?: string
     multiple?: boolean
     collapseTags?: boolean
-    clear?: boolean
+    clearable?: boolean
     filterable?: boolean
     size?: string // 尺寸
     placeholder?: string
@@ -135,7 +133,7 @@ const props = withDefaults(
   {
     multiple: false,
     collapseTags: false,
-    clear: false,
+    clearable: true,
     filterable: false,
     disabled: false,
     appendToBody: false,
@@ -148,20 +146,20 @@ const props = withDefaults(
   }
 )
 const emits = defineEmits<{
-  (e: 'update:value', modelValue: string[]): void
-  (e: 'updateValue', modelValue: string[]): void
-  (e: 'blur', value: string | string[], index?: number): void
+  (e: 'update:value', modelValue: any): void
+  (e: 'updateValue', modelValue: any): void
+  (e: 'blur', value: any, index?: number): void
   (e: 'toggleClick', value: boolean, evt: MouseEvent): void
   (e: 'clear'): void
   (e: 'delete', value: number): void
-  (e: 'input', value: string | string[], index?: number): void
-  (e: 'focus', value: string | string[], index?: number): void
+  (e: 'input', value: any, index?: number): void
+  (e: 'focus', value: any, index?: number): void
   (e: 'keyupEnter', value: string): void
 }>()
 const el = ref()
 const selectDown = ref()
 const state = reactive({
-  valueLabel: ref(JSON.parse(JSON.stringify(props.modelValue || []))),
+  valueLabel: ref(JSON.parse(JSON.stringify(props.value || []))),
   visible: false,
   appendStyle: {
     top: '',
@@ -174,7 +172,7 @@ const state = reactive({
   searchValueM: '' // 多选输入框的值
 })
 watch(
-  () => props.modelValue,
+  () => props.value,
   (val: any) => {
     state.valueLabel = JSON.parse(JSON.stringify(val))
   }

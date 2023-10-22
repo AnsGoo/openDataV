@@ -6,7 +6,8 @@
     before-change=""
     options=""
     optionskey=""
-    :model-value="showLabel"
+    :value="showLabel"
+    :clearable="clearable"
     @clear="clearClick"
     @delete="deleteClick"
     @input="inputChange"
@@ -42,7 +43,7 @@ import SelectDown from './SelectDown.vue'
 
 const props = withDefaults(
   defineProps<{
-    value?: string[] | number | string
+    value?: any
     //width?: string
     multiple?: boolean
     //collapseTags?: boolean
@@ -62,6 +63,8 @@ const props = withDefaults(
     async?: boolean
     emptyText?: string
     allowCreate?: boolean // 允许创建
+    placeholder?: string
+    clearable?: boolean
   }>(),
   {
     options: () => [],
@@ -69,15 +72,16 @@ const props = withDefaults(
       return { label: 'label', value: 'value' }
     },
     downHeight: 200,
-    emptyText: '无数据'
+    emptyText: '无数据',
+    placeholder: '',
+    clearable: false
   }
 )
 const emits = defineEmits<{
-  (e: 'update:value', modelValue: string[] | string | number): void
-  (e: 'updateValue', modelValue: string[] | string | number): void
-  (e: 'change', value: string[] | string | number, obj: any): void
-  (e: 'limitChange', value: string[] | string | number): void
-  //(e: 'toggleClick', value: boolean, evt: MouseEvent): void
+  (e: 'update:value', value: any): void
+  (e: 'updateValue', value: any): void
+  (e: 'change', value: any, obj: any): void
+  (e: 'limitChange', value: any): void
   (e: 'clear'): void
   (e: 'delete', value?: number): void
   (e: 'input', value: string): void
