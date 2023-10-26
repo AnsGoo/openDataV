@@ -89,7 +89,6 @@
           ['o-select-down-pane']: true,
           top: state.direction2 === 2
         }"
-        :style="downPanelStyle"
         @click.stop=""
       >
         <div :style="downHeightStyle" class="scroll-pane">
@@ -287,9 +286,6 @@ const downHeightStyle: any = computed(() => {
     }
   }
   return {}
-})
-const downPanelStyle = computed(() => {
-  return Object.assign({}, props.downStyle || {})
 })
 
 onMounted(() => {
