@@ -1,4 +1,4 @@
-import { NColorPicker, NForm, NFormItem, NInputGroup, NInputNumber, NSelect } from 'naive-ui'
+import { NColorPicker, NForm, NFormItem, NInputGroup } from 'naive-ui'
 
 import { Button, ButtonGroup } from './Button'
 import Card from './Card'
@@ -6,10 +6,12 @@ import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
 import Icon from './Icon'
 import { Input } from './Input'
+import { InputNumber } from './InputNumber'
 import type { MenuOption } from './Menu'
 import { Menu } from './Menu'
 import Modal from './Modal'
 import { Radio, RadioGroup } from './Radio'
+import { Select } from './Select'
 import Slider from './Slider'
 import Switch from './Switch'
 import { TabPane, Tabs } from './Tabs'
@@ -17,7 +19,7 @@ import Tooltip from './Tooltip'
 import type { SelectOption } from './type'
 
 const OInput = Input
-const OSelect = NSelect
+const OSelect = Select
 const OTabPane = TabPane
 const OTabs = Tabs
 const OMenu = Menu
@@ -27,7 +29,7 @@ const OColorPicker = NColorPicker
 const OButton = Button
 const OCard = Card
 const OInputGroup = NInputGroup
-const OInputNumber = NInputNumber
+const OInputNumber = InputNumber
 const OModal = Modal
 const ORadio = Radio
 const ORadioGroup = RadioGroup

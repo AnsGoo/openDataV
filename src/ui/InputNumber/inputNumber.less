@@ -1,0 +1,53 @@
+@disabledOpacity: 0.5;
+@primaryColor: #2080f0;
+
+.o-input-number {
+  @apply w-full dark:bg-zinc-800 bg-white px-2 align-middle inline-block border border-solid border-gray-300 dark:border-0 relative;
+  height: 34px;
+  .o-input-number-input {
+    @apply w-full h-full align-middle inline-block;
+    input {
+      @apply w-full h-full bg-transparent px-2 ;
+      &:focus-visible {
+        outline: 0;
+        color: @primaryColor;
+      }
+    }
+
+  }
+
+  .number-control {
+    @apply w-full h-full inline-block;
+    a {
+      @apply flex absolute bg-transparent text-center items-center justify-center cursor-pointer;
+      top: 1px;
+      bottom: 1px;
+      width: 20px;
+      right: 20px;
+      font-size: 14px;
+
+      &:last-child {
+        left: auto;
+        right: 1px;
+      }
+
+      &.disabled {
+        @apply cursor-not-allowed;
+        opacity: @disabledOpacity
+      }
+
+      &.suffix {
+        right: 40px;
+
+      }
+    }
+  }
+  &.disabled {
+    .number-control {
+      opacity: @disabledOpacity;
+      a {
+        cursor: not-allowed
+      }
+    }
+  }
+}
