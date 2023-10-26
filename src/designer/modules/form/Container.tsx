@@ -22,7 +22,7 @@ export default defineComponent({
     mode: {
       type: String as PropType<ContainerType>,
       required: false,
-      defalut: ContainerType.COLLAPSE
+      defalut: ContainerType.CARD
     },
     flat: {
       type: Boolean as PropType<boolean>,

@@ -107,7 +107,6 @@ import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } 
 import { Close } from '../Icon'
 import Tag from '../Tag/Tag.vue'
 import { Transition as OTransition } from '../Transition'
-import { getOffset, getWindow } from '../util/dom'
 
 const props = withDefaults(
   defineProps<{
@@ -196,7 +195,6 @@ const downToggle = (evt: MouseEvent) => {
   state.visible = true
   nextTick(() => {
     setPosition(evt)
-    setAppendToBodyStyle()
   })
   emits('toggleClick', state.visible, evt)
   // 设置为true不触发document点击的关闭事件，解决一个页面多次使用组件时，点击时可将展开中的收起
@@ -266,33 +264,6 @@ const keyupEnter = (evt: Event) => {
   emits('keyupEnter', value)
 }
 // 计算插入body的位置样式
-const setAppendToBodyStyle = () => {
-  const offset = getOffset(el.value)
-  if (props.appendToBody) {
-    const ww = getWindow()
-    state.appendStyle = {
-      bottom: 'auto',
-      width: offset.width + 'px',
-      left: offset.left + 'px',
-      top: offset.top + offset.height + 8 + 'px'
-    }
-    if (state.direction2 === 2) {
-      // 向上
-      state.appendStyle.top = 'auto'
-      state.appendStyle.bottom = ww.height - offset.top + 'px'
-    }
-  } else {
-    console.log(offset)
-    state.appendStyle.top = offset.height * 4 + 'px'
-    state.appendStyle.bottom = 'auto'
-    state.appendStyle.width = offset.width + 'px'
-    if (state.direction2 === 2) {
-      // 向上
-      state.appendStyle.top = 'auto'
-      state.appendStyle.bottom = offset.height + 8 + 'px'
-    }
-  }
-}
 const setPosition = (evt: MouseEvent) => {
   if (props.direction === 0) {
     state.direction2 = props.direction
@@ -318,15 +289,7 @@ const downHeightStyle: any = computed(() => {
   return {}
 })
 const downPanelStyle = computed(() => {
-  /*let style = {}*/
-  /*if (props.downHeight) {
-      style = {
-        'max-height': props.downHeight + 'px',
-        overflowY: 'auto'
-      }
-    }*/
-  // style = Object.assign({}, state.appendStyle, props.downStyle || {})
-  return Object.assign({}, state.appendStyle, props.downStyle || {})
+  return Object.assign({}, props.downStyle || {})
 })
 
 onMounted(() => {
