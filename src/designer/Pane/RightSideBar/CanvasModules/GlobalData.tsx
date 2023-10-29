@@ -87,7 +87,7 @@ export default defineComponent({
 
     const renderDataSelect = () => {
       return (
-        <OForm labelPlacement="top" labelAlign="left">
+        <OForm labelPlacement="top">
           <OFormItem prop="dataType" label="数据类型">
             <div class="justify-center flex-row flex-nowrap flex items-center">
               <OSelect

@@ -17,11 +17,13 @@ const props = withDefaults(
     required?: boolean
     size?: string
     disabled?: boolean
+    labelPlacement?: 'left' | 'top' | 'right'
   }>(),
   {
     showMessage: true,
     required: true,
     trigger: 'change',
+    labelPlacement: 'left',
     rules: () => {
       return {}
     },

@@ -82,7 +82,7 @@ export default defineComponent({
 
     const renderData = () => {
       return (
-        <OForm size="small" labelPlacement="top" labelAlign="left">
+        <OForm size="small" labelPlacement="top">
           <OFormItem prop="dataType" label="数据类型">
             <OSelect
               v-model:value={dataType.value}
@@ -98,7 +98,7 @@ export default defineComponent({
     }
     const renderScript = () => {
       return (
-        <OForm size="small" labelPlacement="top" labelAlign="left">
+        <OForm size="small" labelPlacement="top">
           <OFormItem prop="scriptType" label="脚本类型">
             <OSelect
               v-model:value={scriptType.value}

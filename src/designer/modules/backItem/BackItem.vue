@@ -1,7 +1,6 @@
 <template>
-  <div class="flex flex-col flex-nowrap">
+  <div class="flex flex-col flex-nowrap w-full">
     <o-select v-model:value="selectOption" :options="options" class="pb-2.5" />
-
     <o-color-picker
       v-if="selectOption === 'backgroundColor'"
       v-model:value="backgroundColor.backgroundColor"

@@ -98,7 +98,7 @@ export default defineComponent({
           </div>
           <OModal v-model:show={isShow.value} class={['dark:bg-gray-800', 'bg-gray-100']}>
             <OCard title={item.label || ''} bordered={options.bordered || false}>
-              <OForm size="small" labelPlacement="left" labelAlign="left">
+              <OForm size="small" labelPlacement="top">
                 {(item.children || []).map((el) => {
                   return (
                     <OFormItem
@@ -270,7 +270,7 @@ export default defineComponent({
       }
     }
     return () => (
-      <OForm>
+      <OForm labelPlacement="top">
         {props.children.map((item) => (
           <OFormItem
             prop={`${props.ukey}${item.prop}`}

@@ -2,15 +2,16 @@
   <div
     :class="{
       className,
-      ['o-Form-item-error']: state.errorTips !== '',
-      ['o-Form-item']: true,
-      ['Form-item-' + state.formSize]: state.formSize
+      ['o-form-item-error']: state.errorTips !== '',
+      ['o-form-item']: true,
+      ['form-item-' + state.formSize]: state.formSize,
+      ['form-item-' + labelPlacement]: !!labelPlacement
     }"
   >
     <label
       v-if="label || $slots.label"
       v-show="showLabel"
-      :class="{ required: isRequired, ['o-Form-label']: true }"
+      :class="{ required: isRequired, ['o-form-label']: true }"
       :style="labelStyle"
     >
       <slot name="label">{{ label }}</slot>
@@ -73,7 +74,7 @@ if (props.rules?.length === 0 && formRules) {
   // 使用form的，formItem没有设置时使用form
   rules = [...formRules]
 }
-
+const labelPlacement = computed<string>(() => formProps.labelPlacement)
 // formItem设置值时使用formItem的，否则使用form的
 const getFormProps = (params: string, defaultValue: any) => {
   const itemProps = (props as any)[params]
