@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on 2018/9/7 0007. -->
 <template>
   <label
     :class="{
@@ -37,7 +36,7 @@ const emits = defineEmits<{
   (e: 'updateValue', modelValue: any): void
   (e: 'change', modelValue: any): void
 }>()
-// formItem
+// FormItem
 const controlChange: any = inject(`OControlChange`, '')
 const changeHandler = () => {
   // 点击后只有选中状态

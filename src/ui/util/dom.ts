@@ -1,7 +1,3 @@
-/**
- * Created by 337547038 on 2018/9/5 0005.
- */
-
 /* 节点操作的一些方法 */
 interface Offset {
   width: number

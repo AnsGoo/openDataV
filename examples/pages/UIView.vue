@@ -31,7 +31,10 @@
           <NCard title="卡片" class="m-5">
             <div class="flex flex-row w-full">
               <NCard title="基础" class="m-5 w-1/2">
-                <Card title="我是标题"> 我是卡片内容 </Card>
+                <Card title="我是标题">
+                  <div>我是卡片内容</div>
+                  <div class="w-full"><ColorPicker /></div
+                ></Card>
               </NCard>
               <NCard title="标题自定义" class="m-5 w-1/2">
                 <Card>
@@ -95,6 +98,7 @@
 <script lang="ts" setup>
 import { NCard, NLayout, NLayoutHeader, NTabPane, NTabs } from 'naive-ui'
 import Card from 'open-data-v/ui/Card'
+import { ColorPicker } from 'open-data-v/ui/ColorPicker'
 import Diveider from 'open-data-v/ui/Divider'
 import { Input } from 'open-data-v/ui/Input'
 import { Radio, RadioGroup } from 'open-data-v/ui/Radio'

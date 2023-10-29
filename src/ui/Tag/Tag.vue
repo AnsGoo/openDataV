@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on 2021/8/27. -->
 <template>
   <span
     v-show="visible"

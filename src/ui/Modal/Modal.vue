@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on 2018/8/31 0031. -->
 <template>
   <transition :name="animation">
     <div

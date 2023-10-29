@@ -1,9 +1,9 @@
 <template>
   <o-form-item key="data" label="系统脚本">
-    <o-input-group>
+    <div class="justify-center flex-row flex-nowrap flex items-center">
       <o-select v-model:value="scriptRef" :options="scriptOptions" @update:value="scriptChange" />
       <o-button type="primary" @click="isShow = true"> 文档 </o-button>
-    </o-input-group>
+    </div>
   </o-form-item>
   <DynamicForm v-model:data="extendParam" :items="extendParamItems" @change="extendParamChange" />
   <o-modal v-model:show="isShow">
@@ -22,7 +22,7 @@
 
 <script lang="ts" setup>
 import type { SelectOption } from 'open-data-v/ui'
-import { OButton, OCard, OFormItem, OInputGroup, OModal, OSelect } from 'open-data-v/ui'
+import { OButton, OCard, OFormItem, OModal, OSelect } from 'open-data-v/ui'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import type { Slotter } from '../type'
