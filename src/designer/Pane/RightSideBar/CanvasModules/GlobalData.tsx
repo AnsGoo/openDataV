@@ -8,7 +8,6 @@ import {
   ODivider,
   OForm,
   OFormItem,
-  OInputGroup,
   OSelect
 } from 'open-data-v/ui'
 import { computed, defineComponent, onMounted, ref } from 'vue'
@@ -89,8 +88,8 @@ export default defineComponent({
     const renderDataSelect = () => {
       return (
         <OForm labelPlacement="top" labelAlign="left">
-          <OFormItem key="dataType" label="数据类型">
-            <OInputGroup>
+          <OFormItem prop="dataType" label="数据类型">
+            <div class="justify-center flex-row flex-nowrap flex items-center">
               <OSelect
                 v-model:value={curDataType.value}
                 placeholder="请选择数据类型"
@@ -100,7 +99,7 @@ export default defineComponent({
               <OButton type="success" onClick={appendGlobalData}>
                 新增
               </OButton>
-            </OInputGroup>
+            </div>
           </OFormItem>
         </OForm>
       )

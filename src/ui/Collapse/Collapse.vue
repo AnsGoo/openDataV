@@ -1,4 +1,3 @@
-<!-- Created by 337547038. -->
 <template>
   <div class="o-collapse">
     <slot></slot>

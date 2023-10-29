@@ -1,6 +1,6 @@
 <template>
   <o-form-item key="title" label="静态数据">
-    <o-input-group>
+    <div class="justify-center flex-row flex-nowrap flex items-center">
       <o-input
         v-model:value="formDataConfig.data"
         :readonly="true"
@@ -8,7 +8,7 @@
         @click="isShow = true"
       />
       <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
-    </o-input-group>
+    </div>
   </o-form-item>
   <o-modal v-model:show="isShow">
     <o-card
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts" setup>
-import { OButton, OCard, OFormItem, OInput, OInputGroup, OModal } from 'open-data-v/ui'
+import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { Slotter } from '../type'

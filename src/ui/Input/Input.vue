@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on 2021.6 0015. -->
 <template>
   <div
     :class="{
@@ -126,7 +125,7 @@ watch(
     controlChangeEvent(v, 'mounted')
   }
 )
-// formItem
+// FormItem
 const controlChange: any = inject(`OControlChange`, '')
 const controlChangeEvent = (val: any, type?: string) => {
   controlChange && controlChange(val, type)

@@ -1,9 +1,11 @@
-import { NColorPicker, NForm, NFormItem, NInputGroup } from 'naive-ui'
+import { NColorPicker } from 'naive-ui'
 
 import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
 import Divider from './Divider'
+import { Form } from './Form'
+import { FormItem } from './FormItem'
 import Icon from './Icon'
 import { Input } from './Input'
 import { InputNumber } from './InputNumber'
@@ -23,12 +25,11 @@ const OSelect = Select
 const OTabPane = TabPane
 const OTabs = Tabs
 const OMenu = Menu
-const OForm = NForm
-const OFormItem = NFormItem
+const OForm = Form
+const OFormItem = FormItem
 const OColorPicker = NColorPicker
 const OButton = Button
 const OCard = Card
-const OInputGroup = NInputGroup
 const OInputNumber = InputNumber
 const OModal = Modal
 const ORadio = Radio
@@ -57,7 +58,6 @@ export {
   OFormItem,
   OIcon,
   OInput,
-  OInputGroup,
   OInputNumber,
   OMenu,
   OModal,

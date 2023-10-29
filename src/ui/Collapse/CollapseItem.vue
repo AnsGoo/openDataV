@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on 2021.6. -->
 <template>
   <div
     :class="{ active: visible }"

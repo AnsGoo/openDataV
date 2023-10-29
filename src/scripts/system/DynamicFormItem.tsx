@@ -147,7 +147,7 @@ export default defineComponent({
     return () => (
       <>
         {props.items.map((item) => (
-          <OFormItem key={`${item.prop}`} label={item.label}>
+          <OFormItem prop={`${item.prop}`} label={item.label}>
             {isUndefined(props.data) ? <></> : renderItem(item, props.data)}
           </OFormItem>
         ))}

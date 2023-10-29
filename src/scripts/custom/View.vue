@@ -1,13 +1,12 @@
 <template>
   <o-form-item key="data" label="自定义脚本">
-    <o-input-group>
+    <div class="justify-center flex-row flex-nowrap flex items-center">
       <o-input :value="scriptRef" />
       <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
-    </o-input-group>
+    </div>
   </o-form-item>
   <o-modal v-model:show="isShow">
     <o-card
-      style="width: 600px"
       title="自定义脚本"
       :bordered="false"
       size="small"
@@ -22,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { OButton, OCard, OFormItem, OInput, OInputGroup, OModal } from 'open-data-v/ui'
+import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { onMounted, ref, watch } from 'vue'
 
 import type { Slotter } from '../type'

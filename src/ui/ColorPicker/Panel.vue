@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on $. -->
 <template>
   <div ref="el" class="color-panel" :style="{ background: background }" @mousedown="bgClick">
     <div class="color-white-panel"></div>

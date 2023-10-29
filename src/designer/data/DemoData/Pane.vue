@@ -1,9 +1,9 @@
 <template>
   <o-form-item key="data" label="示例数据">
-    <o-input-group>
+    <div class="justify-center flex-row flex-nowrap flex items-center">
       <o-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
       <o-button type="primary" @click="isShow = true"> 预览 </o-button>
-    </o-input-group>
+    </div>
   </o-form-item>
   <o-modal v-model:show="isShow">
     <o-card
@@ -23,7 +23,7 @@
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
 import type { Slotter } from 'open-data-v/data/type'
-import { OButton, OCard, OFormItem, OInput, OInputGroup, OModal } from 'open-data-v/ui'
+import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import DataHandler from './handler'

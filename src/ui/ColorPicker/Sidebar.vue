@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on $. -->
 <template>
   <div class="color-slider" @mousedown="barClick">
     <span class="color-slier-thumb" :style="{ top: topStyle + 'px' }" @mousedown="mouseDown"></span>

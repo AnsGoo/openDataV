@@ -18,7 +18,6 @@ import {
   OForm,
   OFormItem,
   OInput,
-  OInputGroup,
   OInputNumber,
   OModal,
   ORadio,
@@ -86,7 +85,7 @@ export default defineComponent({
       const options = ((item || {}).props || {}) as ModalProps
       return (
         <>
-          <OInputGroup>
+          <div class="justify-center flex-row flex-nowrap flex items-center">
             <OInput
               readonly={true}
               onClick={() => (isShow.value = true)}
@@ -96,14 +95,14 @@ export default defineComponent({
             <OButton type="primary" onClick={() => (isShow.value = true)}>
               {options.buttonText}
             </OButton>
-          </OInputGroup>
+          </div>
           <OModal v-model:show={isShow.value} class={['dark:bg-gray-800', 'bg-gray-100']}>
             <OCard title={item.label || ''} bordered={options.bordered || false}>
               <OForm size="small" labelPlacement="left" labelAlign="left">
                 {(item.children || []).map((el) => {
                   return (
                     <OFormItem
-                      key={`${props.ukey}${item.prop}${el.prop}`}
+                      prop={`${props.ukey}${item.prop}${el.prop}`}
                       label={el.label}
                       showLabel={isShowLabel(el.showLabel)}
                     >
@@ -274,7 +273,7 @@ export default defineComponent({
       <OForm>
         {props.children.map((item) => (
           <OFormItem
-            key={`${props.ukey}${item.prop}`}
+            prop={`${props.ukey}${item.prop}`}
             label={item.label}
             showLabel={isShowLabel(item.showLabel)}
           >

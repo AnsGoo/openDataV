@@ -1,6 +1,6 @@
 <template>
   <o-form-item label="动态数据" label-placement="top" size="small">
-    <o-input-group>
+    <div class="justify-center flex-row flex-nowrap flex items-center">
       <o-input v-model:value="formData.url" readonly>
         <template #prefix>
           <span class="accent-green-500" style="font-weight: 800">
@@ -9,7 +9,7 @@
         </template>
       </o-input>
       <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
-    </o-input-group>
+    </div>
   </o-form-item>
   <o-form-item label="是否重复" label-placement="top">
     <o-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
@@ -44,16 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  OButton,
-  OCard,
-  OFormItem,
-  OInput,
-  OInputGroup,
-  OInputNumber,
-  OModal,
-  OSwitch
-} from 'open-data-v/ui'
+import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { Slotter } from '../type'
