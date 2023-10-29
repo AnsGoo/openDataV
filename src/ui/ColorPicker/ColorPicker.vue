@@ -1,15 +1,26 @@
+<!-- Created by 337547038 on 2019/9/23 0023. -->
 <template>
   <div ref="el">
-    <slot></slot>
+    <Input :value="colorToRgba" readonly :style="{ background: colorToRgba }" />
     <transition name="slide-toggle">
-      <div v-show="state.visible" class="o-color-picker" @click.stop="">
+      <div v-show="state.visible" :class="`o-color-picker`" @click.stop="">
         <div class="color-picker-content">
-          <Sidebar ref="sidebar" v-model="state.bgColor" :side-bar-height="state.sideBarHeight" />
+          <Sidebar
+            ref="sidebar"
+            v-model:value="state.bgColor"
+            :side-bar-height="state.sideBarHeight"
+          />
           <Panel ref="panel" :bg-color="state.bgColor" :show-color="state.showColor" />
         </div>
         <div class="color-picker-control">
           <div class="color-input">
-            <input type="text" class="o-input-control" :value="colorToRgba" @change="onChange" />
+            <Input
+              type="text"
+              :class="`o-input-control`"
+              :style="{ background: colorToRgba }"
+              :value="colorToRgba"
+              @change="onChange"
+            />
           </div>
           <div class="color-confirm" @click="confirmClick" v-html="text"></div>
         </div>
@@ -21,6 +32,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref } from 'vue'
 
+import { Input } from '../Input'
 import Panel from './Panel.vue'
 import Sidebar from './Sidebar.vue'
 
@@ -39,6 +51,7 @@ const props = withDefaults(
 const emits = defineEmits<{
   (e: 'change', modelValue: any): void
   (e: 'update:value', modelValue: any): void
+  (e: 'updateValue', modelValue: any): void
 }>()
 
 const el = ref()
@@ -168,6 +181,7 @@ const confirmClick = (e: MouseEvent) => {
   console.log(e)
   state.visible = false
   emits('update:value', colorToRgba.value)
+  emits('updateValue', colorToRgba.value)
   emits('change', colorToRgba.value)
   e.stopPropagation()
 }

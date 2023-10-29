@@ -1,66 +1,43 @@
-@borderColor: #dcdee0;
-@backgroundColor:#fff;
-
 .o-color-picker{
   width: 300px;
   position: absolute;
   box-sizing: content-box;
-  border: 1px solid @borderColor;
   box-shadow: 0 4px 15px rgba(0, 0, 0, .2);
   border-radius: 5px;
   z-index: 10;
   padding: 7px;
-  background-color: @backgroundColor;
   user-select: none;
-  .color-picker-content{position: relative;height: 180px;margin-bottom: 10px}
-  .color-slider{position: absolute;width: 12px;
+  @apply dark:bg-zinc-700 bg-white;
+  .color-picker-content{
+    position: relative;
+    height: 180px;
+    margin-bottom: 10px;
+
+  }
+
+  .color-slider{
+    position: absolute;
+    width: 12px;
     height: 100%;
     z-index: 10;
     right: 0;
     top: 0;
-    background: linear-gradient(180deg, #f00 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00);}
-  .color-slier-thumb{ position: absolute;
-    cursor: pointer;
-    box-sizing: border-box;
-    left: 0;
-    top: 0;
-    width: 12px;
-    height: 4px;
-    border-radius: 1px;
-    background: #fff;
-    border: 1px solid #f0f0f0;
-    box-shadow: 0 0 2px rgba(0, 0, 0, .6);}
+    background: linear-gradient(180deg, #f00 0, #ff0 17%, #0f0 33%, #0ff 50%, #00f 67%, #f0f 83%, #f00);
+  }
   .color-panel{
     position: relative;
     width: 280px;
     height: 180px;
     cursor: pointer;
   }
-  .color-white-panel{
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: linear-gradient(90deg, #fff, hsla(0, 0%, 100%, 0));}
-  .color-block-panel{position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    background: linear-gradient(0deg, #000, transparent);
+  .color-input{
+    float: left;
+    width: 80%;
   }
-  .color-cursor{
-    position: absolute;
-    width: 5px;
-    height: 5px;
-    box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0, 0, 0, 0.3), 0 0 1px 2px rgba(0, 0, 0, 0.4);
-    border-radius: 50%;
-    transform: translate(-2px, -2px);
-    cursor: pointer;
-    z-index: 10;}
-  .color-input{float: left;width: 60%;
-    input{width: 100%}
+  .color-confirm{
+    float: right;
+    line-height: 38px;
+    margin-right: 10px;
+    cursor: pointer
   }
-  .color-confirm{float: right;line-height: 38px;margin-right: 10px;cursor: pointer}
 }

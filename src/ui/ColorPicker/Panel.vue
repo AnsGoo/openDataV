@@ -1,3 +1,4 @@
+<!-- Created by 337547038 on $. -->
 <template>
   <div ref="el" class="color-panel" :style="{ background: background }" @mousedown="bgClick">
     <div class="color-white-panel"></div>
@@ -92,6 +93,7 @@ const calcHeightColor = (_x: number, y: number, _w: number, h: number, color: an
 }
 // 滑块被点击时
 const onMouseDown = (e: MouseEvent) => {
+  console.log('_onMouseDown')
   const { w, h } = state.panelBgInfo
   const l = e.pageX - state.style.left
   const t = e.pageY - state.style.top
@@ -147,3 +149,31 @@ const changeShowColor = () => {
 }
 defineExpose({ calcXY })
 </script>
+<style lang="less" scoped>
+.color-white-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, #fff, hsla(0, 0%, 100%, 0));
+}
+.color-block-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: linear-gradient(0deg, #000, transparent);
+}
+.color-cursor {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  box-shadow: 0 0 0 1.5px #fff, inset 0 0 1px 1px rgba(0, 0, 0, 0.3), 0 0 1px 2px rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  transform: translate(-2px, -2px);
+  cursor: pointer;
+  z-index: 10;
+}
+</style>

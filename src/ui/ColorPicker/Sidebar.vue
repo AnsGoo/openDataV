@@ -1,3 +1,4 @@
+<!-- Created by 337547038 on $. -->
 <template>
   <div class="color-slider" @mousedown="barClick">
     <span class="color-slier-thumb" :style="{ top: topStyle + 'px' }" @mousedown="mouseDown"></span>
@@ -11,7 +12,7 @@ import type { Color } from './types'
 
 const props = withDefaults(
   defineProps<{
-    modelValue: Color // rgb格式，初始值
+    value: Color // rgb格式，初始值
     sideBarHeight: number
   }>(),
   {}
@@ -88,7 +89,7 @@ const getValue = (top: number, total: number, index: number) => {
 }
 // 通过选择或输入背景颜色修改时，重新计算滑块位置
 const calcTop = () => {
-  const { r, g, b } = props.modelValue
+  const { r, g, b } = props.value
   let top = 0
   const total = props.sideBarHeight / 6
   if (r === 255 && b === 0) top = (g / 255) * total
@@ -101,3 +102,18 @@ const calcTop = () => {
 }
 defineExpose({ calcTop })
 </script>
+<style scoped>
+.color-slier-thumb {
+  position: absolute;
+  cursor: pointer;
+  box-sizing: border-box;
+  left: 0;
+  top: 0;
+  width: 12px;
+  height: 4px;
+  border-radius: 1px;
+  background: #fff;
+  border: 1px solid #f0f0f0;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.6);
+}
+</style>
