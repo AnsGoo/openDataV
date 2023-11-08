@@ -46,7 +46,7 @@ export class CustomComponent {
   // 检测变化
   propIsChange = true
   styleIsChange = true
-  defaultViewType: ContainerType = ContainerType.COLLAPSE
+  defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
   _prop: MetaContainerItem[] = []
@@ -134,8 +134,7 @@ export class CustomComponent {
             type: FormType.NUMBER,
             props: {
               defaultValue: this.positionStyle.left,
-              suffix: () => h('span', {}, 'px'),
-              precision: 0
+              suffix: () => h('span', {}, 'px')
             }
           },
           {
@@ -144,8 +143,7 @@ export class CustomComponent {
             type: FormType.NUMBER,
             props: {
               defaultValue: this.positionStyle.top,
-              suffix: () => h('span', {}, 'px'),
-              precision: 0
+              suffix: () => h('span', {}, 'px')
             }
           },
           {
@@ -154,8 +152,7 @@ export class CustomComponent {
             type: FormType.NUMBER,
             props: {
               defaultValue: this.positionStyle.width,
-              suffix: () => h('span', {}, 'px'),
-              precision: 0
+              suffix: () => h('span', {}, 'px')
             }
           },
           {
@@ -164,8 +161,7 @@ export class CustomComponent {
             type: FormType.NUMBER,
             props: {
               defaultValue: this.positionStyle.height,
-              suffix: () => h('span', {}, 'px'),
-              precision: 0
+              suffix: () => h('span', {}, 'px')
             }
           },
           {

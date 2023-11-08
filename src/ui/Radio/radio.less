@@ -1,0 +1,47 @@
+@borderColor: #dcdee0;
+@primaryColor: #2080f0;
+.o-radio {
+  cursor: pointer;display: inline-block;
+  > span {display: flex;align-items: center}
+  .radio-inner {
+    margin-right: 5px;
+    width: 14px;height: 14px;
+    border-radius: 50%;
+    border: 1px solid @borderColor;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:after {
+      display: block;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      content: '';
+      background: @borderColor;
+      opacity: 0;
+      transform: scale(0);transition: all .3s
+    }
+  }
+  &.checked {
+    // 选中状态
+    .radio-inner {
+      border-color: @primaryColor;
+      &:after {
+        opacity: 1;transform: scale(1);
+        background: @primaryColor;
+      }
+    }
+  }
+  &.disabled {
+    cursor: not-allowed;
+    opacity: .5;
+    .radio-inner {
+      opacity: .5}
+  }
+  .o-radio {
+    margin-left: 10px
+  }
+}
+.o-radio-group {
+  display: inline-block
+}

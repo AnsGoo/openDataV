@@ -1,0 +1,68 @@
+@textColor:#323233;
+
+.o-form-item {
+  margin-bottom: 10px;
+  //line-height: 40px;
+  position: relative;
+  //display: flex;
+  .o-form-label {
+    text-align: right;
+    font-size: 14px;
+    box-sizing: border-box;
+    &.required {
+      &:before {
+        content: '*';
+        color: #f00;
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  }
+  .o-form-box {
+    position: relative;
+    @apply flex flex-col items-start;
+  }
+  /*错误提示*/
+  .o-form-tips {
+    color: #f00;
+    display: flex;
+  }
+  &.form-item-mini {
+    line-height: 28px;
+    .o-input-control {
+      height: 28px;
+      line-height: 28px;
+    }
+    .o-btn {
+      height: 28px;
+      line-height: 28px;
+    }
+  }
+  &.form-item-small {
+    line-height: 32px;
+    .o-input-control {
+      height: 32px;
+      line-height: 32px;
+    }
+    .o-btn {
+      height: 32px;
+      line-height: 32px;
+    }
+  }
+  &.form-item-medium {
+    line-height: 36px;
+    .o-input-control {
+      height: 36px;
+      line-height: 36px;
+    }
+    .o-btn {
+      height: 36px;
+      line-height: 36px;
+    }
+  }
+}
+.o-form-item-error {
+  .o-input-control {
+    border-color: #f00;
+  }
+}

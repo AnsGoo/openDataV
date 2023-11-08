@@ -8,16 +8,16 @@ const basicRoutes = [
     redirect: 'UiView',
     meta: {
       title: 'UI管理',
-      icon: 'api'
+      icon: 'components'
     },
     children: [
       {
         path: '/ui/view',
-        name: 'API',
+        name: 'UIComponent',
         component: () => import('@/pages/UIView.vue'),
         meta: {
           title: 'UI组件',
-          icon: 'api'
+          icon: 'components'
         }
       }
     ]

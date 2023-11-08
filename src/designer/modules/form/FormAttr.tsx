@@ -18,7 +18,6 @@ import {
   OForm,
   OFormItem,
   OInput,
-  OInputGroup,
   OInputNumber,
   OModal,
   ORadio,
@@ -86,7 +85,7 @@ export default defineComponent({
       const options = ((item || {}).props || {}) as ModalProps
       return (
         <>
-          <OInputGroup>
+          <div class="justify-center flex-row flex-nowrap flex items-center">
             <OInput
               readonly={true}
               onClick={() => (isShow.value = true)}
@@ -96,14 +95,14 @@ export default defineComponent({
             <OButton type="primary" onClick={() => (isShow.value = true)}>
               {options.buttonText}
             </OButton>
-          </OInputGroup>
+          </div>
           <OModal v-model:show={isShow.value} class={['dark:bg-gray-800', 'bg-gray-100']}>
             <OCard title={item.label || ''} bordered={options.bordered || false}>
-              <OForm size="small" labelPlacement="left" labelAlign="left">
+              <OForm size="small" labelPlacement="top">
                 {(item.children || []).map((el) => {
                   return (
                     <OFormItem
-                      key={`${props.ukey}${item.prop}${el.prop}`}
+                      prop={`${props.ukey}${item.prop}${el.prop}`}
                       label={el.label}
                       showLabel={isShowLabel(el.showLabel)}
                     >
@@ -191,7 +190,6 @@ export default defineComponent({
           return (
             <ORadioGroup
               v-model:value={modelValue[item.prop]}
-              name={props.uid}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
             >
               {options.map((op) => (
@@ -204,7 +202,6 @@ export default defineComponent({
         case FormType.NUMBER:
           const numberMax: number = getOptionsValue<number>('max', 9999999999)
           const numberMin: number = getOptionsValue<number>('min', -9999999999)
-          const precision: number | undefined = getOptionsValue<number>('precision', undefined)
 
           return (
             <OInputNumber
@@ -212,7 +209,6 @@ export default defineComponent({
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
               max={numberMax}
               min={numberMin}
-              precision={precision}
               clearable={true}
               v-slots={{
                 prefix: (itemOptions as InputNumberProps).prefix,
@@ -274,10 +270,10 @@ export default defineComponent({
       }
     }
     return () => (
-      <OForm>
+      <OForm labelPlacement="top">
         {props.children.map((item) => (
           <OFormItem
-            key={`${props.ukey}${item.prop}`}
+            prop={`${props.ukey}${item.prop}`}
             label={item.label}
             showLabel={isShowLabel(item.showLabel)}
           >

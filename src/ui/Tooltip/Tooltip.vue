@@ -1,4 +1,3 @@
-<!--Created by 337547038 on 2017/12/19.-->
 <template>
   <span ref="el" class="inline-block relative">
     <slot></slot>

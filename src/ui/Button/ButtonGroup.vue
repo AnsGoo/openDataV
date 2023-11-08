@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on 2021/5/21 0021. -->
 <template>
   <div class="o-btn-group">
     <slot></slot>

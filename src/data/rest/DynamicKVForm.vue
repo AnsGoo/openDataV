@@ -10,7 +10,7 @@
     </o-divider>
   </div>
   <div v-for="(item, index) in formData" :key="item.id">
-    <o-input-group class="mb-0.5">
+    <div class="mb-0.5 flex-nowrap flex flex-row items-center justify-center">
       <o-input
         class="w-1/2"
         size="small"
@@ -43,11 +43,11 @@
           <x-icon name="delete" color="#F76560" />
         </template>
       </o-button>
-    </o-input-group>
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
-import { OButton, ODivider, OInput, OInputGroup } from 'open-data-v/ui'
+import { OButton, ODivider, OInput } from 'open-data-v/ui'
 import { ref, watch } from 'vue'
 
 import { uuid } from '../utils'

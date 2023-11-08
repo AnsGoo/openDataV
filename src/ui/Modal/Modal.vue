@@ -1,4 +1,3 @@
-<!-- Created by 337547038 on 2018/8/31 0031. -->
 <template>
   <transition :name="animation">
     <div
@@ -26,7 +25,9 @@
         }"
         @click.stop
       >
-        <a v-if="showClose" :class="`o-dialog-close icon-close`" @click="btnClick('close')"></a>
+        <a v-if="showClose" :class="`o-dialog-close icon-close`" @click="btnClick('close')">
+          <Clear />
+        </a>
         <div v-if="autoClose > 0" :class="`o-dialog-auto-close`">
           <span>{{ closeTips.replace('S', state.autoTime.toString()) }}</span>
         </div>
@@ -71,6 +72,7 @@
 import { computed, nextTick, onBeforeUnmount, onMounted, reactive, ref, watch } from 'vue'
 
 import OButton from '../Button/Button.vue'
+import { Clear } from '../Icon'
 import { getOffset, getWindow } from '../util/dom'
 
 const scrollTop = () => {

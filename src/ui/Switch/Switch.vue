@@ -1,4 +1,3 @@
-<!--Created by 337547038 on 2021/6.-->
 <template>
   <span
     :class="{
@@ -34,8 +33,9 @@ const props = withDefaults(
 )
 
 const emits = defineEmits<{
-  (e: 'update:value', modelValue: string | number | boolean): void
-  (e: 'change', modelValue: string | number | boolean): void
+  (e: 'update:value', value: string | number | boolean): void
+  (e: 'updateValue', value: string | number | boolean): void
+  (e: 'change', value: string | number | boolean): void
 }>()
 
 const controlChange: any = inject(`OControlChange`, '')
@@ -64,6 +64,7 @@ const click = () => {
       }
     }
     emits('update:value', checked)
+    emits('updateValue', checked)
     emits('change', checked)
     controlChangeEvent(checked)
   }
