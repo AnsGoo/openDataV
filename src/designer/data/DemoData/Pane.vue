@@ -1,13 +1,12 @@
 <template>
-  <n-form-item key="data" label="示例数据">
-    <n-input-group>
-      <n-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
-      <n-button type="primary" @click="isShow = true"> 预览 </n-button>
-    </n-input-group>
-  </n-form-item>
-  <n-modal v-model:show="isShow">
-    <n-card
-      style="width: 600px"
+  <o-form-item key="data" label="示例数据">
+    <div class="justify-center flex-row flex-nowrap flex items-center">
+      <o-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
+      <o-button type="primary" @click="isShow = true"> 预览 </o-button>
+    </div>
+  </o-form-item>
+  <o-modal v-model:show="isShow">
+    <o-card
       title="示例数据"
       :bordered="false"
       size="small"
@@ -17,14 +16,14 @@
       @close="isShow = false"
     >
       <OCodeEditor v-model:value="formData.data" />
-    </n-card>
-  </n-modal>
+    </o-card>
+  </o-modal>
 </template>
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
 import type { Slotter } from 'open-data-v/data/type'
+import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import DataHandler from './handler'

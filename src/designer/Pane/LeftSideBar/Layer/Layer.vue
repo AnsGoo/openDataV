@@ -1,28 +1,29 @@
 <template>
-  <div>
-    <n-menu
-      v-if="componentData.length > 0"
-      :options="menuOptions"
-      :root-indent="1"
-      :indent="12"
-      @update:value="handleSelect"
-    />
-    <n-descriptions v-else class="placeholder">
-      <n-descriptions-item>
-        <n-empty description="画布为空" />
-      </n-descriptions-item>
-    </n-descriptions>
-  </div>
+  <o-menu
+    v-if="componentData.length > 0"
+    class="h-full o-scroll overflow-auto"
+    :options="menuOptions"
+    :root-indent="1"
+    :indent="12"
+    :collapsed="!iscollapsed"
+    @update:value="handleSelect"
+  />
+  <LayerEmpty v-else />
 </template>
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import type { MenuOption } from 'naive-ui'
-import { NDescriptions, NDescriptionsItem, NEmpty, NMenu } from 'naive-ui'
 import type { CustomComponent } from 'open-data-v/base'
-import { ComponentGroup, useEventBus } from 'open-data-v/base'
+import { ComponentGroup } from 'open-data-v/base'
 import type { ContextmenuItem } from 'open-data-v/designer'
-import { ComponentGroupList, useCanvasState, useClipBoardState } from 'open-data-v/designer'
+import {
+  ComponentGroupList,
+  useCanvasState,
+  useClipBoardState,
+  useEmpty
+} from 'open-data-v/designer'
+import type { MenuOption } from 'open-data-v/ui'
+import { OMenu } from 'open-data-v/ui'
 import { computed, h, ref, watch } from 'vue'
 
 import { uuid } from '../../../utils'
@@ -32,26 +33,24 @@ import SimpleLayerItem from './SimpleLayerItem.vue'
 const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()
 
+const LayerEmpty = useEmpty()
+
 const iconMap: Record<string, string> = {}
 ComponentGroupList.map((ele) => {
   iconMap[ele.key] = ele.icon
 })
+withDefaults(
+  defineProps<{
+    iscollapsed?: boolean
+  }>(),
+  {
+    iscollapsed: true
+  }
+)
 
 const componentData = computed(() => canvasState.componentData)
 
-const menu = ref<ElRef<any>>(null)
-const activeKey = ref<string>('')
-const open = (event: any) => {
-  const index = event as string
-  activeKey.value = index
-  if (menu.value && menu.value.open) {
-    menu.value.open(index)
-  }
-}
-useEventBus('ActiveMenu', open)
-
 const handleSelect = (key: string) => {
-  activeKey.value = key
   const indexes: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
   if (activedComponent) {
@@ -271,5 +270,6 @@ watch(
   }
 )
 </script>
-
-<style lang="less" scoped></style>
+<style scoped lang="less">
+@import 'open-data-v/css/index.less';
+</style>

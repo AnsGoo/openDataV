@@ -1,21 +1,19 @@
 <template>
-  <n-card>
-    <div class="static-data">
+  <o-card>
+    <div>
       <slot name="data-select"></slot>
     </div>
     <StaticDataView
       :data="originData"
       :title="title"
-      class="content"
       :mode="mode"
-      :error="errMessage"
       @update:data="originDataChange"
     />
-  </n-card>
+  </o-card>
 </template>
 
 <script lang="ts" setup>
-import { NCard } from 'naive-ui'
+import { OCard } from 'open-data-v/ui'
 import { computed, ref } from 'vue'
 
 import StaticDataView from './StaticDataView.vue'

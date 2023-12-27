@@ -1,18 +1,30 @@
 <template>
-  <div class="components">
-    <n-menu :options="menuOptions" :accordion="false" />
-  </div>
+  <o-menu
+    :options="menuOptions"
+    :accordion="false"
+    :collapsed="!iscollapsed"
+    class="h-full o-scroll overflow-auto select-none"
+  />
 </template>
 
 <script setup lang="ts">
-import type { MenuOption } from 'naive-ui'
-import { NMenu } from 'naive-ui'
 import type { CustomComponent } from 'open-data-v/base'
 import type { GroupType } from 'open-data-v/designer'
 import { ComponentGroupList, useCanvasState } from 'open-data-v/designer'
+import type { MenuOption } from 'open-data-v/ui'
+import { OMenu } from 'open-data-v/ui'
 import { computed, getCurrentInstance, h } from 'vue'
 
 import ComponentItem from './ComponentItem.vue'
+
+withDefaults(
+  defineProps<{
+    iscollapsed?: boolean
+  }>(),
+  {
+    iscollapsed: true
+  }
+)
 
 const canvasState = useCanvasState()
 const instance = getCurrentInstance()
@@ -62,9 +74,6 @@ const handleDragStart = (e) => {
   e.dataTransfer.setData('componentName', e.target.dataset.component)
 }
 </script>
-
-<style scoped>
-.components {
-  user-select: none;
-}
+<style scoped lang="less">
+@import 'open-data-v/css/index.less';
 </style>

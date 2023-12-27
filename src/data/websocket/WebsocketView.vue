@@ -1,37 +1,27 @@
 <template>
-  <n-card>
-    <div class="rest-data">
+  <o-card>
+    <div class="flex flex-col flex-nowrap">
       <slot name="data-select"></slot>
     </div>
-    <div class="api">
-      <n-input v-model:value="formData['url']" class="url" @update-value="formChange" />
-      <n-space>
-        <n-button-group class="send">
-          <n-button type="primary" @click="connect">链接</n-button>
-          <n-button @click="send">发送</n-button>
-        </n-button-group>
-      </n-space>
+    <div class="flex flex-row flex-nowrap">
+      <o-input v-model:value="formData['url']" class="flex-1" @update-value="formChange" />
+      <div>
+        <o-button-group>
+          <o-button type="primary" @click="connect">链接</o-button>
+          <o-button @click="send">发送</o-button>
+        </o-button-group>
+      </div>
     </div>
-    <div class="config">
-      <n-tabs type="line" animated>
-        <n-tab-pane name="query" tab="消息" display-directive="show">
-          <div class="params">
-            <OCodeEditor v-model:value="formData.message" class="content" height="100px" />
-          </div>
-        </n-tab-pane>
-      </n-tabs>
-    </div>
-    <div class="response">
-      <n-tabs>
-        <n-tab-pane name="origin" tab="原始数据结果" display-directive="show">
-          <OCodeEditor :value="response.data" class="content" />
-        </n-tab-pane>
-      </n-tabs>
-    </div>
-  </n-card>
+    <o-card name="query" title="消息">
+      <OCodeEditor v-model:value="formData.message" height="100px" />
+    </o-card>
+    <o-card name="origin" title="原始数据结果">
+      <OCodeEditor :value="response.data" />
+    </o-card>
+  </o-card>
 </template>
 <script setup lang="ts">
-import { NButton, NButtonGroup, NCard, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
+import { OButton, OButtonGroup, OCard, OInput } from 'open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
 import { dataLogger } from '../utils'
@@ -101,36 +91,3 @@ onUnmounted(() => {
   close()
 })
 </script>
-
-<style scoped lang="less">
-.rest-data {
-  display: flex;
-  margin-bottom: 5px;
-  .selected {
-    flex: 4;
-  }
-  .title {
-    flex: 8;
-  }
-}
-.api {
-  display: flex;
-  .method {
-    min-width: 110px;
-    flex: 8;
-  }
-  .url {
-    flex: 90;
-  }
-}
-.response {
-  .resp-fail {
-    color: #f76560;
-    margin-left: 10px;
-  }
-  .resp-code.resp-success {
-    color: #18a058;
-    margin-left: 10px;
-  }
-}
-</style>

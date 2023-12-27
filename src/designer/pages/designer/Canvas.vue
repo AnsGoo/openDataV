@@ -1,60 +1,45 @@
 <template>
-  <n-layout ref="centerCanvas" v-resize="editorWindowResizeHandler">
-    <!-- 中间画布 -->
-    <n-layout-content class="content">
-      <n-scrollbar x-scrollable :style="scrollbarStyle">
-        <Editor />
-      </n-scrollbar>
-    </n-layout-content>
-    <n-layout-footer position="absolute" class="footer">
-      <n-space justify="end" align="center" style="height: 100%; margin-right: 5px">
-        <n-el
-          tag="span"
-          :style="{ color: primaryColor, transition: `all 0.3s ${cubicBezierEaseInOut}` }"
-        >
-          画布缩放:
-        </n-el>
-        <n-slider
+  <div ref="centerCanvas" class="middle">
+    <div class="canvas o-scroll overflow-auto">
+      <div class="edit" :style="scrollbarStyle">
+        <Editor v-resize="editorWindowResizeHandler" />
+      </div>
+    </div>
+    <div class="flex flex-row justify-end items-center ml-0.5 w-full">
+      <div class="flex-nowrap flex items-center">
+        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }"> 缩放: </span>
+
+        <o-slider
           :value="sliderValue"
           :min="10"
           :max="200"
           style="width: 120px"
-          @update:value="handleScale"
+          @update:value="(value) => handleScale(value as number)"
         />
-        <n-select
+        <o-select
           :value="selectValue"
           :options="options"
           size="tiny"
           style="width: 90px"
           @update:value="handleScale"
         />
-      </n-space>
-    </n-layout-footer>
-  </n-layout>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { debounce } from 'lodash-es'
-import type { SelectOption } from 'naive-ui'
-import {
-  NEl,
-  NLayout,
-  NLayoutContent,
-  NLayoutFooter,
-  NScrollbar,
-  NSelect,
-  NSlider,
-  NSpace,
-  useThemeVars
-} from 'naive-ui'
+import { useThemeVars } from 'naive-ui'
 import { useCanvasState } from 'open-data-v/designer'
+import type { SelectOption } from 'open-data-v/ui'
+import { OSelect, OSlider } from 'open-data-v/ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import Editor from '../../Editor'
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)
-const toolBarHeight = ref<number>(35)
 
 const sliderValue = ref<number>(100)
 const selectValue = ref<string>('100%')
@@ -84,7 +69,7 @@ const options: SelectOption[] = [
 ]
 
 const themeVars = useThemeVars()
-const { primaryColor, cubicBezierEaseInOut } = themeVars.value
+const { cubicBezierEaseInOut } = themeVars.value
 
 const scrollbarStyle = computed(() => {
   return {
@@ -96,10 +81,10 @@ const scrollbarStyle = computed(() => {
 const editorWindowResizeHandler = (entry: ResizeObserverEntry) => {
   const { width, height } = entry.contentRect
   windowWidth.value = width
-  windowHeight.value = height - toolBarHeight.value
+  windowHeight.value = height - 100
 }
 
-const handleScale = (value: number) => {
+const handleScale = (value: number): void => {
   selectValue.value = `${value}%`
   sliderValue.value = value
   changeScale(sliderValue.value)
@@ -111,7 +96,7 @@ const changeScale = debounce((value: number) => {
 }, 300)
 
 // region 按住 alt 或 command + 滚轮缩放
-const centerCanvas = ref()
+const centerCanvas = ref<HTMLDivElement | null>(null)
 function setScaleByWheel(e: WheelEvent) {
   const max = 200
   const min = 10
@@ -133,27 +118,24 @@ function setScaleByWheel(e: WheelEvent) {
 }
 
 onMounted(() => {
-  centerCanvas.value.$el!.addEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value?.addEventListener('wheel', setScaleByWheel, false)
 })
 
 onBeforeUnmount(() => {
-  centerCanvas.value.$el!.removeEventListener('wheel', setScaleByWheel, false)
+  centerCanvas.value?.removeEventListener('wheel', setScaleByWheel, false)
 })
-// endregion
 </script>
 
-<style lang="less" scoped>
-.content {
-  box-shadow: inset 0 0 3px black;
-
-  :deep(.n-scrollbar-content):has(div[id='editor']) {
+<style scoped lang="less">
+@import 'open-data-v/css/index.less';
+.middle {
+  .canvas {
+    height: 100%;
+  }
+  :deep(.edit) {
     transform-origin: left top;
     transform: scale(v-bind(scaleValue));
     transition: all 0.3s;
   }
-}
-
-.footer {
-  height: v-bind('toolBarHeight + "px"');
 }
 </style>

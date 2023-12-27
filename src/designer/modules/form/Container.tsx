@@ -1,6 +1,6 @@
-import { NCard, NCollapse, NCollapseItem, NDivider, NTimeline, NTimelineItem } from 'naive-ui'
 import type { MetaContainerItem, MetaForm } from 'open-data-v/base'
 import { ContainerType } from 'open-data-v/base'
+import { OCard, OCollapse, OCollapseItem, ODivider } from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 
@@ -22,7 +22,7 @@ export default defineComponent({
     mode: {
       type: String as PropType<ContainerType>,
       required: false,
-      defalut: ContainerType.COLLAPSE
+      defalut: ContainerType.CARD
     },
     flat: {
       type: Boolean as PropType<boolean>,
@@ -70,57 +70,45 @@ export default defineComponent({
       switch (props.mode) {
         case ContainerType.COLLAPSE:
           return (
-            <NCollapse accordion={true}>
+            <OCollapse accordion={true}>
               {containerItems.map((el) => {
                 return (
-                  <NCollapseItem key={el.prop} title={el.label} name={el.prop}>
+                  <OCollapseItem key={el.prop} title={el.label} name={el.prop}>
                     {renderForm(el)}
-                  </NCollapseItem>
+                  </OCollapseItem>
                 )
               })}
-            </NCollapse>
+            </OCollapse>
           )
         case ContainerType.CARD:
           return (
             <>
               {containerItems.map((el) => {
                 return (
-                  <NCard title={el.label} size="small" style={{ marginBottom: '0.25rem' }}>
+                  <OCard title={el.label} class="mb-1">
                     {renderForm(el)}
-                  </NCard>
+                  </OCard>
                 )
               })}
             </>
           )
         case ContainerType.FORM:
           return (
-            <div style={{ padding: '0 1rem' }}>
+            <div class="p-2">
               {containerItems.map((el) => {
                 return (
                   <>
-                    <NDivider
+                    <ODivider
                       title-placement="left"
                       style={{ marginTop: '0px', marginBottom: '0px' }}
                     >
                       {el.label}
-                    </NDivider>
+                    </ODivider>
                     {renderForm(el)}
                   </>
                 )
               })}
             </div>
-          )
-        case ContainerType.TIMELINE:
-          return (
-            <NTimeline>
-              {containerItems.map((el) => {
-                return (
-                  <NTimelineItem key={el.prop} title={el.label} type={'success'}>
-                    {renderForm(el)}
-                  </NTimelineItem>
-                )
-              })}
-            </NTimeline>
           )
       }
     }

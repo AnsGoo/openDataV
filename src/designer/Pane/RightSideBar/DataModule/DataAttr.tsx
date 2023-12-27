@@ -1,20 +1,15 @@
-import {
-  NCard,
-  NCollapse,
-  NCollapseItem,
-  NDescriptions,
-  NDescriptionsItem,
-  NDivider,
-  NEmpty,
-  NForm,
-  NFormItem,
-  NSelect,
-  NTimeline,
-  NTimelineItem
-} from 'naive-ui'
 import type { CustomComponent } from 'open-data-v/base'
 import { ContainerType } from 'open-data-v/base'
 import { DataMode, useDataState, useEmpty, useScriptState } from 'open-data-v/designer'
+import {
+  OCard,
+  OCollapse,
+  OCollapseItem,
+  ODivider,
+  OForm,
+  OFormItem,
+  OSelect
+} from 'open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, onMounted, ref, watch } from 'vue'
 
@@ -87,34 +82,34 @@ export default defineComponent({
 
     const renderData = () => {
       return (
-        <NForm size="small" labelPlacement="top" labelAlign="left">
-          <NFormItem key="dataType" label="数据类型">
-            <NSelect
+        <OForm size="small" labelPlacement="top">
+          <OFormItem prop="dataType" label="数据类型">
+            <OSelect
               v-model:value={dataType.value}
               placeholder="请选择数据类型"
               options={componentDataTypes.value}
               onUpdateValue={(type: string) => typeChanged(type)}
               clearable={true}
             />
-          </NFormItem>
+          </OFormItem>
           {renderDataComponent()}
-        </NForm>
+        </OForm>
       )
     }
     const renderScript = () => {
       return (
-        <NForm size="small" labelPlacement="top" labelAlign="left">
-          <NFormItem key="scriptType" label="脚本类型">
-            <NSelect
+        <OForm size="small" labelPlacement="top">
+          <OFormItem prop="scriptType" label="脚本类型">
+            <OSelect
               v-model:value={scriptType.value}
               placeholder="请选择脚本类型"
               options={scriptState.allScriptType}
               onUpdateValue={(type: string) => scriptTypeChange(type)}
               clearable={true}
             />
-          </NFormItem>
+          </OFormItem>
           {renderScriptComponent()}
-        </NForm>
+        </OForm>
       )
     }
     const renderContainer = () => {
@@ -122,62 +117,44 @@ export default defineComponent({
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
-            <NCollapse accordion={true}>
-              <NCollapseItem title="数据选择" name="dataType">
+            <OCollapse accordion={true}>
+              <OCollapseItem title="数据选择" name="dataType">
                 {renderData()}
-              </NCollapseItem>
-              <NCollapseItem title="脚本配置" name="scriptOptions">
+              </OCollapseItem>
+              <OCollapseItem title="脚本配置" name="scriptOptions">
                 {renderScript()}
-              </NCollapseItem>
-            </NCollapse>
+              </OCollapseItem>
+            </OCollapse>
           )
         case ContainerType.CARD:
           return (
             <>
-              <NCard title="数据选择" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="数据选择" style={{ marginBottom: '0.25rem' }}>
                 {renderData()}
-              </NCard>
-              <NCard title="脚本配置" size="small" style={{ marginBottom: '0.25rem' }}>
+              </OCard>
+              <OCard title="脚本配置" style={{ marginBottom: '0.25rem' }}>
                 {renderScript()}
-              </NCard>
+              </OCard>
             </>
           )
         case ContainerType.FORM:
           return (
             <div style={{ padding: '0 1rem' }}>
-              <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
+              <ODivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {'数据选择'}
-              </NDivider>
+              </ODivider>
               {renderData()}
-              <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
+              <ODivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {'脚本配置'}
-              </NDivider>
+              </ODivider>
               {renderScript()}
             </div>
-          )
-        case ContainerType.TIMELINE:
-          return (
-            <NTimeline>
-              <NTimelineItem title="数据选择" type={'success'}>
-                {renderData()}
-              </NTimelineItem>
-              <NTimelineItem title="脚本配置" type={'success'}>
-                {renderScript()}
-              </NTimelineItem>
-            </NTimeline>
           )
       }
     }
     return () =>
-      props.curComponent.dataMode ||
-      props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL ? (
-        renderContainer()
-      ) : (
-        <NDescriptions>
-          <NDescriptionsItem>
-            <NEmpty description="未发现数据配置项"></NEmpty>
-          </NDescriptionsItem>
-        </NDescriptions>
-      )
+      props.curComponent.dataMode || props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL
+        ? renderContainer()
+        : useEmpty('未发现数据配置项')
   }
 })

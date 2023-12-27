@@ -30,8 +30,8 @@
 </template>
 <script setup lang="ts">
 import { NCard, NInput, NLi, NOl, NSpace, NTabPane, NTabs } from 'naive-ui'
-import type { ContextmenuItem } from 'open-data-v'
-import { eventBus, StaticKey } from 'open-data-v'
+import { eventBus, StaticKey } from 'open-data-v/base'
+import type { ContextmenuItem } from 'open-data-v/designer'
 import { onMounted, ref } from 'vue'
 
 import type { StaticDataDetail } from '@/api/data'

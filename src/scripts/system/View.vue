@@ -1,14 +1,13 @@
 <template>
-  <n-form-item key="data" label="系统脚本">
-    <n-input-group>
-      <n-select v-model:value="scriptRef" :options="scriptOptions" @update:value="scriptChange" />
-      <n-button type="primary" @click="isShow = true"> 文档 </n-button>
-    </n-input-group>
-  </n-form-item>
+  <o-form-item key="data" label="系统脚本">
+    <div class="justify-center flex-row flex-nowrap flex items-center">
+      <o-select v-model:value="scriptRef" :options="scriptOptions" @update:value="scriptChange" />
+      <o-button type="primary" @click="isShow = true"> 文档 </o-button>
+    </div>
+  </o-form-item>
   <DynamicForm v-model:data="extendParam" :items="extendParamItems" @change="extendParamChange" />
-  <n-modal v-model:show="isShow">
-    <n-card
-      style="width: 600px"
+  <o-modal v-model:show="isShow">
+    <o-card
       title="文档"
       :bordered="false"
       size="small"
@@ -16,14 +15,14 @@
       closable
       aria-modal="true"
       @close="isShow = false"
-      >我还没有写文档</n-card
+      >我还没有写文档</o-card
     >
-  </n-modal>
+  </o-modal>
 </template>
 
 <script lang="ts" setup>
-import type { SelectOption } from 'naive-ui'
-import { NButton, NCard, NFormItem, NInputGroup, NModal, NSelect } from 'naive-ui'
+import type { SelectOption } from 'open-data-v/ui'
+import { OButton, OCard, OFormItem, OModal, OSelect } from 'open-data-v/ui'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import type { Slotter } from '../type'

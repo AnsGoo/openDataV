@@ -1,47 +1,47 @@
 <template>
-  <n-form :model="data" size="small" label-placement="left" :show-label="false">
-    <n-form-item label="图片">
-      <n-input
+  <o-form :model="data" size="small" label-placement="left" :show-label="false">
+    <o-form-item label="图片">
+      <o-input
         :value="data.backgroundImage"
         placeholder="请输入图片地址"
         @update:value="(val: string) => handleChange(val, 'backgroundImage')"
       />
-    </n-form-item>
-    <n-form-item label="填充">
-      <n-select
+    </o-form-item>
+    <o-form-item label="填充">
+      <o-select
         :value="data.backgroundRepeat"
         :options="repeatOptions"
         @update:value="(val:string) => handleChange(val, 'backgroundRepeat')"
       />
-    </n-form-item>
-    <n-form-item label="附着">
-      <n-select
+    </o-form-item>
+    <o-form-item label="附着">
+      <o-select
         :value="data.backgroundAttachment"
         :options="attachmentOptions"
         @update:value="(val: string) => handleChange(val, 'backgroundAttachment')"
       />
-    </n-form-item>
-    <n-form-item label="位置">
-      <n-select
+    </o-form-item>
+    <o-form-item label="位置">
+      <o-select
         :value="data.backgroundPosition"
         :options="positionOptions"
         @update:value="(val:string) => handleChange(val, 'backgroundPosition')"
       />
-    </n-form-item>
-    <n-form-item label="尺寸">
-      <n-select
+    </o-form-item>
+    <o-form-item label="尺寸">
+      <o-select
         :value="data.backgroundSize"
         :options="sizeOptions"
         @update:value="(val: string) => handleChange(val, 'backgroundSize')"
       />
-    </n-form-item>
-  </n-form>
+    </o-form-item>
+  </o-form>
 </template>
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import type { SelectOption } from 'naive-ui'
-import { NForm, NFormItem, NInput, NSelect } from 'naive-ui'
+import type { SelectOption } from 'open-data-v/ui'
+import { OForm, OFormItem, OInput, OSelect } from 'open-data-v/ui'
 import { computed } from 'vue'
 
 import type { BackgroundImage } from './type'
@@ -166,13 +166,3 @@ const handleChange = (value: string, type: string) => {
   emits('update:value', background)
 }
 </script>
-
-<style lang="less" scoped>
-:deep(.n-upload) {
-  width: auto;
-}
-
-:deep(.n-form-item .n-form-item-feedback-wrapper) {
-  --n-feedback-height: 10px;
-}
-</style>

@@ -1,58 +1,50 @@
 <template>
-  <n-tabs
-    v-if="!iscollapsed"
+  <o-tabs
+    v-if="iscollapsed"
     v-model:value="activeKey"
-    type="line"
-    animated
-    :bar-width="100"
-    justify-content="center"
     @update:value="
       (key) => {
         activeKey = key
       }
     "
   >
-    <n-tab-pane name="components" display-directive="show:lazy">
-      <template #tab>
-        <x-icon name="components" />
-        <span>组件</span>
+    <o-tab-pane name="components" display-directive="show:lazy">
+      <template #label>
+        <div class="flex-nowrap flex flex-row items-center">
+          <x-icon name="components" class="inline-block" />
+          <span class="inline-block">组件</span>
+        </div>
       </template>
-      <ComponentList />
-    </n-tab-pane>
-    <n-tab-pane name="layer" display-directive="show:lazy">
-      <template #tab>
-        <x-icon name="layers" />
-        <span>图层</span>
+      <ComponentList class="components" />
+    </o-tab-pane>
+    <o-tab-pane name="layer" display-directive="show:lazy">
+      <template #label>
+        <div class="flex-nowrap flex flex-row items-center">
+          <x-icon name="layers" class="inline-block" />
+          <span class="inline-block">图层</span>
+        </div>
       </template>
-      <Layer />
-    </n-tab-pane>
-  </n-tabs>
-  <n-tabs
-    v-else
-    v-model:value="activeKey"
-    type="line"
-    animated
-    :bar-width="48"
-    justify-content="center"
-    @update:value="collapsedTabPane"
-  >
-    <n-tab-pane v-if="activeKey === 'components'" name="components" display-directive="show:lazy">
-      <template #tab>
+      <Layer class="layers" />
+    </o-tab-pane>
+  </o-tabs>
+  <o-tabs v-else v-model:value="activeKey" @update:value="collapsedTabPane">
+    <o-tab-pane v-if="activeKey === 'components'" name="components">
+      <template #label>
         <x-icon name="components" @click="switchTab('layer')" />
       </template>
-      <ComponentList />
-    </n-tab-pane>
-    <n-tab-pane v-else-if="activeKey === 'layer'" name="layer" display-directive="show:lazy">
-      <template #tab>
+      <ComponentList :iscollapsed="iscollapsed" class="h-full components" />
+    </o-tab-pane>
+    <o-tab-pane v-else-if="activeKey === 'layer'" name="layer">
+      <template #label>
         <x-icon name="layers" @click="switchTab('components')" />
       </template>
-      <Layer />
-    </n-tab-pane>
-  </n-tabs>
+      <Layer :iscollapsed="iscollapsed" />
+    </o-tab-pane>
+  </o-tabs>
 </template>
 
 <script lang="ts" setup>
-import { NTabPane, NTabs } from 'naive-ui'
+import { OTabPane, OTabs } from 'open-data-v/ui'
 import { ref } from 'vue'
 
 import ComponentList from './Component/ComponentList.vue'
@@ -77,3 +69,11 @@ const switchTab = (key: string) => {
   activeKey.value = key
 }
 </script>
+<style scoped lang="less">
+.components {
+  height: calc(90vh - 28px);
+}
+.layers {
+  height: calc(90vh - 28px);
+}
+</style>

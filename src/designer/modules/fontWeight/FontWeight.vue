@@ -1,5 +1,5 @@
 <template>
-  <n-select
+  <o-select
     v-model:value="weight"
     clearable
     placeholder="请选择字重"
@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { NSelect } from 'naive-ui'
+import { OSelect } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
 import { SYS_FONT_WEIGHT } from './enum'

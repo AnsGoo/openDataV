@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
-    <div v-for="(_, index) in arrayValue" :key="index" class="item">
-      <n-input
+  <div class="flex-col flex">
+    <div v-for="(_, index) in arrayValue" :key="index" class="flex flex-row p-1 items-center">
+      <o-input
         v-model:value="arrayValue[index]"
         type="text"
         style="width: 100%"
@@ -16,8 +16,8 @@
         @click="handleDelete(index)"
       />
     </div>
-    <div v-if="type === 'dynamic'" class="item">
-      <n-input
+    <div v-if="type === 'dynamic'" class="flex flex-row p-1 items-center">
+      <o-input
         ref="addInputEl"
         v-model:value="newValue"
         type="text"
@@ -31,7 +31,7 @@
 
 <script lang="ts" setup>
 import { isNumber } from 'lodash-es'
-import { NInput } from 'naive-ui'
+import { OInput } from 'open-data-v/ui'
 import { nextTick, reactive, ref } from 'vue'
 
 const props = withDefaults(
@@ -95,12 +95,3 @@ const handleChange = (index: number) => {
   emits('updateValue', arrayValue)
 }
 </script>
-
-<style lang="less" scoped>
-.container {
-  @apply flex-col;
-  .item {
-    @apply flex flex-row p-1 items-center;
-  }
-}
-</style>

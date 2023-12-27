@@ -1,21 +1,15 @@
-import {
-  NButton,
-  NCard,
-  NCollapse,
-  NCollapseItem,
-  NDescriptions,
-  NDescriptionsItem,
-  NDivider,
-  NEmpty,
-  NForm,
-  NFormItem,
-  NInputGroup,
-  NSelect,
-  NTimeline,
-  NTimelineItem
-} from 'naive-ui'
 import { ContainerType } from 'open-data-v/base'
 import { useCanvasState, useDataState, useEmpty } from 'open-data-v/designer'
+import {
+  OButton,
+  OCard,
+  OCollapse,
+  OCollapseItem,
+  ODivider,
+  OForm,
+  OFormItem,
+  OSelect
+} from 'open-data-v/ui'
 import { computed, defineComponent, onMounted, ref } from 'vue'
 
 const canvasState = useCanvasState()
@@ -65,61 +59,49 @@ export default defineComponent({
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
-            <NCollapse accordion={true}>
-              <NCollapseItem title={`全局数据${index + 1}`} name="dataType">
+            <OCollapse accordion={true}>
+              <OCollapseItem title={`全局数据${index + 1}`} name="dataType">
                 {renderDataComponent(dataType, id)}
-              </NCollapseItem>
-            </NCollapse>
+              </OCollapseItem>
+            </OCollapse>
           )
         case ContainerType.CARD:
           return (
             <>
-              <NCard
-                title={`全局数据${index + 1}`}
-                size="small"
-                style={{ marginBottom: '0.25rem' }}
-              >
+              <OCard title={`全局数据${index + 1}`} style={{ marginBottom: '0.25rem' }}>
                 {renderDataComponent(dataType, id)}
-              </NCard>
+              </OCard>
             </>
           )
         case ContainerType.FORM:
           return (
             <div style={{ padding: '0 1rem' }}>
-              <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
+              <ODivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {`全局数据${index + 1}`}
-              </NDivider>
+              </ODivider>
               {renderDataComponent(dataType, id)}
             </div>
-          )
-        case ContainerType.TIMELINE:
-          return (
-            <NTimeline>
-              <NTimelineItem title={`全局数据${index + 1}`} type={'success'}>
-                {renderDataComponent(dataType, id)}
-              </NTimelineItem>
-            </NTimeline>
           )
       }
     }
 
     const renderDataSelect = () => {
       return (
-        <NForm size="small" labelPlacement="top" labelAlign="left">
-          <NFormItem key="dataType" label="数据类型">
-            <NInputGroup>
-              <NSelect
+        <OForm labelPlacement="top">
+          <OFormItem prop="dataType" label="数据类型">
+            <div class="justify-center flex-row flex-nowrap flex items-center">
+              <OSelect
                 v-model:value={curDataType.value}
                 placeholder="请选择数据类型"
                 options={globalDataTypes.value}
                 clearable={true}
               />
-              <NButton type="success" onClick={appendGlobalData}>
+              <OButton type="success" onClick={appendGlobalData}>
                 新增
-              </NButton>
-            </NInputGroup>
-          </NFormItem>
-        </NForm>
+              </OButton>
+            </div>
+          </OFormItem>
+        </OForm>
       )
     }
 
@@ -128,36 +110,28 @@ export default defineComponent({
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
-            <NCollapse accordion={true}>
-              <NCollapseItem title="添加数据" name="dataType">
+            <OCollapse accordion={true}>
+              <OCollapseItem title="添加数据" name="dataType">
                 {renderDataSelect()}
-              </NCollapseItem>
-            </NCollapse>
+              </OCollapseItem>
+            </OCollapse>
           )
         case ContainerType.CARD:
           return (
             <>
-              <NCard title="添加数据" size="small" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="添加数据" style={{ marginBottom: '0.25rem' }}>
                 {renderDataSelect()}
-              </NCard>
+              </OCard>
             </>
           )
         case ContainerType.FORM:
           return (
             <div style={{ padding: '0 1rem' }}>
-              <NDivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
+              <ODivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {'添加数据'}
-              </NDivider>
+              </ODivider>
               {renderDataSelect()}
             </div>
-          )
-        case ContainerType.TIMELINE:
-          return (
-            <NTimeline>
-              <NTimelineItem title="添加数据" type={'success'}>
-                {renderDataSelect()}
-              </NTimelineItem>
-            </NTimeline>
           )
       }
     }
@@ -168,11 +142,7 @@ export default defineComponent({
           {dataOptions.value.map((el, index) => renderContainer(el.type, el.id, index))}
         </>
       ) : (
-        <NDescriptions>
-          <NDescriptionsItem>
-            <NEmpty description="未发现任何全局数据插件"></NEmpty>
-          </NDescriptionsItem>
-        </NDescriptions>
+        useEmpty('未发现任何全局数据插件')
       )
   }
 })

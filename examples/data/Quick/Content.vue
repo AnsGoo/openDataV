@@ -14,7 +14,11 @@
         placeholder="请选择数据"
         @update:value="dataChangeHandler"
         @clear="clear"
-      />
+      >
+        <template #arrow>
+          <x-icon name="data" />
+        </template>
+      </n-select>
       <n-input-group v-if="mode === 'debug'">
         <n-input v-model:value="formData.title" class="title">
           <template #prefix>
@@ -30,7 +34,7 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 import { NButton, NInput, NInputGroup, NSelect } from 'naive-ui'
-import { StaticKey, useEventBus } from 'open-data-v'
+import { StaticKey, useEventBus } from 'open-data-v/base'
 import { StaticContent } from 'open-data-v/data/static'
 import { onMounted, reactive, ref, watch } from 'vue'
 

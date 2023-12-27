@@ -1,4 +1,3 @@
-import { NSpin } from 'naive-ui'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
@@ -24,7 +23,6 @@ const useComponetPlugin = ({
 
   const groupComp = defineAsyncComponent({
     loader: Group.component,
-    loadingComponent: NSpin,
     delay: 200,
     timeout: 3000
   })

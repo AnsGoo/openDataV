@@ -1,19 +1,19 @@
 <template>
-  <div class="linear-gradient">
-    <n-slider
+  <div class="w-full">
+    <o-slider
       v-model:value="linearGradient.angle"
       :step="5"
       size="small"
       :max="360"
       @update:value="changed"
     />
-    <NColorPicker
+    <OColorPicker
       v-model:value="linearGradient.color1"
       :swatches="GlobalColorSwatches"
       clearable
       @update:value="changed"
     />
-    <NColorPicker
+    <OColorPicker
       v-model:value="linearGradient.color2"
       :swatches="GlobalColorSwatches"
       clearable
@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { NColorPicker, NSlider } from 'naive-ui'
+import { OColorPicker, OSlider } from 'open-data-v/ui'
 import { ref } from 'vue'
 
 import { GlobalColorSwatches } from '../enum'
@@ -58,9 +58,3 @@ const changed = () => {
   emits('update:value', linearGradient.value)
 }
 </script>
-
-<style scoped lang="less">
-.linear-gradient {
-  width: 100%;
-}
-</style>

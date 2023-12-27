@@ -1,15 +1,14 @@
 <template>
-  <n-tooltip>
-    <template #trigger>
-      <n-button quaternary size="small" :title="label" @click="action"> <IconComponent /></n-button>
-    </template>
-    <span>{{ label }}</span>
-  </n-tooltip>
-  <n-divider v-if="divider" vertical />
+  <o-tooltip :content="label">
+    <o-button :bordered="false" size="small" :title="label" @click="action">
+      <IconComponent
+    /></o-button>
+  </o-tooltip>
+  <o-divider v-if="divider" vertical />
 </template>
 <script lang="ts" setup>
 import { isString } from 'lodash-es'
-import { NButton, NDivider, NTooltip } from 'naive-ui'
+import { OButton, ODivider, OTooltip } from 'open-data-v/ui'
 import type { ComponentOptions, VNode } from 'vue'
 import { computed, getCurrentInstance, h } from 'vue'
 

@@ -1,8 +1,7 @@
 <template>
-  <n-space vertical style="width: 100%">
-    <n-select v-model:value="selectOption" :options="options" />
-
-    <n-color-picker
+  <div class="flex flex-col flex-nowrap w-full">
+    <o-select v-model:value="selectOption" :options="options" class="pb-2.5" />
+    <o-color-picker
       v-if="selectOption === 'backgroundColor'"
       v-model:value="backgroundColor.backgroundColor"
       :swatches="GlobalColorSwatches"
@@ -16,13 +15,13 @@
     <div v-else-if="selectOption === 'backgroundGradient'">
       <linear-gradient v-model:value="backgroundGradient" @update:value="changeBackgroundImage" />
     </div>
-  </n-space>
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { isNumber } from 'lodash-es'
-import type { SelectOption } from 'naive-ui'
-import { NColorPicker, NSelect, NSpace } from 'naive-ui'
+import type { SelectOption } from 'open-data-v/ui'
+import { OColorPicker, OSelect } from 'open-data-v/ui'
 import { onMounted, ref } from 'vue'
 
 import { GlobalColorSwatches } from '../enum'
@@ -113,5 +112,3 @@ onMounted(() => {
   }
 })
 </script>
-
-<style lang="less" scoped></style>

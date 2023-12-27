@@ -2,13 +2,21 @@
   <div
     v-contextmenu.stop="contextmenus"
     draggable="true"
-    class="layer"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
   >
-    <span v-show="mode === 'expand'">{{ component.name }}</span>
-    <x-icon :name="toggleIcon(component.display)" :size="18" />
+    <div
+      v-if="component.component === 'Group'"
+      class="flex flex-nowrap flex-row justify-between content-center items-center"
+    >
+      <span v-show="mode === 'expand'">{{ component.name || '分组' }}</span>
+      <x-icon :name="toggleIcon(component.display)" :size="18" />
+    </div>
+    <div v-else class="flex flex-nowrap flex-row justify-between content-center items-center">
+      <span v-show="mode === 'expand'">{{ component.name }}</span>
+      <x-icon :name="toggleIcon(component.display)" :size="18" />
+    </div>
   </div>
 </template>
 
@@ -76,14 +84,3 @@ const handleDrop = (event: DragEvent, toIndex: string) => {
   }
 }
 </script>
-
-<style lang="less" scoped>
-.layer {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-content: center;
-  justify-content: space-between;
-  align-items: center;
-}
-</style>

@@ -1,40 +1,39 @@
 <template>
-  <n-form-item label="链接地址" label-placement="top" size="small">
-    <n-input-group>
-      <n-input v-model:value="formData.url" style="flex: 1" readonly>
+  <o-form-item label="链接地址" label-placement="top" size="small">
+    <div class="justify-center flex-row flex-nowrap flex items-center">
+      <o-input v-model:value="formData.url" readonly>
         <template #prefix>
-          <n-gradient-text type="success" style="font-weight: 800">
+          <span class="accent-green-500 font-extrabold">
             {{ formData.url.includes(':') ? formData.url.split(':')[0] : '' }}
-          </n-gradient-text>
+          </span>
         </template>
-      </n-input>
-      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-    </n-input-group>
-  </n-form-item>
-  <n-form-item label="超时时间" label-placement="top">
-    <n-input-number
+      </o-input>
+      <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
+    </div>
+  </o-form-item>
+  <o-form-item label="超时时间" label-placement="top">
+    <o-input-number
       v-model:value="formData.timeout"
       :min="300"
       :step="100"
       @update:value="changeHandler"
     >
       <template #suffix> ms </template>
-    </n-input-number>
-  </n-form-item>
-  <n-form-item label="是否重试" label-placement="top">
-    <n-switch v-model:value="formData.isRetry" @update:value="changeHandler" />
-  </n-form-item>
-  <n-form-item v-if="formData.isRetry" label="最大重试次数" label-placement="top">
-    <n-input-number
+    </o-input-number>
+  </o-form-item>
+  <o-form-item label="是否重试" label-placement="top">
+    <o-switch v-model:value="formData.isRetry" @update:value="changeHandler" />
+  </o-form-item>
+  <o-form-item v-if="formData.isRetry" label="最大重试次数" label-placement="top">
+    <o-input-number
       v-model:value="formData.maxRetryCount"
       :step="1"
       placeholder="小于等于0表示不限制重试次数"
       @update:value="changeHandler"
     />
-  </n-form-item>
-  <n-modal v-model:show="isShow" display-directive="show" :on-after-leave="close">
-    <n-card
-      style="width: 800px"
+  </o-form-item>
+  <o-modal v-model:show="isShow" :beforeClose="close">
+    <o-card
       title="WS数据"
       :bordered="false"
       closable
@@ -49,22 +48,12 @@
         @update:options="changeHandler"
         @change="changeHandler"
       />
-    </n-card>
-  </n-modal>
+    </o-card>
+  </o-modal>
 </template>
 
 <script lang="ts" setup>
-import {
-  NButton,
-  NCard,
-  NFormItem,
-  NGradientText,
-  NInput,
-  NInputGroup,
-  NInputNumber,
-  NModal,
-  NSwitch
-} from 'naive-ui'
+import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { Slotter } from '../type'
@@ -154,5 +143,3 @@ watch(
   { immediate: true }
 )
 </script>
-
-<style lang="less" scoped></style>

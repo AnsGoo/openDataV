@@ -1,18 +1,17 @@
 <template>
-  <n-form-item key="title" label="静态数据">
-    <n-input-group>
-      <n-input
+  <o-form-item key="title" label="静态数据">
+    <div class="justify-center flex-row flex-nowrap flex items-center">
+      <o-input
         v-model:value="formDataConfig.data"
         :readonly="true"
         placeholder="编辑请点击"
         @click="isShow = true"
       />
-      <n-button type="primary" @click="isShow = true"> 编辑 </n-button>
-    </n-input-group>
-  </n-form-item>
-  <n-modal v-model:show="isShow" display-directive="show">
-    <n-card
-      style="width: 800px"
+      <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
+    </div>
+  </o-form-item>
+  <o-modal v-model:show="isShow">
+    <o-card
       title="静态数据"
       :bordered="false"
       size="small"
@@ -22,12 +21,12 @@
       @close="isShow = false"
     >
       <StaticView v-model:options="formDataConfig" mode="use" @data-change="dataChangeHandler" />
-    </n-card>
-  </n-modal>
+    </o-card>
+  </o-modal>
 </template>
 
 <script lang="ts" setup>
-import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
+import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import type { Slotter } from '../type'
