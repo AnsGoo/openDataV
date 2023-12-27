@@ -132,7 +132,7 @@ onBeforeUnmount(() => {
   .canvas {
     height: 100%;
   }
-  :deep(.edit) {
+  .edit {
     transform-origin: left top;
     transform: scale(v-bind(scaleValue));
     transition: all 0.3s;
