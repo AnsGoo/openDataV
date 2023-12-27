@@ -5,9 +5,9 @@
         <Editor v-resize="editorWindowResizeHandler" />
       </div>
     </div>
-    <div class="flex flex-row justify-end items-center ml-0.5 w-full">
+    <div class="flex flex-row justify-end items-center w-full">
       <div class="flex-nowrap flex items-center">
-        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }"> 缩放: </span>
+        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }">缩放：</span>
 
         <o-slider
           :value="sliderValue"
@@ -20,6 +20,7 @@
           :value="selectValue"
           :options="options"
           size="tiny"
+          class="ml-2"
           style="width: 90px"
           @update:value="handleScale"
         />
@@ -129,10 +130,11 @@ onBeforeUnmount(() => {
 <style scoped lang="less">
 @import 'open-data-v/css/index.less';
 .middle {
+  height: 100%;
   .canvas {
-    height: 100%;
+    height: calc(100% - 36px);
   }
-  :deep(.edit) {
+  .edit {
     transform-origin: left top;
     transform: scale(v-bind(scaleValue));
     transition: all 0.3s;
