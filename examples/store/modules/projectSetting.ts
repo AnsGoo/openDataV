@@ -2,29 +2,29 @@ import { defineStore } from 'pinia'
 
 import store from '@/store'
 
-export interface IheaderSetting {
+export interface IHeaderSetting {
   fixed: boolean
   isReload: boolean
 }
 
-export interface ImenuSetting {
+export interface IMenuSetting {
   minMenuWidth: number
   menuWidth: number
   fixed: boolean
   collapsed: boolean
 }
 
-export interface IcrumbsSetting {
+export interface ICrumbsSetting {
   show: boolean
 }
 
 export interface ProjectSettingState {
   appTheme: string
   navTheme: string //导航风格
-  headerSetting: IheaderSetting //顶部设置
+  headerSetting: IHeaderSetting //顶部设置
   showFooter: boolean //页脚
-  menuSetting: ImenuSetting //多标签
-  crumbsSetting: IcrumbsSetting //面包屑
+  menuSetting: IMenuSetting //多标签
+  crumbsSetting: ICrumbsSetting //面包屑
   isPageAnimate: boolean //是否开启路由动画
   pageAnimateType: string //路由动画类型
   darkTheme: boolean
