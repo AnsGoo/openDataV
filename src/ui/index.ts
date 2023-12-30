@@ -1,5 +1,3 @@
-// import { NColorPicker } from 'naive-ui'
-
 import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
