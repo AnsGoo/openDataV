@@ -5,7 +5,6 @@
       v-if="selectOption === 'backgroundColor'"
       v-model:value="backgroundColor.backgroundColor"
       :swatches="GlobalColorSwatches"
-      :modes="['hex', 'rgb', 'hsl']"
       @update:value="changeBackgroundColor"
     />
 

@@ -7,21 +7,15 @@
     </div>
     <div class="flex flex-row justify-end items-center ml-0.5 w-full">
       <div class="flex-nowrap flex items-center">
-        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }"> 缩放: </span>
-
+        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }">
+          缩放:{{ sliderValue }} %
+        </span>
         <o-slider
           :value="sliderValue"
           :min="10"
           :max="200"
           style="width: 120px"
           @update:value="(value) => handleScale(value as number)"
-        />
-        <o-select
-          :value="selectValue"
-          :options="options"
-          size="tiny"
-          style="width: 90px"
-          @update:value="handleScale"
         />
       </div>
     </div>
@@ -32,8 +26,7 @@
 import { debounce } from 'lodash-es'
 import { useThemeVars } from 'naive-ui'
 import { useCanvasState } from 'open-data-v/designer'
-import type { SelectOption } from 'open-data-v/ui'
-import { OSelect, OSlider } from 'open-data-v/ui'
+import { OSlider } from 'open-data-v/ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import Editor from '../../Editor'
@@ -45,28 +38,6 @@ const sliderValue = ref<number>(100)
 const selectValue = ref<string>('100%')
 const scaleValue = ref<number>(1)
 const canvasState = useCanvasState()
-const options: SelectOption[] = [
-  {
-    value: 200,
-    label: '200%'
-  },
-  {
-    value: 150,
-    label: '150%'
-  },
-  {
-    value: 100,
-    label: '100%'
-  },
-  {
-    value: 80,
-    label: '80%'
-  },
-  {
-    value: 50,
-    label: '50%'
-  }
-]
 
 const themeVars = useThemeVars()
 const { cubicBezierEaseInOut } = themeVars.value

@@ -33,7 +33,7 @@
               <NCard title="基础" class="m-5 w-1/2">
                 <Card title="我是标题">
                   <div>我是卡片内容</div>
-                  <div class="w-full"><ColorPicker /></div
+                  <div class="w-full"><ColorPane v-model:value="colors" /></div
                 ></Card>
               </NCard>
               <NCard title="标题自定义" class="m-5 w-1/2">
@@ -58,6 +58,12 @@
                     />
                   </div>
                 </Card>
+              </NCard>
+              <NCard title="基础1" class="m-5 w-1/2">
+                <Card title="我是标题">
+                  <div>我是卡片内容</div>
+                  <div class="w-full"><ColorPicker v-model:value="color" /></div
+                ></Card>
               </NCard>
             </div>
           </NCard>
@@ -98,7 +104,7 @@
 <script lang="ts" setup>
 import { NCard, NLayout, NLayoutHeader, NTabPane, NTabs } from 'naive-ui'
 import Card from 'open-data-v/ui/Card'
-import { ColorPicker } from 'open-data-v/ui/ColorPicker'
+import { ColorPane, ColorPicker } from 'open-data-v/ui/ColorPicker'
 import Diveider from 'open-data-v/ui/Divider'
 import { Input } from 'open-data-v/ui/Input'
 import { Radio, RadioGroup } from 'open-data-v/ui/Radio'
@@ -106,6 +112,17 @@ import { getCurrentInstance, ref } from 'vue'
 
 import ToolBar from '@/pages/ApiView/ToolBar'
 
+const colors = ref({
+  hsl: { h: 150, s: 0.5098039215686275, l: 0.19999999999999998, a: 0.6588235294117647 },
+  hex: '#194D33',
+  hex8: '#194D33A8',
+  rgba: { r: 25, g: 77, b: 51, a: 0.6588235294117647 },
+  hsv: { h: 150, s: 0, v: 0, a: 0.6588235294117647 },
+  oldHue: 150,
+  a: 0.6588235294117647
+})
+
+const color = ref<string>('#194D33A8')
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 const radioGroupValue = ref<string>('M')
