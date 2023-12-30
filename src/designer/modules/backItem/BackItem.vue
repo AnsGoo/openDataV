@@ -1,17 +1,18 @@
 <template>
   <div class="flex flex-col flex-nowrap w-full">
-    <o-select v-model:value="selectOption" :options="options" class="pb-2.5" />
+    <o-select v-model:value="selectOption" :options="options" class="pb-2.5 mt-1" />
     <o-color-picker
       v-if="selectOption === 'backgroundColor'"
       v-model:value="backgroundColor.backgroundColor"
+      class="mt-1"
       :swatches="GlobalColorSwatches"
       @update:value="changeBackgroundColor"
     />
 
-    <div v-else-if="selectOption === 'backgroundImage'">
+    <div v-else-if="selectOption === 'backgroundImage'" class="mt-1">
       <back-image v-model:value="backgroundImage" @update:value="changeBackgroundImage" />
     </div>
-    <div v-else-if="selectOption === 'backgroundGradient'">
+    <div v-else-if="selectOption === 'backgroundGradient'" class="mt-1">
       <linear-gradient v-model:value="backgroundGradient" @update:value="changeBackgroundImage" />
     </div>
   </div>
