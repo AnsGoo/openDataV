@@ -104,15 +104,19 @@
     <div class="flex flex-row flex-nowrap">
       <template v-for="c in preColors" :key="c">
         <div
+          v-if="!isTransparent(c)"
+          :key="`!${c}`"
           class="rounded-sm w-5 h-5 ml-1 cursor-pointer"
           :style="{ background: c }"
           @click="handlePreset(c)"
         ></div>
+        <div
+          v-else
+          :key="c"
+          class="bg-transparent rounded-sm border border-solid w-5 h-5 ml-1 cursor-pointer border-gray-600 dark:border-gray-50"
+          @click="handlePreset(c)"
+        ></div>
       </template>
-      <div
-        class="bg-transparent rounded-sm border border-solid w-5 h-5 ml-1 cursor-pointer border-gray-600 dark:border-gray-50"
-        @click="handlePreset(c)"
-      ></div>
     </div>
   </div>
 </template>

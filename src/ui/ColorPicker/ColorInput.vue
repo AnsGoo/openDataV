@@ -9,8 +9,6 @@
 </template>
 
 <script lang="ts" setup>
-import { watch } from 'vue'
-
 const props = withDefaults(
   defineProps<{
     label: string
