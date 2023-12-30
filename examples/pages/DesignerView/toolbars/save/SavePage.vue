@@ -1,5 +1,5 @@
 <template>
-  <ConfigProvider>
+  <ConfigProvider v-if="saveDialogVisible">
     <n-modal
       :show="saveDialogVisible"
       :mask-closable="false"

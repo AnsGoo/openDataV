@@ -5,11 +5,13 @@
         <Editor v-resize="editorWindowResizeHandler" />
       </div>
     </div>
-    <div class="flex flex-row justify-end items-center ml-0.5 w-full">
+    <div class="flex flex-row justify-end items-center w-full">
       <div class="flex-nowrap flex items-center">
         <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }">
           缩放:{{ sliderValue }} %
         </span>
+        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }">缩放：</span>
+
         <o-slider
           :value="sliderValue"
           :min="10"
