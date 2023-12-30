@@ -1,8 +1,7 @@
-import { NColorPicker } from 'naive-ui'
-
 import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
+import { ColorPicker } from './ColorPicker'
 import Divider from './Divider'
 import { Form } from './Form'
 import { FormItem } from './FormItem'
@@ -27,7 +26,7 @@ const OTabs = Tabs
 const OMenu = Menu
 const OForm = Form
 const OFormItem = FormItem
-const OColorPicker = NColorPicker
+const OColorPicker = ColorPicker
 const OButton = Button
 const OCard = Card
 const OInputNumber = InputNumber

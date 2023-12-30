@@ -287,7 +287,6 @@ const toggleClick = (val: boolean) => {
       // 收起时判断当前所选值是否都包含了展开时的值
       const tempChecked = JSON.parse(state.tempChecked)
       let isDel = true
-      console.log(JSON.stringify(props.value))
       tempChecked.forEach((item: string) => {
         if ((props.value as any).indexOf(item) === -1) {
           isDel = false // 有删除
