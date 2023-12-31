@@ -44,7 +44,7 @@ const props = withDefaults(
   defineProps<{
     value?: any
     //width?: string
-    multiple?: booleann
+    multiple?: boolean
     filterable?: boolean
     downHeight?: number // 显示下拉最大高度，超出显示滚动条
     multipleLimit?: number
