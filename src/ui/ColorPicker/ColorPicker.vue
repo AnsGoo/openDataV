@@ -1,5 +1,5 @@
 <template>
-  <div ref="el">
+  <div class="w-full">
     <Input readonly :value="value" :style="{ backgroundColor: value }" @click="toggle" />
     <transition v-click-outside="close" name="slide-toggle">
       <div v-show="state.visible" :class="`o-color-picker`" @click.stop="">
@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 import type { ColorOption } from 'open-data-v/ui/ColorPicker/types'
 import { tinycolor, transColor } from 'open-data-v/ui/ColorPicker/utils'
-import { computed, reactive, ref } from 'vue'
+import { computed, reactive } from 'vue'
 
 import { Input } from '../Input'
 import ColorPane from './ColorPane.vue'
@@ -43,7 +43,6 @@ const emit = defineEmits<{
   (e: 'updateValue', value: string): void
 }>()
 
-const el = ref()
 const state: any = reactive({
   visible: false
 })

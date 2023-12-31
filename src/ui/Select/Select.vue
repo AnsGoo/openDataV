@@ -43,7 +43,6 @@ import SelectDown from './SelectDown.vue'
 const props = withDefaults(
   defineProps<{
     value?: any
-    //width?: string
     multiple?: boolean
     filterable?: boolean
     downHeight?: number // 显示下拉最大高度，超出显示滚动条

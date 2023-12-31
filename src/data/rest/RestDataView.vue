@@ -59,7 +59,6 @@
   </o-card>
 </template>
 <script setup lang="ts">
-import type { AxiosResponse } from 'axios'
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
@@ -103,9 +102,7 @@ const requestHeaderOptions = Object.keys(RequestHeaderEnum)
 interface ErrorResponse extends Error {
   config: Record<string, any>
   code?: number | undefined
-  response: AxiosResponse
-  isAxiosError: boolean
-
+  response: any
   toJSON?: () => {
     message: string
     name: string

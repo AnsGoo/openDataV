@@ -7,9 +7,7 @@
     </div>
     <div class="flex flex-row justify-end items-center w-full">
       <div class="flex-nowrap flex items-center">
-        <span :style="{ transition: `all 0.3s ${cubicBezierEaseInOut}` }">
-          缩放:{{ sliderValue }} %
-        </span>
+        <span :style="{ transition: `all 0.3s` }"> 缩放:{{ sliderValue }} % </span>
         <o-slider
           :value="sliderValue"
           :min="10"
@@ -24,7 +22,6 @@
 
 <script lang="ts" setup>
 import { debounce } from 'lodash-es'
-import { useThemeVars } from 'naive-ui'
 import { useCanvasState } from 'open-data-v/designer'
 import { OSlider } from 'open-data-v/ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
@@ -38,9 +35,6 @@ const sliderValue = ref<number>(100)
 const selectValue = ref<string>('100%')
 const scaleValue = ref<number>(1)
 const canvasState = useCanvasState()
-
-const themeVars = useThemeVars()
-const { cubicBezierEaseInOut } = themeVars.value
 
 const scrollbarStyle = computed(() => {
   return {
