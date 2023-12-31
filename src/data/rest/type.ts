@@ -1,5 +1,3 @@
-import type { Method } from 'axios'
-
 export interface KV {
   key: string
   value: string
@@ -27,7 +25,7 @@ export interface RestResponse<T = string> {
 }
 
 export interface RestOption {
-  method: Method
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH'
   url: string
   headers: Array<KV>
   params: Array<KV>
