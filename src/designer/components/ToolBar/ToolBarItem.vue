@@ -12,14 +12,14 @@ import { OButton, ODivider, OTooltip } from 'open-data-v/ui'
 import type { ComponentOptions, VNode } from 'vue'
 import { computed, getCurrentInstance, h } from 'vue'
 
-import type { iconNode, ToolBarItemType } from './type'
+import type { IconNode, ToolBarItemType } from './type'
 
 const props = withDefaults(
   defineProps<{
     label: string
     action: (e: MouseEvent) => void
     disable?: (e: MouseEvent) => void
-    icon: string | Function
+    icon: string | IconNode
     divider?: boolean | undefined
     children?: ToolBarItemType[]
     otherShow?: VNode
@@ -41,7 +41,7 @@ const IconComponent = computed<ComponentOptions>(() =>
         name: props.icon,
         size: 24
       })
-    : (props.icon as iconNode)()
+    : (props.icon as IconNode)()
 )
 </script>
 <style lang="less" scoped></style>

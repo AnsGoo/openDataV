@@ -13,7 +13,7 @@ import { NButton, NDivider, NTooltip } from 'naive-ui'
 import type { ComponentOptions, VNode } from 'vue'
 import { computed, getCurrentInstance, h } from 'vue'
 
-import type { iconNode, ToolBarItemType } from './type'
+import type { IconNode, ToolBarItemType } from './type'
 
 const props = withDefaults(
   defineProps<{
@@ -42,7 +42,7 @@ const IconComponent = computed<ComponentOptions>(() =>
         name: props.icon,
         size: 24
       })
-    : (props.icon as iconNode)()
+    : (props.icon as IconNode)()
 )
 </script>
 <style lang="less" scoped></style>
