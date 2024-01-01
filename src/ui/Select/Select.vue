@@ -43,18 +43,9 @@ import SelectDown from './SelectDown.vue'
 const props = withDefaults(
   defineProps<{
     value?: any
-    //width?: string
     multiple?: boolean
-    //collapseTags?: boolean
-    //clear?: boolean
     filterable?: boolean
-    //size?: string // 尺寸
-    //placeholder?: string
-    //disabled?: boolean
-    //appendToBody?: boolean
     downHeight?: number // 显示下拉最大高度，超出显示滚动条
-    //icon?: string
-    //fixedIcon?: boolean
     multipleLimit?: number
     options?: Array<any>
     optionsKey?: { label: string; value: string }
@@ -112,7 +103,7 @@ const state = reactive<StateType>({
   tempChecked: ''
 })
 // 下拉的数据，存在options插槽里面插入的数据
-const optionsList: FormControlOption = ref(JSON.parse(JSON.stringify(props.options)))
+const optionsList = ref<Array<FormControlOption>>(props.options)
 watch(
   () => props.value,
   () => {
@@ -122,7 +113,7 @@ watch(
 watch(
   () => props.options,
   () => {
-    optionsList.value = JSON.parse(JSON.stringify(props.options))
+    optionsList.value = props.options
     setFirstText()
   },
   {

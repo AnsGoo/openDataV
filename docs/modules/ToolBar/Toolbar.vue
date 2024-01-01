@@ -55,7 +55,7 @@ const toolBars: ToolBarItemType[] = [
     action: () => {
       window.open('https://github.com/AnsGoo/openDataV', '_blank')
     },
-    icon: 'github',
+    icon: 'github' as string,
     location: 'right'
   },
   {

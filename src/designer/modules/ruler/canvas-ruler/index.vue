@@ -75,7 +75,7 @@ const drawRuler = (ratio: number) => {
 
   if (state.canvasContext) {
     drawCavaseRuler(
-      state.canvasContext,
+      state.canvasContext as CanvasRenderingContext2D,
       props.start!,
       props.selectStart!,
       props.selectLength!,

@@ -1,6 +1,6 @@
 import type { RendererElement, RendererNode, VNode } from 'vue'
 
-export type iconNode = () => VNode<
+export type IconNode = () => VNode<
   RendererNode,
   RendererElement,
   {
@@ -11,7 +11,7 @@ export interface ToolBarItemType {
   label: string
   action: (e: MouseEvent, ...others: any) => void
   disable?: (e: MouseEvent) => void
-  icon: string | iconNode
+  icon: string | IconNode
   divider?: boolean
   // 不填默认为left
   location?: 'left' | 'right' | 'middle'

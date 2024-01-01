@@ -1,8 +1,7 @@
-import type { Method } from 'axios'
 import Axios from 'axios'
 
 export interface RequestConfig {
-  method: Method
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH'
   url: string
   headers: Record<string, any>
   params: Record<string, any>
