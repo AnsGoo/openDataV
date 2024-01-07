@@ -1,23 +1,19 @@
 <template>
-  <n-form :model="formData" size="small" label-placement="left">
-    <n-form-item label="行高度">
-      <n-input-number v-model:value="formData.height" @keypress.enter.prevent="changeData" />
-    </n-form-item>
-    <n-form-item label="背景色">
-      <div class="backcolor">
-        <n-color-picker v-model:value="formData.oddRowBGC" @complete="changeData" />
-        <span class="title">奇数行</span>
-      </div>
-      <div class="backcolor">
-        <n-color-picker v-model:value="formData.evenRowBGC" @complete="changeData" />
-        <span class="title">偶数行</span>
-      </div>
-    </n-form-item>
-  </n-form>
+  <o-form>
+    <o-form-item label="行高度">
+      <o-input-number v-model:value="formData.height" @keypress.enter.prevent="changeData" />
+    </o-form-item>
+    <o-form-item label="奇数行背景色">
+      <o-color-picker v-model:value="formData.oddRowBGC" @complete="changeData" />
+    </o-form-item>
+    <o-form-item label="偶数行背景色">
+      <o-color-picker v-model:value="formData.evenRowBGC" @complete="changeData" />
+    </o-form-item>
+  </o-form>
 </template>
 
 <script lang="ts" setup>
-import { NColorPicker, NForm, NFormItem, NInputNumber } from 'naive-ui'
+import { OColorPicker, OForm, OFormItem, OInputNumber } from 'open-data-v/ui'
 import { reactive } from 'vue'
 
 import type { RowType } from './type'
@@ -41,14 +37,3 @@ const changeData = () => {
   emits('updateValue', formData)
 }
 </script>
-
-<style lang="less" scoped>
-.title {
-  color: gray;
-}
-
-.backcolor {
-  width: 49%;
-  margin-right: 1%;
-}
-</style>
