@@ -87,7 +87,7 @@ class AxiosHttp {
     return this.request({ ...config, method: 'DELETE' })
   }
 
-  private request<T = any>(config: AxiosRequestConfig): Promise<T> {
+  public request<T = any>(config: AxiosRequestConfig): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       this.axiosInstance
         .request<any, AxiosResponse<ResultType>>(config)

@@ -3,8 +3,9 @@ import type { DataAcceptor, DataInstance, RequestOptions, Response } from '../ty
 class StaticRequestData implements DataInstance {
   public data?: any
 
-  constructor({ data }: { data: string }) {
-    this.data = data
+  constructor(options?: { data?: string }) {
+    const { data } = options || {}
+    this.data = data || ''
   }
 
   public toJSON(): RequestOptions<{ data: string }> {
@@ -36,5 +37,14 @@ class StaticRequestData implements DataInstance {
 
     return response
   }
+
+  public async debug(config: { data: string }, acceptor: DataAcceptor) {
+    const { data } = config
+    this.data = data
+    const resp = await this.getRespData()
+    acceptor(resp)
+  }
+
+  public close() {}
 }
 export default StaticRequestData

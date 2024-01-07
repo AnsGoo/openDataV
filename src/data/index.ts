@@ -5,6 +5,7 @@ import SubDataPlugin from './sub'
 import type {
   DataAcceptor,
   DataConfig,
+  DataHandler,
   DataInstance,
   RequestOptions,
   Response,
@@ -15,6 +16,7 @@ import WebsocketDataPlugin from './websocket'
 export type {
   DataAcceptor,
   DataConfig,
+  DataHandler,
   DataInstance,
   RequestOptions,
   Response,

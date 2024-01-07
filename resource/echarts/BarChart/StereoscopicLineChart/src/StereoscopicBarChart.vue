@@ -275,7 +275,7 @@ const getOption = () => {
 const updateData = (resp: Array<{ label: string; value: number }>) => {
   const upperLimit = propValue.data.upperLimit
   const lowerLimit = propValue.data.lowerLimit
-  const data = resp.map((ele) => {
+  const data = (resp || []).map((ele) => {
     return {
       value: compareResetValue(Number(ele.value), upperLimit, lowerLimit),
       label: ele.label

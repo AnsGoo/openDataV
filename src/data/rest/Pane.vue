@@ -36,6 +36,7 @@
     >
       <RestView
         v-model:options="formData"
+        :handler="handler"
         @update:options="changeHandler"
         @change="changeHandler"
       />
@@ -47,10 +48,9 @@
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { Slotter } from '../type'
+import type { DataHandler, Slotter } from '../type'
 import { uuid } from '../utils'
 import type RestRequestData from './handler'
-import DataHandler from './handler'
 import { RequestMethod } from './requestEnums'
 import Rest from './RestDataView.vue'
 import type { RestOption, StoreRestOption } from './type'
@@ -59,6 +59,7 @@ import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
 const props = defineProps<{
   slotter: Slotter
   index?: number
+  handler: DataHandler
 }>()
 const slots = useSlots()
 const isShow = ref<boolean>(false)
@@ -69,6 +70,7 @@ const RestView = computed(() => {
     return Rest
   }
 })
+
 const formData = reactive<RestOption>({
   method: RequestMethod.GET,
   url: '/getRiskArea',
@@ -87,7 +89,7 @@ const changeHandler = () => {
 const setDataConfig = () => {
   const dataConfig = {
     type: 'REST',
-    dataInstance: new DataHandler(requestOptionsToStore(formData))
+    dataInstance: new props.handler(requestOptionsToStore(formData))
   }
   if (props.slotter) {
     props.slotter.changeDataConfig(dataConfig)

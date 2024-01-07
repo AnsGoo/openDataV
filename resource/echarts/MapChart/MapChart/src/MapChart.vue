@@ -185,7 +185,7 @@ const getOption = () => {
 
 const updateData = (resp: Array<{ label: string; value: number }>) => {
   globalOption = getOption()
-  globalOption.series![1].data = resp
+  globalOption.series![1].data = resp || []
   updateEchart(globalOption)
 }
 </script>

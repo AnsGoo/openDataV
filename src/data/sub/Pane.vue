@@ -20,7 +20,12 @@
       closable
       @close="isShow = false"
     >
-      <StaticView v-model:options="formDataConfig" mode="use" @channel-change="dataChangeHandler" />
+      <StaticView
+        v-model:options="formDataConfig"
+        mode="use"
+        :hanlder="handler"
+        @channel-change="dataChangeHandler"
+      />
     </o-card>
   </o-modal>
 </template>
@@ -29,7 +34,7 @@
 import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { Slotter } from '../type'
+import type { DataInstance, Slotter } from '../type'
 import type SubRequestData from './handler'
 import DataHandler from './handler'
 import SubDataView from './SubDataView.vue'
@@ -46,6 +51,7 @@ const StaticView = computed(() => {
 
 const props = defineProps<{
   slotter: Slotter
+  handler: DataInstance
 }>()
 const isShow = ref<boolean>(false)
 
@@ -66,13 +72,7 @@ const initData = async () => {
     const { options } = staticRequest.toJSON()
     formDataConfig.channel = options.channel
   } else {
-    const dataConfig = {
-      type: 'SUB',
-      dataInstance: new DataHandler({
-        channel: formDataConfig.channel
-      })
-    }
-    await props.slotter.changeDataConfig(dataConfig)
+    changeHandler()
   }
 }
 const changeHandler = () => {

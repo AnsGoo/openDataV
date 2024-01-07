@@ -119,7 +119,7 @@ const maxValue = computed<number>(() => {
 })
 
 const updateData = (results: Array<{ label: string; value: number }>) => {
-  results.sort((a, b) => b.value - a.value)
+  ;(results || []).sort((a, b) => b.value - a.value)
   dataSource.value = results
 }
 onMounted(async () => {})

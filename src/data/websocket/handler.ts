@@ -1,18 +1,22 @@
 import { cloneDeep } from 'lodash-es'
+import type { WebSocketInstance } from 'open-data-v/data/hooks'
+import { useWebsocket } from 'open-data-v/data/hooks'
 
 import type { DataAcceptor, DataInstance, Response } from '../type'
 import { dataLogger } from '../utils'
 import type { WebsocketOption } from './type'
 
 class WebsocketData implements DataInstance {
-  public options: WebsocketOption
+  public options?: WebsocketOption
   public wsInstance?: WebSocket
   public timer: IntervalHandle = 0
   public acceptor?: DataAcceptor
   private retryCount = 0
+  private connector: WebSocketInstance
 
-  constructor(options: WebsocketOption) {
+  constructor(options?: WebsocketOption, connector?: WebSocketInstance) {
     this.options = options
+    this.connector = connector || useWebsocket()
   }
   public close() {
     this.wsInstance?.close()
@@ -20,7 +24,7 @@ class WebsocketData implements DataInstance {
   }
 
   private ping() {
-    const timeout = this.options.timeout || 3000
+    const timeout = this.options?.timeout || 3000
     const handler = () => {
       this.wsInstance?.send('ping')
     }
@@ -33,7 +37,10 @@ class WebsocketData implements DataInstance {
   }
 
   private async wsconnect() {
-    this.wsInstance = new WebSocket(this.options.url)
+    if (!this.options) {
+      return
+    }
+    this.wsInstance = new this.connector(this.options.url)
     this.wsInstance.addEventListener('open', () => {
       dataLogger.info('wsOpen')
     })
@@ -56,11 +63,11 @@ class WebsocketData implements DataInstance {
     }
     this.wsInstance.addEventListener('message', handlerData)
     this.wsInstance.addEventListener('error', (_err) => {
-      dataLogger.error('ws Error')
-      if (!this.options.isRetry) {
+      dataLogger.error('ws.ts Error')
+      if (!this.options!.isRetry) {
         return
       }
-      if (this.options.maxRetryCount < 0 || this.retryCount < this.options.maxRetryCount) {
+      if (this.options!.maxRetryCount < 0 || this.retryCount < this.options!.maxRetryCount) {
         this.reConnect()
       }
     })
@@ -71,6 +78,11 @@ class WebsocketData implements DataInstance {
     this.close()
     this.wsconnect()
     this.retryCount++
+  }
+
+  public async debug(options: WebsocketOption, acceptor: DataAcceptor) {
+    this.options = options
+    this.connect(acceptor)
   }
 
   public toJSON() {

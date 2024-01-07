@@ -1,3 +1,5 @@
+import type { RequestInstance, WebSocketInstance } from 'open-data-v/data/hooks'
+
 export * from './rest/type'
 
 export interface DataConfig {
@@ -25,5 +27,11 @@ export type DataAcceptor = (result: any, id?: string) => void
 export interface DataInstance {
   toJSON: () => any | undefined
   connect: (dataAcceptor: DataAcceptor) => void
-  close?: () => void
+  close: () => void
+  debug: (config: any, dataAcceptor: DataAcceptor) => void
 }
+
+export type DataHandler = new (
+  options?: Record<string, any>,
+  connector?: RequestInstance | WebSocketInstance | any
+) => DataInstance

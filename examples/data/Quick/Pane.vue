@@ -2,7 +2,7 @@
   <n-form-item key="title" label="快速数据">
     <n-input-group>
       <n-input
-        v-model:value="formDataConfig.title"
+        v-model:value="formData.title"
         :readonly="true"
         placeholder="编辑请点击"
         @click="isShow = true"
@@ -21,25 +21,31 @@
       closable
       @close="isShow = false"
     >
-      <StaticContent v-model:options="formDataConfig" mode="use" @data-change="dataChangeHandler" />
+      <StaticContent
+        v-model:options="formData"
+        mode="use"
+        :handler="handler"
+        @data-change="dataChangeHandler"
+      />
     </n-card>
   </n-modal>
 </template>
 
 <script lang="ts" setup>
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import type { Slotter } from 'open-data-v/data'
+import type { DataHandler, DataInstance, Slotter } from 'open-data-v/data'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 import StaticContent from './Content.vue'
-import DataHandler, { QUICK_TYPE } from './handler'
+import { QUICK_TYPE } from './handler'
 
 const props = defineProps<{
   slotter: Slotter
+  handler?: DataHandler
 }>()
 const isShow = ref<boolean>(false)
 
-const formDataConfig = reactive<{
+const formData = reactive<{
   id: string
   title: string
   data: string
@@ -53,36 +59,48 @@ onMounted(async () => {
   await initData()
 })
 
+let dataInstance: DataInstance
 const initData = async () => {
+  if (!props.handler) {
+    return
+  }
   const dataConfig = props.slotter.dataConfig
   if (dataConfig && dataConfig.type === QUICK_TYPE) {
-    const staticRequest = props.slotter.dataConfig?.dataInstance as DataHandler
+    const staticRequest = props.slotter.dataConfig?.dataInstance
     const { options } = staticRequest.toJSON()
-    formDataConfig.id = options.id
-    formDataConfig.title = options.title!
-  } else {
-    const dataConfig = {
-      type: QUICK_TYPE,
-      dataInstance: new DataHandler({
-        id: formDataConfig.id
-      })
+
+    formData.id = options.id
+    formData.title = options.title!
+    if (dataInstance) {
+      dataInstance.close()
     }
-    await props.slotter.changeDataConfig(dataConfig)
+    dataInstance = new props.handler()
+    const acceptor = (resp) => {
+      formData.id = resp.id
+      formData.title = resp.title!
+      formData.data = resp.data
+    }
+    dataInstance.debug(options, acceptor)
+  } else {
+    changeHandler()
   }
 }
 const changeHandler = () => {
+  if (!props.handler) {
+    return
+  }
   const dataConfig = {
     type: QUICK_TYPE,
-    dataInstance: new DataHandler({
-      id: formDataConfig.id
+    dataInstance: new props.handler({
+      id: formData.id
     })
   }
   props.slotter.changeDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (id: string, title: string) => {
-  formDataConfig.id = id
-  formDataConfig.title = title
+  formData.id = id
+  formData.title = title
   changeHandler()
 }
 

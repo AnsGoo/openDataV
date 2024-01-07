@@ -21,6 +21,8 @@
   </o-card>
 </template>
 <script setup lang="ts">
+import type { WebSocketInstance } from 'open-data-v/data/hooks'
+import { useWebsocket } from 'open-data-v/data/hooks'
 import { OButton, OButtonGroup, OCard, OInput } from 'open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
@@ -32,6 +34,7 @@ const props = withDefaults(
     options?: WebsocketOption
     mode?: 'debug' | 'use'
     index?: number
+    handler?: WebSocketInstance
   }>(),
   {
     options: () => {
@@ -42,6 +45,9 @@ const props = withDefaults(
         isRetry: false,
         maxRetryCount: 0
       }
+    },
+    handler: () => {
+      return useWebsocket()
     },
     mode: 'use'
   }
@@ -65,7 +71,7 @@ const close = () => {
 
 const connect = () => {
   close()
-  wsInstance = new WebSocket(formData.url)
+  wsInstance = new props.handler(formData.url)
   wsInstance.onopen = () => {
     dataLogger.info('wsOpen')
   }
