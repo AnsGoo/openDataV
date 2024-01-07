@@ -23,7 +23,7 @@ const props = withDefaults(
     format?: 'hex' | 'rgb' | 'hsl' // 风琴模式
     text?: string
     disableAlpha?: boolean
-    swatches: Array<string>
+    swatches?: Array<string>
   }>(),
   {
     value: '#fff',
