@@ -172,7 +172,6 @@ export default defineComponent({
             <OColorPicker
               v-model:value={modelValue[item.prop]}
               swatches={GlobalColorSwatches}
-              modes={['hex', 'rgb', 'hsl']}
               onUpdateValue={(event) => changed(event, [...path, item.prop])}
             />
           )

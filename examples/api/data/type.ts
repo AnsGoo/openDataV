@@ -1,5 +1,3 @@
-import type { Method } from 'axios'
-
 export interface AfterScript {
   code: string
 }
@@ -14,7 +12,7 @@ export interface StaticDataDetail {
 }
 
 export interface RestDataDetail {
-  method: Method
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH'
   url: string
   headers: Record<string, any>
   params: Record<string, any>

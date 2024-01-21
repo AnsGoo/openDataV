@@ -3,7 +3,6 @@
 @primaryColor: #2080f0;
 .o-select-down {
   @apply w-full dark:bg-zinc-800 bg-white border border-solid border-gray-300 dark:border-0 relative;
-  min-width: 150px;
   height: 35px;
   .select-control {
     position: relative;
@@ -176,6 +175,7 @@
   }
   // 滚动条
   .scroll-pane{
+    @apply overflow-x-hidden w-full;
     &::-webkit-scrollbar {
       width: 8px;
       height: 8px;
