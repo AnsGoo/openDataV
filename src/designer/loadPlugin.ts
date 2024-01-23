@@ -6,19 +6,19 @@ import useCanvasState from './state/canvas'
 
 const canvasState = useCanvasState()
 
-const useComponetPlugin = ({
-  codeEditorComponet,
-  iconComponet
+const useComponentPlugin = ({
+  codeEditorComponent,
+  iconComponent
 }: {
-  codeEditorComponet?: any
-  iconComponet?: any
+  codeEditorComponent?: any
+  iconComponent?: any
 }) => {
-  const OXIcon = iconComponet
-    ? iconComponet
+  const OXIcon = iconComponent
+    ? iconComponent
     : defineAsyncComponent(() => import('./components/xicon/XIcon.vue'))
 
-  const OCodeEditor = codeEditorComponet
-    ? codeEditorComponet
+  const OCodeEditor = codeEditorComponent
+    ? codeEditorComponent
     : defineAsyncComponent(() => import('./components/CodeEditor.vue'))
 
   const groupComp = defineAsyncComponent({
@@ -37,4 +37,4 @@ const useComponetPlugin = ({
   }
 }
 
-export default useComponetPlugin
+export default useComponentPlugin
