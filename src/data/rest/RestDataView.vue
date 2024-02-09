@@ -125,7 +125,6 @@ const send = async () => {
   dataInstance = new props.handler()
   const acceptor = (resp: any) => {
     response.value.status = resp.status
-    response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
   }
   dataInstance.debug(requestOptionsToStore(formData), acceptor)
