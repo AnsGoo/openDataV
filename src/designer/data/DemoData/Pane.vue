@@ -56,12 +56,11 @@ const initData = async () => {
   const dataConfig = props.slotter.dataConfig
   const exampleData = props.slotter.exampleData || {}
   if (dataConfig && dataConfig.type === 'DEMO') {
-    const options = { data: cloneDeep(exampleData) }
     const acceptor = (resp) => {
       formData.data = JSON.stringify(resp.data, null, '\t')
     }
-    const instance = new props.handler({})
-    instance.debug(options, acceptor)
+    const instance = dataConfig.dataInstance
+    instance.debug(acceptor)
   } else {
     const dataConfig = {
       type: 'DEMO',

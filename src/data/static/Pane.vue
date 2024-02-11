@@ -82,8 +82,11 @@ const initData = async () => {
     if (dataInstance) {
       dataInstance.close()
     }
-    dataInstance = new props.handler()
-    dataInstance.debug(formData, acceptor)
+    dataInstance = props.slotter.dataConfig.dataInstance
+    if (!dataInstance) {
+      return
+    }
+    dataInstance.debug(acceptor)
   } else {
     changeHandler()
   }

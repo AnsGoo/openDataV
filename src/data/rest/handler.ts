@@ -61,9 +61,7 @@ class RestRequestData implements DataInstance {
     return response
   }
 
-  public async debug(config: StoreRestOption, acceptor: DataAcceptor) {
-    this.options = JSON.parse(JSON.stringify(config)) as StoreRestOption
-    this.options.otherConfig.isRepeat = false
+  public async debug(acceptor: DataAcceptor) {
     this.connect(acceptor)
   }
 

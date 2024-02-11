@@ -13,6 +13,7 @@ class WebsocketData implements DataInstance {
   public acceptor?: DataAcceptor
   private retryCount = 0
   private connector: WebSocketInstance
+  private debugAcceptor?: DataAcceptor
 
   constructor(options?: WebsocketOption, connector?: WebSocketInstance) {
     this.options = options
@@ -31,6 +32,9 @@ class WebsocketData implements DataInstance {
     this.timer = setInterval(handler, timeout)
   }
 
+  public send(message: string) {
+    this.wsInstance?.send(message)
+  }
   public async connect(acceptor: DataAcceptor) {
     this.acceptor = acceptor
     await this.wsconnect()
@@ -60,6 +64,9 @@ class WebsocketData implements DataInstance {
       if (this.acceptor) {
         this.acceptor(response)
       }
+      if (this.debugAcceptor) {
+        this.debugAcceptor(response)
+      }
     }
     this.wsInstance.addEventListener('message', handlerData)
     this.wsInstance.addEventListener('error', (_err) => {
@@ -80,9 +87,12 @@ class WebsocketData implements DataInstance {
     this.retryCount++
   }
 
-  public async debug(options: WebsocketOption, acceptor: DataAcceptor) {
-    this.options = options
-    this.connect(acceptor)
+  public async debug(acceptor: DataAcceptor) {
+    this.debugAcceptor = acceptor
+  }
+
+  public cancelDebug() {
+    this.debugAcceptor = undefined
   }
 
   public toJSON() {

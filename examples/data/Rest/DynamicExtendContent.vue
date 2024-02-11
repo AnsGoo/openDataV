@@ -1,7 +1,7 @@
 <template>
   <RestContent
     v-model:options="formData"
-    :handler="handler"
+    :data-instance="dataInstance"
     @update:rest-options="formChange"
     @change="formChange"
   >
@@ -34,15 +34,9 @@
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
 import { StaticKey, useEventBus } from 'open-data-v/base'
-import type { DataHandler } from 'open-data-v/data'
+import type { DataInstance } from 'open-data-v/data'
 import type { RestOption, RestResponse } from 'open-data-v/data/rest'
-import {
-  KVToRecordable,
-  recordabletoKV,
-  RequestMethod,
-  requestOptionsToStore,
-  RestContent
-} from 'open-data-v/data/rest'
+import { KVToRecordable, recordabletoKV, RequestMethod, RestContent } from 'open-data-v/data/rest'
 import { onMounted, reactive, ref } from 'vue'
 
 import {
@@ -63,7 +57,7 @@ const props = withDefaults(
   defineProps<{
     options?: RestOption
     mode?: 'debug' | 'use'
-    handler?: DataHandler
+    dataInstance?: DataInstance
   }>(),
   {
     options: () => {
@@ -82,7 +76,6 @@ const props = withDefaults(
     mode: 'use'
   }
 )
-
 const restDataList = ref<Array<SelectOption>>([])
 const loadRestList = async () => {
   try {
@@ -157,16 +150,14 @@ const response = ref<RestResponse>({
   headers: {}
 })
 const send = async () => {
-  if (!props.handler) {
+  if (!props.dataInstance) {
     return
   }
-  const instance = new props.handler({})
   const acceptor = (resp: any) => {
     response.value.status = resp.status
-    response.value.code = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
   }
-  instance.debug(requestOptionsToStore(formData), acceptor)
+  props.dataInstance.debug(acceptor)
   formData.id && snapShot && snapShot.save(formData)
 }
 const formChange = () => {

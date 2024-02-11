@@ -28,7 +28,7 @@ export interface DataInstance {
   toJSON: () => any | undefined
   connect: (dataAcceptor: DataAcceptor) => void
   close: () => void
-  debug: (config: any, dataAcceptor: DataAcceptor) => void
+  debug: (dataAcceptor: DataAcceptor) => void
 }
 
 export type DataHandler = new (

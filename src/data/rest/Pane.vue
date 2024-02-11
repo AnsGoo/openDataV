@@ -36,7 +36,7 @@
     >
       <RestView
         v-model:options="formData"
-        :handler="handler"
+        :dataInstance="dataInstance"
         @update:options="changeHandler"
         @change="changeHandler"
       />
@@ -70,6 +70,8 @@ const RestView = computed(() => {
     return Rest
   }
 })
+
+const dataInstance = computed(() => props.slotter.dataConfig.dataInstance)
 
 const formData = reactive<RestOption>({
   method: RequestMethod.GET,

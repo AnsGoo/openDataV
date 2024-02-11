@@ -38,9 +38,7 @@ class StaticRequestData implements DataInstance {
     return response
   }
 
-  public async debug(config: { data: string }, acceptor: DataAcceptor) {
-    const { data } = config
-    this.data = data
+  public async debug(acceptor: DataAcceptor) {
     const resp = await this.getRespData()
     acceptor(resp)
   }

@@ -35,9 +35,9 @@
 import type { SelectOption } from 'naive-ui'
 import { NButton, NInput, NInputGroup, NSelect } from 'naive-ui'
 import { StaticKey, useEventBus } from 'open-data-v/base'
-import type { DataHandler, DataInstance } from 'open-data-v/data'
+import type { DataInstance } from 'open-data-v/data'
 import { StaticContent } from 'open-data-v/data/static'
-import { onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 import type { StaticDataDetail } from '@/api/data'
 import {
@@ -56,7 +56,7 @@ const props = withDefaults(
   defineProps<{
     options?: StoreStaticOption
     mode?: 'debug' | 'use'
-    handler?: DataHandler
+    dataInstance?: DataInstance
   }>(),
   {
     options: () => {
@@ -181,8 +181,6 @@ const handleUpdate = async () => {
     message.warning('数据更新失败')
   }
 }
-
-let dataInstance: DataInstance
 const handleSaveOrUpdate = async () => {
   formData.id ? handleSave() : handleUpdate()
 }
@@ -193,11 +191,7 @@ onMounted(async () => {
 })
 
 const init = async () => {
-  if (props.options && props.options.id && props.handler) {
-    if (dataInstance) {
-      dataInstance.close()
-    }
-    dataInstance = new props.handler({})
+  if (props.options && props.options.id && props.dataInstance) {
     const acceptor = (resp) => {
       if (resp) {
         formData.id = resp.id!
@@ -207,7 +201,7 @@ const init = async () => {
         emits('dataChange', props.options.id, resp.name)
       }
     }
-    dataInstance.debug(props.options, acceptor)
+    props.dataInstance.debug(acceptor)
   } else {
     formData.id = ''
     formData.title = ''
@@ -215,11 +209,6 @@ const init = async () => {
     staticDataOptions.data = ''
   }
 }
-
-onUnmounted(() => {
-  dataInstance.close()
-})
-
 watch(
   () => props.options.id,
   async () => {

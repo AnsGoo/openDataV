@@ -60,20 +60,19 @@
 </template>
 <script setup lang="ts">
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
-import { onUnmounted, reactive, ref } from 'vue'
+import { reactive, ref } from 'vue'
 
-import type { DataHandler, DataInstance } from '../type'
+import type { DataInstance } from '../type'
 import { uuid } from '../utils'
 import DynamicKVForm from './DynamicKVForm.vue'
 import { RequestHeaderEnum, RequestMethod } from './requestEnums'
 import type { RestOption, RestResponse } from './type'
-import { requestOptionsToStore } from './utils'
 
 const props = withDefaults(
   defineProps<{
     options?: RestOption
     mode?: 'debug' | 'use'
-    handler?: DataHandler
+    dataInstance?: DataInstance
   }>(),
   {
     options: () => {
@@ -113,32 +112,20 @@ const response = ref<RestResponse>({
   afterData: '',
   headers: {}
 })
-
-let dataInstance: DataInstance
 const send = async () => {
-  if (!props.handler) {
+  if (!props.dataInstance) {
     return
   }
-  if (dataInstance) {
-    dataInstance.close()
-  }
-  dataInstance = new props.handler()
   const acceptor = (resp: any) => {
     response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
   }
-  dataInstance.debug(requestOptionsToStore(formData), acceptor)
+  props.dataInstance.debug(acceptor)
 }
 const formChange = () => {
   emits('change', formData)
   emits('update:options', formData)
 }
-
-onUnmounted(() => {
-  if (dataInstance) {
-    dataInstance.close()
-  }
-})
 </script>
 
 <style scoped lang="less">

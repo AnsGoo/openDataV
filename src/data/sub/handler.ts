@@ -38,9 +38,7 @@ class SubRequestData implements DataInstance {
     })
   }
 
-  public async debug(options: { channel: string }, acceptor: DataAcceptor) {
-    const { channel } = options
-    this.channel = channel
+  public async debug(acceptor: DataAcceptor) {
     this.connect(acceptor)
   }
 }

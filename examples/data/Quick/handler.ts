@@ -65,10 +65,8 @@ class QuickRequestData implements DataInstance {
     return response
   }
 
-  public async debug(config: { id: string }, acceptor: DataAcceptor) {
-    const { id } = config
-    this.id = id
-    this.connect(acceptor, config)
+  public async debug(acceptor: DataAcceptor) {
+    this.connect(acceptor)
   }
 
   public close() {}

@@ -24,7 +24,7 @@
       <StaticContent
         v-model:options="formData"
         mode="use"
-        :handler="handler"
+        :data-instance="dataInstance"
         @data-change="dataChangeHandler"
       />
     </n-card>
@@ -33,10 +33,11 @@
 
 <script lang="ts" setup>
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import type { DataHandler, DataInstance, Slotter } from 'open-data-v/data'
-import { onMounted, reactive, ref, watch } from 'vue'
+import type { DataHandler, Slotter } from 'open-data-v/data'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 
 import StaticContent from './Content.vue'
+import type QuickRequestData from './handler'
 import { QUICK_TYPE } from './handler'
 
 const props = defineProps<{
@@ -54,33 +55,24 @@ const formData = reactive<{
   title: '',
   data: ''
 })
-
+const dataInstance = computed(() => props.slotter.dataConfig.dataInstance)
 onMounted(async () => {
   await initData()
 })
-
-let dataInstance: DataInstance
 const initData = async () => {
-  if (!props.handler) {
-    return
-  }
   const dataConfig = props.slotter.dataConfig
   if (dataConfig && dataConfig.type === QUICK_TYPE) {
-    const staticRequest = props.slotter.dataConfig?.dataInstance
-    const { options } = staticRequest.toJSON()
+    const dataInstance = props.slotter.dataConfig?.dataInstance as QuickRequestData
+    const { options } = dataInstance.toJSON()
 
     formData.id = options.id
     formData.title = options.title!
-    if (dataInstance) {
-      dataInstance.close()
-    }
-    dataInstance = new props.handler()
     const acceptor = (resp) => {
       formData.id = resp.id
       formData.title = resp.title!
       formData.data = resp.data
     }
-    dataInstance.debug(options, acceptor)
+    dataInstance.debug(acceptor)
   } else {
     changeHandler()
   }
