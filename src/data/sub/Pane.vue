@@ -34,9 +34,8 @@
 import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { DataInstance, Slotter } from '../type'
+import type { DataHandler, Slotter } from '../type'
 import type SubRequestData from './handler'
-import DataHandler from './handler'
 import SubDataView from './SubDataView.vue'
 
 const slots = useSlots()
@@ -51,7 +50,7 @@ const StaticView = computed(() => {
 
 const props = defineProps<{
   slotter: Slotter
-  handler: DataInstance
+  handler: DataHandler
 }>()
 const isShow = ref<boolean>(false)
 
@@ -76,9 +75,12 @@ const initData = async () => {
   }
 }
 const changeHandler = () => {
+  if (!props.handler) {
+    return
+  }
   const dataConfig = {
     type: 'SUB',
-    dataInstance: new DataHandler({
+    dataInstance: new props.handler({
       channel: formDataConfig.channel
     })
   }
