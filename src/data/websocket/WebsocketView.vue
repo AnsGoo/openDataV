@@ -69,10 +69,10 @@ const close = () => {
 }
 
 const connect = () => {
-  wsInstance = props.dataInstance
-  if (!wsInstance) {
+  if (!props.dataInstance) {
     return
   }
+  wsInstance = props.dataInstance
   const acceptor = (message) => {
     response.value.data = message.data
   }
