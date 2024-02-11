@@ -225,7 +225,6 @@ importers:
       '@vicons/ionicons5': ^0.12.0
       '@vicons/material': ^0.12.0
       '@vicons/utils': ^0.1.4
-      axios: ^0.23.0
       dexie: ^3.2.4
       less: ^4.2.0
       lodash-es: ^4.17.21
@@ -241,7 +240,6 @@ importers:
       '@vicons/ionicons5': registry.npmmirror.com/@vicons/ionicons5/0.12.0
       '@vicons/material': registry.npmmirror.com/@vicons/material/0.12.0
       '@vicons/utils': registry.npmmirror.com/@vicons/utils/0.1.4_vue@3.4.5
-      axios: registry.npmmirror.com/axios/0.23.0
       dexie: registry.npmmirror.com/dexie/3.2.4
       lodash-es: registry.npmmirror.com/lodash-es/4.17.21
       vue: registry.npmmirror.com/vue/3.4.5
@@ -257,12 +255,6 @@ importers:
     dependencies:
       lodash-es: registry.npmmirror.com/lodash-es/4.17.21
       mitt: registry.npmmirror.com/mitt/3.0.1
-
-  src/data:
-    specifiers:
-      lodash-es: ^4.17.21
-    dependencies:
-      lodash-es: registry.npmmirror.com/lodash-es/4.17.21
 
   src/scripts:
     specifiers:
