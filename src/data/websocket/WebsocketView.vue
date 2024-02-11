@@ -21,10 +21,11 @@
   </o-card>
 </template>
 <script setup lang="ts">
+import { useWebsocket } from 'open-data-v/data/hooks'
+import type WebsocketData from 'open-data-v/data/websocket/handler'
 import { OButton, OButtonGroup, OCard, OInput } from 'open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
-import { dataLogger } from '../utils'
 import type { WebsocketOption } from './type'
 
 const props = withDefaults(
@@ -32,6 +33,7 @@ const props = withDefaults(
     options?: WebsocketOption
     mode?: 'debug' | 'use'
     index?: number
+    dataInstance?: WebsocketData
   }>(),
   {
     options: () => {
@@ -42,6 +44,9 @@ const props = withDefaults(
         isRetry: false,
         maxRetryCount: 0
       }
+    },
+    handler: () => {
+      return useWebsocket()
     },
     mode: 'use'
   }
@@ -55,7 +60,7 @@ const formData = reactive<WebsocketOption>(props.options)
 const response = ref({
   data: ''
 })
-let wsInstance: WebSocket
+let wsInstance: WebsocketData
 
 const close = () => {
   if (wsInstance) {
@@ -64,18 +69,14 @@ const close = () => {
 }
 
 const connect = () => {
-  close()
-  wsInstance = new WebSocket(formData.url)
-  wsInstance.onopen = () => {
-    dataLogger.info('wsOpen')
+  if (!props.dataInstance) {
+    return
   }
-  wsInstance.onmessage = (message) => {
+  wsInstance = props.dataInstance
+  const acceptor = (message) => {
     response.value.data = message.data
   }
-  wsInstance.onerror = (_err) => {
-    dataLogger.error('wsClose')
-    close()
-  }
+  wsInstance.debug(acceptor)
 }
 const send = () => {
   wsInstance.send(formData.message)
@@ -88,6 +89,9 @@ const formChange = () => {
 defineExpose({ close })
 
 onUnmounted(() => {
-  close()
+  if (!wsInstance) {
+    return
+  }
+  wsInstance.cancelDebug()
 })
 </script>

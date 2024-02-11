@@ -1,15 +1,23 @@
 import { handler, RequestMethod } from 'open-data-v/data/rest'
 import { shallowRef } from 'vue'
 
+import { apiHttp as http } from '@/utils/http'
 import { uuid } from '@/utils/utils'
 
 import DataView from './Pane.vue'
+
+class RestRequestHandler extends handler {
+  constructor(options) {
+    const connector = http
+    super(options, connector)
+  }
+}
 
 export default {
   type: 'REST',
   name: '动态数据',
   component: shallowRef(DataView),
-  handler,
+  handler: RestRequestHandler,
   useTo: ['COMPONENT', 'GLOBAL'],
   getdefaultOption: () => {
     return {

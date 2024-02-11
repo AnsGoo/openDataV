@@ -62,17 +62,17 @@
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
-import { useRequest } from '../hooks/http'
+import type { DataInstance } from '../type'
 import { uuid } from '../utils'
 import DynamicKVForm from './DynamicKVForm.vue'
 import { RequestHeaderEnum, RequestMethod } from './requestEnums'
 import type { RestOption, RestResponse } from './type'
-import { requestOptionsToStore } from './utils'
 
 const props = withDefaults(
   defineProps<{
     options?: RestOption
     mode?: 'debug' | 'use'
+    dataInstance?: DataInstance
   }>(),
   {
     options: () => {
@@ -99,56 +99,28 @@ const requestMethodOptions = Object.keys(RequestMethod).map((el) => {
   }
 })
 const requestHeaderOptions = Object.keys(RequestHeaderEnum)
-interface ErrorResponse extends Error {
-  config: Record<string, any>
-  code?: number | undefined
-  response: any
-  toJSON?: () => {
-    message: string
-    name: string
-    // Microsoft
-    description?: string
-    number?: string
-    // Mozill
-    fileName?: string
-    lineNumber?: string
-    columnNumber?: string
-    stack?: string
-    // Axios
-    config: Record<string, any>
-    code?: number
-    status?: number
-  }
-}
 
 const emits = defineEmits<{
   (e: 'update:options', value: RestOption): void
   (e: 'change', value: RestOption): void
 }>()
-interface RequestDataOption extends RestOption {
-  title?: string
-  id?: string
-}
-const formData = reactive<RequestDataOption>(props.options)
+
+const formData = reactive<RestOption>(props.options)
 const response = ref<RestResponse>({
   status: 0,
   data: '',
   afterData: '',
   headers: {}
 })
-const requestInstance = useRequest()
 const send = async () => {
-  formChange()
-  try {
-    const resp = await requestInstance.request(requestOptionsToStore(formData))
+  if (!props.dataInstance) {
+    return
+  }
+  const acceptor = (resp: any) => {
     response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
-  } catch (err: any) {
-    err as ErrorResponse
-    const result = err.response || (err.toJSON ? err.toJSON() : {})
-    response.value.code = result.status
-    response.value.data = err.stack || err.message
   }
+  props.dataInstance.debug(acceptor)
 }
 const formChange = () => {
   emits('change', formData)

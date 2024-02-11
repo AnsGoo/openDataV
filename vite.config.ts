@@ -19,7 +19,6 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         rewrite: (path) => path.replace(new RegExp(`^${prefix}`), '')
       }
     }
-
     return ret
   }
 
@@ -30,7 +29,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       }),
       vueJsx(),
       viteMockServe({
-        mockPath: 'mock',
+        mockPath: 'mock/modules',
         logger: true,
         localEnabled: command === 'serve',
         prodEnabled: VITE_MOCK === 'true',

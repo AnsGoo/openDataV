@@ -22,7 +22,6 @@ scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])
 
 onMounted(async () => {
   const snapshot = await snapShotState.latestRecord()
-  console.log(snapshot)
   if (snapshot) {
     viewer.value!.setLayoutData({
       canvasData: snapshot.canvasData as ComponentDataType[],

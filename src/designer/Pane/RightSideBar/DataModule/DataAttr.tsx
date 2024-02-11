@@ -61,9 +61,13 @@ export default defineComponent({
     }
     const renderDataComponent = () => {
       const plugin = dataState.getPlugin(dataType.value)
-      const DataComponent = plugin ? plugin.component : useEmpty('未发现相应的数据插件')
+      if (plugin) {
+        const DataComponent = plugin.component
+        return <DataComponent slotter={props.curComponent} handler={plugin.handler} />
+      } else {
+        return useEmpty('未发现相应的数据插件')
+      }
       // @ts-ignore
-      return <DataComponent slotter={props.curComponent} />
     }
 
     const renderScriptComponent = () => {

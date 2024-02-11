@@ -10,7 +10,7 @@
   "author": "",
   "license": "ISC",
   "peerDependencies": {
-    "vue": "^3.4.3"
+    "vue": "^3.3.8"
   },
   "dependencies": {
     "@ctrl/tinycolor": "^4.0.2",

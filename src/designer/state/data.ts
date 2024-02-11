@@ -2,7 +2,7 @@ import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from 'open-data-
 import { DemoDataPlugin } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
-interface DataPlugin {
+export interface DataPlugin {
   type: string
   name: string
   component: any
@@ -57,9 +57,7 @@ class DataState {
 
   public loadPlugins(plugins: Array<DataPlugin>) {
     plugins.forEach((el) => {
-      if (!this.plugins[el.type]) {
-        this.plugins[el.type] = el
-      }
+      this.plugins[el.type] = el
     })
   }
 }

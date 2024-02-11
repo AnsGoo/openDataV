@@ -1,5 +1,10 @@
 <template>
-  <RestContent v-model:options="formData" @update:rest-options="formChange" @change="formChange">
+  <RestContent
+    v-model:options="formData"
+    :data-instance="dataInstance"
+    @update:rest-options="formChange"
+    @change="formChange"
+  >
     <template #data-select>
       <div class="flex flex-nowrap flex-row">
         <n-select
@@ -26,19 +31,12 @@
   </RestContent>
 </template>
 <script setup lang="ts">
-import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
 import { StaticKey, useEventBus } from 'open-data-v/base'
-import { useRequest } from 'open-data-v/data/hooks/http'
+import type { DataInstance } from 'open-data-v/data'
 import type { RestOption, RestResponse } from 'open-data-v/data/rest'
-import {
-  KVToRecordable,
-  recordabletoKV,
-  RequestMethod,
-  requestOptionsToStore,
-  RestContent
-} from 'open-data-v/data/rest'
+import { KVToRecordable, recordabletoKV, RequestMethod, RestContent } from 'open-data-v/data/rest'
 import { onMounted, reactive, ref } from 'vue'
 
 import {
@@ -59,6 +57,7 @@ const props = withDefaults(
   defineProps<{
     options?: RestOption
     mode?: 'debug' | 'use'
+    dataInstance?: DataInstance
   }>(),
   {
     options: () => {
@@ -77,7 +76,6 @@ const props = withDefaults(
     mode: 'use'
   }
 )
-
 const restDataList = ref<Array<SelectOption>>([])
 const loadRestList = async () => {
   try {
@@ -103,29 +101,6 @@ const clear = () => {
   formData.params = [{ key: '', value: '', disable: false, id: uuid() }]
   formData.method = RequestMethod.GET
   formData.url = ''
-}
-interface ErrorResponse extends Error {
-  config: Record<string, any>
-  code?: number | undefined
-  response: AxiosResponse
-  isAxiosError: boolean
-
-  toJSON?: () => {
-    message: string
-    name: string
-    // Microsoft
-    description?: string
-    number?: string
-    // Mozill
-    fileName?: string
-    lineNumber?: string
-    columnNumber?: string
-    stack?: string
-    // Axios
-    config: Record<string, any>
-    code?: number
-    status?: number
-  }
 }
 let snapShot
 if (props.mode === 'debug') {
@@ -174,22 +149,16 @@ const response = ref<RestResponse>({
   data: '',
   headers: {}
 })
-const requestInstance = useRequest()
 const send = async () => {
-  try {
-    const resp = await requestInstance.request(requestOptionsToStore(formData))
+  if (!props.dataInstance) {
+    return
+  }
+  const acceptor = (resp: any) => {
     response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
-
-    response.value.headers = resp.headers
-    formData.id && snapShot && snapShot.save(formData)
-  } catch (err: any) {
-    err as ErrorResponse
-    const result = err.response || (err.toJSON ? err.toJSON() : {})
-    response.value.status = result.status
-    response.value.data = err.stack || err.message
-    response.value.headers = result.headers || result?.config?.headers || {}
   }
+  props.dataInstance.debug(acceptor)
+  formData.id && snapShot && snapShot.save(formData)
 }
 const formChange = () => {
   emits('change', formData)
