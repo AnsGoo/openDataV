@@ -35,7 +35,7 @@ import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
 import { StaticKey, useEventBus } from 'open-data-v/base'
 import type { DataInstance } from 'open-data-v/data'
-import type { RestOption, RestResponse } from 'open-data-v/data/rest'
+import type { RestOption } from 'open-data-v/data/rest'
 import { KVToRecordable, recordabletoKV, RequestMethod, RestContent } from 'open-data-v/data/rest'
 import { onMounted, reactive, ref } from 'vue'
 
@@ -77,6 +77,7 @@ const props = withDefaults(
   }
 )
 const restDataList = ref<Array<SelectOption>>([])
+const formData = reactive<RequestDataOption>(props.options)
 const loadRestList = async () => {
   try {
     const resp = await getRestDataListApi()
@@ -102,11 +103,9 @@ const clear = () => {
   formData.method = RequestMethod.GET
   formData.url = ''
 }
-let snapShot
 if (props.mode === 'debug') {
   useEventBus(StaticKey.REST_KEY, async (id) => {
     await loadRestData(id as string)
-    await send()
   })
 }
 
@@ -143,23 +142,7 @@ interface RequestDataOption extends RestOption {
   title?: string
   id?: string
 }
-const formData = reactive<RequestDataOption>(props.options)
-const response = ref<RestResponse>({
-  status: 0,
-  data: '',
-  headers: {}
-})
-const send = async () => {
-  if (!props.dataInstance) {
-    return
-  }
-  const acceptor = (resp: any) => {
-    response.value.status = resp.status
-    response.value.data = JSON.stringify(resp.data, null, '\t')
-  }
-  props.dataInstance.debug(acceptor)
-  formData.id && snapShot && snapShot.save(formData)
-}
+
 const formChange = () => {
   emits('change', formData)
   emits('update:options', formData)
@@ -167,7 +150,6 @@ const formChange = () => {
 
 const selectedChange = async (id: string) => {
   await loadRestData(id)
-  await send()
   emits('update:options', formData)
   emits('change', formData)
 }
@@ -220,7 +202,6 @@ const handleUpdate = async () => {
 }
 
 onMounted(async () => {
-  await send()
   await loadRestList()
 })
 </script>
