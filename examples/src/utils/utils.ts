@@ -39,7 +39,7 @@ export const pasteText = (): string => {
 export const loadScript = async (src: string) => {
   return new Promise(function (resolve, reject) {
     let shouldAppend = false
-    let el: any = document.querySelector('script[src="' + src + '"]')
+    let el: any = document.querySelector('script[packages="' + src + '"]')
     if (!el) {
       el = document.createElement('script')
       el.type = 'text/javascript'

@@ -26,7 +26,7 @@ import { useCanvasState } from 'open-data-v/designer'
 import { OSlider } from 'open-data-v/ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
-import Editor from '../../Editor'
+import Editor from '../../editor'
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)
@@ -92,7 +92,7 @@ onBeforeUnmount(() => {
 </script>
 
 <style scoped lang="less">
-@import 'open-data-v/css/index.less';
+@import '../../css/index.less';
 .middle {
   .canvas {
     height: 100%;

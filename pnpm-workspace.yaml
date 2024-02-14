@@ -1,6 +1,6 @@
 packages:
-  - src/**
-  - examples/**
+  - packages/**
+  - examples/src/**
   - resource/**
   - docs/**
   - mock/**

@@ -40,7 +40,7 @@ import type { CustomComponent, Hooks } from 'open-data-v/base'
 import { channels, eventBus } from 'open-data-v/base'
 import { computed, inject } from 'vue'
 
-import Shape from '../../Editor/Shape'
+import Shape from '../../editor/Shape'
 import useCanvasState from '../../state/canvas'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '../../utils'
 

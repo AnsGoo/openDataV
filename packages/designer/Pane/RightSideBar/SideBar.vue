@@ -181,7 +181,7 @@ const collapsedTabPane = (key: string) => {
 }
 </script>
 <style scoped>
-@import 'open-data-v/css/index.less';
+@import '../../css/index.less';
 .attr-list {
   @apply overflow-auto p-1 pt-0;
   backdrop-filter: blur(50px);

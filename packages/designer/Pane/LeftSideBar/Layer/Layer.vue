@@ -271,5 +271,5 @@ watch(
 )
 </script>
 <style scoped lang="less">
-@import 'open-data-v/css/index.less';
+@import '../../../css/index.less';
 </style>

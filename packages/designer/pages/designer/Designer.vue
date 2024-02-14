@@ -47,9 +47,9 @@ import { useCanvasState } from 'open-data-v/designer'
 import { computed, onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '../../../designer/state/type'
-import LeftSideBar from '../../Pane/LeftSideBar'
-import RightSideBar from '../../Pane/RightSideBar'
-import ToolBar from '../../Pane/Toolsbar'
+import LeftSideBar from '../../pane/LeftSideBar'
+import RightSideBar from '../../pane/RightSideBar'
+import ToolBar from '../../pane/Toolsbar'
 import Canvas from './Canvas.vue'
 import Toggle from './Toggle.vue'
 
@@ -83,7 +83,7 @@ const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 
 const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${rightWidth.value})`)
 </script>
 <style scoped lang="less">
-@import 'open-data-v/css/index.less';
+@import '../../css/index.less';
 .main {
   .content {
     width: 100vw;

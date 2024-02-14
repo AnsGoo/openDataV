@@ -4,13 +4,14 @@
   "scripts": {
     "bootstrap": "pnpm install",
     "dev": "vite",
-    "build": "vue-tsc --noEmit && vite build",
-    "serve": "pnpm build && vite preview",
-    "lint": "eslint --ext .js,.ts,.vue,.tsx src/ examples/ docs/ resource/",
-    "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
-    "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/ examples/ docs/ resource/",
+    "demo": "npm -C examples run dev",
+    "build:demo": "npm -C examples run build",
+    "build": "",
+    "lint": "eslint --ext .js,.ts,.vue,.tsx packages/ examples/ docs/ resource/",
+    "lint:fromat": "prettier -c --parser typescript \"{packages,__tests__,e2e}/**/*.[jt]s?(x)\"",
+    "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx packages/ examples/ docs/ resource/",
     "prepare": "husky install",
-    "reinstall": "rimraf pnpm-lock.yaml && rimraf src/**/node_modules && rimraf node_modules && pnpm bootstrap"
+    "reinstall": "rimraf pnpm-lock.yaml && rimraf packages/**/node_modules && rimraf node_modules && pnpm bootstrap"
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -35,7 +36,7 @@
     "eslint-plugin-vue": "^9.18.1",
     "husky": "^7.0.4",
     "less": "^4.2.0",
-    "open-data-v": "link:src",
+    "open-data-v": "link:packages",
     "postcss": "^8.4.31",
     "postcss-html": "^1.5.0",
     "postcss-less": "^6.0.0",

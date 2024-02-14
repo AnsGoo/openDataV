@@ -8,7 +8,7 @@ const useLoadComponent = () => {
   return {
     install: (app: App) => {
       // 注册Group组件
-      const moduleFilesTs: any = import.meta.glob('../resource/**/index.ts', {
+      const moduleFilesTs: any = import.meta.glob('../../resource/**/index.ts', {
         eager: true
       })
       Object.keys(moduleFilesTs).forEach((key: string) => {
