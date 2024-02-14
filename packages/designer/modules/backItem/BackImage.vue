@@ -39,9 +39,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { SelectOption } from '@open-data-v/ui'
+import { OForm, OFormItem, OInput, OSelect } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
-import type { SelectOption } from 'open-data-v/ui'
-import { OForm, OFormItem, OInput, OSelect } from 'open-data-v/ui'
 import { computed } from 'vue'
 
 import type { BackgroundImage } from './type'

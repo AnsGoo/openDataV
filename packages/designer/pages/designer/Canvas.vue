@@ -21,12 +21,12 @@
 </template>
 
 <script lang="ts" setup>
+import { OSlider } from '@open-data-v/ui'
 import { debounce } from 'lodash-es'
-import { useCanvasState } from 'open-data-v/designer'
-import { OSlider } from 'open-data-v/ui'
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 import Editor from '../../editor'
+import { useCanvasState } from '../../state'
 
 const windowWidth = ref<number>(0)
 const windowHeight = ref<number>(0)

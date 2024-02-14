@@ -29,9 +29,9 @@
   </ConfigProvider>
 </template>
 <script lang="ts" setup>
+import { useCanvasState } from '@open-data-v/designer'
 import type { FormItemRule } from 'naive-ui'
 import { NButton, NForm, NFormItem, NInput, NModal, NSpace } from 'naive-ui'
-import { useCanvasState } from 'open-data-v/designer'
 import { reactive, ref } from 'vue'
 
 import type { LayoutData } from '@/api/pages'

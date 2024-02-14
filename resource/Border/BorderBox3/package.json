@@ -8,6 +8,8 @@
   },
   "author": "chenghaiwen",
   "license": "Apache-2.0",
-  "dependencies": {},
+  "dependencies": {
+    "@open-data-v/base":"workspace:*"
+  },
   "devDependencies": {}
 }

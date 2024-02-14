@@ -10,12 +10,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { ColorOption } from 'open-data-v/ui/ColorPicker/types'
-import { tinycolor, transColor } from 'open-data-v/ui/ColorPicker/utils'
 import { computed, reactive } from 'vue'
 
 import { Input } from '../Input'
 import ColorPane from './ColorPane.vue'
+import type { ColorOption } from './types'
+import { tinycolor, transColor } from './utils'
 
 const props = withDefaults(
   defineProps<{

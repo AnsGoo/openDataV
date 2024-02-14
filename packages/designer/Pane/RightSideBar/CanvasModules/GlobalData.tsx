@@ -1,5 +1,4 @@
-import { ContainerType } from 'open-data-v/base'
-import { useCanvasState, useDataState, useEmpty } from 'open-data-v/designer'
+import { ContainerType } from '@open-data-v/base'
 import {
   OButton,
   OCard,
@@ -9,8 +8,11 @@ import {
   OForm,
   OFormItem,
   OSelect
-} from 'open-data-v/ui'
+} from '@open-data-v/ui'
 import { computed, defineComponent, onMounted, ref } from 'vue'
+
+import { useEmpty } from '../../../modules'
+import { useCanvasState, useDataState } from '../../../state'
 
 const canvasState = useCanvasState()
 

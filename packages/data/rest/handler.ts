@@ -1,5 +1,5 @@
+import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
-import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 
 import type { RequestInstance } from '../hooks'
 import { useRequest } from '../hooks'

@@ -12,20 +12,17 @@
 </template>
 
 <script lang="ts" setup>
+import type { CustomComponent } from '@open-data-v/base'
+import { ComponentGroup } from '@open-data-v/base'
+import type { MenuOption } from '@open-data-v/ui'
+import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
-import type { CustomComponent } from 'open-data-v/base'
-import { ComponentGroup } from 'open-data-v/base'
-import type { ContextmenuItem } from 'open-data-v/designer'
-import {
-  ComponentGroupList,
-  useCanvasState,
-  useClipBoardState,
-  useEmpty
-} from 'open-data-v/designer'
-import type { MenuOption } from 'open-data-v/ui'
-import { OMenu } from 'open-data-v/ui'
 import { computed, h, ref, watch } from 'vue'
 
+import { ComponentGroupList } from '../../../enum'
+import { useEmpty } from '../../../modules'
+import { useCanvasState, useClipBoardState } from '../../../state'
+import type { ContextmenuItem } from '../../../type'
 import { uuid } from '../../../utils'
 import LayerItem from './LayerItem.vue'
 import SimpleLayerItem from './SimpleLayerItem.vue'

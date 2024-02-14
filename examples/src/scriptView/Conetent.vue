@@ -38,9 +38,9 @@
 </template>
 
 <script lang="ts" setup>
+import { StaticKey, useEventBus } from '@open-data-v/base'
+import { makeFunction } from '@open-data-v/scripts'
 import { NButton, NButtonGroup, NCard, NDivider, NInput, NSpace, NTabPane, NTabs } from 'naive-ui'
-import { StaticKey, useEventBus } from 'open-data-v/base'
-import { makeFunction } from 'open-data-v/scripts'
 import { reactive, ref } from 'vue'
 
 import {

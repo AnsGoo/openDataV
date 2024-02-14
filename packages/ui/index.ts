@@ -1,7 +1,7 @@
 import { Button, ButtonGroup } from './Button'
 import Card from './Card'
 import { Collapse, CollapsePanel } from './Collapse'
-import { ColorPicker } from './ColorPicker'
+import { ColorPane, ColorPicker } from './ColorPicker'
 import Divider from './Divider'
 import { Form } from './Form'
 import { FormItem } from './FormItem'
@@ -42,6 +42,7 @@ const OButtonGroup = ButtonGroup
 
 const OSlider = Slider
 const OIcon = Icon
+const OColorPane = ColorPane
 
 export type { MenuOption, SelectOption }
 
@@ -51,6 +52,7 @@ export {
   OCard,
   OCollapse,
   OCollapseItem,
+  OColorPane,
   OColorPicker,
   ODivider,
   OForm,

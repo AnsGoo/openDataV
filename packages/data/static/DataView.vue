@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { OCard } from 'open-data-v/ui'
+import { OCard } from '@open-data-v/ui'
 import { computed, ref } from 'vue'
 
 import StaticDataView from './StaticDataView.vue'

@@ -3,9 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import type { ContainerType, CustomComponent, MetaContainerItem } from 'open-data-v/base'
-import { Container, useCanvasState } from 'open-data-v/designer'
+import type { ContainerType, CustomComponent, MetaContainerItem } from '@open-data-v/base'
 import { computed } from 'vue'
+
+import { Container } from '../../../modules'
+import { useCanvasState } from '../../../state'
 
 const props = defineProps<{
   curComponent: CustomComponent

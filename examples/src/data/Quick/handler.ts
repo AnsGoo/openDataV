@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
+import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
 
 import { getStaticDataApi } from '@/api/data'
 

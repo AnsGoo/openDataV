@@ -1,4 +1,5 @@
-import type { BaseComponent, CustomComponent } from 'open-data-v/base'
+import type { BaseComponent, CustomComponent } from '@open-data-v/base'
+
 import type {
   ComponentDataType,
   ContainerType,
@@ -7,7 +8,7 @@ import type {
   MetaContainerItem,
   Position,
   StoreComponentData
-} from 'open-data-v/designer'
+} from '../type'
 
 export interface CanvasStyleData {
   width: number

@@ -1,4 +1,3 @@
-import { isUndefined } from 'lodash-es'
 import type {
   CustomProps,
   FormItemProps,
@@ -9,8 +8,8 @@ import type {
   RadioProps,
   SelectProps,
   SwitchProps
-} from 'open-data-v/base'
-import { FormType } from 'open-data-v/base'
+} from '@open-data-v/base'
+import { FormType } from '@open-data-v/base'
 import {
   OButton,
   OCard,
@@ -24,7 +23,8 @@ import {
   ORadioGroup,
   OSelect,
   OSwitch
-} from 'open-data-v/ui'
+} from '@open-data-v/ui'
+import { isUndefined } from 'lodash-es'
 import type { PropType } from 'vue'
 import { defineComponent, h, ref, watch } from 'vue'
 

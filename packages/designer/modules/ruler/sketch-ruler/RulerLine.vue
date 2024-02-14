@@ -13,9 +13,9 @@
   </div>
 </template>
 <script lang="ts" setup>
-import type { ContextmenuItem } from 'open-data-v/designer'
 import { computed, onMounted, ref } from 'vue'
 
+import type { ContextmenuItem } from '../../../type'
 import type { PaletteType } from '../index-types'
 
 const props = defineProps<{

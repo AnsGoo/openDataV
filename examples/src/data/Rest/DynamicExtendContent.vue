@@ -31,12 +31,12 @@
   </RestContent>
 </template>
 <script setup lang="ts">
+import type { DataInstance } from '@open-data-v/base'
+import { StaticKey, useEventBus } from '@open-data-v/base'
+import type { RestOption } from '@open-data-v/data'
+import { KVToRecordable, recordabletoKV, RequestMethod, RestContent } from '@open-data-v/data'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
-import type { DataInstance } from 'open-data-v/base'
-import { StaticKey, useEventBus } from 'open-data-v/base'
-import type { RestOption } from 'open-data-v/data/rest'
-import { KVToRecordable, recordabletoKV, RequestMethod, RestContent } from 'open-data-v/data/rest'
 import { onMounted, reactive, ref } from 'vue'
 
 import {

@@ -1,6 +1,6 @@
-import type { MetaContainerItem, MetaForm } from 'open-data-v/base'
-import { ContainerType } from 'open-data-v/base'
-import { OCard, OCollapse, OCollapseItem, ODivider } from 'open-data-v/ui'
+import type { MetaContainerItem, MetaForm } from '@open-data-v/base'
+import { ContainerType } from '@open-data-v/base'
+import { OCard, OCollapse, OCollapseItem, ODivider } from '@open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, ref, watch } from 'vue'
 

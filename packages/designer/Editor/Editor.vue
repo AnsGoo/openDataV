@@ -50,23 +50,18 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from 'open-data-v/base'
-import type { ContextmenuItem, Location, Vector } from 'open-data-v/designer'
-import {
-  DataMode,
-  EditMode,
-  useActionState,
-  useCanvasState,
-  useClipBoardState
-} from 'open-data-v/designer'
-import Area from 'open-data-v/designer/Editor/Area.vue'
-import Grid from 'open-data-v/designer/Editor/Grid.vue'
-import MarkLine from 'open-data-v/designer/Editor/MarkLine.vue'
-import Ruler from 'open-data-v/designer/Editor/Ruler.vue'
-import Shape from 'open-data-v/designer/Editor/Shape'
+import type { CustomComponent } from '@open-data-v/base'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
 import { systemLogger } from '../../designer/utils'
+import Area from '../editor/Area.vue'
+import Grid from '../editor/Grid.vue'
+import MarkLine from '../editor/MarkLine.vue'
+import Ruler from '../editor/Ruler.vue'
+import Shape from '../editor/Shape'
+import { DataMode, EditMode } from '../enum'
+import { useActionState, useCanvasState, useClipBoardState } from '../state'
+import type { ContextmenuItem, Location, Vector } from '../type'
 import {
   backgroundToCss,
   createComponent,

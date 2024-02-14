@@ -1,4 +1,4 @@
-import type { BaseScript } from 'open-data-v/scripts'
+import type { BaseScript } from '@open-data-v/scripts'
 import { reactive } from 'vue'
 
 type ScriptHandler = { new (key: string, ...args: any): BaseScript }

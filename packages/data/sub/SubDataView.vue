@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { OCard, OForm, OFormItem, OInput } from 'open-data-v/ui'
+import { OCard, OForm, OFormItem, OInput } from '@open-data-v/ui'
 import { ref } from 'vue'
 
 const props = withDefaults(

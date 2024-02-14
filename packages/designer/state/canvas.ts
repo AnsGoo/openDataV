@@ -1,30 +1,27 @@
-import { cloneDeep } from 'lodash-es'
 import type {
   BaseComponent,
   CustomComponent,
   DataInstance,
   MetaContainerItem
-} from 'open-data-v/base'
+} from '@open-data-v/base'
 import {
   buildModeValue,
   ContainerType,
   eventBus,
   FormType,
   updateModeValue
-} from 'open-data-v/base'
-import type {
-  CanvasData,
-  ComponentDataType,
-  DOMRectStyle,
-  GroupStyle,
-  Vector
-} from 'open-data-v/designer'
-import { DataSlotter, EditMode, handleLogger, PixelEnum } from 'open-data-v/designer'
+} from '@open-data-v/base'
+import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
+import { EditMode, PixelEnum } from '../enum'
+import type { CanvasData } from '../state'
+import { DataSlotter } from '../state'
+import type { ComponentDataType, DOMRectStyle, GroupStyle, Vector } from '../type'
 import {
   calcComponentsRect,
   createComponent,
+  handleLogger,
   mod360,
   rotatePoint,
   swap,

@@ -47,7 +47,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { OButton, ODivider, OInput } from 'open-data-v/ui'
+import { OButton, ODivider, OInput } from '@open-data-v/ui'
 import { ref, watch } from 'vue'
 
 import { uuid } from '../utils'

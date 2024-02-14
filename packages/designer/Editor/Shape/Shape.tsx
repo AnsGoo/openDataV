@@ -1,11 +1,11 @@
-import type { CustomComponent } from 'open-data-v/base'
-import { eventBus, StaticKey } from 'open-data-v/base'
-import type { ComponentStyle, ContextmenuItem, Vector } from 'open-data-v/designer'
-import { useActionState, useCanvasState, useClipBoardState } from 'open-data-v/designer'
+import type { CustomComponent } from '@open-data-v/base'
+import { eventBus, StaticKey } from '@open-data-v/base'
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 
 import { stretchedComponents } from '../../component'
+import { useActionState, useCanvasState, useClipBoardState } from '../../state'
+import type { ComponentStyle, ContextmenuItem, Vector } from '../../type'
 import { copyText, mod360, systemLogger, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
 

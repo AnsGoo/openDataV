@@ -11,9 +11,9 @@
 </template>
 
 <script lang="ts" setup>
+import { XIcon } from '@open-data-v/designer'
 import type { MenuOption } from 'naive-ui'
 import { NMenu } from 'naive-ui'
-import { XIcon } from 'open-data-v/designer'
 import { computed, h, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 

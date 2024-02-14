@@ -7,8 +7,8 @@
   <o-divider v-if="divider" vertical />
 </template>
 <script lang="ts" setup>
+import { OButton, ODivider, OTooltip } from '@open-data-v/ui'
 import { isString } from 'lodash-es'
-import { OButton, ODivider, OTooltip } from 'open-data-v/ui'
 import type { ComponentOptions, VNode } from 'vue'
 import { computed, getCurrentInstance, h } from 'vue'
 

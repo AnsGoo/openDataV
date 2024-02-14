@@ -21,7 +21,7 @@
   </o-card>
 </template>
 <script setup lang="ts">
-import { OButton, OButtonGroup, OCard, OInput } from 'open-data-v/ui'
+import { OButton, OButtonGroup, OCard, OInput } from '@open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
 import { useWebsocket } from '../hooks/ws'

@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { OSelect } from 'open-data-v/ui'
+import { OSelect } from '@open-data-v/ui'
 import { reactive, ref } from 'vue'
 
 import { SYS_FONT_WEIGHT } from './enum'

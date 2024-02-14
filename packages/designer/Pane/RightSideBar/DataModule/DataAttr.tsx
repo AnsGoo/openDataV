@@ -1,6 +1,5 @@
-import type { CustomComponent } from 'open-data-v/base'
-import { ContainerType } from 'open-data-v/base'
-import { DataMode, useDataState, useEmpty, useScriptState } from 'open-data-v/designer'
+import type { CustomComponent } from '@open-data-v/base'
+import { ContainerType } from '@open-data-v/base'
 import {
   OCard,
   OCollapse,
@@ -9,9 +8,13 @@ import {
   OForm,
   OFormItem,
   OSelect
-} from 'open-data-v/ui'
+} from '@open-data-v/ui'
 import type { PropType } from 'vue'
 import { defineComponent, onMounted, ref, watch } from 'vue'
+
+import { DataMode } from '../../../enum'
+import { useEmpty } from '../../../modules'
+import { useDataState, useScriptState } from '../../../state'
 
 export default defineComponent({
   props: {

@@ -32,8 +32,8 @@
 </template>
 
 <script lang="ts" setup>
+import type { DataHandler, Slotter } from '@open-data-v/base'
 import { NButton, NCard, NFormItem, NInput, NInputGroup, NModal } from 'naive-ui'
-import type { DataHandler, Slotter } from 'open-data-v/base'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 
 import StaticContent from './Content.vue'

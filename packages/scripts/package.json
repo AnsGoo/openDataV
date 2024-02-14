@@ -1,0 +1,21 @@
+{
+  "name": "@open-data-v/scripts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnsGoo/openDataV.git"
+  },
+  "dependencies": {
+    "@open-data-v/base": "workspace:*",
+    "lodash-es": "^4.17.21",
+    "@open-data-v/ui": "workspace:*"
+  },
+  "peerDependencies ": {
+    "vue": "^3.3.4"
+  }
+}

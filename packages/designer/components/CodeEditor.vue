@@ -18,7 +18,7 @@
 </template>
 
 <script setup lang="ts">
-import { OInput } from 'open-data-v/ui'
+import { OInput } from '@open-data-v/ui'
 
 withDefaults(
   defineProps<{

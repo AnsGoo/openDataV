@@ -1,10 +1,10 @@
+import type { CustomComponent } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
-import type { CustomComponent } from 'open-data-v/base'
-import type { ComponentDataType } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
 import type { StoreComponentData } from '../db'
 import { snapshotDb } from '../db'
+import type { ComponentDataType } from '../type'
 import type { CanvasStyleData, SnapData } from './type'
 
 class SnapshotState {

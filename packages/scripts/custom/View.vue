@@ -21,7 +21,7 @@
 </template>
 
 <script setup lang="ts">
-import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
+import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
 import { onMounted, ref, watch } from 'vue'
 
 import type { Slotter } from '../type'

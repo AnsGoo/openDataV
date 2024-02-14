@@ -36,8 +36,8 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent, Hooks } from 'open-data-v/base'
-import { channels, eventBus } from 'open-data-v/base'
+import type { CustomComponent, Hooks } from '@open-data-v/base'
+import { channels, eventBus } from '@open-data-v/base'
 import { computed, inject } from 'vue'
 
 import Shape from '../../editor/Shape'

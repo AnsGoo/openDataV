@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
+import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
 
 class StaticRequestData implements DataInstance {
   public data?: any

@@ -1,5 +1,9 @@
 packages:
-  - packages/**
+  - packages/base/**
+  - packages/data/**
+  - packages/ui/**
+  - packages/scripts/**
+  - packages/designer/**
   - examples/**
   - resource/**
   - docs/**

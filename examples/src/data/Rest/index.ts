@@ -1,4 +1,4 @@
-import { handler, RequestMethod } from 'open-data-v/data/rest'
+import { RequestMethod, RestHandler } from '@open-data-v/data'
 import { shallowRef } from 'vue'
 
 import { apiHttp as http } from '@/utils/http'
@@ -6,7 +6,7 @@ import { uuid } from '@/utils/utils'
 
 import DataView from './Pane.vue'
 
-class RestRequestHandler extends handler {
+class RestRequestHandler extends RestHandler {
   constructor(options) {
     const connector = http
     super(options, connector)

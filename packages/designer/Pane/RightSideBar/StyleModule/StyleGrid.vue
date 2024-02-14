@@ -3,11 +3,13 @@
 </template>
 
 <script setup lang="ts">
+import type { ContainerType, CustomComponent, MetaContainerItem } from '@open-data-v/base'
 import { cloneDeep, debounce } from 'lodash-es'
-import type { ContainerType, CustomComponent, MetaContainerItem } from 'open-data-v/base'
-import type { ComponentStyle } from 'open-data-v/designer'
-import { Container, useCanvasState } from 'open-data-v/designer'
 import { computed, ref, watch } from 'vue'
+
+import { Container } from '../../../modules'
+import { useCanvasState } from '../../../state'
+import type { ComponentStyle } from '../../../type'
 
 const props = defineProps<{
   curComponent: CustomComponent

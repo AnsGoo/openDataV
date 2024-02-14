@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Previewer } from 'open-data-v/designer'
+import { Previewer } from '@open-data-v/designer'
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 

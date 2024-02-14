@@ -1,7 +1,7 @@
 import { shallowRef } from 'vue'
 
 import { uuid } from '../utils'
-import handler from './handler'
+import RestHandler from './handler'
 import RestPane from './Pane.vue'
 import { RequestMethod } from './requestEnums'
 import RestContent from './RestDataView.vue'
@@ -12,7 +12,7 @@ export default {
   type: 'REST',
   name: '动态数据',
   component: shallowRef(RestPane),
-  handler,
+  handler: RestHandler,
   useTo: ['COMPONENT', 'GLOBAL'],
   getDefaultOption: () => {
     return {
@@ -29,12 +29,12 @@ export default {
   }
 }
 export {
-  handler,
   KVToRecordable,
   recordabletoKV,
   RequestMethod,
   requestOptionsToStore,
   RestContent,
+  RestHandler,
   RestPane
 }
 

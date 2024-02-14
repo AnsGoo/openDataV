@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import { OIcon } from 'open-data-v/ui'
+import { OIcon } from '@open-data-v/ui'
 import { computed } from 'vue'
 
 const CheveronRight = OIcon.CheveronRight

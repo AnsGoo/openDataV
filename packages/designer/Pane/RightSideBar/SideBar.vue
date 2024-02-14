@@ -90,10 +90,10 @@
 </template>
 
 <script setup lang="ts">
-import { useCanvasState } from 'open-data-v/designer'
-import { OTabPane, OTabs } from 'open-data-v/ui'
+import { OTabPane, OTabs } from '@open-data-v/ui'
 import { computed, getCurrentInstance, h, ref } from 'vue'
 
+import { useCanvasState } from '../../state'
 import AttrList from './AttrModule'
 import Canvas from './CanvasModules/Canvas.vue'
 import GlobalData from './CanvasModules/GlobalData'

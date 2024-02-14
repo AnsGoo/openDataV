@@ -21,8 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { SelectOption } from 'open-data-v/ui'
-import { OButton, OCard, OFormItem, OModal, OSelect } from 'open-data-v/ui'
+import type { SelectOption } from '@open-data-v/ui'
+import { OButton, OCard, OFormItem, OModal, OSelect } from '@open-data-v/ui'
 import { computed, onMounted, ref, watch } from 'vue'
 
 import type { Slotter } from '../type'

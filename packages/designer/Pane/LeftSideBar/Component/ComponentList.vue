@@ -8,13 +8,14 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from 'open-data-v/base'
-import type { GroupType } from 'open-data-v/designer'
-import { ComponentGroupList, useCanvasState } from 'open-data-v/designer'
-import type { MenuOption } from 'open-data-v/ui'
-import { OMenu } from 'open-data-v/ui'
+import type { CustomComponent } from '@open-data-v/base'
+import type { MenuOption } from '@open-data-v/ui'
+import { OMenu } from '@open-data-v/ui'
 import { computed, getCurrentInstance, h } from 'vue'
 
+import type { GroupType } from '../../../enum'
+import { ComponentGroupList } from '../../../enum'
+import { useCanvasState } from '../../../state'
 import ComponentItem from './ComponentItem.vue'
 
 withDefaults(

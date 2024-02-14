@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { SelectOption } from '@open-data-v/ui'
+import { OColorPicker, OSelect } from '@open-data-v/ui'
 import { isNumber } from 'lodash-es'
-import type { SelectOption } from 'open-data-v/ui'
-import { OColorPicker, OSelect } from 'open-data-v/ui'
 import { onMounted, ref } from 'vue'
 
 import { GlobalColorSwatches } from '../enum'

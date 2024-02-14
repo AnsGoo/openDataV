@@ -1,5 +1,7 @@
-import DemoDatePlugin from './DemoData'
+import DemoDataPlugin from './DemoData'
 
 export default {
-  DemoDatePlugin
+  DemoDataPlugin
 }
+
+export { DemoDataPlugin }

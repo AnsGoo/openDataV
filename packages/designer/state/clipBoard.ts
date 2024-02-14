@@ -1,5 +1,5 @@
+import type { CustomComponent } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
-import type { CustomComponent } from 'open-data-v/base'
 import { reactive } from 'vue'
 
 import { copyText, uuid } from '../utils'

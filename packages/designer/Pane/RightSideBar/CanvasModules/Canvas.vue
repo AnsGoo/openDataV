@@ -2,9 +2,11 @@
   <Container :config="config" :data="formData" :mode="mode" @change="changed" />
 </template>
 <script setup lang="ts">
-import type { ContainerType, MetaContainerItem } from 'open-data-v/base'
-import { Container, useCanvasState } from 'open-data-v/designer'
+import type { ContainerType, MetaContainerItem } from '@open-data-v/base'
 import { computed } from 'vue'
+
+import { Container } from '../../../modules'
+import { useCanvasState } from '../../../state'
 
 const canvasState = useCanvasState()
 const config = computed<Array<MetaContainerItem>>(() => canvasState.canvasStyleConfig.formItems!)

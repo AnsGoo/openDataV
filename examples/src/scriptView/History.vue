@@ -25,8 +25,8 @@
   </n-card>
 </template>
 <script setup lang="ts">
+import { eventBus, StaticKey } from '@open-data-v/base'
 import { NCard, NGradientText, NInput, NLi, NOl, NTabPane, NTabs } from 'naive-ui'
-import { eventBus, StaticKey } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import { getAfterScriptListApi } from '@/api/data/afterScript'

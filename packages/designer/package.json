@@ -1,0 +1,32 @@
+{
+  "name": "@open-data-v/designer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AnsGoo/openDataV.git"
+  },
+  "dependencies": {
+    "@open-data-v/base": "workspace:*",
+    "@open-data-v/ui":"workspace:*",
+    "@open-data-v/data":"workspace:*",
+    "@open-data-v/scripts":"workspace:*",
+    "lodash-es": "^4.17.21",
+    "@vicons/antd": "^0.12.0",
+    "@vicons/carbon": "^0.12.0",
+    "@vicons/fa": "^0.12.0",
+    "@vicons/fluent": "^0.12.0",
+    "@vicons/ionicons4": "^0.12.0",
+    "@vicons/ionicons5": "^0.12.0",
+    "@vicons/material": "^0.12.0",
+    "@vicons/utils": "^0.1.4"
+
+  },
+  "peerDependencies ": {
+    "vue": "^3.3.4"
+  }
+}

@@ -1,4 +1,4 @@
-import type { FormItemProps, FormType } from 'open-data-v/base'
+import type { FormItemProps, FormType } from '@open-data-v/base'
 import type { ConcreteComponent } from 'vue'
 
 export interface ScriptForm {

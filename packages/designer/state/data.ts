@@ -1,6 +1,7 @@
-import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from 'open-data-v/data'
-import { DemoDataPlugin } from 'open-data-v/designer'
+import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 import { reactive } from 'vue'
+
+import { DemoDataPlugin } from '../data'
 
 export interface DataPlugin {
   type: string

@@ -23,7 +23,7 @@
 </template>
 
 <script setup lang="ts">
-import { OColorPicker, OSlider } from 'open-data-v/ui'
+import { OColorPicker, OSlider } from '@open-data-v/ui'
 import { ref } from 'vue'
 
 import { GlobalColorSwatches } from '../enum'

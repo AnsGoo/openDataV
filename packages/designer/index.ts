@@ -6,8 +6,7 @@ import Editor from './editor'
 import Shape from './editor/Shape'
 import { ComponentGroupList, DataMode, EditMode, GroupType, PixelEnum } from './enum'
 import useComponentPlugin from './loadPlugin'
-import useEmpty from './modules/Empty'
-import Container from './modules/form/Container'
+import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/Canvas.vue'
 import Designer from './pages/designer/Designer.vue'
 import Previewer from './pages/perviewer/viewer.vue'
@@ -15,7 +14,7 @@ import LeftSideBar from './pane/LeftSideBar'
 import RightSideBar from './pane/RightSideBar'
 import ToolsBar from './pane/Toolsbar'
 import Directive from './plugins/directive'
-import type { ContextmenuItem } from './plugins/directive/contextmenu'
+import type { CanvasData, CanvasStyleData } from './state'
 import {
   DataSlotter,
   useActionState,
@@ -25,12 +24,12 @@ import {
   useScriptState,
   useSnapshotState
 } from './state'
-import type { CanvasData, CanvasStyleData } from './state/type'
 import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from './toolbars'
 import type {
   ComponentDataType,
   ComponentItem,
   ComponentStyle,
+  ContextmenuItem,
   DOMRectStyle,
   GroupStyle,
   Location,

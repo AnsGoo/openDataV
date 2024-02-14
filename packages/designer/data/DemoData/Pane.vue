@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { DataHandler, Slotter } from '@open-data-v/base'
+import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
-import type { DataHandler, Slotter } from 'open-data-v/base'
-import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 
 interface CustomeSlotter extends Slotter {

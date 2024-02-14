@@ -1,7 +1,8 @@
-import type { ComponentGroup, DataMode } from 'open-data-v/base'
+import type { ComponentGroup, DataMode } from '@open-data-v/base'
 import type { Component } from 'vue'
 
-import type { CanvasStyleData } from './state/type'
+import type { ContextmenuItem } from './plugins/directive'
+import type { CanvasStyleData } from './state'
 
 export interface Vector {
   x: number
@@ -82,3 +83,5 @@ export interface ComponentItem {
     docs?: Component
   }>
 }
+
+export type { ContextmenuItem }

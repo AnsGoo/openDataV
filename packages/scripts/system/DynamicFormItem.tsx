@@ -1,4 +1,3 @@
-import { isUndefined } from 'lodash-es'
 import type {
   CustomProps,
   FormItemProps,
@@ -7,8 +6,8 @@ import type {
   RadioProps,
   SelectProps,
   SwitchProps
-} from 'open-data-v/base'
-import { FormType, GlobalColorSwatches } from 'open-data-v/base'
+} from '@open-data-v/base'
+import { FormType, GlobalColorSwatches } from '@open-data-v/base'
 import {
   OColorPicker,
   OFormItem,
@@ -18,7 +17,8 @@ import {
   ORadioGroup,
   OSelect,
   OSwitch
-} from 'open-data-v/ui'
+} from '@open-data-v/ui'
+import { isUndefined } from 'lodash-es'
 import type { PropType } from 'vue'
 import { defineComponent, h } from 'vue'
 

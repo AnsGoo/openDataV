@@ -45,8 +45,8 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataHandler, Slotter } from 'open-data-v/base'
-import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from 'open-data-v/ui'
+import type { DataHandler, Slotter } from '@open-data-v/base'
+import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
 import { uuid } from '../utils'

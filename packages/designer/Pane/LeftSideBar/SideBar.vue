@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import { OTabPane, OTabs } from 'open-data-v/ui'
+import { OTabPane, OTabs } from '@open-data-v/ui'
 import { ref } from 'vue'
 
 import ComponentList from './Component/ComponentList.vue'

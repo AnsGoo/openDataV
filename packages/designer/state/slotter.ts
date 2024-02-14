@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataConfig } from 'open-data-v/base'
+import type { DataAcceptor, DataConfig } from '@open-data-v/base'
 
 interface DataInstance {
   toJSON: () => any | undefined

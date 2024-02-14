@@ -30,8 +30,8 @@
 </template>
 
 <script lang="ts" setup>
+import { OInput } from '@open-data-v/ui'
 import { isNumber } from 'lodash-es'
-import { OInput } from 'open-data-v/ui'
 import { nextTick, reactive, ref } from 'vue'
 
 const props = withDefaults(

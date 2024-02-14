@@ -41,15 +41,15 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useData, useProp } from 'open-data-v/base'
-import type { ToolBarItemType } from 'open-data-v/designer'
-import { useCanvasState } from 'open-data-v/designer'
+import { useData, useProp } from '@open-data-v/base'
 import { computed, onUnmounted, provide, readonly, ref } from 'vue'
 
 import type { LayoutData } from '../../../designer/state/type'
+import type { ToolBarItemType } from '../../components'
 import LeftSideBar from '../../pane/LeftSideBar'
 import RightSideBar from '../../pane/RightSideBar'
 import ToolBar from '../../pane/Toolsbar'
+import { useCanvasState } from '../../state'
 import Canvas from './Canvas.vue'
 import Toggle from './Toggle.vue'
 
