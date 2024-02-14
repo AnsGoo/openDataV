@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataHandler, Slotter } from 'open-data-v/data'
+import type { DataHandler, Slotter } from 'open-data-v/base'
 import { RestPane } from 'open-data-v/data/rest'
 
 import DataViewSlot from './DynamicExtendContent.vue'

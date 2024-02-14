@@ -27,17 +27,17 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import type { DataHandler, Slotter } from 'open-data-v/data/type'
+import type { DataHandler, Slotter } from 'open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 
-interface CutomeSlotter extends Slotter {
+interface CustomeSlotter extends Slotter {
   exampleData: any
   propValue: any
 }
 
 const props = defineProps<{
-  slotter: CutomeSlotter
+  slotter: CustomeSlotter
   handler: DataHandler
 }>()
 const isShow = ref<boolean>(false)

@@ -13,6 +13,10 @@ import type {
   ComponentType,
   ContainerItemProps,
   CustomProps,
+  DataAcceptor,
+  DataConfig,
+  DataHandler,
+  DataInstance,
   DataOption,
   DOMRectStyle,
   FormItemProps,
@@ -22,9 +26,10 @@ import type {
   MetaForm,
   ModalProps,
   RadioProps,
-  ResponseData,
+  Response,
   ScriptOption,
   SelectProps,
+  Slotter,
   SwitchProps
 } from './type'
 import { buildModeValue, updateModeValue } from './utils'
@@ -57,6 +62,10 @@ export type {
   ComponentType,
   ContainerItemProps,
   CustomProps,
+  DataAcceptor,
+  DataConfig,
+  DataHandler,
+  DataInstance,
   DataOption,
   DOMRectStyle,
   FormItemProps,
@@ -67,8 +76,9 @@ export type {
   MetaForm,
   ModalProps,
   RadioProps,
-  ResponseData,
+  Response,
   ScriptOption,
   SelectProps,
+  Slotter,
   SwitchProps
 }

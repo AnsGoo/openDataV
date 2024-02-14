@@ -26,6 +26,8 @@ class DemoRequestData implements DataInstance {
     const resp = await this.getRespData()
     acceptor(resp)
   }
+
+  close(): void {}
 }
 
 export default DemoRequestData

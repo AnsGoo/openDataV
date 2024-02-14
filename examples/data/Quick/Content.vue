@@ -34,8 +34,8 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 import { NButton, NInput, NInputGroup, NSelect } from 'naive-ui'
+import type { DataInstance } from 'open-data-v/base'
 import { StaticKey, useEventBus } from 'open-data-v/base'
-import type { DataInstance } from 'open-data-v/data'
 import { StaticContent } from 'open-data-v/data/static'
 import { onMounted, reactive, ref, watch } from 'vue'
 

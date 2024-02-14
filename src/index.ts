@@ -8,6 +8,10 @@ import type {
   ComponentType,
   ContainerItemProps,
   CustomProps,
+  DataAcceptor,
+  DataConfig,
+  DataHandler,
+  DataInstance,
   DataOption,
   DOMRectStyle,
   FormItemProps,
@@ -18,9 +22,10 @@ import type {
   MetaForm,
   ModalProps,
   RadioProps,
-  ResponseData,
+  Response,
   ScriptOption,
   SelectProps,
+  Slotter,
   SwitchProps
 } from './base'
 import {
@@ -41,16 +46,6 @@ import {
   useEventBus,
   useProp
 } from './base'
-import type {
-  DataAcceptor,
-  DataConfig,
-  DataHandler,
-  DataInstance,
-  RequestOptions,
-  Response,
-  RestResponse,
-  Slotter
-} from './data'
 import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './data'
 
 export {
@@ -99,10 +94,7 @@ export type {
   MetaForm,
   ModalProps,
   RadioProps,
-  RequestOptions,
   Response,
-  ResponseData,
-  RestResponse,
   ScriptOption,
   SelectProps,
   Slotter,

@@ -59,10 +59,10 @@
   </o-card>
 </template>
 <script setup lang="ts">
+import type { DataInstance } from 'open-data-v/base'
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
-import type { DataInstance } from '../type'
 import { uuid } from '../utils'
 import DynamicKVForm from './DynamicKVForm.vue'
 import { RequestHeaderEnum, RequestMethod } from './requestEnums'

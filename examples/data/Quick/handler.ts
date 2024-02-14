@@ -1,8 +1,6 @@
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from 'open-data-v/data'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 
 import { getStaticDataApi } from '@/api/data'
-
-import type { StoreStaticOption } from './type'
 
 const QUICK_TYPE = 'QUICK'
 
@@ -19,7 +17,7 @@ class QuickRequestData implements DataInstance {
     this.id = id
   }
 
-  public toJSON(): RequestOptions<StoreStaticOption> {
+  public toJSON() {
     return {
       options: {
         id: this.id || '',
