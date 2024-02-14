@@ -36,7 +36,14 @@ import type {
   Position,
   Vector
 } from './type'
-import { createComponent, handleLogger } from './utils'
+import {
+  createComponent,
+  filterStyle,
+  getComponentStyle,
+  getInnerComponentShapeStyle,
+  handleLogger,
+  toPercent
+} from './utils'
 
 export {
   Canvas,
@@ -52,6 +59,9 @@ export {
   EditMode,
   Editor,
   exportCanvas,
+  filterStyle,
+  getComponentStyle,
+  getInnerComponentShapeStyle,
   Group,
   GroupType,
   handleLogger,
@@ -66,6 +76,7 @@ export {
   ToolBar,
   ToolBarItem,
   ToolsBar,
+  toPercent,
   undo,
   useActionState,
   useCanvasState,

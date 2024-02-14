@@ -59,10 +59,14 @@ importers:
 
   docs:
     specifiers:
+      '@open-data-v/base': workspace:*
+      '@open-data-v/designer': workspace:*
       naive-ui: ^2.36.0
       vue: ^3.3.8
       vue-router: ^4.2.5
     dependencies:
+      '@open-data-v/base': link:../packages/base
+      '@open-data-v/designer': link:../packages/designer
       naive-ui: 2.37.3_vue@3.4.19
       vue: 3.4.19
       vue-router: 4.2.5_vue@3.4.19

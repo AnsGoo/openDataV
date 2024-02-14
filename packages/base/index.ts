@@ -32,7 +32,7 @@ import type {
   Slotter,
   SwitchProps
 } from './type'
-import { buildModeValue, updateModeValue } from './utils'
+import { buildModeValue, updateModeValue, uuid } from './utils'
 
 export {
   buildModeValue,
@@ -50,7 +50,8 @@ export {
   updateModeValue,
   useData,
   useEventBus,
-  useProp
+  useProp,
+  uuid
 }
 export type {
   ArrayProps,

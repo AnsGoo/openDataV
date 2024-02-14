@@ -44,7 +44,7 @@
 </template>
 <script setup lang="ts">
 import type { CustomComponent } from '@open-data-v/base'
-import { DataMode, useProp } from '@open-data-v/base'
+import { DataMode, useProp, uuid } from '@open-data-v/base'
 import {
   filterStyle,
   getComponentStyle,
@@ -52,8 +52,7 @@ import {
   Group,
   Shape,
   toPercent,
-  useCanvasState,
-  uuid
+  useCanvasState
 } from '@open-data-v/designer'
 import { computed, defineAsyncComponent, ref, watch } from 'vue'
 
