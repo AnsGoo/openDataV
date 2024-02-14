@@ -122,13 +122,13 @@
 </template>
 
 <script lang="ts" setup>
-import type { ColorOption } from 'open-data-v/ui/ColorPicker/types'
 import { computed, ref, watch } from 'vue'
 
 import Alpha from './Alpha.vue'
 import EdIn from './ColorInput.vue'
 import Hue from './Hue.vue'
 import Saturation from './Saturation.vue'
+import type { ColorOption } from './types'
 import { tinycolor, transColor } from './utils'
 
 const innerColors: Array<string> = [

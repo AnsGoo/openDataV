@@ -54,10 +54,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { DataInstance, Slotter } from 'open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { DataInstance, Slotter } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 import type { WebsocketOption } from './type'

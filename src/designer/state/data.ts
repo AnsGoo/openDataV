@@ -8,7 +8,7 @@ export interface DataPlugin {
   component: any
   handler: any
   useTo?: string | Array<string>
-  getdefaultOption?: () => any
+  getDefaultOption?: () => any
 }
 
 class DataState {

@@ -31,10 +31,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { DataHandler, Slotter } from 'open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { DataHandler, Slotter } from '../type'
 import type SubRequestData from './handler'
 import SubDataView from './SubDataView.vue'
 

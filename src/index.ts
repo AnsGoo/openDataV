@@ -1,8 +1,3 @@
-import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './bus'
-import { CustomComponent } from './component'
-import { ComponentGroup, ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
-import type { Hooks } from './hooks'
-import { useData, useProp } from './hooks'
 import type {
   ArrayProps,
   BaseComponent,
@@ -20,6 +15,7 @@ import type {
   DataOption,
   DOMRectStyle,
   FormItemProps,
+  Hooks,
   InputNumberProps,
   InputProps,
   MetaContainerItem,
@@ -31,10 +27,8 @@ import type {
   SelectProps,
   Slotter,
   SwitchProps
-} from './type'
-import { buildModeValue, updateModeValue } from './utils'
-
-export {
+} from './base'
+import {
   buildModeValue,
   channels,
   ComponentGroup,
@@ -51,6 +45,30 @@ export {
   useData,
   useEventBus,
   useProp
+} from './base'
+import { RestDataPlugin, StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from './data'
+
+export {
+  buildModeValue,
+  channels,
+  ComponentGroup,
+  ContainerType,
+  CustomComponent,
+  DataMode,
+  eventBus,
+  FormType,
+  GlobalColorSwatches,
+  Logger,
+  LogLevel,
+  RestDataPlugin,
+  StaticDataPlugin,
+  StaticKey,
+  SubDataPlugin,
+  updateModeValue,
+  useData,
+  useEventBus,
+  useProp,
+  WebsocketDataPlugin
 }
 export type {
   ArrayProps,

@@ -1,6 +1,5 @@
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 import { eventBus, useEventBus } from 'open-data-v/base'
-
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from '../type'
 
 class SubRequestData implements DataInstance {
   public channel?: string
@@ -9,7 +8,7 @@ class SubRequestData implements DataInstance {
     this.channel = channel
   }
 
-  public toJSON(): RequestOptions<{ channel: string }> {
+  public toJSON() {
     return {
       options: {
         channel: this.channel || ''

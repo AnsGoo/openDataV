@@ -1,8 +1,8 @@
 import { cloneDeep } from 'lodash-es'
-import type { WebSocketInstance } from 'open-data-v/data/hooks'
-import { useWebsocket } from 'open-data-v/data/hooks'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 
-import type { DataAcceptor, DataInstance, Response } from '../type'
+import type { WebSocketInstance } from '../hooks'
+import { useWebsocket } from '../hooks'
 import { dataLogger } from '../utils'
 import type { WebsocketOption } from './type'
 

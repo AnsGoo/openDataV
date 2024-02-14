@@ -1,4 +1,4 @@
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from '../type'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 
 class StaticRequestData implements DataInstance {
   public data?: any
@@ -8,7 +8,7 @@ class StaticRequestData implements DataInstance {
     this.data = data || ''
   }
 
-  public toJSON(): RequestOptions<{ data: string }> {
+  public toJSON() {
     return {
       options: {
         data: this.data

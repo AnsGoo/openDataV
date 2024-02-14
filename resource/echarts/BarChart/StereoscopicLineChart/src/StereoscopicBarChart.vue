@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import type { CustomSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
 import { graphic } from 'echarts'
-import type { ResponseData } from 'open-data-v/base'
+import type { Response } from 'open-data-v/base'
 import { useData, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
@@ -18,10 +18,8 @@ let globalOption: EChartsOption
 const props = defineProps<{
   component: StereoscopicBarChartComponent
 }>()
-let chartData:
-  | Array<{ label: string; value: number }>
-  | ResponseData<{ label: string; value: number }[]>['afterData'] = []
-const dataChange = (resp: ResponseData<Array<{ label: string; value: number }>>, _?: string) => {
+let chartData: Array<{ label: string; value: number }> = []
+const dataChange = (resp: Response, _?: string) => {
   if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)

@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import type { EChartsOption, LineSeriesOption, XAXisComponentOption } from 'echarts'
-import type { ResponseData } from 'open-data-v/base'
+import type { Response } from 'open-data-v/base'
 import { useData, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
@@ -18,10 +18,8 @@ let globalOption: EChartsOption
 const props = defineProps<{
   component: BasicLineChartComponent
 }>()
-let chartData:
-  | Array<{ label: string; value: number }>
-  | ResponseData<Array<{ label: string; value: number }>>['afterData'] = []
-const dataChange = (resp: any, _?: string) => {
+let chartData: Array<{ label: string; value: number }> = []
+const dataChange = (resp: Response, _?: string) => {
   if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)
