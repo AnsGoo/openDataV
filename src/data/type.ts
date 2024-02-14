@@ -1,4 +1,4 @@
-import type { RequestInstance, WebSocketInstance } from 'open-data-v/data/hooks'
+import type { RequestInstance, WebSocketInstance } from './hooks'
 
 export * from './rest/type'
 

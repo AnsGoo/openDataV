@@ -45,11 +45,12 @@
     "stylelint-config-recommended-vue": "^1.5.0",
     "tailwindcss": "^3.3.5",
     "typescript": "^4.9.5",
-    "vite": "^4.5.0",
     "vite-plugin-vue-markdown": "^0.22.6",
+    "vite": "^4.5.0",
+    "vite-plugin-dts": "^3.7.2",
+    "vite-plugin-mock": "^2.9.8",
     "vue-eslint-parser": "^7.11.0",
-    "vue-tsc": "^1.8.22",
-    "vite-plugin-mock": "^2.9.8"
+    "vue-tsc": "^1.8.22"
   },
   "prettier": {
     "useTabs": false,

@@ -30,7 +30,7 @@
       "@/*": ["examples/*"],
       "open-data-v/*": ["src/*"],
       "docs/*": ["docs/*"]
-    }
+    },
   },
   "include": [
     "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue",

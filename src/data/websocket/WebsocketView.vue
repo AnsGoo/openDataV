@@ -21,11 +21,11 @@
   </o-card>
 </template>
 <script setup lang="ts">
-import { useWebsocket } from 'open-data-v/data/hooks'
-import type WebsocketData from 'open-data-v/data/websocket/handler'
 import { OButton, OButtonGroup, OCard, OInput } from 'open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
+import { useWebsocket } from '../hooks/ws'
+import type WebsocketData from './handler'
 import type { WebsocketOption } from './type'
 
 const props = withDefaults(

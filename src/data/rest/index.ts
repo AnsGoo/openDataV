@@ -14,7 +14,7 @@ export default {
   component: shallowRef(RestPane),
   handler,
   useTo: ['COMPONENT', 'GLOBAL'],
-  getdefaultOption: () => {
+  getDefaultOption: () => {
     return {
       method: RequestMethod.GET,
       url: '/getRiskArea',
