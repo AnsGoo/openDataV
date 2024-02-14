@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "scripts": {
     "bootstrap": "pnpm install",
-    "dev": "vite",
+    "dev": "",
     "demo": "npm -C examples run dev",
     "build:demo": "npm -C examples run build",
     "build": "",
-    "lint": "eslint --ext .js,.ts,.vue,.tsx packages/ examples/ docs/ resource/",
+    "lint": "eslint --ext .js,.ts,.vue,.tsx packages/ examples/src docs/ resource/",
     "lint:fromat": "prettier -c --parser typescript \"{packages,__tests__,e2e}/**/*.[jt]s?(x)\"",
     "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx packages/ examples/ docs/ resource/",
     "prepare": "husky install",
@@ -15,15 +15,12 @@
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "vue": "^3.3.8",
-    "vue-router": "^4.2.5"
+    "vue": "^3.3.8"
   },
   "devDependencies": {
     "@types/node": "^16.18.61",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
-    "@vitejs/plugin-vue": "^4.5.0",
-    "@vitejs/plugin-vue-jsx": "^3.1.0",
     "autoprefixer": "^10.4.16",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -44,14 +41,8 @@
     "rimraf": "^3.0.2",
     "stylelint": "^15.11.0",
     "stylelint-config-recommended-vue": "^1.5.0",
-    "tailwindcss": "^3.3.5",
     "typescript": "^4.9.5",
-    "vite-plugin-vue-markdown": "^0.22.6",
-    "vite": "^4.5.0",
-    "vite-plugin-dts": "^3.7.2",
-    "vite-plugin-mock": "^2.9.8",
-    "vue-eslint-parser": "^7.11.0",
-    "vue-tsc": "^1.8.22"
+    "vite-plugin-vue-markdown": "^0.22.6"
   },
   "prettier": {
     "useTabs": false,
