@@ -29,9 +29,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["examples/*"],
-      "open-data-v/*": ["src/*"],
       "docs/*": ["docs/*"]
-    }
+    },
   },
   "include": [
     "packages/**/*.ts",
@@ -40,7 +39,6 @@
     "packages/**/*.vue",
     "resource/**/*.ts", "resource/**/*.d.ts", "resource/**/*.tsx", "resource/**/*.vue",
     "examples/src/**/*.ts", "examples//src**/*.d.ts", "examples/src/**/*.tsx", "examples/src/**/*.vue",
-    "mock/*", "docs/*","mock/**"
   ],
   "exclude": ["**/node_modules/**", "dist", "**/*.js"]
 }

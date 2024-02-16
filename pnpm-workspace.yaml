@@ -4,7 +4,7 @@ packages:
   - packages/ui/**
   - packages/scripts/**
   - packages/designer/**
-  - examples/**
-  - resource/**
-  - docs/**
-  - mock/**
+  - examples/
+  - resource/
+  - docs/
+  - mock/

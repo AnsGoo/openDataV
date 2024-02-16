@@ -2,7 +2,11 @@
   "name": "@open-data-v/ui",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.ts",
+  "module": "es/index.esm.mjs",
+  "type": "module",
+  "types": "es/index.d.ts",
+  "unpkg": "dist/index.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -10,6 +14,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ctrl/tinycolor": "^4.0.3"
+    "@ctrl/tinycolor": "^4.0.3",
+    "lodash-es": "^4.17.21"
+  },
+  "peerDependencies ": {
+    "vue": "^3.3.4"
   }
 }
