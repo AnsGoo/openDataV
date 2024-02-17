@@ -1,6 +1,6 @@
 <template>
   <div class="main h-fit flex-col flex flex-nowrap">
-    <div class="top w-full h-14 align-middle">
+    <div class="w-full h-14 align-middle">
       <ToolBar :toolbars="toolbars" />
     </div>
     <div class="content flex flex-nowrap flex-row">
@@ -87,7 +87,7 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
 .main {
   .content {
     width: 100vw;
-    height: calc(95vh - 2rem);
+    height: calc(100vh - 3.5rem);
     .canvas {
       transition-property: width;
       transition-duration: 0.5s;
