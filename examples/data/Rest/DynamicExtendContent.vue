@@ -1,5 +1,10 @@
 <template>
-  <RestContent v-model:options="formData" @update:rest-options="formChange" @change="formChange">
+  <RestContent
+    v-model:options="formData"
+    :data-instance="dataInstance"
+    @update:rest-options="formChange"
+    @change="formChange"
+  >
     <template #data-select>
       <div class="flex flex-nowrap flex-row">
         <n-select
@@ -26,19 +31,12 @@
   </RestContent>
 </template>
 <script setup lang="ts">
-import type { AxiosResponse } from 'axios'
 import type { SelectOption } from 'naive-ui'
 import { NButton, NButtonGroup, NInput, NSelect, NSpace } from 'naive-ui'
+import type { DataInstance } from 'open-data-v/base'
 import { StaticKey, useEventBus } from 'open-data-v/base'
-import { useRequest } from 'open-data-v/data/hooks/http'
-import type { RestOption, RestResponse } from 'open-data-v/data/rest'
-import {
-  KVToRecordable,
-  recordabletoKV,
-  RequestMethod,
-  requestOptionsToStore,
-  RestContent
-} from 'open-data-v/data/rest'
+import type { RestOption } from 'open-data-v/data/rest'
+import { KVToRecordable, recordabletoKV, RequestMethod, RestContent } from 'open-data-v/data/rest'
 import { onMounted, reactive, ref } from 'vue'
 
 import {
@@ -59,6 +57,7 @@ const props = withDefaults(
   defineProps<{
     options?: RestOption
     mode?: 'debug' | 'use'
+    dataInstance?: DataInstance
   }>(),
   {
     options: () => {
@@ -77,8 +76,8 @@ const props = withDefaults(
     mode: 'use'
   }
 )
-
 const restDataList = ref<Array<SelectOption>>([])
+const formData = reactive<RequestDataOption>(props.options)
 const loadRestList = async () => {
   try {
     const resp = await getRestDataListApi()
@@ -104,34 +103,9 @@ const clear = () => {
   formData.method = RequestMethod.GET
   formData.url = ''
 }
-interface ErrorResponse extends Error {
-  config: Record<string, any>
-  code?: number | undefined
-  response: AxiosResponse
-  isAxiosError: boolean
-
-  toJSON?: () => {
-    message: string
-    name: string
-    // Microsoft
-    description?: string
-    number?: string
-    // Mozill
-    fileName?: string
-    lineNumber?: string
-    columnNumber?: string
-    stack?: string
-    // Axios
-    config: Record<string, any>
-    code?: number
-    status?: number
-  }
-}
-let snapShot
 if (props.mode === 'debug') {
   useEventBus(StaticKey.REST_KEY, async (id) => {
     await loadRestData(id as string)
-    await send()
   })
 }
 
@@ -168,29 +142,7 @@ interface RequestDataOption extends RestOption {
   title?: string
   id?: string
 }
-const formData = reactive<RequestDataOption>(props.options)
-const response = ref<RestResponse>({
-  status: 0,
-  data: '',
-  headers: {}
-})
-const requestInstance = useRequest()
-const send = async () => {
-  try {
-    const resp = await requestInstance.request(requestOptionsToStore(formData))
-    response.value.status = resp.status
-    response.value.data = JSON.stringify(resp.data, null, '\t')
 
-    response.value.headers = resp.headers
-    formData.id && snapShot && snapShot.save(formData)
-  } catch (err: any) {
-    err as ErrorResponse
-    const result = err.response || (err.toJSON ? err.toJSON() : {})
-    response.value.status = result.status
-    response.value.data = err.stack || err.message
-    response.value.headers = result.headers || result?.config?.headers || {}
-  }
-}
 const formChange = () => {
   emits('change', formData)
   emits('update:options', formData)
@@ -198,7 +150,6 @@ const formChange = () => {
 
 const selectedChange = async (id: string) => {
   await loadRestData(id)
-  await send()
   emits('update:options', formData)
   emits('change', formData)
 }
@@ -251,7 +202,6 @@ const handleUpdate = async () => {
 }
 
 onMounted(async () => {
-  await send()
   await loadRestList()
 })
 </script>

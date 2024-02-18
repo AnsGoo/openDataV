@@ -1,4 +1,6 @@
 packages:
-  - src/*
-  - examples/*
+  - src/**
+  - examples/**
   - resource/**
+  - docs/**
+  - mock/**

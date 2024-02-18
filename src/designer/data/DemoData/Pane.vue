@@ -1,7 +1,12 @@
 <template>
   <o-form-item key="data" label="示例数据">
     <div class="justify-center flex-row flex-nowrap flex items-center">
-      <o-input placeholder="点击预览" :readonly="true" @click="isShow = true" />
+      <o-input
+        placeholder="点击预览"
+        :readonly="true"
+        :value="previewData"
+        @click="isShow = true"
+      />
       <o-button type="primary" @click="isShow = true"> 预览 </o-button>
     </div>
   </o-form-item>
@@ -22,46 +27,44 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import type { Slotter } from 'open-data-v/data/type'
+import type { DataHandler, Slotter } from 'open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
-import { onMounted, reactive, ref, watch } from 'vue'
+import { computed, onMounted, reactive, ref, watch } from 'vue'
 
-import DataHandler from './handler'
-
-interface CutomeSlotter extends Slotter {
+interface CustomeSlotter extends Slotter {
   exampleData: any
   propValue: any
 }
 
 const props = defineProps<{
-  slotter: CutomeSlotter
+  slotter: CustomeSlotter
+  handler: DataHandler
 }>()
 const isShow = ref<boolean>(false)
 
 const formData = reactive<{
   data: string
 }>({
-  data: ''
+  data: '[]'
 })
-
+const previewData = computed<string>(() => JSON.stringify(JSON.parse(formData.data || '[]')))
 onMounted(async () => {
   await initData()
 })
 
 const initData = async () => {
   const dataConfig = props.slotter.dataConfig
-
+  const exampleData = props.slotter.exampleData || {}
   if (dataConfig && dataConfig.type === 'DEMO') {
-    const demoRequest = props.slotter.dataConfig?.dataInstance as DataHandler
-    if (demoRequest) {
-      const resp = await demoRequest.getRespData({ propValue: props.slotter.propValue })
+    const acceptor = (resp) => {
       formData.data = JSON.stringify(resp.data, null, '\t')
     }
+    const instance = dataConfig.dataInstance
+    instance.debug(acceptor)
   } else {
-    const exampleData = props.slotter.exampleData
     const dataConfig = {
       type: 'DEMO',
-      dataInstance: new DataHandler({
+      dataInstance: new props.handler({
         data: cloneDeep(exampleData)
       })
     }

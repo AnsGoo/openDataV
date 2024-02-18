@@ -11,7 +11,7 @@ export default {
   component: shallowRef(WebSocketPane),
   handler,
   useTo: ['COMPONENT', 'GLOBAL'] as Array<'COMPONENT' | 'GLOBAL'>,
-  getdefaultOption: () => {
+  getDefaultOption: () => {
     return {
       url: '',
       message: '',

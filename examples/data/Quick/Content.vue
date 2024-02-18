@@ -34,6 +34,7 @@
 <script lang="ts" setup>
 import type { SelectOption } from 'naive-ui'
 import { NButton, NInput, NInputGroup, NSelect } from 'naive-ui'
+import type { DataInstance } from 'open-data-v/base'
 import { StaticKey, useEventBus } from 'open-data-v/base'
 import { StaticContent } from 'open-data-v/data/static'
 import { onMounted, reactive, ref, watch } from 'vue'
@@ -55,6 +56,7 @@ const props = withDefaults(
   defineProps<{
     options?: StoreStaticOption
     mode?: 'debug' | 'use'
+    dataInstance?: DataInstance
   }>(),
   {
     options: () => {
@@ -179,7 +181,6 @@ const handleUpdate = async () => {
     message.warning('数据更新失败')
   }
 }
-
 const handleSaveOrUpdate = async () => {
   formData.id ? handleSave() : handleUpdate()
 }
@@ -190,15 +191,17 @@ onMounted(async () => {
 })
 
 const init = async () => {
-  if (props.options && props.options.id) {
-    const resp: StaticDataDetail | undefined = await loadStaticData(props.options.id)
-    if (resp) {
-      formData.id = resp.id!
-      formData.title = resp.name
-      formData.originData = resp.data
-      staticDataOptions.data = JSON.stringify(formData.originData, null, '\t')
-      emits('dataChange', props.options.id, resp.name)
+  if (props.options && props.options.id && props.dataInstance) {
+    const acceptor = (resp) => {
+      if (resp) {
+        formData.id = resp.id!
+        formData.title = resp.name
+        formData.originData = resp.data
+        staticDataOptions.data = JSON.stringify(formData.originData, null, '\t')
+        emits('dataChange', props.options.id, resp.name)
+      }
     }
+    props.dataInstance.debug(acceptor)
   } else {
     formData.id = ''
     formData.title = ''
@@ -206,7 +209,6 @@ const init = async () => {
     staticDataOptions.data = ''
   }
 }
-
 watch(
   () => props.options.id,
   async () => {

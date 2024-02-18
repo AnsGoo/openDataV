@@ -1,20 +1,23 @@
-import type { DataAcceptor, DataInstance, RequestOptions, Response } from 'open-data-v/data'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 
-import type { StaticDataDetail } from '@/api/data'
 import { getStaticDataApi } from '@/api/data'
 
-import type { StoreStaticOption } from './type'
-
 const QUICK_TYPE = 'QUICK'
+
+export interface QuickDataResponse extends Response {
+  id: string
+  title: string
+}
 class QuickRequestData implements DataInstance {
   public id?: string
   public title?: string
 
-  constructor({ id }: { id: string | undefined }) {
+  constructor(options: { id: string | undefined }) {
+    const { id } = options || {}
     this.id = id
   }
 
-  public toJSON(): RequestOptions<StoreStaticOption> {
+  public toJSON() {
     return {
       options: {
         id: this.id || '',
@@ -23,7 +26,6 @@ class QuickRequestData implements DataInstance {
       type: 'STATIC'
     }
   }
-
   public static dumps(data: string, isFormat = false): string | undefined {
     return isFormat ? JSON.stringify(data, null, '\t') : JSON.stringify(data)
   }
@@ -36,9 +38,11 @@ class QuickRequestData implements DataInstance {
     acceptor(resp)
   }
   public async getRespData(_options?: Record<string, any>): Promise<Response> {
-    const response: Response = {
+    const response: QuickDataResponse = {
       status: 'SUCCESS',
-      data: ''
+      data: '',
+      id: '',
+      title: ''
     }
     if (!this.id) {
       return response
@@ -46,7 +50,7 @@ class QuickRequestData implements DataInstance {
     try {
       const resp = await getStaticDataApi(this.id!)
       if (resp.status < 400) {
-        const data: StaticDataDetail = resp.data
+        const data = resp.data
         this.title = data.name
         response.data = data.data
       }
@@ -54,8 +58,16 @@ class QuickRequestData implements DataInstance {
       response.status = 'FAILED'
       response.data = err.stack || err.message
     }
+    response.id = this.id
+    response.title = this.title || ''
     return response
   }
+
+  public async debug(acceptor: DataAcceptor) {
+    this.connect(acceptor)
+  }
+
+  public close() {}
 }
 
 export { QUICK_TYPE }

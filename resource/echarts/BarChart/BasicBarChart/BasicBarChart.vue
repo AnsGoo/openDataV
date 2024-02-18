@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
-import type { Hooks, ResponseData } from 'open-data-v/base'
+import type { Hooks } from 'open-data-v/base'
 import { inject, onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'
@@ -19,9 +19,7 @@ const props = defineProps<{
 }>()
 const { useProp, useData } = inject<Hooks>('HOOKS') || {}
 
-let chartData:
-  | Array<{ label: string; value: number }>
-  | ResponseData<Array<{ label: string; value: number }>>['afterData'] = []
+let chartData: Array<{ label: string; value: number }> = []
 
 const dataChange = (resp: any, _?: string) => {
   if (resp.status === 'SUCCESS') {
@@ -140,7 +138,7 @@ const getOption = () => {
 const updateData = (resp: Array<{ label: string; value: number }>) => {
   const upperLimit = propValue.data.upperLimit
   const lowerLimit = propValue.data.lowerLimit
-  const data = resp.map((ele) => {
+  const data = (resp || []).map((ele) => {
     return {
       value: compareResetValue(Number(ele.value), upperLimit, lowerLimit),
       label: ele.label

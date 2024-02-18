@@ -49,7 +49,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { CustomComponent, ResponseData } from 'open-data-v/base'
+import type { CustomComponent, Response } from 'open-data-v/base'
 import { useData, useProp } from 'open-data-v/base'
 import { computed, ref } from 'vue'
 
@@ -67,11 +67,8 @@ const resizeHandler = (entry: ResizeObserverEntry) => {
   comHeight.value = height
 }
 
-const tableData = ref<
-  | Array<{ label: string; value: number }>
-  | ResponseData<Array<{ label: string; value: number }>>['afterData']
->([])
-const dataChange = (resp: any, _?: string) => {
+const tableData = ref<Array<{ label: string; value: number }>>([])
+const dataChange = (resp: Response, _?: string) => {
   if (resp.status === 'SUCCESS') {
     tableData.value = resp.afterData
   }

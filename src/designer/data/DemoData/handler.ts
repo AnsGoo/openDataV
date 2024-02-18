@@ -21,6 +21,13 @@ class DemoRequestData implements DataInstance {
       data: this.data
     }
   }
+
+  public async debug(acceptor: DataAcceptor) {
+    const resp = await this.getRespData()
+    acceptor(resp)
+  }
+
+  close(): void {}
 }
 
 export default DemoRequestData

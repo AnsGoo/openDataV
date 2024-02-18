@@ -1,25 +1,25 @@
 import { cloneDeep } from 'lodash-es'
+import type { DataAcceptor, DataInstance, Response } from 'open-data-v/base'
 
-import type { RequestInstance } from '../hooks/http'
-import { useRequest } from '../hooks/http'
-import type { DataAcceptor, DataInstance, Response } from '../type'
+import type { RequestInstance } from '../hooks'
+import { useRequest } from '../hooks'
 import type { StoreRestOption } from './type'
 
 class RestRequestData implements DataInstance {
-  public options: StoreRestOption
+  public options?: StoreRestOption
   public requestInstance: RequestInstance
   public timer: IntervalHandle = 0
 
-  constructor(options: StoreRestOption) {
+  constructor(options?: StoreRestOption, connector?: RequestInstance) {
     this.options = options
-    this.requestInstance = useRequest()
+    this.requestInstance = connector || useRequest()
   }
   public close() {
     clearInterval(this.timer)
   }
 
   public async connect(acceptor: DataAcceptor) {
-    const { otherConfig } = this.options || {}
+    const { otherConfig = { isRepeat: false, interval: 3000 } } = this.options || {}
     if (otherConfig.isRepeat) {
       const handler = async () => {
         const resp = await this.getRespData()
@@ -38,6 +38,10 @@ class RestRequestData implements DataInstance {
       status: 'FAILED',
       data: ''
     }
+    if (!this.options) {
+      return response
+    }
+
     try {
       const config = {
         url: this.options.url,
@@ -55,6 +59,10 @@ class RestRequestData implements DataInstance {
       response.data = err.stack || err.message
     }
     return response
+  }
+
+  public async debug(acceptor: DataAcceptor) {
+    this.connect(acceptor)
   }
 
   public toJSON() {

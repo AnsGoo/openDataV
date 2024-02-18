@@ -6,6 +6,8 @@ import { loadEnv } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
 import MarkDownPlugin from 'vite-plugin-vue-markdown'
 
+import Toc from './build/toc.js'
+
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
   const { VITE_APP_PORT, VITE_APP_PROXY, VITE_MOCK } = loadEnv(mode, process.cwd())
@@ -19,7 +21,6 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         rewrite: (path) => path.replace(new RegExp(`^${prefix}`), '')
       }
     }
-
     return ret
   }
 
@@ -30,7 +31,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       }),
       vueJsx(),
       viteMockServe({
-        mockPath: 'mock',
+        mockPath: 'mock/modules',
         logger: true,
         localEnabled: command === 'serve',
         prodEnabled: VITE_MOCK === 'true',
@@ -41,7 +42,7 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       }),
       MarkDownPlugin({
         markdownItSetup(md) {
-          md.use(require('./build/toc.js'))
+          md.use(Toc)
         }
       })
     ],

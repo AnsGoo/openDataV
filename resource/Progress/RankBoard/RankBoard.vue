@@ -19,7 +19,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { CustomComponent, ResponseData } from 'open-data-v/base'
+import type { CustomComponent, Response } from 'open-data-v/base'
 import { useData, useProp } from 'open-data-v/base'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 
@@ -29,11 +29,8 @@ const props = defineProps<{
   component: CustomComponent
 }>()
 
-const dataSource = ref<
-  | Array<{ label: string; value: number }>
-  | ResponseData<Array<{ label: string; value: number }>>['afterData']
->([])
-const dataChange = (resp: any, _?: string) => {
+const dataSource = ref<Array<{ label: string; value: number }>>([])
+const dataChange = (resp: Response, _?: string) => {
   if (resp.status === 'SUCCESS') {
     dataSource.value = resp.afterData
   }
@@ -119,7 +116,7 @@ const maxValue = computed<number>(() => {
 })
 
 const updateData = (results: Array<{ label: string; value: number }>) => {
-  results.sort((a, b) => b.value - a.value)
+  ;(results || []).sort((a, b) => b.value - a.value)
   dataSource.value = results
 }
 onMounted(async () => {})

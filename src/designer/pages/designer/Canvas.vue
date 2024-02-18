@@ -95,7 +95,7 @@ onBeforeUnmount(() => {
 @import 'open-data-v/css/index.less';
 .middle {
   .canvas {
-    height: 100%;
+    height: calc(100% - 38px);
   }
   :deep(.edit) {
     transform-origin: left top;

@@ -8,7 +8,7 @@
           </span>
         </template>
       </o-input>
-      <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
+      <o-button type="primary" @click="isShow = true"> 编辑</o-button>
     </div>
   </o-form-item>
   <o-form-item label="超时时间" label-placement="top">
@@ -18,7 +18,7 @@
       :step="100"
       @update:value="changeHandler"
     >
-      <template #suffix> ms </template>
+      <template #suffix> ms</template>
     </o-input-number>
   </o-form-item>
   <o-form-item label="是否重试" label-placement="top">
@@ -45,18 +45,19 @@
       <WsView
         ref="wsRef"
         v-model:options="formData"
-        @update:options="changeHandler"
+        :hanlder="handler"
         @change="changeHandler"
+        @update:options="changeHandler"
       />
     </o-card>
   </o-modal>
 </template>
 
 <script lang="ts" setup>
+import type { DataInstance, Slotter } from 'open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from 'open-data-v/ui'
 import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { Slotter } from '../type'
 import type RestRequestData from './handler'
 import DataHandler from './handler'
 import type { WebsocketOption } from './type'
@@ -65,6 +66,7 @@ import WebsocketView from './WebsocketView.vue'
 const props = defineProps<{
   slotter: Slotter
   index?: number
+  handler: DataInstance
 }>()
 const slots = useSlots()
 

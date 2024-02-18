@@ -30,13 +30,13 @@
       "@/*": ["examples/*"],
       "open-data-v/*": ["src/*"],
       "docs/*": ["docs/*"]
-    }
+    },
   },
   "include": [
     "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue",
     "resource/**/*.ts", "resource/**/*.d.ts", "resource/**/*.tsx", "resource/**/*.vue",
     "examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue",
-    "mock/*", "docs/*"
+    "mock/*", "docs/*","mock/**"
   ],
   "exclude": ["**/node_modules/**", "dist", "**/*.js"]
 }

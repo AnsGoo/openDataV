@@ -3,8 +3,6 @@ import type { ConcreteComponent, VNode } from 'vue'
 import type { CustomComponent } from './component'
 import type { ComponentGroup, ContainerType, DataMode, FormType } from './enums'
 
-export type DataAcceptor = (result: any, id?: string) => void
-
 export interface DOMRectStyle {
   width: number
   height: number
@@ -22,15 +20,6 @@ export interface GroupStyle {
   gleft: number
   gtop: number
   grotate: number
-}
-export interface DataInstance {
-  toJSON: () => any | undefined
-  connect: (dataAcceptor: DataAcceptor) => void
-  close?: () => void
-}
-export interface Response {
-  status: 'SUCCESS' | 'FAILED'
-  data: any
 }
 
 export interface ScriptOption {
@@ -194,6 +183,34 @@ export interface MetaContainerItem {
 export type PropsType = MetaContainerItem
 export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }
 
-export interface ResponseData<T = any> extends Response {
-  afterData: T
+export interface DataConfig {
+  type: string
+  dataInstance: DataInstance
 }
+export interface Slotter {
+  dataConfig: DataConfig
+  changeDataConfig: (config: DataConfig) => void
+}
+
+export interface Response {
+  status: 'SUCCESS' | 'FAILED'
+  data: any
+  [key: string]: any
+}
+
+type RequestOption = any
+
+export interface RequestOptions<T = RequestOption> {
+  options: T
+  type: string
+}
+
+export type DataAcceptor = (result: any, id?: string) => void
+export interface DataInstance {
+  toJSON: () => any | undefined
+  connect: (dataAcceptor: DataAcceptor) => void
+  close: () => void
+  debug: (dataAcceptor: DataAcceptor) => void
+}
+
+export type DataHandler = new (options?: Record<string, any>, connector?: any) => DataInstance

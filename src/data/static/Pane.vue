@@ -2,7 +2,7 @@
   <o-form-item key="title" label="静态数据">
     <div class="justify-center flex-row flex-nowrap flex items-center">
       <o-input
-        v-model:value="formDataConfig.data"
+        :value="previewData"
         :readonly="true"
         placeholder="编辑请点击"
         @click="isShow = true"
@@ -20,19 +20,22 @@
       closable
       @close="isShow = false"
     >
-      <StaticView v-model:options="formDataConfig" mode="use" @data-change="dataChangeHandler" />
+      <StaticView
+        v-model:options="formData"
+        mode="use"
+        :hanlder="handler"
+        @data-change="dataChangeHandler"
+      />
     </o-card>
   </o-modal>
 </template>
 
 <script lang="ts" setup>
+import type { DataHandler, DataInstance, Slotter } from 'open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from 'open-data-v/ui'
-import { computed, onMounted, reactive, ref, useSlots, watch } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, useSlots, watch } from 'vue'
 
-import type { Slotter } from '../type'
 import StaticContent from './DataView.vue'
-import type StaticRequestData from './handler'
-import DataHandler from './handler'
 
 const slots = useSlots()
 
@@ -46,50 +49,67 @@ const StaticView = computed(() => {
 
 const props = defineProps<{
   slotter: Slotter
+  handler: DataHandler
 }>()
 const isShow = ref<boolean>(false)
 
-const formDataConfig = reactive<{
+const formData = reactive<{
   data: string
 }>({
-  data: ''
+  data: '[]'
+})
+
+const previewData = computed<string>(() => {
+  try {
+    return JSON.stringify(JSON.parse(formData.data || '[]'))
+  } catch (e) {
+    return ''
+  }
 })
 
 onMounted(async () => {
   await initData()
 })
 
+let dataInstance: DataInstance
+
 const initData = async () => {
   const dataConfig = props.slotter.dataConfig
   if (dataConfig && dataConfig.type === 'STATIC') {
-    const staticRequest = props.slotter.dataConfig?.dataInstance as StaticRequestData
-    const { options } = staticRequest.toJSON()
-    formDataConfig.data = JSON.stringify(options.data, null, '\t')
-  } else {
-    const dataConfig = {
-      type: 'STATIC',
-      dataInstance: new DataHandler({
-        data: formDataConfig.data
-      })
+    const acceptor = (resp: any) => {
+      formData.data = JSON.stringify(resp.data, null, '\t')
     }
-    await props.slotter.changeDataConfig(dataConfig)
+    if (dataInstance) {
+      dataInstance.close()
+    }
+    dataInstance = props.slotter.dataConfig.dataInstance
+    if (!dataInstance) {
+      return
+    }
+    dataInstance.debug(acceptor)
+  } else {
+    changeHandler()
   }
 }
 const changeHandler = () => {
   const dataConfig = {
     type: 'STATIC',
-    dataInstance: new DataHandler({
-      data: formDataConfig.data
+    dataInstance: new props.handler({
+      data: formData.data
     })
   }
   props.slotter.changeDataConfig(dataConfig)
 }
 
 const dataChangeHandler = (data) => {
-  formDataConfig.data = data
+  formData.data = data
   changeHandler()
 }
-
+onUnmounted(() => {
+  if (dataInstance) {
+    dataInstance.close()
+  }
+})
 watch(
   () => props.slotter,
   async () => {

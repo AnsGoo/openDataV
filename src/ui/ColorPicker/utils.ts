@@ -1,5 +1,6 @@
 import { TinyColor } from '@ctrl/tinycolor'
-import type { ColorOption } from 'open-data-v/ui/ColorPicker/types'
+
+import type { ColorOption } from './types'
 
 export function tinycolor(...args) {
   return new TinyColor(...args)
