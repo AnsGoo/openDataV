@@ -71,3 +71,29 @@ export {
   OTabs,
   OTooltip
 }
+
+export default {
+  OButton,
+  OButtonGroup,
+  OCard,
+  OCollapse,
+  OCollapseItem,
+  OColorPane,
+  OColorPicker,
+  ODivider,
+  OForm,
+  OFormItem,
+  OIcon,
+  OInput,
+  OInputNumber,
+  OMenu,
+  OModal,
+  ORadio,
+  ORadioGroup,
+  OSelect,
+  OSlider,
+  OSwitch,
+  OTabPane,
+  OTabs,
+  OTooltip
+}
