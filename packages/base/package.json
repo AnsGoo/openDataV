@@ -10,9 +10,9 @@
   ],
   "author": "ansgoo",
   "type": "module",
-  "main": "src/index.ts",
+  "main": "es/index.esm.mjs",
   "module": "es/index.esm.mjs",
-  "types": "src/index.ts",
+  "types": "./index.d.ts",
   "unpkg": "dist/index.min.js",
   "license": "Apache-2.0",
   "dependencies": {

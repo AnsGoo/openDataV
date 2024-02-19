@@ -5,13 +5,14 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "main": "src/index.ts",
-  "module": "src/index.ts",
-  "types": "es/index.d.ts",
+  "keywords": [
+    "open-data-v"
+  ],
+  "author": "ansgoo",
   "type": "module",
+  "main": "es/index.esm.mjs",
+  "module": "es/index.esm.mjs",
+  "types": "./index.d.ts",
   "unpkg": "dist/index.min.js",
   "dependencies": {
     "@open-data-v/base": "workspace:*",

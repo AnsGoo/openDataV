@@ -2,11 +2,6 @@
   "name": "@open-data-v/scripts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.ts",
-  "module": "src/index.ts",
-  "types": "es/index.d.ts",
-  "type": "module",
-  "unpkg": "dist/index.min.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +9,12 @@
     "type": "git",
     "url": "https://github.com/AnsGoo/openDataV.git"
   },
+  "author": "ansgoo",
+  "type": "module",
+  "main": "es/index.esm.mjs",
+  "module": "es/index.esm.mjs",
+  "types": "./index.d.ts",
+  "unpkg": "dist/index.min.js",
   "dependencies": {
     "@open-data-v/base": "workspace:*",
     "lodash-es": "^4.17.21",

@@ -2,14 +2,15 @@
   "name": "@open-data-v/designer",
   "version": "1.0.0",
   "description": "",
-  "main": "src/index.ts",
+  "keywords": [
+    "open-data-v"
+  ],
+  "author": "ansgoo",
   "type": "module",
-  "module": "src/index.ts",
-  "types": "es/index.d.ts",
+  "main": "es/index.esm.mjs",
+  "module": "es/index.esm.mjs",
+  "types": "./index.d.ts",
   "unpkg": "dist/index.min.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AnsGoo/openDataV.git"
