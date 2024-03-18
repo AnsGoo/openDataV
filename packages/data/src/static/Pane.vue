@@ -7,7 +7,7 @@
         placeholder="编辑请点击"
         @click="isShow = true"
       />
-      <o-button type="primary" @click="isShow = true"> 编辑 </o-button>
+      <o-button type="primary" @click.prevent="isShow = true"> 编辑 </o-button>
     </div>
   </o-form-item>
   <o-modal v-model:show="isShow">
