@@ -8,7 +8,7 @@
           </span>
         </template>
       </o-input>
-      <o-button type="primary" @click.prevent="isShow = true"> 编辑</o-button>
+      <o-button type="primary" @click="isShow = true"> 编辑</o-button>
     </div>
   </o-form-item>
   <o-form-item label="超时时间" label-placement="top">
