@@ -2,6 +2,6 @@ import BorderImage, { componentName } from './config'
 
 export default {
   componentName,
-  component: () => import('./src/BorderImage.vue'),
+  component: () => import('./BorderImage.vue'),
   config: BorderImage
 }

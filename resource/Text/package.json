@@ -10,6 +10,7 @@
   "author": "chenghaiwen",
   "license": "Apache-2.0",
   "dependencies": {
-    "dayjs": "^1.11.5"
+    "dayjs": "^1.11.5",
+    "@open-data-v/base":"workspace:*"
   }
 }

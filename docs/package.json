@@ -9,6 +9,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "@open-data-v/base":"workspace:*",
+    "@open-data-v/designer":"workspace:*"
+  },
   "peerDependencies": {
     "vue": "^3.3.8",
     "vue-router": "^4.2.5",

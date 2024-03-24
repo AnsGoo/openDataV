@@ -1,5 +1,5 @@
-import type { MetaContainerItem } from 'open-data-v/base'
-import { ComponentGroup, CustomComponent, DataMode, FormType } from 'open-data-v/base'
+import type { MetaContainerItem } from '@open-data-v/base'
+import { ComponentGroup, CustomComponent, DataMode, FormType } from '@open-data-v/base'
 import { h } from 'vue'
 
 export const componentName = 'ScrollRankingBoard'

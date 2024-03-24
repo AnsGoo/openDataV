@@ -29,9 +29,9 @@
   </n-card>
 </template>
 <script setup lang="ts">
+import type { CustomComponent } from '@open-data-v/base'
+import { getComponentStyle, uuid } from '@open-data-v/designer'
 import { NCard, NTabPane, NTabs } from 'naive-ui'
-import type { CustomComponent } from 'open-data-v/base'
-import { getComponentStyle, uuid } from 'open-data-v/designer/utils'
 import type { ComponentOptions, ConcreteComponent } from 'vue'
 import { computed, h, reactive } from 'vue'
 

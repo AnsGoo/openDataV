@@ -1,5 +1,5 @@
-import type { MetaContainerItem } from 'open-data-v/base'
-import { ComponentGroup, CustomComponent, FormType } from 'open-data-v/base'
+import type { MetaContainerItem } from '@open-data-v/base'
+import { ComponentGroup, CustomComponent, FormType } from '@open-data-v/base'
 
 export const componentName = 'BorderBox6'
 class BorderBoxComponent extends CustomComponent {

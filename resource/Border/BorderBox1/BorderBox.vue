@@ -72,7 +72,7 @@
 </template>
 
 <script setup lang="ts">
-import { useProp } from 'open-data-v/base/hooks'
+import { useProp } from '@open-data-v/base'
 import { ref } from 'vue'
 
 import type BorderBoxComponent from './config'

@@ -1,0 +1,130 @@
+@primaryColor: #18a058;
+
+.o-slider {
+  .o-slider-runway {
+    width: 100%;
+    height: 6px;
+    margin: 16px 0;
+    background-color: #e4e7ed;
+    border-radius: 3px;
+    position: relative;
+    cursor: pointer;
+    vertical-align: middle;
+  }
+
+  .slider-bar {
+    height: 6px;
+    background-color: @primaryColor;
+    border-radius: 3px;
+    position: absolute;
+  }
+
+  .slider-control {
+    display: block;
+    height: 36px;
+    width: 36px;
+    position: absolute;
+    z-index: 81;
+    top: -13px;
+    transform: translateX(-50%);
+    background-color: transparent;
+    user-select: none;
+    line-height: normal;
+
+    &:after {
+      display: block;
+      content: '';
+      width: 16px;
+      height: 16px;
+      border: 2px solid @primaryColor;
+      background-color: #fff;
+      border-radius: 50%;
+      transition: .2s;
+      user-select: none;
+      margin: 8px auto;
+    }
+
+    &:hover {
+      &:after {
+        transform: scale(1.2);
+      }
+
+      .slider-tooltip {
+        opacity: 1;
+      }
+    }
+  }
+
+  .slider-tooltip {
+    position: absolute;
+    white-space: nowrap;
+    padding: 5px 10px;
+    background: #000;
+    color: #fff;
+    border-radius: 10px;
+    transform: translate(-50%, -100%);
+    left: 50%;
+    box-shadow: 0 0 2px #999;
+    opacity: 0;
+    transition: all .3s;
+    &:after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 0;
+      border: 5px solid transparent;
+      border-top-color: black;
+      position: absolute;
+      left: 50%;
+      bottom: -10px;
+      transform: translateX(-50%);
+    }
+  }
+
+  .slider-stop {
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    border-radius: 100%;
+    background-color: #fff;
+    transform: translateX(-50%);
+  }
+
+  .slider-marks {
+    position: absolute;
+    height: 6px;
+    width: 6px;
+    border-radius: 100%;
+    background-color: #fff;
+    transform: translateX(-50%);
+
+    .slider-marks-text {
+      display: block;
+      white-space: nowrap;
+      position: absolute;
+      transform: translateX(-50%);
+      left: 50%;
+      bottom: -25px;
+      color: #999;
+    }
+  }
+
+  &.disabled {
+    .slider-bar {
+      background: #c0c4cc;
+    }
+
+    .slider-control {
+      &:after {
+        border-color: #c0c4cc;
+      }
+
+      &:hover {
+        &:after {
+          cursor: not-allowed;
+          transform: scale(1);
+        }
+      }
+    }
+  }
+}

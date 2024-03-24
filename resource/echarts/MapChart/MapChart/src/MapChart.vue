@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
+import type { Response } from '@open-data-v/base'
+import { useData, useProp } from '@open-data-v/base'
 import type { EChartsOption } from 'echarts'
 import { graphic, registerMap } from 'echarts'
-import type { Response } from 'open-data-v/base'
-import { useData, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../../hooks'

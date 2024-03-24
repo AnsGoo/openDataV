@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Response } from '@open-data-v/base'
+import { useData, useProp } from '@open-data-v/base'
 import type { EChartsOption, PieSeriesOption } from 'echarts'
-import type { Response } from 'open-data-v/base'
-import { useData, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'

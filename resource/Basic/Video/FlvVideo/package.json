@@ -12,6 +12,7 @@
   "author": "chenghaiwen",
   "license": "Apache-2.0",
   "dependencies": {
-    "flv.js": "^1.6.2"
+    "flv.js": "^1.6.2",
+    "@open-data-v/base":"workspace:*"
   }
 }

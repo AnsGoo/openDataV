@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { OColorPicker, OForm, OFormItem, OInputNumber } from 'open-data-v/ui'
+import { OColorPicker, OForm, OFormItem, OInputNumber } from '@open-data-v/ui'
 import { reactive } from 'vue'
 
 import type { RowType } from './type'
