@@ -1,5 +1,11 @@
 <template>
-  <button v-bind="$attrs" :class="classStyle" :style="{ width: btnWidth }" @click="handleClick">
+  <button
+    v-bind="$attrs"
+    type="button"
+    :class="classStyle"
+    :style="{ width: btnWidth }"
+    @click.prevent="handleClick"
+  >
     <slot name="icon"></slot>
     <slot></slot>
   </button>
