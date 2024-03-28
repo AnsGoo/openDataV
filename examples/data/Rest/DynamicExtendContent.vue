@@ -156,7 +156,7 @@ const selectedChange = async (id: string) => {
 const handleSave = async () => {
   try {
     const headers = KVToRecordable(formData.headers)
-    const params = KVToRecordable(formData.headers)
+    const params = KVToRecordable(formData.params)
     const data = KVToRecordable(formData.data)
     const resp = await createRestDataApi({
       data: data,
