@@ -1,6 +1,7 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
 import type { ConfigEnv, ProxyOptions, UserConfigExport } from 'vite'
 import { loadEnv } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
@@ -44,7 +45,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         markdownItSetup(md) {
           md.use(Toc)
         }
-      })
+      }),
+      visualizer()
     ],
     base: './',
     resolve: {
@@ -55,11 +57,10 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         docs: resolve(__dirname, 'docs')
       },
       // 使用路径别名时想要省略的后缀名，官方不建议将.vue文件省略后缀
-      extensions: ['.js', '.ts', '.tsx', '.jsx']
+      extensions: ['.ts', '.tsx', '.js']
     },
     server: {
       // 是否开启 https
-      https: false,
       port: Number(VITE_APP_PORT),
       host: '0.0.0.0',
       open: false,
@@ -68,15 +69,27 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         allow: ['..'],
         strict: false
       },
-      cors: true
+      cors: true,
+      warmup: {
+        clientFiles: ['./src/index.ts']
+      }
     },
     build: {
       target: 'es2022',
-      chunkSizeWarningLimit: 1500
+      chunkSizeWarningLimit: 1500,
+      minify: 'terser',
+      terserOptions: {
+        compress: {
+          //生产环境时移除console
+          drop_console: true,
+          drop_debugger: true
+        }
+      }
     },
     css: {
       preprocessorOptions: {
         less: {
+          math: 'always',
           modifyVars: {
             hack: `true; @import (reference) "${resolve('examples/css/index.less')}";`
           },
