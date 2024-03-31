@@ -13,7 +13,7 @@ import App from './App.vue'
 import CodeEditor from './components/CodeEditor'
 import { useLoadComponent } from './load'
 
-const componentPlugin = useComponentPlugin({ codeEditorComponet: CodeEditor })
+const componentPlugin = useComponentPlugin({ codeEditorComponent: CodeEditor })
 const AsyncComponent = useLoadComponent()
 
 const app = createApp(App)
