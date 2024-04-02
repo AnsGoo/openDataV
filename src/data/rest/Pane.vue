@@ -3,7 +3,7 @@
     <div class="justify-center flex-row flex-nowrap flex items-center">
       <o-input v-model:value="formData.url" readonly>
         <template #prefix>
-          <span class="accent-green-500" style="font-weight: 800">
+          <span class="text-green-700" style="font-weight: 800">
             {{ formData.method }}
           </span>
         </template>
