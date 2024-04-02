@@ -1,4 +1,4 @@
-import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from 'open-data-v/data'
+import { RestDataPlugin,StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from 'open-data-v/data'
 import { DemoDataPlugin } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
@@ -17,7 +17,8 @@ class DataState {
       [DemoDataPlugin.type]: DemoDataPlugin,
       [StaticDataPlugin.type]: StaticDataPlugin,
       [SubDataPlugin.type]: SubDataPlugin,
-      [WebsocketDataPlugin.type]: WebsocketDataPlugin
+      [WebsocketDataPlugin.type]: WebsocketDataPlugin,
+      [RestDataPlugin.type]: RestDataPlugin,
     }
   })
 
