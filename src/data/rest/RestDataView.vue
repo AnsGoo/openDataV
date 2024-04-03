@@ -116,9 +116,6 @@ const response = ref<RestResponse>({
   headers: {}
 })
 const send = async () => {
-  // if (!props.dataInstance) {
-  //   return
-  // }
   const acceptor = (resp: any) => {
     response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
