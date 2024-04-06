@@ -63,13 +63,14 @@ import type { DataInstance } from 'open-data-v/base'
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from 'open-data-v/ui'
 import { reactive, ref } from 'vue'
 
+import { apiHttp } from '@/utils/http'
+
 import { uuid } from '../utils'
 import DynamicKVForm from './DynamicKVForm.vue'
+import DataHandler from './handler'
 import { RequestHeaderEnum, RequestMethod } from './requestEnums'
 import type { RestOption, RestResponse } from './type'
-import DataHandler from './handler'
 import { requestOptionsToStore } from './utils'
-import { apiHttp  } from '@/utils/http'
 
 const props = withDefaults(
   defineProps<{
@@ -120,10 +121,10 @@ const send = async () => {
     response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
   }
-  if (!props.dataInstance) {   
-    const dataHandler =  new DataHandler(requestOptionsToStore(formData))
-    dataHandler.requestInstance = apiHttp;
-    dataHandler.debug(acceptor);
+  if (!props.dataInstance) {
+    const dataHandler = new DataHandler(requestOptionsToStore(formData))
+    dataHandler.requestInstance = apiHttp
+    dataHandler.debug(acceptor)
   } else {
     props.dataInstance?.debug(acceptor)
   }
