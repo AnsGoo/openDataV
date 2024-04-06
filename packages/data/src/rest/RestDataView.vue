@@ -63,8 +63,6 @@ import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from '@open-data-v/ui'
 import { reactive, ref } from 'vue'
 
-import { apiHttp } from '@/utils/http'
-
 import { uuid } from '../utils'
 import DynamicKVForm from './DynamicKVForm.vue'
 import DataHandler from './handler'
@@ -123,7 +121,6 @@ const send = async () => {
   }
   if (!props.dataInstance) {
     const dataHandler = new DataHandler(requestOptionsToStore(formData))
-    dataHandler.requestInstance = apiHttp
     dataHandler.debug(acceptor)
   } else {
     props.dataInstance?.debug(acceptor)
