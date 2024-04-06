@@ -78,6 +78,6 @@ const handleClick = (event: MouseEvent) => {
   }
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './button.less';
 </style>

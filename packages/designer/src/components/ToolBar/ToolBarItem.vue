@@ -44,4 +44,3 @@ const IconComponent = computed<ComponentOptions>(() =>
     : (props.icon as IconNode)()
 )
 </script>
-<style lang="less" scoped></style>

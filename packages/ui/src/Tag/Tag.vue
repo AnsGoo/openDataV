@@ -50,6 +50,6 @@ const click = () => {
   emits('click')
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import 'tag.less';
 </style>

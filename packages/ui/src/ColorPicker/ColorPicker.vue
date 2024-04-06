@@ -16,6 +16,9 @@ import { Input } from '../Input'
 import ColorPane from './ColorPane.vue'
 import type { ColorOption } from './types'
 import { tinycolor, transColor } from './utils'
+import { ClickOutsideDirective } from '@open-data-v/base'
+
+const vClickOutside = ClickOutsideDirective
 
 const props = withDefaults(
   defineProps<{

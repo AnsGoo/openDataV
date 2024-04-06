@@ -82,6 +82,6 @@ onMounted(() => {
   controlChangeEvent(props.value, 'mounted')
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './switch.less';
 </style>

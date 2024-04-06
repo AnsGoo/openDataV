@@ -33,6 +33,6 @@ provide(
 )
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import './collapse.less';
 </style>

@@ -3,17 +3,23 @@
   "version": "0.0.1",
   "description": "base for open-data-v",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:lib": "vite build"
   },
   "keywords": [
     "open-data-v"
   ],
   "author": "ansgoo",
   "type": "module",
-  "main": "es/index.esm.mjs",
-  "module": "es/index.esm.mjs",
-  "types": "./index.d.ts",
-  "unpkg": "dist/index.min.js",
+  "main": "lib/index.umd.cjs",
+  "module": "es/index.esm.js",
+  "types": "es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "default": "./es/index.esm.js"
+    },
+    "./style": "./es/style.css"
+  },
   "license": "Apache-2.0",
   "dependencies": {
     "mitt": "^3.0.1",

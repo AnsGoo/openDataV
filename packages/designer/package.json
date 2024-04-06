@@ -5,12 +5,21 @@
   "keywords": [
     "open-data-v"
   ],
+  "scripts": {
+    "build:lib": "vite build"
+  },
   "author": "ansgoo",
   "type": "module",
-  "main": "es/index.esm.mjs",
-  "module": "es/index.esm.mjs",
-  "types": "./index.d.ts",
-  "unpkg": "dist/index.min.js",
+  "main": "lib/index.umd.cjs",
+  "module": "es/index.esm.js",
+  "types": "es/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./es/index.d.ts",
+      "default": "./es/index.esm.js"
+    },
+    "./style": "./es/style.css"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/AnsGoo/openDataV.git"

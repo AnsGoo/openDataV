@@ -82,7 +82,7 @@ const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 
 
 const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${rightWidth.value})`)
 </script>
-<style scoped lang="less">
+<style lang="less" scoped>
 @import '../../css/index.less';
 .main {
   .content {

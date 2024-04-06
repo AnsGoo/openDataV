@@ -219,6 +219,6 @@ onMounted(() => {
 })
 defineExpose({ validate, clearTips })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './formitem.less';
 </style>

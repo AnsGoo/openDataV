@@ -41,6 +41,6 @@ const change = (val: string | number | boolean, item: any) => {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import './radio.less';
 </style>

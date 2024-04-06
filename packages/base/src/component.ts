@@ -17,7 +17,7 @@ import type {
 } from './type'
 import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
 
-interface DataConfig {
+export interface DataConfig {
   type: string
   dataInstance: DataInstance
 }

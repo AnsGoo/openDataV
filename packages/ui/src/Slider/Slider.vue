@@ -36,7 +36,7 @@ import { computed, onMounted, ref, watch } from 'vue'
 
 import { getOffset } from '../util/dom'
 
-interface Marks {
+export interface Marks {
   [key: number]: string
 }
 
@@ -303,6 +303,6 @@ onMounted(() => {
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 @import './slider.less';
 </style>

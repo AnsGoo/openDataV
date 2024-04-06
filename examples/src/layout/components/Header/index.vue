@@ -309,7 +309,6 @@ function openSetting() {
   &-trigger {
     display: inline-block;
     width: 64px;
-    height: 64px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s ease-in-out;

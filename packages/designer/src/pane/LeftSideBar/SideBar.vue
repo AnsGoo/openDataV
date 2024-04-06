@@ -69,7 +69,7 @@ const switchTab = (key: string) => {
   activeKey.value = key
 }
 </script>
-<style scoped lang="less">
+<style lang="less" scoped>
 .components {
   height: calc(90vh - 28px);
 }

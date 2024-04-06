@@ -5,6 +5,6 @@ packages:
   - packages/scripts/**
   - packages/designer/**
   - examples/
-  - resource/
+  - resource/**
   - docs/
   - mock/

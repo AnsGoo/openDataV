@@ -48,7 +48,7 @@ const rightToolBars = computed<ToolBarItemType[]>(() =>
 )
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .tool-bar {
   display: flex;
   align-items: center;

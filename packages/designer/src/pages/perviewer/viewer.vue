@@ -65,7 +65,7 @@ const setScale = () => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .bg {
   @apply w-screen h-screen;
 

@@ -140,7 +140,7 @@ const paletteCpu = computed<PaletteType>(() => {
 })
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .style-ruler {
   position: absolute;
   //z-index: 3; /* 需要比resizer高 */

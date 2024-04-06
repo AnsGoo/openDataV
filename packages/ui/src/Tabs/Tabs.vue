@@ -142,6 +142,6 @@ onBeforeUnmount(() => {
   window.removeEventListener('resize', scrollInit, false)
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './tabs.less';
 </style>

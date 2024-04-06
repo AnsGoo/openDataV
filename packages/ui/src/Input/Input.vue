@@ -135,6 +135,6 @@ onMounted(() => {
 
 defineExpose({ blur, focus })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './input.less';
 </style>

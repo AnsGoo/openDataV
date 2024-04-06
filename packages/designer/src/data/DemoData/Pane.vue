@@ -31,7 +31,7 @@ import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 
-interface CustomeSlotter extends Slotter {
+export interface CustomeSlotter extends Slotter {
   exampleData: any
   propValue: any
 }
@@ -82,5 +82,3 @@ watch(
   { immediate: true }
 )
 </script>
-
-<style lang="less" scoped></style>

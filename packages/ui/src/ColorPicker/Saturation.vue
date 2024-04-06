@@ -101,7 +101,7 @@ onUnmounted(() => {
 })
 </script>
 
-<style scoped>
+<style>
 .vc-saturation-circle {
   cursor: pointer;
   width: 4px;

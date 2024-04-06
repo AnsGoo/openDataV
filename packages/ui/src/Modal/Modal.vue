@@ -320,6 +320,6 @@ onBeforeUnmount(() => {
   clearTime && window.clearInterval(clearTime)
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './modal.less';
 </style>

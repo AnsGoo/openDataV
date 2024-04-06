@@ -70,6 +70,6 @@ onMounted(() => {
   controlChange && controlChange(props.checked, 'mounted')
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './radio.less';
 </style>

@@ -28,7 +28,7 @@
   </svg>
 </template>
 
-<style scoped>
+<style>
 .grid {
   @apply absolute top-0 left-0;
 }

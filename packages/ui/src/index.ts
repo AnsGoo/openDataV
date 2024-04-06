@@ -13,7 +13,7 @@ import { Menu } from './Menu'
 import Modal from './Modal'
 import { Radio, RadioGroup } from './Radio'
 import { Select } from './Select'
-import Slider from './Slider'
+import { Slider } from './Slider'
 import Switch from './Switch'
 import { TabPane, Tabs } from './Tabs'
 import Tooltip from './Tooltip'
@@ -47,32 +47,6 @@ const OColorPane = ColorPane
 export type { MenuOption, SelectOption }
 
 export {
-  OButton,
-  OButtonGroup,
-  OCard,
-  OCollapse,
-  OCollapseItem,
-  OColorPane,
-  OColorPicker,
-  ODivider,
-  OForm,
-  OFormItem,
-  OIcon,
-  OInput,
-  OInputNumber,
-  OMenu,
-  OModal,
-  ORadio,
-  ORadioGroup,
-  OSelect,
-  OSlider,
-  OSwitch,
-  OTabPane,
-  OTabs,
-  OTooltip
-}
-
-export default {
   OButton,
   OButtonGroup,
   OCard,

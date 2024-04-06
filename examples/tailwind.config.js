@@ -1,10 +1,16 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
+  performance: true,
   darkMode: 'class',
+  mode: 'jit',
   content: [
-    './index.html',
-    '../packages/**/*.{vue,js,ts,jsx,tsx}',
-    './src/**/*.{vue,js,ts,jsx,tsx}',
-    '../docs/**/*.{vue,js,ts,jsx,tsx}'
+    '../packages/data/src/**/*.{vue,ts,tsx}',
+    '../packages/designer/src/**/*.{vue,ts,tsx}',
+    '../packages/scripts/src**/*.{vue,ts,tsx}',
+    '../packages/ui/src/**/*.{vue,ts,tsx}',
+    './src/**/*.{vue,ts,tsx}',
+    '!../resource/**/node_modules/**',
+    '../resource/**/*.{vue,ts,tsx}'
   ],
   theme: {
     extend: {}

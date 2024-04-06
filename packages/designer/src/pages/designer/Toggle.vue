@@ -41,7 +41,7 @@ const right = computed<string>(() =>
   props.location === 'right' ? `calc(${props.x} - 10px)` : 'unset'
 )
 </script>
-<style scoped lang="less">
+<style lang="less" scoped>
 .toggle {
   transition-property: left, right;
   transition-duration: 0.5s;

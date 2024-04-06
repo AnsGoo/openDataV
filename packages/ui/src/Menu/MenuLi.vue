@@ -144,6 +144,6 @@ const afterEvent = (el): void => {
   el.style.overflow = ''
 }
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import 'menu.less';
 </style>

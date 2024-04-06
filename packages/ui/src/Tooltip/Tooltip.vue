@@ -191,7 +191,7 @@ const close = () => {
 }
 defineExpose({ close })
 </script>
-<style scoped lang="less">
+<style lang="less">
 .tooltip {
   position: absolute;
   z-index: 100;

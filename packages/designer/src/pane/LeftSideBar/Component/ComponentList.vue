@@ -75,6 +75,6 @@ const handleDragStart = (e) => {
   e.dataTransfer.setData('componentName', e.target.dataset.component)
 }
 </script>
-<style scoped lang="less">
+<style lang="less" scoped>
 @import '../../../css/index.less';
 </style>

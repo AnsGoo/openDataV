@@ -84,6 +84,6 @@ onBeforeUnmount(() => {
   }
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import 'menu.less';
 </style>

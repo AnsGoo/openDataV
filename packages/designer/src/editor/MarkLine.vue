@@ -252,7 +252,7 @@ const chooseTheTureLine = (needToShow, isDownward, isRightward) => {
 }
 </script>
 
-<style scoped>
+<style>
 .mark-line {
   @apply h-full;
 }

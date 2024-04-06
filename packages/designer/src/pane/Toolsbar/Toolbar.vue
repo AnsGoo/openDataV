@@ -21,7 +21,7 @@ withDefaults(
 )
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .tool-bar-title {
   font-size: 20px;
   font-weight: 400;

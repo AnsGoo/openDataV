@@ -180,7 +180,7 @@ const collapsedTabPane = (key: string) => {
   activeKey.value = key
 }
 </script>
-<style scoped>
+<style lang="less" scoped>
 @import '../../css/index.less';
 .attr-list {
   @apply overflow-auto p-1 pt-0;

@@ -258,7 +258,7 @@ const deselectCurComponent = () => {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 .editor {
   @apply relative m-auto;
 }

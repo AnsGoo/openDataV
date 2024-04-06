@@ -71,6 +71,6 @@ onMounted(() => {
   // parentProps.panelName.push(randomName)
 })
 </script>
-<style lang="less" scoped>
+<style lang="less">
 @import './collapse.less';
 </style>
