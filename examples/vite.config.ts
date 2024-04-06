@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import type { ConfigEnv, ProxyOptions, UserConfigExport } from 'vite'
 import { loadEnv } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
@@ -36,7 +37,8 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         import { setupProdMockServer } from '../../mock/mockProdServer';
         setupProdMockServer();
       `
-      })
+      }),
+      visualizer()
     ],
     base: './',
     resolve: {

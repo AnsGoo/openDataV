@@ -4,6 +4,7 @@ import path from 'path'
 // @ts-ignore
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
   publicDir: false,
@@ -15,7 +16,8 @@ export default defineConfig({
       outDir: ['es', 'lib'],
       include: ['src/**/*.ts', 'src/**/*.tsx'],
       tsconfigPath: '../tsconfig.json'
-    })
+    }),
+    visualizer()
   ],
   build: {
     lib: {
