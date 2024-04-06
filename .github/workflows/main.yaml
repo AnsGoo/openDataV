@@ -40,6 +40,12 @@ jobs:
       - name: Lint Code
         run: pnpm run lint
 
+      # 运行构建核心库
+      - name: Build frontend
+        run: pnpm run build:lib
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
+
       # 运行构建脚本
       - name: Build frontend
         run: pnpm run build
