@@ -4,8 +4,8 @@
   "scripts": {
     "bootstrap": "pnpm install",
     "dev": "npm -C examples run dev",
-    "build:demo": "npm -C examples run build",
-    "build": "npm -C packages/* run build:lib",
+    "build": "npm -C examples run build",
+    "build:lib": "pnpm recursive run build:lib",
     "lint": "eslint --ext .js,.ts,.vue,.tsx packages/base/src packages/ui/src packages/scripts/src packages/data/src packages/designer/src  examples/src docs/ resource/",
     "lint:fromat": "prettier -c --parser typescript \"{packages,__tests__,e2e}/**/*.[jt]s?(x)\"",
     "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx packages/base/src packages/ui/src packages/scripts/src packages/data/src packages/designer/src examples/ docs/ resource/",

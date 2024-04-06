@@ -94,7 +94,12 @@ pnpm install
 或
 pnpm bootstrap
 
+# 构建核心库
+
+pnpm build:lib
+
 # 运行项目
+
 pnpm dev
 
 # 打包项目
