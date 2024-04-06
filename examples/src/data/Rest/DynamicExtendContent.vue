@@ -116,9 +116,6 @@ const loadRestData = async (id: string) => {
       const data: RestDataDetail = resp.data
       formData.method = data.method
       formData.url = data.url
-      if (!data.data) {
-        return
-      }
       const body = recordabletoKV(data.data || {})
       formData.data = body.length > 0 ? body : getEmptyParams()
       const params = recordabletoKV(data.params || {})
@@ -156,7 +153,7 @@ const selectedChange = async (id: string) => {
 const handleSave = async () => {
   try {
     const headers = KVToRecordable(formData.headers)
-    const params = KVToRecordable(formData.headers)
+    const params = KVToRecordable(formData.params)
     const data = KVToRecordable(formData.data)
     const resp = await createRestDataApi({
       data: data,
