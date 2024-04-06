@@ -10,13 +10,13 @@
 </template>
 
 <script lang="ts" setup>
+import { ClickOutsideDirective } from '@open-data-v/base'
 import { computed, reactive } from 'vue'
 
 import { Input } from '../Input'
 import ColorPane from './ColorPane.vue'
 import type { ColorOption } from './types'
 import { tinycolor, transColor } from './utils'
-import { ClickOutsideDirective } from '@open-data-v/base'
 
 const vClickOutside = ClickOutsideDirective
 

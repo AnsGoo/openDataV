@@ -1,5 +1,8 @@
 <template>
-  <div class="w-full h-full absolute top-0 right-0 bottom-0 left-0 rounded-xl" :class="[directionClass]">
+  <div
+    class="w-full h-full absolute top-0 right-0 bottom-0 left-0 rounded-xl"
+    :class="[directionClass]"
+  >
     <div
       ref="container"
       class="cursor-pointer relative h-full mx-1"
