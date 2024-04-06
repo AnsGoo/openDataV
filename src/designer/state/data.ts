@@ -18,7 +18,7 @@ class DataState {
       [StaticDataPlugin.type]: StaticDataPlugin,
       [SubDataPlugin.type]: SubDataPlugin,
       [WebsocketDataPlugin.type]: WebsocketDataPlugin,
-      [RestDataPlugin.type]: RestDataPlugin,
+      [RestDataPlugin.type]: RestDataPlugin
     }
   })
 
