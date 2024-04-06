@@ -1,4 +1,9 @@
-import { RestDataPlugin,StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from 'open-data-v/data'
+import {
+  RestDataPlugin,
+  StaticDataPlugin,
+  SubDataPlugin,
+  WebsocketDataPlugin
+} from 'open-data-v/data'
 import { DemoDataPlugin } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
