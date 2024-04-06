@@ -11,6 +11,8 @@ const contextmenuListener = (el: HTMLElement, event: MouseEvent, binding: Direct
   const { stop } = binding.modifiers
   if (stop) {
     event.stopPropagation()
+  } else {
+    event.stopPropagation()
   }
 
   const menus = binding.value(el, event)
