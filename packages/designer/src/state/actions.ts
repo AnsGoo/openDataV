@@ -2,8 +2,6 @@ import type { CustomComponent } from 'open-data-v/base'
 import type { Location, Position } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
-import { singleton } from './utils'
-
 import {
   calcComponentsRect,
   createGroupStyle,
@@ -12,6 +10,7 @@ import {
 } from '../utils'
 import useCanvasState from './canvas'
 import type { SelectedAreaData } from './type'
+import { singleton } from './utils'
 
 const canvasState = useCanvasState()
 
