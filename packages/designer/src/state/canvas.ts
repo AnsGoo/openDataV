@@ -31,6 +31,7 @@ import {
 import useDataState from './data'
 import useSnapShotState from './snapshot'
 import type { CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
+import { singleton } from 'open-data-v/designer/state/utils'
 
 const dataState = useDataState()
 
@@ -835,9 +836,7 @@ class CanvasState {
   }
 }
 
-const canvasState = new CanvasState({
-  mode: ContainerType.CARD
-})
+const State = singleton(CanvasState)
 export default function useCanvasState() {
-  return canvasState
+  return new State({ mode: ContainerType.CARD }) as CanvasState
 }

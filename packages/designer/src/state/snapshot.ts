@@ -6,6 +6,7 @@ import type { StoreComponentData } from '../db'
 import { snapshotDb } from '../db'
 import type { ComponentDataType } from '../type'
 import type { CanvasStyleData, SnapData } from './type'
+import { singleton } from 'open-data-v/designer/state/utils'
 
 class SnapshotState {
   public state = reactive<SnapData>({
@@ -134,8 +135,7 @@ class SnapshotState {
   }
 }
 
-const snapshotState = new SnapshotState()
-// Need to be used outside the setup
+const State = singleton(SnapshotState)
 export default function useSnapshotState() {
-  return snapshotState
+  return new State() as SnapshotState
 }
