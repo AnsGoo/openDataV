@@ -3,8 +3,8 @@ import {
   StaticDataPlugin,
   SubDataPlugin,
   WebsocketDataPlugin
-} from 'open-data-v/data'
-import { DemoDataPlugin } from 'open-data-v/designer'
+} from '@open-data-v/data'
+import { DemoDataPlugin } from '../data'
 import { reactive } from 'vue'
 
 import { singleton } from './utils'

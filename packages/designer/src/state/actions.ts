@@ -1,5 +1,5 @@
-import type { CustomComponent } from 'open-data-v/base'
-import type { Location, Position } from 'open-data-v/designer'
+import type { CustomComponent } from '@open-data-v/base'
+import type { Location, Position } from '../type'
 import { reactive } from 'vue'
 
 import {
@@ -236,8 +236,8 @@ class ActionState {
     canvasState.saveComponentData()
   }
 }
-const actionState = new ActionState()
+const State = singleton(ActionState)
 
 export default function useActionState() {
-  return actionState
+  return new State() as ActionState
 }
