@@ -1,5 +1,11 @@
-import { RestDataPlugin,StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from 'open-data-v/data'
+import {
+  RestDataPlugin,
+  StaticDataPlugin,
+  SubDataPlugin,
+  WebsocketDataPlugin
+} from 'open-data-v/data'
 import { DemoDataPlugin } from 'open-data-v/designer'
+import { singleton } from 'open-data-v/designer/state/utils'
 import { reactive } from 'vue'
 
 export interface DataPlugin {
@@ -18,7 +24,7 @@ class DataState {
       [StaticDataPlugin.type]: StaticDataPlugin,
       [SubDataPlugin.type]: SubDataPlugin,
       [WebsocketDataPlugin.type]: WebsocketDataPlugin,
-      [RestDataPlugin.type]: RestDataPlugin,
+      [RestDataPlugin.type]: RestDataPlugin
     }
   })
 
@@ -63,7 +69,7 @@ class DataState {
   }
 }
 
-const dataState = new DataState()
+const State = singleton(DataState)
 export default function useDataState() {
-  return dataState
+  return new State() as DataState
 }
