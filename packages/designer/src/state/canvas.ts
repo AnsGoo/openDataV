@@ -15,7 +15,7 @@ import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import { EditMode, PixelEnum } from '../enum'
-import type { CanvasData } from '../state'
+import type { CanvasData, CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
 import { DataSlotter } from '../state'
 import type { ComponentDataType, DOMRectStyle, GroupStyle, Vector } from '../type'
 import {
@@ -30,7 +30,6 @@ import {
 } from '../utils'
 import useDataState from './data'
 import useSnapShotState from './snapshot'
-import type { CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
 import { singleton } from './utils'
 
 const dataState = useDataState()

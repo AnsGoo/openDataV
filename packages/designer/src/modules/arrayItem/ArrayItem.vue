@@ -65,7 +65,7 @@ const handleAdd = () => {
     return
   }
 
-  const { maxItem } = props
+  const { maxItem = 5 } = props
   if (isNumber(maxItem) && arrayValue.length >= maxItem) {
     return
   }

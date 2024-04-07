@@ -31,13 +31,8 @@ import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, onMounted, reactive, ref, watch } from 'vue'
 
-export interface CustomeSlotter extends Slotter {
-  exampleData: any
-  propValue: any
-}
-
 const props = defineProps<{
-  slotter: CustomeSlotter
+  slotter: Slotter
   handler: DataHandler
 }>()
 const isShow = ref<boolean>(false)
