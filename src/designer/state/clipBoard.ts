@@ -5,6 +5,7 @@ import { reactive } from 'vue'
 import { copyText, uuid } from '../utils'
 import useCanvasState from './canvas'
 import type { CopyItem } from './type'
+import { singleton } from './utils'
 
 class ClipBoardState {
   public state = reactive<CopyItem>({
@@ -53,7 +54,7 @@ class ClipBoardState {
   }
 }
 
-const clipBoardState = new ClipBoardState()
+const State = singleton(ClipBoardState)
 export default function useClipBoardState() {
-  return clipBoardState
+  return new State() as ClipBoardState
 }

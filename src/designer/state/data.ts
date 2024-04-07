@@ -7,6 +7,8 @@ import {
 import { DemoDataPlugin } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
+import { singleton } from './utils'
+
 export interface DataPlugin {
   type: string
   name: string
@@ -68,7 +70,7 @@ class DataState {
   }
 }
 
-const dataState = new DataState()
+const State = singleton(DataState)
 export default function useDataState() {
-  return dataState
+  return new State() as DataState
 }

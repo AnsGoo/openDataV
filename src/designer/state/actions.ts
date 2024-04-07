@@ -10,6 +10,7 @@ import {
 } from '../utils'
 import useCanvasState from './canvas'
 import type { SelectedAreaData } from './type'
+import { singleton } from './utils'
 
 const canvasState = useCanvasState()
 
@@ -235,8 +236,8 @@ class ActionState {
     canvasState.saveComponentData()
   }
 }
-const actionState = new ActionState()
 
+const State = singleton(ActionState)
 export default function useActionState() {
-  return actionState
+  return new State() as ActionState
 }
