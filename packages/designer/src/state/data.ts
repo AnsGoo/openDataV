@@ -5,8 +5,9 @@ import {
   WebsocketDataPlugin
 } from 'open-data-v/data'
 import { DemoDataPlugin } from 'open-data-v/designer'
-import { singleton } from 'open-data-v/designer/state/utils'
 import { reactive } from 'vue'
+
+import { singleton } from './utils'
 
 export interface DataPlugin {
   type: string

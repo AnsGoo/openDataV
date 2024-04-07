@@ -1,11 +1,11 @@
 import { cloneDeep } from 'lodash-es'
 import type { CustomComponent } from 'open-data-v/base'
-import { singleton } from 'open-data-v/designer/state/utils'
 import { reactive } from 'vue'
 
 import { copyText, uuid } from '../utils'
 import useCanvasState from './canvas'
 import type { CopyItem } from './type'
+import { singleton } from './utils'
 
 class ClipBoardState {
   public state = reactive<CopyItem>({

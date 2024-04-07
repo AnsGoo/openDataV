@@ -31,7 +31,7 @@ import {
 import useDataState from './data'
 import useSnapShotState from './snapshot'
 import type { CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
-import { singleton } from 'open-data-v/designer/state/utils'
+import { singleton } from './utils'
 
 const dataState = useDataState()
 

@@ -1,6 +1,7 @@
 import type { BaseScript } from '@open-data-v/scripts'
 import { reactive } from 'vue'
-import { singleton } from 'open-data-v/designer/state/utils'
+
+import { singleton } from './utils'
 
 type ScriptHandler = { new (key: string, ...args: any): BaseScript }
 
