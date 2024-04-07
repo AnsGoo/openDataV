@@ -6,7 +6,7 @@ import { reactive } from 'vue'
 import type { StoreComponentData } from '../db'
 import { snapshotDb } from '../db'
 import type { CanvasStyleData, SnapData } from './type'
-import { singleton } from 'open-data-v/designer/state/utils'
+import { singleton } from './utils'
 
 class SnapshotState {
   public state = reactive<SnapData>({
