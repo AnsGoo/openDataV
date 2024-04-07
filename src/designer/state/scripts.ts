@@ -1,5 +1,6 @@
 import type { BaseScript } from 'open-data-v/scripts'
 import { reactive } from 'vue'
+import { singleton } from 'open-data-v/designer/state/utils'
 
 type ScriptHandler = { new (key: string, ...args: any): BaseScript }
 
@@ -45,7 +46,7 @@ class ScriptState {
   }
 }
 
-const scriptState = new ScriptState()
+const State = singleton(ScriptState)
 export default function useScriptState() {
-  return scriptState
+  return new State() as ScriptState
 }

@@ -2,6 +2,8 @@ import type { CustomComponent } from 'open-data-v/base'
 import type { Location, Position } from 'open-data-v/designer'
 import { reactive } from 'vue'
 
+import { singleton } from './utils'
+
 import {
   calcComponentsRect,
   createGroupStyle,
@@ -235,8 +237,8 @@ class ActionState {
     canvasState.saveComponentData()
   }
 }
-const actionState = new ActionState()
 
+const State = singleton(ActionState)
 export default function useActionState() {
-  return actionState
+  return new State() as ActionState
 }

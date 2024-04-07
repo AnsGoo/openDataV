@@ -5,6 +5,7 @@ import {
   WebsocketDataPlugin
 } from 'open-data-v/data'
 import { DemoDataPlugin } from 'open-data-v/designer'
+import { singleton } from 'open-data-v/designer/state/utils'
 import { reactive } from 'vue'
 
 export interface DataPlugin {
@@ -68,7 +69,7 @@ class DataState {
   }
 }
 
-const dataState = new DataState()
+const State = singleton(DataState)
 export default function useDataState() {
-  return dataState
+  return new State() as DataState
 }

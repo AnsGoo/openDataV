@@ -1,5 +1,6 @@
 import { cloneDeep } from 'lodash-es'
 import type { CustomComponent } from 'open-data-v/base'
+import { singleton } from 'open-data-v/designer/state/utils'
 import { reactive } from 'vue'
 
 import { copyText, uuid } from '../utils'
@@ -53,7 +54,7 @@ class ClipBoardState {
   }
 }
 
-const clipBoardState = new ClipBoardState()
+const State = singleton(ClipBoardState)
 export default function useClipBoardState() {
-  return clipBoardState
+  return new State() as ClipBoardState
 }
