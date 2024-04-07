@@ -21,7 +21,7 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, './src'),
       name: 'data',
-      fileName: (format) => `index.${format}.js`, // 输出文件名
+      fileName: (format) => `index.${format}.js` // 输出文件名
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖

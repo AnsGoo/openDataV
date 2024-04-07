@@ -1,10 +1,10 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import path from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
 // @ts-ignore
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import { visualizer } from 'rollup-plugin-visualizer'
 
 export default defineConfig({
   publicDir: false,
@@ -42,7 +42,8 @@ export default defineConfig({
         '@vicons/ionicons5',
         '@vicons/material',
         '@vicons/utils',
-        'dexie'],
+        'dexie'
+      ],
       output: [
         {
           format: 'es',
