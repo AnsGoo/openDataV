@@ -3,3 +3,5 @@
 .vscode
 .idea
 public
+./packages/**/es/**
+./packages/**/lib/**
