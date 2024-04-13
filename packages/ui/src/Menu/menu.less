@@ -35,14 +35,14 @@
     &.disabled {
       opacity: @disabledOpacity;
       cursor: not-allowed;
-      .menu-title {
+      .o-menu-title {
         cursor: not-allowed
       }
     }
 
     // 展开状态
     &.is-down {
-      >.menu-title {
+      >.o-menu-title {
         color: @primaryColor;
 
         .icon-arrow {
@@ -53,14 +53,14 @@
 
     // 选中状态
     &.selected {
-      >.menu-title {
+      >.o-menu-title {
         @apply bg-gray-100 dark:bg-gray-700;
         color: @primaryColor
       }
     }
   }
 
-  .menu-title {
+  .o-menu-title {
     display: flex;
     align-items: center;
     font-size: 14px;
@@ -78,7 +78,8 @@
     }
 
     .icon {
-      display: block;
+      display: flex;
+      align-items:center;
       margin-right: 3px;
       font-size: 16px;
     }
@@ -127,7 +128,7 @@
       }
 
       &:hover {
-        >.menu-title {
+        >.o-menu-title {
           color: @primaryColor;
         }
 
@@ -143,7 +144,7 @@
       line-height: 40px;
 
       &:hover {
-        >.menu-title {
+        >.o-menu-title {
           @apply bg-gray-100 dark:bg-gray-700;
         }
       }
@@ -151,19 +152,19 @@
 
     // 缩进
     .layer-1 {
-      .menu-title {
+      .o-menu-title {
         padding-left: 40px;
       }
     }
 
     .layer-2 {
-      .menu-title {
+      .o-menu-title {
         padding-left: 60px;
       }
     }
 
     .layer-3 {
-      .menu-title {
+      .o-menu-title {
         padding-left: 80px;
       }
     }
@@ -174,7 +175,7 @@
 
     // 第一级只显示一个icon
     .layer-0 {
-      >li>.menu-title {
+      >li>.o-menu-title {
         .icon {
           margin: 5px 0;
         }
@@ -202,7 +203,7 @@
       }
     }
 
-    .menu-title {
+    .o-menu-title {
       padding: 0 20px !important;
     }
   }
@@ -225,14 +226,14 @@
 
       li {
         &:hover {
-          >.menu-title {
+          >.o-menu-title {
             background: @primaryColor;
             color: #fff;
           }
         }
 
         &.is-down {
-          >.menu-title {
+          >.o-menu-title {
             color: #fff;
           }
         }

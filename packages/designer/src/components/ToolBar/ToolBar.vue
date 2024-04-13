@@ -1,6 +1,6 @@
 <template>
-  <div class="tool-bar flex flex-row flex-nowrap justify-between border">
-    <div class="tool-bar-item flex align-center">
+  <div class="tool-bar">
+    <div class="tool-bar-item">
       <ToolBarItem
         v-for="(item, index) in leftToolBars"
         :key="index"
@@ -50,11 +50,18 @@ const rightToolBars = computed<ToolBarItemType[]>(() =>
 
 <style lang="less" scoped>
 .tool-bar {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
   height: inherit;
   border-bottom: 1px var(--n-text-color) solid;
 }
 .tool-bar-item {
   height: inherit;
+  display: flex;
+  align-items: center;
 }
 
 button {

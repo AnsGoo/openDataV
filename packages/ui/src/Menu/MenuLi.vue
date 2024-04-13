@@ -23,7 +23,7 @@
         @mouseleave="mouseleave(item)"
         @click="click(item, $event)"
       >
-        <span class="menu-title">
+        <span class="o-menu-title">
           <i v-if="item.icon" class="icon">
             <component
               :is="item.icon!()"
