@@ -1,7 +1,7 @@
 import type { CustomComponent } from '@open-data-v/base'
-import type { Location, Position } from '../type'
 import { reactive } from 'vue'
 
+import type { Location, Position } from '../type'
 import {
   calcComponentsRect,
   createGroupStyle,
