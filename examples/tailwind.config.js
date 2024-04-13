@@ -4,13 +4,17 @@ module.exports = {
   darkMode: 'class',
   mode: 'jit',
   content: [
-    '../packages/data/src/**/*.{vue,ts,tsx}',
-    '../packages/designer/src/**/*.{vue,ts,tsx}',
-    '../packages/scripts/src**/*.{vue,ts,tsx}',
-    '../packages/ui/src/**/*.{vue,ts,tsx}',
+    // '../packages/data/src/**/*.{vue,ts,tsx}',
+    // '../packages/designer/src/**/*.{vue,ts,tsx}',
+    // '../packages/scripts/src**/*.{vue,ts,tsx}',
+    // '../packages/ui/src/**/*.{vue,ts,tsx}',
     './src/**/*.{vue,ts,tsx}',
     '!../resource/**/node_modules/**',
-    '../resource/**/*.{vue,ts,tsx}'
+    '../resource/**/*.{vue,ts,tsx}',
+    './node_modules/@open-data-v/data/src/**/*.{vue,ts,tsx}',
+    './node_modules/@open-data-v/designer/src/**/*.{vue,ts,tsx}',
+    './node_modules/@open-data-v/scripts/src/**/*.{vue,ts,tsx}',
+    './node_modules/@open-data-v/ui/src/**/*.{vue,ts,tsx}'
   ],
   theme: {
     extend: {}

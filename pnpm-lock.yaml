@@ -21,7 +21,6 @@ importers:
       eslint-plugin-vue: ^9.24.0
       husky: ^7.0.4
       less: ^4.2.0
-      open-data-v: link:src
       postcss: ^8.4.38
       postcss-html: ^1.6.0
       postcss-less: ^6.0.0
@@ -62,7 +61,6 @@ importers:
       eslint-plugin-vue: 9.24.0_eslint@7.32.0
       husky: 7.0.4
       less: 4.2.0
-      open-data-v: link:src
       postcss: 8.4.38
       postcss-html: 1.6.0
       postcss-less: 6.0.0_postcss@8.4.38
@@ -103,11 +101,11 @@ importers:
       '@codemirror/state': ^6.3.1
       '@codemirror/theme-one-dark': ^6.1.2
       '@codemirror/view': ^6.22.0
-      '@open-data-v/base': workspace:*
-      '@open-data-v/data': workspace:*
-      '@open-data-v/designer': workspace:*
-      '@open-data-v/scripts': workspace:*
-      '@open-data-v/ui': workspace:*
+      '@open-data-v/base': ^0.0.2
+      '@open-data-v/data': ^0.0.2
+      '@open-data-v/designer': ^0.0.2
+      '@open-data-v/scripts': ^0.0.2
+      '@open-data-v/ui': ^0.0.2
       '@types/codemirror': ^5.60.13
       '@types/lodash-es': ^4.17.11
       '@types/nprogress': ^0.2.3
