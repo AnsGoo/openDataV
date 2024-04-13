@@ -391,6 +391,55 @@ importers:
       echarts: 5.5.0
       echarts-liquidfill: 3.1.0_echarts@5.5.0
 
+  src:
+    specifiers:
+      '@ctrl/tinycolor': ^4.0.2
+      '@types/lodash-es': ^4.17.12
+      '@vicons/antd': ^0.12.0
+      '@vicons/carbon': ^0.12.0
+      '@vicons/fa': ^0.12.0
+      '@vicons/fluent': ^0.12.0
+      '@vicons/ionicons4': ^0.12.0
+      '@vicons/ionicons5': ^0.12.0
+      '@vicons/material': ^0.12.0
+      '@vicons/utils': ^0.1.4
+      dexie: ^3.2.4
+      less: ^4.2.0
+      lodash-es: ^4.17.21
+      tailwindcss: ^3.4.0
+      vue: ^3.3.8
+    dependencies:
+      '@ctrl/tinycolor': 4.0.3
+      '@vicons/antd': 0.12.0
+      '@vicons/carbon': 0.12.0
+      '@vicons/fa': 0.12.0
+      '@vicons/fluent': 0.12.0
+      '@vicons/ionicons4': 0.12.0
+      '@vicons/ionicons5': 0.12.0
+      '@vicons/material': 0.12.0
+      '@vicons/utils': 0.1.4_vue@3.4.21
+      dexie: 3.2.7
+      lodash-es: 4.17.21
+      vue: 3.4.21
+    devDependencies:
+      '@types/lodash-es': 4.17.12
+      less: 4.2.0
+      tailwindcss: 3.4.3
+
+  src/base:
+    specifiers:
+      lodash-es: ^4.17.21
+      mitt: ^3.0.1
+    dependencies:
+      lodash-es: 4.17.21
+      mitt: 3.0.1
+
+  src/ui:
+    specifiers:
+      '@ctrl/tinycolor': ^4.0.3
+    dependencies:
+      '@ctrl/tinycolor': 4.0.3
+
 packages:
 
   /@aashutoshrathi/word-wrap/1.2.6:

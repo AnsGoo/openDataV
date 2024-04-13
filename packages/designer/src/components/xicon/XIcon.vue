@@ -11,13 +11,11 @@
 </template>
 
 <script lang="ts" setup>
-import { Help } from '@vicons/carbon'
 import { Icon } from '@vicons/utils'
 import type { Component, ComputedRef } from 'vue'
 import { computed, inject } from 'vue'
 
-// import icons from './icons'
-import icons from './icon/index'
+import iconMap from './icon-map'
 
 const darkTheme = inject<ComputedRef<boolean>>(
   'DarkTheme',
@@ -39,6 +37,6 @@ const getIconColor = () => {
 }
 const iconColor = computed<string>(() => (props.color ? props.color : getIconColor()))
 const IconComponet = computed<Component>(() => {
-  return icons[props.name] ? icons[props.name] : Help
+  return iconMap[props.name] ? iconMap[props.name] : iconMap['help']
 })
 </script>
