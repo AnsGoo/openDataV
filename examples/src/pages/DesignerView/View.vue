@@ -4,10 +4,10 @@
 
 <script setup lang="ts">
 import { StaticKey, useEventBus } from '@open-data-v/base'
+import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Designer, useCanvasState, useDataState, useScriptState } from '@open-data-v/designer'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
-import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
