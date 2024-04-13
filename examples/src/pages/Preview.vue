@@ -11,12 +11,19 @@ import { onMounted, ref } from 'vue'
 
 import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
+import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 
 const viewer = ref<InstanceType<typeof Previewer> | null>(null)
 const snapShotState = useSnapshotState()
 
 const dataState = useDataState()
-dataState.loadPlugins([QuickDataPlugin, RestDataPlugin])
+dataState.loadPlugins([
+  QuickDataPlugin,
+  RestDataPlugin,
+  StaticDataPlugin,
+  SubDataPlugin,
+  WebsocketDataPlugin
+])
 const scriptState = useScriptState()
 scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])
 

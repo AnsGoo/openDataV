@@ -31,9 +31,7 @@ export default defineConfig({
         'vue',
         'lodash-es',
         '@open-data-v/base',
-        '@open-data-v/data',
         '@open-data-v/ui',
-        '@open-data-v/scripts',
         '@vicons/utils',
         'dexie'
       ],

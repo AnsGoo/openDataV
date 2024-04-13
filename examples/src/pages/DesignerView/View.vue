@@ -7,6 +7,7 @@ import { StaticKey, useEventBus } from '@open-data-v/base'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Designer, useCanvasState, useDataState, useScriptState } from '@open-data-v/designer'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
+import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
@@ -43,7 +44,13 @@ useEventBus(StaticKey.STDOUT, (event) => {
 
 const canvasState = useCanvasState()
 const dataState = useDataState()
-dataState.loadPlugins([QuickDataPlugin, RestDataPlugin])
+dataState.loadPlugins([
+  QuickDataPlugin,
+  RestDataPlugin,
+  StaticDataPlugin,
+  SubDataPlugin,
+  WebsocketDataPlugin
+])
 const route = useRoute()
 const router = useRouter()
 const toolBars = useToolBars(router, route)

@@ -1,4 +1,4 @@
-import type { BaseScript } from '@open-data-v/scripts'
+import type { BaseScript } from '@open-data-v/base'
 import { reactive } from 'vue'
 
 import { singleton } from './utils'

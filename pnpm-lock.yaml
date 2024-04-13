@@ -174,59 +174,290 @@ importers:
 
   packages/base:
     specifiers:
+      eslint-config-prettier: ^8.10.0
+      eslint-define-config: ^1.24.1
+      eslint-plugin-import: ^2.29.1
+      eslint-plugin-prettier: ^4.2.1
+      eslint-plugin-simple-import-sort: ^10.0.0
+      eslint-plugin-spellcheck: ^0.0.20
+      eslint-plugin-vue: ^9.24.0
+      husky: ^7.0.4
+      less: ^4.2.0
       lodash-es: ^4.17.21
       mitt: ^3.0.1
+      postcss: ^8.4.38
+      postcss-less: ^6.0.0
+      prettier: ^2.8.8
+      rimraf: ^3.0.2
+      rollup-plugin-visualizer: ^5.12.0
+      stylelint: ^15.11.0
+      stylelint-config-recommended-vue: ^1.5.0
+      tailwindcss: ^3.4.3
+      terser: ^5.30.0
+      typescript: ^4.9.5
+      vite: ^5.1.6
+      vite-plugin-dts: ^3.8.1
+      vue-eslint-parser: ^7.11.0
+      vue-tsc: ^1.8.27
     dependencies:
       lodash-es: 4.17.21
       mitt: 3.0.1
+    devDependencies:
+      eslint-config-prettier: 8.10.0_eslint@7.32.0
+      eslint-define-config: 1.24.1
+      eslint-plugin-import: 2.29.1_eslint@7.32.0
+      eslint-plugin-prettier: 4.2.1_bbatpuwfbpnx32jr4tzjhnui3m
+      eslint-plugin-simple-import-sort: 10.0.0_eslint@7.32.0
+      eslint-plugin-spellcheck: 0.0.20_eslint@7.32.0
+      eslint-plugin-vue: 9.24.0_eslint@7.32.0
+      husky: 7.0.4
+      less: 4.2.0
+      postcss: 8.4.38
+      postcss-less: 6.0.0_postcss@8.4.38
+      prettier: 2.8.8
+      rimraf: 3.0.2
+      rollup-plugin-visualizer: 5.12.0
+      stylelint: 15.11.0_typescript@4.9.5
+      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      tailwindcss: 3.4.3
+      terser: 5.30.3
+      typescript: 4.9.5
+      vite: 5.2.8_less@4.2.0+terser@5.30.3
+      vite-plugin-dts: 3.8.1_araarbxd7wnbozfwonxqi3il6m
+      vue-eslint-parser: 7.11.0_eslint@7.32.0
+      vue-tsc: 1.8.27_typescript@4.9.5
 
   packages/data:
     specifiers:
       '@open-data-v/base': workspace:*
       '@open-data-v/ui': workspace:*
+      eslint-config-prettier: ^8.10.0
+      eslint-define-config: ^1.24.1
+      eslint-plugin-import: ^2.29.1
+      eslint-plugin-prettier: ^4.2.1
+      eslint-plugin-simple-import-sort: ^10.0.0
+      eslint-plugin-spellcheck: ^0.0.20
+      eslint-plugin-vue: ^9.24.0
+      husky: ^7.0.4
+      less: ^4.2.0
       lodash-es: ^4.17.21
+      postcss: ^8.4.38
+      postcss-less: ^6.0.0
+      prettier: ^2.8.8
+      rimraf: ^3.0.2
+      rollup-plugin-visualizer: ^5.12.0
+      stylelint: ^15.11.0
+      stylelint-config-recommended-vue: ^1.5.0
+      tailwindcss: ^3.4.3
+      terser: ^5.30.0
+      typescript: ^4.9.5
+      vite: ^5.1.6
+      vite-plugin-dts: ^3.8.1
+      vue-eslint-parser: ^7.11.0
+      vue-tsc: ^1.8.27
     dependencies:
       '@open-data-v/base': link:../base
       '@open-data-v/ui': link:../ui
       lodash-es: 4.17.21
+    devDependencies:
+      eslint-config-prettier: 8.10.0_eslint@7.32.0
+      eslint-define-config: 1.24.1
+      eslint-plugin-import: 2.29.1_eslint@7.32.0
+      eslint-plugin-prettier: 4.2.1_bbatpuwfbpnx32jr4tzjhnui3m
+      eslint-plugin-simple-import-sort: 10.0.0_eslint@7.32.0
+      eslint-plugin-spellcheck: 0.0.20_eslint@7.32.0
+      eslint-plugin-vue: 9.24.0_eslint@7.32.0
+      husky: 7.0.4
+      less: 4.2.0
+      postcss: 8.4.38
+      postcss-less: 6.0.0_postcss@8.4.38
+      prettier: 2.8.8
+      rimraf: 3.0.2
+      rollup-plugin-visualizer: 5.12.0
+      stylelint: 15.11.0_typescript@4.9.5
+      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      tailwindcss: 3.4.3
+      terser: 5.30.3
+      typescript: 4.9.5
+      vite: 5.2.8_less@4.2.0+terser@5.30.3
+      vite-plugin-dts: 3.8.1_araarbxd7wnbozfwonxqi3il6m
+      vue-eslint-parser: 7.11.0_eslint@7.32.0
+      vue-tsc: 1.8.27_typescript@4.9.5
 
   packages/designer:
     specifiers:
       '@open-data-v/base': workspace:*
-      '@open-data-v/data': workspace:*
-      '@open-data-v/scripts': workspace:*
       '@open-data-v/ui': workspace:*
       '@vicons/utils': ^0.1.4
       dexie: ^3.2.5
+      eslint-config-prettier: ^8.10.0
+      eslint-define-config: ^1.24.1
+      eslint-plugin-import: ^2.29.1
+      eslint-plugin-prettier: ^4.2.1
+      eslint-plugin-simple-import-sort: ^10.0.0
+      eslint-plugin-spellcheck: ^0.0.20
+      eslint-plugin-vue: ^9.24.0
+      husky: ^7.0.4
+      less: ^4.2.0
       lodash-es: ^4.17.21
+      postcss: ^8.4.38
+      postcss-less: ^6.0.0
+      prettier: ^2.8.8
+      rimraf: ^3.0.2
+      rollup-plugin-visualizer: ^5.12.0
+      stylelint: ^15.11.0
+      stylelint-config-recommended-vue: ^1.5.0
+      tailwindcss: ^3.4.3
+      terser: ^5.30.0
+      typescript: ^4.9.5
+      vite: ^5.1.6
+      vite-plugin-dts: ^3.8.1
+      vue-eslint-parser: ^7.11.0
+      vue-tsc: ^1.8.27
     dependencies:
       '@open-data-v/base': link:../base
-      '@open-data-v/data': link:../data
-      '@open-data-v/scripts': link:../scripts
       '@open-data-v/ui': link:../ui
       '@vicons/utils': 0.1.4_vue@3.4.21
       dexie: 3.2.7
       lodash-es: 4.17.21
+    devDependencies:
+      eslint-config-prettier: 8.10.0_eslint@7.32.0
+      eslint-define-config: 1.24.1
+      eslint-plugin-import: 2.29.1_eslint@7.32.0
+      eslint-plugin-prettier: 4.2.1_bbatpuwfbpnx32jr4tzjhnui3m
+      eslint-plugin-simple-import-sort: 10.0.0_eslint@7.32.0
+      eslint-plugin-spellcheck: 0.0.20_eslint@7.32.0
+      eslint-plugin-vue: 9.24.0_eslint@7.32.0
+      husky: 7.0.4
+      less: 4.2.0
+      postcss: 8.4.38
+      postcss-less: 6.0.0_postcss@8.4.38
+      prettier: 2.8.8
+      rimraf: 3.0.2
+      rollup-plugin-visualizer: 5.12.0
+      stylelint: 15.11.0_typescript@4.9.5
+      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      tailwindcss: 3.4.3
+      terser: 5.30.3
+      typescript: 4.9.5
+      vite: 5.2.8_less@4.2.0+terser@5.30.3
+      vite-plugin-dts: 3.8.1_araarbxd7wnbozfwonxqi3il6m
+      vue-eslint-parser: 7.11.0_eslint@7.32.0
+      vue-tsc: 1.8.27_typescript@4.9.5
 
   packages/scripts:
     specifiers:
       '@open-data-v/base': workspace:*
       '@open-data-v/ui': workspace:*
+      eslint-config-prettier: ^8.10.0
+      eslint-define-config: ^1.24.1
+      eslint-plugin-import: ^2.29.1
+      eslint-plugin-prettier: ^4.2.1
+      eslint-plugin-simple-import-sort: ^10.0.0
+      eslint-plugin-spellcheck: ^0.0.20
+      eslint-plugin-vue: ^9.24.0
+      husky: ^7.0.4
+      less: ^4.2.0
       lodash-es: ^4.17.21
+      postcss: ^8.4.38
+      postcss-less: ^6.0.0
+      prettier: ^2.8.8
+      rimraf: ^3.0.2
+      rollup-plugin-visualizer: ^5.12.0
+      stylelint: ^15.11.0
+      stylelint-config-recommended-vue: ^1.5.0
+      tailwindcss: ^3.4.3
+      terser: ^5.30.0
+      typescript: ^4.9.5
+      vite: ^5.1.6
+      vite-plugin-dts: ^3.8.1
+      vue-eslint-parser: ^7.11.0
+      vue-tsc: ^1.8.27
     dependencies:
       '@open-data-v/base': link:../base
       '@open-data-v/ui': link:../ui
       lodash-es: 4.17.21
+    devDependencies:
+      eslint-config-prettier: 8.10.0_eslint@7.32.0
+      eslint-define-config: 1.24.1
+      eslint-plugin-import: 2.29.1_eslint@7.32.0
+      eslint-plugin-prettier: 4.2.1_bbatpuwfbpnx32jr4tzjhnui3m
+      eslint-plugin-simple-import-sort: 10.0.0_eslint@7.32.0
+      eslint-plugin-spellcheck: 0.0.20_eslint@7.32.0
+      eslint-plugin-vue: 9.24.0_eslint@7.32.0
+      husky: 7.0.4
+      less: 4.2.0
+      postcss: 8.4.38
+      postcss-less: 6.0.0_postcss@8.4.38
+      prettier: 2.8.8
+      rimraf: 3.0.2
+      rollup-plugin-visualizer: 5.12.0
+      stylelint: 15.11.0_typescript@4.9.5
+      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      tailwindcss: 3.4.3
+      terser: 5.30.3
+      typescript: 4.9.5
+      vite: 5.2.8_less@4.2.0+terser@5.30.3
+      vite-plugin-dts: 3.8.1_araarbxd7wnbozfwonxqi3il6m
+      vue-eslint-parser: 7.11.0_eslint@7.32.0
+      vue-tsc: 1.8.27_typescript@4.9.5
 
   packages/ui:
     specifiers:
       '@ctrl/tinycolor': ^4.0.3
       '@open-data-v/base': workspace:*
+      eslint-config-prettier: ^8.10.0
+      eslint-define-config: ^1.24.1
+      eslint-plugin-import: ^2.29.1
+      eslint-plugin-prettier: ^4.2.1
+      eslint-plugin-simple-import-sort: ^10.0.0
+      eslint-plugin-spellcheck: ^0.0.20
+      eslint-plugin-vue: ^9.24.0
+      husky: ^7.0.4
+      less: ^4.2.0
       lodash-es: ^4.17.21
+      postcss: ^8.4.38
+      postcss-less: ^6.0.0
+      prettier: ^2.8.8
+      rimraf: ^3.0.2
+      rollup-plugin-visualizer: ^5.12.0
+      stylelint: ^15.11.0
+      stylelint-config-recommended-vue: ^1.5.0
+      tailwindcss: ^3.4.3
+      terser: ^5.30.0
+      typescript: ^4.9.5
+      vite: ^5.1.6
+      vite-plugin-dts: ^3.8.1
+      vue-eslint-parser: ^7.11.0
+      vue-tsc: ^1.8.27
     dependencies:
       '@ctrl/tinycolor': 4.0.3
       '@open-data-v/base': link:../base
       lodash-es: 4.17.21
+    devDependencies:
+      eslint-config-prettier: 8.10.0_eslint@7.32.0
+      eslint-define-config: 1.24.1
+      eslint-plugin-import: 2.29.1_eslint@7.32.0
+      eslint-plugin-prettier: 4.2.1_bbatpuwfbpnx32jr4tzjhnui3m
+      eslint-plugin-simple-import-sort: 10.0.0_eslint@7.32.0
+      eslint-plugin-spellcheck: 0.0.20_eslint@7.32.0
+      eslint-plugin-vue: 9.24.0_eslint@7.32.0
+      husky: 7.0.4
+      less: 4.2.0
+      postcss: 8.4.38
+      postcss-less: 6.0.0_postcss@8.4.38
+      prettier: 2.8.8
+      rimraf: 3.0.2
+      rollup-plugin-visualizer: 5.12.0
+      stylelint: 15.11.0_typescript@4.9.5
+      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      tailwindcss: 3.4.3
+      terser: 5.30.3
+      typescript: 4.9.5
+      vite: 5.2.8_less@4.2.0+terser@5.30.3
+      vite-plugin-dts: 3.8.1_araarbxd7wnbozfwonxqi3il6m
+      vue-eslint-parser: 7.11.0_eslint@7.32.0
+      vue-tsc: 1.8.27_typescript@4.9.5
 
   resource/Basic/Image:
     specifiers:
@@ -2002,7 +2233,7 @@ packages:
       vue: ^3.0.6
     dependencies:
       '@xicons/utils': 0.1.4
-      vue: 3.4.21
+      vue: 3.4.21_typescript@4.9.5
     dev: false
 
   /@vitejs/plugin-vue-jsx/3.1.0_vite@4.5.3+vue@3.4.21:
@@ -3466,6 +3697,68 @@ packages:
       eslint: 7.32.0
       eslint-import-resolver-node: 0.3.9
     transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /eslint-module-utils/2.8.1_zumbdmlf3a2duzd5de43h3jgd4:
+    resolution: {integrity: sha512-rXDXR3h7cs7dy9RNpUlQf80nX31XWJEyGq1tRMo+6GsO5VmTe4UTwtmonAD4ZkAsrfMVDA2wlGJ3790Ys+D49Q==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      '@typescript-eslint/parser': '*'
+      eslint: '*'
+      eslint-import-resolver-node: '*'
+      eslint-import-resolver-typescript: '*'
+      eslint-import-resolver-webpack: '*'
+    peerDependenciesMeta:
+      '@typescript-eslint/parser':
+        optional: true
+      eslint:
+        optional: true
+      eslint-import-resolver-node:
+        optional: true
+      eslint-import-resolver-typescript:
+        optional: true
+      eslint-import-resolver-webpack:
+        optional: true
+    dependencies:
+      debug: 3.2.7
+      eslint: 7.32.0
+      eslint-import-resolver-node: 0.3.9
+    transitivePeerDependencies:
+      - supports-color
+    dev: true
+
+  /eslint-plugin-import/2.29.1_eslint@7.32.0:
+    resolution: {integrity: sha512-BbPC0cuExzhiMo4Ff1BTVwHpjjv28C5R+btTOGaCRC7UEz801up0JadwkeSk5Ued6TG34uaczuVuH6qyy5YUxw==}
+    engines: {node: '>=4'}
+    peerDependencies:
+      '@typescript-eslint/parser': '*'
+      eslint: ^2 || ^3 || ^4 || ^5 || ^6 || ^7.2.0 || ^8
+    peerDependenciesMeta:
+      '@typescript-eslint/parser':
+        optional: true
+    dependencies:
+      array-includes: 3.1.8
+      array.prototype.findlastindex: 1.2.5
+      array.prototype.flat: 1.3.2
+      array.prototype.flatmap: 1.3.2
+      debug: 3.2.7
+      doctrine: 2.1.0
+      eslint: 7.32.0
+      eslint-import-resolver-node: 0.3.9
+      eslint-module-utils: 2.8.1_zumbdmlf3a2duzd5de43h3jgd4
+      hasown: 2.0.2
+      is-core-module: 2.13.1
+      is-glob: 4.0.3
+      minimatch: 3.1.2
+      object.fromentries: 2.0.8
+      object.groupby: 1.0.3
+      object.values: 1.2.0
+      semver: 6.3.1
+      tsconfig-paths: 3.15.0
+    transitivePeerDependencies:
+      - eslint-import-resolver-typescript
+      - eslint-import-resolver-webpack
       - supports-color
     dev: true
 
@@ -6146,6 +6439,31 @@ packages:
       vue: 3.4.21
     dev: false
 
+  /vite-plugin-dts/3.8.1_araarbxd7wnbozfwonxqi3il6m:
+    resolution: {integrity: sha512-zEYyQxH7lKto1VTKZHF3ZZeOPkkJgnMrePY4VxDHfDSvDjmYMMfWjZxYmNwW8QxbaItWJQhhXY+geAbyNphI7g==}
+    engines: {node: ^14.18.0 || >=16.0.0}
+    peerDependencies:
+      typescript: '*'
+      vite: '*'
+    peerDependenciesMeta:
+      vite:
+        optional: true
+    dependencies:
+      '@microsoft/api-extractor': 7.43.0
+      '@rollup/pluginutils': 5.1.0
+      '@vue/language-core': 1.8.27_typescript@4.9.5
+      debug: 4.3.4
+      kolorist: 1.8.0
+      magic-string: 0.30.9
+      typescript: 4.9.5
+      vite: 5.2.8_less@4.2.0+terser@5.30.3
+      vue-tsc: 1.8.27_typescript@4.9.5
+    transitivePeerDependencies:
+      - '@types/node'
+      - rollup
+      - supports-color
+    dev: true
+
   /vite-plugin-dts/3.8.1_htktipq74alichhy44mtpwvwke:
     resolution: {integrity: sha512-zEYyQxH7lKto1VTKZHF3ZZeOPkkJgnMrePY4VxDHfDSvDjmYMMfWjZxYmNwW8QxbaItWJQhhXY+geAbyNphI7g==}
     engines: {node: ^14.18.0 || >=16.0.0}
@@ -6355,6 +6673,43 @@ packages:
         optional: true
     dependencies:
       '@types/node': 16.18.95
+      esbuild: 0.20.2
+      less: 4.2.0
+      postcss: 8.4.38
+      rollup: 4.14.1
+      terser: 5.30.3
+    optionalDependencies:
+      fsevents: 2.3.3
+    dev: true
+
+  /vite/5.2.8_less@4.2.0+terser@5.30.3:
+    resolution: {integrity: sha512-OyZR+c1CE8yeHw5V5t59aXsUPPVTHMDjEZz8MgguLL/Q7NblxhZUlTu9xSPqlsUO/y+X7dlU05jdhvyycD55DA==}
+    engines: {node: ^18.0.0 || >=20.0.0}
+    hasBin: true
+    peerDependencies:
+      '@types/node': ^18.0.0 || >=20.0.0
+      less: '*'
+      lightningcss: ^1.21.0
+      sass: '*'
+      stylus: '*'
+      sugarss: '*'
+      terser: ^5.4.0
+    peerDependenciesMeta:
+      '@types/node':
+        optional: true
+      less:
+        optional: true
+      lightningcss:
+        optional: true
+      sass:
+        optional: true
+      stylus:
+        optional: true
+      sugarss:
+        optional: true
+      terser:
+        optional: true
+    dependencies:
       esbuild: 0.20.2
       less: 4.2.0
       postcss: 8.4.38
