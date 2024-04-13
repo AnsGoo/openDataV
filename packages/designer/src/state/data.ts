@@ -4,9 +4,9 @@ import {
   SubDataPlugin,
   WebsocketDataPlugin
 } from '@open-data-v/data'
-import { DemoDataPlugin } from '../data'
 import { reactive } from 'vue'
 
+import { DemoDataPlugin } from '../data'
 import { singleton } from './utils'
 
 export interface DataPlugin {
