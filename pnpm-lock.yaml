@@ -223,13 +223,6 @@ importers:
     specifiers:
       '@ctrl/tinycolor': ^4.0.2
       '@types/lodash-es': ^4.17.12
-      '@vicons/antd': ^0.12.0
-      '@vicons/carbon': ^0.12.0
-      '@vicons/fa': ^0.12.0
-      '@vicons/fluent': ^0.12.0
-      '@vicons/ionicons4': ^0.12.0
-      '@vicons/ionicons5': ^0.12.0
-      '@vicons/material': ^0.12.0
       '@vicons/utils': ^0.1.4
       dexie: ^3.2.4
       less: ^4.2.0
@@ -238,13 +231,6 @@ importers:
       vue: ^3.3.8
     dependencies:
       '@ctrl/tinycolor': 4.0.3
-      '@vicons/antd': 0.12.0
-      '@vicons/carbon': 0.12.0
-      '@vicons/fa': 0.12.0
-      '@vicons/fluent': 0.12.0
-      '@vicons/ionicons4': 0.12.0
-      '@vicons/ionicons5': 0.12.0
-      '@vicons/material': 0.12.0
       '@vicons/utils': 0.1.4_vue@3.4.21
       dexie: 3.2.7
       lodash-es: 4.17.21
@@ -1563,34 +1549,6 @@ packages:
       '@typescript-eslint/types': 4.33.0
       eslint-visitor-keys: 2.1.0
     dev: true
-
-  /@vicons/antd/0.12.0:
-    resolution: {integrity: sha512-C0p6aO1EmGG1QHrqgUWQS1No20934OdWSRQshM5NIDK5H1On6tC26U0hT6Rmp40KfUsvhvX5YW8BoWJdNFifPg==}
-    dev: false
-
-  /@vicons/carbon/0.12.0:
-    resolution: {integrity: sha512-kCOgr/ZOhZzoiFLJ8pwxMa2TMxrkCUOA22qExPabus35F4+USqzcsxaPoYtqRd9ROOYiHrSqwapak/ywF0D9bg==}
-    dev: false
-
-  /@vicons/fa/0.12.0:
-    resolution: {integrity: sha512-g2PIeJLsTHUjt6bK63LxqC0uYQB7iu+xViJOxvp1s8b9/akpXVPVWjDTTsP980/0KYyMMe4U7F/aUo7wY+MsXA==}
-    dev: false
-
-  /@vicons/fluent/0.12.0:
-    resolution: {integrity: sha512-ATCiqPuiJ6RI5GBlD3BIpZ9Xw4MsCA4RpI5oR6MCti4quS4mX1Gp6N74FCzw7lgOj+80rV4HMKhZTVInwimpVQ==}
-    dev: false
-
-  /@vicons/ionicons4/0.12.0:
-    resolution: {integrity: sha512-i+7YwlpCrqD6m9esbZLy1bpVQlh4CKugtS3OzgfNw6BLTQQK6HT7drktaJgcESj/BTr4avdNbAtMQXx56wSVMg==}
-    dev: false
-
-  /@vicons/ionicons5/0.12.0:
-    resolution: {integrity: sha512-Iy1EUVRpX0WWxeu1VIReR1zsZLMc4fqpt223czR+Rpnrwu7pt46nbnC2ycO7ItI/uqDLJxnbcMC7FujKs9IfFA==}
-    dev: false
-
-  /@vicons/material/0.12.0:
-    resolution: {integrity: sha512-chv1CYAl8P32P3Ycwgd5+vw/OFNc2mtkKdb1Rw4T5IJmKy6GVDsoUKV3N2l208HATn7CCQphZtuPDdsm7K2kmA==}
-    dev: false
 
   /@vicons/utils/0.1.4_vue@3.4.21:
     resolution: {integrity: sha512-OHI19qVNN6i+uPQ+Y3f2s0dUxwsYnOCcKBW7XOU4yXXO1aU3ZoKpblCc3+4N0qmgoJs5rWKRAaMisipqEXJwAg==}
