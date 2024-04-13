@@ -34,13 +34,6 @@ export default defineConfig({
         '@open-data-v/data',
         '@open-data-v/ui',
         '@open-data-v/scripts',
-        '@vicons/antd',
-        '@vicons/carbon',
-        '@vicons/fa',
-        '@vicons/fluent',
-        '@vicons/ionicons4',
-        '@vicons/ionicons5',
-        '@vicons/material',
         '@vicons/utils',
         'dexie'
       ],
