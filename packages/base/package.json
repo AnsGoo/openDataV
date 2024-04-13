@@ -11,7 +11,8 @@
     "datav"
   ],
   "scripts": {
-    "build:lib": "vite build"
+    "build:lib": "vite build",
+    "public":"npm publish --access public"
   },
   "author": "ansgoo",
   "type": "module",
@@ -67,5 +68,8 @@
     "bracketSpacing": true,
     "semi": false,
     "endOfLine": "lf"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }

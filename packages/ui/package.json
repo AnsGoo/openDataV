@@ -11,8 +11,10 @@
     "datav"
   ],
   "scripts": {
-    "build:lib": "vite build"
+    "build:lib": "vite build",
+    "public":"npm publish --access public"
   },
+  "license": "Apache-2.0",
   "author": "ansgoo",
   "type": "module",
   "main": "lib/index.umd.cjs",
@@ -68,5 +70,8 @@
     "bracketSpacing": true,
     "semi": false,
     "endOfLine": "lf"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
