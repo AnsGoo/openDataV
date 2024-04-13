@@ -4,7 +4,7 @@
       <component
         :is="item.component"
         :id="'component' + item.id"
-        class="component"
+        class="component absolute"
         :style="getComponentStyle(item)"
         :component="item"
       />
@@ -26,7 +26,7 @@
         <component
           :is="item.component"
           :id="'component' + item.id"
-          class="component"
+          class="component absolute"
           :style="getInnerComponentShapeStyle(item)"
           :component="item"
         />

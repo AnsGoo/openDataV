@@ -3,7 +3,7 @@
     <div class="tool-bar">
       <slot name="tool-bar"> </slot>
     </div>
-    <div class="main" :style="{ maxHeight: height }">
+    <div class="main flex overflow-hidden" :style="{ maxHeight: height }">
       <OInput
         :value="value"
         type="textarea"
@@ -48,8 +48,6 @@ const change = (value: string) => {
 <style lang="less" scoped>
 .editor {
   .main {
-    display: flex;
-    overflow: hidden;
     ::-webkit-scrollbar {
       /*滚动条整体样式*/
       width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
