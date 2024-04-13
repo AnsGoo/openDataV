@@ -1,10 +1,9 @@
-
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Icon',
   setup() {
-      return () => {
+    return () => {
       return (
         <svg
           xmlns="http://www.w3.org/2000/svg"

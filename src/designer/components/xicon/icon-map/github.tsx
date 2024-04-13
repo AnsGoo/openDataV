@@ -1,9 +1,8 @@
-
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'Icon',
-    setup(props:{color: string}) {
+  setup() {
     return () => {
       return (
         <svg
@@ -21,5 +20,3 @@ export default defineComponent({
     }
   }
 })
-
-    
