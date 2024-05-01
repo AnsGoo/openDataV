@@ -1,5 +1,6 @@
 import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './bus'
 import { CustomComponent } from './component'
+import { RenderSlot } from './components'
 import directive, { ClickOutsideDirective, ResizeDomDirective } from './directive'
 import { ComponentGroup, ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
 import type { Hooks } from './hooks'
@@ -49,6 +50,7 @@ export {
   GlobalColorSwatches,
   Logger,
   LogLevel,
+  RenderSlot,
   ResizeDomDirective,
   StaticKey,
   updateModeValue,

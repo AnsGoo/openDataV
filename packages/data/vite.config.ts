@@ -1,6 +1,6 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import path from 'path'
+import path, { resolve } from 'path'
 // @ts-ignore
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
@@ -17,6 +17,12 @@ export default defineConfig({
       tsconfigPath: '../tsconfig.json'
     })
   ],
+  resolve: {
+    alias: {
+      // 路径别名
+      '@': resolve(__dirname, 'src')
+    }
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, './src'),
