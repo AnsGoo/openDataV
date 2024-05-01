@@ -17,7 +17,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useData, useProp, RenderSlot } from '@open-data-v/base'
+import { RenderSlot, useData, useProp } from '@open-data-v/base'
 import { onUnmounted, provide, readonly, useSlots } from 'vue'
 
 import type { ToolBarItemType } from '../../components'

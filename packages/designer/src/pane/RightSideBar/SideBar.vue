@@ -8,9 +8,9 @@
     />
     <div v-if="collapsedRight">
       <o-tabs
-        :style="{ width: rightWidth }"
         v-if="curComponent"
         v-model:value="activeKey"
+        :style="{ width: rightWidth }"
         @update:value="
           (key) => {
             activeKey = key
