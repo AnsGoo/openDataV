@@ -4,6 +4,8 @@ import directive, { ClickOutsideDirective, ResizeDomDirective } from './directiv
 import { ComponentGroup, ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
 import type { Hooks } from './hooks'
 import { useData, useProp } from './hooks'
+
+import { RenderSlot } from './components'
 import type {
   ArrayProps,
   BaseComponent,
@@ -49,6 +51,7 @@ export {
   GlobalColorSwatches,
   Logger,
   LogLevel,
+  RenderSlot,
   ResizeDomDirective,
   StaticKey,
   updateModeValue,

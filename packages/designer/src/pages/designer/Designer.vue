@@ -4,45 +4,21 @@
       <ToolBar :toolbars="toolbars" />
     </div>
     <div class="content flex flex-nowrap flex-row">
-      <div class="left o-scroll">
-        <Toggle
-          :direction="leftDreiction"
-          :x="leftWidth"
-          location="left"
-          @click="collapsedLeft = !collapsedLeft"
-        />
-        <LeftSideBar
-          :iscollapsed="collapsedLeft"
-          @update:iscollapsed="
-            (value) => {
-              collapsedLeft = value
-            }
-          "
-        />
-      </div>
+      <template v-if="slots?.left">
+        <RenderSlot :slots="slots?.left()" />
+      </template>
+      <template v-else><LeftSideBar /> </template>
       <Canvas class="canvas border border-gray-500" />
-      <div class="right o-scroll">
-        <Toggle
-          :x="rightWidth"
-          location="right"
-          :direction="rightDreiction"
-          @click="collapsedRight = !collapsedRight"
-        />
-        <RightSideBar
-          v-model:iscollapsed="collapsedRight"
-          @update:iscollapsed="
-            (value) => {
-              collapsedRight = value
-            }
-          "
-        />
-      </div>
+      <template v-if="slots?.right">
+        <RenderSlot :slots="slots?.right()" />
+      </template>
+      <template v-else><RightSideBar /> </template>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { useData, useProp } from '@open-data-v/base'
-import { computed, onUnmounted, provide, readonly, ref } from 'vue'
+import { useData, useProp, RenderSlot } from '@open-data-v/base'
+import { onUnmounted, provide, readonly, useSlots } from 'vue'
 
 import type { ToolBarItemType } from '../../components'
 import LeftSideBar from '../../pane/LeftSideBar'
@@ -51,8 +27,8 @@ import ToolBar from '../../pane/Toolsbar'
 import { useCanvasState } from '../../state'
 import type { LayoutData } from '../../state/type'
 import Canvas from './Canvas.vue'
-import Toggle from './Toggle.vue'
 
+const slots = useSlots()
 withDefaults(
   defineProps<{
     toolbars?: ToolBarItemType[]
@@ -63,24 +39,14 @@ withDefaults(
 )
 const canvasState = useCanvasState()
 
-const collapsedLeft = ref(true)
-const collapsedRight = ref(true)
 provide('HOOKS', readonly({ useProp, useData }))
 const setLayoutData = (data: LayoutData) => {
   canvasState.setLayoutData(data)
 }
 defineExpose({ setLayoutData })
-
 onUnmounted(() => {
   canvasState.clearCanvas()
 })
-const leftWidth = computed<string>(() => (collapsedLeft.value ? '18rem' : '4rem'))
-const leftDreiction = computed<'left' | 'right'>(() => (collapsedLeft.value ? 'left' : 'right'))
-
-const rightWidth = computed<string>(() => (collapsedRight.value ? '18rem' : '4rem'))
-const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 'right' : 'left'))
-
-const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${rightWidth.value})`)
 </script>
 <style lang="less" scoped>
 @import '../../css/index.less';
@@ -89,21 +55,9 @@ const canvasWidth = computed<string>(() => `calc(100vw - ${leftWidth.value} - ${
     width: 100vw;
     height: calc(100vh - 3.5rem);
     .canvas {
+      flex: 1;
       transition-property: width;
       transition-duration: 0.5s;
-      width: v-bind(canvasWidth);
-    }
-    .left {
-      transition-property: width;
-      transition-duration: 0.5s;
-      width: v-bind(leftWidth);
-      overflow: hidden;
-    }
-    .right {
-      transition-property: width;
-      transition-duration: 0.5s;
-      width: v-bind(rightWidth);
-      height: 100%;
       overflow: hidden;
     }
   }

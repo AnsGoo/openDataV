@@ -11,7 +11,6 @@ import { computed } from 'vue'
 
 const CheveronRight = OIcon.CheveronRight
 const CheveronLeft = OIcon.CheveronLeft
-
 const props = withDefaults(
   defineProps<{
     direction?: 'left' | 'right'

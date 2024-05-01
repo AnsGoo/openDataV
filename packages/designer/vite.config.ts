@@ -1,6 +1,6 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import path from 'path'
+import path, { resolve } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 // @ts-ignore
 import { defineConfig } from 'vite'
@@ -12,13 +12,18 @@ export default defineConfig({
     vue(),
     vueJsx(),
     dts({
-      // entryRoot: './src',
       outDir: ['es', 'lib'],
       include: ['src/**/*.ts', 'src/**/*.tsx'],
       tsconfigPath: '../tsconfig.json'
     }),
     visualizer()
   ],
+  resolve: {
+    alias: {
+      // 路径别名
+      '@': resolve(__dirname, 'src')
+    }
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, './src'),

@@ -1,5 +1,5 @@
 <template>
-  <div ref="tabsEl" :class="[`o-tabs ${tabPosition}`, 'flex', 'flex-wrap flex-col']">
+  <div ref="tabsEl" :class="[`o-tabs ${tabPosition}`, 'flex', 'flex-wrap flex-col w-full']">
     <slot></slot>
     <div
       class="tabs-nav relative w-full border-b dark:border-b-zinc-500 border-b-zinc-200 flex flex-col items-center"
