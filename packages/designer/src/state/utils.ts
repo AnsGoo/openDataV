@@ -11,4 +11,3 @@ export function singleton(className: Class): Class {
     }
   })
 }
-

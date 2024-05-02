@@ -252,7 +252,8 @@ export default defineComponent({
         return
       }
 
-      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
       e.stopPropagation()
       e.preventDefault()
 
@@ -306,7 +307,8 @@ export default defineComponent({
       }
       e.preventDefault()
       e.stopPropagation()
-      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
       if (props.info!.locked) return
 
       // 初始坐标和初始角度
@@ -421,7 +423,8 @@ export default defineComponent({
      */
     const keyDown = (e: KeyboardEvent): void => {
       document.addEventListener('keyup', keyUp)
-      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
 
       const aliasCtrlKey = e.ctrlKey || e.metaKey
 
@@ -475,7 +478,8 @@ export default defineComponent({
     }
 
     const keyUp = (e: KeyboardEvent): void => {
-      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
 
       e.stopPropagation()
       if (props.info) {
