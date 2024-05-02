@@ -70,7 +70,7 @@ export default defineComponent({
         event.stopPropagation()
       } else if (!canvasState.curComponent && !props.info!.parent) {
         // 如果当前没有选中组件，就选中最底层的组件
-        canvasState.setCurComponent(props.info!, props.index!.toString())
+        canvasState.activateComponent(props.info!, props.index!.toString())
         event.stopPropagation()
       } else {
         return
@@ -222,11 +222,11 @@ export default defineComponent({
       e.preventDefault()
       if (!props.isInner) {
         e.stopPropagation()
-        canvasState.setCurComponent(props.info, props.index!.toString())
+        canvasState.activateComponent(props.info, props.index!.toString())
       } else {
         if (props.info!.parent?.id === canvasState.benchmarkComponent?.id) {
           e.stopPropagation()
-          canvasState.setCurComponent(props.info, props.index!.toString())
+          canvasState.activateComponent(props.info, props.index!.toString())
         }
       }
     }
@@ -240,7 +240,7 @@ export default defineComponent({
       if (props.info && (!props.info.parent || props.info.parent?.active)) {
         // 阻止向父组件冒泡
         e.stopPropagation()
-        canvasState.setCurComponent(props.info, props.index!.toString())
+        canvasState.activateComponent(props.info, props.index!.toString())
       }
     }
 

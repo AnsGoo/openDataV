@@ -28,8 +28,7 @@ export interface CanvasData {
   canvasStyleData: CanvasStyleData
   componentData: CustomComponent[]
   activeIndex?: string
-  curComponent: Optional<CustomComponent>
-  isClickComponent: boolean
+  activeComponent: Optional<CustomComponent>
   isShowEm: boolean
   ids: Set<string>
   benchmarkComponent: Optional<CustomComponent>

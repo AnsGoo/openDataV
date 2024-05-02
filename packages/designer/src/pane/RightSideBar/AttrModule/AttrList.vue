@@ -36,7 +36,10 @@ const attrKeys = computed<Array<MetaContainerItem>>(() => {
 
 // 样式页面改变，修改当前组件的样式：curComponent.propValue
 const changed = (keys: Array<string>, val: any) => {
-  canvasState.setCurComponentPropValue(keys, val)
+  if (!props.curComponent) {
+    return
+  }
+  canvasState.setComponentPropValue(props.curComponent, keys, val)
 }
 
 const resetFormData = () => {

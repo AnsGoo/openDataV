@@ -51,7 +51,7 @@ const handleSelect = (key: string) => {
   const indexes: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
   if (activedComponent) {
-    canvasState.setCurComponent(activedComponent, key)
+    canvasState.activateComponent(activedComponent, key)
   }
 }
 

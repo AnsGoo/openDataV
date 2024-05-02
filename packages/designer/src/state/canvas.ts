@@ -111,8 +111,7 @@ class CanvasState {
     canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
     componentData: [],
     activeIndex: undefined,
-    curComponent: undefined,
-    isClickComponent: false,
+    activeComponent: undefined,
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
@@ -125,6 +124,8 @@ class CanvasState {
       mode: ContainerType.CARD
     }
   })
+
+  private componentMap: Map<string, BaseComponent> = new Map()
   constructor(config?: CanvasStyleConfig) {
     const extraStyles = config
       ? config
@@ -138,6 +139,7 @@ class CanvasState {
       ...(extraStyles.formItems || [])
     ]
     this.state.canvasStyleConfig.mode = extraStyles.mode
+    console.log(this.state.canvasStyleConfig)
     this.rebuildCanvasExtraStyle(extraStyles.formItems || [])
   }
 
@@ -156,7 +158,7 @@ class CanvasState {
     return this.state.components
   }
 
-  public loadComponent(name: string, component: BaseComponent) {
+  public loadComponent(name: string, component: CustomComponent) {
     this.state.components[name] = component
   }
 
@@ -195,25 +197,29 @@ class CanvasState {
     this.state.benchmarkComponent = benchmarkComponent
   }
 
-  get ids(): Set<string> {
+  private get ids(): Set<string> {
     return this.state.ids
   }
-  set ids(ids: Set<string>) {
+  private set ids(ids: Set<string>) {
     this.state.ids = ids
   }
 
-  get isClickComponent(): boolean {
-    return this.state.isClickComponent
+  /**
+   * @deprecated
+   * 请使用 activeComponent 属性
+   */
+  get curComponent(): Optional<CustomComponent> {
+    return this.state.activeComponent
   }
-  set isClickComponent(isClickComponent: boolean) {
-    this.state.isClickComponent = isClickComponent
+  private set curComponent(component: Optional<CustomComponent>) {
+    this.state.activeComponent = component
   }
 
-  get curComponent(): Optional<CustomComponent> {
-    return this.state.curComponent
+  get activeComponent(): Optional<CustomComponent> {
+    return this.state.activeComponent
   }
-  set curComponent(curComponent: Optional<CustomComponent>) {
-    this.state.curComponent = curComponent
+  private set activeComponent(component: Optional<CustomComponent>) {
+    this.state.activeComponent = component
   }
 
   get componentData(): CustomComponent[] {
@@ -296,6 +302,7 @@ class CanvasState {
       })
     }
   }
+
   setCanvasStyle(keys: Array<string>, val: any) {
     if (keys.length === 2 && keys[0] === 'basic') {
       if (keys[1] === 'pixel') {
@@ -325,9 +332,6 @@ class CanvasState {
     buildModeValue(formItems, extraAttrs)
     this.canvasStyleData.extraAttrs = extraAttrs
   }
-  setClickComponentStatus(status: boolean): void {
-    this.isClickComponent = status
-  }
 
   setEditMode(mode: EditMode): void {
     this.editMode = mode
@@ -343,22 +347,45 @@ class CanvasState {
   }
 
   /**
+   * @deprecated 请使用 activateComponent方法
    * 设置当前组件
    * @param component 当前组件
    * @param index
    */
   setCurComponent(component: Optional<CustomComponent>, index?: string): void {
+    this.activateComponent(component, index)
+  }
+
+  /**
+   * 激活当前组件
+   * @param component 当前组件
+   * @param index
+   */
+  activateComponent(component: Optional<CustomComponent>, index?: string): void {
     // 设置前清理当前
-    if (this.curComponent) {
-      this.curComponent.active = false
+    if (this.activeComponent) {
+      this.activeComponent.active = false
     }
-    this.curComponent = <CustomComponent>component
+    this.activeComponent = component
     this.activeIndex = index
-    if (this.curComponent) {
-      this.curComponent.active = true
-      this.isClickComponent = true
-      this.benchmarkComponent = this.curComponent.parent
+    if (this.activeComponent) {
+      this.activeComponent.active = true
+      this.benchmarkComponent = this.activeComponent.parent
     }
+  }
+
+  /**
+   * 取消组件的激活状态
+   * @param component 当前组件
+   * @param index
+   */
+  deactivateComponent(): void {
+    // 设置前清理当前
+    if (this.activeComponent) {
+      this.activeComponent.active = false
+    }
+    this.activeComponent = undefined
+    this.activeIndex = undefined
   }
 
   /**
@@ -373,7 +400,7 @@ class CanvasState {
     parentComponent?: CustomComponent,
     isSave = true
   ): void {
-    if (!this.curComponent) {
+    if (!this.activeComponent) {
       return
     }
     const styleKeys = ['top', 'left', 'width', 'height', 'rotate']
@@ -385,7 +412,7 @@ class CanvasState {
     })
     if (parentComponent) {
       const parentStyle = parentComponent.positionStyle
-      const groupStyle = this.curComponent.groupStyle!
+      const groupStyle = this.activeComponent.groupStyle!
       const gStyle = {
         gleft:
           ablePosition.left !== undefined
@@ -409,34 +436,36 @@ class CanvasState {
         left:
           ablePosition.left !== undefined
             ? ablePosition.left
-            : this.curComponent.positionStyle.left,
+            : this.activeComponent.positionStyle.left,
         top:
-          ablePosition.top !== undefined ? ablePosition.top : this.curComponent.positionStyle.top,
+          ablePosition.top !== undefined
+            ? ablePosition.top
+            : this.activeComponent.positionStyle.top,
         width:
           ablePosition.width !== undefined
             ? ablePosition.width
-            : this.curComponent.positionStyle.width,
+            : this.activeComponent.positionStyle.width,
         height:
           ablePosition.height !== undefined
             ? ablePosition.height
-            : this.curComponent.positionStyle.height,
+            : this.activeComponent.positionStyle.height,
         rotate:
           ablePosition.rotate !== undefined
             ? ablePosition.rotate!
-            : this.curComponent.positionStyle.rotate
+            : this.activeComponent.positionStyle.rotate
       }
-      this.curComponent.groupStyle = gStyle
+      this.activeComponent.groupStyle = gStyle
       for (const key in newStyle) {
-        this.curComponent.changeStyle(['position', key], newStyle[key])
+        this.activeComponent.changeStyle(['position', key], newStyle[key])
       }
     } else {
       for (const key in ablePosition) {
-        this.curComponent.changeStyle(['position', key], ablePosition[key])
+        this.activeComponent.changeStyle(['position', key], ablePosition[key])
       }
     }
 
-    if (this.curComponent.subComponents) {
-      this.resizeSubComponent(this.curComponent)
+    if (this.activeComponent.subComponents) {
+      this.resizeSubComponent(this.activeComponent)
     }
     if (isSave) {
       this.saveComponentData()
@@ -446,7 +475,7 @@ class CanvasState {
    * 重新调整当前组件的子组件
    * @param component 当前组件
    */
-  resizeSubComponent(component: CustomComponent) {
+  private resizeSubComponent(component: CustomComponent) {
     if (!component.subComponents) return
     const subComponents = component.subComponents
     const parentStyle = component.positionStyle
@@ -492,6 +521,7 @@ class CanvasState {
       }
 
       this.ids.add(item.id!)
+      this.componentMap.set(item.id!, item)
       if (item.subComponents) {
         this.resetComponentData(item.subComponents)
       }
@@ -519,42 +549,41 @@ class CanvasState {
     }
     component.parent = undefined
     this.componentData.push(component)
+    this.componentMap.set(component.id, component)
     this.saveComponentData()
   }
   /**
    * 设置当前组件的PropValue
+   * @param component
    * @param keys 属性组
    * @param value 值
    * @returns
    */
-  setCurComponentPropValue(keys: Array<string>, value: any): void {
-    const curComponent = this.curComponent
-    if (!curComponent || !curComponent.propValue) {
-      return
-    }
-    curComponent.changeProp(keys, value)
+  setComponentPropValue(component: CustomComponent, keys: Array<string>, value: any): void {
+    component.changeProp(keys, value)
     this.saveComponentData()
   }
   /**
    * 设置当前组件的样式
+   * @param component
    * @param keys
    * @param value 值
    * @returns
    */
-  setCurComponentStyle(keys: Array<string>, value: any): void {
+  setComponentStyle(component: CustomComponent, keys: Array<string>, value: any): void {
     const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
-    if (!this.curComponent) {
+    if (!this.activeComponent) {
       return
     }
     if (
       keys.length === 2 &&
       keys[0] === 'position' &&
-      this.curComponent.groupStyle &&
+      component.groupStyle &&
       groupStyleKeys.includes(keys[1])
     ) {
-      this.curComponent.groupStyle[keys[1]] = value
+      component.groupStyle[keys[1]] = value
     } else {
-      this.curComponent.changeStyle(keys, value)
+      component.changeStyle(keys, value)
     }
     this.saveComponentData()
   }
@@ -565,13 +594,30 @@ class CanvasState {
     }
     return this.componentData.findIndex((item) => item.id === id)
   }
+
+  public getComponentById(id: string): CustomComponent | undefined {
+    return this.findComponentById(id, this.componentData)
+  }
+
+  private findComponentById(id: string, data: Array<CustomComponent>): CustomComponent | undefined {
+    const len = data.length
+    for (let i = 0; i < len; i++) {
+      if (data[i].id === id) {
+        return data[i]
+      } else {
+        const subComponents = data[i].subComponents
+        if (subComponents) {
+          return this.findComponentById(id, subComponents)
+        }
+      }
+    }
+  }
   /**
    * 清空画布
    */
   clearCanvas(): void {
     this.componentData = []
-    this.curComponent = undefined
-    this.isClickComponent = false
+    this.activeComponent = undefined
     this.isShowEm = false
     this.name = ''
     this.thumbnail = ''
@@ -667,6 +713,7 @@ class CanvasState {
     }
     this.saveComponentData()
   }
+
   getComponentByIndex(indexs: readonly number[]): Optional<CustomComponent> {
     const firstIndex = indexs[0]
     if (firstIndex === undefined || firstIndex < 0 || firstIndex >= this.componentData.length) {
@@ -702,6 +749,13 @@ class CanvasState {
       return components[0]
     }
   }
+
+  /**
+   * 想组件中插入子组件
+   * @param index
+   * @param insertComponent
+   * @param parent
+   */
   insertComponent(
     index: number,
     insertComponent: CustomComponent,
@@ -727,7 +781,7 @@ class CanvasState {
    * 重新自动调整组件尺寸
    * @param parentComponent
    */
-  resizeAutoComponent(parentComponent: Optional<CustomComponent>): void {
+  private resizeAutoComponent(parentComponent: Optional<CustomComponent>): void {
     if (parentComponent && parentComponent.component === 'Group') {
       const parentStyle = parentComponent.positionStyle
       const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents)
@@ -763,15 +817,15 @@ class CanvasState {
    * @returns
    */
   decompose() {
-    if (!(this.curComponent && this.curComponent.component === 'Group')) return
-    const components: CustomComponent[] = cloneDeep(this.curComponent.subComponents)
+    if (!(this.activeComponent && this.activeComponent.component === 'Group')) return
+    const components: CustomComponent[] = cloneDeep(this.activeComponent.subComponents)
     if (components.length > 0) {
       const index: number = this.getComponentIndexById(
-        this.curComponent.id,
-        this.curComponent.parent
+        this.activeComponent.id,
+        this.activeComponent.parent
       )
-      this.removeComponent(index, this.curComponent.parent)
-      const parentComponent = this.curComponent.parent
+      this.removeComponent(index, this.activeComponent.parent)
+      const parentComponent = this.activeComponent.parent
       if (parentComponent) {
         const parentStyle: DOMRectStyle = parentComponent.positionStyle
         components.forEach((item: CustomComponent) => {

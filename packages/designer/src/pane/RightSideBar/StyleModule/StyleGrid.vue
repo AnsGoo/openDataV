@@ -37,7 +37,7 @@ const changed = debounce((keys: Array<string>, val: any) => {
         canvasState.resizeAutoComponent(parentComponent)
       }
     } else {
-      canvasState.setCurComponentStyle(keys, val)
+      canvasState.setComponentStyle(props.curComponent, keys, val)
     }
   }
 }, 300)
