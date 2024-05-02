@@ -127,7 +127,7 @@ const curComponent = computed(() => canvasState.activeComponent)
 
 const canvasActiveKey = ref<string>('canvas')
 const menuOptions = computed(() => {
-  if (canvasState.curComponent) {
+  if (canvasState.activeComponent) {
     return [
       {
         label: '样式',

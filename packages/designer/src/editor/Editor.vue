@@ -126,7 +126,7 @@ const componentData = computed(() => {
 })
 
 const canvasStyleData = computed(() => canvasState.canvasStyleData)
-const curComponent = computed(() => canvasState.curComponent)
+const curComponent = computed(() => canvasState.activeComponent)
 
 const bgStyle = computed<Record<string, string>>(() => {
   const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
@@ -144,8 +144,8 @@ const bgStyle = computed<Record<string, string>>(() => {
 })
 
 const copyComponent = () => {
-  if (canvasState.curComponent) {
-    clipBoardState.copy(canvasState.curComponent)
+  if (canvasState.activeComponent) {
+    clipBoardState.copy(canvasState.activeComponent)
   }
 }
 
@@ -252,7 +252,7 @@ const handleDragOver = (e) => {
 }
 
 const deselectCurComponent = () => {
-  if (!canvasState.curComponent) {
+  if (!canvasState.activeComponent) {
     canvasState.activateComponent(undefined)
   }
 }

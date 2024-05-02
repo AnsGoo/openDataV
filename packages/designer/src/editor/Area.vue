@@ -28,7 +28,7 @@ const width = computed<number>(() => actionState.style.width)
 const height = computed<number>(() => actionState.style.height)
 
 const stopWatch: WatchStopHandle = watch(
-  () => canvasState.curComponent,
+  () => canvasState.activeComponent,
   () => {
     if (actionState.components.length > 0) {
       actionState.setHidden()

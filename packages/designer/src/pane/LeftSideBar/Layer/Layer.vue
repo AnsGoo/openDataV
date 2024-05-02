@@ -127,31 +127,31 @@ const copy = (index: string) => {
 const remove = async (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.removeComponent(indexes[indexes.length - 1], canvasState.curComponent?.parent)
+  canvasState.removeComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
 }
 
 const up = async (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.upComponent(indexes[indexes.length - 1], canvasState.curComponent?.parent)
+  canvasState.upComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
 }
 
 const down = async (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.downComponent(indexes[indexes.length - 1], canvasState.curComponent?.parent)
+  canvasState.downComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
 }
 
 const top = async (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.topComponent(indexes[indexes.length - 1], canvasState.curComponent?.parent)
+  canvasState.topComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
 }
 
 const bottom = async (index: string) => {
   handleSelect(index)
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.bottomComponent(indexes[indexes.length - 1], canvasState.curComponent?.parent)
+  canvasState.bottomComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
 }
 
 const hidden = (index: string) => {
