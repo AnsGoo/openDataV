@@ -781,7 +781,7 @@ class CanvasState {
    * 重新自动调整组件尺寸
    * @param parentComponent
    */
-  private resizeAutoComponent(parentComponent: Optional<CustomComponent>): void {
+  public resizeAutoComponent(parentComponent: Optional<CustomComponent>): void {
     if (parentComponent && parentComponent.component === 'Group') {
       const parentStyle = parentComponent.positionStyle
       const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents)
