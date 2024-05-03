@@ -2,7 +2,7 @@ import { FormType } from '@open-data-v/base'
 import { h } from 'vue'
 
 export default {
-  style: [
+  style: () => [
     {
       label: '字体设置',
       prop: 'font',
@@ -43,7 +43,7 @@ export default {
       ]
     }
   ],
-  propValue: [
+  propValue: () => [
     {
       label: '数据配置',
       prop: 'data',

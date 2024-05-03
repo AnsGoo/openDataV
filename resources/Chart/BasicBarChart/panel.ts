@@ -1,8 +1,8 @@
 import { FormType } from '@open-data-v/base'
 
 export default {
-  style: [],
-  propValue: [
+  style: () => [],
+  propValue: () => [
     {
       label: '数据配置',
       prop: 'data',

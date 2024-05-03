@@ -1,8 +1,7 @@
 import { FormType } from '@open-data-v/base'
 
 export default {
-  style: [],
-  propValue: [
+  style: () => [
     {
       label: '背景设置',
       prop: 'back',
@@ -17,5 +16,6 @@ export default {
         }
       ]
     }
-  ]
+  ],
+  propValue: () => []
 }
