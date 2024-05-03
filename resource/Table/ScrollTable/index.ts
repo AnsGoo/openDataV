@@ -1,7 +1,7 @@
-import ScrollTableComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./ScrollTable.vue'),
-  config: ScrollTableComponent
+  mainfest
 }

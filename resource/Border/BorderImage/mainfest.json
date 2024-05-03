@@ -1,0 +1,9 @@
+{
+  "name": "BorderImage",
+  "title": "7#图片边框",
+  "category": "BORDER",
+  "size": {
+    "width": 300,
+    "height": 200
+  }
+}

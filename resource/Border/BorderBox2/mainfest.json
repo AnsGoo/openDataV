@@ -1,8 +1,8 @@
 {
   "name": "BorderBox2",
-  "title": "2#边框'",
+  "title": "2#边框",
   "category": "BORDER",
-  "metaData": {
+  "size": {
     "width": 200,
     "height": 200
   }

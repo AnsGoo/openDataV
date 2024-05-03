@@ -1,7 +1,7 @@
-import BasicPieChartComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./BasicPieChart.vue'),
-  config: BasicPieChartComponent
+  config: () => import('./config'),
+  mainfest
 }

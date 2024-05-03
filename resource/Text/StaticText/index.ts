@@ -1,8 +1,7 @@
-import StaticTextComponent, { componentName } from './config'
-// import README from './README.md'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./StaticText.vue'),
-  config: StaticTextComponent
+  mainfest
 }

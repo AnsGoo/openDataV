@@ -2,7 +2,7 @@
   "name": "Image",
   "title": "图片",
   "category": "BASIC",
-  "metaData": {
+  "size": {
     "width": 200,
     "height": 200
   }

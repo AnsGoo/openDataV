@@ -1,7 +1,7 @@
-import BorderImage, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./BorderImage.vue'),
-  config: BorderImage
+  config: () => import('./config'),
+  mainfest
 }

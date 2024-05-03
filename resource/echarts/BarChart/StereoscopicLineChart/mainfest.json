@@ -1,0 +1,10 @@
+{
+  "name": "StereoscopicBarChart",
+  "title": "立体柱状图",
+  "category": "BAR",
+  "size": {
+    "width": 500,
+    "height": 170
+  },
+  "dataMode": "UNIVERSAL"
+}

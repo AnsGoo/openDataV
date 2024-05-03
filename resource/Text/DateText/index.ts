@@ -1,7 +1,7 @@
-import DateTextComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./DateText.vue'),
-  config: DateTextComponent
+  mainfest
 }

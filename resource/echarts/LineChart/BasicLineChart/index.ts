@@ -1,7 +1,7 @@
-import BasicLineChartComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./BasicLineChart.vue'),
-  config: BasicLineChartComponent
+  config: () => import('./config'),
+  mainfest
 }

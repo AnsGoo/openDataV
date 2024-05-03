@@ -1,0 +1,9 @@
+{
+  "name": "Progress",
+  "title": "进度条",
+  "category": "PROGERSS",
+  "size": {
+    "width": 800,
+    "height": 400
+  }
+}
