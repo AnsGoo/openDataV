@@ -6,5 +6,6 @@ packages:
   - packages/designer/**
   - examples/
   - resource/**
+  - resources/**
   - docs/
   - mock/

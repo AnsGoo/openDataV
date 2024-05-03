@@ -1,7 +1,7 @@
-import ProgressComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./WaveChart.vue'),
-  config: ProgressComponent
+  config: () => import('./config'),
+  mainfest
 }

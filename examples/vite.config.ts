@@ -1,10 +1,10 @@
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
 import type { ConfigEnv, ProxyOptions, UserConfigExport } from 'vite'
 import { loadEnv } from 'vite'
 import { viteMockServe } from 'vite-plugin-mock'
-import { visualizer } from 'rollup-plugin-visualizer'
 
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {

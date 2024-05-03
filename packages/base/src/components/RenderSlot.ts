@@ -6,7 +6,6 @@ export default defineComponent({
   },
   // @ts-ignore
   setup(props) {
-    console.log(props.slots)
     return () => [h('div', {}, props.slots)]
   }
 })

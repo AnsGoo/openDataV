@@ -1,0 +1,10 @@
+{
+  "name": "ScrollRankingBoard",
+  "title": "排名板",
+  "category": "PROGERSS",
+  "size": {
+    "width": 800,
+    "height": 400
+  },
+  "dataMode": "UNIVERSAL"
+}

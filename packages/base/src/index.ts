@@ -34,7 +34,7 @@ import type {
   Slotter,
   SwitchProps
 } from './type'
-import { buildModeValue, updateModeValue, uuid } from './utils'
+import { buildModeValue, isClass, updateModeValue, uuid } from './utils'
 
 export {
   buildModeValue,
@@ -48,6 +48,7 @@ export {
   eventBus,
   FormType,
   GlobalColorSwatches,
+  isClass,
   Logger,
   LogLevel,
   RenderSlot,

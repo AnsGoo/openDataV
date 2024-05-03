@@ -1,7 +1,7 @@
-import ComChartComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
+  mainfest,
   component: () => import('./ComChart.vue'),
-  config: ComChartComponent
+  config: () => import('./config')
 }

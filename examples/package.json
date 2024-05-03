@@ -28,11 +28,11 @@
     "vue": "^3.3.8",
     "vue-codemirror": "^6.1.1",
     "vue-router": "^4.2.5",
-    "@open-data-v/base":"^0.0.2",
-    "@open-data-v/ui":"^0.0.2",
+    "@open-data-v/base":"workspace:*",
+    "@open-data-v/ui":"workspace:*",
     "@open-data-v/data":"^0.0.2",
     "@open-data-v/scripts":"^0.0.2",
-    "@open-data-v/designer":"^0.0.2"
+    "@open-data-v/designer":"workspace:*"
   },
   "devDependencies": {
     "@types/codemirror": "^5.60.13",

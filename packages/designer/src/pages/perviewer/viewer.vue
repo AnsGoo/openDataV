@@ -7,22 +7,19 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from '@open-data-v/base'
 import { useData, useProp } from '@open-data-v/base'
-import { computed, onMounted, onUnmounted, provide, readonly, ref } from 'vue'
+import { computed, onMounted, onUnmounted, provide, readonly } from 'vue'
 
 import Wrapper from '../../editor/Wrapper.vue'
-import type { CanvasStyleData, LayoutData } from '../../state/type'
-import { backgroundToCss, createComponent, filterStyle, pageScale } from '../../utils'
+import { useCanvasState } from '../../state'
+import type { LayoutData } from '../../state/type'
+import { backgroundToCss, filterStyle, pageScale } from '../../utils'
 
 provide('HOOKS', readonly({ useData, useProp }))
 
-const componentData = ref<Array<CustomComponent>>([])
-const canvasStyle = ref<CanvasStyleData>({
-  width: 0,
-  height: 0,
-  background: { backgroundColor: '#272e3b' }
-})
+const canvasState = useCanvasState()
+const canvasStyle = computed(() => canvasState.canvasStyleData)
+const componentData = computed(() => canvasState.componentData)
 const bgStyle = computed<Record<string, string>>(() => {
   return backgroundToCss(canvasStyle.value.background)
 })
@@ -33,15 +30,8 @@ const screenStyle = computed<Record<string, string>>(() => {
   }
   return filterStyle(style, ['width', 'height'])
 })
-const setLayoutData = (data: LayoutData): void => {
-  if (data.canvasStyle) {
-    canvasStyle.value = data.canvasStyle
-  }
-  if (data.canvasData) {
-    componentData.value = data.canvasData.map((ele) => {
-      return createComponent(ele)
-    })
-  }
+const setLayoutData = async (data: LayoutData): Promise<void> => {
+  await canvasState.setLayoutData(data)
   setScale()
 }
 defineExpose({ setLayoutData })

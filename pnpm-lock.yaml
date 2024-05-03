@@ -101,11 +101,11 @@ importers:
       '@codemirror/state': ^6.3.1
       '@codemirror/theme-one-dark': ^6.1.2
       '@codemirror/view': ^6.22.0
-      '@open-data-v/base': ^0.0.2
+      '@open-data-v/base': workspace:*
       '@open-data-v/data': ^0.0.2
-      '@open-data-v/designer': ^0.0.2
+      '@open-data-v/designer': workspace:*
       '@open-data-v/scripts': ^0.0.2
-      '@open-data-v/ui': ^0.0.2
+      '@open-data-v/ui': workspace:*
       '@types/codemirror': ^5.60.13
       '@types/lodash-es': ^4.17.11
       '@types/nprogress': ^0.2.3
@@ -603,6 +603,34 @@ importers:
       '@open-data-v/base': link:../../packages/base
       echarts: 5.5.0
       echarts-liquidfill: 3.1.0_echarts@5.5.0
+
+  resources/Basic/BorderBox1:
+    specifiers:
+      '@open-data-v/base': workspace:*
+    dependencies:
+      '@open-data-v/base': link:../../../packages/base
+
+  resources/Basic/Image:
+    specifiers:
+      '@open-data-v/base': workspace:*
+    dependencies:
+      '@open-data-v/base': link:../../../packages/base
+
+  resources/Chart:
+    specifiers:
+      '@open-data-v/base': workspace:*
+      echarts: ^5.3.3
+      echarts-liquidfill: ^3.1.0
+    dependencies:
+      '@open-data-v/base': link:../../packages/base
+      echarts: 5.5.0
+      echarts-liquidfill: 3.1.0_echarts@5.5.0
+
+  resources/Gauge:
+    specifiers:
+      '@open-data-v/base': workspace:*
+    dependencies:
+      '@open-data-v/base': link:../../packages/base
 
 packages:
 

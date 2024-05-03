@@ -1,0 +1,10 @@
+{
+  "name": "WaveChart",
+  "title": "水波图",
+  "category": "PROGERSS",
+  "size": {
+    "width": 200,
+    "height": 300
+  },
+  "dataMode": "UNIVERSAL"
+}

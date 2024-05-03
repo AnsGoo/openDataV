@@ -1,5 +1,5 @@
-import type { CustomComponent, DataOption, ScriptOption } from '@open-data-v/base'
-import { ContainerType, DataMode, Logger } from '@open-data-v/base'
+import type { DataOption, ScriptOption } from '@open-data-v/base'
+import { ContainerType, CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
 
 import { useCanvasState, useDataState, useScriptState } from './state'
@@ -9,7 +9,7 @@ export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
 }
 
-const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
+export const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
   const dataState = useDataState()
   if (!(data && data.requestOptions)) {
     componentObj.loadDemoData()
@@ -47,9 +47,12 @@ const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption
 }
 export function createComponent(component: ComponentDataType): any {
   const canvasState = useCanvasState()
-  const components = canvasState.components
-  const _class = components[component.component as string]
-  const obj = new _class(component.id, component.name, component.icon)
+  const obj = getComponentInstance({
+    component: component.component,
+    name: component.name,
+    icon: component.icon,
+    id: component.id
+  })
   obj.groupStyle = component.groupStyle
   obj.setPropValue({ propValue: component.propValue })
   obj.setStyleValue({ style: component.style })
@@ -67,6 +70,50 @@ export function createComponent(component: ComponentDataType): any {
 
   const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
   obj.setViewType(viewType)
+  return obj
+}
+
+export function getComponentInstance({
+  component,
+  id,
+  name,
+  icon
+}: {
+  component: string
+  id?: string
+  name?: string
+  icon?: string
+}) {
+  const canvasState = useCanvasState()
+  const components = canvasState.components
+  const componentName = component
+  const _class = components[componentName]
+  let obj
+  if (_class) {
+    obj = new _class(id, name, icon)
+  } else {
+    const componentInfo = canvasState.componentMetaMap.get(componentName)
+    if (!componentInfo) {
+      return
+    }
+    const clazz = componentInfo.clazz
+    if (clazz) {
+      obj = new clazz(id, name, icon)
+    } else {
+      obj = new CustomComponent({
+        id: id,
+        width: componentInfo.size.width,
+        height: componentInfo.size.height,
+        group: componentInfo.category,
+        icon: icon || componentInfo.icon,
+        name: name || componentInfo.title,
+        component: componentInfo.name
+      })
+      obj.loadExtraProp(componentInfo.propValueConfig!())
+      obj.loadExtraStyle(componentInfo.styleConfig!())
+      obj.setExampleData(componentInfo.demoLoader)
+    }
+  }
   return obj
 }
 

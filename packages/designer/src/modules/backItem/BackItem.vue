@@ -22,7 +22,7 @@
 import type { SelectOption } from '@open-data-v/ui'
 import { OColorPicker, OSelect } from '@open-data-v/ui'
 import { isNumber } from 'lodash-es'
-import { onMounted, ref } from 'vue'
+import { ref, watch } from 'vue'
 
 import { GlobalColorSwatches } from '../enum'
 import LinearGradient from '../linearGradient'
@@ -99,16 +99,20 @@ const changeBackgroundImage = () => {
   }
 }
 
-onMounted(() => {
-  if ('backgroundColor' in props.value) {
-    selectOption.value = 'backgroundColor'
-    backgroundColor.value = props.value
-  } else if ('angle' in props.value) {
-    selectOption.value = 'backgroundGradient'
-    backgroundGradient.value = props.value
-  } else if ('backgroundImage' in props.value) {
-    selectOption.value = 'backgroundImage'
-    backgroundImage.value = props.value
+watch(
+  () => props.value,
+  () => {
+    const backGroundValue = props.value || {}
+    if ('backgroundColor' in backGroundValue) {
+      selectOption.value = 'backgroundColor'
+      backgroundColor.value = backGroundValue
+    } else if ('angle' in backGroundValue) {
+      selectOption.value = 'backgroundGradient'
+      backgroundGradient.value = backGroundValue
+    } else if ('backgroundImage' in backGroundValue) {
+      selectOption.value = 'backgroundImage'
+      backgroundImage.value = backGroundValue
+    }
   }
-})
+)
 </script>

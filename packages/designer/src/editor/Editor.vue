@@ -63,8 +63,10 @@ import { useActionState, useCanvasState, useClipBoardState } from '../state'
 import type { ContextmenuItem, Location, Vector } from '../type'
 import {
   backgroundToCss,
+  buildDataHandler,
   createComponent,
   filterStyle,
+  getComponentInstance,
   getComponentShapeStyle,
   systemLogger,
   uuid
@@ -73,8 +75,6 @@ import {
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
 const canvasState = useCanvasState()
-
-const components = canvasState.components
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
@@ -149,11 +149,13 @@ const copyComponent = () => {
   }
 }
 
-const pasteComponent = (event: ClipboardEvent) => {
+const pasteComponent = async (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
-      const component: CustomComponent = createComponent(JSON.parse(textData))
+      const componentData = JSON.parse(textData)
+      await canvasState.loadComponetClazz(componentData.component)
+      const component: CustomComponent = createComponent(componentData)
       if (component) {
         component.changeStyle(['position', 'top'], component.positionStyle.top + 10)
         component.changeStyle(['position', 'left'], component.positionStyle.left + 10)
@@ -231,19 +233,25 @@ const handleDrop = async (e) => {
   e.preventDefault()
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
-  if (componentName) {
-    const component: CustomComponent = new components[componentName]()
-    if (component.dataMode === DataMode.UNIVERSAL) {
-      component.loadDemoData()
-    }
-
-    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-    const y = (e.pageY - editorRectInfo.top) / canvasState.scale
-    const x = (e.pageX - editorRectInfo.left) / canvasState.scale
-    component.changeStyle(['position', 'top'], y)
-    component.changeStyle(['position', 'left'], x)
-    canvasState.appendComponent(component)
+  if (!componentName) {
+    return
   }
+  await canvasState.loadComponetClazz(componentName)
+  const component: CustomComponent = getComponentInstance({ component: componentName })
+  if (!component) {
+    return
+  }
+
+  if (component.dataMode === DataMode.UNIVERSAL) {
+    buildDataHandler(component)
+  }
+
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+  const y = (e.pageY - editorRectInfo.top) / canvasState.scale
+  const x = (e.pageX - editorRectInfo.left) / canvasState.scale
+  component.changeStyle(['position', 'top'], y)
+  component.changeStyle(['position', 'left'], x)
+  canvasState.appendComponent(component)
 }
 
 const handleDragOver = (e) => {

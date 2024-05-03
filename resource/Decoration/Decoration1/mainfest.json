@@ -1,0 +1,9 @@
+{
+  "name": "Decoration1",
+  "title": "1#装饰",
+  "category": "DECORATION",
+  "size": {
+    "width": 200,
+    "height": 60
+  }
+}

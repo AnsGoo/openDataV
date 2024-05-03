@@ -5,7 +5,7 @@ module.exports = {
   mode: 'jit',
   content: [
     // '../packages/data/src/**/*.{vue,ts,tsx}',
-    // '../packages/designer/src/**/*.{vue,ts,tsx}',
+    '../packages/designer/src/**/*.{vue,ts,tsx}',
     // '../packages/scripts/src**/*.{vue,ts,tsx}',
     // '../packages/ui/src/**/*.{vue,ts,tsx}',
     './src/**/*.{vue,ts,tsx}',

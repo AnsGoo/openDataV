@@ -3,6 +3,8 @@ import { useCanvasState } from '@open-data-v/designer'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
+import components from '../../resources/components'
+
 const canvasState = useCanvasState()
 const useLoadComponent = () => {
   return {
@@ -15,17 +17,16 @@ const useLoadComponent = () => {
         const componentOptions = moduleFilesTs[key]?.default
 
         if (componentOptions) {
-          canvasState.loadComponent(
-            componentOptions.componentName,
-            componentOptions.config as BaseComponent
-          )
+          const { componentName, config, mainfest, component } = componentOptions
+          const name = mainfest ? mainfest.name : componentName
+          canvasState.loadComponent(name, config as BaseComponent, mainfest)
           // 注册异步组件
           const asyncComp = defineAsyncComponent({
-            loader: componentOptions.component,
+            loader: component,
             delay: 200,
             timeout: 3000
           })
-          app.component(componentOptions.componentName, asyncComp)
+          app.component(name, asyncComp)
         } else {
           console.error(`${key} is not a valid component`)
         }
@@ -34,4 +35,24 @@ const useLoadComponent = () => {
   }
 }
 
-export { useLoadComponent }
+const useAsyncLoadComponent = () => {
+  return {
+    install: (app: App) => {
+      // 注册Group组件
+      const keys = Object.keys(components)
+      keys.forEach((el) => {
+        const pkg = components[el]
+        const { mainfest, panel, component } = pkg
+        const asyncComp = defineAsyncComponent({
+          loader: component,
+          delay: 200,
+          timeout: 3000
+        })
+        canvasState.loadComponents(mainfest.name, mainfest, panel)
+        app.component(mainfest.name, asyncComp)
+      })
+    }
+  }
+}
+
+export { useAsyncLoadComponent, useLoadComponent }
