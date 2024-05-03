@@ -1,0 +1,9 @@
+{
+  "name": "FlvVideo",
+  "title": "视频",
+  "category": "BASIC",
+  "metaData": {
+    "width": 400,
+    "height": 225
+  }
+}
