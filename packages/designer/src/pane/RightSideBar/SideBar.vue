@@ -123,11 +123,11 @@ const emits = defineEmits<{
 const collapsedRight = ref(true)
 const rightWidth = computed<string>(() => (collapsedRight.value ? '18rem' : '4rem'))
 const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 'right' : 'left'))
-const curComponent = computed(() => canvasState.curComponent)
+const curComponent = computed(() => canvasState.activeComponent)
 
 const canvasActiveKey = ref<string>('canvas')
 const menuOptions = computed(() => {
-  if (canvasState.curComponent) {
+  if (canvasState.activeComponent) {
     return [
       {
         label: '样式',

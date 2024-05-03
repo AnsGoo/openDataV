@@ -25,40 +25,20 @@
     "noUnusedParameters": false,
     "removeComments": true,
     "baseUrl": "./src",
+    "experimentalDecorators": true,
     "typeRoots":[
       "node_modules/@types",
       "packages/**/*.d.ts",
-      "packages/*.d.ts",
-      "./env.d.ts",
-      "./packages/*.d.ts"
     ]
   },
   "include": [
-    "./scripts/src/**/*.ts",
-    "./scripts/src/**/*.d.ts",
-    "./scripts/src/**/*.tsx",
-    "./scripts/src/**/*.vue",
-    "./ui/src/**/*.ts",
-    "./ui/src/**/*.d.ts",
-    "./ui/src/**/*.tsx",
-    "./ui/src/**/*.vue",
-    "./data/src/**/*.ts",
-    "./data/src/**/*.d.ts",
-    "./data/src/**/*.tsx",
-    "./data/src/**/*.vue",
-    "./base/src/**/*.ts",
-    "./base/src/**/*.d.ts",
-    "./base/src/**/*.tsx",
-    "./base/src/**/*.vue",
-    "./designer/src/**/*.ts",
-    "./designer/src/**/*.d.ts",
-    "./designer/src/**/*.tsx",
-    "./designer/src/**/*.vue"
+    "./packages/**/*.ts",
+    "./packages/**/*.d.ts",
+    "./packages/**/*.tsx",
+    "./packages/**/*.vue",
+
   ],
   "exclude": [
     "node_modules",
-    "examples/*",
-    "../examples/*",
-    "../../examples/*"
   ]
 }

@@ -29,7 +29,7 @@ export default defineComponent({
     const clipBoardState = useClipBoardState()
 
     const copy = () => {
-      clipBoardState.copy(canvasState.curComponent!)
+      clipBoardState.copy(canvasState.activeComponent!)
     }
 
     const deleteComponent = () => {
@@ -52,7 +52,7 @@ export default defineComponent({
      * 复制组件ID
      */
     const copyComponentId = () => {
-      const id = canvasState.curComponent!.id
+      const id = canvasState.activeComponent!.id
       copyText(id as string)
     }
 
@@ -66,11 +66,11 @@ export default defineComponent({
 
     const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
       // 如果当前有选中组件，并且接受到contextmenu事件的组件正是当前组件，就停止事件冒泡
-      if (canvasState.curComponent && canvasState.curComponent.id === props.info!.id) {
+      if (canvasState.activeComponent && canvasState.activeComponent.id === props.info!.id) {
         event.stopPropagation()
-      } else if (!canvasState.curComponent && !props.info!.parent) {
+      } else if (!canvasState.activeComponent && !props.info!.parent) {
         // 如果当前没有选中组件，就选中最底层的组件
-        canvasState.setCurComponent(props.info!, props.index!.toString())
+        canvasState.activateComponent(props.info!, props.index!.toString())
         event.stopPropagation()
       } else {
         return
@@ -80,7 +80,7 @@ export default defineComponent({
         {
           text: '拆分',
           subText: '',
-          disable: canvasState.curComponent?.component !== 'Group',
+          disable: canvasState.activeComponent?.component !== 'Group',
           handler: decompose
         },
         { divider: true },
@@ -157,7 +157,7 @@ export default defineComponent({
     })
 
     const appendComponent = () => {
-      actionState.appendComponent(canvasState.curComponent)
+      actionState.appendComponent(canvasState.activeComponent)
       actionState.appendComponent(props.info!)
     }
 
@@ -172,7 +172,7 @@ export default defineComponent({
       }
 
       // 如果没选择组件，或者选中的组件不是自己，就把事件向外冒泡
-      if (!canvasState.curComponent || props.info!.id !== canvasState.curComponent.id) return
+      if (!canvasState.activeComponent || props.info!.id !== canvasState.activeComponent.id) return
 
       // 如果组件锁定了，就把事件向外冒泡
       if (props.info!.locked) return
@@ -222,11 +222,11 @@ export default defineComponent({
       e.preventDefault()
       if (!props.isInner) {
         e.stopPropagation()
-        canvasState.setCurComponent(props.info, props.index!.toString())
+        canvasState.activateComponent(props.info, props.index!.toString())
       } else {
         if (props.info!.parent?.id === canvasState.benchmarkComponent?.id) {
           e.stopPropagation()
-          canvasState.setCurComponent(props.info, props.index!.toString())
+          canvasState.activateComponent(props.info, props.index!.toString())
         }
       }
     }
@@ -240,7 +240,7 @@ export default defineComponent({
       if (props.info && (!props.info.parent || props.info.parent?.active)) {
         // 阻止向父组件冒泡
         e.stopPropagation()
-        canvasState.setCurComponent(props.info, props.index!.toString())
+        canvasState.activateComponent(props.info, props.index!.toString())
       }
     }
 
@@ -252,7 +252,8 @@ export default defineComponent({
         return
       }
 
-      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
       e.stopPropagation()
       e.preventDefault()
 
@@ -306,7 +307,8 @@ export default defineComponent({
       }
       e.preventDefault()
       e.stopPropagation()
-      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
       if (props.info!.locked) return
 
       // 初始坐标和初始角度
@@ -351,11 +353,11 @@ export default defineComponent({
     }
 
     const getCursor = () => {
-      if (!canvasState.curComponent) {
+      if (!canvasState.activeComponent) {
         return {}
       }
 
-      const rotate: number = mod360(canvasState.curComponent!.style.rotate) // 取余 360
+      const rotate: number = mod360(canvasState.activeComponent!.style.rotate) // 取余 360
       const result = {}
       let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
       const angleToCursor = [
@@ -421,7 +423,8 @@ export default defineComponent({
      */
     const keyDown = (e: KeyboardEvent): void => {
       document.addEventListener('keyup', keyUp)
-      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
 
       const aliasCtrlKey = e.ctrlKey || e.metaKey
 
@@ -475,7 +478,8 @@ export default defineComponent({
     }
 
     const keyUp = (e: KeyboardEvent): void => {
-      if (!(canvasState.curComponent && props.info!.id === canvasState.curComponent.id)) return
+      if (!(canvasState.activeComponent && props.info!.id === canvasState.activeComponent.id))
+        return
 
       e.stopPropagation()
       if (props.info) {
@@ -490,7 +494,7 @@ export default defineComponent({
     })
 
     watch(
-      () => canvasState.curComponent,
+      () => canvasState.activeComponent,
       (newValue: CustomComponent | undefined) => {
         if (newValue && props.info!.id === newValue.id) {
           document.addEventListener('keydown', keyDown)

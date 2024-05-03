@@ -65,19 +65,19 @@ useEventBus(StaticKey.DRAG_STOP, () => {
 
 const showLine = (isDownward, isRightward) => {
   const components = canvasState.componentData as Array<CustomComponent>
-  if (canvasState.curComponent) {
+  if (canvasState.activeComponent) {
     const {
       top: mytop,
       left: myleft,
       right: myright,
       bottom: mybottom
-    }: Location = calcComponentAxis(canvasState.curComponent.positionStyle)
+    }: Location = calcComponentAxis(canvasState.activeComponent.positionStyle)
     const curComponentHalfwidth = (myright - myleft) / 2
     const curComponentHalfHeight = (mybottom - mytop) / 2
 
     hideLine()
     components.forEach((component) => {
-      if (component == canvasState.curComponent) return
+      if (component == canvasState.activeComponent) return
       const componentStyle = calcComponentAxis(component.positionStyle)
       const { top, left, bottom, right } = componentStyle
       const componentHalfwidth = (right - left) / 2
@@ -166,7 +166,7 @@ const showLine = (isDownward, isRightward) => {
       }
 
       const needToShow: Array<any> = []
-      const { rotate } = canvasState.curComponent!.style
+      const { rotate } = canvasState.activeComponent!.style
       Object.keys(conditions).forEach((key) => {
         // 遍历符合的条件并处理
         conditions[key].forEach((condition) => {
@@ -180,7 +180,7 @@ const showLine = (isDownward, isRightward) => {
                   height: mybottom - mytop
                 })
               : condition.dragShift
-          canvasState.setCurComponentStyle(['position', key], value)
+          canvasState.activateComponentStyle(['position', key], value)
 
           condition.lineNode.style[key] = `${condition.lineShift}px`
           needToShow.push(condition.line)
@@ -201,7 +201,7 @@ const isNearly = (dragValue, targetValue) => {
 }
 
 const translatecurComponentShift = (key, condition, curComponentStyle) => {
-  const { width, height } = canvasState.curComponent!.style
+  const { width, height } = canvasState.activeComponent!.style
   if (key == 'top') {
     return Math.round(condition.dragShift - ((height as number) - curComponentStyle.height) / 2)
   }

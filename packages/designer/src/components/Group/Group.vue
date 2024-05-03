@@ -75,9 +75,9 @@ if (useData) {
 const canvasState = useCanvasState()
 const editMode = computed<boolean>(() => canvasState.isEditMode)
 
-const curComponent = computed(() => canvasState.curComponent)
+const curComponent = computed(() => canvasState.activeComponent)
 const isActive = computed(() => {
-  let curComponent = canvasState.curComponent
+  let curComponent = canvasState.activeComponent
   while (curComponent) {
     if (curComponent.parent?.id === props.component.id) {
       return true
