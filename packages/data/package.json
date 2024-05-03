@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/data",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "OpenDataV  数据处理基础组件包",
   "keywords": [
     "open-data-v",
