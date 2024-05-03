@@ -3,6 +3,8 @@ import { useCanvasState } from '@open-data-v/designer'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
+import components from '../../resources/components'
+
 const canvasState = useCanvasState()
 const useLoadComponent = () => {
   return {
@@ -34,4 +36,24 @@ const useLoadComponent = () => {
   }
 }
 
-export { useLoadComponent }
+const useAsyncLoadComponent = () => {
+  return {
+    install: (app: App) => {
+      // 注册Group组件
+      const keys = Object.keys(components)
+      keys.forEach((el) => {
+        const pkg = components[el]
+        const { mainfest, panel, component } = pkg
+        const asyncComp = defineAsyncComponent({
+          loader: component,
+          delay: 200,
+          timeout: 3000
+        })
+        canvasState.loadComponents(mainfest.name, mainfest, panel)
+        app.component(mainfest.name, asyncComp)
+      })
+    }
+  }
+}
+
+export { useAsyncLoadComponent, useLoadComponent }

@@ -1,5 +1,9 @@
 <template>
-  <Designer ref="designer" :toolbars="toolBars" />
+  <Designer ref="designer" :toolbars="toolBars">
+    <!--    <template #left>-->
+    <!--      <div style="width: 200px">我是测试</div>-->
+    <!--    </template>-->
+  </Designer>
 </template>
 
 <script setup lang="ts">
