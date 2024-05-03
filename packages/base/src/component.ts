@@ -49,8 +49,8 @@ export class CustomComponent {
   defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
-  _prop: MetaContainerItem[] = []
-  _style: MetaContainerItem[] = []
+  private _prop: MetaContainerItem[] = []
+  private _style: MetaContainerItem[] = []
   extraStyle: Record<string, string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
@@ -177,7 +177,6 @@ export class CustomComponent {
       }
       this._style = [common, ...this._style]
     }
-
     return this._style
   }
 
@@ -217,9 +216,21 @@ export class CustomComponent {
     }
     return this._styleValue
   }
-
   get exampleData(): any {
     return undefined
+  }
+  private loadExampleData?: () => any
+
+  public setExampleData(loader: () => any) {
+    this.loadExampleData = loader
+  }
+
+  public getExampleData() {
+    if (this.exampleData) {
+      return this.exampleData
+    } else {
+      return this.loadExampleData ? this.loadExampleData() : undefined
+    }
   }
 
   // 自定义样式编辑框数据处理
@@ -416,8 +427,8 @@ export class CustomComponent {
       }
     }
   }
-  loadDemoData() {
-    const exampleData = this.exampleData
+  async loadDemoData() {
+    const exampleData = await this.getExampleData()
     setTimeout(() => {
       if (this.callbackData) {
         this.callbackData({ status: 'SUCCESS', data: exampleData, afterData: exampleData }, 'DEMO')
@@ -429,6 +440,13 @@ export class CustomComponent {
   }
   updateChild(index: number, child: CustomComponent) {
     this.subComponents[index] = child
+  }
+
+  loadExtraProp(prop: Array<MetaContainerItem>) {
+    this._prop = prop
+  }
+  loadExtraStyle(style: Array<MetaContainerItem>) {
+    this._style = style
   }
 }
 
