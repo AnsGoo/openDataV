@@ -17,17 +17,16 @@ const useLoadComponent = () => {
         const componentOptions = moduleFilesTs[key]?.default
 
         if (componentOptions) {
-          canvasState.loadComponent(
-            componentOptions.componentName,
-            componentOptions.config as BaseComponent
-          )
+          const { componentName, config, mainfest, component } = componentOptions
+          const name = mainfest ? mainfest.name : componentName
+          canvasState.loadComponent(name, config as BaseComponent, mainfest)
           // 注册异步组件
           const asyncComp = defineAsyncComponent({
-            loader: componentOptions.component,
+            loader: component,
             delay: 200,
             timeout: 3000
           })
-          app.component(componentOptions.componentName, asyncComp)
+          app.component(name, asyncComp)
         } else {
           console.error(`${key} is not a valid component`)
         }
