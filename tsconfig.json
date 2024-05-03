@@ -15,6 +15,7 @@
     "types": ["vite/client"],
     "checkJs": true,
     "skipLibCheck": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false, // 允许隐式的any类型（某些第三方库有隐式的any类型）
     "strictNullChecks": true, // 不允许把null、undefined赋值给其他类型的变量
