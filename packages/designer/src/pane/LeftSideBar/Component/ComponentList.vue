@@ -52,7 +52,10 @@ const loadMenuOption = () => {
   })
 
   componentMap.forEach((value, key) => {
-    const { category } = value
+    const { category = 'OTHER' } = value
+    if (!groups[category]) {
+      groups[category] = []
+    }
     groups[category].push({
       name: value.title,
       component: key

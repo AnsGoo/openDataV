@@ -6,6 +6,7 @@ import type { ComponentDataType } from './type'
 import { exportRaw, handleLogger, importRaw } from './utils'
 
 const snapShotState = useSnapShotState()
+
 // 状态管理
 const canvasState = useCanvasState()
 const undo = async () => {

@@ -1,4 +1,4 @@
-import { isUndefined } from 'lodash-es'
+import { isFunction, isUndefined } from 'lodash-es'
 
 import type { MetaContainerItem, MetaForm } from './type'
 
@@ -79,4 +79,8 @@ export const updateFormItemsValue = (
       modelValue[item.prop] = (item.props || item.componentOptions).defaultValue
     }
   })
+}
+
+export const isClass = (varValue: any) => {
+  return isFunction(varValue) && !isUndefined(varValue.prototype)
 }

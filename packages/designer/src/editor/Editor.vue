@@ -50,8 +50,7 @@
 </template>
 
 <script setup lang="ts">
-import { CustomComponent } from '@open-data-v/base'
-import { isFunction, isUndefined } from 'lodash-es'
+import type { CustomComponent } from '@open-data-v/base'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
 import Area from '../editor/Area.vue'
@@ -67,6 +66,7 @@ import {
   buildDataHandler,
   createComponent,
   filterStyle,
+  getComponentInstance,
   getComponentShapeStyle,
   systemLogger,
   uuid
@@ -75,8 +75,6 @@ import {
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
 const canvasState = useCanvasState()
-
-const components = canvasState.components
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
@@ -151,11 +149,13 @@ const copyComponent = () => {
   }
 }
 
-const pasteComponent = (event: ClipboardEvent) => {
+const pasteComponent = async (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
-      const component: CustomComponent = createComponent(JSON.parse(textData))
+      const componentData = JSON.parse(textData)
+      await canvasState.loadComponetClazz(componentData.component)
+      const component: CustomComponent = createComponent(componentData)
       if (component) {
         component.changeStyle(['position', 'top'], component.positionStyle.top + 10)
         component.changeStyle(['position', 'left'], component.positionStyle.left + 10)
@@ -236,44 +236,8 @@ const handleDrop = async (e) => {
   if (!componentName) {
     return
   }
-  let component: CustomComponent
-  const componentConstructor = components[componentName]
-  if (componentConstructor) {
-    if (isFunction(componentConstructor) && isUndefined(componentConstructor.prototype)) {
-      const result = await componentConstructor()
-      const constructor = result.default
-      component = new constructor()
-    } else {
-      component = new componentConstructor()
-    }
-  } else {
-    const componentInfo = canvasState.componentMetaMap.get(componentName)
-    if (!componentInfo) {
-      return
-    }
-
-    component = new CustomComponent({
-      width: componentInfo.size.width,
-      height: componentInfo.size.height,
-      group: componentInfo.category,
-      icon: componentInfo.icon,
-      name: componentInfo.title,
-      component: componentInfo.name,
-      dataMode: componentInfo.dataMode
-    })
-    const { propValueConfig, styleConfig, panel } = componentInfo
-    if (isUndefined(propValueConfig) && isUndefined(styleConfig) && panel) {
-      const result = await panel()
-      const { propValue, style, demoLoader } = result.default
-      componentInfo.propValueConfig = propValue || []
-      componentInfo.styleConfig = style || []
-      componentInfo.demoLoader = demoLoader || (() => {})
-    }
-    component.loadExtraProp(componentInfo.propValueConfig)
-    component.loadExtraStyle(componentInfo.styleConfig)
-    component.setExampleData(componentInfo.demoLoader)
-  }
-
+  await canvasState.loadComponetClazz(componentName)
+  const component: CustomComponent = getComponentInstance({ component: componentName })
   if (!component) {
     return
   }

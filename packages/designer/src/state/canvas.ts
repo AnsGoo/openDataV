@@ -9,9 +9,10 @@ import {
   ContainerType,
   eventBus,
   FormType,
+  isClass,
   updateModeValue
 } from '@open-data-v/base'
-import { cloneDeep } from 'lodash-es'
+import { cloneDeep, isUndefined } from 'lodash-es'
 import { reactive } from 'vue'
 
 import { EditMode, PixelEnum } from '../enum'
@@ -137,15 +138,19 @@ class CanvasState {
         height: number
       }
       dataMode?: string
+      clazz?: { new (id?: string, name?: string, icon?: string): CustomComponent }
+      remoteClazz?: () => Promise<{
+        default: { new (id?: string, name?: string, icon?: string): CustomComponent }
+      }>
       panel?: () => Promise<{
         default: {
-          propValue: MetaContainerItem[]
-          style: MetaContainerItem[]
+          propValue: () => MetaContainerItem[]
+          style: () => MetaContainerItem[]
           demoLoader: () => any
         }
       }>
-      propValueConfig?: MetaContainerItem[]
-      styleConfig?: MetaContainerItem[]
+      propValueConfig?: () => MetaContainerItem[]
+      styleConfig?: () => MetaContainerItem[]
       demoLoader?: () => any
     }
   > = new Map()
@@ -182,8 +187,54 @@ class CanvasState {
     return this.state.components
   }
 
-  public loadComponent(name: string, component: CustomComponent) {
-    this.state.components[name] = component
+  public loadComponent(name: string, component: CustomComponent, mainfest?: any) {
+    if (mainfest) {
+      this.componentMetaMap.set(name, {
+        ...mainfest,
+        clazz: isClass(component) ? component : undefined,
+        remoteClazz: isClass(component) ? undefined : component
+      })
+    } else {
+      this.state.components[name] = component
+    }
+  }
+
+  public async loadComponetClazz(name: string) {
+    const componentInfo = this.componentMetaMap.get(name)
+    if (!componentInfo) {
+      return
+    }
+    if (componentInfo?.clazz) {
+      return
+    } else {
+      const remoteClazz = componentInfo.remoteClazz
+      if (remoteClazz) {
+        const result = await remoteClazz()
+        componentInfo.clazz = result?.default
+      }
+    }
+    await this.loadComponetPanel(name)
+  }
+
+  public async loadComponetPanel(name: string) {
+    const componentInfo = this.componentMetaMap.get(name)
+    if (!componentInfo) {
+      return
+    }
+    const { propValueConfig, styleConfig, panel } = componentInfo
+    if (isUndefined(propValueConfig) && isUndefined(styleConfig)) {
+      if (panel) {
+        const result = await panel()
+        const { propValue, style, demoLoader } = result.default
+        componentInfo.propValueConfig = propValue || (() => [])
+        componentInfo.styleConfig = style || (() => [])
+        componentInfo.demoLoader = demoLoader || (() => {})
+      } else {
+        componentInfo.propValueConfig = () => []
+        componentInfo.styleConfig = () => []
+        componentInfo.demoLoader = () => {}
+      }
+    }
   }
 
   public loadComponents(name: string, componentInfo: any, panel: any): void {
@@ -306,7 +357,25 @@ class CanvasState {
   get canvasData(): CanvasStyleData {
     return new Proxy(this.canvasStyleData, storeCanvasHandler)
   }
-  setLayoutData(data: LayoutData) {
+
+  private resolveCanvasData(canvasData, clazzNames) {
+    canvasData.forEach((el) => {
+      if (el.subComponents) {
+        this.resolveCanvasData(el.subComponents, clazzNames)
+      } else {
+        clazzNames.add(el.component)
+      }
+    })
+  }
+  async setLayoutData(data: LayoutData) {
+    const clazzNames: Set<string> = new Set()
+    this.resolveCanvasData(data.canvasData, clazzNames)
+    const len = clazzNames.size
+    const clazzNameList = Array.from(clazzNames)
+    for (let i = 0; i < len; i++) {
+      const clazzName = clazzNameList[i]
+      await this.loadComponetClazz(clazzName)
+    }
     this.name = data.name || ''
     this.thumbnail = data.thumbnail || ''
     if (data.canvasData) {
