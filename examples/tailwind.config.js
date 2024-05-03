@@ -4,10 +4,10 @@ module.exports = {
   darkMode: 'class',
   mode: 'jit',
   content: [
-    // '../packages/data/src/**/*.{vue,ts,tsx}',
+    '../packages/data/src/**/*.{vue,ts,tsx}',
     '../packages/designer/src/**/*.{vue,ts,tsx}',
-    // '../packages/scripts/src**/*.{vue,ts,tsx}',
-    // '../packages/ui/src/**/*.{vue,ts,tsx}',
+    '../packages/scripts/src**/*.{vue,ts,tsx}',
+    '../packages/ui/src/**/*.{vue,ts,tsx}',
     './src/**/*.{vue,ts,tsx}',
     '!../resource/**/node_modules/**',
     '../resource/**/*.{vue,ts,tsx}',
