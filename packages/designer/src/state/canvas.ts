@@ -125,6 +125,31 @@ class CanvasState {
     }
   })
 
+  public componentMetaMap: Map<
+    string,
+    {
+      name: string
+      title: string
+      category: string
+      icon?: string
+      size: {
+        width: number
+        height: number
+      }
+      dataMode?: string
+      panel?: () => Promise<{
+        default: {
+          propValue: MetaContainerItem[]
+          style: MetaContainerItem[]
+          demoLoader: () => any
+        }
+      }>
+      propValueConfig?: MetaContainerItem[]
+      styleConfig?: MetaContainerItem[]
+      demoLoader?: () => any
+    }
+  > = new Map()
+
   private componentMap: Map<string, BaseComponent> = new Map()
   constructor(config?: CanvasStyleConfig) {
     const extraStyles = config
@@ -139,7 +164,6 @@ class CanvasState {
       ...(extraStyles.formItems || [])
     ]
     this.state.canvasStyleConfig.mode = extraStyles.mode
-    console.log(this.state.canvasStyleConfig)
     this.rebuildCanvasExtraStyle(extraStyles.formItems || [])
   }
 
@@ -160,6 +184,13 @@ class CanvasState {
 
   public loadComponent(name: string, component: CustomComponent) {
     this.state.components[name] = component
+  }
+
+  public loadComponents(name: string, componentInfo: any, panel: any): void {
+    this.componentMetaMap.set(name, {
+      ...componentInfo,
+      panel: panel
+    })
   }
 
   get globalSlotters() {

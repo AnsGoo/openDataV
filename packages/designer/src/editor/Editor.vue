@@ -50,7 +50,8 @@
 </template>
 
 <script setup lang="ts">
-import type { CustomComponent } from '@open-data-v/base'
+import { CustomComponent } from '@open-data-v/base'
+import { isFunction, isUndefined } from 'lodash-es'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
 import Area from '../editor/Area.vue'
@@ -63,6 +64,7 @@ import { useActionState, useCanvasState, useClipBoardState } from '../state'
 import type { ContextmenuItem, Location, Vector } from '../type'
 import {
   backgroundToCss,
+  buildDataHandler,
   createComponent,
   filterStyle,
   getComponentShapeStyle,
@@ -231,19 +233,61 @@ const handleDrop = async (e) => {
   e.preventDefault()
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
-  if (componentName) {
-    const component: CustomComponent = new components[componentName]()
-    if (component.dataMode === DataMode.UNIVERSAL) {
-      component.loadDemoData()
+  if (!componentName) {
+    return
+  }
+  let component: CustomComponent
+  const componentConstructor = components[componentName]
+  if (componentConstructor) {
+    if (isFunction(componentConstructor) && isUndefined(componentConstructor.prototype)) {
+      const result = await componentConstructor()
+      const constructor = result.default
+      component = new constructor()
+    } else {
+      component = new componentConstructor()
+    }
+  } else {
+    const componentInfo = canvasState.componentMetaMap.get(componentName)
+    if (!componentInfo) {
+      return
     }
 
-    const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-    const y = (e.pageY - editorRectInfo.top) / canvasState.scale
-    const x = (e.pageX - editorRectInfo.left) / canvasState.scale
-    component.changeStyle(['position', 'top'], y)
-    component.changeStyle(['position', 'left'], x)
-    canvasState.appendComponent(component)
+    component = new CustomComponent({
+      width: componentInfo.size.width,
+      height: componentInfo.size.height,
+      group: componentInfo.category,
+      icon: componentInfo.icon,
+      name: componentInfo.title,
+      component: componentInfo.name,
+      dataMode: componentInfo.dataMode
+    })
+    const { propValueConfig, styleConfig, panel } = componentInfo
+    if (isUndefined(propValueConfig) && isUndefined(styleConfig) && panel) {
+      const result = await panel()
+      const { propValue, style, demoLoader } = result.default
+      componentInfo.propValueConfig = propValue || []
+      componentInfo.styleConfig = style || []
+      componentInfo.demoLoader = demoLoader || (() => {})
+    }
+    component.loadExtraProp(componentInfo.propValueConfig)
+    component.loadExtraStyle(componentInfo.styleConfig)
+    component.setExampleData(componentInfo.demoLoader)
   }
+
+  if (!component) {
+    return
+  }
+
+  if (component.dataMode === DataMode.UNIVERSAL) {
+    buildDataHandler(component)
+  }
+
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+  const y = (e.pageY - editorRectInfo.top) / canvasState.scale
+  const x = (e.pageX - editorRectInfo.left) / canvasState.scale
+  component.changeStyle(['position', 'top'], y)
+  component.changeStyle(['position', 'left'], x)
+  canvasState.appendComponent(component)
 }
 
 const handleDragOver = (e) => {

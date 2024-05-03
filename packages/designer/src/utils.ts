@@ -1,6 +1,6 @@
-import type { CustomComponent, DataOption, ScriptOption } from '@open-data-v/base'
-import { ContainerType, DataMode, Logger } from '@open-data-v/base'
-import { cloneDeep, isNumber } from 'lodash-es'
+import type { DataOption, ScriptOption } from '@open-data-v/base'
+import { ContainerType, CustomComponent, DataMode, Logger } from '@open-data-v/base'
+import { cloneDeep, isNumber, isUndefined } from 'lodash-es'
 
 import { useCanvasState, useDataState, useScriptState } from './state'
 import type { ComponentDataType, DOMRectStyle, Location, Vector } from './type'
@@ -9,7 +9,7 @@ export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
 }
 
-const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
+export const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
   const dataState = useDataState()
   if (!(data && data.requestOptions)) {
     componentObj.loadDemoData()
@@ -48,8 +48,42 @@ const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption
 export function createComponent(component: ComponentDataType): any {
   const canvasState = useCanvasState()
   const components = canvasState.components
-  const _class = components[component.component as string]
-  const obj = new _class(component.id, component.name, component.icon)
+  const componentName = component.component
+  const _class = components[componentName]
+  let obj
+  if (_class) {
+    obj = new _class(component.id, component.name, component.icon)
+  } else {
+    const componentInfo = canvasState.componentMetaMap.get(componentName)
+    if (!componentInfo) {
+      return
+    }
+    obj = new CustomComponent({
+      width: componentInfo.size.width,
+      height: componentInfo.size.height,
+      group: componentInfo.category,
+      icon: componentInfo.icon,
+      name: componentInfo.title,
+      component: componentInfo.name
+    })
+    const { propValueConfig, styleConfig, panel } = componentInfo
+    if (isUndefined(propValueConfig) && isUndefined(styleConfig) && panel) {
+      panel().then((result) => {
+        const { propValue, style, demoLoader } = result.default
+        componentInfo.propValueConfig = propValue || []
+        componentInfo.styleConfig = style || []
+        componentInfo.demoLoader = demoLoader || (() => {})
+        obj.loadExtraProp(componentInfo.propValueConfig)
+        obj.loadExtraStyle(componentInfo.styleConfig)
+        obj.setExampleData(componentInfo.demoLoader)
+      })
+    } else {
+      obj.loadExtraProp(componentInfo.propValueConfig)
+      obj.loadExtraStyle(componentInfo.styleConfig)
+      obj.setExampleData(componentInfo.demoLoader)
+    }
+  }
+
   obj.groupStyle = component.groupStyle
   obj.setPropValue({ propValue: component.propValue })
   obj.setStyleValue({ style: component.style })

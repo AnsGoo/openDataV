@@ -49,7 +49,7 @@ onMounted(async () => {
 
 const initData = async () => {
   const dataConfig = props.slotter.dataConfig
-  const exampleData = props.slotter.exampleData || {}
+  const exampleData = (await props.slotter.getExampleData()) || {}
   if (dataConfig && dataConfig.type === 'DEMO') {
     const acceptor = (resp) => {
       formData.data = JSON.stringify(resp.data, null, '\t')
@@ -57,6 +57,7 @@ const initData = async () => {
     const instance = dataConfig.dataInstance
     instance.debug(acceptor)
   } else {
+    formData.data = JSON.stringify(exampleData, null, '\t')
     const dataConfig = {
       type: 'DEMO',
       dataInstance: new props.handler({

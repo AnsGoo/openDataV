@@ -11,7 +11,7 @@
 import type { CustomComponent } from '@open-data-v/base'
 import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
-import { computed, getCurrentInstance, h } from 'vue'
+import { getCurrentInstance, h, onMounted, ref } from 'vue'
 
 import type { GroupType } from '../../../enum'
 import { ComponentGroupList } from '../../../enum'
@@ -27,15 +27,19 @@ withDefaults(
   }
 )
 
+const menuOptions = ref<Array<MenuOption>>([])
+
 const canvasState = useCanvasState()
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 
-const menuOptions = computed<MenuOption[]>(() => {
+const loadMenuOption = () => {
   const components = canvasState.components
+  const componentMap = canvasState.componentMetaMap
   const groups: { group: string; component: CustomComponent[] } | {} = {}
   Object.keys(components).forEach((key) => {
-    const component: CustomComponent = new components[key]()
+    const clazz = components[key]
+    const component = new clazz()
     const group = component.group
     if (!group || !component.show) {
       return
@@ -46,9 +50,16 @@ const menuOptions = computed<MenuOption[]>(() => {
     }
     groups[group].push(component)
   })
-  const menus: MenuOption[] = []
+
+  componentMap.forEach((value, key) => {
+    const { category } = value
+    groups[category].push({
+      name: value.title,
+      component: key
+    })
+  })
   ComponentGroupList.forEach((item: GroupType) => {
-    menus.push({
+    menuOptions.value.push({
       label: () => item.name,
       key: item.key,
       icon: () =>
@@ -68,7 +79,10 @@ const menuOptions = computed<MenuOption[]>(() => {
       })
     })
   })
-  return menus
+}
+
+onMounted(() => {
+  loadMenuOption()
 })
 
 const handleDragStart = (e) => {
