@@ -1,0 +1,1 @@
+import{p as a,q as n}from"./index-40170f2c.js";const t=(t,s)=>{a((()=>{s&&t.setDataChangeCallback(s)})),n((()=>{var a,n;null!=(a=t.dataConfig)&&a.dataInstance.close&&(null==(n=t.dataConfig)||n.dataInstance.close())}))};export{t as f};

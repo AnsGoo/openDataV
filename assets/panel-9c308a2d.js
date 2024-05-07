@@ -1,0 +1,1 @@
+import{O as e}from"./index-40170f2c.js";const p={style:()=>[],propValue:()=>[{label:"基础配置",prop:"base",children:[{prop:"colorLeft",label:"边框颜色1",type:e.COLOR,props:{defaultValue:"#4fd2dd"}},{prop:"colorRight",label:"边框颜色2",type:e.COLOR,props:{defaultValue:"#235fa7"}},{prop:"backgroundColor",label:"底色",type:e.COLOR,props:{defaultValue:"transparent"}}]}]};export{p as default};

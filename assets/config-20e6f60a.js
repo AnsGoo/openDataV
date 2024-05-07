@@ -1,0 +1,1 @@
+import{_ as e,n as o,O as r}from"./index-40170f2c.js";const p="Image";class a extends e{constructor(e,r){super({component:p,group:o.BASIC,name:r||"图片",id:e,width:200,height:200})}_prop=[];_style=[{label:"背景设置",prop:"back",children:[{prop:"background",label:"背景",type:r.BACKGROUND,props:{defaultValue:{backgroundColor:"#14c9c9"}}}]}]}export{p as componentName,a as default};

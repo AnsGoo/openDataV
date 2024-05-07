@@ -1,1 +1,0 @@
-import{d as e,o as _,c as o,_ as s}from"./index-10d63009.js";const t={class:"bg"},a=e({__name:"Image",props:{component:{}},setup(c){return(n,p)=>(_(),o("div",t))}});const m=s(a,[["__scopeId","data-v-69ffae50"]]);export{m as default};

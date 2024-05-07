@@ -1,0 +1,1 @@
+import{a}from"./index-63f72026.js";const e=async e=>a.get({url:`/page/page/${e}/`}),p=async()=>a.get({url:"/page/page/"}),g=e=>a.post({url:"/page/page/",data:e}),s=(e,p)=>a.put({url:`/page/page/${e}/`,data:p}),t=e=>a.delete({url:`/page/page/${e}/`});export{p as a,t as d,e as g,g as s,s as u};

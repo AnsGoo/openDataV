@@ -1,0 +1,1 @@
+import{_ as t,n as o,A as e}from"./index-40170f2c.js";const a="ComChart";class n extends t{constructor(t,n,r){super({component:a,group:o.OTHER,name:n||"通用Echart图",id:t,width:500,height:170,icon:r,dataMode:e.UNIVERSAL})}}export{a as componentName,n as default};

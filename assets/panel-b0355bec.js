@@ -1,0 +1,1 @@
+import{O as o}from"./index-40170f2c.js";const e={style:()=>[{label:"背景设置",prop:"back",children:[{prop:"background",label:"背景",type:o.BACKGROUND,props:{defaultValue:{backgroundColor:"#14c9c9"}}}]}],propValue:()=>[]};export{e as default};
