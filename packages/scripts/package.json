@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/scripts",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "OpenDataV 脚本基础包",
   "keywords": [
     "open-data-v",
@@ -32,9 +32,9 @@
     "./style": "./es/style.css"
   },
   "dependencies": {
-    "@open-data-v/base": "workspace:*",
+    "@open-data-v/base": "^0.0.4",
     "lodash-es": "^4.17.21",
-    "@open-data-v/ui": "workspace:*"
+    "@open-data-v/ui": "^0.0.4"
   },
   "peerDependencies ": {
     "vue": "^3.3.4"

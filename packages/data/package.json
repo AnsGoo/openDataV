@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/data",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "OpenDataV  数据处理基础组件包",
   "keywords": [
     "open-data-v",
@@ -28,8 +28,8 @@
     "./style": "./es/style.css"
   },
   "dependencies": {
-    "@open-data-v/base": "workspace:*",
-    "@open-data-v/ui": "workspace:*",
+    "@open-data-v/base": "^0.0.4",
+    "@open-data-v/ui": "^0.0.4",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies ": {

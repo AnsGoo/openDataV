@@ -227,8 +227,8 @@ importers:
 
   packages/data:
     specifiers:
-      '@open-data-v/base': workspace:*
-      '@open-data-v/ui': workspace:*
+      '@open-data-v/base': ^0.0.4
+      '@open-data-v/ui': ^0.0.4
       eslint-config-prettier: ^8.10.0
       eslint-define-config: ^1.24.1
       eslint-plugin-import: ^2.29.1
@@ -284,8 +284,8 @@ importers:
 
   packages/designer:
     specifiers:
-      '@open-data-v/base': workspace:*
-      '@open-data-v/ui': workspace:*
+      '@open-data-v/base': ^0.0.4
+      '@open-data-v/ui': ^0.0.4
       '@vicons/utils': ^0.1.4
       dexie: ^3.2.5
       eslint-config-prettier: ^8.10.0
@@ -345,8 +345,8 @@ importers:
 
   packages/scripts:
     specifiers:
-      '@open-data-v/base': workspace:*
-      '@open-data-v/ui': workspace:*
+      '@open-data-v/base': ^0.0.4
+      '@open-data-v/ui': ^0.0.4
       eslint-config-prettier: ^8.10.0
       eslint-define-config: ^1.24.1
       eslint-plugin-import: ^2.29.1
@@ -403,7 +403,7 @@ importers:
   packages/ui:
     specifiers:
       '@ctrl/tinycolor': ^4.0.3
-      '@open-data-v/base': workspace:*
+      '@open-data-v/base': ^0.0.4
       eslint-config-prettier: ^8.10.0
       eslint-define-config: ^1.24.1
       eslint-plugin-import: ^2.29.1
