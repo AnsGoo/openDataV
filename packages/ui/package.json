@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/ui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "OpenDataV UI基础包",
   "keywords": [
     "open-data-v",
@@ -30,7 +30,7 @@
   "dependencies": {
     "@ctrl/tinycolor": "^4.0.3",
     "lodash-es": "^4.17.21",
-    "@open-data-v/base":"workspace:*"
+    "@open-data-v/base":"^0.0.4"
   },
   "sideEffects": false,
   "peerDependencies ": {
