@@ -49,7 +49,6 @@ function setScaleByWheel(e: WheelEvent) {
     } else if (scale >= max && deltaY < 0) {
       scale -= limit
     }
-    console.log(scale)
     handleScale(scale)
   }
 }
