@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-end items-center w-full" ref="bottomTip">
+  <div class="flex flex-row justify-end items-center w-full">
     <div class="flex-nowrap flex items-center">
       <span :style="{ transition: `all 0.3s` }"> 缩放:{{ sliderValue }} % </span>
       <OSlider
@@ -16,7 +16,9 @@
 import { OSlider } from '@open-data-v/ui'
 import { debounce } from 'lodash-es'
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+
 import { useCanvasState } from '../../state'
+
 const canvasState = useCanvasState()
 const sliderValue = ref<number>(100)
 const selectValue = ref<string>('100%')
@@ -30,7 +32,6 @@ const changeScale = debounce((value: number) => {
   canvasState.setScale(value)
 }, 300)
 // region 按住 alt 或 command + 滚轮缩放
-const bottomTip = ref<HTMLDivElement | null>(null)
 function setScaleByWheel(e: WheelEvent) {
   const max = 200
   const min = 10
@@ -40,6 +41,7 @@ function setScaleByWheel(e: WheelEvent) {
   let scale = sliderValue.value
   if (altKey || metaKey) {
     e.preventDefault()
+    e.stopPropagation()
     if (min < scale && scale < max) {
       scale = deltaY > 0 ? scale + limit : scale - limit
     } else if (scale <= min && deltaY > 0) {
@@ -47,15 +49,16 @@ function setScaleByWheel(e: WheelEvent) {
     } else if (scale >= max && deltaY < 0) {
       scale -= limit
     }
+    console.log(scale)
     handleScale(scale)
   }
 }
 
 onMounted(() => {
-  bottomTip.value?.addEventListener('wheel', setScaleByWheel, false)
+  document.addEventListener('wheel', setScaleByWheel, false)
 })
 
 onBeforeUnmount(() => {
-  bottomTip.value?.removeEventListener('wheel', setScaleByWheel, false)
+  document.removeEventListener('wheel', setScaleByWheel, false)
 })
 </script>

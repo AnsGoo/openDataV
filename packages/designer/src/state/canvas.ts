@@ -438,6 +438,8 @@ class CanvasState {
   }
   setScale(value: number) {
     this.scale = value / 100
+
+    console.log(this.scale)
   }
   toggleShowEm(): void {
     this.isShowEm = !this.isShowEm
