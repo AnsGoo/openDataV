@@ -8,7 +8,15 @@
         <RenderSlot :slots="slots?.left()" />
       </template>
       <template v-else><LeftSideBar /> </template>
-      <Canvas class="canvas border border-gray-500" />
+      <div class="canvas flex flex-col flex-nowrap">
+        <Canvas class="border border-gray-500" />
+        <template v-if="slots?.bottom">
+          <RenderSlot :slots="slots?.bottom()" />
+        </template>
+        <template v-else>
+          <BottomTip />
+        </template>
+      </div>
       <template v-if="slots?.right">
         <RenderSlot :slots="slots?.right()" />
       </template>
@@ -26,6 +34,7 @@ import RightSideBar from '../../pane/RightSideBar'
 import ToolBar from '../../pane/Toolsbar'
 import { useCanvasState } from '../../state'
 import type { LayoutData } from '../../state/type'
+import BottomTip from './BottomTip.vue'
 import Canvas from './Canvas.vue'
 
 const slots = useSlots()
