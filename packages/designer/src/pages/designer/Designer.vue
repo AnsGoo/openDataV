@@ -14,7 +14,7 @@
           <RenderSlot :slots="slots?.bottom()" />
         </template>
         <template v-else>
-          <BottomTip/>
+          <BottomTip />
         </template>
       </div>
       <template v-if="slots?.right">
