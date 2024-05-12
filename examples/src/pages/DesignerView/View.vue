@@ -1,12 +1,24 @@
 <template>
-  <Designer ref="designer" :toolbars="toolBars" />
+  <Designer ref="designer">
+    <template #top>
+      <ToolBar :bars="toolBars" class="w-full h-14 align-middle">
+        <div class="tool-bar-title">{{ canvasState.name }}</div>
+      </ToolBar>
+    </template>
+  </Designer>
 </template>
 
 <script setup lang="ts">
 import { StaticKey, useEventBus } from '@open-data-v/base'
 import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Designer, useCanvasState, useDataState, useScriptState } from '@open-data-v/designer'
+import {
+  Designer,
+  ToolBar,
+  useCanvasState,
+  useDataState,
+  useScriptState
+} from '@open-data-v/designer'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'

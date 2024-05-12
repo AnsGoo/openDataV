@@ -1,7 +1,7 @@
 <template>
   <n-layout class="home">
-    <n-layout-header class="h-16">
-      <ToolBar />
+    <n-layout-header class="h-14">
+      <ToolBar class="w-full h-14" />
     </n-layout-header>
     <!-- 左侧组件列表 -->
     <n-layout class="main">

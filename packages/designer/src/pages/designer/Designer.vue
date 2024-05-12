@@ -1,8 +1,11 @@
 <template>
   <div class="h-full flex-col flex flex-nowrap overflow-hidden">
-    <div class="w-full h-14 align-middle">
+    <template v-if="slots?.top">
+      <RenderSlot :slots="slots?.top()" />
+    </template>
+    <template v-else>
       <ToolBar :toolbars="toolbars" />
-    </div>
+    </template>
     <div class="content flex flex-1 flex-nowrap flex-row overflow-auto">
       <template v-if="slots?.left">
         <RenderSlot :slots="slots?.left()" />
