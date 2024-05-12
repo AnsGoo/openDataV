@@ -1,5 +1,6 @@
 import type { App } from 'vue'
 
+import useIcon from './useIcon'
 import XIcon from './XIcon.vue'
 
 export { XIcon }
@@ -10,3 +11,5 @@ export default {
     app.component('XIcon', XIcon)
   }
 }
+
+export { useIcon }
