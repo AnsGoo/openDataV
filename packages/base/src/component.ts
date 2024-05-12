@@ -330,7 +330,7 @@ export class CustomComponent {
     const positionKey = ['top', 'left', 'height', 'width', 'rotate']
     let changeValue = value
     if (propKeys[0] === 'position') {
-      if ((propKeys.length === 2, positionKey.includes(propKeys[1]))) {
+      if (propKeys.length === 2 && positionKey.includes(propKeys[1])) {
         changeValue = Math.round(value)
         this.positionStyle[propKeys[1]] = changeValue
       } else if (propKeys.length === 1) {

@@ -249,8 +249,8 @@ const handleDrop = async (e) => {
   }
 
   const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-  const y = (e.pageY - editorRectInfo.top) / canvasState.scale
-  const x = (e.pageX - editorRectInfo.left) / canvasState.scale
+  const y = Math.round((e.pageY - editorRectInfo.top) / canvasState.scale)
+  const x = Math.round((e.pageX - editorRectInfo.left) / canvasState.scale)
   component.changeStyle(['position', 'top'], y)
   component.changeStyle(['position', 'left'], x)
   canvasState.appendComponent(component)
