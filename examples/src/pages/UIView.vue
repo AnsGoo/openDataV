@@ -96,6 +96,7 @@
             </div>
           </NCard>
         </n-tab-pane>
+        <n-tab-pane name="icon" tab="内置图标" />
       </n-tabs>
     </n-layout>
   </n-layout>
