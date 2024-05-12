@@ -11,7 +11,7 @@
       <XIcon
         v-if="type === 'dynamic'"
         :size="18"
-        name="delete"
+        name="remove"
         color="#F76560"
         @click="handleDelete(index)"
       />

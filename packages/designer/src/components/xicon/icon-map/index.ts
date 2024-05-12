@@ -128,6 +128,7 @@ export default {
   question,
   refresh,
   remove,
+  delete: remove,
   rotation,
   save,
   script,
