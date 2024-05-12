@@ -13,7 +13,7 @@ document.documentElement.classList.add('dark')
 </script>
 
 <template>
-  <ConfigProvider>
+  <ConfigProvider class="h-full w-full">
     <n-loading-bar-provider>
       <RouterView :key="currentRoute.path" />
       <n-global-style />

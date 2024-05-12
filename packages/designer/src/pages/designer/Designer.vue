@@ -1,14 +1,22 @@
 <template>
-  <div class="main h-fit flex-col flex flex-nowrap">
+  <div class="h-full flex-col flex flex-nowrap overflow-hidden">
     <div class="w-full h-14 align-middle">
       <ToolBar :toolbars="toolbars" />
     </div>
-    <div class="content flex flex-nowrap flex-row">
+    <div class="content flex flex-1 flex-nowrap flex-row overflow-auto">
       <template v-if="slots?.left">
         <RenderSlot :slots="slots?.left()" />
       </template>
       <template v-else><LeftSideBar /> </template>
-      <Canvas class="canvas border border-gray-500" />
+      <div class="canvas flex flex-col flex-nowrap h-full">
+        <Canvas class="border border-gray-500 flex-1" />
+        <template v-if="slots?.bottom">
+          <RenderSlot :slots="slots?.bottom()" />
+        </template>
+        <template v-else>
+          <BottomTip />
+        </template>
+      </div>
       <template v-if="slots?.right">
         <RenderSlot :slots="slots?.right()" />
       </template>
@@ -26,6 +34,7 @@ import RightSideBar from '../../pane/RightSideBar'
 import ToolBar from '../../pane/Toolsbar'
 import { useCanvasState } from '../../state'
 import type { LayoutData } from '../../state/type'
+import BottomTip from './BottomTip.vue'
 import Canvas from './Canvas.vue'
 
 const slots = useSlots()
@@ -50,16 +59,10 @@ onUnmounted(() => {
 </script>
 <style lang="less" scoped>
 @import '../../css/index.less';
-.main {
-  .content {
-    width: 100vw;
-    height: calc(100vh - 3.5rem);
-    .canvas {
-      flex: 1;
-      transition-property: width;
-      transition-duration: 0.5s;
-      overflow: hidden;
-    }
-  }
+.canvas {
+  flex: 1;
+  transition-property: width;
+  transition-duration: 0.5s;
+  overflow: hidden;
 }
 </style>

@@ -1,51 +1,53 @@
 <template>
-  <div
-    id="editor"
-    ref="editor"
-    v-contextmenu="contextMenus"
-    class="editor edit"
-    :style="bgStyle"
-    @mousedown.left="handleMouseDown"
-    @drop="handleDrop"
-    @dragover="handleDragOver"
-    @mouseup="deselectCurComponent"
-  >
-    <!-- 网格线 -->
-    <Grid />
+  <div>
+    <div
+      id="editor"
+      ref="editor"
+      v-contextmenu="contextMenus"
+      class="editor edit"
+      :style="bgStyle"
+      @mousedown.left="handleMouseDown"
+      @drop="handleDrop"
+      @dragover="handleDragOver"
+      @mouseup="deselectCurComponent"
+    >
+      <!-- 网格线 -->
+      <Grid />
 
-    <!-- 标尺 -->
-    <Ruler
-      :width="canvasStyleData.width"
-      :height="canvasStyleData.height"
-      :isShowReferLine="isShowReferLine"
-    />
+      <!-- 标尺 -->
+      <Ruler
+        :width="canvasStyleData.width"
+        :height="canvasStyleData.height"
+        :isShowReferLine="isShowReferLine"
+      />
 
-    <!--页面组件列表展示-->
-    <template v-for="(item, index) in componentData" :key="item.id">
-      <Shape
-        v-if="canvasState.isEditMode && item.display"
-        :id="'shape' + item.id"
-        :defaultStyle="item.style"
-        :style="getShapeStyle(item.style)"
-        :active="item.id === (curComponent || {}).id"
-        :info="item"
-        :class="{ lock: item.locked }"
-        :index="index"
-      >
-        <component
-          :is="item.component"
-          :id="'component' + item.id"
-          class="component"
-          :style="getComponentShapeStyle(item)"
-          :component="item"
-        />
-      </Shape>
-    </template>
-    <!-- 标线 -->
-    <MarkLine />
+      <!--页面组件列表展示-->
+      <template v-for="(item, index) in componentData" :key="item.id">
+        <Shape
+          v-if="canvasState.isEditMode && item.display"
+          :id="'shape' + item.id"
+          :defaultStyle="item.style"
+          :style="getShapeStyle(item.style)"
+          :active="item.id === (curComponent || {}).id"
+          :info="item"
+          :class="{ lock: item.locked }"
+          :index="index"
+        >
+          <component
+            :is="item.component"
+            :id="'component' + item.id"
+            class="component"
+            :style="getComponentShapeStyle(item)"
+            :component="item"
+          />
+        </Shape>
+      </template>
+      <!-- 标线 -->
+      <MarkLine />
 
-    <!-- 选中区域 -->
-    <Area />
+      <!-- 选中区域 -->
+      <Area />
+    </div>
   </div>
 </template>
 
@@ -129,6 +131,7 @@ const canvasStyleData = computed(() => canvasState.canvasStyleData)
 const curComponent = computed(() => canvasState.activeComponent)
 
 const bgStyle = computed<Record<string, string>>(() => {
+  debugger
   const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,

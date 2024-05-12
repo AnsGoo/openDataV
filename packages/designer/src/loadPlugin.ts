@@ -6,16 +6,8 @@ import useCanvasState from './state/canvas'
 
 const canvasState = useCanvasState()
 
-const useComponentPlugin = ({
-  codeEditorComponent,
-  iconComponent
-}: {
-  codeEditorComponent?: any
-  iconComponent?: any
-}) => {
-  const OXIcon = iconComponent
-    ? iconComponent
-    : defineAsyncComponent(() => import('./components/xicon/XIcon.vue'))
+const useComponentPlugin = ({ codeEditorComponent }: { codeEditorComponent?: any }) => {
+  const OXIcon = defineAsyncComponent(() => import('./components/xicon/XIcon.vue'))
 
   const OCodeEditor = codeEditorComponent
     ? codeEditorComponent
