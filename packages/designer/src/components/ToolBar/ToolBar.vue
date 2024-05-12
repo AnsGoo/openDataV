@@ -38,7 +38,6 @@ const props = withDefaults(
     bars: () => []
   }
 )
-
 const leftToolBars = computed<ToolBarItemType[]>(() =>
   props.bars.filter((el) => el.location === 'left' || el.location === undefined)
 )
@@ -55,11 +54,9 @@ const rightToolBars = computed<ToolBarItemType[]>(() =>
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  height: inherit;
   border-bottom: 1px var(--n-text-color) solid;
 }
 .tool-bar-item {
-  height: inherit;
   display: flex;
   align-items: center;
 }

@@ -131,7 +131,6 @@ const canvasStyleData = computed(() => canvasState.canvasStyleData)
 const curComponent = computed(() => canvasState.activeComponent)
 
 const bgStyle = computed<Record<string, string>>(() => {
-  debugger
   const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
   const style = {
     ...canvasStyleData.value,
