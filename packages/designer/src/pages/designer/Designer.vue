@@ -14,11 +14,11 @@
           <RenderSlot :slots="slots?.bottom()" />
         </template>
         <template v-else>
-          <BottomTip class="h-10" />
+          <BottomTip/>
         </template>
       </div>
       <template v-if="slots?.right">
-        <RenderSlot :slots="slots?.right()" class="h-10" />
+        <RenderSlot :slots="slots?.right()" />
       </template>
       <template v-else><RightSideBar /> </template>
     </div>

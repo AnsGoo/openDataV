@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-row justify-end items-center w-full">
+  <div class="flex flex-row justify-end items-center w-full h-10">
     <div class="flex-nowrap flex items-center">
       <span :style="{ transition: `all 0.3s` }"> 缩放:{{ sliderValue }} % </span>
       <OSlider
