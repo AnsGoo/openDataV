@@ -6,6 +6,6 @@ export default defineComponent({
   },
   // @ts-ignore
   setup(props) {
-    return () => <template>{props.slots}</template>
+    return () => <div>{props.slots}</div>
   }
 })
