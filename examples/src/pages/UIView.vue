@@ -96,13 +96,31 @@
             </div>
           </NCard>
         </n-tab-pane>
-        <n-tab-pane name="icon" tab="内置图标" />
+        <n-tab-pane name="icon" tab="图标">
+          <div class="flex flex-row">
+            <n-card title="内置" class="m-2 w-1/2">
+              <div class="flex flex-row flex-wrap w-full h-full">
+                <div v-for="item in iconMap" :key="item" class="m-2" @click="handleClick(item)">
+                  <XIcon :name="item" class="hover:scale-150" />
+                </div>
+              </div>
+            </n-card>
+            <n-card title="IconFont" class="m-2 w-1/2">
+              <ul class="icon-list">
+                <li v-for="icon in iconList" :key="icon" class="dib" @click="handleClick(icon)">
+                  <span :class="`icon iconfont ${icon}`"></span>
+                </li>
+              </ul>
+            </n-card>
+          </div>
+        </n-tab-pane>
       </n-tabs>
     </n-layout>
   </n-layout>
 </template>
 
 <script lang="ts" setup>
+import { iconMap } from '@open-data-v/designer'
 import {
   OCard,
   OColorPane,
@@ -113,10 +131,20 @@ import {
   ORadioGroup
 } from '@open-data-v/ui'
 import { NCard, NLayout, NLayoutHeader, NTabPane, NTabs } from 'naive-ui'
-import { getCurrentInstance, ref } from 'vue'
+import { computed, getCurrentInstance, ref } from 'vue'
 
+import iconfontList from '@/assets/directionFonts/iconfont.json'
 import ToolBar from '@/pages/ApiView/ToolBar'
+import { message } from '@/utils/message'
+import { copyText } from '@/utils/utils'
 
+const iconList = computed<string[]>(() => {
+  return iconfontList.glyphs.map((item) => `icon-${item.font_class}`)
+})
+const handleClick = (icon: string) => {
+  copyText(icon)
+  message.success(`复制图标: ${icon}`)
+}
 const colors = ref({
   hsl: { h: 150, s: 0.5098039215686275, l: 0.19999999999999998, a: 0.6588235294117647 },
   hex: '#194D33',
@@ -134,3 +162,37 @@ const radioGroupValue = ref<string>('M')
 
 const inputValue = ref<string>('12312312')
 </script>
+<style scoped>
+.icon-list {
+  width: 100% !important;
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.icon-list li {
+  width: 50px;
+  text-align: center;
+  list-style: none !important;
+  cursor: default;
+  transition: all 0.3s;
+
+  &:hover {
+    transform: scale(1.5);
+  }
+
+  &:active {
+    transform: scale(1);
+  }
+}
+.icon {
+  display: block;
+  height: 50px;
+  line-height: 50px;
+  font-size: 22px;
+  margin: 10px auto;
+  -webkit-transition: font-size 0.25s linear, width 0.25s linear;
+  -moz-transition: font-size 0.25s linear, width 0.25s linear;
+  transition: font-size 0.25s linear, width 0.25s linear;
+}
+</style>

@@ -33,7 +33,7 @@ export default function useIcon(icons?: Record<string, Component>) {
       return { iconColor }
     },
     render: ({ name, size, iconColor }: { name: string; size: number; iconColor: string }) => {
-      const obIcon = iconMap[name]
+      const obIcon = iconMap[name] || iconMap['help']
       return h(
         Icon,
         {

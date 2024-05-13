@@ -1,5 +1,5 @@
 import type { ToolBarItemType } from './components'
-import { CodeEditor, Group, ToolBar, ToolBarItem, XIcon } from './components'
+import { CodeEditor, Group, iconMap, ToolBar, ToolBarItem, XIcon } from './components'
 import DemoDataPlugin from './data/DemoData'
 import type { StoreComponentData } from './db'
 import Editor from './editor'
@@ -65,6 +65,7 @@ export {
   Group,
   GroupType,
   handleLogger,
+  iconMap,
   importCanvas,
   LeftSideBar,
   PixelEnum,
@@ -141,5 +142,6 @@ export default {
   useEmpty,
   useScriptState,
   useSnapshotState,
-  XIcon
+  XIcon,
+  iconMap
 }
