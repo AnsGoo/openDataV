@@ -65,6 +65,7 @@ export {
   Group,
   GroupType,
   handleLogger,
+  iconMap,
   importCanvas,
   LeftSideBar,
   PixelEnum,
@@ -86,8 +87,7 @@ export {
   useEmpty,
   useScriptState,
   useSnapshotState,
-  XIcon,
-  iconMap
+  XIcon
 }
 export type {
   CanvasData,
