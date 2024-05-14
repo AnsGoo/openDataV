@@ -73,7 +73,7 @@ export function createStyleComponent(structOption: MetaContainerItem[]) {
       }
     },
     emits: ['change', 'update:value'],
-    setup(props, { slots }) {
+    setup(props) {
       const canvasState = useCanvasState()
       const changed = (keys: Array<string>, value: any) => {
         const component = canvasState.getComponentById(props.componentId!)
