@@ -1,3 +1,5 @@
+import component from '*.vue'
+
 export enum DataMode {
   SELF = 'SELF',
   UNIVERSAL = 'UNIVERSAL',
@@ -93,5 +95,13 @@ export enum ContainerType {
   COLLAPSE = 'Collapse',
   CARD = 'Card',
   TIMELINE = 'Timeline'
+}
+
+export enum Event {
+  ComponentPropChange = 'component:prop',
+  ComponentStyleChange = 'component:style',
+  ComponentCreate = 'component:create',
+  ComponentDestory = 'component:destory',
+  ComponentResize = 'component:resize'
 }
 export const GlobalColorSwatches = ['#FFFFFF', '#18A058', '#2080F0', '#F0A020', '#D03050FF']

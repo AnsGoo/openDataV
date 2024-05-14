@@ -1,4 +1,4 @@
-import { isFunction, isUndefined } from 'lodash-es'
+import { isFunction, isUndefined, isArray, isObject } from 'lodash-es'
 
 import type { MetaContainerItem, MetaForm } from './type'
 
