@@ -1,11 +1,11 @@
 import type { StoreComponentData } from './db'
-import useCanvasState from './state/canvas'
-import useSnapShotState from './state/snapshot'
+import { useCanvasState, useClipBoardState, useSnapshotState } from './state'
 import type { CanvasStyleData } from './state/type'
 import type { ComponentDataType } from './type'
 import { exportRaw, handleLogger, importRaw } from './utils'
 
-const snapShotState = useSnapShotState()
+const snapShotState = useSnapshotState()
+const clipBoardState = useClipBoardState()
 
 // 状态管理
 const canvasState = useCanvasState()
@@ -70,4 +70,18 @@ const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   }
 }
 
-export { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo }
+const decompose = () => {
+  canvasState.decompose()
+}
+const copy = () => {
+  clipBoardState.copy(canvasState.activeComponent!)
+}
+
+const fullScreen = () => {
+  const el: HTMLElement | null = document.querySelector('#editor')
+  if (document.fullscreenEnabled && el) {
+    el.requestFullscreen()
+  }
+}
+
+export { copy, decompose, exportCanvas, fullScreen, importCanvas, recoveryDraft, setShowEm, undo }
