@@ -84,4 +84,26 @@ const fullScreen = () => {
   }
 }
 
-export { copy, decompose, exportCanvas, fullScreen, importCanvas, recoveryDraft, setShowEm, undo }
+const paste = (_: HTMLElement, event: MouseEvent) => {
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+  const y = event.pageY - editorRectInfo.top
+  const x = event.pageX - editorRectInfo.left
+  clipBoardState.paste(true, x, y)
+}
+
+const clearCanvas = () => {
+  canvasState.clearCanvas()
+}
+
+export {
+  clearCanvas,
+  copy,
+  decompose,
+  exportCanvas,
+  fullScreen,
+  importCanvas,
+  paste,
+  recoveryDraft,
+  setShowEm,
+  undo
+}
