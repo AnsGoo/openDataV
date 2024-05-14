@@ -1,5 +1,3 @@
-import component from '*.vue'
-
 export enum DataMode {
   SELF = 'SELF',
   UNIVERSAL = 'UNIVERSAL',
