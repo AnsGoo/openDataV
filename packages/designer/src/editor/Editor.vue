@@ -55,6 +55,8 @@
 import type { CustomComponent } from '@open-data-v/base'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
+import { clearCanvas, paste } from '@/toolbars'
+
 import Area from '../editor/Area.vue'
 import Grid from '../editor/Grid.vue'
 import MarkLine from '../editor/MarkLine.vue'
@@ -80,17 +82,6 @@ const canvasState = useCanvasState()
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
-}
-
-const clearCanvas = () => {
-  canvasState.clearCanvas()
-}
-
-const paste = (_: HTMLElement, event: MouseEvent) => {
-  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
-  const y = event.pageY - editorRectInfo.top
-  const x = event.pageX - editorRectInfo.left
-  clipBoardState.paste(true, x, y)
 }
 
 const contextMenus = (): ContextmenuItem[] => {

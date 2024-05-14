@@ -1,11 +1,11 @@
 import type { StoreComponentData } from './db'
-import useCanvasState from './state/canvas'
-import useSnapShotState from './state/snapshot'
+import { useCanvasState, useClipBoardState, useSnapshotState } from './state'
 import type { CanvasStyleData } from './state/type'
 import type { ComponentDataType } from './type'
 import { exportRaw, handleLogger, importRaw } from './utils'
 
-const snapShotState = useSnapShotState()
+const snapShotState = useSnapshotState()
+const clipBoardState = useClipBoardState()
 
 // 状态管理
 const canvasState = useCanvasState()
@@ -70,4 +70,40 @@ const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   }
 }
 
-export { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo }
+const decompose = () => {
+  canvasState.decompose()
+}
+const copy = () => {
+  clipBoardState.copy(canvasState.activeComponent!)
+}
+
+const fullScreen = () => {
+  const el: HTMLElement | null = document.querySelector('#editor')
+  if (document.fullscreenEnabled && el) {
+    el.requestFullscreen()
+  }
+}
+
+const paste = (_: HTMLElement, event: MouseEvent) => {
+  const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
+  const y = event.pageY - editorRectInfo.top
+  const x = event.pageX - editorRectInfo.left
+  clipBoardState.paste(true, x, y)
+}
+
+const clearCanvas = () => {
+  canvasState.clearCanvas()
+}
+
+export {
+  clearCanvas,
+  copy,
+  decompose,
+  exportCanvas,
+  fullScreen,
+  importCanvas,
+  paste,
+  recoveryDraft,
+  setShowEm,
+  undo
+}

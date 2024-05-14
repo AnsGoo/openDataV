@@ -19,6 +19,8 @@ import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, h, ref, watch } from 'vue'
 
+import { decompose } from '@/toolbars'
+
 import { ComponentGroupList } from '../../../enum'
 import { useEmpty } from '../../../modules'
 import { useCanvasState, useClipBoardState } from '../../../state'
@@ -213,7 +215,7 @@ const contextmenus = (index: string): ContextmenuItem[] => {
       disable:
         canvasState.getComponentByIndex(index.split('-').map((i) => Number(i)))?.component !==
         'Group',
-      handler: () => canvasState.decompose()
+      handler: decompose
     },
     {
       text: '删除',

@@ -24,7 +24,18 @@ import {
   useScriptState,
   useSnapshotState
 } from './state'
-import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from './toolbars'
+import {
+  clearCanvas,
+  copy,
+  decompose,
+  exportCanvas,
+  fullScreen,
+  importCanvas,
+  paste,
+  recoveryDraft,
+  setShowEm,
+  undo
+} from './toolbars'
 import type {
   ComponentDataType,
   ComponentItem,
@@ -47,12 +58,15 @@ import {
 
 export {
   Canvas,
+  clearCanvas,
   CodeEditor,
   ComponentGroupList,
   Container,
+  copy,
   createComponent,
   DataMode,
   DataSlotter,
+  decompose,
   DemoDataPlugin,
   Designer,
   Directive,
@@ -60,6 +74,7 @@ export {
   Editor,
   exportCanvas,
   filterStyle,
+  fullScreen,
   getComponentStyle,
   getInnerComponentShapeStyle,
   Group,
@@ -68,6 +83,7 @@ export {
   iconMap,
   importCanvas,
   LeftSideBar,
+  paste,
   PixelEnum,
   Previewer,
   recoveryDraft,

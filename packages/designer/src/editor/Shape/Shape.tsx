@@ -4,7 +4,8 @@ import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 
 import { stretchedComponents } from '../../component'
-import { useActionState, useCanvasState, useClipBoardState } from '../../state'
+import { useActionState, useCanvasState } from '../../state'
+import { copy, decompose } from '../../toolbars'
 import type { ComponentStyle, ContextmenuItem, Vector } from '../../type'
 import { copyText, mod360, systemLogger, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
@@ -26,11 +27,6 @@ export default defineComponent({
   setup(props, { slots }) {
     const canvasState = useCanvasState()
     const actionState = useActionState()
-    const clipBoardState = useClipBoardState()
-
-    const copy = () => {
-      clipBoardState.copy(canvasState.activeComponent!)
-    }
 
     const deleteComponent = () => {
       canvasState.removeComponent(props.index!, props.info!.parent)
@@ -58,10 +54,6 @@ export default defineComponent({
 
     const bottomComponent = () => {
       canvasState.bottomComponent(props.index!, props.info!.parent)
-    }
-
-    const decompose = () => {
-      canvasState.decompose()
     }
 
     const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {

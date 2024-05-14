@@ -1,4 +1,11 @@
-import { exportCanvas, importCanvas, recoveryDraft, setShowEm, undo } from '@open-data-v/designer'
+import {
+  exportCanvas,
+  fullScreen,
+  importCanvas,
+  recoveryDraft,
+  setShowEm,
+  undo
+} from '@open-data-v/designer'
 import { h } from 'vue'
 import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 
@@ -74,12 +81,7 @@ export default function useToolBars(
     },
     {
       label: '全屏',
-      action: () => {
-        const el: HTMLElement | null = document.querySelector('#editor')
-        if (document.fullscreenEnabled && el) {
-          el.requestFullscreen()
-        }
-      },
+      action: fullScreen,
       icon: 'fullScreen'
     },
     {
