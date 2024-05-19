@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/base",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "OpenDataV 公共基础包",
   "keywords": [
     "open-data-v",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build:lib": "vite build",
-    "public":"npm publish --access public"
+    "publish":"npm publish --access public"
   },
   "author": "ansgoo",
   "type": "module",

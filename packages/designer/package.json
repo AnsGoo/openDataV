@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/designer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "OpenDataV 是一个基于Vue3的拖拽式、可视化、低代码数据可视化大屏应用基础组件包",
   "keywords": [
     "open-data-v",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build:lib": "vite build",
-    "public":"npm publish --access public"
+    "publish":"npm publish --access public"
   },
   "license": "Apache-2.0",
   "author": "ansgoo",
