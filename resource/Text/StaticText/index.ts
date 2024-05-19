@@ -1,7 +1,7 @@
-import mainfest from './mainfest.json'
+import manifest from './manifest.json'
 
 export default {
   config: () => import('./config'),
   component: () => import('./StaticText.vue'),
-  mainfest
+  manifest
 }
