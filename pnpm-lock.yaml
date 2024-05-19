@@ -254,7 +254,7 @@ importers:
       vue-eslint-parser: ^7.11.0
       vue-tsc: ^1.8.27
     dependencies:
-      '@open-data-v/base': link:../base
+      '@open-data-v/base': 0.0.4
       '@open-data-v/ui': link:../ui
       lodash-es: 4.17.21
     devDependencies:
@@ -313,7 +313,7 @@ importers:
       vue-eslint-parser: ^7.11.0
       vue-tsc: ^1.8.27
     dependencies:
-      '@open-data-v/base': link:../base
+      '@open-data-v/base': 0.0.4
       '@open-data-v/ui': link:../ui
       '@vicons/utils': 0.1.4_vue@3.4.27
       dexie: 3.2.7
@@ -372,7 +372,7 @@ importers:
       vue-eslint-parser: ^7.11.0
       vue-tsc: ^1.8.27
     dependencies:
-      '@open-data-v/base': link:../base
+      '@open-data-v/base': 0.0.4
       '@open-data-v/ui': link:../ui
       lodash-es: 4.17.21
     devDependencies:
@@ -430,7 +430,7 @@ importers:
       vue-tsc: ^1.8.27
     dependencies:
       '@ctrl/tinycolor': 4.1.0
-      '@open-data-v/base': link:../base
+      '@open-data-v/base': 0.0.4
       lodash-es: 4.17.21
     devDependencies:
       eslint-config-prettier: 8.10.0_eslint@8.57.0
@@ -1864,6 +1864,13 @@ packages:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
     dev: true
+
+  /@open-data-v/base/0.0.4:
+    resolution: {integrity: sha512-w991xrbVexyI0HPn7LBNZeg4w3DfYI+ctcJNbLtj5iq9HFivzT0uDF8hMYGTTUaZb1nN6FGEW9lCoNy6/4uIfA==}
+    dependencies:
+      lodash-es: 4.17.21
+      mitt: 3.0.1
+    dev: false
 
   /@pkgjs/parseargs/0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
