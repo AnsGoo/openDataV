@@ -4,7 +4,6 @@ import { resolve } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
 import type { ConfigEnv, ProxyOptions, UserConfigExport } from 'vite'
 import { loadEnv } from 'vite'
-import { viteMockServe } from 'vite-plugin-mock'
 
 // https://vitejs.dev/config/
 export default ({ mode, command }: ConfigEnv): UserConfigExport => {
@@ -28,16 +27,6 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
         include: [/\.vue$/, /\.md$/] // <--
       }),
       vueJsx(),
-      viteMockServe({
-        mockPath: '../mock/modules',
-        logger: true,
-        localEnabled: command === 'serve',
-        prodEnabled: VITE_MOCK === 'true',
-        injectCode: `
-        import { setupProdMockServer } from '../../mock/mockProdServer';
-        setupProdMockServer();
-      `
-      }),
       visualizer()
     ],
     base: './',
