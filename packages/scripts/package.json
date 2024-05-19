@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/scripts",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "OpenDataV 脚本基础包",
   "keywords": [
     "open-data-v",
