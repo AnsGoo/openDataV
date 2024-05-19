@@ -1,0 +1,10 @@
+{
+  "name": "MapChart",
+  "title": "地图",
+  "category": "MAP",
+  "size": {
+    "width": 490,
+    "height": 408
+  },
+  "dataMode": "UNIVERSAL"
+}

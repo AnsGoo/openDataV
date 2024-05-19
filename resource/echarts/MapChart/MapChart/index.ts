@@ -1,7 +1,7 @@
-import MapChartComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./src/MapChart.vue'),
-  config: MapChartComponent
+  config: () => import('./config'),
+  mainfest
 }

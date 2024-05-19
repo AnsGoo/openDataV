@@ -1,0 +1,10 @@
+{
+  "name": "BasicBarChart",
+  "title": "基础柱状图",
+  "category": "BAR",
+  "size": {
+    "width": 500,
+    "height": 170
+  },
+  "dataMode": "UNIVERSAL"
+}

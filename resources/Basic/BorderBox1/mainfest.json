@@ -1,0 +1,9 @@
+{
+  "name": "BorderBox",
+  "title": "测试边框",
+  "category": "BORDER",
+  "size": {
+    "width": 200,
+    "height": 200
+  }
+}

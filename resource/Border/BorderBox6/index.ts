@@ -1,7 +1,7 @@
-import BorderBox6, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./BorderBox.vue'),
-  config: BorderBox6
+  config: () => import('./config'),
+  mainfest
 }

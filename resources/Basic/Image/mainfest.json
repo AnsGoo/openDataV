@@ -1,0 +1,9 @@
+{
+  "name": "ImgView",
+  "title": "图片测试",
+  "category": "BASIC",
+  "size": {
+    "width": 200,
+    "height": 200
+  }
+}

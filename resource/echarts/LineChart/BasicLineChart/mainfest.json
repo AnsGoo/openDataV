@@ -1,0 +1,10 @@
+{
+  "name": "BasicLineChart",
+  "title": "基础线图",
+  "category": "LINE",
+  "size": {
+    "width": 500,
+    "height": 170
+  },
+  "dataMode": "UNIVERSAL"
+}

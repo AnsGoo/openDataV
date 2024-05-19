@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
+import { useProp } from '@open-data-v/base'
 import dayjs from 'dayjs'
-import { useProp } from 'open-data-v/base'
 import { onMounted, onUnmounted, ref } from 'vue'
 
 import type DateTextComponent from './config'
