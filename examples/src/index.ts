@@ -15,17 +15,15 @@ import store from '@/store'
 
 import App from './App.vue'
 import CodeEditor from './components/CodeEditor'
-import { useAsyncLoadComponent, useLoadComponent } from './load'
+import { useAsyncLoadComponent } from './load'
 
 const componentPlugin = useComponentPlugin({ codeEditorComponent: CodeEditor })
-const AsyncComponent = useLoadComponent()
 
 const RemoteComponent = useAsyncLoadComponent()
 
 const app = createApp(App)
 app.use(router)
 app.use(Directive)
-app.use(AsyncComponent)
 
 // 注册状态管理器
 app.use(store)
