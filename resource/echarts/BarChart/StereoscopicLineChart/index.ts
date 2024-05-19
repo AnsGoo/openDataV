@@ -1,7 +1,7 @@
-import mainfest from './mainfest.json'
+import manifest from './manifest.json'
 
 export default {
   config: () => import('./config'),
   component: () => import('./src/StereoscopicBarChart.vue'),
-  mainfest
+  manifest
 }
