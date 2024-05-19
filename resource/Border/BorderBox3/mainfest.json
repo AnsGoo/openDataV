@@ -1,0 +1,9 @@
+{
+  "name": "BorderBox3",
+  "title": "3#边框",
+  "category": "BORDER",
+  "size": {
+    "width": 200,
+    "height": 200
+  }
+}

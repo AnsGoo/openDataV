@@ -1,0 +1,15 @@
+{
+  "name": "border-image",
+  "version": "1.0.0",
+  "description": "带边框的图片",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "chenghaiwen",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@open-data-v/base":"workspace:*"
+  },
+  "devDependencies": {}
+}

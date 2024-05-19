@@ -1,7 +1,7 @@
-import FlvVideo, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./FlvVideo.vue'),
-  config: FlvVideo
+  config: () => import('./config'),
+  mainfest
 }

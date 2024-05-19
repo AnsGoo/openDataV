@@ -3,8 +3,8 @@
 </template>
 
 <script setup lang="ts">
+import type { Hooks } from '@open-data-v/base'
 import type { BarSeriesOption, EChartsOption, XAXisComponentOption } from 'echarts'
-import type { Hooks } from 'open-data-v/base'
 import { inject, onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'

@@ -1,0 +1,10 @@
+{
+  "name": "ScrollTable",
+  "title": "滚动表格",
+  "category": "TABLE",
+  "size": {
+    "width": 400,
+    "height": 100
+  },
+  "dataMode": "UNIVERSAL"
+}

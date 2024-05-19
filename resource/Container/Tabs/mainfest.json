@@ -1,0 +1,9 @@
+{
+  "name": "Tabs",
+  "title": "标签页",
+  "category": "CONTAINER",
+  "size": {
+    "width": 400,
+    "height": 200
+  }
+}

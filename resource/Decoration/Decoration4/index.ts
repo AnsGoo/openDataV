@@ -1,7 +1,7 @@
-import Decoration, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./Decoration.vue'),
-  config: Decoration
+  mainfest
 }
