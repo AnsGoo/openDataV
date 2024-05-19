@@ -1,7 +1,7 @@
-import SubTextComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./SubText.vue'),
-  config: SubTextComponent
+  mainfest
 }

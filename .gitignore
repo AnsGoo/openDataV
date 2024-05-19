@@ -4,3 +4,6 @@ components.d.ts
 .DS_Store
 dist
 .idea
+**/es
+**/lib
+**/stats.html

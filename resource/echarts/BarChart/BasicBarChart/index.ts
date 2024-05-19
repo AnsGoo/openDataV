@@ -1,7 +1,7 @@
-import BasicBarChartComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./BasicBarChart.vue'),
-  config: BasicBarChartComponent
+  config: () => import('./config'),
+  mainfest
 }

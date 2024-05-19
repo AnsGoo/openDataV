@@ -1,7 +1,7 @@
-import StereoscopicBarChartComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./src/StereoscopicBarChart.vue'),
-  config: StereoscopicBarChartComponent
+  mainfest
 }

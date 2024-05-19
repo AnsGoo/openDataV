@@ -10,8 +10,8 @@
 </template>
 
 <script lang="ts" setup>
+import { useProp } from '@open-data-v/base'
 import flvjs from 'flv.js'
-import { useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import type FlvVideoComponent from './config'

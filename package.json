@@ -3,14 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "bootstrap": "pnpm install",
-    "dev": "vite --profile --open",
-    "build": "vue-tsc --noEmit && vite build",
-    "serve": "pnpm build && vite preview",
-    "lint": "eslint --ext .js,.ts,.vue,.tsx src/ examples/ docs/ resource/",
-    "lint:fromat": "prettier -c --parser typescript \"{src,__tests__,e2e}/**/*.[jt]s?(x)\"",
-    "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx src/ examples/ docs/ resource/",
+    "dev": "npm -C examples run dev",
+    "build": "npm -C examples run build",
+    "build:lib": "pnpm recursive run build:lib",
+    "lint": "eslint --ext .js,.ts,.vue,.tsx packages/base/src packages/ui/src packages/scripts/src packages/data/src packages/designer/src  examples/src docs/ resource/",
+    "lint:fromat": "prettier -c --parser typescript \"{packages,__tests__,e2e}/**/*.[jt]s?(x)\"",
+    "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx packages/base/src packages/ui/src packages/scripts/src packages/data/src packages/designer/src examples/ docs/ resource/",
     "prepare": "husky install",
-    "reinstall": "rimraf pnpm-lock.yaml && rimraf src/**/node_modules && rimraf node_modules && pnpm bootstrap"
+    "reinstall": "rimraf pnpm-lock.yaml && rimraf packages/**/node_modules && rimraf examples/node_modules && rimraf node_modules && pnpm bootstrap"
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -35,7 +35,6 @@
     "eslint-plugin-vue": "^9.24.0",
     "husky": "^7.0.4",
     "less": "^4.2.0",
-    "open-data-v": "link:src",
     "postcss": "^8.4.38",
     "postcss-html": "^1.6.0",
     "postcss-less": "^6.0.0",

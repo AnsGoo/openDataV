@@ -1,0 +1,9 @@
+{
+  "name": "SubText",
+  "title": "数据订阅文本",
+  "category": "TEXT",
+  "size": {
+    "width": 100,
+    "height": 30
+  }
+}

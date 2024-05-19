@@ -1,7 +1,7 @@
-import ImageComponent, { componentName } from './config'
+import mainfest from './mainfest.json'
 
 export default {
-  componentName,
   component: () => import('./Image.vue'),
-  config: ImageComponent
+  config: () => import('./config'),
+  mainfest
 }
