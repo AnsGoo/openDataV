@@ -16,7 +16,7 @@
 
 🧙国内：[http://opendatav.xingxingzaixian.fun/](http://opendatav.xingxingzaixian.fun/) (已对接后端)
 
-🧙文档: [https://datav.byteportrait.com/#/docs/quick-satrt/quick-start](https://datav.byteportrait.com/#/docs/quick-satrt/quick-start)
+🧙文档: [https://ansgoo.github.io/docs/](https://ansgoo.github.io/docs/)
 
 
 ## 源码地址：
