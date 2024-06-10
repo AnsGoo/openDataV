@@ -1,7 +1,7 @@
-import ProgressComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./WaveChart.vue'),
-  config: ProgressComponent
+  config: () => import('./config'),
+  manifest
 }

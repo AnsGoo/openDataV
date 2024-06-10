@@ -1,0 +1,9 @@
+{
+  "name": "DateText",
+  "title": "时间文本",
+  "category": "TEXT",
+  "size": {
+    "width": 200,
+    "height": 50
+  }
+}

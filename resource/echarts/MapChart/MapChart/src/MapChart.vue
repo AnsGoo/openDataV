@@ -3,10 +3,10 @@
 </template>
 
 <script setup lang="ts">
+import type { Response } from '@open-data-v/base'
+import { useData, useProp } from '@open-data-v/base'
 import type { EChartsOption } from 'echarts'
 import { graphic, registerMap } from 'echarts'
-import type { ResponseData } from 'open-data-v/base'
-import { useData, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../../hooks'
@@ -19,10 +19,8 @@ let globalOption: EChartsOption
 const props = defineProps<{
   component: MapChartComponent
 }>()
-let chartData:
-  | Array<{ label: string; value: number }>
-  | ResponseData<Array<{ label: string; value: number }>>['afterData'] = []
-const dataChange = (resp: any, _?: string) => {
+let chartData: Array<{ label: string; value: number }> = []
+const dataChange = (resp: Response, _?: string) => {
   if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)
@@ -185,7 +183,7 @@ const getOption = () => {
 
 const updateData = (resp: Array<{ label: string; value: number }>) => {
   globalOption = getOption()
-  globalOption.series![1].data = resp
+  globalOption.series![1].data = resp || []
   updateEchart(globalOption)
 }
 </script>

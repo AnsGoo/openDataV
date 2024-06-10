@@ -1,7 +1,7 @@
-import RankBoardComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./RankBoard.vue'),
-  config: RankBoardComponent
+  config: () => import('./config'),
+  manifest
 }

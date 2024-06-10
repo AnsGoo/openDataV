@@ -1,0 +1,9 @@
+{
+  "name": "StaticText",
+  "title": "静态文本",
+  "category": "TEXT",
+  "size": {
+    "width": 150,
+    "height": 20
+  }
+}

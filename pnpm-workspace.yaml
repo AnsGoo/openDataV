@@ -1,4 +1,11 @@
 packages:
-  - src/*
-  - examples/*
+  - packages/base/**
+  - packages/data/**
+  - packages/ui/**
+  - packages/scripts/**
+  - packages/designer/**
+  - examples/
   - resource/**
+  - resources/**
+  - docs/
+  - mock/

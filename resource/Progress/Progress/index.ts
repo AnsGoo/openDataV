@@ -1,7 +1,8 @@
-import ProgressComponent, { componentName } from './config'
+import ProgressComponent from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./Progress.vue'),
-  config: ProgressComponent
+  config: ProgressComponent,
+  manifest
 }

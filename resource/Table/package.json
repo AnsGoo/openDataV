@@ -8,5 +8,9 @@
     "OpenDataV"
   ],
   "author": "xingxingzaixian",
-  "license": "Apache-2.0"
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@open-data-v/base":"workspace:*",
+    "@open-data-v/ui":"workspace:*"
+  }
 }

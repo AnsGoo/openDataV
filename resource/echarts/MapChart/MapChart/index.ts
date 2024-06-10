@@ -1,7 +1,7 @@
-import MapChartComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./src/MapChart.vue'),
-  config: MapChartComponent
+  config: () => import('./config'),
+  manifest
 }

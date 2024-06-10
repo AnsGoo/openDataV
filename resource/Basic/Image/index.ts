@@ -1,7 +1,7 @@
-import ImageComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./Image.vue'),
-  config: ImageComponent
+  config: () => import('./config'),
+  manifest
 }

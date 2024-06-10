@@ -1,7 +1,7 @@
-import GaugeComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./Gauge.vue'),
-  config: GaugeComponent
+  manifest
 }

@@ -112,6 +112,7 @@ module.exports = defineConfig?.({
     'import/first': 'error',
     'import/newline-after-import': 'error',
     'import/no-duplicates': 'error',
-    'vue/no-setup-props-destructure': 'off'
+    'vue/no-setup-props-destructure': 'off',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }]
   }
 })

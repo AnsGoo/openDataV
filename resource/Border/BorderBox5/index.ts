@@ -1,7 +1,7 @@
-import BorderBox5, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./BorderBox.vue'),
-  config: BorderBox5
+  manifest
 }

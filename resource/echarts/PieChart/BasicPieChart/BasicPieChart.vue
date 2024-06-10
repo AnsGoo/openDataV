@@ -3,9 +3,9 @@
 </template>
 
 <script setup lang="ts">
+import type { Response } from '@open-data-v/base'
+import { useData, useProp } from '@open-data-v/base'
 import type { EChartsOption, PieSeriesOption } from 'echarts'
-import type { ResponseData } from 'open-data-v/base'
-import { useData, useProp } from 'open-data-v/base'
 import { onMounted, ref } from 'vue'
 
 import { useEchart } from '../../hooks'
@@ -21,10 +21,8 @@ const props = defineProps<{
 }>()
 
 const { updateEchart, resizeHandler } = useEchart(chartEl)
-let chartData:
-  | Array<{ label: string; value: number }>
-  | ResponseData<Array<{ label: string; value: number }>>['afterData'] = []
-const dataChange = (resp: any, _?: string) => {
+let chartData: Array<{ label: string; value: number }> = []
+const dataChange = (resp: Response, _?: string) => {
   if (resp.status === 'SUCCESS') {
     chartData = resp.afterData
     updateData(chartData)
@@ -102,7 +100,7 @@ const getOption = () => {
 const updateData = (resp: Array<{ label: string; value: number }>) => {
   const upperLimit = propValue.data.upperLimit
   const lowerLimit = propValue.data.lowerLimit
-  const data = resp.map((ele) => {
+  const data = (resp || []).map((ele) => {
     return {
       value: compareResetValue(Number(ele.value), upperLimit, lowerLimit),
       label: ele.label

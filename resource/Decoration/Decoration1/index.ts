@@ -1,7 +1,7 @@
-import Decoration, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./Decoration.vue'),
-  config: Decoration
+  manifest
 }

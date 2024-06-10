@@ -1,0 +1,9 @@
+{
+  "name": "Gauge2",
+  "title": "2#仪表盘",
+  "category": "GAUGE",
+  "size": {
+    "width": 200,
+    "height": 200
+  }
+}

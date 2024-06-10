@@ -1,7 +1,7 @@
-import BorderImage, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
-  component: () => import('./src/BorderImage.vue'),
-  config: BorderImage
+  component: () => import('./BorderImage.vue'),
+  config: () => import('./config'),
+  manifest
 }

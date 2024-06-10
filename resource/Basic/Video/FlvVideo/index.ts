@@ -1,7 +1,7 @@
-import FlvVideo, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./FlvVideo.vue'),
-  config: FlvVideo
+  config: () => import('./config'),
+  manifest
 }

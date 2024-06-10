@@ -1,7 +1,7 @@
-import BasicBarChartComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./BasicBarChart.vue'),
-  config: BasicBarChartComponent
+  config: () => import('./config'),
+  manifest
 }

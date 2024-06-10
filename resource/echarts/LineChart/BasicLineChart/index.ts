@@ -1,7 +1,7 @@
-import BasicLineChartComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
   component: () => import('./BasicLineChart.vue'),
-  config: BasicLineChartComponent
+  config: () => import('./config'),
+  manifest
 }

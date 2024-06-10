@@ -1,7 +1,7 @@
-import SubTextComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
+  config: () => import('./config'),
   component: () => import('./SubText.vue'),
-  config: SubTextComponent
+  manifest
 }

@@ -14,8 +14,8 @@
     "allowJs": true,
     "types": ["vite/client"],
     "checkJs": true,
-    "outDir": "./dist",
     "skipLibCheck": true,
+    "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
     "noImplicitAny": false, // 允许隐式的any类型（某些第三方库有隐式的any类型）
     "strictNullChecks": true, // 不允许把null、undefined赋值给其他类型的变量
@@ -24,19 +24,22 @@
     "noUnusedLocals": false, // 检查只声明、未使用的局部变量(只提示不报错)
     "noUnusedParameters": true, // 检查未使用的函数参数(只提示不报错)
     "removeComments": true, // 移除代码中的注释
-    "typeRoots":["node_modules/@types", "src/**/*.d.ts", "examples/**/*.d.ts"], // 将这些文件夹下的包自动导入 TypeScript 声明
+    "typeRoots":["node_modules/@types", "packages/**/es/*.d.ts"], // 将这些文件夹下的包自动导入 TypeScript 声明
     "baseUrl": ".",
     "paths": {
-      "@/*": ["examples/*"],
-      "open-data-v/*": ["src/*"],
-      "docs/*": ["docs/*"]
-    }
+      "@open-data-v/designer": ["packages/designer/*"],
+      "@open-data-v/data": ["packages/data/*"],
+      "@open-data-v/base": ["packages/base/*"],
+      "@open-data-v/scripts": ["packages/scripts/*"],
+      "@open-data-v/ui": ["packages/ui/*"]
+    },
   },
   "include": [
-    "src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue",
+    "packages/**/*.ts",
+    "packages/**/*.d.ts",
+    "packages/**/*.tsx",
+    "packages/**/*.vue",
     "resource/**/*.ts", "resource/**/*.d.ts", "resource/**/*.tsx", "resource/**/*.vue",
-    "examples/**/*.ts", "examples/**/*.d.ts", "examples/**/*.tsx", "examples/**/*.vue",
-    "mock/*", "docs/*"
   ],
   "exclude": ["**/node_modules/**", "dist", "**/*.js"]
 }

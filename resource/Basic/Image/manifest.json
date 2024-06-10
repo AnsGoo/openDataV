@@ -1,0 +1,9 @@
+{
+  "name": "Image",
+  "title": "图片",
+  "category": "BASIC",
+  "size": {
+    "width": 200,
+    "height": 200
+  }
+}

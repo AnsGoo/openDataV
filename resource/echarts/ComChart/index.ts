@@ -1,7 +1,7 @@
-import ComChartComponent, { componentName } from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
+  manifest,
   component: () => import('./ComChart.vue'),
-  config: ComChartComponent
+  config: () => import('./config')
 }
