@@ -198,7 +198,7 @@ importers:
       rimraf: 3.0.2
       rollup-plugin-visualizer: 5.12.0
       stylelint: 15.11.0_typescript@4.9.5
-      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      stylelint-config-recommended-vue: 1.5.0_wcwbrsvmk4gdkhzphuiyflvb64
       tailwindcss: 3.4.3
       terser: 5.31.0
       typescript: 4.9.5
@@ -209,8 +209,8 @@ importers:
 
   packages/data:
     specifiers:
-      '@open-data-v/base': ^0.0.4
-      '@open-data-v/ui': ^0.0.4
+      '@open-data-v/base': workspace:*
+      '@open-data-v/ui': workspace:*
       eslint-config-prettier: ^8.10.0
       eslint-define-config: ^1.24.1
       eslint-plugin-import: ^2.29.1
@@ -236,8 +236,8 @@ importers:
       vue-eslint-parser: ^7.11.0
       vue-tsc: ^1.8.27
     dependencies:
-      '@open-data-v/base': 0.0.4
-      '@open-data-v/ui': 0.0.4
+      '@open-data-v/base': link:../base
+      '@open-data-v/ui': link:../ui
       lodash-es: 4.17.21
     devDependencies:
       eslint-config-prettier: 8.10.0_eslint@8.57.0
@@ -255,7 +255,7 @@ importers:
       rimraf: 3.0.2
       rollup-plugin-visualizer: 5.12.0
       stylelint: 15.11.0_typescript@4.9.5
-      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      stylelint-config-recommended-vue: 1.5.0_wcwbrsvmk4gdkhzphuiyflvb64
       tailwindcss: 3.4.3
       terser: 5.31.0
       typescript: 4.9.5
@@ -266,8 +266,8 @@ importers:
 
   packages/designer:
     specifiers:
-      '@open-data-v/base': ^0.0.4
-      '@open-data-v/ui': ^0.0.4
+      '@open-data-v/base': workspace:*
+      '@open-data-v/ui': workspace:*
       '@vicons/utils': ^0.1.4
       dexie: ^3.2.5
       eslint-config-prettier: ^8.10.0
@@ -295,8 +295,8 @@ importers:
       vue-eslint-parser: ^7.11.0
       vue-tsc: ^1.8.27
     dependencies:
-      '@open-data-v/base': 0.0.4
-      '@open-data-v/ui': 0.0.4
+      '@open-data-v/base': link:../base
+      '@open-data-v/ui': link:../ui
       '@vicons/utils': 0.1.4_vue@3.4.27
       dexie: 3.2.7
       lodash-es: 4.17.21
@@ -316,7 +316,7 @@ importers:
       rimraf: 3.0.2
       rollup-plugin-visualizer: 5.12.0
       stylelint: 15.11.0_typescript@4.9.5
-      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      stylelint-config-recommended-vue: 1.5.0_wcwbrsvmk4gdkhzphuiyflvb64
       tailwindcss: 3.4.3
       terser: 5.31.0
       typescript: 4.9.5
@@ -327,8 +327,8 @@ importers:
 
   packages/scripts:
     specifiers:
-      '@open-data-v/base': ^0.0.4
-      '@open-data-v/ui': ^0.0.4
+      '@open-data-v/base': workspace:*
+      '@open-data-v/ui': workspace:*
       eslint-config-prettier: ^8.10.0
       eslint-define-config: ^1.24.1
       eslint-plugin-import: ^2.29.1
@@ -354,8 +354,8 @@ importers:
       vue-eslint-parser: ^7.11.0
       vue-tsc: ^1.8.27
     dependencies:
-      '@open-data-v/base': 0.0.4
-      '@open-data-v/ui': 0.0.4
+      '@open-data-v/base': link:../base
+      '@open-data-v/ui': link:../ui
       lodash-es: 4.17.21
     devDependencies:
       eslint-config-prettier: 8.10.0_eslint@8.57.0
@@ -373,7 +373,7 @@ importers:
       rimraf: 3.0.2
       rollup-plugin-visualizer: 5.12.0
       stylelint: 15.11.0_typescript@4.9.5
-      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      stylelint-config-recommended-vue: 1.5.0_wcwbrsvmk4gdkhzphuiyflvb64
       tailwindcss: 3.4.3
       terser: 5.31.0
       typescript: 4.9.5
@@ -385,7 +385,7 @@ importers:
   packages/ui:
     specifiers:
       '@ctrl/tinycolor': ^4.0.3
-      '@open-data-v/base': ^0.0.4
+      '@open-data-v/base': workspace:*
       eslint-config-prettier: ^8.10.0
       eslint-define-config: ^1.24.1
       eslint-plugin-import: ^2.29.1
@@ -412,7 +412,7 @@ importers:
       vue-tsc: ^1.8.27
     dependencies:
       '@ctrl/tinycolor': 4.1.0
-      '@open-data-v/base': 0.0.4
+      '@open-data-v/base': link:../base
       lodash-es: 4.17.21
     devDependencies:
       eslint-config-prettier: 8.10.0_eslint@8.57.0
@@ -430,7 +430,7 @@ importers:
       rimraf: 3.0.2
       rollup-plugin-visualizer: 5.12.0
       stylelint: 15.11.0_typescript@4.9.5
-      stylelint-config-recommended-vue: 1.5.0_odtlx3nwmt523l5qmbpwaagb6e
+      stylelint-config-recommended-vue: 1.5.0_wcwbrsvmk4gdkhzphuiyflvb64
       tailwindcss: 3.4.3
       terser: 5.31.0
       typescript: 4.9.5
@@ -589,30 +589,40 @@ importers:
   resources/Basic/BorderBox1:
     specifiers:
       '@open-data-v/base': workspace:*
+      '@open-data-v/designer': workspace:*
+      lodash-es: ^4.17.21
     dependencies:
       '@open-data-v/base': link:../../../packages/base
+      '@open-data-v/designer': link:../../../packages/designer
+      lodash-es: 4.17.21
 
   resources/Basic/Image:
     specifiers:
       '@open-data-v/base': workspace:*
+      '@open-data-v/designer': workspace:*
     dependencies:
       '@open-data-v/base': link:../../../packages/base
+      '@open-data-v/designer': link:../../../packages/designer
 
   resources/Chart:
     specifiers:
       '@open-data-v/base': workspace:*
+      '@open-data-v/designer': workspace:*
       echarts: ^5.3.3
       echarts-liquidfill: ^3.1.0
     dependencies:
       '@open-data-v/base': link:../../packages/base
+      '@open-data-v/designer': link:../../packages/designer
       echarts: 5.5.0
       echarts-liquidfill: 3.1.0_echarts@5.5.0
 
   resources/Gauge:
     specifiers:
       '@open-data-v/base': workspace:*
+      '@open-data-v/designer': workspace:*
     dependencies:
       '@open-data-v/base': link:../../packages/base
+      '@open-data-v/designer': link:../../packages/designer
 
 packages:
 
@@ -1823,21 +1833,6 @@ packages:
       fastq: 1.17.1
     dev: true
 
-  /@open-data-v/base/0.0.4:
-    resolution: {integrity: sha512-w991xrbVexyI0HPn7LBNZeg4w3DfYI+ctcJNbLtj5iq9HFivzT0uDF8hMYGTTUaZb1nN6FGEW9lCoNy6/4uIfA==}
-    dependencies:
-      lodash-es: 4.17.21
-      mitt: 3.0.1
-    dev: false
-
-  /@open-data-v/ui/0.0.4:
-    resolution: {integrity: sha512-iHSXXZGQFwkJNI9iwoJ2oq3LPG9JrJbKhZrSZnz+n3i423U6H4YNE7fpLZGdjp33yNdfFAb6gRdrRwf49alj3w==}
-    dependencies:
-      '@ctrl/tinycolor': 4.1.0
-      '@open-data-v/base': 0.0.4
-      lodash-es: 4.17.21
-    dev: false
-
   /@pkgjs/parseargs/0.11.0:
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
@@ -2478,7 +2473,7 @@ packages:
     dependencies:
       '@vue/compiler-ssr': 3.4.27
       '@vue/shared': 3.4.27
-      vue: 3.4.27_typescript@4.9.5
+      vue: 3.4.27_typescript@5.4.5
 
   /@vue/shared/3.4.27:
     resolution: {integrity: sha512-DL3NmY2OFlqmYYrzp39yi3LDkKxa5vZVwxWdQ3rG0ekuWscHraeIbnI8t+aZK7qhYqEqWKTUdijadunb9pnrgA==}
@@ -4900,10 +4895,6 @@ packages:
     resolution: {integrity: sha512-RdJUflcE3cUzKiMqQgsCu06FPu9UdIJO0beYbPhHN4k6apgJtifcoCtT9bcxOpYBtpD2kCM6Sbzg4CausW/PKQ==}
     dev: true
 
-  /js-tokens/8.0.3:
-    resolution: {integrity: sha512-UfJMcSJc+SEXEl9lH/VLHSZbThQyLpw1vLO1Lb+j4RWDvG3N2f7yj3PVQA3cmkTBNldJ9eFnM+xEXxHIXrYiJw==}
-    dev: true
-
   /js-tokens/9.0.0:
     resolution: {integrity: sha512-WriZw1luRMlmV3LGJaR6QOJjWwgLUTf89OwT2lUOyjX2dJGBwgmIkbcz+7WFZjrZM635JOIR517++e/67CP9dQ==}
     dev: true
@@ -5533,16 +5524,6 @@ packages:
     engines: {node: '>= 0.4'}
     dev: true
 
-  /postcss-html/1.6.0:
-    resolution: {integrity: sha512-OWgQ9/Pe23MnNJC0PL4uZp8k0EDaUvqpJFSiwFxOLClAhmD7UEisyhO3x5hVsD4xFrjReVTXydlrMes45dJ71w==}
-    engines: {node: ^12 || >=14}
-    dependencies:
-      htmlparser2: 8.0.2
-      js-tokens: 8.0.3
-      postcss: 8.4.38
-      postcss-safe-parser: 6.0.0_postcss@8.4.38
-    dev: true
-
   /postcss-html/1.7.0:
     resolution: {integrity: sha512-MfcMpSUIaR/nNgeVS8AyvyDugXlADjN9AcV7e5rDfrF1wduIAGSkL4q2+wgrZgA3sHVAHLDO9FuauHhZYW2nBw==}
     engines: {node: ^12 || >=14}
@@ -6119,17 +6100,6 @@ packages:
     resolution: {integrity: sha512-Dj1Okke1C3uKKwQcetra4jSuk0DqbzbYtXipzFlFMZtowbF1x7BKJwB9AayVMyFARvU8EDrZdcax4At/452cAg==}
     dev: true
 
-  /stylelint-config-html/1.1.0_odtlx3nwmt523l5qmbpwaagb6e:
-    resolution: {integrity: sha512-IZv4IVESjKLumUGi+HWeb7skgO6/g4VMuAYrJdlqQFndgbj6WJAXPhaysvBiXefX79upBdQVumgYcdd17gCpjQ==}
-    engines: {node: ^12 || >=14}
-    peerDependencies:
-      postcss-html: ^1.0.0
-      stylelint: '>=14.0.0'
-    dependencies:
-      postcss-html: 1.6.0
-      stylelint: 15.11.0_typescript@4.9.5
-    dev: true
-
   /stylelint-config-html/1.1.0_wcwbrsvmk4gdkhzphuiyflvb64:
     resolution: {integrity: sha512-IZv4IVESjKLumUGi+HWeb7skgO6/g4VMuAYrJdlqQFndgbj6WJAXPhaysvBiXefX79upBdQVumgYcdd17gCpjQ==}
     engines: {node: ^12 || >=14}
@@ -6141,20 +6111,6 @@ packages:
       stylelint: 15.11.0_typescript@4.9.5
     dev: true
 
-  /stylelint-config-recommended-vue/1.5.0_odtlx3nwmt523l5qmbpwaagb6e:
-    resolution: {integrity: sha512-65TAK/clUqkNtkZLcuytoxU0URQYlml+30Nhop7sRkCZ/mtWdXt7T+spPSB3KMKlb+82aEVJ4OrcstyDBdbosg==}
-    engines: {node: ^12 || >=14}
-    peerDependencies:
-      postcss-html: ^1.0.0
-      stylelint: '>=14.0.0'
-    dependencies:
-      postcss-html: 1.6.0
-      semver: 7.6.0
-      stylelint: 15.11.0_typescript@4.9.5
-      stylelint-config-html: 1.1.0_odtlx3nwmt523l5qmbpwaagb6e
-      stylelint-config-recommended: 14.0.0_stylelint@15.11.0
-    dev: true
-
   /stylelint-config-recommended-vue/1.5.0_wcwbrsvmk4gdkhzphuiyflvb64:
     resolution: {integrity: sha512-65TAK/clUqkNtkZLcuytoxU0URQYlml+30Nhop7sRkCZ/mtWdXt7T+spPSB3KMKlb+82aEVJ4OrcstyDBdbosg==}
     engines: {node: ^12 || >=14}
@@ -6163,7 +6119,7 @@ packages:
       stylelint: '>=14.0.0'
     dependencies:
       postcss-html: 1.7.0
-      semver: 7.6.2
+      semver: 7.6.0
       stylelint: 15.11.0_typescript@4.9.5
       stylelint-config-html: 1.1.0_wcwbrsvmk4gdkhzphuiyflvb64
       stylelint-config-recommended: 14.0.0_stylelint@15.11.0
@@ -6923,7 +6879,7 @@ packages:
       espree: 9.6.1
       esquery: 1.5.0
       lodash: 4.17.21
-      semver: 7.6.2
+      semver: 7.6.0
     transitivePeerDependencies:
       - supports-color
     dev: true
@@ -6952,7 +6908,7 @@ packages:
       vue: ^3.2.0
     dependencies:
       '@vue/devtools-api': 6.6.1
-      vue: 3.4.27_typescript@4.9.5
+      vue: 3.4.27_typescript@5.4.5
     dev: false
 
   /vue-template-compiler/2.7.16:
@@ -6982,7 +6938,7 @@ packages:
     dependencies:
       '@volar/typescript': 1.11.1
       '@vue/language-core': 1.8.27_typescript@5.4.5
-      semver: 7.6.0
+      semver: 7.6.2
       typescript: 5.4.5
     dev: true
 

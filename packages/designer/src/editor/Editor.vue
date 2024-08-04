@@ -55,8 +55,6 @@
 import type { CustomComponent } from '@open-data-v/base'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
-import { clearCanvas, paste } from '@/toolbars'
-
 import Area from '../editor/Area.vue'
 import Grid from '../editor/Grid.vue'
 import MarkLine from '../editor/MarkLine.vue'
@@ -64,6 +62,7 @@ import Ruler from '../editor/Ruler.vue'
 import Shape from '../editor/Shape'
 import { DataMode, EditMode } from '../enum'
 import { useActionState, useCanvasState, useClipBoardState } from '../state'
+import { clearCanvas, paste } from '../toolbars'
 import type { ContextmenuItem, Location, Vector } from '../type'
 import {
   backgroundToCss,
@@ -142,12 +141,11 @@ const copyComponent = () => {
   }
 }
 
-const pasteComponent = async (event: ClipboardEvent) => {
+const pasteComponent = (event: ClipboardEvent) => {
   if (event.clipboardData) {
     const textData = event.clipboardData.getData('text')
     try {
       const componentData = JSON.parse(textData)
-      await canvasState.loadComponetClazz(componentData.component)
       const component: CustomComponent = createComponent(componentData)
       if (component) {
         component.changeStyle(['position', 'top'], component.positionStyle.top + 10)
@@ -229,7 +227,6 @@ const handleDrop = async (e) => {
   if (!componentName) {
     return
   }
-  await canvasState.loadComponetClazz(componentName)
   const component: CustomComponent = getComponentInstance({ component: componentName })
   if (!component) {
     return
@@ -246,6 +243,7 @@ const handleDrop = async (e) => {
   component.changeStyle(['position', 'left'], x)
   canvasState.appendComponent(component)
 }
+
 
 const handleDragOver = (e) => {
   e.preventDefault()

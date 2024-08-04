@@ -17,19 +17,10 @@
   "license": "Apache-2.0",
   "author": "ansgoo",
   "type": "module",
-  "main": "lib/index.umd.cjs",
-  "module": "es/index.esm.js",
-  "types": "es/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./es/index.d.ts",
-      "default": "./es/index.esm.js"
-    },
-    "./style": "./es/style.css"
-  },
+  "main": "src/index.ts",
   "dependencies": {
-    "@open-data-v/base": "^0.0.4",
-    "@open-data-v/ui": "^0.0.4",
+    "@open-data-v/base":"workspace:*",
+    "@open-data-v/ui":"workspace:*",
     "lodash-es": "^4.17.21"
   },
   "peerDependencies ": {

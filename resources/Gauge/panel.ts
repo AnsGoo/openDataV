@@ -1,8 +1,9 @@
 import { FormType } from '@open-data-v/base'
+import { createAttrComponent, createStyleComponent } from '@open-data-v/designer'
 import { h } from 'vue'
 
-export default {
-  style: () => [
+const styleComponent = () =>
+  createStyleComponent([
     {
       label: '字体设置',
       prop: 'font',
@@ -42,8 +43,9 @@ export default {
         }
       ]
     }
-  ],
-  propValue: () => [
+  ])
+const attrsComponent = () =>
+  createAttrComponent([
     {
       label: '数据配置',
       prop: 'data',
@@ -104,5 +106,6 @@ export default {
         }
       ]
     }
-  ]
-}
+  ])
+
+export { attrsComponent, styleComponent }

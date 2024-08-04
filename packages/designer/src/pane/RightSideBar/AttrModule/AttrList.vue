@@ -1,12 +1,12 @@
 <template>
-  <Container :config="attrKeys" :data="formData" :mode="mode" @change="changed" />
+  <AttrComponent :mode="mode" :componentId="curComponent ? curComponent.id : null" />
 </template>
 
 <script setup lang="ts">
-import type { ContainerType, CustomComponent, MetaContainerItem } from '@open-data-v/base'
+import type { ContainerType, CustomComponent } from '@open-data-v/base'
 import { computed } from 'vue'
 
-import { Container } from '../../../modules'
+import { useEmpty } from '../../../modules'
 import { useCanvasState } from '../../../state'
 
 const props = defineProps<{
@@ -15,45 +15,11 @@ const props = defineProps<{
 const canvasState = useCanvasState()
 
 const mode = computed<ContainerType>(() => props.curComponent.defaultViewType)
-
-interface PropData {
-  common: {
-    name: string
-    component: string
-    id: string
+const AttrComponent = computed(() => {
+  const panel = canvasState.getComponentPanel(props.curComponent.component)
+  if (panel) {
+    return panel.attrComponent
   }
-  [key: string]: any
-}
-
-const formData = computed(() => resetFormData())
-
-const attrKeys = computed<Array<MetaContainerItem>>(() => {
-  if (props.curComponent) {
-    return props.curComponent.propFromValue
-  }
-  return []
+  return useEmpty('未发现对应的数据面板')
 })
-
-// 样式页面改变，修改当前组件的样式：curComponent.propValue
-const changed = (keys: Array<string>, val: any) => {
-  if (!props.curComponent) {
-    return
-  }
-  canvasState.setComponentPropValue(props.curComponent, keys, val)
-}
-
-const resetFormData = () => {
-  const data: PropData = {
-    common: {
-      name: props.curComponent.name,
-      component: props.curComponent.component,
-      id: props.curComponent.id
-    }
-  }
-
-  if (props.curComponent && props.curComponent.propValue) {
-    Object.assign(data, props.curComponent.propValue)
-  }
-  return data
-}
 </script>

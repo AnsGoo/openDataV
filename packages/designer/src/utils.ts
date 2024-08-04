@@ -109,8 +109,6 @@ export function getComponentInstance({
         name: name || componentInfo.title,
         component: componentInfo.name
       })
-      obj.loadExtraProp(componentInfo.propValueConfig!())
-      obj.loadExtraStyle(componentInfo.styleConfig!())
       obj.setExampleData(componentInfo.demoLoader)
     }
   }
@@ -118,7 +116,7 @@ export function getComponentInstance({
 }
 
 export function getComponentIndexById(id: string, parent: CustomComponent) {
-  return parent.subComponents.findIndex((item) => item.id === id)
+  return (parent.subComponents || []).findIndex((item) => item.id === id)
 }
 
 /**
@@ -532,6 +530,14 @@ export const stylePropToCss = (key: string, value: any): Record<string, any> => 
         : {}
     case 'background': {
       return backgroundToCss(value)
+    }
+    case 'position': {
+      const keys = Object.keys(value)
+      const styles = {}
+      keys.forEach((el) => {
+        styles[el] = `${value[el]}px`
+      })
+      return styles
     }
     default:
       return { [key]: value }

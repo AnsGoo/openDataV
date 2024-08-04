@@ -1,21 +1,17 @@
 import { cloneDeep, isNumber } from 'lodash-es'
-import { h } from 'vue'
 
 import type { ComponentGroup } from './enums'
-import { ContainerType, DataMode, FormType } from './enums'
+import { ContainerType, DataMode } from './enums'
 import type {
   BaseScript,
   ComponentDataType,
-  ComponentStyle,
   ComponentType,
   DataInstance,
   DOMRectStyle,
   GroupStyle,
-  MetaContainerItem,
-  MetaForm,
   Response
 } from './type'
-import { buildModeValue, getObjProp, updateFormItemsValue, updateModeValue, uuid } from './utils'
+import { uuid } from './utils'
 
 export interface DataConfig {
   type: string
@@ -38,29 +34,24 @@ export class CustomComponent {
    * @deprecated dataIntegrationMode 即将弃用，建议使用 dataMode
    */
   dataIntegrationMode: DataMode = DataMode.SELF
-  callbackProp?: (propKeys: Array<string>, value: any) => void
-  callbackStyle?: (propKeys: Array<string>, value: any) => void
+  callbackProp?: (propKeys: Array<string>, value: any, modelValue: any) => void
+  callbackStyle?: (propKeys: Array<string>, value: any, modelValue: any) => void
   callbackData?: (result: any, type?: string) => void
   protected componentDataCallback?: (result: any, type?: string) => void
 
-  // 检测变化
-  propIsChange = true
-  styleIsChange = true
   defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
-  private _prop: MetaContainerItem[] = []
-  private _style: MetaContainerItem[] = []
   extraStyle: Record<string, string | number | boolean> = {}
   groupStyle?: GroupStyle
   positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
   parent?: CustomComponent
-  subComponents: CustomComponent[] = []
+  subComponents?: CustomComponent[] = undefined
 
-  _propValue: Record<string, any> = {}
-  _styleValue: ComponentStyle = {
-    ...this.positionStyle
+  private _propValue: Record<string, any> = {}
+  private _styleValue: Record<string, any> = {
+    position: this.positionStyle
   }
   dataConfig?: DataConfig
   scriptConfig?: BaseScript
@@ -81,110 +72,10 @@ export class CustomComponent {
     this.positionStyle.width = detail.width || 100
     this.positionStyle.height = detail.height || 100
     this.dataMode = detail.dataMode || detail.dataIntegrationMode || DataMode.SELF
-  }
-
-  get propFromValue(): MetaContainerItem[] {
-    const common: MetaContainerItem = {
-      label: '公共属性',
-      prop: 'common',
-      children: [
-        {
-          label: '名称',
-          prop: 'name',
-          type: FormType.TEXT,
-          props: {
-            defaultValue: this.name
-          }
-        },
-        {
-          label: '组件',
-          prop: 'component',
-          type: FormType.TEXT,
-          props: {
-            defaultValue: this.component,
-            editable: false
-          }
-        },
-        {
-          label: '组件ID',
-          prop: 'id',
-          type: FormType.TEXT,
-          props: {
-            defaultValue: this.id,
-            editable: false
-          }
-        }
-      ]
-    }
-    const propFrom = [common, ...this._prop]
-    const propValue = {}
-    buildModeValue(propFrom, propValue)
-    return propFrom
-  }
-
-  get styleFormValue(): MetaContainerItem[] {
-    if (!this._style.find((item) => item.prop === 'position')) {
-      const common: MetaContainerItem = {
-        label: '位置大小',
-        prop: 'position',
-        children: [
-          {
-            label: '左边距',
-            prop: 'left',
-            type: FormType.NUMBER,
-            props: {
-              defaultValue: this.positionStyle.left,
-              suffix: () => h('span', {}, 'px')
-            }
-          },
-          {
-            label: '上边距',
-            prop: 'top',
-            type: FormType.NUMBER,
-            props: {
-              defaultValue: this.positionStyle.top,
-              suffix: () => h('span', {}, 'px')
-            }
-          },
-          {
-            label: '宽度',
-            prop: 'width',
-            type: FormType.NUMBER,
-            props: {
-              defaultValue: this.positionStyle.width,
-              suffix: () => h('span', {}, 'px')
-            }
-          },
-          {
-            label: '高度',
-            prop: 'height',
-            type: FormType.NUMBER,
-            props: {
-              defaultValue: this.positionStyle.height,
-              suffix: () => h('span', {}, 'px')
-            }
-          },
-          {
-            label: '旋转角度',
-            prop: 'rotate',
-            type: FormType.NUMBER,
-            props: {
-              defaultValue: this.positionStyle.rotate,
-              suffix: () => h('span', {}, '°')
-            }
-          }
-        ]
-      }
-      this._style = [common, ...this._style]
-    }
-    return this._style
+    this.initProp()
   }
 
   get propValue() {
-    if (this.propIsChange) {
-      updateFormItemsValue(this._prop, this._propValue)
-      this.propIsChange = false
-    }
     return this._propValue
   }
 
@@ -192,28 +83,7 @@ export class CustomComponent {
     this.defaultViewType = viewType
   }
 
-  get style(): ComponentStyle {
-    if (this.styleIsChange) {
-      const customStyle: Record<string, any>[] = []
-      this.styleFormValue.forEach((item) => {
-        ;(item.children || []).forEach((obj) => {
-          const objProps = obj.props || obj.componentOptions
-          if (objProps) {
-            if (obj.type === FormType.CUSTOM) {
-              customStyle[obj.prop] = objProps.defaultValue
-            }
-            this._styleValue[obj.prop] = objProps!.defaultValue
-          }
-        })
-      })
-
-      Object.assign(this._styleValue, this.extraStyle)
-      const res = this.styleToCss(customStyle)
-      if (res) {
-        Object.assign(this._styleValue, res)
-      }
-      this.styleIsChange = false
-    }
+  get style(): Record<string, any> {
     return this._styleValue
   }
   get exampleData(): any {
@@ -240,7 +110,7 @@ export class CustomComponent {
 
   // 生成后端存储需要的Json
   toJson(): ComponentDataType {
-    const subComponents = this.subComponents.map((item) => item.toJson())
+    const subComponents = (this.subComponents || []).map((item) => item.toJson())
     const component: ComponentDataType = {
       id: this.id,
       component: this.component,
@@ -248,7 +118,7 @@ export class CustomComponent {
       propValue: this.propValue,
       style: this.style,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataMode: this.dataMode || this.dataIntegrationMode,
+      dataMode: this.dataMode,
       script: this.scriptConfig?.toJSON()
     }
     if (this.dataConfig) {
@@ -264,49 +134,35 @@ export class CustomComponent {
   }
 
   // 后端数据回填propValue
-  setPropValue({ propValue }: { propValue: Record<string, any> }) {
-    this.propIsChange = true
-    updateFormItemsValue(this._prop, propValue)
+  setPropValue(propValue: Record<string, any>) {
+    console.log(propValue)
     this._propValue = propValue
   }
 
-  // 后端数据回填style
-  setStyleValue({ style }: { style: Record<string, any> }) {
-    this.styleIsChange = true
-    for (const prop in style) {
-      this.styleFormValue.forEach((item) => {
-        const propObj = (item.children || []).find((obj) => obj.prop === prop)
-        if (propObj) {
-          const objProps = propObj.props || propObj.componentOptions
-          if (!objProps) {
-            return
-          }
-          objProps.defaultValue = style[prop]
-          if (prop in this.positionStyle) {
-            this.positionStyle[prop] = style[prop]
-          }
-        }
-      })
+  private initProp() {
+    this._propValue = {
+      common: {
+        id: this.id,
+        name: this.name,
+        component: this.component
+      }
     }
   }
 
-  // change(propKeys: Array<string>, value: any, from: 'style' | 'propValue' | 'data') {
-  //   if (from === 'propValue') {
-  //     this.changeProp(propKeys, value)
-  //   } else if (from === 'style') {
-  //     this.changeStyle(propKeys, value)
-  //   }
-  // }
+  // 后端数据回填style
+  setStyleValue(style: Record<string, any>) {
+    this._styleValue = { ...this._styleValue, ...style }
+  }
+
   // 修改属性
-  changeProp(propKeys: Array<string>, value: string | number | boolean | any) {
-    this.propIsChange = true
+  changeProp(propKeys: Array<string>, value: string | number | boolean | any, modelValue) {
     if (propKeys.length === 2 && propKeys[0] === 'common' && propKeys[1] === 'name') {
       this.name = value as string
       return
     }
-    updateModeValue(this._propValue, propKeys, value)
+    this.setPropValue(modelValue)
     if (this.callbackProp) {
-      this.callbackProp(propKeys, value)
+      this.callbackProp(propKeys, value, modelValue)
     }
   }
 
@@ -324,9 +180,12 @@ export class CustomComponent {
       }
     }
   }
+  changePosition(key: 'top' | 'left' | 'height' | 'width' | 'rotate', value: number) {
+    this.changeStyle(['position', key], value, this.style)
+  }
 
   // 修改样式
-  changeStyle(propKeys: Array<string>, value: any) {
+  changeStyle(propKeys: Array<string>, value: any, style: Record<string, any>) {
     const positionKey = ['top', 'left', 'height', 'width', 'rotate']
     let changeValue = value
     if (propKeys[0] === 'position') {
@@ -341,15 +200,11 @@ export class CustomComponent {
           this.positionStyle[el] = value[el]
         })
       }
+      this.setStyleValue(this.positionStyle)
+    } else {
+      this.setStyleValue(style)
     }
-    this.styleIsChange = true
-    const curObj = getObjProp(this.styleFormValue, propKeys) as MetaForm
-    const objProps = curObj && (curObj.props || curObj.componentOptions)
-    if (objProps) {
-      objProps.defaultValue = value
-    }
-
-    if (this.callbackStyle) this.callbackStyle(propKeys, value)
+    if (this.callbackStyle) this.callbackStyle(propKeys, value, this.style)
   }
 
   setStyleChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
@@ -363,6 +218,9 @@ export class CustomComponent {
    * @param clear
    */
   addComponent(components: CustomComponent[], deep = false, clear = false) {
+    if (!this.subComponents) {
+      return
+    }
     if (clear) {
       this.subComponents = []
     }
@@ -373,7 +231,7 @@ export class CustomComponent {
         com = cloneDeep(item)
       }
       com.parent = this
-      this.subComponents.push(com)
+      this.subComponents!.push(com)
     })
   }
   /**
@@ -436,17 +294,16 @@ export class CustomComponent {
     }, 200)
   }
   appendChild(child: CustomComponent) {
-    this.subComponents.push(child)
+    if (!this.subComponents) {
+      return
+    }
+    this.subComponents!.push(child)
   }
   updateChild(index: number, child: CustomComponent) {
-    this.subComponents[index] = child
-  }
-
-  loadExtraProp(prop: Array<MetaContainerItem>) {
-    this._prop = prop
-  }
-  loadExtraStyle(style: Array<MetaContainerItem>) {
-    this._style = style
+    if (!this.subComponents) {
+      return
+    }
+    this.subComponents![index] = child
   }
 }
 

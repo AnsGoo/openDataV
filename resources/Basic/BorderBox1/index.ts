@@ -1,7 +1,10 @@
+import { defineAsyncComponent } from 'vue'
+
 import manifest from './manifest.json'
 
 export default {
   component: () => import('./BorderBox.vue'),
-  panel: () => import('./panel'),
+  attrs: defineAsyncComponent(() => import('./attrs')),
+  style: defineAsyncComponent(() => import('./style')),
   manifest
 }

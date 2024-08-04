@@ -16,16 +16,7 @@
   },
   "author": "ansgoo",
   "type": "module",
-  "main": "lib/index.umd.cjs",
-  "module": "es/index.esm.js",
-  "types": "es/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./es/index.d.ts",
-      "default": "./es/index.esm.js"
-    },
-    "./style": "./es/style.css"
-  },
+  "main": "src/index.ts",
   "license": "Apache-2.0",
   "dependencies": {
     "mitt": "^3.0.1",

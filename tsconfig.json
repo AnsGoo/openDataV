@@ -10,7 +10,7 @@
     "isolatedModules": false,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom"],
+    "lib": ["esnext", "dom","dom.iterable"],
     "allowJs": true,
     "types": ["vite/client"],
     "checkJs": true,

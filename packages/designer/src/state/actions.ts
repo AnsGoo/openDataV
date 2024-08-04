@@ -143,7 +143,10 @@ class ActionState {
     const GroupClass = components['Group']
     const groupComponent: CustomComponent = new GroupClass()
     for (const prop in this.style) {
-      groupComponent.changeStyle(['position', prop], this.style[prop])
+      groupComponent.changePosition(
+        prop as 'top' | 'left' | 'height' | 'width' | 'rotate',
+        this.style[prop]
+      )
     }
     groupComponent.addComponent(this.components, true)
     createGroupStyle(groupComponent)
@@ -176,7 +179,7 @@ class ActionState {
     const { right, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = right - el.right
-      el.component.changeStyle(['position', 'left'], el.component.positionStyle.left + distance)
+      el.component.changePosition('left', el.component.positionStyle.left + distance)
     })
     canvasState.saveComponentData()
   }
@@ -187,7 +190,7 @@ class ActionState {
     const { left, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = el.left - left
-      el.component.changeStyle(['position', 'left'], el.component.positionStyle.left - distance)
+      el.component.changePosition('left', el.component.positionStyle.left - distance)
     })
     canvasState.saveComponentData()
   }
@@ -198,7 +201,7 @@ class ActionState {
     const { top, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = el.top - top
-      el.component.changeStyle(['position', 'top'], el.component.positionStyle.top - distance)
+      el.component.changePosition('top', el.component.positionStyle.top - distance)
     })
     canvasState.saveComponentData()
   }
@@ -209,7 +212,7 @@ class ActionState {
     const { bottom, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = bottom - el.bottom
-      el.component.changeStyle(['position', 'top'], el.component.positionStyle.top + distance)
+      el.component.changePosition('top', el.component.positionStyle.top + distance)
     })
     canvasState.saveComponentData()
   }
@@ -220,7 +223,7 @@ class ActionState {
     const { top, bottom, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distanceY = (bottom + top) / 2 - el.center.y
-      el.component.changeStyle(['position', 'top'], el.component.positionStyle.top + distanceY)
+      el.component.changePosition('top', el.component.positionStyle.top + distanceY)
     })
     canvasState.saveComponentData()
   }
@@ -231,7 +234,7 @@ class ActionState {
     const { left, right, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distanceX = (left + right) / 2 - el.center.x
-      el.component.changeStyle(['position', 'left'], el.component.positionStyle.left + distanceX)
+      el.component.changePosition('left', el.component.positionStyle.left + distanceX)
     })
     canvasState.saveComponentData()
   }

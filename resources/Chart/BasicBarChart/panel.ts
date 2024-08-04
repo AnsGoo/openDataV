@@ -1,8 +1,9 @@
 import { FormType } from '@open-data-v/base'
+import { createAttrComponent, createStyleComponent } from '@open-data-v/designer'
 
-export default {
-  style: () => [],
-  propValue: () => [
+const styleComponent = () => createStyleComponent([])
+const attrsComponent = () =>
+  createAttrComponent([
     {
       label: '数据配置',
       prop: 'data',
@@ -200,16 +201,17 @@ export default {
         }
       ]
     }
-  ],
-  demoLoader: () => {
-    return [
-      { label: '秦', value: Math.round(Math.random() * 100) },
-      { label: '齐', value: Math.round(Math.random() * 100) },
-      { label: '楚', value: Math.round(Math.random() * 100) },
-      { label: '赵', value: Math.round(Math.random() * 100) },
-      { label: '燕', value: Math.round(Math.random() * 100) },
-      { label: '韩', value: Math.round(Math.random() * 100) },
-      { label: '魏', value: Math.round(Math.random() * 100) }
-    ]
-  }
+  ])
+const demoLoader = () => {
+  return [
+    { label: '秦', value: Math.round(Math.random() * 100) },
+    { label: '齐', value: Math.round(Math.random() * 100) },
+    { label: '楚', value: Math.round(Math.random() * 100) },
+    { label: '赵', value: Math.round(Math.random() * 100) },
+    { label: '燕', value: Math.round(Math.random() * 100) },
+    { label: '韩', value: Math.round(Math.random() * 100) },
+    { label: '魏', value: Math.round(Math.random() * 100) }
+  ]
 }
+
+export { attrsComponent, styleComponent }

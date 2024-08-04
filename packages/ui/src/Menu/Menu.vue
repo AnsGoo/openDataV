@@ -68,6 +68,7 @@ const slideUp = () => {
   selectKey.value = ''
 }
 const click = (item: MenuOption) => {
+  debugger
   emits('click', item)
 }
 const select = (item: MenuOption) => {

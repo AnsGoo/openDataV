@@ -1,7 +1,8 @@
 import type { MetaContainerItem } from '@open-data-v/base'
 import { buildModeValue, FormType } from '@open-data-v/base'
 import type { PropType } from 'vue'
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, watch } from 'vue'
+import { cloneDeep } from 'lodash-es'
 
 import { Container } from '../../modules'
 import { useCanvasState } from '../../state'
@@ -41,13 +42,13 @@ export function createAttrComponent(structOption: MetaContainerItem[]) {
   }
 
   const attrKeys = [commonOption, ...structOption]
-  const propValue = {}
+  const propValue: Record<string, any> = {}
   buildModeValue(attrKeys, propValue)
 
   return defineComponent({
     props: {
       componentId: {
-        type: Object as PropType<string>
+        type: String as PropType<string>
       },
       value: {
         type: Object as PropType<any>,
@@ -57,16 +58,36 @@ export function createAttrComponent(structOption: MetaContainerItem[]) {
     emits: ['change'],
     setup(props, { emit }) {
       const canvasState = useCanvasState()
+      const modelValue = reactive(cloneDeep(propValue))
       const changed = (keys: Array<string>, val: any) => {
+        debugger
         const component = canvasState.getComponentById(props.componentId!)
+        // console.log(props.componentId)
         if (!component) {
           return
         }
-        component.changeProp(keys, val)
+        debugger
+        component.changeProp(keys, val, modelValue)
         emit('change', modelValue)
       }
 
-      const modelValue = reactive(propValue)
+      watch(
+        () => props.componentId,
+        () => {
+          const component = canvasState.getComponentById(props.componentId!)
+          if (!component) {
+            return
+          }
+          Object.assign(modelValue, cloneDeep(propValue))
+          modelValue.common.id = component.id
+          modelValue.common.name = component.name
+          modelValue.common.component = component.component
+          Object.assign(modelValue, component.propValue)
+        },
+        {
+          immediate: true
+        }
+      )
       return () => <Container config={attrKeys} onChange={changed} data={modelValue} />
     }
   })

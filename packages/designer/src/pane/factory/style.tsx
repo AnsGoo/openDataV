@@ -1,7 +1,8 @@
 import type { MetaContainerItem } from '@open-data-v/base'
 import { buildModeValue, FormType } from '@open-data-v/base'
+import { debounce, cloneDeep } from 'lodash-es'
 import type { PropType } from 'vue'
-import { defineComponent, h, reactive } from 'vue'
+import { computed, defineComponent, h, reactive, watch } from 'vue'
 
 import { Container } from '../../modules'
 import { useCanvasState } from '../../state'
@@ -66,7 +67,7 @@ export function createStyleComponent(structOption: MetaContainerItem[]) {
   return defineComponent({
     props: {
       componentId: {
-        type: Object as PropType<string>
+        type: String as PropType<string>
       },
       value: {
         type: Object as PropType<any>
@@ -75,25 +76,42 @@ export function createStyleComponent(structOption: MetaContainerItem[]) {
     emits: ['change', 'update:value'],
     setup(props) {
       const canvasState = useCanvasState()
-      const changed = (keys: Array<string>, value: any) => {
+      const modelValue = reactive(cloneDeep(propValue))
+      const changed = debounce((keys: Array<string>, value: any) => {
         const component = canvasState.getComponentById(props.componentId!)
         if (!component) {
           return
         }
-        const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
-        if (
-          keys.length === 2 &&
-          keys[0] === 'position' &&
-          component.groupStyle &&
-          groupStyleKeys.includes(keys[1])
-        ) {
-          component.groupStyle[keys[1]] = value
+        const locationKeys = ['top', 'left', 'width', 'height', 'rotate']
+        if (keys.length === 2 && keys[0] === 'position' && locationKeys.includes(keys[1])) {
+          const parentComponent = component.parent
+          // key as 'top' | 'left' | 'width' | 'height' | 'rotate'
+          canvasState.syncComponentLocation({ [keys[1]]: value as number }, parentComponent, true)
+          if (parentComponent) {
+            canvasState.resizeAutoComponent(parentComponent)
+          }
         } else {
-          component.changeStyle(keys, value)
+          canvasState.setComponentStyle(component, keys, value, modelValue)
         }
-      }
+      }, 300)
 
-      const modelValue = reactive(propValue)
+
+      watch(
+        () => props.componentId,
+        () => {
+          const component = canvasState.getComponentById(props.componentId!)
+          if (!component) {
+            return
+          }
+          console.log(component.style)
+          Object.assign(modelValue, cloneDeep(propValue))
+          Object.assign(modelValue, component.style)
+        },
+        {
+          immediate: true
+        }
+      )
+
       return () => <Container config={attrKeys} onChange={changed} data={modelValue} />
     }
   })

@@ -6,6 +6,7 @@
     :root-indent="1"
     :indent="12"
     :collapsed="!iscollapsed"
+    @select="handleSelect"
     @update:value="handleSelect"
   />
   <LayerEmpty v-else />
@@ -19,7 +20,7 @@ import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, h, ref, watch } from 'vue'
 
-import { decompose } from '@/toolbars'
+import { decompose } from '../../../toolbars'
 
 import { ComponentGroupList } from '../../../enum'
 import { useEmpty } from '../../../modules'

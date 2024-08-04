@@ -34,23 +34,8 @@ const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 
 const loadMenuOption = () => {
-  const components = canvasState.components
   const componentMap = canvasState.componentMetaMap
   const groups: { group: string; component: CustomComponent[] } | {} = {}
-  Object.keys(components).forEach((key) => {
-    const clazz = components[key]
-    const component = new clazz()
-    const group = component.group
-    if (!group || !component.show) {
-      return
-    }
-
-    if (!groups[group]) {
-      groups[group] = []
-    }
-    groups[group].push(component)
-  })
-
   componentMap.forEach((value, key) => {
     const { category = 'OTHER' } = value
     if (!groups[category]) {

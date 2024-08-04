@@ -1,11 +1,11 @@
 import BorderBox1 from './Basic/BorderBox1'
-import Image from './Basic/Image'
-import Gauge from './Gauge'
-import BasicBarChart from './Chart/BasicBarChart'
+// import Image from './Basic/Image'
+// import Gauge from './Gauge'
+// import BasicBarChart from './Chart/BasicBarChart'
 
 export default {
-  Image,
+  // Image,
   BorderBox1,
-  Gauge,
-  BasicBarChart
+  // Gauge,
+  // BasicBarChart
 }

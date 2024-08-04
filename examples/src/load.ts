@@ -12,13 +12,13 @@ const useAsyncLoadComponent = () => {
       const keys = Object.keys(components)
       keys.forEach((el) => {
         const pkg = components[el]
-        const { manifest, panel, component } = pkg
+        const { manifest, attrs, style, component } = pkg
         const asyncComp = defineAsyncComponent({
           loader: component,
           delay: 200,
           timeout: 3000
         })
-        canvasState.loadComponents(manifest.name, manifest, panel)
+        canvasState.loadComponent(manifest.name, manifest, attrs, style)
         app.component(manifest.name, asyncComp)
       })
     }

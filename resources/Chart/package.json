@@ -12,6 +12,7 @@
   "dependencies": {
     "echarts": "^5.3.3",
     "echarts-liquidfill": "^3.1.0",
-    "@open-data-v/base":"workspace:*"
+    "@open-data-v/base":"workspace:*",
+    "@open-data-v/designer":"workspace:*"
   }
 }

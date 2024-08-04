@@ -9,10 +9,10 @@ import {
   ContainerType,
   eventBus,
   FormType,
-  isClass,
   updateModeValue
 } from '@open-data-v/base'
-import { cloneDeep, isUndefined } from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
+import type { Component } from 'vue'
 import { reactive } from 'vue'
 
 import { EditMode, PixelEnum } from '../enum'
@@ -138,24 +138,15 @@ class CanvasState {
         height: number
       }
       dataMode?: string
-      clazz?: { new (id?: string, name?: string, icon?: string): CustomComponent }
-      remoteClazz?: () => Promise<{
-        default: { new (id?: string, name?: string, icon?: string): CustomComponent }
-      }>
-      panel?: () => Promise<{
-        default: {
-          propValue: () => MetaContainerItem[]
-          style: () => MetaContainerItem[]
-          demoLoader: () => any
-        }
-      }>
-      propValueConfig?: () => MetaContainerItem[]
-      styleConfig?: () => MetaContainerItem[]
-      demoLoader?: () => any
+      panel: {
+        attrComponent: Component
+        styleComponent: Component
+        demoLoader: () => any
+      }
     }
   > = new Map()
 
-  private componentMap: Map<string, BaseComponent> = new Map()
+  private componentMap: Map<string, CustomComponent> = new Map()
   constructor(config?: CanvasStyleConfig) {
     const extraStyles = config
       ? config
@@ -186,61 +177,18 @@ class CanvasState {
   get components() {
     return this.state.components
   }
-
-  public loadComponent(name: string, component: CustomComponent, manifest?: any) {
-    if (manifest) {
-      this.componentMetaMap.set(name, {
-        ...manifest,
-        clazz: isClass(component) ? component : undefined,
-        remoteClazz: isClass(component) ? undefined : component
-      })
-    } else {
-      this.state.components[name] = component
-    }
-  }
-
-  public async loadComponetClazz(name: string) {
-    const componentInfo = this.componentMetaMap.get(name)
-    if (!componentInfo) {
-      return
-    }
-    if (componentInfo?.clazz) {
-      return
-    } else {
-      const remoteClazz = componentInfo.remoteClazz
-      if (remoteClazz) {
-        const result = await remoteClazz()
-        componentInfo.clazz = result?.default
-      }
-    }
-    await this.loadComponetPanel(name)
-  }
-
-  public async loadComponetPanel(name: string) {
-    const componentInfo = this.componentMetaMap.get(name)
-    if (!componentInfo) {
-      return
-    }
-    const { propValueConfig, styleConfig, panel } = componentInfo
-    if (isUndefined(propValueConfig) && isUndefined(styleConfig)) {
-      if (panel) {
-        const result = await panel()
-        const { propValue, style, demoLoader } = result.default
-        componentInfo.propValueConfig = propValue || (() => [])
-        componentInfo.styleConfig = style || (() => [])
-        componentInfo.demoLoader = demoLoader || (() => {})
-      } else {
-        componentInfo.propValueConfig = () => []
-        componentInfo.styleConfig = () => []
-        componentInfo.demoLoader = () => {}
-      }
-    }
-  }
-
-  public loadComponents(name: string, componentInfo: any, panel: any): void {
+  public loadComponent(
+    name: string,
+    componentInfo: any,
+    attrs?: Component,
+    style?: Component
+  ): void {
     this.componentMetaMap.set(name, {
       ...componentInfo,
-      panel: panel
+      panel: {
+        styleComponent: style,
+        attrComponent: attrs
+      }
     })
   }
 
@@ -358,24 +306,15 @@ class CanvasState {
     return new Proxy(this.canvasStyleData, storeCanvasHandler)
   }
 
-  private resolveCanvasData(canvasData, clazzNames) {
+  private resolveCanvasData(canvasData) {
     canvasData.forEach((el) => {
       if (el.subComponents) {
-        this.resolveCanvasData(el.subComponents, clazzNames)
-      } else {
-        clazzNames.add(el.component)
+        this.resolveCanvasData(el.subComponents)
       }
     })
   }
   async setLayoutData(data: LayoutData) {
-    const clazzNames: Set<string> = new Set()
-    this.resolveCanvasData(data.canvasData, clazzNames)
-    const len = clazzNames.size
-    const clazzNameList = Array.from(clazzNames)
-    for (let i = 0; i < len; i++) {
-      const clazzName = clazzNameList[i]
-      await this.loadComponetClazz(clazzName)
-    }
+    this.resolveCanvasData(data.canvasData)
     this.name = data.name || ''
     this.thumbnail = data.thumbnail || ''
     if (data.canvasData) {
@@ -556,11 +495,17 @@ class CanvasState {
       }
       this.activeComponent.groupStyle = gStyle
       for (const key in newStyle) {
-        this.activeComponent.changeStyle(['position', key], newStyle[key])
+        this.activeComponent.changePosition(
+          key as 'top' | 'left' | 'height' | 'width' | 'rotate',
+          newStyle[key]
+        )
       }
     } else {
       for (const key in ablePosition) {
-        this.activeComponent.changeStyle(['position', key], ablePosition[key])
+        this.activeComponent.changePosition(
+          key as 'top' | 'left' | 'height' | 'width' | 'rotate',
+          ablePosition[key]
+        )
       }
     }
 
@@ -598,13 +543,17 @@ class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.changeStyle(['position'], {
-        top: Math.round(afterPoint.y - height / 2),
-        left: Math.round(afterPoint.x - width / 2),
-        height: Math.round(height),
-        width: Math.round(width),
-        rotate: rotate
-      })
+      el.changeStyle(
+        ['position'],
+        {
+          top: Math.round(afterPoint.y - height / 2),
+          left: Math.round(afterPoint.x - width / 2),
+          height: Math.round(height),
+          width: Math.round(width),
+          rotate: rotate
+        },
+        el.style
+      )
     })
   }
 
@@ -657,10 +606,16 @@ class CanvasState {
    * @param component
    * @param keys 属性组
    * @param value 值
+   * @param modelValue PropValue 值
    * @returns
    */
-  setComponentPropValue(component: CustomComponent, keys: Array<string>, value: any): void {
-    component.changeProp(keys, value)
+  setComponentPropValue(
+    component: CustomComponent,
+    keys: Array<string>,
+    value: any,
+    modelValue: Record<string, any>
+  ): void {
+    component.changeProp(keys, value, modelValue)
     this.saveComponentData()
   }
   /**
@@ -668,9 +623,15 @@ class CanvasState {
    * @param component
    * @param keys
    * @param value 值
+   * @param modelValue style 值
    * @returns
    */
-  setComponentStyle(component: CustomComponent, keys: Array<string>, value: any): void {
+  setComponentStyle(
+    component: CustomComponent,
+    keys: Array<string>,
+    value: any,
+    modelValue: Record<string, any>
+  ): void {
     const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
     if (!this.activeComponent) {
       return
@@ -683,14 +644,14 @@ class CanvasState {
     ) {
       component.groupStyle[keys[1]] = value
     } else {
-      component.changeStyle(keys, value)
+      component.changeStyle(keys, value, modelValue)
     }
     this.saveComponentData()
   }
 
   getComponentIndexById(id: string, parent: Optional<CustomComponent>): number {
     if (parent) {
-      return parent.subComponents.findIndex((item) => item.id === id)
+      return (parent.subComponents || []).findIndex((item) => item.id === id)
     }
     return this.componentData.findIndex((item) => item.id === id)
   }
@@ -706,7 +667,7 @@ class CanvasState {
         return data[i]
       } else {
         const subComponents = data[i].subComponents
-        if (subComponents) {
+        if (subComponents && subComponents.length > 0) {
           return this.findComponentById(id, subComponents)
         }
       }
@@ -884,7 +845,7 @@ class CanvasState {
   public resizeAutoComponent(parentComponent: Optional<CustomComponent>): void {
     if (parentComponent && parentComponent.component === 'Group') {
       const parentStyle = parentComponent.positionStyle
-      const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents)
+      const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents!)
       if (
         top === parentStyle.top &&
         left === parentStyle.left &&
@@ -895,7 +856,10 @@ class CanvasState {
       } else {
         const newGroupStyle = { ...parentStyle, top, left, height, width }
         for (const key in newGroupStyle) {
-          parentComponent.changeStyle(['position', key], newGroupStyle[key])
+          parentComponent.changePosition(
+            key as 'top' | 'left' | 'height' | 'width' | 'rotate',
+            newGroupStyle[key]
+          )
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
           el.groupStyle = {
@@ -986,6 +950,12 @@ class CanvasState {
       })
     })
     return dataSlotters
+  }
+
+  getComponentPanel(componentName: string) {
+    if (this.componentMetaMap.has(componentName)) {
+      return this.componentMetaMap.get(componentName)!.panel
+    }
   }
 }
 

@@ -10,7 +10,8 @@
   "author": "chenghaiwen",
   "license": "Apache-2.0",
   "dependencies": {
-    "@open-data-v/base":"workspace:*"
+    "@open-data-v/base":"workspace:*",
+    "@open-data-v/designer":"workspace:*"
   },
   "devDependencies": {}
 }

@@ -1,7 +1,8 @@
 import { FormType } from '@open-data-v/base'
+import { createAttrComponent, createStyleComponent } from '@open-data-v/designer'
 
-export default {
-  style: () => [
+const styleComponent = () =>
+  createStyleComponent([
     {
       label: '背景设置',
       prop: 'back',
@@ -16,6 +17,7 @@ export default {
         }
       ]
     }
-  ],
-  propValue: () => []
-}
+  ])
+const attrsComponent = () => createAttrComponent([])
+
+export { attrsComponent, styleComponent }

@@ -72,17 +72,26 @@
 </template>
 
 <script setup lang="ts">
+import type { CustomComponent } from '@open-data-v/base'
 import { useProp } from '@open-data-v/base'
-import { ref } from 'vue'
+import { set } from 'lodash-es'
+import { reactive, ref } from 'vue'
 
-import type BorderBoxComponent from './config'
+import { getDefaultValue } from './config'
 import type { BorderBox } from './type'
 
 const props = defineProps<{
-  component: BorderBoxComponent
+  component: CustomComponent
 }>()
+const defaultValue = getDefaultValue()
 
-const { propValue } = useProp<BorderBox>(props.component)
+const propValue = reactive<BorderBox>(defaultValue)
+const propChange = (propKeys: Array<string>, value: string) => {
+  console.log(propKeys, value)
+  set(propValue, propKeys, value)
+}
+
+useProp<BorderBox>(props.component, propChange)
 
 const width = ref<number>(150)
 const height = ref<number>(150)
