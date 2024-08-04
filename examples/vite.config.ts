@@ -50,7 +50,14 @@ export default ({ mode, command }: ConfigEnv): UserConfigExport => {
       extensions: ['.ts', '.tsx', '.js', '.m.js']
     },
     optimizeDeps: {
-      holdUntilCrawlEnd: false
+      include: [
+        '../packages/ui/src/index.ts',
+        '../packages/data/src/index.ts',
+        '../packages/base/src/index.ts',
+        '../packages/designer/src/index.ts',
+        '../packages/scripts/src/index.ts'
+      ],
+      force: true
     },
     server: {
       // 是否开启 https
