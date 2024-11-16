@@ -88,10 +88,11 @@
       <div
         v-for="(item, index) in menuOptions"
         :key="index"
-        class="h-full o-scroll overflow-auto flex flex-nowrap flex-col hover:scale-110"
+        class="h-full o-scroll overflow-auto flex flex-nowrap flex-col"
+        @click="collapsedRight = !collapsedRight"
       >
         <div class="m-2 text-center">
-          <component :is="item.icon" />
+          <component :is="item.icon" class="hover:scale-110" />
         </div>
       </div>
     </div>
