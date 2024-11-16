@@ -6,7 +6,7 @@
     :root-indent="1"
     :indent="12"
     :collapsed="!iscollapsed"
-    @select="handleSelect"
+    @select="(item) => handleSelect(item.key)"
     @update:value="handleSelect"
   />
   <LayerEmpty v-else />
@@ -20,11 +20,10 @@ import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, h, ref, watch } from 'vue'
 
-import { decompose } from '../../../toolbars'
-
 import { ComponentGroupList } from '../../../enum'
 import { useEmpty } from '../../../modules'
 import { useCanvasState, useClipBoardState } from '../../../state'
+import { decompose } from '../../../toolbars'
 import type { ContextmenuItem } from '../../../type'
 import { uuid } from '../../../utils'
 import LayerItem from './LayerItem.vue'

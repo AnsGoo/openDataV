@@ -87,7 +87,6 @@ const defaultValue = getDefaultValue()
 
 const propValue = reactive<BorderBox>(defaultValue)
 const propChange = (propKeys: Array<string>, value: string) => {
-  console.log(propKeys, value)
   set(propValue, propKeys, value)
 }
 

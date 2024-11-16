@@ -10,7 +10,7 @@ import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/Canvas.vue'
 import Designer from './pages/designer/Designer.vue'
 import Previewer from './pages/perviewer/viewer.vue'
-import { createAttrComponent, createStyleComponent } from './pane/factory'
+import { createAttrComponent } from './pane/factory'
 import LeftSideBar from './pane/LeftSideBar'
 import RightSideBar from './pane/RightSideBar'
 import ToolsBar from './pane/Toolsbar'
@@ -163,6 +163,5 @@ export default {
   useSnapshotState,
   XIcon,
   iconMap,
-  createAttrComponent,
-  createStyleComponent
+  createAttrComponent
 }

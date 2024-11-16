@@ -84,7 +84,14 @@ export class CustomComponent {
   }
 
   get style(): Record<string, any> {
-    return this._styleValue
+    return {
+      ...this._styleValue,
+      info: {
+        id: this.id,
+        name: this.name,
+        component: this.component
+      }
+    }
   }
   get exampleData(): any {
     return undefined
@@ -140,13 +147,7 @@ export class CustomComponent {
   }
 
   private initProp() {
-    this._propValue = {
-      common: {
-        id: this.id,
-        name: this.name,
-        component: this.component
-      }
-    }
+    this._propValue = {}
   }
 
   // 后端数据回填style
@@ -156,10 +157,6 @@ export class CustomComponent {
 
   // 修改属性
   changeProp(propKeys: Array<string>, value: string | number | boolean | any, modelValue) {
-    if (propKeys.length === 2 && propKeys[0] === 'common' && propKeys[1] === 'name') {
-      this.name = value as string
-      return
-    }
     this.setPropValue(modelValue)
     if (this.callbackProp) {
       this.callbackProp(propKeys, value, modelValue)
