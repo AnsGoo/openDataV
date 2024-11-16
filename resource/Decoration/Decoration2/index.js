@@ -1,7 +1,8 @@
-import manifest from './manifest.json';
+import manifest from './manifest.json'
+
 export default {
-    config: () => import('./config'),
-    component: () => import('./Decoration.vue'),
-    manifest
-};
+  config: () => import('./config'),
+  component: () => import('./Decoration.vue'),
+  manifest
+}
 //# sourceMappingURL=index.js.map

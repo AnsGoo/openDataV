@@ -1,7 +1,8 @@
-import manifest from './manifest.json';
+import manifest from './manifest.json'
+
 export default {
-    component: () => import('./BorderImage.vue'),
-    config: () => import('./config'),
-    manifest
-};
+  component: () => import('./BorderImage.vue'),
+  config: () => import('./config'),
+  manifest
+}
 //# sourceMappingURL=index.js.map

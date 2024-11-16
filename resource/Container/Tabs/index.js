@@ -1,7 +1,8 @@
-import Tabs, { componentName } from './config';
+import Tabs, { componentName } from './config'
+
 export default {
-    componentName,
-    component: () => import('./Tabs.vue'),
-    config: Tabs
-};
+  componentName,
+  component: () => import('./Tabs.vue'),
+  config: Tabs
+}
 //# sourceMappingURL=index.js.map

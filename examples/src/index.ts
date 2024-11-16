@@ -2,11 +2,11 @@ import '@/css/tailwind.css'
 import '@/css/index.less'
 import '@/css/font.less'
 import '@/assets/directionFonts/iconfont.css'
+
 // import '@open-data-v/ui/style'
 // import '@open-data-v/designer/style'
 // import '@open-data-v/data/style'
 // import '@open-data-v/scripts/style'
-
 import { Directive, useComponentPlugin } from '@open-data-v/designer'
 import { createApp } from 'vue'
 

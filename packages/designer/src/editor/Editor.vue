@@ -244,7 +244,6 @@ const handleDrop = async (e) => {
   canvasState.appendComponent(component)
 }
 
-
 const handleDragOver = (e) => {
   e.preventDefault()
   e.dataTransfer.dropEffect = 'copy'

@@ -1,7 +1,8 @@
-import manifest from './manifest.json';
+import manifest from './manifest.json'
+
 export default {
-    config: () => import('./config'),
-    component: () => import('./ScrollTable.vue'),
-    manifest
-};
+  config: () => import('./config'),
+  component: () => import('./ScrollTable.vue'),
+  manifest
+}
 //# sourceMappingURL=index.js.map

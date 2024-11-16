@@ -22,7 +22,7 @@ const useComponentPlugin = ({
     delay: 200,
     timeout: 3000
   })
-  canvasState.loadComponent(Group.componentName, {title:'分组'})
+  canvasState.loadComponent(Group.componentName, { title: '分组' })
 
   const OIcon = useIcon(icons)
   return {
