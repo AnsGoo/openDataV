@@ -5,6 +5,7 @@
 <script setup lang="ts">
 import type { ContainerType, CustomComponent } from '@open-data-v/base'
 import { computed } from 'vue'
+
 import createStyleComponent from './style'
 
 const props = defineProps<{

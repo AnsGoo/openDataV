@@ -267,8 +267,7 @@ export class CustomComponent {
         const { status, data } = resp
         if (status === 'SUCCESS') {
           try {
-            const afterData = afterCallback(data, this.propValue)
-            resp['afterData'] = afterData
+            resp['afterData'] = afterCallback(data, this.propValue)
           } catch (err) {
             resp['afterData'] = undefined
             resp.status = 'FAILED'

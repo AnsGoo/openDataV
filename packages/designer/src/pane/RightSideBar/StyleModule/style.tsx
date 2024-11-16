@@ -101,7 +101,8 @@ export function createStyleComponent(structOption: MetaContainerItem[]) {
   return defineComponent({
     props: {
       componentId: {
-        type: String as PropType<string>
+        type: String as PropType<string>,
+        required: false
       },
       value: {
         type: Object as PropType<any>

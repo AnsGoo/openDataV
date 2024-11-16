@@ -3,7 +3,8 @@
     :class="{
       ['o-form-input']: true,
       'input-prepend': $slots.prepend,
-      'input-append': $slots.append
+      'input-append': $slots.append,
+      'rounded-sm': true
     }"
     :style="{ width: width }"
   >

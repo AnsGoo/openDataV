@@ -16,7 +16,7 @@
     >
       <slot name="label">{{ label }}</slot>
     </label>
-    <div :class="`o-form-box`">
+    <div class="o-form-box">
       <slot></slot>
       <template
         v-if="
