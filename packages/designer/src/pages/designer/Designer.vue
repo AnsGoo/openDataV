@@ -31,6 +31,7 @@
 import { RenderSlot, useData, useProp } from '@open-data-v/base'
 import { onUnmounted, provide, readonly, useSlots } from 'vue'
 
+import { HOOKS } from '../../../const'
 import type { ToolBarItemType } from '../../components'
 import LeftSideBar from '../../pane/LeftSideBar'
 import RightSideBar from '../../pane/RightSideBar'
