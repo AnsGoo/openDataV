@@ -16,10 +16,10 @@
   "license": "Apache-2.0",
   "dependencies": {
     "vue": "^3.5.13",
-    "vue-router": "^4.4.5"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
-    "@types/node": "^16.18.119",
+    "@types/node": "^16.18.121",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "@vitejs/plugin-vue": "^4.6.2",
@@ -35,7 +35,7 @@
     "eslint-plugin-spellcheck": "^0.0.20",
     "eslint-plugin-vue": "^9.31.0",
     "husky": "^7.0.4",
-    "less": "^4.2.0",
+    "less": "^4.2.1",
     "postcss": "^8.4.49",
     "postcss-html": "^1.7.0",
     "postcss-less": "^6.0.0",
