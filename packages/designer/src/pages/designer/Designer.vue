@@ -51,7 +51,7 @@ withDefaults(
 )
 const canvasState = useCanvasState()
 
-provide('HOOKS', readonly({ useProp, useData }))
+provide(HOOKS, readonly({ useProp, useData }))
 const setLayoutData = (data: LayoutData) => {
   canvasState.setLayoutData(data)
 }

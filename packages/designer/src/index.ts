@@ -1,5 +1,6 @@
 import type { ToolBarItemType } from './components'
 import { CodeEditor, Group, iconMap, ToolBar, ToolBarItem, XIcon } from './components'
+import { HOOKS } from './const'
 import DemoDataPlugin from './data/DemoData'
 import type { StoreComponentData } from './db'
 import Editor from './editor'
@@ -66,7 +67,6 @@ export {
   copy,
   createAttrComponent,
   createComponent,
-  createStyleComponent,
   DataMode,
   DataSlotter,
   decompose,
@@ -83,6 +83,7 @@ export {
   Group,
   GroupType,
   handleLogger,
+  HOOKS,
   iconMap,
   importCanvas,
   LeftSideBar,

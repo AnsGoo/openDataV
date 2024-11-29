@@ -1,5 +1,1 @@
-export enum EditMode {
-  EDIT = 'edit',
-  PREVIEW = 'preview',
-  VIEW = 'view'
-}
+export const HOOKS = Symbol('HOOK')
