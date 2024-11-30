@@ -45,6 +45,10 @@ jobs:
         run: pnpm run build:lib
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
+      
+      # 安装核心库
+      - name: Install dependencies
+        run: pnpm install
 
       # 运行构建脚本
       - name: Build frontend
