@@ -52,7 +52,7 @@ const dataChange = (resp: any, _?: string) => {
   if (resp.status === 'SUCCESS') {
     const data = resp.afterData
     const propValue = props.component.propValue
-    const myChannel = propValue.dataOption.channel
+    const myChannel = propValue?.dataOption?.channel
     const channel = myChannel ? myChannel : props.component.id
     if (propValue.isRegExp) {
       const keys = Object.keys(channels)
