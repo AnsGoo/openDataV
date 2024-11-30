@@ -2,7 +2,7 @@
   <input
     ref="input"
     :value="value"
-    class="outline-0 p-0 w-full rounded-sm dark:bg-zinc-800 bg-white text-gray-800 dark:text-gray-50"
+    class="outline-0 p-0 w-full rounded-sm dark:bg-zinc-800 bg-white text-gray-800 dark:text-gray-50 dark:border-gray-500 border border-gray-300"
     @keydown="handleKeyDown"
     @input="update"
   />
