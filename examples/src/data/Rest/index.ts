@@ -1,10 +1,8 @@
 import { RequestMethod, RestHandler } from '@open-data-v/data'
-import { shallowRef } from 'vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 
 import { apiHttp as http } from '@/utils/http'
 import { uuid } from '@/utils/utils'
-
-import DataView from './Pane.vue'
 
 class RestRequestHandler extends RestHandler {
   constructor(options) {
@@ -12,6 +10,8 @@ class RestRequestHandler extends RestHandler {
     super(options, connector)
   }
 }
+
+const DataView = defineAsyncComponent(() => import('./Pane.vue'))
 
 export default {
   type: 'REST',

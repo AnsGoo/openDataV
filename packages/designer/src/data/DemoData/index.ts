@@ -1,7 +1,8 @@
-import { shallowRef } from 'vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 
 import DemoRequestData from './handler'
-import DemoPane from './Pane.vue'
+
+const DemoPane = defineAsyncComponent(() => import('./Pane.vue'))
 
 export default {
   type: 'DEMO',
