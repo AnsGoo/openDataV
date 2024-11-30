@@ -1,7 +1,8 @@
-import { shallowRef } from 'vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 
 import handler, { QUICK_TYPE } from './handler'
-import Quick from './Pane.vue'
+
+const Quick = defineAsyncComponent(() => import('./Pane.vue'))
 
 export default {
   type: QUICK_TYPE,

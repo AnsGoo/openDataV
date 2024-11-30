@@ -1,12 +1,13 @@
-import { shallowRef } from 'vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 
 import { uuid } from '../utils'
 import RestHandler from './handler'
-import RestPane from './Pane.vue'
 import { RequestMethod } from './requestEnums'
-import RestContent from './RestDataView.vue'
 import type { RestOption, RestResponse } from './type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from './utils'
+
+const RestPane = defineAsyncComponent(() => import('./Pane.vue'))
+const RestContent = defineAsyncComponent(() => import('./RestDataView.vue'))
 
 export default {
   type: 'REST',
