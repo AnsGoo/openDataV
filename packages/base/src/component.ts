@@ -63,9 +63,9 @@ export class CustomComponent {
       this.id = uuid()
     }
     this.component = detail.component
-    this.group = detail.group
     this.name = detail.name
 
+    this.subComponents = detail.subComponents
     if (detail.icon) {
       this.icon = detail.icon
     }

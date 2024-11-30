@@ -53,9 +53,12 @@ export function createComponent(component: ComponentDataType): any {
     icon: component.icon,
     id: component.id
   })
+  if (!obj) {
+    return
+  }
   obj.groupStyle = component.groupStyle
   obj.setPropValue({ propValue: component.propValue })
-  obj.setStyleValue({ style: component.style })
+  obj.setStyleValue({ style: component.style.position })
   obj.dataMode = component.dataMode || DataMode.SELF
   const data = component.data
   if (obj.dataMode || obj.dataIntegrationMode === DataMode.UNIVERSAL) {
@@ -65,7 +68,7 @@ export function createComponent(component: ComponentDataType): any {
   component.subComponents?.forEach((item) => {
     const subObj = createComponent(item)
     subObj.parent = obj
-    obj.subComponents.push(subObj)
+    obj.subComponents?.push(subObj)
   })
 
   const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
@@ -85,33 +88,20 @@ export function getComponentInstance({
   icon?: string
 }) {
   const canvasState = useCanvasState()
-  const components = canvasState.components
   const componentName = component
-  const _class = components[componentName]
-  let obj
-  if (_class) {
-    obj = new _class(id, name, icon)
-  } else {
-    const componentInfo = canvasState.componentMetaMap.get(componentName)
-    if (!componentInfo) {
-      return
-    }
-    const clazz = componentInfo.clazz
-    if (clazz) {
-      obj = new clazz(id, name, icon)
-    } else {
-      obj = new CustomComponent({
-        id: id,
-        width: componentInfo.size.width,
-        height: componentInfo.size.height,
-        group: componentInfo.category,
-        icon: icon || componentInfo.icon,
-        name: name || componentInfo.title,
-        component: componentInfo.name
-      })
-      obj.setExampleData(componentInfo.demoLoader)
-    }
+  const componentInfo = canvasState.componentMetaMap.get(componentName)
+  if (!componentInfo) {
+    return
   }
+  const obj = new CustomComponent({
+    id: id,
+    width: componentInfo.size.width,
+    height: componentInfo.size.height,
+    icon: icon || componentInfo.icon,
+    name: name || componentInfo.title,
+    component: componentInfo.name
+  })
+  // obj.setExampleData(componentInfo.demoLoader)
   return obj
 }
 
@@ -144,7 +134,7 @@ export const getSelectComponents = (
   // 计算所有的组件数据，判断是否在选中区域内
   componentData.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const { width, height, left, top, rotate } = component.style
+    const { width, height, left, top, rotate } = component.style.position
     const componentRect: Location = calcComponentAxis({
       width,
       height,
@@ -447,7 +437,7 @@ export const getGroupStyle = (style: Record<string, any>) => {
  * @returns css
  */
 export const getComponentStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.style)
+  const style = cloneDeep(component.style.position)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
     return {
@@ -455,7 +445,7 @@ export const getComponentStyle = (component: CustomComponent) => {
       ...getGroupStyle(groupStyle)
     }
   } else {
-    return excludeStyle(component.style)
+    return excludeStyle(style)
   }
 }
 
@@ -465,7 +455,7 @@ export const getComponentStyle = (component: CustomComponent) => {
  * @returns css
  */
 export const getComponentShapeStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.style)
+  const style = cloneDeep(component.style.position)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
     return {
@@ -483,7 +473,7 @@ export const getComponentShapeStyle = (component: CustomComponent) => {
  * @returns css
  */
 export const getInnerComponentShapeStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.style)
+  const style = cloneDeep(component.style.position)
   return {
     ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
     width: '100%',

@@ -166,7 +166,7 @@ const showLine = (isDownward, isRightward) => {
       }
 
       const needToShow: Array<any> = []
-      const { rotate } = canvasState.activeComponent!.style
+      const { rotate } = canvasState.activeComponent!.style.position
       Object.keys(conditions).forEach((key) => {
         // 遍历符合的条件并处理
         conditions[key].forEach((condition) => {
@@ -182,7 +182,7 @@ const showLine = (isDownward, isRightward) => {
               : condition.dragShift
           canvasState.activateComponentStyle(['position', key], value)
 
-          condition.lineNode.style[key] = `${condition.lineShift}px`
+          condition.lineNode.style.position[key] = `${condition.lineShift}px`
           needToShow.push(condition.line)
         })
       })
@@ -201,7 +201,7 @@ const isNearly = (dragValue, targetValue) => {
 }
 
 const translatecurComponentShift = (key, condition, curComponentStyle) => {
-  const { width, height } = canvasState.activeComponent!.style
+  const { width, height } = canvasState.activeComponent!.style.position
   if (key == 'top') {
     return Math.round(condition.dragShift - ((height as number) - curComponentStyle.height) / 2)
   }

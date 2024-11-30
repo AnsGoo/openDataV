@@ -40,6 +40,7 @@ import type { CustomComponent, Hooks } from '@open-data-v/base'
 import { channels, eventBus } from '@open-data-v/base'
 import { computed, inject } from 'vue'
 
+import { HOOKS } from '../../const'
 import Shape from '../../editor/Shape'
 import useCanvasState from '../../state/canvas'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '../../utils'
@@ -66,7 +67,7 @@ const dataChange = (resp: any, _?: string) => {
     }
   }
 }
-const { useData } = inject<Hooks>('HOOKS') || {}
+const { useData } = inject<Hooks>(HOOKS) || {}
 
 if (useData) {
   useData(props.component, dataChange)

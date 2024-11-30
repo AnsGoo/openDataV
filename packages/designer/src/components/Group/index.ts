@@ -1,7 +1,11 @@
-import GroupComponent, { componentName } from './config'
+import { defineAsyncComponent } from 'vue'
+
+import GroupComponent from './config'
+import manifest from './manifest.json'
 
 export default {
-  componentName,
-  component: () => import('./Group.vue'),
-  config: GroupComponent
+  component: defineAsyncComponent(() => import('./Group.vue')),
+  attrs: defineAsyncComponent(() => import('./attr-panel')),
+  GroupComponent,
+  manifest
 }

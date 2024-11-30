@@ -349,7 +349,7 @@ export default defineComponent({
         return {}
       }
 
-      const rotate: number = mod360(canvasState.activeComponent!.style.rotate) // 取余 360
+      const rotate: number = mod360(canvasState.activeComponent!.style.position.rotate) // 取余 360
       const result = {}
       let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
       const angleToCursor = [

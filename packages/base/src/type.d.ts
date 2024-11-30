@@ -122,7 +122,7 @@ export interface ComponentDataType {
 }
 
 export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
-  group: ComponentGroup
+  group?: ComponentGroup
   id?: string
   width?: number
   height?: number
@@ -131,6 +131,7 @@ export interface ComponentType extends Pick<ComponentDataType, 'component' | 'na
    * deprecated: 即将废弃，请使用 dataMode 属性
    */
   dataIntegrationMode?: DataMode
+  subComponents?: Array<CustomComponent>
 }
 interface CustomContainerProps {
   componentType: string | ConcreteComponent

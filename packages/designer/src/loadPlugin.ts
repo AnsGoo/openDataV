@@ -17,12 +17,8 @@ const useComponentPlugin = ({
     ? codeEditorComponent
     : defineAsyncComponent(() => import('./components/CodeEditor.vue'))
 
-  const groupComp = defineAsyncComponent({
-    loader: Group.component,
-    delay: 200,
-    timeout: 3000
-  })
-  canvasState.loadComponent(Group.componentName, { title: '分组' })
+  const groupMeta = Group.manifest
+  canvasState.loadComponent('Group', groupMeta, Group.attrs)
 
   const OIcon = useIcon(icons)
   return {
@@ -30,7 +26,7 @@ const useComponentPlugin = ({
       // 插入元素
       app.component('OCodeEditor', OCodeEditor)
       app.component('XIcon', OIcon)
-      app.component(Group.componentName, groupComp)
+      app.component('Group', Group.component)
     }
   }
 }

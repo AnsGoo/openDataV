@@ -67,7 +67,7 @@ const getMenuOptions = (
   for (let i = 0; i < components.length; i++) {
     const item = components[i]
     const currentIndex = calcIndex(i, fatherIndex)
-    if (item.group === ComponentGroup.CONTAINER) {
+    if (item.subComponents) {
       const childrenOptions: MenuOption[] = []
       options.push({
         label: () =>
