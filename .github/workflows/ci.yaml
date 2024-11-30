@@ -32,7 +32,7 @@ jobs:
 
       # 安装依赖
       - name: Install dependencies
-        run: pnpm bootstrap --frozen-lockfile
+        run: pnpm install
 
       # 检查代码
       - name: Lint Code
