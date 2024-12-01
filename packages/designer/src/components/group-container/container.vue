@@ -96,8 +96,8 @@ const isShow = (display: boolean): boolean => {
   return !(canvasState.isEditMode && !display)
 }
 const getShapeStyle = (item: CustomComponent) => {
-  if (item.groupStyle?.gheight) {
-    return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
+  if (item.relativePosition?.gheight) {
+    return filterStyle(item.relativePosition, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {
     return filterStyle(item.position, ['top', 'left', 'width', 'height', 'rotate'])
   }

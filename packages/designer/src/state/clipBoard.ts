@@ -28,7 +28,7 @@ class ClipBoardState {
   }
   copy(data: ComponentDataType) {
     this.copyData = cloneDeep(data)
-    this.copyData!.groupStyle = undefined
+    this.copyData!.relativePosition = undefined
     copyText(JSON.stringify(this.copyData))
   }
 

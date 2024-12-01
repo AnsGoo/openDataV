@@ -26,7 +26,7 @@ export interface Location {
   bottom: number
 }
 
-export interface GroupStyle {
+export interface RelativePosition {
   gwidth: number
   gheight: number
   gleft: number

@@ -4,7 +4,7 @@ import { reactive } from 'vue'
 import type { Location, Position } from '../type'
 import {
   calcComponentsRect,
-  createGroupStyle,
+  createRelativePosition,
   getComponentInstance,
   getComponentRealRect,
   getSelectComponents
@@ -149,7 +149,7 @@ class ActionState {
       )
     }
     groupComponent.addComponent(this.components, true)
-    createGroupStyle(groupComponent)
+    createRelativePosition(groupComponent)
     this.batchDeleteComponent(this.components)
     canvasState.appendComponent(groupComponent)
 

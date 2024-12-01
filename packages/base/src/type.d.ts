@@ -14,7 +14,7 @@ export interface DOMRectStyle {
 export interface ComponentStyle extends DOMRectStyle {
   [propName: string]: string | number | boolean
 }
-export interface GroupStyle {
+export interface RelativePosition {
   gwidth: number
   gheight: number
   gleft: number
@@ -111,7 +111,7 @@ export interface ComponentDataType {
   id?: string
   name: string
   component: string
-  groupStyle?: GroupStyle
+  relativePosition?: RelativePosition
   icon?: string
   position: DOMRectStyle
   propValue?: Record<string, any>

@@ -6,7 +6,7 @@ import type {
   ComponentDataType,
   DataInstance,
   DOMRectStyle,
-  GroupStyle,
+  RelativePosition,
   Response
 } from './type'
 import { uuid } from './utils'
@@ -40,7 +40,7 @@ export class CustomComponent {
 
   // form表单中使用
   extraStyle: Record<string, string | number | boolean> = {}
-  groupStyle?: GroupStyle
+  relativePosition?: RelativePosition
   position: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
   parent?: CustomComponent

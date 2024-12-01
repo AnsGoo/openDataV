@@ -62,7 +62,7 @@ export function createComponent(component: ComponentDataType): any {
       subObj.parent = obj
       obj.subComponents?.push(subObj)
     })
-    createGroupStyle(obj)
+    createRelativePosition(obj)
   }
 
   const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
@@ -353,12 +353,12 @@ export function mod360(deg): number {
   return (deg + 360) % 360
 }
 
-export function createGroupStyle(groupComponent: CustomComponent) {
+export function createRelativePosition(groupComponent: CustomComponent) {
   const parentPosition: DOMRectStyle = groupComponent.position
   groupComponent.subComponents!.forEach((component) => {
-    // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
-    // 如果已存在 component.groupStyle，说明已经计算过一次了。不需要再次计算
-    component.groupStyle = {
+    // component.relativePosition 的 gtop gsleft 是相对于 group 组件的位置
+    // 如果已存在 component.relativePosition，说明已经计算过一次了。不需要再次计算
+    component.relativePosition = {
       gleft: toPercent((component.position.left - parentPosition.left) / parentPosition.width),
       gtop: toPercent((component.position.top - parentPosition.top) / parentPosition.height),
       gwidth: toPercent(component.position.width / parentPosition.width),
@@ -422,7 +422,7 @@ export function filterStyle(style: Record<string, any>, filters: Array<string> =
  * @returns css
  */
 
-export const getGroupStyle = (style: Record<string, any>) => {
+export const getRelativePosition = (style: Record<string, any>) => {
   const filters = ['gtop', 'gheight', 'gwidth', 'gleft', 'grotate']
   return filterStyle(style, filters)
 }
@@ -434,11 +434,11 @@ export const getGroupStyle = (style: Record<string, any>) => {
  */
 export const getComponentStyle = (component: CustomComponent) => {
   const style = cloneDeep(component.position)
-  const groupStyle = cloneDeep(component.groupStyle)
-  if (groupStyle) {
+  const relativePosition = cloneDeep(component.relativePosition)
+  if (relativePosition) {
     return {
       ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
-      ...getGroupStyle(groupStyle)
+      ...getRelativePosition(relativePosition)
     }
   } else {
     return excludeStyle(style)
@@ -452,11 +452,11 @@ export const getComponentStyle = (component: CustomComponent) => {
  */
 export const getComponentShapeStyle = (component: CustomComponent) => {
   const position = cloneDeep(component.position)
-  const groupStyle = cloneDeep(component.groupStyle)
-  if (groupStyle) {
+  const relativePosition = cloneDeep(component.relativePosition)
+  if (relativePosition) {
     return {
       ...excludeStyle(position, ['top', 'left', 'width', 'height', 'rotate']),
-      ...getGroupStyle(groupStyle)
+      ...getRelativePosition(relativePosition)
     }
   } else {
     return excludeStyle(position, ['top', 'left', 'width', 'height', 'rotate'])

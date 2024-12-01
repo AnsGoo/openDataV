@@ -43,7 +43,7 @@ import type {
   ComponentStyle,
   ContextmenuItem,
   DOMRectStyle,
-  GroupStyle,
+  RelativePosition,
   Location,
   Position,
   Vector
@@ -115,7 +115,7 @@ export type {
   ComponentStyle,
   ContextmenuItem,
   DOMRectStyle,
-  GroupStyle,
+  RelativePosition,
   Location,
   Position,
   StoreComponentData,

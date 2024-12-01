@@ -18,7 +18,7 @@ import { reactive } from 'vue'
 
 import { EditMode, PixelEnum } from '../enum'
 import { DataSlotter } from '../state'
-import type { DOMRectStyle, GroupStyle, Vector } from '../type'
+import type { DOMRectStyle, RelativePosition, Vector } from '../type'
 import {
   calcComponentsRect,
   createComponent,
@@ -441,25 +441,25 @@ class CanvasState {
     })
     if (parentComponent) {
       const parentPosition = parentComponent.position
-      const groupStyle = this.activeComponent.groupStyle!
+      const relativePosition = this.activeComponent.relativePosition!
       const gStyle = {
         gleft:
           ablePosition.left !== undefined
             ? toPercent((ablePosition.left! - parentPosition.left) / parentPosition.width)
-            : groupStyle.gleft,
+            : relativePosition.gleft,
         gtop:
           ablePosition.top !== undefined
             ? toPercent((ablePosition.top! - parentPosition.top) / parentPosition.height)
-            : groupStyle.gtop,
+            : relativePosition.gtop,
         gwidth:
           ablePosition.width !== undefined
             ? toPercent(ablePosition.width! / parentPosition.width)
-            : groupStyle.gwidth,
+            : relativePosition.gwidth,
         gheight:
           ablePosition.height !== undefined
             ? toPercent(ablePosition.height! / parentPosition.height)
-            : groupStyle.gheight,
-        grotate: ablePosition.rotate !== undefined ? ablePosition.rotate! : groupStyle.grotate
+            : relativePosition.gheight,
+        grotate: ablePosition.rotate !== undefined ? ablePosition.rotate! : relativePosition.grotate
       }
       const newStyle = {
         left:
@@ -478,7 +478,7 @@ class CanvasState {
             ? ablePosition.rotate!
             : this.activeComponent.position.rotate
       }
-      this.activeComponent.groupStyle = gStyle
+      this.activeComponent.relativePosition = gStyle
       for (const key in newStyle) {
         this.activeComponent.changePosition(
           key as 'top' | 'left' | 'height' | 'width' | 'rotate',
@@ -510,17 +510,17 @@ class CanvasState {
     const subComponents = component.subComponents
     const parentPosition = component.position
     subComponents.forEach((el: CustomComponent) => {
-      const groupStyle: GroupStyle = el.groupStyle!
+      const relativePosition: RelativePosition = el.relativePosition!
       const center: Vector = {
         y: parentPosition.top + parentPosition.height / 2,
         x: parentPosition.left + parentPosition.width / 2
       }
       const { top, left, height, width, rotate } = {
-        top: parentPosition.top + (parentPosition.height * groupStyle.gtop) / 100,
-        left: parentPosition.left + (parentPosition.width * groupStyle.gleft) / 100,
-        height: (parentPosition.height * groupStyle.gheight) / 100,
-        width: (parentPosition.width * groupStyle.gwidth) / 100,
-        rotate: mod360(parentPosition.rotate + (groupStyle.grotate || 0))
+        top: parentPosition.top + (parentPosition.height * relativePosition.gtop) / 100,
+        left: parentPosition.left + (parentPosition.width * relativePosition.gleft) / 100,
+        height: (parentPosition.height * relativePosition.gheight) / 100,
+        width: (parentPosition.width * relativePosition.gwidth) / 100,
+        rotate: mod360(parentPosition.rotate + (relativePosition.grotate || 0))
       }
       const point: Vector = {
         y: top + height / 2,
@@ -756,7 +756,7 @@ class CanvasState {
     if (index < componentData.length && index >= 0) {
       const components: CustomComponent[] = componentData.splice(index, 1)
       if (parent) {
-        components[0].groupStyle = undefined
+        components[0].relativePosition = undefined
         this.resizeAutoComponent(parent)
       }
       this.saveComponentData()
@@ -781,7 +781,7 @@ class CanvasState {
       insertComponent.parent = parent
     } else {
       insertComponent.parent = undefined
-      insertComponent.groupStyle = undefined
+      insertComponent.relativePosition = undefined
     }
     if (index < componentData.length && index >= 0) {
       componentData.splice(index + 1, 0, insertComponent)
@@ -807,19 +807,19 @@ class CanvasState {
       ) {
         return
       } else {
-        const newGroupStyle = { ...parentPosition, top, left, height, width }
-        for (const key in newGroupStyle) {
+        const newRelativePosition = { ...parentPosition, top, left, height, width }
+        for (const key in newRelativePosition) {
           parentComponent.changePosition(
             key as 'top' | 'left' | 'height' | 'width' | 'rotate',
-            newGroupStyle[key]
+            newRelativePosition[key]
           )
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
-          el.groupStyle = {
-            gleft: toPercent((el.position.left - newGroupStyle.left) / newGroupStyle.width),
-            gtop: toPercent((el.position.top - newGroupStyle.top) / newGroupStyle.height),
-            gwidth: toPercent(el.position.width / newGroupStyle.width),
-            gheight: toPercent(el.position.height / newGroupStyle.height),
+          el.relativePosition = {
+            gleft: toPercent((el.position.left - newRelativePosition.left) / newRelativePosition.width),
+            gtop: toPercent((el.position.top - newRelativePosition.top) / newRelativePosition.height),
+            gwidth: toPercent(el.position.width / newRelativePosition.width),
+            gheight: toPercent(el.position.height / newRelativePosition.height),
             grotate: el.position.rotate
           }
         })
@@ -846,7 +846,7 @@ class CanvasState {
       if (parentComponent) {
         const parentPosition: DOMRectStyle = parentComponent.position
         components.forEach((item: CustomComponent) => {
-          item.groupStyle = {
+          item.relativePosition = {
             gleft: toPercent((item.position.left - parentPosition.left) / parentPosition.width),
             gtop: toPercent((item.position.top - parentPosition.top) / parentPosition.height),
             gwidth: toPercent(item.position.width / parentPosition.width),
@@ -857,7 +857,7 @@ class CanvasState {
         })
       } else {
         components.forEach((item) => {
-          item.groupStyle = undefined
+          item.relativePosition = undefined
           item.parent = undefined
           this.appendComponent(item)
         })
