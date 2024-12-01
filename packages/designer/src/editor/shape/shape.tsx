@@ -1,4 +1,4 @@
-import type { CustomComponent } from '@open-data-v/base'
+import type { CustomComponent, DOMRectStyle } from '@open-data-v/base'
 import { eventBus, StaticKey } from '@open-data-v/base'
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
@@ -21,7 +21,7 @@ export default defineComponent({
       default: false
     },
     info: Object as PropType<CustomComponent>,
-    defaultStyle: Object as PropType<ComponentStyle>,
+    defaultStyle: Object as PropType<DOMRectStyle>,
     index: Number
   },
   setup(props, { slots }) {

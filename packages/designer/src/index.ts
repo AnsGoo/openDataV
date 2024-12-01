@@ -40,12 +40,11 @@ import {
 } from './toolbars'
 import type {
   ComponentItem,
-  ComponentStyle,
   ContextmenuItem,
   DOMRectStyle,
-  RelativePosition,
   Location,
   Position,
+  RelativePosition,
   Vector
 } from './type'
 import {
@@ -115,9 +114,9 @@ export type {
   ComponentStyle,
   ContextmenuItem,
   DOMRectStyle,
-  RelativePosition,
   Location,
   Position,
+  RelativePosition,
   StoreComponentData,
   ToolBarItemType,
   Vector

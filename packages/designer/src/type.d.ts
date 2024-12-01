@@ -42,10 +42,6 @@ export interface DOMRectStyle {
   rotate: number
 }
 
-export interface ComponentStyle extends DOMRectStyle {
-  [propName: string]: string | number | boolean
-}
-
 export interface ComponentData {
   canvasStyle: CanvasStyleData
   canvasData: Record<string, any>[]
