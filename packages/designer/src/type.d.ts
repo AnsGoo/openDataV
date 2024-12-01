@@ -60,6 +60,7 @@ export interface ComponentDataType {
   icon?: string
   style: Record<string, string | number | boolean>
   propValue: Record<string, any>
+  positon: DOMRectStyle
   subComponents?: ComponentDataType[]
   data?: DataOption
   dataMode: DataMode

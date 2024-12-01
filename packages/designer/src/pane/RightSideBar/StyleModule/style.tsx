@@ -139,10 +139,15 @@ export function createStyleComponent(structOption: MetaContainerItem[]) {
           if (!component) {
             return
           }
-          console.log(component.style)
 
-          Object.assign(modelValue, cloneDeep(propValue))
-          Object.assign(modelValue, component.style)
+          Object.assign(modelValue, {
+            info: {
+              id: props.componentId,
+              component: component.component,
+              name: component.name
+            },
+            position: component.position
+          })
         },
         {
           immediate: true

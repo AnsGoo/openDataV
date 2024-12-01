@@ -24,7 +24,7 @@
       <Shape
         v-if="isShow(content.display || false)"
         :id="'shape' + content.id"
-        :defaultStyle="content.style"
+        :defaultStyle="content.position"
         :style="getShapeStyle(content)"
         :active="content.id === (curComponent || {}).id"
         :info="content"
@@ -84,14 +84,14 @@ watch(
       if (!props.component.subComponents[i]) {
         const groupConfig = new GroupComponent(uuid())
         if (mode === 'horizontal') {
-          groupConfig.changeStyle(['position'], {
+          groupConfig.changePositions({
             top: top + labelHeight,
             left: left,
             width: width,
             height: height - labelHeight
           })
         } else {
-          groupConfig.changeStyle(['position'], {
+          groupConfig.changePositions({
             top: top,
             left: left + labelHeight,
             width: width - labelHeight,
@@ -110,11 +110,11 @@ watch(
       } else {
         const groupConfig = props.component.subComponents[i]
         if (mode === 'horizontal') {
-          groupConfig.changeStyle(['position', 'top'], top + labelHeight)
-          groupConfig.changeStyle(['position', 'left'], left)
+          groupConfig.changePosition('top', top + labelHeight)
+          groupConfig.changePosition('left', left)
         } else {
-          groupConfig.changeStyle(['position', 'top'], top)
-          groupConfig.changeStyle(['position', 'left'], left + labelHeight)
+          groupConfig.changePosition('top', top)
+          groupConfig.changePosition('left', left + labelHeight)
         }
         groupConfig.groupStyle = {
           gleft: toPercent((groupConfig.positionStyle.left - left) / width),
@@ -190,8 +190,8 @@ const handleDrop = async (e) => {
     const y = (e.pageY - top) / canvasState.scale
     const x = (e.pageX - left) / canvasState.scale
     const parentStyle = props.component.subComponents[activeKey.value].style
-    component.changeStyle(['position', 'top'], y)
-    component.changeStyle(['position', 'left'], x)
+    component.changePosition('top', y)
+    component.changePosition('left', x)
     component.groupStyle = {
       gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
       gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),

@@ -58,7 +58,7 @@ export function createComponent(component: ComponentDataType): any {
   }
   obj.groupStyle = component.groupStyle
   obj.setPropValue({ propValue: component.propValue })
-  obj.setStyleValue({ style: component.position })
+  obj.changePositions(component.position)
   obj.dataMode = component.dataMode || DataMode.SELF
   const data = component.data
   if (obj.dataMode || obj.dataIntegrationMode === DataMode.UNIVERSAL) {

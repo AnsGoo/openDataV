@@ -1,4 +1,4 @@
-import { cloneDeep, isNumber, set } from 'lodash-es'
+import { cloneDeep, set } from 'lodash-es'
 
 import { ContainerType, DataMode } from './enums'
 import type {
@@ -33,7 +33,7 @@ export class CustomComponent {
    */
   dataIntegrationMode: DataMode = DataMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any, modelValue: any) => void
-  callbackStyle?: (propKeys: Array<string>, value: any, modelValue: any) => void
+  callbackStyle?: (modelValue: any) => void
   callbackData?: (result: any, type?: string) => void
   protected componentDataCallback?: (result: any, type?: string) => void
 
@@ -48,9 +48,6 @@ export class CustomComponent {
   subComponents?: CustomComponent[] = undefined
 
   private _propValue: Record<string, any> = {}
-  private _styleValue: Record<string, any> = {
-    position: this.position
-  }
   dataConfig?: DataConfig
   scriptConfig?: BaseScript
 
@@ -81,16 +78,6 @@ export class CustomComponent {
     this.defaultViewType = viewType
   }
 
-  get style(): Record<string, any> {
-    return {
-      info: {
-        id: this.id,
-        name: this.name,
-        component: this.component
-      },
-      position: this.position
-    }
-  }
   get exampleData(): any {
     return undefined
   }
@@ -148,11 +135,6 @@ export class CustomComponent {
     this._propValue = {}
   }
 
-  // 后端数据回填style
-  setStyleValue(style: Record<string, any>) {
-    this._styleValue = { ...this._styleValue, ...style }
-  }
-
   // 修改属性
   changeProp(propKeys: Array<string>, value: string | number | boolean | any, modelValue) {
     this.setPropValue(modelValue)
@@ -181,7 +163,7 @@ export class CustomComponent {
       return
     }
     set(this.position, key, key === 'rotate' ? value : Math.round(value))
-    this.changeStyle(['position', key], value, this.style)
+    if (this.callbackStyle) this.callbackStyle(this.position)
   }
   changePositions(positions: Record<'top' | 'left' | 'height' | 'width' | 'rotate', number>) {
     const keys = Object.keys(positions) as Array<'top' | 'left' | 'height' | 'width' | 'rotate'>
@@ -189,31 +171,8 @@ export class CustomComponent {
       this.changePosition(el, positions[el])
     })
   }
-
-  // 修改样式
-  changeStyle(propKeys: Array<string>, value: any, style: Record<string, any>) {
-    const positionKey = ['top', 'left', 'height', 'width', 'rotate']
-    let changeValue = value
-    if (propKeys[0] === 'position') {
-      if (propKeys.length === 2 && positionKey.includes(propKeys[1])) {
-        changeValue = Math.round(value)
-        this.position[propKeys[1]] = changeValue
-      } else if (propKeys.length === 1) {
-        positionKey.forEach((el) => {
-          if (!isNumber(value[el])) {
-            return
-          }
-          this.position[el] = value[el]
-        })
-      }
-      this.setStyleValue(this.position)
-    } else {
-      this.setStyleValue(style)
-    }
-    if (this.callbackStyle) this.callbackStyle(propKeys, value, this.style)
-  }
-
-  setStyleChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
+  s
+  etStyleChangeCallback(callback: (value: any) => void) {
     this.callbackStyle = callback
   }
 

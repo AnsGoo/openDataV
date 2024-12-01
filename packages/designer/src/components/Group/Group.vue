@@ -15,7 +15,7 @@
       <Shape
         v-if="isShow(item.display)"
         :id="'shape' + item.id"
-        :defaultStyle="item.style"
+        :defaultStyle="item.position"
         :style="getShapeStyle(item)"
         :active="item.id === (curComponent || {}).id"
         :info="item"
