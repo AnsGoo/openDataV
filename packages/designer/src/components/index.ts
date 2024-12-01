@@ -1,5 +1,5 @@
 import CodeEditor from './code-editor.vue'
-import Group from './group'
+import Group from './group-container'
 import Toggle from './toggle.vue'
 import ToolBar from './tool-bar/tool-bar.vue'
 import ToolBarItem from './tool-bar/tool-bar-item.vue'

@@ -1,9 +1,0 @@
-{
-  "name": "Group",
-  "title": "分组容器",
-  "size": {
-    "width": 200,
-    "height": 200
-  },
-  "dataMode": "UNIVERSAL"
-}
