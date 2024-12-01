@@ -172,7 +172,7 @@ export default defineComponent({
       e.stopPropagation()
       cursors.value = getCursor()
 
-      let { top, left } = props.defaultStyle!
+      let { top, left } = props.position!
       const startY = e.clientY
       const startX = e.clientX
       // 如果直接修改属性，值的类型会变为字符串，所以要转为数值型
@@ -250,11 +250,11 @@ export default defineComponent({
       e.preventDefault()
 
       const position = {
-        top: props.defaultStyle!.top,
-        left: props.defaultStyle!.left,
-        height: props.defaultStyle!.height,
-        width: props.defaultStyle!.width,
-        rotate: props.defaultStyle!.rotate
+        top: props.position!.top,
+        left: props.position!.left,
+        height: props.position!.height,
+        width: props.position!.width,
+        rotate: props.position!.rotate
       }
       // 获取画布位移信息
       const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
@@ -304,7 +304,7 @@ export default defineComponent({
       if (props.info!.locked) return
 
       // 初始坐标和初始角度
-      let { rotate } = { ...props.defaultStyle! }
+      let { rotate } = { ...props.position! }
       const startY: number = e.clientY
       const startX: number = e.clientX
       const startRotate: number = rotate
@@ -398,7 +398,7 @@ export default defineComponent({
 
     const rotateClassName = computed(() => {
       const prefix = 'rotate-'
-      const rotate = props.defaultStyle!.rotate
+      const rotate = props.position!.rotate
       if (rotate > -22.5 && rotate <= 22.5) return prefix + 0
       else if (rotate > 22.5 && rotate <= 67.5) return prefix + 45
       else if (rotate > 67.5 && rotate <= 112.5) return prefix + 90
@@ -558,7 +558,7 @@ export default defineComponent({
             onMousedown={handleRotate}
           />
           <em v-show={showEm.value}>
-            ({props.defaultStyle!.left},{props.defaultStyle!.top})
+            ({props.position!.left},{props.position!.top})
           </em>
           {pointRenderData.map((point) => (
             <div
