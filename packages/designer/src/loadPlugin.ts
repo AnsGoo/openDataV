@@ -1,7 +1,7 @@
 import type { App, Component } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
-import Group from './components/Group'
+import Group from './components/group'
 import { useIcon } from './components/xicon'
 import useCanvasState from './state/canvas'
 

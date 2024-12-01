@@ -59,7 +59,6 @@ import Area from '../editor/Area.vue'
 import Grid from '../editor/Grid.vue'
 import MarkLine from '../editor/MarkLine.vue'
 import Ruler from '../editor/Ruler.vue'
-import Shape from '../editor/Shape'
 import { DataMode, EditMode } from '../enum'
 import { useActionState, useCanvasState, useClipBoardState } from '../state'
 import { clearCanvas, paste } from '../toolbars'
@@ -73,6 +72,7 @@ import {
   getComponentShapeStyle,
   systemLogger
 } from '../utils'
+import Shape from './shape'
 
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
