@@ -99,7 +99,7 @@ const getShapeStyle = (item: CustomComponent) => {
   if (item.groupStyle?.gheight) {
     return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {
-    return filterStyle(item.style, ['top', 'left', 'width', 'height', 'rotate'])
+    return filterStyle(item.position, ['top', 'left', 'width', 'height', 'rotate'])
   }
 }
 </script>

@@ -251,8 +251,8 @@ export function calcComponentsRect(components: CustomComponent[]) {
   const bottomSet: Set<number> = new Set()
   components.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const style: DOMRectStyle = component.position
-    const componentRect: Location = calcComponentAxis(style)
+    const position: DOMRectStyle = component.position
+    const componentRect: Location = calcComponentAxis(position)
     leftSet.add(componentRect.left)
     topSet.add(componentRect.top)
     rightSet.add(componentRect.right)
@@ -268,16 +268,22 @@ export function calcComponentsRect(components: CustomComponent[]) {
 
 /**
  * 计算组件笛卡尔坐标系坐标
- * @param style 组件在画布中的位置
+ * @param position 组件在画布中的位置
  * @returns 组件坐标
  */
-export function calcComponentAxis(style: DOMRectStyle): Location {
-  const leftUpPoint: Vector = { x: style.left, y: style.top }
-  const rightUpPoint: Vector = { x: style.left + style.width, y: style.top }
-  const rightDownPoint: Vector = { x: style.left + style.width, y: style.top + style.height }
-  const leftDownPoint: Vector = { x: style.left, y: style.top + style.height }
-  const center: Vector = { x: style.left + style.width / 2, y: style.top + style.height / 2 }
-  const realRotate = mod360(style.rotate)
+export function calcComponentAxis(position: DOMRectStyle): Location {
+  const leftUpPoint: Vector = { x: position.left, y: position.top }
+  const rightUpPoint: Vector = { x: position.left + position.width, y: position.top }
+  const rightDownPoint: Vector = {
+    x: position.left + position.width,
+    y: position.top + position.height
+  }
+  const leftDownPoint: Vector = { x: position.left, y: position.top + position.height }
+  const center: Vector = {
+    x: position.left + position.width / 2,
+    y: position.top + position.height / 2
+  }
+  const realRotate = mod360(position.rotate)
   if (realRotate != 0) {
     const alu: Vector = rotatePoint(leftUpPoint, center, realRotate)
     const aru: Vector = rotatePoint(rightUpPoint, center, realRotate)
@@ -290,10 +296,10 @@ export function calcComponentAxis(style: DOMRectStyle): Location {
     return { left, right, top, bottom }
   } else {
     return {
-      top: style.top,
-      left: style.left,
-      right: style.left + style.width,
-      bottom: style.top + style.height
+      top: position.top,
+      left: position.left,
+      right: position.left + position.width,
+      bottom: position.top + position.height
     }
   }
 }
@@ -358,15 +364,15 @@ export function mod360(deg): number {
 }
 
 export function createGroupStyle(groupComponent: CustomComponent) {
-  const parentStyle: DOMRectStyle = groupComponent.position
+  const parentPosition: DOMRectStyle = groupComponent.position
   groupComponent.subComponents!.forEach((component) => {
     // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
     // 如果已存在 component.groupStyle，说明已经计算过一次了。不需要再次计算
     component.groupStyle = {
-      gleft: toPercent((component.position.left - parentStyle.left) / parentStyle.width),
-      gtop: toPercent((component.position.top - parentStyle.top) / parentStyle.height),
-      gwidth: toPercent(component.position.width / parentStyle.width),
-      gheight: toPercent(component.position.height / parentStyle.height),
+      gleft: toPercent((component.position.left - parentPosition.left) / parentPosition.width),
+      gtop: toPercent((component.position.top - parentPosition.top) / parentPosition.height),
+      gwidth: toPercent(component.position.width / parentPosition.width),
+      gheight: toPercent(component.position.height / parentPosition.height),
       grotate: component.position.rotate
     }
   })
@@ -455,15 +461,15 @@ export const getComponentStyle = (component: CustomComponent) => {
  * @returns css
  */
 export const getComponentShapeStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.position)
+  const position = cloneDeep(component.position)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
     return {
-      ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
+      ...excludeStyle(position, ['top', 'left', 'width', 'height', 'rotate']),
       ...getGroupStyle(groupStyle)
     }
   } else {
-    return excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
+    return excludeStyle(position, ['top', 'left', 'width', 'height', 'rotate'])
   }
 }
 
@@ -473,9 +479,9 @@ export const getComponentShapeStyle = (component: CustomComponent) => {
  * @returns css
  */
 export const getInnerComponentShapeStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.position)
+  const position = cloneDeep(component.position)
   return {
-    ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
+    ...excludeStyle(position, ['top', 'left', 'width', 'height', 'rotate']),
     width: '100%',
     height: '100%'
   }
