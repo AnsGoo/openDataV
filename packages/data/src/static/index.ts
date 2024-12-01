@@ -2,8 +2,8 @@ import { defineAsyncComponent, shallowRef } from 'vue'
 
 import handler from './handler'
 
-const StaticContent = defineAsyncComponent(() => import('./DataView.vue'))
-const StaticPane = defineAsyncComponent(() => import('./Pane.vue'))
+const StaticContent = defineAsyncComponent(() => import('./data-view.vue'))
+const StaticPane = defineAsyncComponent(() => import('./panel.vue'))
 export default {
   type: 'STATIC',
   name: '静态数据',
