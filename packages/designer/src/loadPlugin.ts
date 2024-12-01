@@ -15,7 +15,7 @@ const useComponentPlugin = ({
 }) => {
   const OCodeEditor = codeEditorComponent
     ? codeEditorComponent
-    : defineAsyncComponent(() => import('./components/CodeEditor.vue'))
+    : defineAsyncComponent(() => import('./components/code-editor.vue'))
 
   const groupMeta = Group.manifest
   canvasState.loadComponent('Group', { ...groupMeta, subComponents: [] }, Group.attrs)
