@@ -58,11 +58,11 @@ const dataChange = (resp: any, _?: string) => {
       const matchReg = new RegExp(channel)
       keys.forEach((el) => {
         if (matchReg.test(el)) {
-          eventBus.on(el, data)
+          eventBus.emit(el, data)
         }
       })
     } else {
-      eventBus.on(channel, data)
+      eventBus.emit(channel, data)
     }
   }
 }
