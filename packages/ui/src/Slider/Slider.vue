@@ -181,7 +181,6 @@ const slierClick = (evt: MouseEvent) => {
     startLeft.value.toFixed(2) === endLeft.value.toFixed(2)
   ) {
     // 重叠点所在的位置
-    console.log('重叠点所在的位置')
     if (startLeft.value === 0) {
       // 将结束点往后一个单位
       endLeft.value = getStepPercent.value

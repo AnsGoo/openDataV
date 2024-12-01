@@ -173,7 +173,6 @@ const inputChange = (value: any) => {
 }
 // 设置初始值
 const setFirstText = () => {
-  // console.log('setFirstText')
   if (state.setFirst) {
     return
   }

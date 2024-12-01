@@ -28,7 +28,6 @@ export function createAttrComponent(structOption: MetaContainerItem[]) {
       const modelValue = reactive(cloneDeep(propValue))
       const changed = (keys: Array<string>, val: any) => {
         const component = canvasState.getComponentById(props.componentId!)
-        // console.log(props.componentId)
         if (!component) {
           return
         }

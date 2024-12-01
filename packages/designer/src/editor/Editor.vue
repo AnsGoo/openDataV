@@ -137,7 +137,6 @@ const bgStyle = computed<Record<string, string>>(() => {
 
 const copyComponent = () => {
   if (canvasState.activeComponent) {
-    console.log('---')
     clipBoardState.copy(canvasState.activeComponent.toJson(false))
   }
 }
