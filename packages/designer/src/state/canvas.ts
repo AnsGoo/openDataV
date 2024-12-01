@@ -1,5 +1,4 @@
 import type {
-  BaseComponent,
   CustomComponent,
   DataInstance,
   MetaContainerItem
@@ -138,11 +137,7 @@ class CanvasState {
         height: number
       }
       dataMode?: string
-      panel: {
-        attrComponent: Component
-        styleComponent: Component
-        demoLoader: () => any
-      }
+      panel: Component
     }
   > = new Map()
 
@@ -177,18 +172,10 @@ class CanvasState {
   get components() {
     return this.state.components
   }
-  public loadComponent(
-    name: string,
-    componentInfo: any,
-    attrs?: Component,
-    style?: Component
-  ): void {
+  public loadComponent(name: string, componentInfo: any, panel?: Component): void {
     this.componentMetaMap.set(name, {
       ...componentInfo,
-      panel: {
-        styleComponent: style,
-        attrComponent: attrs
-      }
+      panel: panel
     })
   }
 

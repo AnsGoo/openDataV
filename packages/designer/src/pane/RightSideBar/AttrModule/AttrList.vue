@@ -18,7 +18,7 @@ const mode = computed<ContainerType>(() => props.curComponent.defaultViewType)
 const AttrComponent = computed(() => {
   const panel = canvasState.getComponentPanel(props.curComponent.component)
   if (panel) {
-    return panel.attrComponent
+    return panel
   }
   return useEmpty('未发现对应的数据面板')
 })
