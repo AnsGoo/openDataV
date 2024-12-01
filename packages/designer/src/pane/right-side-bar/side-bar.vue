@@ -105,11 +105,11 @@ import { computed, getCurrentInstance, h, ref } from 'vue'
 
 import { Toggle } from '../../components'
 import { useCanvasState } from '../../state'
-import AttrList from './AttrModule'
-import Canvas from './CanvasModules/canvas.vue'
-import GlobalData from './CanvasModules/global-data'
-import DataList from './DataModule'
-import StyleList from './StyleModule'
+import AttrList from './attr-module'
+import Canvas from './canvas-modules/Canvas.vue'
+import GlobalData from './canvas-modules/global-data.tsx'
+import DataList from './data-module'
+import StyleList from './style-module'
 // 右侧属性列表
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
