@@ -1,4 +1,4 @@
-import DemoDataPlugin from './DemoData'
+import DemoDataPlugin from './demo-data'
 
 export default {
   DemoDataPlugin

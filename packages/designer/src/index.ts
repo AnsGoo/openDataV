@@ -1,7 +1,7 @@
 import type { ToolBarItemType } from './components'
 import { CodeEditor, Group, iconMap, ToolBar, ToolBarItem, XIcon } from './components'
 import { HOOKS } from './const'
-import DemoDataPlugin from './data/DemoData'
+import DemoDataPlugin from './data/demo-data'
 import type { StoreComponentData } from './db'
 import Editor from './editor'
 import Shape from './editor/shape'
