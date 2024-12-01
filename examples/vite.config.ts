@@ -6,8 +6,8 @@ import type { ConfigEnv, ProxyOptions, UserConfigExport } from 'vite'
 import { loadEnv } from 'vite'
 
 // https://vitejs.dev/config/
-export default ({ mode, command }: ConfigEnv): UserConfigExport => {
-  const { VITE_APP_PORT, VITE_APP_PROXY, VITE_MOCK } = loadEnv(mode, process.cwd())
+export default ({ mode }: ConfigEnv): UserConfigExport => {
+  const { VITE_APP_PORT, VITE_APP_PROXY } = loadEnv(mode, process.cwd())
 
   const createProxy = (proxyList) => {
     const ret = {} as Record<string, ProxyOptions>
