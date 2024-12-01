@@ -25,8 +25,8 @@ import { useCanvasState, useClipBoardState } from '../../../state'
 import { decompose } from '../../../toolbars'
 import type { ContextmenuItem } from '../../../type'
 import { uuid } from '../../../utils'
-import LayerItem from './LayerItem.vue'
-import SimpleLayerItem from './SimpleLayerItem.vue'
+import LayerItem from './layer-item.vue'
+import SimpleLayerItem from './simple-layer-item.vue'
 
 const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()

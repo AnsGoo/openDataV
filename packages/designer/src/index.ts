@@ -11,10 +11,10 @@ import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/Canvas.vue'
 import Designer from './pages/designer/Designer.vue'
 import Previewer from './pages/perviewer/viewer.vue'
-import createAttrComponent from './pane/factory'
-import LeftSideBar from './pane/LeftSideBar'
-import RightSideBar from './pane/RightSideBar'
-import ToolsBar from './pane/Toolsbar'
+import createAttrComponent from './pane/factory.tsx'
+import LeftSideBar from './pane/left-side-bar'
+import RightSideBar from './pane/right-side-bar'
+import ToolsBar from './pane/tools-bar'
 import Directive from './plugins/directive'
 import type { CanvasData, CanvasStyleData } from './state'
 import {
@@ -111,7 +111,6 @@ export {
 export type {
   CanvasData,
   CanvasStyleData,
-  ComponentDataType,
   ComponentItem,
   ComponentStyle,
   ContextmenuItem,

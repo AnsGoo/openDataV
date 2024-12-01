@@ -16,7 +16,7 @@ import { getCurrentInstance, h, onMounted, ref } from 'vue'
 import type { GroupType } from '../../../enum'
 import { ComponentGroupList } from '../../../enum'
 import { useCanvasState } from '../../../state'
-import ComponentItem from './ComponentItem.vue'
+import ComponentItem from './component-item.vue'
 
 withDefaults(
   defineProps<{

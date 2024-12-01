@@ -57,8 +57,8 @@ import { OTabPane, OTabs } from '@open-data-v/ui'
 import { computed, ref } from 'vue'
 
 import Toggle from '../../components/Toggle.vue'
-import ComponentList from './Component/ComponentList.vue'
-import Layer from './Layer/Layer.vue'
+import ComponentList from './component/component-list.vue'
+import Layer from './layer/layer.vue'
 
 const activeKey = ref<string>('components')
 const emits = defineEmits<{
