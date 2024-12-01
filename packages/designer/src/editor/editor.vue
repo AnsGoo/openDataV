@@ -26,7 +26,7 @@
         <Shape
           v-if="canvasState.isEditMode && item.display"
           :id="'shape' + item.id"
-          :defaultStyle="item.position"
+          :position="item.position"
           :style="getShapeStyle(item.position)"
           :active="item.id === (curComponent || {}).id"
           :info="item"

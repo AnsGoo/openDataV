@@ -21,7 +21,7 @@ export default defineComponent({
       default: false
     },
     info: Object as PropType<CustomComponent>,
-    defaultStyle: Object as PropType<DOMRectStyle>,
+    position: Object as PropType<DOMRectStyle>,
     index: Number
   },
   setup(props, { slots }) {

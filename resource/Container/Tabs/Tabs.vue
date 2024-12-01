@@ -99,7 +99,7 @@ watch(
           })
         }
         groupConfig.parent = props.component
-        groupConfig.groupStyle = {
+        groupConfig.relativePosition = {
           gleft: 0,
           gtop: toPercent((groupConfig.positionStyle.top - top) / height),
           gwidth: 100,
@@ -116,12 +116,12 @@ watch(
           groupConfig.changePosition('top', top)
           groupConfig.changePosition('left', left + labelHeight)
         }
-        groupConfig.groupStyle = {
+        groupConfig.relativePosition = {
           gleft: toPercent((groupConfig.positionStyle.left - left) / width),
           gtop: toPercent((groupConfig.positionStyle.top - top) / height),
           gwidth: toPercent(groupConfig.positionStyle.width / width),
           gheight: toPercent(groupConfig.positionStyle.height / height),
-          grotate: groupConfig.groupStyle!.grotate || 0
+          grotate: groupConfig.relativePosition!.grotate || 0
         }
       }
     }
@@ -132,8 +132,8 @@ watch(
 )
 
 const getShapeStyle = (item: CustomComponent) => {
-  if (item.groupStyle?.gheight) {
-    return filterStyle(item.groupStyle, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
+  if (item.relativePosition?.gheight) {
+    return filterStyle(item.relativePosition, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {
     return filterStyle(item.style, ['top', 'left', 'width', 'height', 'rotate'])
   }
@@ -192,7 +192,7 @@ const handleDrop = async (e) => {
     const parentStyle = props.component.subComponents[activeKey.value].style
     component.changePosition('top', y)
     component.changePosition('left', x)
-    component.groupStyle = {
+    component.relativePosition = {
       gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
       gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),
       gwidth: toPercent(component.positionStyle.width / parentStyle.width),
