@@ -2,7 +2,7 @@ import type { App } from 'vue'
 
 import icons from './icon-map'
 import useIcon from './useIcon'
-import XIcon from './XIcon.vue'
+import XIcon from './x-icon.vue'
 
 export { XIcon }
 
