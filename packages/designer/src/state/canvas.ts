@@ -611,7 +611,10 @@ class CanvasState {
       } else {
         const subComponents = data[i].subComponents
         if (subComponents && subComponents.length > 0) {
-          return this.findComponentById(id, subComponents)
+          const component = this.findComponentById(id, subComponents)
+          if (component) {
+            return component
+          }
         }
       }
     }
