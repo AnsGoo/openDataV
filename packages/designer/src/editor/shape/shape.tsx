@@ -6,7 +6,7 @@ import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } fro
 import { stretchedComponents } from '../../component'
 import { useActionState, useCanvasState } from '../../state'
 import { copy, decompose } from '../../toolbars'
-import type { ComponentStyle, ContextmenuItem, Vector } from '../../type'
+import type { ContextmenuItem, Vector } from '../../type'
 import { copyText, mod360, systemLogger, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
 
