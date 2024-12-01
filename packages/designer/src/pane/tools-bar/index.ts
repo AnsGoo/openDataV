@@ -1,3 +1,3 @@
-import ToolBar from './Toolbar.vue'
+import ToolBar from './toolbar.vue'
 
 export default ToolBar
