@@ -38,41 +38,16 @@
 <script setup lang="ts">
 import type { CustomComponent, Hooks } from '@open-data-v/base'
 import { channels, eventBus } from '@open-data-v/base'
-import { computed, inject, reactive } from 'vue'
+import { computed, inject } from 'vue'
 
 import { HOOKS } from '../../const'
 import Shape from '../../editor/Shape'
 import useCanvasState from '../../state/canvas'
 import { filterStyle, getComponentStyle, getInnerComponentShapeStyle } from '../../utils'
-import { getDefaultValue } from './config'
-import type { Group } from './type'
 
 const props = defineProps<{
   component: CustomComponent
 }>()
-
-const defaultPropValue = reactive<Group>(getDefaultValue())
-
-const useMessage = (
-  { channel, isRegExp, isListen }: { channel: string; isRegExp: boolean; isListen: boolean },
-  callback: (...args) => void
-) => {
-  if (isRegExp && channel) {
-    const keys = Object.keys(channels)
-    const matchReg = new RegExp(channel)
-    const call = isListen
-      ? (name) => eventBus.on(name, callback)
-      : (name) => eventBus.off(name, callback)
-    keys.forEach((el) => {
-      if (matchReg.test(el)) {
-        call(el)
-      }
-    })
-  } else {
-    const myChannel = channel ? channel : props.component.id
-    call(myChannel)
-  }
-}
 
 function pubMessgae({ channel, isRegExp }: { channel: string; isRegExp: boolean }, data) {
   if (isRegExp && channel) {
@@ -85,25 +60,17 @@ function pubMessgae({ channel, isRegExp }: { channel: string; isRegExp: boolean 
     })
   } else {
     const myChannel = channel ? channel : props.component.id
-    eventBus(myChannel, data)
+    eventBus.emit(myChannel, data)
   }
 }
 const dataChange = (resp: any, _?: string) => {
   if (resp.status === 'SUCCESS') {
     const data = resp.afterData
     const propValue = props.component.propValue
-    pubMessgae({ channel, isRegExp: propValue.isRegExp }, data)
+    pubMessgae(propValue, data)
   }
 }
-const { useData, useProp } = inject<Hooks>(HOOKS) || {}
-
-if (useProp) {
-  useProp(props.component, (propsKey: Array<string>, value: any) => {
-    useMessage({ ...defaultPropValue.dataOption, isListen: false }, dataChange)
-    set(defaultPropValue, propsKey.join('.'), value)
-    useMessage({ ...defaultPropValue, isListen: true }, dataChange)
-  })
-}
+const { useData } = inject<Hooks>(HOOKS) || {}
 
 if (useData) {
   useData(props.component, dataChange)
