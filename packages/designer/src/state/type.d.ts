@@ -59,7 +59,7 @@ export interface CanvasStyleConfig {
 }
 
 export interface CopyItem {
-  copyData: Optional<CustomComponent>
+  copyData: Optional<ComponentDataType>
   isCut: boolean
 }
 export interface SelectedAreaData {

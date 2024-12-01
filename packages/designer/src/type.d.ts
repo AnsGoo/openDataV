@@ -52,21 +52,6 @@ export interface ComponentData {
   dataSlotters: Array<{ type: string; config: any }>
 }
 
-export interface ComponentDataType {
-  id: string
-  name: string
-  component: string
-  groupStyle?: GroupStyle
-  icon?: string
-  position: Record<string, string | number | boolean>
-  propValue: Record<string, any>
-  positon: DOMRectStyle
-  subComponents?: ComponentDataType[]
-  data?: DataOption
-  dataMode: DataMode
-  script?: ScriptOption
-}
-
 export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
   group: ComponentGroup
   id?: string

@@ -1,8 +1,8 @@
-import type { CustomComponent } from '@open-data-v/base'
-import { cloneDeep } from 'lodash-es'
+import type { ComponentDataType } from '@open-data-v/base'
+import { cloneDeep, set } from 'lodash-es'
 import { reactive } from 'vue'
 
-import { copyText, uuid } from '../utils'
+import { copyText, createComponent } from '../utils'
 import useCanvasState from './canvas'
 import type { CopyItem } from './type'
 import { singleton } from './utils'
@@ -13,10 +13,10 @@ class ClipBoardState {
     isCut: false
   })
 
-  get copyData(): Optional<CustomComponent> {
+  get copyData(): Optional<ComponentDataType> {
     return this.state.copyData
   }
-  set copyData(data: Optional<CustomComponent>) {
+  set copyData(data: Optional<ComponentDataType>) {
     this.state.copyData = data
   }
 
@@ -26,11 +26,10 @@ class ClipBoardState {
   set isCut(isCut: boolean) {
     this.state.isCut = isCut
   }
-  copy(data: CustomComponent) {
+  copy(data: ComponentDataType) {
     this.copyData = cloneDeep(data)
-    this.copyData!.parent = undefined
     this.copyData!.groupStyle = undefined
-    copyText(JSON.stringify(this.copyData!.toJson()))
+    copyText(JSON.stringify(this.copyData))
   }
 
   paste(isMouse: boolean, x?: number, y?: number): void {
@@ -39,18 +38,19 @@ class ClipBoardState {
     }
 
     const canvasState = useCanvasState()
-
+    const componentCopy = createComponent(this.copyData)
     if (isMouse) {
-      this.copyData.changePosition('top', y!)
-      this.copyData.changePosition('left', x!)
+      componentCopy.changePositions({
+        top: y!,
+        left: x!
+      })
     } else {
-      this.copyData.changePosition('top', (this.copyData.style.top as number) + 10)
-      this.copyData.changePosition('left', (this.copyData.style.left as number) + 10)
+      componentCopy.changePositions({
+        top: (this.copyData.position.top as number) + 10,
+        left: (this.copyData.position.left as number) + 10
+      })
     }
-
-    const data = cloneDeep(this.copyData)
-    data.id = uuid()
-    canvasState.appendComponent(data)
+    canvasState.appendComponent(componentCopy)
   }
 }
 

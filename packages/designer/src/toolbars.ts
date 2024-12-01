@@ -74,7 +74,7 @@ const decompose = () => {
   canvasState.decompose()
 }
 const copy = () => {
-  clipBoardState.copy(canvasState.activeComponent!)
+  canvasState.activeComponent && clipBoardState.copy(canvasState.activeComponent.toJson(false))
 }
 
 const fullScreen = () => {

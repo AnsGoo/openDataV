@@ -108,13 +108,13 @@ export interface DataOption {
   requestOptions: RequestOptions
 }
 export interface ComponentDataType {
-  id: string
+  id?: string
   name: string
   component: string
   groupStyle?: GroupStyle
   icon?: string
   position: DOMRectStyle
-  propValue: Record<string, any>
+  propValue?: Record<string, any>
   subComponents?: ComponentDataType[]
   data?: DataOption
   dataMode: DataMode

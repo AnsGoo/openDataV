@@ -1,4 +1,4 @@
-import type { CustomComponent, DataInstance, MetaContainerItem } from '@open-data-v/base'
+import type { CustomComponent, DataInstance, DataMode, MetaContainerItem } from '@open-data-v/base'
 import {
   buildModeValue,
   ContainerType,
@@ -124,6 +124,7 @@ class CanvasState {
   public componentMetaMap: Map<
     string,
     {
+      subComponents: ComponentDataType[] | undefined
       name: string
       title: string
       category: string
@@ -132,7 +133,7 @@ class CanvasState {
         width: number
         height: number
       }
-      dataMode?: string
+      dataMode?: DataMode
       panel: Component
     }
   > = new Map()

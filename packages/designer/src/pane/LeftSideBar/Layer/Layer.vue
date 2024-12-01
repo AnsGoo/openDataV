@@ -120,9 +120,9 @@ const calcIndex = (index: number, fatherIndex: string) => {
 
 const copy = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<CustomComponent> = cloneDeep(canvasState.getComponentByIndex(indexes))
+  const component: Optional<CustomComponent> = anvasState.getComponentByIndex(indexes)
   if (component) {
-    clipBoardState.copy(component)
+    clipBoardState.copy(component.toJson(false))
   }
 }
 
@@ -177,7 +177,7 @@ const cut = (index: string) => {
     cutComponent?.parent
   )
   if (component) {
-    clipBoardState.copy(component)
+    clipBoardState.copy(component.toJson(false))
   }
 }
 

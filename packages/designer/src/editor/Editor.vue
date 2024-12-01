@@ -137,7 +137,8 @@ const bgStyle = computed<Record<string, string>>(() => {
 
 const copyComponent = () => {
   if (canvasState.activeComponent) {
-    clipBoardState.copy(canvasState.activeComponent)
+    console.log('---')
+    clipBoardState.copy(canvasState.activeComponent.toJson(false))
   }
 }
 
@@ -148,10 +149,12 @@ const pasteComponent = (event: ClipboardEvent) => {
       const componentData = JSON.parse(textData)
       const component: CustomComponent = createComponent(componentData)
       if (component) {
-        component.changePosition('top', component.position.top + 10)
-        component.changePosition('left', component.position.left + 10)
-        component.id = uuid()
-        clipBoardState.copy(component)
+        component.changePositions({
+          top: component.position.top + 10,
+          left: component.position.left + 10
+        })
+
+        clipBoardState.copy(component.toJson(false))
         event.preventDefault()
         event.stopPropagation()
         canvasState.appendComponent(component)

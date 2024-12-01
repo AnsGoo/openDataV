@@ -1,10 +1,11 @@
-import { CustomComponent } from '@open-data-v/base'
+import type { CustomComponent } from '@open-data-v/base'
 import { reactive } from 'vue'
 
 import type { Location, Position } from '../type'
 import {
   calcComponentsRect,
   createGroupStyle,
+  getComponentInstance,
   getComponentRealRect,
   getSelectComponents
 } from '../utils'
@@ -139,19 +140,8 @@ class ActionState {
     if (this.style.width === 0) {
       this.style = { ...this.style, ...calcComponentsRect(this.components) }
     }
-    const componentInfo = canvasState.componentMetaMap.get('Group')
-    if (!componentInfo) {
-      return
-    }
-    const groupComponent = new CustomComponent({
-      width: componentInfo.size.width,
-      height: componentInfo.size.height,
-      icon: componentInfo.icon,
-      name: componentInfo.title,
-      component: componentInfo.name,
-      dataMode: componentInfo.dataMode as any,
-      subComponents: []
-    })
+    const groupComponent = getComponentInstance({ component: 'Group' })!
+
     for (const prop in this.style) {
       groupComponent.changePosition(
         prop as 'top' | 'left' | 'height' | 'width' | 'rotate',

@@ -1,9 +1,9 @@
-import type { DataOption, ScriptOption } from '@open-data-v/base'
+import type { ComponentDataType, DataOption, ScriptOption } from '@open-data-v/base'
 import { ContainerType, CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
 
 import { useCanvasState, useDataState, useScriptState } from './state'
-import type { ComponentDataType, DOMRectStyle, Location, Vector } from './type'
+import type { DOMRectStyle, Location, Vector } from './type'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
@@ -47,46 +47,30 @@ const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption
 }
 export function createComponent(component: ComponentDataType): any {
   const canvasState = useCanvasState()
-  const obj = getComponentInstance({
-    component: component.component,
-    name: component.name,
-    icon: component.icon,
-    id: component.id
-  })
+  const obj = new CustomComponent(component)
   if (!obj) {
     return
   }
-  obj.groupStyle = component.groupStyle
-  obj.setPropValue({ propValue: component.propValue })
-  obj.changePositions(component.position)
-  obj.dataMode = component.dataMode || DataMode.SELF
   const data = component.data
-  if (obj.dataMode || obj.dataIntegrationMode === DataMode.UNIVERSAL) {
+  if (obj.dataMode === DataMode.UNIVERSAL) {
     buildDataHandler(obj, data)
   }
   buildAfterCallback(obj, component.script)
-  component.subComponents?.forEach((item) => {
-    const subObj = createComponent(item)
-    subObj.parent = obj
-    obj.subComponents?.push(subObj)
-  })
+  if (component.subComponents) {
+    component.subComponents.forEach((item) => {
+      const subObj = createComponent(item)
+      subObj.parent = obj
+      obj.subComponents?.push(subObj)
+    })
+    createGroupStyle(obj)
+  }
 
   const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
   obj.setViewType(viewType)
   return obj
 }
 
-export function getComponentInstance({
-  component,
-  id,
-  name,
-  icon
-}: {
-  component: string
-  id?: string
-  name?: string
-  icon?: string
-}) {
+export function getComponentInstance({ component }: { component: string }) {
   const canvasState = useCanvasState()
   const componentName = component
   const componentInfo = canvasState.componentMetaMap.get(componentName)
@@ -94,12 +78,18 @@ export function getComponentInstance({
     return
   }
   const obj = new CustomComponent({
-    id: id,
-    width: componentInfo.size.width,
-    height: componentInfo.size.height,
-    icon: icon || componentInfo.icon,
-    name: name || componentInfo.title,
-    component: componentInfo.name
+    position: {
+      width: componentInfo.size.width,
+      height: componentInfo.size.height,
+      top: 0,
+      left: 0,
+      rotate: 0
+    },
+    dataMode: componentInfo.dataMode || DataMode.SELF,
+    icon: componentInfo.icon,
+    name: componentInfo.title,
+    component: componentInfo.name,
+    subComponents: componentInfo.subComponents
   })
   // obj.setExampleData(componentInfo.demoLoader)
   return obj

@@ -18,7 +18,7 @@ const useComponentPlugin = ({
     : defineAsyncComponent(() => import('./components/CodeEditor.vue'))
 
   const groupMeta = Group.manifest
-  canvasState.loadComponent('Group', groupMeta, Group.attrs)
+  canvasState.loadComponent('Group', { ...groupMeta, subComponents: [] }, Group.attrs)
 
   const OIcon = useIcon(icons)
   return {

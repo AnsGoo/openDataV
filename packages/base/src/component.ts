@@ -4,7 +4,6 @@ import { ContainerType, DataMode } from './enums'
 import type {
   BaseScript,
   ComponentDataType,
-  ComponentType,
   DataInstance,
   DOMRectStyle,
   GroupStyle,
@@ -51,23 +50,16 @@ export class CustomComponent {
   dataConfig?: DataConfig
   scriptConfig?: BaseScript
 
-  constructor(detail: ComponentType) {
-    if (detail.id) {
-      this.id = detail.id
-    } else {
-      this.id = uuid()
-    }
-    this.component = detail.component
-    this.name = detail.name
+  constructor(metaData: ComponentDataType) {
+    const { id, component, name, propValue, position, subComponents, dataMode } = metaData
+    this.id = id || uuid()
+    this.component = component
+    this.name = name
 
-    this.subComponents = detail.subComponents
-    if (detail.icon) {
-      this.icon = detail.icon
-    }
-    this.position.width = detail.width || 100
-    this.position.height = detail.height || 100
-    this.dataMode = detail.dataMode || detail.dataIntegrationMode || DataMode.SELF
-    this.initProp()
+    this.subComponents = subComponents ? [] : undefined
+    this.changePositions(position)
+    this.dataMode = dataMode || DataMode.SELF
+    this._propValue = propValue || {}
   }
 
   get propValue() {
@@ -101,38 +93,30 @@ export class CustomComponent {
   }
 
   // 生成后端存储需要的Json
-  toJson(): ComponentDataType {
-    const subComponents = (this.subComponents || []).map((item) => item.toJson())
+  toJson(isDeep = true): ComponentDataType {
+    const subComponents = (this.subComponents || []).map((item) => item.toJson(isDeep))
     const component: ComponentDataType = {
-      id: this.id,
+      id: isDeep ? this.id : undefined,
       component: this.component,
       name: this.name,
       propValue: this.propValue,
       position: this.position,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
       dataMode: this.dataMode,
-      script: this.scriptConfig?.toJSON()
-    }
-    if (this.dataConfig) {
-      component.data = {
-        type: this.dataConfig?.type,
-        requestOptions: this.dataConfig?.dataInstance.toJSON()
-      }
-    }
-    if (this.groupStyle) {
-      component.groupStyle = this.groupStyle
+      script: this.scriptConfig?.toJSON(),
+      data: this.dataConfig
+        ? {
+            type: this.dataConfig?.type,
+            requestOptions: this.dataConfig?.dataInstance.toJSON()
+          }
+        : undefined
     }
     return component
   }
 
   // 后端数据回填propValue
   setPropValue(propValue: Record<string, any>) {
-    console.log(propValue)
-    this._propValue = propValue
-  }
-
-  private initProp() {
-    this._propValue = {}
+    Object.assign(this._propValue, propValue)
   }
 
   // 修改属性
