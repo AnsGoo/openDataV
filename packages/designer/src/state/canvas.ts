@@ -1,4 +1,10 @@
-import type { CustomComponent, DataInstance, DataMode, MetaContainerItem } from '@open-data-v/base'
+import type {
+  ComponentDataType,
+  CustomComponent,
+  DataInstance,
+  DataMode,
+  MetaContainerItem
+} from '@open-data-v/base'
 import {
   buildModeValue,
   ContainerType,
@@ -12,7 +18,7 @@ import { reactive } from 'vue'
 
 import { EditMode, PixelEnum } from '../enum'
 import { DataSlotter } from '../state'
-import type { ComponentDataType, DOMRectStyle, GroupStyle, Vector } from '../type'
+import type { DOMRectStyle, GroupStyle, Vector } from '../type'
 import {
   calcComponentsRect,
   createComponent,

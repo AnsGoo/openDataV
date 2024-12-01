@@ -71,8 +71,7 @@ import {
   filterStyle,
   getComponentInstance,
   getComponentShapeStyle,
-  systemLogger,
-  uuid
+  systemLogger
 } from '../utils'
 
 const actionState = useActionState()

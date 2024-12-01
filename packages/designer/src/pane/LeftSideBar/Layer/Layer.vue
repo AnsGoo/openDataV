@@ -14,7 +14,6 @@
 
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
-import { ComponentGroup } from '@open-data-v/base'
 import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'

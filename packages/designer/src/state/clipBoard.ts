@@ -1,5 +1,5 @@
 import type { ComponentDataType } from '@open-data-v/base'
-import { cloneDeep, set } from 'lodash-es'
+import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import { copyText, createComponent } from '../utils'

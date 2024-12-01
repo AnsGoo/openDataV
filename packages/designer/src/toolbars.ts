@@ -1,7 +1,8 @@
+import type { ComponentDataType } from '@open-data-v/base'
+
 import type { StoreComponentData } from './db'
 import { useCanvasState, useClipBoardState, useSnapshotState } from './state'
 import type { CanvasStyleData } from './state/type'
-import type { ComponentDataType } from './type'
 import { exportRaw, handleLogger, importRaw } from './utils'
 
 const snapShotState = useSnapshotState()
