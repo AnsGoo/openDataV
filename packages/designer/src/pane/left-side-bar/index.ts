@@ -1,3 +1,3 @@
-import LeftSideBar from './SideBar.vue'
+import LeftSideBar from './side-bar.vue'
 
 export default LeftSideBar
