@@ -11,7 +11,7 @@ import { useData, useProp } from '@open-data-v/base'
 import { computed, onMounted, onUnmounted, provide, readonly } from 'vue'
 
 import { HOOKS } from '../../const'
-import Wrapper from '../../editor/Wrapper.vue'
+import Wrapper from '../../editor/wrapper.vue'
 import { useCanvasState } from '../../state'
 import type { LayoutData } from '../../state/type'
 import { backgroundToCss, filterStyle, pageScale } from '../../utils'
