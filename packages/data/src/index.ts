@@ -5,7 +5,7 @@ import RestDataPlugin, {
   RequestMethod,
   RestContent,
   RestHandler,
-  RestPane
+  RestPanel
 } from './rest'
 import StaticDataPlugin, { handler as StaticHandler, StaticContent, StaticPanel } from './static'
 import SubDataPlugin from './sub'
@@ -18,7 +18,7 @@ export {
   RestContent,
   RestDataPlugin,
   RestHandler,
-  RestPane,
+  RestPanel,
   StaticContent,
   StaticDataPlugin,
   StaticHandler,
