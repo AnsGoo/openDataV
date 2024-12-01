@@ -1,8 +1,4 @@
-import type {
-  CustomComponent,
-  DataInstance,
-  MetaContainerItem
-} from '@open-data-v/base'
+import type { CustomComponent, DataInstance, MetaContainerItem } from '@open-data-v/base'
 import {
   buildModeValue,
   ContainerType,
@@ -437,7 +433,7 @@ class CanvasState {
       }
     })
     if (parentComponent) {
-      const parentStyle = parentComponent.positionStyle
+      const parentStyle = parentComponent.position
       const groupStyle = this.activeComponent.groupStyle!
       const gStyle = {
         gleft:
@@ -460,25 +456,20 @@ class CanvasState {
       }
       const newStyle = {
         left:
-          ablePosition.left !== undefined
-            ? ablePosition.left
-            : this.activeComponent.positionStyle.left,
-        top:
-          ablePosition.top !== undefined
-            ? ablePosition.top
-            : this.activeComponent.positionStyle.top,
+          ablePosition.left !== undefined ? ablePosition.left : this.activeComponent.position.left,
+        top: ablePosition.top !== undefined ? ablePosition.top : this.activeComponent.position.top,
         width:
           ablePosition.width !== undefined
             ? ablePosition.width
-            : this.activeComponent.positionStyle.width,
+            : this.activeComponent.position.width,
         height:
           ablePosition.height !== undefined
             ? ablePosition.height
-            : this.activeComponent.positionStyle.height,
+            : this.activeComponent.position.height,
         rotate:
           ablePosition.rotate !== undefined
             ? ablePosition.rotate!
-            : this.activeComponent.positionStyle.rotate
+            : this.activeComponent.position.rotate
       }
       this.activeComponent.groupStyle = gStyle
       for (const key in newStyle) {
@@ -510,7 +501,7 @@ class CanvasState {
   private resizeSubComponent(component: CustomComponent) {
     if (!component.subComponents) return
     const subComponents = component.subComponents
-    const parentStyle = component.positionStyle
+    const parentStyle = component.position
     subComponents.forEach((el: CustomComponent) => {
       const groupStyle: GroupStyle = el.groupStyle!
       const center: Vector = {
@@ -530,17 +521,13 @@ class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentStyle.rotate)
-      el.changeStyle(
-        ['position'],
-        {
-          top: Math.round(afterPoint.y - height / 2),
-          left: Math.round(afterPoint.x - width / 2),
-          height: Math.round(height),
-          width: Math.round(width),
-          rotate: rotate
-        },
-        el.style
-      )
+      el.changePositions({
+        top: Math.round(afterPoint.y - height / 2),
+        left: Math.round(afterPoint.x - width / 2),
+        height: Math.round(height),
+        width: Math.round(width),
+        rotate: rotate
+      })
     })
   }
 
@@ -605,37 +592,6 @@ class CanvasState {
     component.changeProp(keys, value, modelValue)
     this.saveComponentData()
   }
-  /**
-   * 设置当前组件的样式
-   * @param component
-   * @param keys
-   * @param value 值
-   * @param modelValue style 值
-   * @returns
-   */
-  setComponentStyle(
-    component: CustomComponent,
-    keys: Array<string>,
-    value: any,
-    modelValue: Record<string, any>
-  ): void {
-    const groupStyleKeys = ['gtop', 'gleft', 'gweight', 'gheight', 'grotate']
-    if (!this.activeComponent) {
-      return
-    }
-    if (
-      keys.length === 2 &&
-      keys[0] === 'position' &&
-      component.groupStyle &&
-      groupStyleKeys.includes(keys[1])
-    ) {
-      component.groupStyle[keys[1]] = value
-    } else {
-      component.changeStyle(keys, value, modelValue)
-    }
-    this.saveComponentData()
-  }
-
   getComponentIndexById(id: string, parent: Optional<CustomComponent>): number {
     if (parent) {
       return (parent.subComponents || []).findIndex((item) => item.id === id)
@@ -831,7 +787,7 @@ class CanvasState {
    */
   public resizeAutoComponent(parentComponent: Optional<CustomComponent>): void {
     if (parentComponent && parentComponent.component === 'Group') {
-      const parentStyle = parentComponent.positionStyle
+      const parentStyle = parentComponent.position
       const { top, left, height, width } = calcComponentsRect(parentComponent.subComponents!)
       if (
         top === parentStyle.top &&
@@ -850,11 +806,11 @@ class CanvasState {
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
           el.groupStyle = {
-            gleft: toPercent((el.positionStyle.left - newGroupStyle.left) / newGroupStyle.width),
-            gtop: toPercent((el.positionStyle.top - newGroupStyle.top) / newGroupStyle.height),
-            gwidth: toPercent(el.positionStyle.width / newGroupStyle.width),
-            gheight: toPercent(el.positionStyle.height / newGroupStyle.height),
-            grotate: el.positionStyle.rotate
+            gleft: toPercent((el.position.left - newGroupStyle.left) / newGroupStyle.width),
+            gtop: toPercent((el.position.top - newGroupStyle.top) / newGroupStyle.height),
+            gwidth: toPercent(el.position.width / newGroupStyle.width),
+            gheight: toPercent(el.position.height / newGroupStyle.height),
+            grotate: el.position.rotate
           }
         })
         if (parentComponent.parent) {
@@ -878,14 +834,14 @@ class CanvasState {
       this.removeComponent(index, this.activeComponent.parent)
       const parentComponent = this.activeComponent.parent
       if (parentComponent) {
-        const parentStyle: DOMRectStyle = parentComponent.positionStyle
+        const parentStyle: DOMRectStyle = parentComponent.position
         components.forEach((item: CustomComponent) => {
           item.groupStyle = {
-            gleft: toPercent((item.positionStyle.left - parentStyle.left) / parentStyle.width),
-            gtop: toPercent((item.positionStyle.top - parentStyle.top) / parentStyle.height),
-            gwidth: toPercent(item.positionStyle.width / parentStyle.width),
-            gheight: toPercent(item.positionStyle.height / parentStyle.height),
-            grotate: item.positionStyle.rotate
+            gleft: toPercent((item.position.left - parentStyle.left) / parentStyle.width),
+            gtop: toPercent((item.position.top - parentStyle.top) / parentStyle.height),
+            gwidth: toPercent(item.position.width / parentStyle.width),
+            gheight: toPercent(item.position.height / parentStyle.height),
+            grotate: item.position.rotate
           }
           parentComponent?.addComponent([item])
         })

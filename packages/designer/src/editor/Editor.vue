@@ -26,8 +26,8 @@
         <Shape
           v-if="canvasState.isEditMode && item.display"
           :id="'shape' + item.id"
-          :defaultStyle="item.style.position"
-          :style="getShapeStyle(item.style.position)"
+          :defaultStyle="item.position"
+          :style="getShapeStyle(item.position)"
           :active="item.id === (curComponent || {}).id"
           :info="item"
           :class="{ lock: item.locked }"
@@ -148,8 +148,8 @@ const pasteComponent = (event: ClipboardEvent) => {
       const componentData = JSON.parse(textData)
       const component: CustomComponent = createComponent(componentData)
       if (component) {
-        component.changeStyle(['position', 'top'], component.positionStyle.top + 10)
-        component.changeStyle(['position', 'left'], component.positionStyle.left + 10)
+        component.changePosition('top', component.position.top + 10)
+        component.changePosition('left', component.position.left + 10)
         component.id = uuid()
         clipBoardState.copy(component)
         event.preventDefault()
@@ -239,8 +239,8 @@ const handleDrop = async (e) => {
   const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
   const y = Math.round((e.pageY - editorRectInfo.top) / canvasState.scale)
   const x = Math.round((e.pageX - editorRectInfo.left) / canvasState.scale)
-  component.changeStyle(['position', 'top'], y)
-  component.changeStyle(['position', 'left'], x)
+  component.changePosition('top', y)
+  component.changePosition('left', x)
   canvasState.appendComponent(component)
 }
 

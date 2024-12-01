@@ -129,8 +129,6 @@ export function createStyleComponent(structOption: MetaContainerItem[]) {
           if (parentComponent) {
             canvasState.resizeAutoComponent(parentComponent)
           }
-        } else {
-          canvasState.setComponentStyle(component, keys, value, modelValue)
         }
       }, 300)
 

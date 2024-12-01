@@ -1,6 +1,5 @@
-import { cloneDeep, isNumber } from 'lodash-es'
+import { cloneDeep, isNumber, set } from 'lodash-es'
 
-import type { ComponentGroup } from './enums'
 import { ContainerType, DataMode } from './enums'
 import type {
   BaseScript,
@@ -21,7 +20,6 @@ export interface DataConfig {
 export class CustomComponent {
   id: string
   component: string
-  group: ComponentGroup
   name: string
   icon = ''
   locked = false
@@ -44,14 +42,14 @@ export class CustomComponent {
   // form表单中使用
   extraStyle: Record<string, string | number | boolean> = {}
   groupStyle?: GroupStyle
-  positionStyle: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
+  position: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
   parent?: CustomComponent
   subComponents?: CustomComponent[] = undefined
 
   private _propValue: Record<string, any> = {}
   private _styleValue: Record<string, any> = {
-    position: this.positionStyle
+    position: this.position
   }
   dataConfig?: DataConfig
   scriptConfig?: BaseScript
@@ -69,8 +67,8 @@ export class CustomComponent {
     if (detail.icon) {
       this.icon = detail.icon
     }
-    this.positionStyle.width = detail.width || 100
-    this.positionStyle.height = detail.height || 100
+    this.position.width = detail.width || 100
+    this.position.height = detail.height || 100
     this.dataMode = detail.dataMode || detail.dataIntegrationMode || DataMode.SELF
     this.initProp()
   }
@@ -85,12 +83,12 @@ export class CustomComponent {
 
   get style(): Record<string, any> {
     return {
-      ...this._styleValue,
       info: {
         id: this.id,
         name: this.name,
         component: this.component
-      }
+      },
+      position: this.position
     }
   }
   get exampleData(): any {
@@ -123,7 +121,7 @@ export class CustomComponent {
       component: this.component,
       name: this.name,
       propValue: this.propValue,
-      style: this.style,
+      position: this.position,
       subComponents: subComponents.length > 0 ? subComponents : undefined,
       dataMode: this.dataMode,
       script: this.scriptConfig?.toJSON()
@@ -178,7 +176,18 @@ export class CustomComponent {
     }
   }
   changePosition(key: 'top' | 'left' | 'height' | 'width' | 'rotate', value: number) {
+    const positionKey = ['top', 'left', 'height', 'width', 'rotate']
+    if (!positionKey.includes(key)) {
+      return
+    }
+    set(this.position, key, key === 'rotate' ? value : Math.round(value))
     this.changeStyle(['position', key], value, this.style)
+  }
+  changePositions(positions: Record<'top' | 'left' | 'height' | 'width' | 'rotate', number>) {
+    const keys = Object.keys(positions) as Array<'top' | 'left' | 'height' | 'width' | 'rotate'>
+    keys.forEach((el) => {
+      this.changePosition(el, positions[el])
+    })
   }
 
   // 修改样式
@@ -188,16 +197,16 @@ export class CustomComponent {
     if (propKeys[0] === 'position') {
       if (propKeys.length === 2 && positionKey.includes(propKeys[1])) {
         changeValue = Math.round(value)
-        this.positionStyle[propKeys[1]] = changeValue
+        this.position[propKeys[1]] = changeValue
       } else if (propKeys.length === 1) {
         positionKey.forEach((el) => {
           if (!isNumber(value[el])) {
             return
           }
-          this.positionStyle[el] = value[el]
+          this.position[el] = value[el]
         })
       }
-      this.setStyleValue(this.positionStyle)
+      this.setStyleValue(this.position)
     } else {
       this.setStyleValue(style)
     }

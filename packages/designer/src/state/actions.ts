@@ -189,7 +189,7 @@ class ActionState {
     const { right, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = right - el.right
-      el.component.changePosition('left', el.component.positionStyle.left + distance)
+      el.component.changePosition('left', el.component.position.left + distance)
     })
     canvasState.saveComponentData()
   }
@@ -200,7 +200,7 @@ class ActionState {
     const { left, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = el.left - left
-      el.component.changePosition('left', el.component.positionStyle.left - distance)
+      el.component.changePosition('left', el.component.position.left - distance)
     })
     canvasState.saveComponentData()
   }
@@ -211,7 +211,7 @@ class ActionState {
     const { top, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = el.top - top
-      el.component.changePosition('top', el.component.positionStyle.top - distance)
+      el.component.changePosition('top', el.component.position.top - distance)
     })
     canvasState.saveComponentData()
   }
@@ -222,7 +222,7 @@ class ActionState {
     const { bottom, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distance = bottom - el.bottom
-      el.component.changePosition('top', el.component.positionStyle.top + distance)
+      el.component.changePosition('top', el.component.position.top + distance)
     })
     canvasState.saveComponentData()
   }
@@ -233,7 +233,7 @@ class ActionState {
     const { top, bottom, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distanceY = (bottom + top) / 2 - el.center.y
-      el.component.changePosition('top', el.component.positionStyle.top + distanceY)
+      el.component.changePosition('top', el.component.position.top + distanceY)
     })
     canvasState.saveComponentData()
   }
@@ -244,7 +244,7 @@ class ActionState {
     const { left, right, items } = getComponentRealRect(this.components)
     items.forEach((el) => {
       const distanceX = (left + right) / 2 - el.center.x
-      el.component.changePosition('left', el.component.positionStyle.left + distanceX)
+      el.component.changePosition('left', el.component.position.left + distanceX)
     })
     canvasState.saveComponentData()
   }

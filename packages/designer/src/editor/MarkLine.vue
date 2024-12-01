@@ -71,14 +71,14 @@ const showLine = (isDownward, isRightward) => {
       left: myleft,
       right: myright,
       bottom: mybottom
-    }: Location = calcComponentAxis(canvasState.activeComponent.positionStyle)
+    }: Location = calcComponentAxis(canvasState.activeComponent.position)
     const curComponentHalfwidth = (myright - myleft) / 2
     const curComponentHalfHeight = (mybottom - mytop) / 2
 
     hideLine()
     components.forEach((component) => {
       if (component == canvasState.activeComponent) return
-      const componentStyle = calcComponentAxis(component.positionStyle)
+      const componentStyle = calcComponentAxis(component.position)
       const { top, left, bottom, right } = componentStyle
       const componentHalfwidth = (right - left) / 2
       const componentHalfHeight = (bottom - top) / 2
@@ -166,7 +166,7 @@ const showLine = (isDownward, isRightward) => {
       }
 
       const needToShow: Array<any> = []
-      const { rotate } = canvasState.activeComponent!.style.position
+      const { rotate } = canvasState.activeComponent!.position
       Object.keys(conditions).forEach((key) => {
         // 遍历符合的条件并处理
         conditions[key].forEach((condition) => {
@@ -182,7 +182,7 @@ const showLine = (isDownward, isRightward) => {
               : condition.dragShift
           canvasState.activateComponentStyle(['position', key], value)
 
-          condition.lineNode.style.position[key] = `${condition.lineShift}px`
+          condition.lineNode.position[key] = `${condition.lineShift}px`
           needToShow.push(condition.line)
         })
       })
@@ -201,7 +201,7 @@ const isNearly = (dragValue, targetValue) => {
 }
 
 const translatecurComponentShift = (key, condition, curComponentStyle) => {
-  const { width, height } = canvasState.activeComponent!.style.position
+  const { width, height } = canvasState.activeComponent!.position
   if (key == 'top') {
     return Math.round(condition.dragShift - ((height as number) - curComponentStyle.height) / 2)
   }

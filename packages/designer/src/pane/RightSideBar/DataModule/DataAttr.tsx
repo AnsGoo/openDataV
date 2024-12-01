@@ -160,7 +160,7 @@ export default defineComponent({
       }
     }
     return () =>
-      props.curComponent.dataMode || props.curComponent.dataIntegrationMode === DataMode.UNIVERSAL
+      props.curComponent.dataMode === DataMode.UNIVERSAL
         ? renderContainer()
         : useEmpty('未发现数据配置项')
   }

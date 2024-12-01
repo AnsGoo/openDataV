@@ -58,7 +58,7 @@ export function createComponent(component: ComponentDataType): any {
   }
   obj.groupStyle = component.groupStyle
   obj.setPropValue({ propValue: component.propValue })
-  obj.setStyleValue({ style: component.style.position })
+  obj.setStyleValue({ style: component.position })
   obj.dataMode = component.dataMode || DataMode.SELF
   const data = component.data
   if (obj.dataMode || obj.dataIntegrationMode === DataMode.UNIVERSAL) {
@@ -134,7 +134,7 @@ export const getSelectComponents = (
   // 计算所有的组件数据，判断是否在选中区域内
   componentData.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const { width, height, left, top, rotate } = component.style.position
+    const { width, height, left, top, rotate } = component.position
     const componentRect: Location = calcComponentAxis({
       width,
       height,
@@ -199,11 +199,11 @@ export const getComponentRealRect = (components: CustomComponent[]) => {
   const xAxisSet: Array<number> = []
   const yAxisSet: Array<number> = []
   components.forEach((ele) => {
-    const left: number = ele.positionStyle.left
-    const width: number = ele.positionStyle.width
-    const top: number = ele.positionStyle.top
-    const height: number = ele.positionStyle.height
-    const rotate = Number(ele.positionStyle.rotate)
+    const left: number = ele.position.left
+    const width: number = ele.position.width
+    const top: number = ele.position.top
+    const height: number = ele.position.height
+    const rotate = Number(ele.position.rotate)
     const leftTop: Vector = { x: left, y: top }
     const rightTop: Vector = { x: left + width, y: top }
     const rightBottom: Vector = { x: left + width, y: top + height }
@@ -251,7 +251,7 @@ export function calcComponentsRect(components: CustomComponent[]) {
   const bottomSet: Set<number> = new Set()
   components.forEach((component) => {
     // 获取位置大小信息：left, top, width, height
-    const style: DOMRectStyle = component.positionStyle
+    const style: DOMRectStyle = component.position
     const componentRect: Location = calcComponentAxis(style)
     leftSet.add(componentRect.left)
     topSet.add(componentRect.top)
@@ -358,16 +358,16 @@ export function mod360(deg): number {
 }
 
 export function createGroupStyle(groupComponent: CustomComponent) {
-  const parentStyle: DOMRectStyle = groupComponent.positionStyle
+  const parentStyle: DOMRectStyle = groupComponent.position
   groupComponent.subComponents!.forEach((component) => {
     // component.groupStyle 的 gtop gsleft 是相对于 group 组件的位置
     // 如果已存在 component.groupStyle，说明已经计算过一次了。不需要再次计算
     component.groupStyle = {
-      gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
-      gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),
-      gwidth: toPercent(component.positionStyle.width / parentStyle.width),
-      gheight: toPercent(component.positionStyle.height / parentStyle.height),
-      grotate: component.positionStyle.rotate
+      gleft: toPercent((component.position.left - parentStyle.left) / parentStyle.width),
+      gtop: toPercent((component.position.top - parentStyle.top) / parentStyle.height),
+      gwidth: toPercent(component.position.width / parentStyle.width),
+      gheight: toPercent(component.position.height / parentStyle.height),
+      grotate: component.position.rotate
     }
   })
 }
@@ -437,7 +437,7 @@ export const getGroupStyle = (style: Record<string, any>) => {
  * @returns css
  */
 export const getComponentStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.style.position)
+  const style = cloneDeep(component.position)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
     return {
@@ -455,7 +455,7 @@ export const getComponentStyle = (component: CustomComponent) => {
  * @returns css
  */
 export const getComponentShapeStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.style.position)
+  const style = cloneDeep(component.position)
   const groupStyle = cloneDeep(component.groupStyle)
   if (groupStyle) {
     return {
@@ -473,7 +473,7 @@ export const getComponentShapeStyle = (component: CustomComponent) => {
  * @returns css
  */
 export const getInnerComponentShapeStyle = (component: CustomComponent) => {
-  const style = cloneDeep(component.style.position)
+  const style = cloneDeep(component.position)
   return {
     ...excludeStyle(style, ['top', 'left', 'width', 'height', 'rotate']),
     width: '100%',

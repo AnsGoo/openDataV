@@ -349,7 +349,7 @@ export default defineComponent({
         return {}
       }
 
-      const rotate: number = mod360(canvasState.activeComponent!.style.position.rotate) // 取余 360
+      const rotate: number = mod360(canvasState.activeComponent!.position.rotate) // 取余 360
       const result = {}
       let lastMatchIndex = -1 // 从上一个命中的角度的索引开始匹配下一个，降低时间复杂度
       const angleToCursor = [
@@ -430,7 +430,7 @@ export default defineComponent({
           case 'ArrowLeft':
             e.preventDefault()
             canvasState.syncComponentLocation(
-              { left: props.info.positionStyle.left - 1 },
+              { left: props.info.position.left - 1 },
               props.info.parent,
               false
             )
@@ -438,7 +438,7 @@ export default defineComponent({
           case 'ArrowUp':
             e.preventDefault()
             canvasState.syncComponentLocation(
-              { top: props.info.positionStyle.top - 1 },
+              { top: props.info.position.top - 1 },
               props.info.parent,
               false
             )
@@ -446,7 +446,7 @@ export default defineComponent({
           case 'ArrowRight':
             e.preventDefault()
             canvasState.syncComponentLocation(
-              { left: props.info.positionStyle.left + 1 },
+              { left: props.info.position.left + 1 },
               props.info.parent,
               false
             )
@@ -454,7 +454,7 @@ export default defineComponent({
           case 'ArrowDown':
             e.preventDefault()
             canvasState.syncComponentLocation(
-              { top: props.info.positionStyle.top + 1 },
+              { top: props.info.position.top + 1 },
               props.info.parent,
               false
             )

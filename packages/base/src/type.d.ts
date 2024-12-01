@@ -113,7 +113,7 @@ export interface ComponentDataType {
   component: string
   groupStyle?: GroupStyle
   icon?: string
-  style: Record<string, string | number | boolean>
+  position: DOMRectStyle
   propValue: Record<string, any>
   subComponents?: ComponentDataType[]
   data?: DataOption
