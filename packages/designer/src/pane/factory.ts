@@ -4,10 +4,10 @@ import { cloneDeep } from 'lodash-es'
 import type { PropType } from 'vue'
 import { defineComponent, reactive, watch } from 'vue'
 
-import { Container } from '../../modules'
-import { useCanvasState } from '../../state'
+import { Container } from '../modules'
+import { useCanvasState } from '../state'
 
-export function createAttrComponent(structOption: MetaContainerItem[]) {
+function createAttrComponent(structOption: MetaContainerItem[]) {
   const attrKeys = [...structOption]
   const propValue: Record<string, any> = {}
   buildModeValue(attrKeys, propValue)
@@ -53,5 +53,4 @@ export function createAttrComponent(structOption: MetaContainerItem[]) {
     }
   })
 }
-
 export default createAttrComponent
