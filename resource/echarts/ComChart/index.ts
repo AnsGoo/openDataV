@@ -1,7 +1,7 @@
-import mainfest from './mainfest.json'
+import manifest from './manifest.json'
 
 export default {
-  mainfest,
+  manifest,
   component: () => import('./ComChart.vue'),
   config: () => import('./config')
 }

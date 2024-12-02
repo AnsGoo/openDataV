@@ -1,8 +1,9 @@
-import { shallowRef } from 'vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 
-import StaticContent from './DataView.vue'
 import handler from './handler'
-import StaticPane from './Pane.vue'
+
+const StaticPane = defineAsyncComponent(() => import('./Pane.vue'))
+const StaticContent = defineAsyncComponent(() => import('./DataView.vue'))
 
 export default {
   type: 'STATIC',

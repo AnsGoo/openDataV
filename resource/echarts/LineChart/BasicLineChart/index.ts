@@ -1,7 +1,7 @@
-import mainfest from './mainfest.json'
+import manifest from './manifest.json'
 
 export default {
   component: () => import('./BasicLineChart.vue'),
   config: () => import('./config'),
-  mainfest
+  manifest
 }

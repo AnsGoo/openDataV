@@ -17,9 +17,9 @@ const useLoadComponent = () => {
         const componentOptions = moduleFilesTs[key]?.default
 
         if (componentOptions) {
-          const { componentName, config, mainfest, component } = componentOptions
-          const name = mainfest ? mainfest.name : componentName
-          canvasState.loadComponent(name, config as BaseComponent, mainfest)
+          const { componentName, config, manifest, component } = componentOptions
+          const name = manifest ? manifest.name : componentName
+          canvasState.loadComponent(name, config as BaseComponent, manifest)
           // 注册异步组件
           const asyncComp = defineAsyncComponent({
             loader: component,
@@ -42,14 +42,14 @@ const useAsyncLoadComponent = () => {
       const keys = Object.keys(components)
       keys.forEach((el) => {
         const pkg = components[el]
-        const { mainfest, panel, component } = pkg
+        const { manifest, panel, component } = pkg
         const asyncComp = defineAsyncComponent({
           loader: component,
           delay: 200,
           timeout: 3000
         })
-        canvasState.loadComponents(mainfest.name, mainfest, panel)
-        app.component(mainfest.name, asyncComp)
+        canvasState.loadComponents(manifest.name, manifest, panel)
+        app.component(manifest.name, asyncComp)
       })
     }
   }

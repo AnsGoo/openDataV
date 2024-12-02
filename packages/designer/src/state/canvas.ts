@@ -187,10 +187,10 @@ class CanvasState {
     return this.state.components
   }
 
-  public loadComponent(name: string, component: CustomComponent, mainfest?: any) {
-    if (mainfest) {
+  public loadComponent(name: string, component: CustomComponent, manifest?: any) {
+    if (manifest) {
       this.componentMetaMap.set(name, {
-        ...mainfest,
+        ...manifest,
         clazz: isClass(component) ? component : undefined,
         remoteClazz: isClass(component) ? undefined : component
       })

@@ -1,8 +1,9 @@
-import { shallowRef } from 'vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 
 import ScriptHandler from './handler'
 import { makeFunction } from './utils'
-import View from './View.vue'
+
+const View = defineAsyncComponent(() => import('./View.vue'))
 
 export default {
   type: 'Custom',

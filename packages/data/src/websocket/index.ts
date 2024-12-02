@@ -1,9 +1,10 @@
-import { shallowRef } from 'vue'
+import { defineAsyncComponent, shallowRef } from 'vue'
 
 import handler from './handler'
-import WebSocketPane from './Pane.vue'
 import type { WebsocketOption } from './type'
-import WebSocketContent from './WebsocketView.vue'
+
+const WebSocketContent = defineAsyncComponent(() => import('./WebsocketView.vue'))
+const WebSocketPane = defineAsyncComponent(() => import('./Pane.vue'))
 
 export default {
   type: 'WS',

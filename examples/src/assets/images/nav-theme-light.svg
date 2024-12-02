@@ -12,7 +12,7 @@
                             result="shadowBlurOuter1"></feGaussianBlur>
             <feColorMatrix values="0 0 0 0 0   0 0 0 0 0   0 0 0 0 0  0 0 0 0.15 0" type="matrix"
                            in="shadowBlurOuter1" result="shadowMatrixOuter1"></feColorMatrix>
-            <feMerge>
+            <feMerge>F
                 <feMergeNode in="shadowMatrixOuter1"></feMergeNode>
                 <feMergeNode in="SourceGraphic"></feMergeNode>
             </feMerge>

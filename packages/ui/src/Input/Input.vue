@@ -1,10 +1,10 @@
 <template>
   <div
     :class="{
-      ['o-form-input']: true,
       'input-prepend': $slots.prepend,
       'input-append': $slots.append
     }"
+    class="o-form-input dark:border-gray-500 border rounded-sm border-gray-300 my-0.5"
     :style="{ width: width }"
   >
     <div v-if="$slots.prepend" class="prepend">

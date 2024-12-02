@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/data",
-  "version": "0.0.4",
+  "version": "0.0.6",
   "description": "OpenDataV  数据处理基础组件包",
   "keywords": [
     "open-data-v",
@@ -12,7 +12,7 @@
   ],
   "scripts": {
     "build:lib": "vite build",
-    "public":"npm publish --access public"
+    "publish":"npm publish --access public"
   },
   "license": "Apache-2.0",
   "author": "ansgoo",
