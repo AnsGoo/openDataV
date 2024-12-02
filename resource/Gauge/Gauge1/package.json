@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "1#仪表盘",
   "main": "index.ts",
+  "private": true,
   "scripts": {},
   "keywords": [
     "OpenDataV"

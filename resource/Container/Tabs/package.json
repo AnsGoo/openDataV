@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Tabs组件",
   "main": "index.js",
+  "private":true,
   "scripts": {
   },
   "keywords": [
