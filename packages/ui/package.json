@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/ui",
-  "version": "0.0.7",
+  "version": "0.0.8-alpha.3",
   "description": "OpenDataV UI基础包",
   "keywords": [
     "open-data-v",

@@ -11,7 +11,8 @@ export default defineConfig({
     vue(),
     vueJsx(),
     dts({
-      // entryRoot: './src',
+      // rollupTypes: true
+      entryRoot: './src/index.ts',
       outDir: ['es', 'lib'],
       include: ['src/**/*.ts', 'src/**/*.tsx'],
       tsconfigPath: '../tsconfig.json'
