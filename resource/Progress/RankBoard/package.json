@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "排名板",
   "main": "index.ts",
+  "private": true,
   "scripts": {},
   "keywords": [
     "OpenDataV"

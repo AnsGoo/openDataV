@@ -2,6 +2,7 @@
   "name": "border-box",
   "version": "1.0.0",
   "description": "边框",
+  "private": true,
   "scripts": {},
   "keywords": [
     "OpenDataV"
