@@ -816,8 +816,12 @@ class CanvasState {
         }
         parentComponent.subComponents?.forEach((el: CustomComponent) => {
           el.relativePosition = {
-            gleft: toPercent((el.position.left - newRelativePosition.left) / newRelativePosition.width),
-            gtop: toPercent((el.position.top - newRelativePosition.top) / newRelativePosition.height),
+            gleft: toPercent(
+              (el.position.left - newRelativePosition.left) / newRelativePosition.width
+            ),
+            gtop: toPercent(
+              (el.position.top - newRelativePosition.top) / newRelativePosition.height
+            ),
             gwidth: toPercent(el.position.width / newRelativePosition.width),
             gheight: toPercent(el.position.height / newRelativePosition.height),
             grotate: el.position.rotate
