@@ -42,7 +42,7 @@ stages:
         artifacts:
           - name: BUILD_ARTIFACT
             path:
-              - ./dist
+              - ./examples/dist
         caches:
           - ~/.npm
           - ~/.pnpm
