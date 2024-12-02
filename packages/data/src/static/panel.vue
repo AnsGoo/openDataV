@@ -35,7 +35,7 @@ import type { DataHandler, DataInstance, Slotter } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
 import { computed, onMounted, onUnmounted, ref, useSlots, watch } from 'vue'
 
-import StaticContent from './DataView.vue'
+import StaticContent from './data-view.vue'
 
 const slots = useSlots()
 

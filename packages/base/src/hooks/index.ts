@@ -1,6 +1,6 @@
 import type { Hooks } from './type'
-import { useData } from './useData'
-import { useProp } from './useProp'
+import { useData } from './use-data'
+import { useProp } from './use-prop'
 
 export { useData, useProp }
 export default { useProp, useData }
