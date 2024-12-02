@@ -1,6 +1,6 @@
 version: '1.0'
 name: pipeline-20241202
-displayName: pipeline-20241202
+displayName: open-data-v构建
 triggers:
   trigger: auto
   pr:
