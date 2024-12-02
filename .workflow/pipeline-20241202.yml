@@ -1,0 +1,52 @@
+version: '1.0'
+name: pipeline-20241202
+displayName: pipeline-20241202
+triggers:
+  trigger: auto
+  pr:
+    branches:
+      precise:
+        - main
+stages:
+  - name: stage-9bce6ebf
+    displayName: Install Node
+    strategy: naturally
+    trigger: auto
+    executor: []
+    steps:
+      - step: build@nodejs
+        name: build_nodejs
+        displayName: Nodejs 构建
+        nodeVersion: 18.16.0
+        commands:
+          - '# 设置NPM源，提升安装速度'
+          - npm config set registry https://registry.npmmirror.com
+          - ''
+          - ''
+          - '# 安装pnpm'
+          - npm install -g pnpm
+          - ''
+          - '# 安装依赖'
+          - pnpm install
+          - ''
+          - '## 构建核心库'
+          - pnpm run build:lib
+          - ''
+          - '## 安装核心库'
+          - pnpm install
+          - ''
+          - '## 打包'
+          - ''
+          - pnpm run build
+          - ''
+        artifacts:
+          - name: BUILD_ARTIFACT
+            path:
+              - ./dist
+        caches:
+          - ~/.npm
+          - ~/.pnpm
+        notify: []
+        strategy:
+          retry: '0'
+          timeout: 30
