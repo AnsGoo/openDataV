@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "进度条组件",
   "main": "index.ts",
+  "private": true,
   "scripts": {},
   "keywords": [
     "OpenDataV"
