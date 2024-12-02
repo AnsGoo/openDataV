@@ -1,19 +1,19 @@
 import { defineAsyncComponent, shallowRef } from 'vue'
 
 import { uuid } from '../utils'
+import { RequestMethod } from './enums'
 import RestHandler from './handler'
-import { RequestMethod } from './requestEnums'
 import type { RestOption, RestResponse } from './type'
 import { KVToRecordable, recordabletoKV, requestOptionsToStore } from './utils'
 
-const RestPane = defineAsyncComponent(() => import('./Pane.vue'))
+const RestPanel = defineAsyncComponent(() => import('./panel.vue'))
 
-const RestContent = defineAsyncComponent(() => import('./RestDataView.vue'))
+const RestContent = defineAsyncComponent(() => import('./data-view.vue'))
 
 export default {
   type: 'REST',
   name: '动态数据',
-  component: shallowRef(RestPane),
+  component: shallowRef(RestPanel),
   handler: RestHandler,
   useTo: ['COMPONENT', 'GLOBAL'],
   getDefaultOption: () => {
@@ -37,7 +37,7 @@ export {
   requestOptionsToStore,
   RestContent,
   RestHandler,
-  RestPane
+  RestPanel
 }
 
 export type { RestOption, RestResponse }

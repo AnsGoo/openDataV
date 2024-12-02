@@ -64,9 +64,9 @@ import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from '@ope
 import { reactive, ref } from 'vue'
 
 import { uuid } from '../utils'
-import DynamicKVForm from './DynamicKVForm.vue'
+import DynamicKVForm from './dynamic-kv-form.vue'
+import { RequestHeaderEnum, RequestMethod } from './enums'
 import DataHandler from './handler'
-import { RequestHeaderEnum, RequestMethod } from './requestEnums'
 import type { RestOption, RestResponse } from './type'
 import { requestOptionsToStore } from './utils'
 

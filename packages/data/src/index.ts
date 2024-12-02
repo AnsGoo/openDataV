@@ -5,9 +5,9 @@ import RestDataPlugin, {
   RequestMethod,
   RestContent,
   RestHandler,
-  RestPane
+  RestPanel
 } from './rest'
-import StaticDataPlugin, { handler as StaticHandler, StaticContent, StaticPane } from './static'
+import StaticDataPlugin, { handler as StaticHandler, StaticContent, StaticPanel } from './static'
 import SubDataPlugin from './sub'
 import WebsocketDataPlugin from './websocket'
 
@@ -18,11 +18,11 @@ export {
   RestContent,
   RestDataPlugin,
   RestHandler,
-  RestPane,
+  RestPanel,
   StaticContent,
   StaticDataPlugin,
   StaticHandler,
-  StaticPane,
+  StaticPanel,
   SubDataPlugin,
   WebsocketDataPlugin
 }

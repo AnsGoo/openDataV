@@ -50,8 +50,8 @@ import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from
 import { computed, onMounted, ref, useSlots, watch } from 'vue'
 
 import { uuid } from '../utils'
+import { RequestMethod } from './enums'
 import type RestRequestData from './handler'
-import { RequestMethod } from './requestEnums'
 import Rest from './RestDataView.vue'
 import type { RestOption, StoreRestOption } from './type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
