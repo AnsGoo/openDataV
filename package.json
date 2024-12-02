@@ -1,6 +1,7 @@
 {
   "name": "open-data-v",
   "version": "0.0.0",
+  "private": true,
   "scripts": {
     "bootstrap": "pnpm install",
     "dev": "npm -C examples run dev",
