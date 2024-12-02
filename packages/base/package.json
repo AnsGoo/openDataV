@@ -1,6 +1,6 @@
 {
   "name": "@open-data-v/base",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "OpenDataV 公共基础包",
   "keywords": [
     "open-data-v",
