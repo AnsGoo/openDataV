@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main,v1.1.0]
   # 手动触发部署
   workflow_dispatch:
 
