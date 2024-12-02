@@ -10,14 +10,33 @@ jobs:
     runs-on: ubuntu-latest
  
     steps:
-      - uses: actions/checkout@v2
- 
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
         with:
-          node-version: '18'
-          registry-url: https://registry.npmjs.org
- 
-      - run: npm install
+          # “最近更新时间” 等 git 日志相关信息，需要拉取全部提交记录
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          # 选择要使用的 node 版本
+          node-version: '16'
+
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          # 选择要使用的 node 版本
+          version: '7'
+
+      # 安装依赖
+      - name: Install dependencies
+        run: pnpm install
+
+      # 运行构建核心库
+      - name: Build Lib
+        run: pnpm run build:lib
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
  
       - run: npm publish
         env:
