@@ -1,3 +1,3 @@
-import RenderSlot from './RenderSlot'
+import RenderSlot from './render-slot'
 
 export { RenderSlot }
