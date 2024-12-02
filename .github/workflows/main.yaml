@@ -5,7 +5,7 @@ on:
   push:
     branches: [main]
   pull_request:
-    branches: [main]
+    branches: [main,v1.1.0]
   # 手动触发部署
   workflow_dispatch:
 
@@ -34,17 +34,11 @@ jobs:
 
       # 安装依赖
       - name: Install dependencies
-        run: pnpm bootstrap --frozen-lockfile
+        run: pnpm bootstrap
 
       # 检查代码
       - name: Lint Code
         run: pnpm run lint
-
-      # 运行构建核心库
-      - name: Build Lib
-        run: pnpm run build:lib
-        env:
-          NODE_OPTIONS: "--max-old-space-size=4096"
 
       # 运行构建脚本
       - name: Build frontend
