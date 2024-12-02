@@ -51,7 +51,7 @@ stages:
           retry: '0'
           timeout: 30
   - name: stage-a5e2ba21
-    displayName: push page
+    displayName: checkCode
     strategy: naturally
     trigger: auto
     executor: []
