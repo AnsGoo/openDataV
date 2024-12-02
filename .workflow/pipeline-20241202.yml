@@ -3,6 +3,10 @@ name: pipeline-20241202
 displayName: open-data-v构建
 triggers:
   trigger: auto
+  push:
+    branches:
+      precise:
+        - main
   pr:
     branches:
       precise:
