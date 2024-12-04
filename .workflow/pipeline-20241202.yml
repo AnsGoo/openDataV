@@ -63,7 +63,7 @@ stages:
       - step: sc@opensca
         name: open_sca
         displayName: OpenSCA 开源组件检测
-        detectPath: ./
+        detectPath: ./packages/
         notify: []
         strategy:
           retry: '0'
