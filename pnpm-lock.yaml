@@ -212,15 +212,6 @@ importers:
         specifier: ^1.8.22
         version: 1.8.27(typescript@5.4.2)
 
-  mock:
-    devDependencies:
-      mockjs:
-        specifier: ^1.1.0
-        version: 1.1.0
-      vite-plugin-mock:
-        specifier: ^2.9.8
-        version: 2.9.8(mockjs@1.1.0)(vite@5.4.11(@types/node@16.18.121)(less@4.2.1)(terser@5.36.0))
-
   packages/base:
     dependencies:
       lodash-es:
@@ -832,6 +823,21 @@ importers:
       '@open-data-v/designer':
         specifier: workspace:*
         version: link:../../packages/designer
+
+  resources/Text:
+    dependencies:
+      '@open-data-v/base':
+        specifier: workspace:*
+        version: link:../../packages/base
+      '@open-data-v/designer':
+        specifier: workspace:*
+        version: link:../../packages/designer
+      dayjs:
+        specifier: ^1.11.5
+        version: 1.11.13
+      lodash-es:
+        specifier: ^4.17.21
+        version: 4.17.21
 
 packages:
 
@@ -7257,21 +7263,6 @@ snapshots:
       mockjs: 1.1.0
       path-to-regexp: 6.3.0
       vite: 4.5.5(@types/node@16.18.121)(less@4.2.1)(terser@5.36.0)
-    transitivePeerDependencies:
-      - supports-color
-
-  vite-plugin-mock@2.9.8(mockjs@1.1.0)(vite@5.4.11(@types/node@16.18.121)(less@4.2.1)(terser@5.36.0)):
-    dependencies:
-      '@types/mockjs': 1.0.10
-      chalk: 4.1.2
-      chokidar: 3.6.0
-      connect: 3.7.0
-      debug: 4.3.7
-      esbuild: 0.14.54
-      fast-glob: 3.3.2
-      mockjs: 1.1.0
-      path-to-regexp: 6.3.0
-      vite: 5.4.11(@types/node@16.18.121)(less@4.2.1)(terser@5.36.0)
     transitivePeerDependencies:
       - supports-color
 

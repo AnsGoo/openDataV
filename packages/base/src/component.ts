@@ -200,6 +200,7 @@ export class CustomComponent {
     }
   }
   setDataChangeCallback(callback: (result: any, type?: string) => void) {
+    console.log('callback', callback)
     this.componentDataCallback = callback
     this.callbackData = this.buildDataCallback()
     const { dataInstance } = this.dataConfig || {}
