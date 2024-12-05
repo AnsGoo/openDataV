@@ -10,9 +10,6 @@ import type {
   BaseComponent,
   BaseFormProps,
   BaseScript,
-  ComponentStyle,
-  ComponentType,
-  ContainerItemProps,
   CustomProps,
   DataAcceptor,
   DataConfig,
@@ -23,17 +20,20 @@ import type {
   FormItemProps,
   IComponentData,
   IComponentInfo,
+  IContainerItem,
+  IContainerItemProps,
   InputNumberProps,
   InputProps,
-  MetaContainerItem,
   MetaForm,
   ModalProps,
+  Position,
   RadioProps,
   Response,
   ScriptOption,
   SelectProps,
   Slotter,
-  SwitchProps
+  SwitchProps,
+  Vector
 } from './type'
 import { buildModeValue, isClass, updateModeValue, uuid } from './utils'
 
@@ -67,8 +67,6 @@ export type {
   BaseFormProps,
   BaseScript,
   ComponentStyle,
-  ComponentType,
-  ContainerItemProps,
   CustomProps,
   DataAcceptor,
   DataConfig,
@@ -80,15 +78,18 @@ export type {
   Hooks,
   IComponentData,
   IComponentInfo,
+  IContainerItem,
+  IContainerItemProps,
   InputNumberProps,
   InputProps,
-  MetaContainerItem,
   MetaForm,
   ModalProps,
+  Position,
   RadioProps,
   Response,
   ScriptOption,
   SelectProps,
   Slotter,
-  SwitchProps
+  SwitchProps,
+  Vector
 }

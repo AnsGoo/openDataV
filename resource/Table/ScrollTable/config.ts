@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, DataMode, FormType } from '@open-data-v/base'
 import { h, shallowRef } from 'vue'
 
@@ -19,7 +19,7 @@ class ScrollTableComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '表头',
       prop: 'header',

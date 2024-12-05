@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, DataMode, FormType } from '@open-data-v/base'
 
 export const componentName = 'BasicLineChart'
@@ -16,7 +16,7 @@ class BasicLineChartComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -189,7 +189,7 @@ class BasicLineChartComponent extends CustomComponent {
       ]
     }
   ]
-  _style: MetaContainerItem[] = []
+  _style: IContainerItem[] = []
   get exampleData() {
     return [
       { label: '秦', value: Math.round(Math.random() * 100) },

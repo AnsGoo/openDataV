@@ -5,7 +5,7 @@ import type {
   DataSlotter,
   EditMode,
   IComponentData,
-  MetaContainerItem,
+  IContainerItem,
   Position,
   StoreComponentData
 } from '../type'
@@ -18,7 +18,7 @@ export interface CanvasStyleData {
 }
 
 export interface CanvasStyleConfig {
-  formItems?: Array<MetaContainerItem>
+  formItems?: Array<IContainerItem>
   mode?: ContainerType
 }
 export interface CanvasData {
@@ -54,7 +54,7 @@ export interface CanvasStyleData {
 }
 
 export interface CanvasStyleConfig {
-  formItems?: Array<MetaContainerItem>
+  formItems?: Array<IContainerItem>
   mode?: ContainerType
 }
 

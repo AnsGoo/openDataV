@@ -1,9 +1,15 @@
-import type { DataOption, IComponentData, ScriptOption } from '@open-data-v/base'
+import type {
+  DataOption,
+  DOMRectStyle,
+  IComponentData,
+  ScriptOption,
+  Vector
+} from '@open-data-v/base'
 import { ContainerType, CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
+import type { Location } from 'type'
 
 import { useCanvasState, useDataState, useScriptState } from './state'
-import type { DOMRectStyle, Location, Vector } from './type'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))

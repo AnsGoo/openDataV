@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, FormType } from '@open-data-v/base'
 
 export const componentName = 'Decoration3'
@@ -14,7 +14,7 @@ class DecorationComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '基础配置',
       prop: 'base',
@@ -54,7 +54,7 @@ class DecorationComponent extends CustomComponent {
       ]
     }
   ]
-  _style: MetaContainerItem[] = []
+  _style: IContainerItem[] = []
 }
 
 export default DecorationComponent

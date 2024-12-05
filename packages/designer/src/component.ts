@@ -1,4 +1,5 @@
-import type { DOMRectStyle, Position, Vector } from './type'
+import type { DOMRectStyle, Position, Vector } from '@open-data-v/base'
+
 import { rotatePoint } from './utils'
 
 const funcs = {

@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, FormType } from '@open-data-v/base'
 import { h } from 'vue'
 
@@ -16,7 +16,7 @@ class ProgressComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -143,7 +143,7 @@ class ProgressComponent extends CustomComponent {
       ]
     }
   ]
-  _style: MetaContainerItem[] = []
+  _style: IContainerItem[] = []
 }
 
 export default ProgressComponent

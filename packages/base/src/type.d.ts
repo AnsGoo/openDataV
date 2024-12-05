@@ -1,7 +1,7 @@
 import type { ConcreteComponent, VNode } from 'vue'
 
 import type { CustomComponent } from './component'
-import type { ComponentGroup, ContainerType, DataMode, FormType } from './enums'
+import type { ContainerType, DataMode, FormType } from './enums'
 
 export interface DOMRectStyle {
   width: number
@@ -10,6 +10,12 @@ export interface DOMRectStyle {
   top: number
   rotate: number
 }
+export interface Vector {
+  x: number
+  y: number
+}
+
+export type Position = Omit<DOMRectStyle, 'rotate'>
 
 export interface RelativePosition {
   gwidth: number
@@ -129,25 +135,12 @@ export interface IComponentInfo extends IComponentData {
   isContainer: boolean
   icon?: string
 }
-
-export interface ComponentType extends Pick<IComponentData, 'component' | 'name'> {
-  group?: ComponentGroup
-  id?: string
-  width?: number
-  height?: number
-  dataMode?: DataMode
-  /**
-   * deprecated: 即将废弃，请使用 dataMode 属性
-   */
-  dataIntegrationMode?: DataMode
-  subComponents?: Array<CustomComponent>
-}
 interface CustomContainerProps {
   componentType: string | ConcreteComponent
   args: any
 }
 
-export type ContainerItemProps = CollapseProps | TabsProps | FormProps | CustomContainerProps
+export type IContainerItemProps = CollapseProps | TabsProps | FormProps | CustomContainerProps
 export type FormItemProps =
   | InputProps
   | InputNumberProps
@@ -173,7 +166,7 @@ export interface MetaForm {
   children?: MetaForm[]
 }
 
-export interface MetaContainerItem {
+export interface IContainerItem {
   label: string
   prop: string
   showLabel?: boolean
@@ -182,15 +175,15 @@ export interface MetaContainerItem {
   /**
    * @deprecated componentOptions即将弃用，建议使用props
    */
-  componentOptions?: ContainerItemProps
-  props?: ContainerItemProps
+  componentOptions?: IContainerItemProps
+  props?: IContainerItemProps
   children: MetaForm[]
 }
 
 /**
- * @deprecated PropsType 类型即将废弃，建议使用 MetaContainerItem
+ * @deprecated PropsType 类型即将废弃，建议使用 IContainerItem
  */
-export type PropsType = MetaContainerItem
+export type PropsType = IContainerItem
 export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }
 
 export interface DataConfig {

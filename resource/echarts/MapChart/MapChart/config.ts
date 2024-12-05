@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, DataMode, FormType } from '@open-data-v/base'
 import { h } from 'vue'
 
@@ -17,7 +17,7 @@ class MapChartComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '文字配置',
       prop: 'label',
@@ -112,7 +112,7 @@ class MapChartComponent extends CustomComponent {
       ]
     }
   ]
-  _style: MetaContainerItem[] = []
+  _style: IContainerItem[] = []
 
   get exampleData() {
     return [

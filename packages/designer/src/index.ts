@@ -38,7 +38,7 @@ import {
   setShowEm,
   undo
 } from './toolbars'
-import type { ComponentItem, ContextmenuItem, RelativePosition, Vector } from './type'
+import type { ContextmenuItem, RelativePosition } from './type'
 import {
   createComponent,
   filterStyle,
@@ -102,12 +102,10 @@ export {
 export type {
   CanvasData,
   CanvasStyleData,
-  ComponentItem,
   ContextmenuItem,
   RelativePosition,
   StoreComponentData,
-  ToolBarItemType,
-  Vector
+  ToolBarItemType
 }
 
 export default {

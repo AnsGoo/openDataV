@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, FormType } from '@open-data-v/base'
 
 export const componentName = 'Image'
@@ -14,8 +14,8 @@ class ImageComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = []
-  _style: MetaContainerItem[] = [
+  _prop: IContainerItem[] = []
+  _style: IContainerItem[] = [
     {
       label: '背景设置',
       prop: 'back',

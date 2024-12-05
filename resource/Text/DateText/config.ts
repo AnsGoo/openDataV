@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, FormType } from '@open-data-v/base'
 import { h } from 'vue'
 
@@ -15,7 +15,7 @@ class DateTextComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '基础配置',
       prop: 'base',
@@ -31,7 +31,7 @@ class DateTextComponent extends CustomComponent {
       ]
     }
   ]
-  _style: MetaContainerItem[] = [
+  _style: IContainerItem[] = [
     {
       label: '字体设置',
       prop: 'font',

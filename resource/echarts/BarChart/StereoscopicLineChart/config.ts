@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, DataMode, FormType } from '@open-data-v/base'
 
 export const componentName = 'StereoscopicBarChart'
@@ -16,7 +16,7 @@ class StereoscopicBarChartComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '数据配置',
       prop: 'data',
@@ -167,7 +167,7 @@ class StereoscopicBarChartComponent extends CustomComponent {
       ]
     }
   ]
-  _style: MetaContainerItem[] = []
+  _style: IContainerItem[] = []
   get exampleData(): any {
     return [
       { label: '全彩屏', value: Math.round(Math.random() * 100) },

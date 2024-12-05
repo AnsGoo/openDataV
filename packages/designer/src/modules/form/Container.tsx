@@ -1,4 +1,4 @@
-import type { MetaContainerItem, MetaForm } from '@open-data-v/base'
+import type { IContainerItem, MetaForm } from '@open-data-v/base'
 import { ContainerType } from '@open-data-v/base'
 import { OCard, OCollapse, OCollapseItem, ODivider } from '@open-data-v/ui'
 import type { PropType } from 'vue'
@@ -12,7 +12,7 @@ export default defineComponent({
   },
   props: {
     config: {
-      type: Object as PropType<Array<MetaContainerItem>>,
+      type: Object as PropType<Array<IContainerItem>>,
       required: true
     },
     data: {
@@ -49,7 +49,7 @@ export default defineComponent({
       formData.value[prop] = data
     }
 
-    const renderForm = (el: MetaContainerItem) => {
+    const renderForm = (el: IContainerItem) => {
       const modeValue = props.flat ? formData.value : formData.value[el.prop]
       const children = (el.children || []) as Array<MetaForm>
       return modeValue ? (
@@ -66,7 +66,7 @@ export default defineComponent({
         <> {'未获取到正确的数据'}</>
       )
     }
-    const renderContainer = (containerItems: Array<MetaContainerItem>) => {
+    const renderContainer = (containerItems: Array<IContainerItem>) => {
       switch (props.mode) {
         case ContainerType.COLLAPSE:
           return (

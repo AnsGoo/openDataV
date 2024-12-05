@@ -3,7 +3,7 @@ import type {
   DataInstance,
   DataMode,
   IComponentData,
-  MetaContainerItem
+  IContainerItem
 } from '@open-data-v/base'
 import {
   buildModeValue,
@@ -49,7 +49,7 @@ const pixels = [
   { label: '本设备', value: `${window.screen.width}X${window.screen.height}` },
   ...PixelEnum
 ]
-const baseCanvasStyleConfig: Array<MetaContainerItem> = [
+const baseCanvasStyleConfig: Array<IContainerItem> = [
   {
     label: '基本配置',
     prop: 'basic',
@@ -348,7 +348,7 @@ class CanvasState {
     }
     this.saveComponentData()
   }
-  rebuildCanvasExtraStyle(formItems: MetaContainerItem[]) {
+  rebuildCanvasExtraStyle(formItems: IContainerItem[]) {
     const basicAttrs: {
       width?: number
       height?: number

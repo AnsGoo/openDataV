@@ -1,9 +1,9 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { FormType } from '@open-data-v/base'
 
 import { createAttrComponent } from '../../index'
 
-const props: MetaContainerItem[] = [
+const props: IContainerItem[] = [
   {
     label: '数据配置',
     prop: 'dataOption',

@@ -3,6 +3,7 @@
   "title": "数据订阅文本",
   "category": "TEXT",
   "dataMode": "UNIVERSAL",
+  "icon": "text",
   "size": {
     "width": 100,
     "height": 30

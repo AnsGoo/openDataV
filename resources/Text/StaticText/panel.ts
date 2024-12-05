@@ -1,9 +1,9 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { FormType } from '@open-data-v/base'
 import { createAttrComponent } from '@open-data-v/designer'
 import { h } from 'vue'
 
-const props: MetaContainerItem[] = [
+const props: IContainerItem[] = [
   {
     label: '基础配置',
     prop: 'base',

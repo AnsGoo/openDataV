@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { ComponentGroup, CustomComponent, DataMode, FormType } from '@open-data-v/base'
 
 export const componentName = 'WaveChart'
@@ -16,7 +16,7 @@ class WaveChartComponent extends CustomComponent {
     })
   }
 
-  _prop: MetaContainerItem[] = [
+  _prop: IContainerItem[] = [
     {
       label: '图表配置',
       prop: 'options',

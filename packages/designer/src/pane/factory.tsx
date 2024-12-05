@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { buildModeValue } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import type { PropType } from 'vue'
@@ -7,7 +7,7 @@ import { defineComponent, reactive, watch } from 'vue'
 import { Container } from '../modules'
 import { useCanvasState } from '../state'
 
-function createAttrComponent(structOption: MetaContainerItem[]) {
+function createAttrComponent(structOption: IContainerItem[]) {
   const attrKeys = [...structOption]
   const propValue: Record<string, any> = {}
   buildModeValue(attrKeys, propValue)

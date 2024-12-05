@@ -1,6 +1,6 @@
 import { isFunction, isUndefined } from 'lodash-es'
 
-import type { MetaContainerItem, MetaForm } from './type'
+import type { IContainerItem, MetaForm } from './type'
 
 export const uuid = (hasHyphen?: string) => {
   return (
@@ -13,10 +13,10 @@ export const uuid = (hasHyphen?: string) => {
 }
 
 export const getObjProp = (
-  obj: Array<MetaContainerItem> | Array<MetaForm>,
+  obj: Array<IContainerItem> | Array<MetaForm>,
   propKeys: Array<string>,
   start = 0
-): MetaForm | MetaContainerItem | undefined => {
+): MetaForm | IContainerItem | undefined => {
   // @ts-ignore
   const chidObj = obj.find((item) => item.prop === propKeys[start])
   if (chidObj && chidObj.children && start < propKeys.length) {
@@ -31,7 +31,7 @@ export const getObjProp = (
  * @param modelValue 表单初始值
  */
 export const buildModeValue = (
-  formItems: Array<MetaForm> | Array<MetaContainerItem>,
+  formItems: Array<MetaForm> | Array<IContainerItem>,
   modelValue: Record<string, any>
 ) => {
   formItems.forEach((el) => {
@@ -63,7 +63,7 @@ export const updateModeValue = (
 }
 
 export const updateFormItemsValue = (
-  formItems: Array<MetaForm> | Array<MetaContainerItem>,
+  formItems: Array<MetaForm> | Array<IContainerItem>,
   modelValue: Record<string, any>
 ) => {
   formItems.forEach((item) => {

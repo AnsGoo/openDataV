@@ -1,4 +1,4 @@
-import type { MetaContainerItem } from '@open-data-v/base'
+import type { IContainerItem } from '@open-data-v/base'
 import { buildModeValue, FormType } from '@open-data-v/base'
 import { cloneDeep, debounce } from 'lodash-es'
 import type { PropType } from 'vue'
@@ -7,8 +7,8 @@ import { defineComponent, h, reactive, watch } from 'vue'
 import { Container } from '../../../modules'
 import { useCanvasState } from '../../../state'
 
-export function createStyleComponent(structOption: MetaContainerItem[]) {
-  const commonOption: MetaContainerItem[] = [
+export function createStyleComponent(structOption: IContainerItem[]) {
+  const commonOption: IContainerItem[] = [
     {
       label: '组件信息',
       prop: 'info',
