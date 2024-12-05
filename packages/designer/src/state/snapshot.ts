@@ -1,4 +1,4 @@
-import type { ComponentDataType, CustomComponent } from '@open-data-v/base'
+import type { CustomComponent, IComponentData } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
@@ -123,7 +123,7 @@ class SnapshotState {
    * @param dataSlotters  数据插槽
    */
   saveSnapshot(
-    canvasData: ComponentDataType[],
+    canvasData: IComponentData[],
     canvasStyle: CanvasStyleData,
     dataSlotters: Array<{ type: string; config: any }>
   ) {

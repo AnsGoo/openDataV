@@ -1,8 +1,8 @@
 import type {
-  ComponentDataType,
   CustomComponent,
   DataInstance,
   DataMode,
+  IComponentData,
   MetaContainerItem
 } from '@open-data-v/base'
 import {
@@ -130,7 +130,8 @@ class CanvasState {
   public componentMetaMap: Map<
     string,
     {
-      subComponents: ComponentDataType[] | undefined
+      [x: string]: any
+      isContainer: boolean
       name: string
       title: string
       category: string
@@ -281,8 +282,8 @@ class CanvasState {
   set name(name: string) {
     this.state.name = name
   }
-  get layoutData(): ComponentDataType[] {
-    const result: ComponentDataType[] = []
+  get layoutData(): IComponentData[] {
+    const result: IComponentData[] = []
     this.componentData.forEach((item) => {
       result.push(item.toJson())
     })
@@ -561,7 +562,7 @@ class CanvasState {
    * 设置画图的组件数据
    * @param componentData
    */
-  setComponentData(componentData: ComponentDataType[] = []): void {
+  setComponentData(componentData: IComponentData[] = []): void {
     this.componentData = []
     componentData.forEach((item) => {
       return this.componentData.push(createComponent(item))

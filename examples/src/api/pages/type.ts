@@ -1,4 +1,4 @@
-import type { ComponentDataType } from '@open-data-v/base'
+import type { IComponentData } from '@open-data-v/base'
 import type { CanvasStyleData } from '@open-data-v/designer'
 
 export interface LayoutData {
@@ -8,7 +8,7 @@ export interface LayoutData {
   author?: string
   createTime?: string
   isHome?: boolean
-  canvasData: ComponentDataType[]
+  canvasData: IComponentData[]
   canvasStyle: CanvasStyleData
   isPublish?: boolean
   dataSlotters: Array<{ type: string; config: any }>

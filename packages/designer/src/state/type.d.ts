@@ -1,10 +1,10 @@
 import type { BaseComponent, CustomComponent } from '@open-data-v/base'
 
 import type {
-  ComponentDataType,
   ContainerType,
   DataSlotter,
   EditMode,
+  IComponentData,
   MetaContainerItem,
   Position,
   StoreComponentData
@@ -59,7 +59,7 @@ export interface CanvasStyleConfig {
 }
 
 export interface CopyItem {
-  copyData: Optional<ComponentDataType>
+  copyData: Optional<IComponentData>
   isCut: boolean
 }
 export interface SelectedAreaData {
@@ -71,7 +71,7 @@ export interface SelectedAreaData {
 export interface LayoutData {
   name?: string
   thumbnail?: string
-  canvasData: ComponentDataType[]
+  canvasData: IComponentData[]
   canvasStyle: CanvasStyleData
   isPublish?: boolean
   dataSlotters: Array<{ type: string; config: any }>

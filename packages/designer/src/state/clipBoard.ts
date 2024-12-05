@@ -1,4 +1,4 @@
-import type { ComponentDataType } from '@open-data-v/base'
+import type { IComponentData } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
@@ -13,10 +13,10 @@ class ClipBoardState {
     isCut: false
   })
 
-  get copyData(): Optional<ComponentDataType> {
+  get copyData(): Optional<IComponentData> {
     return this.state.copyData
   }
-  set copyData(data: Optional<ComponentDataType>) {
+  set copyData(data: Optional<IComponentData>) {
     this.state.copyData = data
   }
 
@@ -26,7 +26,7 @@ class ClipBoardState {
   set isCut(isCut: boolean) {
     this.state.isCut = isCut
   }
-  copy(data: ComponentDataType) {
+  copy(data: IComponentData) {
     this.copyData = cloneDeep(data)
     this.copyData!.relativePosition = undefined
     copyText(JSON.stringify(this.copyData))

@@ -3,9 +3,10 @@ import { cloneDeep, set } from 'lodash-es'
 import { ContainerType, DataMode } from './enums'
 import type {
   BaseScript,
-  ComponentDataType,
   DataInstance,
   DOMRectStyle,
+  IComponentData,
+  IComponentInfo,
   RelativePosition,
   Response
 } from './type'
@@ -20,26 +21,25 @@ export class CustomComponent {
   id: string
   component: string
   name: string
-  icon = ''
+  icon?: string
   locked = false
   selected = false
   display = true
   show = true
   active = false
   dataMode: DataMode = DataMode.SELF
+  isContainer = false
   /**
    * @deprecated dataIntegrationMode 即将弃用，建议使用 dataMode
    */
   dataIntegrationMode: DataMode = DataMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any, modelValue: any) => void
-  callbackStyle?: (modelValue: any) => void
   callbackData?: (result: any, type?: string) => void
   protected componentDataCallback?: (result: any, type?: string) => void
 
   defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
-  extraStyle: Record<string, string | number | boolean> = {}
   relativePosition?: RelativePosition
   position: DOMRectStyle = { left: 0, top: 0, width: 0, height: 0, rotate: 0 }
 
@@ -50,13 +50,15 @@ export class CustomComponent {
   dataConfig?: DataConfig
   scriptConfig?: BaseScript
 
-  constructor(metaData: ComponentDataType) {
-    const { id, component, name, propValue, position, subComponents, dataMode } = metaData
+  constructor(metaData: IComponentInfo) {
+    const { id, component, name, propValue, position, isContainer, dataMode, icon } = metaData
     this.id = id || uuid()
     this.component = component
     this.name = name
+    this.icon = icon
 
-    this.subComponents = subComponents ? [] : undefined
+    this.isContainer = isContainer || false
+    this.subComponents = isContainer ? [] : undefined
     this.changePositions(position)
     this.dataMode = dataMode || DataMode.SELF
     this._propValue = propValue || {}
@@ -93,16 +95,15 @@ export class CustomComponent {
   }
 
   // 生成后端存储需要的Json
-  toJson(isDeep = true): ComponentDataType {
+  toJson(isDeep = true): IComponentData {
     const subComponents = (this.subComponents || []).map((item) => item.toJson(isDeep))
-    const component: ComponentDataType = {
+    const component: IComponentData = {
       id: isDeep ? this.id : undefined,
       component: this.component,
       name: this.name,
       propValue: this.propValue,
       position: this.position,
-      subComponents: subComponents.length > 0 ? subComponents : undefined,
-      dataMode: this.dataMode,
+      subComponents: this.isContainer && subComponents.length > 0 ? subComponents : undefined,
       script: this.scriptConfig?.toJSON(),
       data: this.dataConfig
         ? {
@@ -115,7 +116,7 @@ export class CustomComponent {
   }
 
   // 后端数据回填propValue
-  setPropValue(propValue: Record<string, any>) {
+  private setPropValue(propValue: Record<string, any>) {
     Object.assign(this._propValue, propValue)
   }
 
@@ -147,17 +148,12 @@ export class CustomComponent {
       return
     }
     set(this.position, key, key === 'rotate' ? value : Math.round(value))
-    if (this.callbackStyle) this.callbackStyle(this.position)
   }
   changePositions(positions: Record<'top' | 'left' | 'height' | 'width' | 'rotate', number>) {
     const keys = Object.keys(positions) as Array<'top' | 'left' | 'height' | 'width' | 'rotate'>
     keys.forEach((el) => {
       this.changePosition(el, positions[el])
     })
-  }
-  s
-  etStyleChangeCallback(callback: (value: any) => void) {
-    this.callbackStyle = callback
   }
 
   /**

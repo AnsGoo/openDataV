@@ -1,4 +1,4 @@
-import type { ComponentDataType } from '@open-data-v/base'
+import type { IComponentData } from '@open-data-v/base'
 
 import type { StoreComponentData } from './db'
 import { useCanvasState, useClipBoardState, useSnapshotState } from './state'
@@ -14,7 +14,7 @@ const undo = async () => {
   const snapshot: StoreComponentData | undefined = await snapShotState.lastRecord()
   if (snapshot) {
     canvasState.setLayoutData({
-      canvasData: snapshot.canvasData as ComponentDataType[],
+      canvasData: snapshot.canvasData as IComponentData[],
       canvasStyle: snapshot.canvasStyle,
       dataSlotters: snapshot.dataSlotters
     })
@@ -27,7 +27,7 @@ const recoveryDraft = async () => {
   const snapshot: StoreComponentData | undefined = await snapShotState.nextRecord()
   if (snapshot) {
     canvasState.setLayoutData({
-      canvasData: snapshot.canvasData as ComponentDataType[],
+      canvasData: snapshot.canvasData as IComponentData[],
       canvasStyle: snapshot.canvasStyle,
       dataSlotters: snapshot.dataSlotters
     })
@@ -60,7 +60,7 @@ const importCanvas = () => {
 const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
   if (loadEvent.target && loadEvent.target.result) {
     const layoutComponents: {
-      canvasData: ComponentDataType[]
+      canvasData: IComponentData[]
       canvasStyle: CanvasStyleData
       dataSlotters: Array<{ type: string; config: any }>
     } = JSON.parse(loadEvent.target.result as string)

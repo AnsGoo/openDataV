@@ -9,16 +9,6 @@ export interface Vector {
   y: number
 }
 
-export interface DOMRectStyle {
-  width: number
-  height: number
-  left: number
-  top: number
-  rotate: number
-}
-
-export type Position = Omit<DOMRectStyle, 'rotate'>
-
 export interface Location {
   right: number
   left: number
@@ -48,7 +38,7 @@ export interface ComponentData {
   dataSlotters: Array<{ type: string; config: any }>
 }
 
-export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
+export interface ComponentType extends Pick<IComponentData, 'component' | 'name' | 'icon'> {
   group: ComponentGroup
   id?: string
   width?: number

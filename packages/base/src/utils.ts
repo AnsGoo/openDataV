@@ -16,7 +16,7 @@ export const getObjProp = (
   obj: Array<MetaContainerItem> | Array<MetaForm>,
   propKeys: Array<string>,
   start = 0
-): MetaForm | MetaContainerItem => {
+): MetaForm | MetaContainerItem | undefined => {
   // @ts-ignore
   const chidObj = obj.find((item) => item.prop === propKeys[start])
   if (chidObj && chidObj.children && start < propKeys.length) {

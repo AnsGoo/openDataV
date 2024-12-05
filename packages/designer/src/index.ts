@@ -38,15 +38,7 @@ import {
   setShowEm,
   undo
 } from './toolbars'
-import type {
-  ComponentItem,
-  ContextmenuItem,
-  DOMRectStyle,
-  Location,
-  Position,
-  RelativePosition,
-  Vector
-} from './type'
+import type { ComponentItem, ContextmenuItem, RelativePosition, Vector } from './type'
 import {
   createComponent,
   filterStyle,
@@ -111,11 +103,7 @@ export type {
   CanvasData,
   CanvasStyleData,
   ComponentItem,
-  ComponentStyle,
   ContextmenuItem,
-  DOMRectStyle,
-  Location,
-  Position,
   RelativePosition,
   StoreComponentData,
   ToolBarItemType,

@@ -11,9 +11,6 @@ export interface DOMRectStyle {
   rotate: number
 }
 
-export interface ComponentStyle extends DOMRectStyle {
-  [propName: string]: string | number | boolean
-}
 export interface RelativePosition {
   gwidth: number
   gheight: number
@@ -107,21 +104,33 @@ export interface DataOption {
   otherConfig?: Record<string, any>
   requestOptions: RequestOptions
 }
-export interface ComponentDataType {
-  id?: string
+
+export interface IComponentMetaData {
   name: string
-  component: string
-  relativePosition?: RelativePosition
   icon?: string
+  component: string
+  position: DOMRectStyle
+  dataMode: DataMode
+  isContainer: boolean
+}
+
+export interface IComponentData
+  extends Omit<IComponentMetaData, 'icon' | 'dataMode' | 'isContainer'> {
+  id?: string
   position: DOMRectStyle
   propValue?: Record<string, any>
-  subComponents?: ComponentDataType[]
+  subComponents?: IComponentData[]
   data?: DataOption
-  dataMode: DataMode
   script?: ScriptOption
 }
 
-export interface ComponentType extends Pick<ComponentDataType, 'component' | 'name' | 'icon'> {
+export interface IComponentInfo extends IComponentData {
+  dataMode: DataMode
+  isContainer: boolean
+  icon?: string
+}
+
+export interface ComponentType extends Pick<IComponentData, 'component' | 'name'> {
   group?: ComponentGroup
   id?: string
   width?: number

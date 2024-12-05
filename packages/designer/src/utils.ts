@@ -1,4 +1,4 @@
-import type { ComponentDataType, DataOption, ScriptOption } from '@open-data-v/base'
+import type { DataOption, IComponentData, ScriptOption } from '@open-data-v/base'
 import { ContainerType, CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
 
@@ -45,18 +45,32 @@ const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption
   const scriptHandler = new scriptHandlerClasss(script.key)
   componentObj.afterCallbackChange(scriptHandler)
 }
-export function createComponent(component: ComponentDataType): any {
+export function createComponent(component: IComponentData): any {
   const canvasState = useCanvasState()
-  const obj = new CustomComponent(component)
+  const componentInfo = canvasState.componentMetaMap.get(component.component)
+  if (!componentInfo) {
+    handleLogger.warn(`${component.component}未注册`)
+    return
+  }
+
+  const { isContainer, icon, dataMode = DataMode.SELF } = componentInfo
+
+  const obj = new CustomComponent({
+    ...component,
+    isContainer,
+    icon,
+    dataMode
+  })
   if (!obj) {
     return
   }
+
   const data = component.data
-  if (obj.dataMode === DataMode.UNIVERSAL) {
+  if (componentInfo.dataMode === DataMode.UNIVERSAL) {
     buildDataHandler(obj, data)
   }
   buildAfterCallback(obj, component.script)
-  if (component.subComponents) {
+  if (componentInfo.isContainer && component.subComponents) {
     component.subComponents.forEach((item) => {
       const subObj = createComponent(item)
       subObj.parent = obj
@@ -86,10 +100,9 @@ export function getComponentInstance({ component }: { component: string }) {
       rotate: 0
     },
     dataMode: componentInfo.dataMode || DataMode.SELF,
-    icon: componentInfo.icon,
     name: componentInfo.title,
     component: componentInfo.name,
-    subComponents: componentInfo.subComponents
+    isContainer: !!componentInfo.isContainer
   })
   // obj.setExampleData(componentInfo.demoLoader)
   return obj

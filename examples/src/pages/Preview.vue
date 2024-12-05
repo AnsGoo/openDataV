@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import type { ComponentDataType } from '@open-data-v/base'
+import type { IComponentData } from '@open-data-v/base'
 import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Previewer, useDataState, useScriptState, useSnapshotState } from '@open-data-v/designer'
@@ -31,7 +31,7 @@ onMounted(async () => {
   const snapshot = await snapShotState.latestRecord()
   if (snapshot) {
     viewer.value!.setLayoutData({
-      canvasData: snapshot.canvasData as ComponentDataType[],
+      canvasData: snapshot.canvasData as IComponentData[],
       canvasStyle: snapshot.canvasStyle,
       dataSlotters: snapshot.dataSlotters
     })
