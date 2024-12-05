@@ -4,7 +4,7 @@
       <o-input
         placeholder="点击预览"
         :readonly="true"
-        :value="previewData"
+        :value="formData.data"
         @click="isShow = true"
       />
       <o-button type="primary" @click="isShow = true"> 预览 </o-button>
@@ -29,7 +29,7 @@
 import type { DataHandler, Slotter } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
-import { computed, onMounted, reactive, ref, watch } from 'vue'
+import { onMounted, reactive, ref, watch } from 'vue'
 
 const props = defineProps<{
   slotter: Slotter
@@ -42,14 +42,13 @@ const formData = reactive<{
 }>({
   data: '[]'
 })
-const previewData = computed<string>(() => JSON.stringify(JSON.parse(formData.data || '[]')))
 onMounted(async () => {
   await initData()
 })
 
 const initData = async () => {
   const dataConfig = props.slotter.dataConfig
-  const exampleData = (await props.slotter.getExampleData()) || {}
+  const exampleData = (await props.slotter.getExampleData()) || { key: 123 }
   if (dataConfig && dataConfig.type === 'DEMO') {
     const acceptor = (resp) => {
       formData.data = JSON.stringify(resp.data, null, '\t')
