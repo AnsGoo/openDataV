@@ -35,7 +35,7 @@ export class CustomComponent {
   dataIntegrationMode: DataMode = DataMode.SELF
   callbackProp?: (propKeys: Array<string>, value: any, modelValue: any) => void
   callbackData?: (result: any, type?: string) => void
-  protected componentDataCallback?: (result: any, type?: string) => void
+  protected dataCallback?: (result: any, type?: string) => void
 
   defaultViewType: ContainerType = ContainerType.CARD
 
@@ -133,7 +133,7 @@ export class CustomComponent {
   }
   afterCallbackChange(scriptHandler: BaseScript) {
     this.scriptConfig = scriptHandler
-    if (this.dataConfig?.dataInstance && this.componentDataCallback) {
+    if (this.dataConfig?.dataInstance && this.dataCallback) {
       this.callbackData = this.buildDataCallback()
       const { dataInstance } = this.dataConfig || {}
       if (dataInstance && dataInstance.close) {
@@ -196,8 +196,7 @@ export class CustomComponent {
     }
   }
   setDataChangeCallback(callback: (result: any, type?: string) => void) {
-    console.log('callback', callback)
-    this.componentDataCallback = callback
+    this.dataCallback = callback
     this.callbackData = this.buildDataCallback()
     const { dataInstance } = this.dataConfig || {}
     if (!dataInstance) {
@@ -225,8 +224,8 @@ export class CustomComponent {
       } else {
         resp['afterData'] = resp.data
       }
-      if (this.componentDataCallback) {
-        this.componentDataCallback(resp)
+      if (this.dataCallback) {
+        this.dataCallback(resp)
       }
     }
   }
