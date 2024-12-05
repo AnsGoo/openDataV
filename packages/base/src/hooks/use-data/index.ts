@@ -4,10 +4,13 @@ import type { CustomComponent } from '../../component'
 
 export const useData = (
   component: CustomComponent,
-  callbackData?: (data: any, type?: string) => void
+  options?: {
+    callback: (data: any, type?: string) => void
+  }
 ) => {
-  if (callbackData) {
-    component.setDataChangeCallback(callbackData)
+  const { callback } = options || {}
+  if (callback) {
+    component.setDataChangeCallback(callback)
   }
   onUnmounted(() => {
     if (component.dataConfig?.dataInstance.close) {

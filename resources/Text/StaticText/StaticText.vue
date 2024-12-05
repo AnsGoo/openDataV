@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import type { CustomComponent } from '@open-data-v/base'
 import { useProp } from '@open-data-v/base'
-import { set } from 'lodash-es'
 import { computed, reactive, ref } from 'vue'
 
 import { getDefaultValue } from './config'
@@ -22,14 +21,9 @@ import type { StaticTextType } from './type'
 const props = defineProps<{
   component: CustomComponent
 }>()
-
-useProp<StaticTextType>(props.component, propValueChange)
-
 const propValue = reactive<StaticTextType>(getDefaultValue())
+useProp<StaticTextType>(props.component, { defaultPropValue: propValue })
 
-function propValueChange(propKeys: Array<string>, value: string) {
-  set(propValue, propKeys.join('.'), value)
-}
 const customeText = computed<string>(() => {
   return propValue.base.text
 })

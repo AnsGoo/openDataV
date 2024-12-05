@@ -9,7 +9,6 @@
 <script setup lang="ts">
 import type { CustomComponent } from '@open-data-v/base'
 import { useData, useEventBus, useProp } from '@open-data-v/base'
-import { set } from 'lodash-es'
 import { computed, reactive, ref } from 'vue'
 
 import { getDefaultValue } from './config'
@@ -19,18 +18,14 @@ const props = defineProps<{
   component: CustomComponent
 }>()
 const propValue = reactive<SubTextType>(getDefaultValue())
-useProp<SubTextType>(props.component, propValueChange)
+useProp<SubTextType>(props.component, { defaultPropValue: propValue })
 const customeText = ref<string>('0')
 
 function dataChange(...args) {
   console.log(args)
 }
 
-useData(props.component, dataChange)
-
-function propValueChange(propKeys: Array<string>, value: string) {
-  set(propValue, propKeys.join('.'), value)
-}
+useData(props.component, { callback: dataChange })
 
 const fontStyle = computed<Record<string, any>>(() => {
   const { color, fontSize, fontWeight } = propValue.font

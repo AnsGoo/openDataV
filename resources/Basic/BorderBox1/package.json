@@ -10,8 +10,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@open-data-v/base":"workspace:*",
-    "@open-data-v/designer":"workspace:*",
-    "lodash-es": "^4.17.21"
+    "@open-data-v/designer":"workspace:*"
   },
   "devDependencies": {}
 }

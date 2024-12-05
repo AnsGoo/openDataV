@@ -12,7 +12,6 @@
   "dependencies": {
     "dayjs": "^1.11.5",
     "@open-data-v/base":"workspace:*",
-    "lodash-es": "^4.17.21",
     "@open-data-v/designer":"workspace:*"
   }
 }
