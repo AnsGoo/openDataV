@@ -9,7 +9,7 @@ import { ContainerType, CustomComponent, DataMode, Logger } from '@open-data-v/b
 import { cloneDeep, isNumber } from 'lodash-es'
 import type { Location } from 'type'
 
-import { useCanvasState, useDataState, useScriptState } from './state'
+import { useCanvasState, useDataState, useScriptState } from '../state'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))

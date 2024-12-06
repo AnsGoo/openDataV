@@ -13,10 +13,10 @@ import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { getCurrentInstance, h, onMounted, ref } from 'vue'
 
-import type { GroupType } from '../../../enum'
-import { ComponentGroupList } from '../../../enum'
 import { useCanvasState } from '../../../state'
-import ComponentItem from './component-item.vue'
+import drapComponent from '../../components/drap-component.vue'
+import type { GroupType } from './group'
+import { ComponentGroupList } from './group'
 
 withDefaults(
   defineProps<{
@@ -37,7 +37,10 @@ const loadMenuOption = () => {
   const componentMap = canvasState.componentMetaMap
   const groups: { group: string; component: CustomComponent[] } | {} = {}
   componentMap.forEach((value, key) => {
-    const { category = 'OTHER' } = value
+    const { category = 'OTHER', isContainer } = value
+    if (isContainer) {
+      return
+    }
     if (!groups[category]) {
       groups[category] = []
     }
@@ -57,11 +60,13 @@ const loadMenuOption = () => {
       children: groups[item.key]?.map((el) => {
         return {
           label: () =>
-            h(ComponentItem, {
-              component: el.component,
-              name: el.name,
-              ondragstart: handleDragStart
-            }),
+            h(
+              drapComponent,
+              {
+                component: el.component
+              },
+              () => h('div', { class: 'select-none' }, el.name)
+            ),
           key: el.component
         }
       })
@@ -72,10 +77,6 @@ const loadMenuOption = () => {
 onMounted(() => {
   loadMenuOption()
 })
-
-const handleDragStart = (e) => {
-  e.dataTransfer.setData('componentName', e.target.dataset.component)
-}
 </script>
 <style lang="less" scoped>
 @import '../../../css/index.less';

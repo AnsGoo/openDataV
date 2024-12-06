@@ -2,8 +2,10 @@ import type {
   CustomComponent,
   DataInstance,
   DataMode,
+  DOMRectStyle,
   IComponentData,
-  IContainerItem
+  IContainerItem,
+  Vector
 } from '@open-data-v/base'
 import {
   buildModeValue,
@@ -18,7 +20,7 @@ import { reactive } from 'vue'
 
 import { EditMode, PixelEnum } from '../enum'
 import { DataSlotter } from '../state'
-import type { DOMRectStyle, RelativePosition, Vector } from '../type'
+import type { RelativePosition } from '../type'
 import {
   calcComponentsRect,
   createComponent,
@@ -642,9 +644,10 @@ class CanvasState {
   /**
    * 组件图层下移
    * @param index 组件索引
-   * @param parent
+   * @param component 当前组件
    */
-  downComponent(index: number, parent: Optional<CustomComponent>) {
+  downComponent(component: CustomComponent, index: number) {
+    const parent = component.parent
     let componentData = this.componentData
     if (parent && parent.subComponents) {
       componentData = parent.subComponents
@@ -659,9 +662,10 @@ class CanvasState {
   /**
    * 组件图层上移
    * @param index 组件索引
-   * @param parent
+   * @param component 当前组件
    */
-  upComponent(index: number, parent: Optional<CustomComponent>) {
+  upComponent(component: CustomComponent, index) {
+    const parent = component.parent
     let componentData = this.componentData
     if (parent && parent.subComponents) {
       componentData = parent.subComponents
@@ -678,15 +682,17 @@ class CanvasState {
 
   /**
    * 组件图层置顶
-   * @param index 组件索引
-   * @param parent
+   * @param component 当前组件
    */
-  topComponent(index: number, parent: Optional<CustomComponent>) {
-    let componentData = this.componentData
+  topComponent(component: CustomComponent) {
+    const parent = component.parent
+    let componentData
     if (parent && parent.subComponents) {
       componentData = parent.subComponents
     }
+    componentData = this.componentData
     const len: number = componentData.length
+    const index = componentData.findIndex((el) => el.id === component.id)
     if (index < len - 1 && index >= 0) {
       const myComponments: CustomComponent[] = componentData.splice(index, 1)
       componentData.push(myComponments[0])
@@ -697,15 +703,16 @@ class CanvasState {
   }
   /**
    * 组件图层置底
-   * @param index 组件索引
-   * @param parent
+   * @param component 当前组件
    */
-  bottomComponent(index: number, parent: Optional<CustomComponent>) {
-    let componentData = this.componentData
+  bottomComponent(component: CustomComponent) {
+    const parent = component.parent
+    let componentData
     if (parent && parent.subComponents) {
       componentData = parent.subComponents
     }
-
+    componentData = this.componentData
+    const index = componentData.findIndex((el) => el.id === component.id)
     if (index > 0) {
       const myComponments: CustomComponent[] = componentData.splice(index, 1)
       componentData.unshift(myComponments[0])
@@ -715,18 +722,25 @@ class CanvasState {
     }
   }
   /**
-   * 根据索引移除组件
-   * @param index 索引
-   * @param parent
+   * 移除组件
+   * @param component 当前组件
    * @returns 移除结果
    */
-  removeComponent(index: number, parent: Optional<CustomComponent>) {
+  removeComponent(component: CustomComponent) {
+    const parent = component.parent
+    let componentData
     if (parent && parent.subComponents) {
-      parent.subComponents.splice(index, 1)
-    } else {
-      this.componentData.splice(index, 1)
+      componentData = parent.subComponents
+    }
+    componentData = this.componentData
+    const index = componentData.findIndex((el) => el.id === component.id)
+    const removedComponents = this.componentData.splice(index, 1)
+    if (parent) {
+      this.resizeAutoComponent(parent)
     }
     this.saveComponentData()
+    removedComponents[0].relativePosition = undefined
+    return removedComponents[0]
   }
 
   getComponentByIndex(indexs: readonly number[]): Optional<CustomComponent> {
@@ -748,21 +762,6 @@ class CanvasState {
         snapShotState.saveSnapshot(this.layoutData, this.canvasStyleData, this.dataSlotterData)
       )
     })
-  }
-  cutComponent(index: number, parent: Optional<CustomComponent>): Optional<CustomComponent> {
-    let componentData = this.componentData
-    if (parent && parent.subComponents) {
-      componentData = parent.subComponents
-    }
-    if (index < componentData.length && index >= 0) {
-      const components: CustomComponent[] = componentData.splice(index, 1)
-      if (parent) {
-        components[0].relativePosition = undefined
-        this.resizeAutoComponent(parent)
-      }
-      this.saveComponentData()
-      return components[0]
-    }
   }
 
   /**
@@ -842,11 +841,7 @@ class CanvasState {
     if (!(this.activeComponent && this.activeComponent.component === 'Group')) return
     const components: CustomComponent[] = cloneDeep(this.activeComponent.subComponents)
     if (components.length > 0) {
-      const index: number = this.getComponentIndexById(
-        this.activeComponent.id,
-        this.activeComponent.parent
-      )
-      this.removeComponent(index, this.activeComponent.parent)
+      this.removeComponent(this.activeComponent)
       const parentComponent = this.activeComponent.parent
       if (parentComponent) {
         const parentPosition: DOMRectStyle = parentComponent.position

@@ -242,6 +242,7 @@ const handleDrop = async (e) => {
   const x = Math.round((e.pageX - editorRectInfo.left) / canvasState.scale)
   component.changePosition('top', y)
   component.changePosition('left', x)
+  console.log(component)
   canvasState.appendComponent(component)
 }
 

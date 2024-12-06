@@ -28,7 +28,6 @@ class ClipBoardState {
   }
   copy(data: IComponentData) {
     this.copyData = cloneDeep(data)
-    this.copyData!.relativePosition = undefined
     copyText(JSON.stringify(this.copyData))
   }
 

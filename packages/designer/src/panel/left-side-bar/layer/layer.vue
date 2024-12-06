@@ -14,6 +14,7 @@
 
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
+import { uuid } from '@open-data-v/base'
 import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
@@ -24,7 +25,6 @@ import { useEmpty } from '../../../modules'
 import { useCanvasState, useClipBoardState } from '../../../state'
 import { decompose } from '../../../toolbars'
 import type { ContextmenuItem } from '../../../type'
-import { uuid } from '../../../utils'
 import LayerItem from './layer-item.vue'
 import SimpleLayerItem from './simple-layer-item.vue'
 
@@ -98,7 +98,7 @@ const getMenuOptions = (
         key: currentIndex,
         icon: () =>
           h(SimpleLayerItem, {
-            name: `${iconMap[item.group!]}`,
+            name: `${iconMap[item.icon!]}`,
             component: item,
             index: currentIndex,
             contextmenus: () => contextmenus(currentIndex),
@@ -119,7 +119,7 @@ const calcIndex = (index: number, fatherIndex: string) => {
 
 const copy = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<CustomComponent> = anvasState.getComponentByIndex(indexes)
+  const component: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
   if (component) {
     clipBoardState.copy(component.toJson(false))
   }
@@ -127,32 +127,41 @@ const copy = (index: string) => {
 
 const remove = async (index: string) => {
   handleSelect(index)
-  const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.removeComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
+  canvasState.removeComponent(canvasState.activeComponent as CustomComponent)
 }
 
 const up = async (index: string) => {
   handleSelect(index)
+  if (!canvasState.activateComponent) {
+    return
+  }
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.upComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
+  canvasState.upComponent(
+    canvasState.activeComponent as CustomComponent,
+    indexes[indexes.length - 1]
+  )
 }
 
 const down = async (index: string) => {
   handleSelect(index)
+  if (!canvasState.activateComponent) {
+    return
+  }
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.downComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
+  canvasState.downComponent(
+    canvasState.activeComponent as CustomComponent,
+    indexes[indexes.length - 1]
+  )
 }
 
 const top = async (index: string) => {
   handleSelect(index)
-  const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.topComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
+  canvasState.topComponent(canvasState.activeComponent as CustomComponent)
 }
 
 const bottom = async (index: string) => {
   handleSelect(index)
-  const indexes: number[] = index.split('-').map((i) => Number(i))
-  canvasState.bottomComponent(indexes[indexes.length - 1], canvasState.activeComponent?.parent)
+  canvasState.bottomComponent(canvasState.activeComponent as CustomComponent)
 }
 
 const hidden = (index: string) => {
@@ -170,10 +179,12 @@ const display = (index: string) => {
 }
 const cut = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const cutComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
-  const component: Optional<CustomComponent> = canvasState.cutComponent(
-    indexes[indexes.length - 1],
-    cutComponent?.parent
+  const curComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  if (!curComponent) {
+    return
+  }
+  const component: Optional<CustomComponent> = canvasState.removeComponent(
+    curComponent as CustomComponent
   )
   if (component) {
     clipBoardState.copy(component.toJson(false))

@@ -8,7 +8,7 @@
   >
     <ul
       v-show="!itemUl || visibleList.includes(itemUl.key)"
-      :class="{ ['layer-' + layer]: true, 'is-child': itemUl }"
+      :class="{ ['layer-' + layer]: true, 'is-child': itemUl, 'z-50': true }"
       :data-height="getUlHeight(itemUl)"
     >
       <li
@@ -134,9 +134,11 @@ const clickEmit = (item: MenuOption) => {
 // 高度展开动画
 const beforeEvent = (el): void => {
   const height = el.getAttribute('data-height')
+  console.log(height)
   if (height) {
     el.style.height = height + 'px'
     el.style.overflow = 'hidden'
+    el.style.zIndex = 9999
   }
 }
 const afterEvent = (el): void => {

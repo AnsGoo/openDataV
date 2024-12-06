@@ -1,7 +1,7 @@
 <template>
-  <div class="logo">
+  <div class="logo sall">
     <img :src="Logo" alt="" :class="{ 'mr-2': !collapsed }" />
-    <h2 v-show="!collapsed" class="title">{{ title }}</h2>
+    <h2 v-show="!collapsed" class="title rail">{{ title }}</h2>
   </div>
 </template>
 
@@ -29,7 +29,13 @@ const title = ref<string>(import.meta.env.VITE_APP_TITLE)
   }
 
   .title {
-    @apply mb-0;
+    @apply mb-0 font-black;
+  }
+  /* 创建多级渐变。 */
+  .sall .rail {
+    color: transparent;
+    background: linear-gradient(to right, #ff0000, #ffff00, #00ff00);
+    background-clip: text;
   }
 }
 </style>

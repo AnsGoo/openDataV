@@ -26,7 +26,7 @@ export interface CanvasData {
   thumbnail: string
   editMode: EditMode
   canvasStyleData: CanvasStyleData
-  componentData: CustomComponent[]
+  componentData: CustomComponent[] | Ref<CustomComponent[]>
   activeIndex?: string
   activeComponent: Optional<CustomComponent>
   isShowEm: boolean

@@ -68,14 +68,14 @@ const handleDrop = (event: DragEvent, toIndex: string) => {
   const isDragAble = diffIndex(fromIndex, toIndex)
   if (!isDragAble) return
   const indexes: number[] = fromIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
-  const inComponent = cloneDeep(cutComponent)
+  const curComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  const inComponent = cloneDeep(curComponent)
   const toIndexs: number[] = toIndex.split('-').map((i) => Number(i))
   const toComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(toIndexs)
 
   if (inComponent && toComponent && toIndex) {
     const toComponentId: string = toComponent.id
-    canvasState.cutComponent(indexes[indexes.length - 1], cutComponent?.parent)
+    canvasState.removeComponent(curComponent as CustomComponent)
     const parent = toComponent.parent || undefined
     const data = parent ? parent.subComponents : canvasState.componentData
     const newToIndex = data.findIndex((el) => el.id === toComponentId)

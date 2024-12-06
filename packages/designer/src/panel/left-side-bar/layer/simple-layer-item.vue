@@ -54,10 +54,12 @@ const handleDrop = (event: DragEvent, index: string) => {
   const componentIndex: string = event.dataTransfer?.getData('componentIndex') as string
   const toIndex: string = calcDragIndex(componentIndex, index)
   const indexes: number[] = componentIndex.split('-').map((i) => Number(i))
-  const cutComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
-  const component: Optional<CustomComponent> = canvasState.cutComponent(
-    indexes[indexes.length - 1],
-    cutComponent?.parent
+  const curComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  if (!curComponent) {
+    return
+  }
+  const component: Optional<CustomComponent> = canvasState.removeComponent(
+    curComponent as CustomComponent
   )
   if (component && toIndex) {
     const toIndexs: number[] = componentIndex.split('-').map((i) => Number(i))

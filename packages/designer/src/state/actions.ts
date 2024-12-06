@@ -1,7 +1,7 @@
-import type { CustomComponent } from '@open-data-v/base'
+import type { CustomComponent, Position } from '@open-data-v/base'
 import { reactive } from 'vue'
 
-import type { Location, Position } from '../type'
+import type { Location } from '../type'
 import {
   calcComponentsRect,
   createRelativePosition,
@@ -159,10 +159,10 @@ class ActionState {
   }
   /**
    * 将已经放到 Group 组件数据删除，也就是在 componentData 中删除，因为它们已经放到 Group 组件中了
-   * @param deleteData
+   * @param components
    */
-  batchDeleteComponent(deleteData: CustomComponent[]) {
-    deleteData.forEach((component) => {
+  batchDeleteComponent(components: CustomComponent[]) {
+    components.forEach((component) => {
       for (let i = 0, len = canvasState.componentData.length; i < len; i++) {
         if (component.id === canvasState.componentData[i].id) {
           canvasState.componentData.splice(i, 1)
