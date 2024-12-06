@@ -12,7 +12,7 @@
     "lint:fix": "eslint --fix --ext .js,.ts,.vue,.tsx packages/base/src packages/ui/src packages/scripts/src packages/data/src packages/designer/src examples/ docs/ resource/",
     "prepare": "husky install",
     "reinstall": "rimraf pnpm-lock.yaml && rimraf packages/**/node_modules && rimraf examples/node_modules && rimraf node_modules && pnpm bootstrap",
-    "publish": "pnpm publish -r"
+    "publish": "pnpm -r run publish"
   },
   "license": "Apache-2.0",
   "dependencies": {
