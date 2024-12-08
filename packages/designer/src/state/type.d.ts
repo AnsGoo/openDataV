@@ -21,12 +21,18 @@ export interface CanvasStyleConfig {
   formItems?: Array<IContainerItem>
   mode?: ContainerType
 }
+
+export interface ComponentTreeData {
+  id: 'root'
+  component: 'root'
+  subComponents: CustomComponent[]
+}
 export interface CanvasData {
   name: string
   thumbnail: string
   editMode: EditMode
   canvasStyleData: CanvasStyleData
-  componentData: CustomComponent[] | Ref<CustomComponent[]>
+  componentData: []
   activeIndex?: string
   activeComponent: Optional<CustomComponent>
   isShowEm: boolean

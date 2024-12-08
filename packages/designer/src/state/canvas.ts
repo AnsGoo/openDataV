@@ -246,10 +246,11 @@ class CanvasState {
   }
 
   get componentData(): CustomComponent[] {
+    window['compoentData'] = this.state.componentData
     return this.state.componentData
   }
-  set componentData(componentData: CustomComponent[]) {
-    this.state.componentData = componentData
+  set componentData(components: CustomComponent[]) {
+    this.state.componentData = components
   }
 
   get activeIndex(): string | undefined {
@@ -329,7 +330,7 @@ class CanvasState {
           const dataInstance = new plugin.handler(options)
           this.appendDataSlotter(el.type, dataInstance)
         } else {
-          console.log(`${el.type}插件不存在`)
+          handleLogger.warn(`${el.type}插件不存在`)
         }
       })
     }
@@ -573,17 +574,14 @@ class CanvasState {
     this.saveComponentData()
   }
   /**
-   * 想画布中添加组件
+   * 向画布中添加组件
    * @param component 组件
    */
   appendComponent(component: CustomComponent): void {
-    if (component.subComponents) {
-      this.resetComponentData(component.subComponents)
+    const result = this._insertComponent(component, [this.componentData.length])
+    if (result) {
+      this.saveComponentData()
     }
-    component.parent = undefined
-    this.componentData.push(component)
-    this.componentMap.set(component.id, component)
-    this.saveComponentData()
   }
   /**
    * 设置当前组件的PropValue
@@ -613,18 +611,30 @@ class CanvasState {
     return this.findComponentById(id, this.componentData)
   }
 
-  private findComponentById(id: string, data: Array<CustomComponent>): CustomComponent | undefined {
+  private findComponentById(
+    id: string,
+    components?: Array<CustomComponent>
+  ): CustomComponent | undefined {
+    const data = components || this.componentData
     const len = data.length
+
+    const quene: Array<CustomComponent> = []
     for (let i = 0; i < len; i++) {
-      if (data[i].id === id) {
-        return data[i]
+      const node = data[i]
+      if (node.id === id) {
+        return node
       } else {
-        const subComponents = data[i].subComponents
-        if (subComponents && subComponents.length > 0) {
-          const component = this.findComponentById(id, subComponents)
-          if (component) {
-            return component
-          }
+        if (node.subComponents && node.subComponents.length > 0) {
+          quene.push(node)
+        }
+      }
+    }
+    while (quene.length > 0) {
+      const node = quene.pop()
+      if (node) {
+        const component = this.findComponentById(id, node.subComponents!)
+        if (component) {
+          return component
         }
       }
     }
@@ -727,19 +737,35 @@ class CanvasState {
    * @returns 移除结果
    */
   removeComponent(component: CustomComponent) {
+    const removedComponent = this._removeComponent(component.id)
+    if (removedComponent) {
+      this.saveComponentData()
+    }
+    return removedComponent
+  }
+
+  private _removeComponent(componentId: string) {
+    const component = this.getComponentById(componentId)
+    if (!component) {
+      return
+    }
     const parent = component.parent
     let componentData
     if (parent && parent.subComponents) {
       componentData = parent.subComponents
+    } else {
+      componentData = this.componentData
     }
-    componentData = this.componentData
+
     const index = componentData.findIndex((el) => el.id === component.id)
-    const removedComponents = this.componentData.splice(index, 1)
+    const removedComponents = componentData.splice(index, 1)
+    this.ids.delete(removedComponents[0].id)
     if (parent) {
+      parent.subComponents = componentData
       this.resizeAutoComponent(parent)
     }
-    this.saveComponentData()
     removedComponents[0].relativePosition = undefined
+    removedComponents[0].parent = undefined
     return removedComponents[0]
   }
 
@@ -764,32 +790,106 @@ class CanvasState {
     })
   }
 
+  private syncMoveComponent(
+    componentId: string,
+    toIndexs: Array<number>,
+    componentData: Array<CustomComponent>,
+    opIndex: number
+  ) {
+    if (opIndex === componentData.length) {
+      // 先从画布中移除组件，再重新获取长度后插入
+      const newInsertComponent = this._removeComponent(componentId)
+      return this._insertComponent(newInsertComponent, [componentData.length])
+    } else {
+      // 插入到中间
+      // 先找到一个插入点的标记组件
+      const opComponent = componentData[opIndex]
+      // 再删除需要插入的组件
+      const newInsertComponent = this._removeComponent(componentId)
+      // 重新获取标记点的索引
+      const toIndex = componentData.findIndex((el) => el.id === opComponent.id)
+      // 插入组件
+      return this._insertComponent(newInsertComponent, [...toIndexs, toIndex])
+    }
+  }
+
+  /**
+   *
+   * @param fromComponent CustomComponent 组件
+   * @param toIndexs Array<number> 索引
+   * @returns void
+   */
+  moveComponent(componentId: string, toIndexs: Array<number>) {
+    if (toIndexs.length === 0 || !componentId) {
+      return
+    }
+
+    // 索引长度为1，说明是向画布中插入组件
+    if (toIndexs.length === 1) {
+      const opIndex = toIndexs.pop()!
+      if (opIndex > -1 && opIndex < this.componentData.length + 1) {
+        return this.syncMoveComponent(componentId, toIndexs, this.componentData, opIndex)
+      } else {
+        handleLogger.warn(`移动失败，非法的位置索引:[${toIndexs.join(',')}]`)
+        return
+      }
+    } else if (toIndexs.length > 1) {
+      // 索引长度大于1，说明是向容器中插入组件
+      const opIndex = toIndexs.pop()!
+      const containerComponent = this.getComponentByIndex(toIndexs)
+      if (!(containerComponent && containerComponent.isContainer)) {
+        return
+      }
+      const componentData = containerComponent.subComponents!
+      return this.syncMoveComponent(componentId, toIndexs, componentData, opIndex)
+    }
+  }
+  private _insertComponent(component: CustomComponent, indexes: Array<number>): boolean {
+    const id = component.id
+    if (id && this.ids.has(id)) {
+      return false
+    }
+    if (!component.id) {
+      component.id = uuid()
+    }
+    const indexs = indexes && indexes.length > 0 ? indexes : [this.componentData.length]
+    const index = indexs.pop()!
+    let componentData
+    if (indexes.length === 0) {
+      componentData = this.componentData
+      component.parent = undefined
+      component.relativePosition = undefined
+    } else {
+      const parent: Optional<CustomComponent> = this.getComponentByIndex(indexs)
+      if (!parent) {
+        return false
+      }
+      componentData = parent?.subComponents
+      component.parent = parent
+    }
+    if (index > -1) {
+      // 默认向前插入
+      componentData.splice(index, 0, component)
+      if (component.parent) {
+        this.resizeAutoComponent(component.parent)
+      }
+      return true
+    } else {
+      handleLogger.warn(`非法的位置索引:[${indexes.join(',')}]`)
+      return false
+    }
+  }
+
   /**
    * 想组件中插入子组件
    * @param index
-   * @param insertComponent
-   * @param parent
+   * @param component
    */
-  insertComponent(
-    index: number,
-    insertComponent: CustomComponent,
-    parent: Optional<CustomComponent>
-  ): void {
-    let componentData = this.componentData
-    if (parent && parent.subComponents) {
-      componentData = parent.subComponents
-      insertComponent.parent = parent
-    } else {
-      insertComponent.parent = undefined
-      insertComponent.relativePosition = undefined
+  insertComponent(component: CustomComponent, indexes: Array<number>): void {
+    const result = this._insertComponent(component, indexes)
+    if (result) {
+      this.saveComponentData()
     }
-    if (index < componentData.length && index >= 0) {
-      componentData.splice(index + 1, 0, insertComponent)
-      if (parent) {
-        this.resizeAutoComponent(parent)
-      }
-    }
-    this.saveComponentData()
   }
   /**
    * 重新自动调整组件尺寸

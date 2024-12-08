@@ -39,5 +39,6 @@
       "yarn-error.log": true,
       "**/.yarn": true
     },
+    "marscode.chatLanguage": "auto",
   }
   

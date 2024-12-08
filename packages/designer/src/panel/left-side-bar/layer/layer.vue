@@ -193,11 +193,11 @@ const cut = (index: string) => {
 
 const paste = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const insertComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+
   if (clipBoardState.copyData) {
     const data = cloneDeep(clipBoardState.copyData) as CustomComponent
     data.id = uuid()
-    canvasState.insertComponent(indexes[indexes.length - 1], data, insertComponent?.parent)
+    canvasState.insertComponent(data, indexes)
   }
 }
 

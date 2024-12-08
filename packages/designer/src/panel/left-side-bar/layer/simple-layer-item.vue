@@ -63,8 +63,7 @@ const handleDrop = (event: DragEvent, index: string) => {
   )
   if (component && toIndex) {
     const toIndexs: number[] = componentIndex.split('-').map((i) => Number(i))
-    const insertComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(toIndexs)
-    canvasState.insertComponent(toIndexs[toIndexs.length - 1], component, insertComponent)
+    canvasState.insertComponent(component, toIndexs)
     emits('select', index)
   }
 }

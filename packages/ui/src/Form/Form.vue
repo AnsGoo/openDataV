@@ -80,7 +80,6 @@ const validate = (field?: string[]) => {
   }
   return new Promise((resolve, reject) => {
     validateFields.forEach((item: any) => {
-      // console.log(item.prop)
       item
         .validate()
         .then(() => {

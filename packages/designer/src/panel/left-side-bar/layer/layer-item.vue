@@ -23,7 +23,6 @@
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
 import { eventBus, StaticKey } from '@open-data-v/base'
-import { cloneDeep } from 'lodash-es'
 
 import { useCanvasState } from '../../../state'
 import type { ContextmenuItem } from '../../../type'
@@ -53,7 +52,7 @@ const handleDragStart = (event: DragEvent, index: string) => {
   event.stopPropagation()
 }
 
-const handleDragOver = (event: DragEvent, index: string, isEmit = false) => {
+const handleDragOver = (event: DragEvent, index: string, isEmit = true) => {
   event.preventDefault()
   event.stopPropagation()
   if (isEmit && index !== props.activeKey) {
@@ -69,17 +68,9 @@ const handleDrop = (event: DragEvent, toIndex: string) => {
   if (!isDragAble) return
   const indexes: number[] = fromIndex.split('-').map((i) => Number(i))
   const curComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
-  const inComponent = cloneDeep(curComponent)
-  const toIndexs: number[] = toIndex.split('-').map((i) => Number(i))
-  const toComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(toIndexs)
-
-  if (inComponent && toComponent && toIndex) {
-    const toComponentId: string = toComponent.id
-    canvasState.removeComponent(curComponent as CustomComponent)
-    const parent = toComponent.parent || undefined
-    const data = parent ? parent.subComponents : canvasState.componentData
-    const newToIndex = data.findIndex((el) => el.id === toComponentId)
-    canvasState.insertComponent(newToIndex!, inComponent!, parent)
+  const toIndexes: number[] = toIndex.split('-').map((i) => Number(i))
+  if (curComponent && toIndex) {
+    canvasState.moveComponent(curComponent.id, toIndexes)
     emits('select', toIndex)
   }
 }

@@ -6,8 +6,10 @@
     @after-leave="afterEvent"
     @before-leave="beforeEvent"
   >
-    <ul
+    <TransitionGroup
       v-show="!itemUl || visibleList.includes(itemUl.key)"
+      tag="ul"
+      name="fade"
       :class="{ ['layer-' + layer]: true, 'is-child': itemUl, 'z-50': true }"
       :data-height="getUlHeight(itemUl)"
     >
@@ -19,6 +21,7 @@
           'is-down': visibleList.includes(item.key),
           selected: item.key === selectedKey
         }"
+        class="item"
         @mouseenter="mouseenter(item)"
         @mouseleave="mouseleave(item)"
         @click="click(item, $event)"
@@ -42,7 +45,7 @@
           @select="select"
         />
       </li>
-    </ul>
+    </TransitionGroup>
   </Transition>
 </template>
 
@@ -134,7 +137,6 @@ const clickEmit = (item: MenuOption) => {
 // 高度展开动画
 const beforeEvent = (el): void => {
   const height = el.getAttribute('data-height')
-  console.log(height)
   if (height) {
     el.style.height = height + 'px'
     el.style.overflow = 'hidden'
