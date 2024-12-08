@@ -29,17 +29,17 @@
 </template>
 <script setup lang="ts">
 import { RenderSlot, useData, useProp } from '@open-data-v/base'
-import { onUnmounted, provide, readonly, useSlots } from 'vue'
+import { defineAsyncComponent, onUnmounted, provide, readonly, useSlots } from 'vue'
 
-import type { ToolBarItemType } from '../../components'
 import { HOOKS } from '../../const'
-import LeftSideBar from '../../panel/left-side-bar'
-import RightSideBar from '../../panel/right-side-bar'
-import ToolBar from '../../panel/tools-bar'
 import { useCanvasState } from '../../state'
 import type { LayoutData } from '../../state/type'
-import BottomTip from './bottom-tip.vue'
 import Canvas from './canvas.vue'
+
+const ToolBar = defineAsyncComponent(() => import('../../panel/tools-bar'))
+const LeftSideBar = defineAsyncComponent(() => import('../../panel/left-side-bar'))
+const RightSideBar = defineAsyncComponent(() => import('../../panel/right-side-bar'))
+const BottomTip = defineAsyncComponent(() => import('./bottom-tip.vue'))
 
 const slots = useSlots()
 withDefaults(
