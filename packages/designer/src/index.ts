@@ -1,5 +1,5 @@
 import type { ToolBarItemType } from './components'
-import { CodeEditor, Group, iconMap, ToolBar, ToolBarItem, XIcon } from './components'
+import { CodeEditor, Group, iconMap, Toggle, ToolBar, ToolBarItem, XIcon } from './components'
 import { HOOKS } from './const'
 import DemoDataPlugin from './data/demo-data'
 import type { StoreComponentData } from './db'
@@ -11,8 +11,8 @@ import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/canvas.vue'
 import Designer from './pages/designer/designer.vue'
 import Previewer from './pages/perviewer/viewer.vue'
+import DrapComponent from './panel/components/drap-component.vue'
 import createAttrComponent from './panel/factory.tsx'
-import LeftSideBar from './panel/left-side-bar'
 import RightSideBar from './panel/right-side-bar'
 import ToolsBar from './panel/tools-bar'
 import Directive from './plugins/directive'
@@ -63,6 +63,7 @@ export {
   DemoDataPlugin,
   Designer,
   Directive,
+  DrapComponent,
   EditMode,
   Editor,
   exportCanvas,
@@ -76,7 +77,6 @@ export {
   HOOKS,
   iconMap,
   importCanvas,
-  LeftSideBar,
   paste,
   PixelEnum,
   Previewer,
@@ -84,6 +84,7 @@ export {
   RightSideBar,
   setShowEm,
   Shape,
+  Toggle,
   ToolBar,
   ToolBarItem,
   ToolsBar,
@@ -126,7 +127,6 @@ export default {
   GroupType,
   handleLogger,
   importCanvas,
-  LeftSideBar,
   PixelEnum,
   Previewer,
   recoveryDraft,

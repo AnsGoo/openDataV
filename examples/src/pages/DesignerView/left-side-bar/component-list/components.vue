@@ -9,14 +9,13 @@
 
 <script setup lang="ts">
 import type { CustomComponent } from '@open-data-v/base'
+import { DrapComponent, useCanvasState } from '@open-data-v/designer'
 import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { getCurrentInstance, h, onMounted, ref } from 'vue'
 
-import { useCanvasState } from '../../../state'
-import drapComponent from '../../components/drap-component.vue'
-import type { GroupType } from './group'
-import { ComponentGroupList } from './group'
+import type { GroupType } from '../enum'
+import { ComponentGroupList } from '../enum'
 
 withDefaults(
   defineProps<{
@@ -61,7 +60,7 @@ const loadMenuOption = () => {
         return {
           label: () =>
             h(
-              drapComponent,
+              DrapComponent,
               {
                 component: el.component
               },
@@ -78,6 +77,3 @@ onMounted(() => {
   loadMenuOption()
 })
 </script>
-<style lang="less" scoped>
-@import '../../../css/index.less';
-</style>

@@ -15,16 +15,14 @@
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
 import { uuid } from '@open-data-v/base'
+import type { ContextmenuItem } from '@open-data-v/designer'
+import { useCanvasState, useClipBoardState, useEmpty } from '@open-data-v/designer'
 import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, h, ref, watch } from 'vue'
 
-import { ComponentGroupList } from '../../../enum'
-import { useEmpty } from '../../../modules'
-import { useCanvasState, useClipBoardState } from '../../../state'
-import { decompose } from '../../../toolbars'
-import type { ContextmenuItem } from '../../../type'
+import { ComponentGroupList } from '../enum'
 import LayerItem from './layer-item.vue'
 import SimpleLayerItem from './simple-layer-item.vue'
 
@@ -279,6 +277,3 @@ watch(
   }
 )
 </script>
-<style lang="less" scoped>
-@import '../../../css/index.less';
-</style>

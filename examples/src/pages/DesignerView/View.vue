@@ -5,6 +5,7 @@
         <div class="tool-bar-title">{{ canvasState.name }}</div>
       </ToolBar>
     </template>
+    <template #left><LeftSideBar /></template>
   </Designer>
 </template>
 
@@ -19,6 +20,7 @@ import {
   useDataState,
   useScriptState
 } from '@open-data-v/designer'
+// import { ResourcePanel } from '@open-data-v/extensions'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -29,6 +31,8 @@ import RestDataPlugin from '@/data/Rest'
 import useToolBars from '@/pages/DesignerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
+
+import LeftSideBar from './left-side-bar'
 
 const scriptState = useScriptState()
 scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])

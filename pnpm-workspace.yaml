@@ -4,6 +4,7 @@ packages:
   - packages/ui/**
   - packages/scripts/**
   - packages/designer/**
+  - packages/extensions/**
   - examples/
   - resource/**
   - resources/**
