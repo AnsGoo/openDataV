@@ -8,17 +8,16 @@ const canvasState = useCanvasState()
 const useAsyncLoadComponent = () => {
   return {
     install: (app: App) => {
-      // 注册Group组件
       const keys = Object.keys(components)
       keys.forEach((el) => {
         const pkg = components[el]
-        const { manifest, panel, style, component } = pkg
+        const { manifest, panel, component } = pkg
         const asyncComp = defineAsyncComponent({
           loader: component,
           delay: 200,
           timeout: 3000
         })
-        canvasState.loadComponent(manifest.name, manifest, panel, style)
+        canvasState.loadComponent(manifest.name, manifest, panel)
         app.component(manifest.name, asyncComp)
       })
     }
