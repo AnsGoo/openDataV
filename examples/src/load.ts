@@ -1,8 +1,7 @@
 import { useCanvasState } from '@open-data-v/designer'
+import components from '@resources/components'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
-
-import components from '../../resources/components'
 
 const canvasState = useCanvasState()
 const useAsyncLoadComponent = () => {

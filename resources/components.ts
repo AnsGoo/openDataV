@@ -13,3 +13,4 @@ export default {
   // Gauge,
   // BasicBarChart
 }
+export { BorderBox1, StaticText, SubText }

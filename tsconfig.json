@@ -40,6 +40,7 @@
     "packages/**/*.tsx",
     "packages/**/*.vue",
     "resource/**/*.ts", "resource/**/*.d.ts", "resource/**/*.tsx", "resource/**/*.vue",
+    "resources/**/*.ts", "resources/**/*.d.ts", "resources/**/*.tsx", "resources/**/*.vue",
   ],
   "exclude": ["**/node_modules/**", "dist", "**/*.js"]
 }
