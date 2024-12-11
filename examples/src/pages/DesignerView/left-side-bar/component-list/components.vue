@@ -13,7 +13,6 @@ import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { getCurrentInstance, h, onMounted, ref } from 'vue'
 
-import components from '../components'
 import type { Category } from '../enum'
 import { CategoryList } from '../enum'
 
@@ -40,17 +39,17 @@ const loadMenuOption = () => {
         h(XIcon, {
           name: `${item.icon}`
         }),
-      children: components[item.key]?.map((el) => {
+      children: item.components.map((el) => {
         return {
           label: () =>
             h(
               DrapComponent,
               {
-                component: el.name
+                component: el.component
               },
               () => h('div', { class: 'select-none' }, el.title)
             ),
-          key: el.name
+          key: el.component
         }
       })
     })

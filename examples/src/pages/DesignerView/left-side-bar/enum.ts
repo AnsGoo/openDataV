@@ -1,3 +1,5 @@
+import { BorderBox1, StaticText, SubText } from '@resources/components'
+
 export enum CategoryEnum {
   // 基础组件
   BASIC = 'BASIC',
@@ -36,11 +38,26 @@ export class Category {
   public name: string
   public icon: string
   public key: string
+  public components: Array<{
+    component: string
+    title: string
+  }>
 
-  constructor(name: string, key: string, icon: string) {
+  constructor(
+    name: string,
+    key: string,
+    icon: string,
+    components: Array<{ component: string; title: string }> = []
+  ) {
     this.name = name
     this.icon = icon
     this.key = key
+    this.components = components.map((el) => {
+      return {
+        component: el.component,
+        title: el.title
+      }
+    })
   }
   public toJSON() {
     return {
@@ -53,7 +70,9 @@ export class Category {
 
 export const CategoryList: Category[] = [
   new Category('基础', CategoryEnum.BASIC, 'cube'),
-  new Category('边框', CategoryEnum.BORDER, 'border'),
+  new Category('边框', CategoryEnum.BORDER, 'border', [
+    { component: BorderBox1.manifest.name, title: BorderBox1.manifest.title }
+  ]),
   new Category('装饰', CategoryEnum.DECORATION, 'icon'),
   new Category('线状图', CategoryEnum.LINE, 'chartLine'),
   new Category('柱状图', CategoryEnum.BAR, 'chartHistogram'),
@@ -61,7 +80,13 @@ export const CategoryList: Category[] = [
   new Category('地图', CategoryEnum.MAP, 'map'),
   new Category('仪表盘', CategoryEnum.GAUGE, 'dashboard'),
   new Category('按钮', CategoryEnum.BUTTON, 'button'),
-  new Category('文本', CategoryEnum.TEXT, 'text'),
+  new Category('文本', CategoryEnum.TEXT, 'text', [
+    {
+      component: StaticText.manifest.name,
+      title: StaticText.manifest.title
+    },
+    { component: SubText.manifest.name, title: SubText.manifest.title }
+  ]),
   new Category('表格', CategoryEnum.TABLE, 'table'),
   new Category('温度计', CategoryEnum.THERMOMETER, 'thermometer'),
   new Category('导航', CategoryEnum.NAVIFATION, 'navigation'),
