@@ -14,8 +14,8 @@ import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { getCurrentInstance, h, onMounted, ref } from 'vue'
 
-import type { GroupType } from '../enum'
-import { ComponentGroupList } from '../enum'
+import type { Category } from '../enum'
+import { CategoryList } from '../enum'
 
 withDefaults(
   defineProps<{
@@ -48,7 +48,7 @@ const loadMenuOption = () => {
       component: key
     })
   })
-  ComponentGroupList.forEach((item: GroupType) => {
+  CategoryList.forEach((item: Category) => {
     menuOptions.value.push({
       label: () => item.name,
       key: item.key,

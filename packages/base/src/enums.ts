@@ -3,58 +3,6 @@ export enum DataMode {
   UNIVERSAL = 'UNIVERSAL',
   GLOBAL = 'GLOBAL'
 }
-export class GroupType {
-  public name: string
-  public icon: string
-  public key: string
-
-  constructor(name: string, key: string, icon: string) {
-    this.name = name
-    this.icon = icon
-    this.key = key
-  }
-  public toJSON() {
-    return {
-      name: this.name,
-      icon: this.icon,
-      key: this.key
-    }
-  }
-}
-
-export enum ComponentGroup {
-  // 基础组件
-  BASIC = 'BASIC',
-  // 边框
-  BORDER = 'BORDER',
-  // 装饰
-  DECORATION = 'DECORATION',
-  // 折线图
-  LINE = 'LINE',
-  // 柱状图
-  BAR = 'BAR',
-  // 百分比图
-  PIE = 'PIE',
-  // 地图
-  MAP = 'MAP',
-  // 仪表盘
-  GAUGE = 'GAUGE',
-  // 定制组件
-  CUSTOM = 'CUSTOM',
-  TEXT = 'TEXT',
-  BUTTON = 'BUTTON',
-  // 表格
-  TABLE = 'TABLE',
-
-  // 其他组件
-  NAVIFATION = 'NAVIFATION',
-  PROGERSS = 'PROGERSS',
-  THERMOMETER = 'THERMOMETER',
-  // 其他组件
-  OTHER = 'OTHER',
-  // 容器组件
-  CONTAINER = 'CONTAINER'
-}
 
 export enum FormType {
   // 文本框

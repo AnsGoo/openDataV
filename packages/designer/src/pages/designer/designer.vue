@@ -7,10 +7,7 @@
       <ToolBar :toolbars="toolbars" />
     </template>
     <div class="content flex flex-1 flex-nowrap flex-row overflow-auto">
-      <template v-if="slots?.left">
-        <RenderSlot :slots="slots?.left()" />
-      </template>
-      <template v-else><LeftSideBar /> </template>
+      <slot name="left"> </slot>
       <div class="canvas flex flex-col flex-nowrap h-full">
         <Canvas class="border border-gray-500 flex-1" />
         <template v-if="slots?.bottom">
@@ -37,7 +34,7 @@ import type { LayoutData } from '../../state/type'
 import Canvas from './canvas.vue'
 
 const ToolBar = defineAsyncComponent(() => import('../../panel/tools-bar'))
-const LeftSideBar = defineAsyncComponent(() => import('../../panel/left-side-bar'))
+
 const RightSideBar = defineAsyncComponent(() => import('../../panel/right-side-bar'))
 const BottomTip = defineAsyncComponent(() => import('./bottom-tip.vue'))
 

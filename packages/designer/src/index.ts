@@ -5,7 +5,7 @@ import DemoDataPlugin from './data/demo-data'
 import type { StoreComponentData } from './db'
 import Editor from './editor'
 import Shape from './editor/shape'
-import { ComponentGroupList, DataMode, EditMode, GroupType, PixelEnum } from './enum'
+import { DataMode, EditMode, PixelEnum } from './enum'
 import useComponentPlugin from './load-plugin'
 import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/canvas.vue'
@@ -52,7 +52,6 @@ export {
   Canvas,
   clearCanvas,
   CodeEditor,
-  ComponentGroupList,
   Container,
   copy,
   createAttrComponent,
@@ -72,7 +71,6 @@ export {
   getComponentStyle,
   getInnerComponentShapeStyle,
   Group,
-  GroupType,
   handleLogger,
   HOOKS,
   iconMap,
@@ -112,7 +110,6 @@ export type {
 export default {
   Canvas,
   CodeEditor,
-  ComponentGroupList,
   Container,
   createComponent,
   DataMode,
@@ -124,7 +121,6 @@ export default {
   Editor,
   exportCanvas,
   Group,
-  GroupType,
   handleLogger,
   importCanvas,
   PixelEnum,

@@ -22,7 +22,7 @@ import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, h, ref, watch } from 'vue'
 
-import { ComponentGroupList } from '../enum'
+import { CategoryList } from '../enum'
 import LayerItem from './layer-item.vue'
 import SimpleLayerItem from './simple-layer-item.vue'
 
@@ -32,7 +32,7 @@ const clipBoardState = useClipBoardState()
 const LayerEmpty = useEmpty()
 
 const iconMap: Record<string, string> = {}
-ComponentGroupList.map((ele) => {
+CategoryList.map((ele) => {
   iconMap[ele.key] = ele.icon
 })
 withDefaults(

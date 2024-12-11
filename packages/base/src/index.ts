@@ -2,7 +2,7 @@ import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './
 import { CustomComponent } from './component'
 import { RenderSlot } from './components'
 import directive, { ClickOutsideDirective, ResizeDomDirective } from './directive'
-import { ComponentGroup, ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
+import { ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
 import type { Hooks } from './hooks'
 import { useData, useProp } from './hooks'
 import type {

@@ -1,4 +1,4 @@
-export enum ComponentGroup {
+export enum CategoryEnum {
   // 基础组件
   BASIC = 'BASIC',
   // 边框
@@ -32,7 +32,7 @@ export enum ComponentGroup {
   CONTAINER = 'CONTAINER'
 }
 
-export class GroupType {
+export class Category {
   public name: string
   public icon: string
   public key: string
@@ -51,21 +51,21 @@ export class GroupType {
   }
 }
 
-export const ComponentGroupList: GroupType[] = [
-  new GroupType('基础', ComponentGroup.BASIC, 'cube'),
-  new GroupType('边框', ComponentGroup.BORDER, 'border'),
-  new GroupType('装饰', ComponentGroup.DECORATION, 'icon'),
-  new GroupType('线状图', ComponentGroup.LINE, 'chartLine'),
-  new GroupType('柱状图', ComponentGroup.BAR, 'chartHistogram'),
-  new GroupType('饼图', ComponentGroup.PIE, 'chartPie'),
-  new GroupType('地图', ComponentGroup.MAP, 'map'),
-  new GroupType('仪表盘', ComponentGroup.GAUGE, 'dashboard'),
-  new GroupType('按钮', ComponentGroup.BUTTON, 'button'),
-  new GroupType('文本', ComponentGroup.TEXT, 'text'),
-  new GroupType('表格', ComponentGroup.TABLE, 'table'),
-  new GroupType('温度计', ComponentGroup.THERMOMETER, 'thermometer'),
-  new GroupType('导航', ComponentGroup.NAVIFATION, 'navigation'),
-  new GroupType('进度图', ComponentGroup.PROGERSS, 'progress'),
-  new GroupType('容器', ComponentGroup.CONTAINER, 'container'),
-  new GroupType('其他', ComponentGroup.OTHER, 'other')
+export const CategoryList: Category[] = [
+  new Category('基础', CategoryEnum.BASIC, 'cube'),
+  new Category('边框', CategoryEnum.BORDER, 'border'),
+  new Category('装饰', CategoryEnum.DECORATION, 'icon'),
+  new Category('线状图', CategoryEnum.LINE, 'chartLine'),
+  new Category('柱状图', CategoryEnum.BAR, 'chartHistogram'),
+  new Category('饼图', CategoryEnum.PIE, 'chartPie'),
+  new Category('地图', CategoryEnum.MAP, 'map'),
+  new Category('仪表盘', CategoryEnum.GAUGE, 'dashboard'),
+  new Category('按钮', CategoryEnum.BUTTON, 'button'),
+  new Category('文本', CategoryEnum.TEXT, 'text'),
+  new Category('表格', CategoryEnum.TABLE, 'table'),
+  new Category('温度计', CategoryEnum.THERMOMETER, 'thermometer'),
+  new Category('导航', CategoryEnum.NAVIFATION, 'navigation'),
+  new Category('进度图', CategoryEnum.PROGERSS, 'progress'),
+  new Category('容器', CategoryEnum.CONTAINER, 'container'),
+  new Category('其他', CategoryEnum.OTHER, 'other')
 ]
