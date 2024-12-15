@@ -1,12 +1,11 @@
 <template>
-  <Designer ref="designer">
+  <Designer ref="designer" :components="components">
     <template #top>
       <ToolBar :bars="toolBars" class="w-full h-14 align-middle">
         <div class="tool-bar-title">{{ canvasState.name }}</div>
       </ToolBar>
     </template>
-    <!-- <template #left><ResourcePanel :components="CategoryList" /></template> -->
-    <template #left><LeftSideBar :components="components" /></template>
+    <template #left><ResourcePanel :components="components" /></template>
   </Designer>
 </template>
 
@@ -16,7 +15,6 @@ import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import {
   Designer,
-  LeftSideBar,
   ToolBar,
   useCanvasState,
   useDataState,

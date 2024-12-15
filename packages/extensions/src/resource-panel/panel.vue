@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <div v-show="display" class="mx-1 h-full border border-slate-300" style="width: 300px">
+    <div v-show="display" class="mx-1 h-full border dark:border-slate-300" style="width: 300px">
       <div class="flex justify-between">
         <span class="text-xl font-bold">组件</span>
         <span class="text-xl font-bold" @click="display = false">
@@ -20,20 +20,16 @@
         </span>
       </div>
       <div class="px-4">
-        <OSelect option="[{}]" />
+        <OSelect :options="[]" />
       </div>
       <o-tabs>
         <o-tab-pane label="基础组件">
-          <div class="flex flex-wrap">
-            <div v-for="(item, index) in props.components" :key="index" class="m-2 text-center">
-              <component :is="item.component" class="hover:scale-110" />
-            </div>
-          </div>
+          <ComponentList :components="props.components" />
         </o-tab-pane>
         <o-tab-pane label="低码组件">
           <div class="flex flex-wrap">
             <div v-for="(item, index) in props.components" :key="index" class="m-2 text-center">
-              <component :is="item.component" class="hover:scale-110" />
+              {{ item.name }}
             </div>
           </div>
         </o-tab-pane>
@@ -46,6 +42,8 @@
 import { OCard, OSelect, OTabPane, OTabs } from '@open-data-v/ui'
 import { getCurrentInstance, h, ref } from 'vue'
 
+import ComponentList from './component-list.vue'
+
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 const display = ref(false)
@@ -54,8 +52,7 @@ const props = defineProps<{
   components: Array<any>
 }>()
 
-const allComponents = ref([])
-
+console.log(props.components)
 const menuOptions = [
   {
     icon: () =>

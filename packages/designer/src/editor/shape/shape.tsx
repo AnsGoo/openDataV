@@ -29,19 +29,19 @@ export default defineComponent({
     const actionState = useActionState()
 
     const deleteComponent = () => {
-      canvasState.removeComponent(props.index!, props.info!.parent)
+      canvasState.removeComponent(props.info!)
     }
 
     const upComponent = () => {
-      canvasState.upComponent(props.index!, props.info!.parent)
+      canvasState.upComponent(props.info!, props.index)
     }
 
     const downComponent = () => {
-      canvasState.downComponent(props.index!, props.info!.parent)
+      canvasState.downComponent(props.info!, props.index!)
     }
 
     const topComponent = () => {
-      canvasState.topComponent(props.index!, props.info!.parent)
+      canvasState.topComponent(props.info!)
     }
 
     /**
@@ -53,7 +53,7 @@ export default defineComponent({
     }
 
     const bottomComponent = () => {
-      canvasState.bottomComponent(props.index!, props.info!.parent)
+      canvasState.bottomComponent(props.info!)
     }
 
     const contextmenus = (_: HTMLDivElement, event: MouseEvent): Optional<ContextmenuItem[]> => {
