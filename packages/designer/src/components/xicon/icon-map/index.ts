@@ -12,6 +12,7 @@ import chartPie from './chartPie'
 import check from './check'
 import clear from './clear'
 import close from './close'
+import closeOne from './close-one'
 import code from './code'
 import components from './components'
 import container from './container'
@@ -142,5 +143,6 @@ export default {
   textStyle,
   thermometer,
   upload,
-  user
+  user,
+  closeOne
 }

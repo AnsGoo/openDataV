@@ -8,55 +8,55 @@
 </template>
 
 <script setup lang="ts">
-import { DrapComponent } from '@open-data-v/designer'
 import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
-import { getCurrentInstance, h, onMounted, ref } from 'vue'
+import { computed, getCurrentInstance, h } from 'vue'
 
-import type { Category } from '../enum'
-import { CategoryList } from '../enum'
+import DrapComponent from '../../components/drap-component.vue'
+import type { IComponentItem } from '../type'
 
-withDefaults(
+const props = withDefaults(
   defineProps<{
     iscollapsed?: boolean
+    components: Array<IComponentItem>
   }>(),
   {
-    iscollapsed: true
+    iscollapsed: true,
+    components: () => [] as Array<IComponentItem>
   }
 )
-
-const menuOptions = ref<Array<MenuOption>>([])
 
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']
 
-const loadMenuOption = () => {
-  CategoryList.forEach((item: Category) => {
-    menuOptions.value.push({
+const menuOptions = computed<MenuOption>(() => {
+  const menuOptions: Array<MenuOption> = []
+  props.components.forEach((item: IComponentItem) => {
+    menuOptions.push({
       label: () => item.name,
       key: item.key,
       icon: () =>
         h(XIcon, {
           name: `${item.icon}`
         }),
-      children: item.components.map((el) => {
+      children: (item.children || []).map((el) => {
         return {
           label: () =>
             h(
               DrapComponent,
               {
-                component: el.component
+                component: el.key
               },
-              () => h('div', { class: 'select-none' }, el.title)
+              () => h('div', { class: 'select-none' }, el.name)
             ),
-          key: el.component
+          key: el.key
         }
       })
     })
   })
-}
-
-onMounted(() => {
-  loadMenuOption()
+  return menuOptions
 })
 </script>
+<style lang="less" scoped>
+@import '../../../css/index.less';
+</style>

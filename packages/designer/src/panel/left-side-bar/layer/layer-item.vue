@@ -23,9 +23,9 @@
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
 import { eventBus, StaticKey } from '@open-data-v/base'
-import type { ContextmenuItem } from '@open-data-v/designer'
-import { useCanvasState } from '@open-data-v/designer'
 
+import useCanvasState from '../../../state/canvas'
+import type { ContextmenuItem } from '../../../type'
 import { diffIndex } from '../utils'
 
 const props = withDefaults(

@@ -5,7 +5,8 @@
         <div class="tool-bar-title">{{ canvasState.name }}</div>
       </ToolBar>
     </template>
-    <template #left><LeftSideBar /></template>
+    <!-- <template #left><ResourcePanel :components="CategoryList" /></template> -->
+    <template #left><LeftSideBar :components="components" /></template>
   </Designer>
 </template>
 
@@ -15,12 +16,13 @@ import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import {
   Designer,
+  LeftSideBar,
   ToolBar,
   useCanvasState,
   useDataState,
   useScriptState
 } from '@open-data-v/designer'
-// import { ResourcePanel } from '@open-data-v/extensions'
+import { ResourcePanel } from '@open-data-v/extensions'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -32,7 +34,8 @@ import useToolBars from '@/pages/DesignerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
 
-import LeftSideBar from './left-side-bar'
+import type { Category } from './enum'
+import { CategoryList } from './enum'
 
 const scriptState = useScriptState()
 scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])
@@ -96,4 +99,24 @@ watch(
     canvasState.darkTheme = settingStore.darkTheme
   }
 )
+
+const components = ref<Array<any>>([])
+
+const loadMenuOption = () => {
+  CategoryList.forEach((item: Category) => {
+    components.value.push({
+      name: item.name,
+      key: item.key,
+      icon: item.icon,
+      children: item.components.map((el) => {
+        return {
+          name: el.title,
+          key: el.component
+        }
+      })
+    })
+  })
+}
+
+loadMenuOption()
 </script>

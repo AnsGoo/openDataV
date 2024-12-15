@@ -15,14 +15,14 @@
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
 import { uuid } from '@open-data-v/base'
-import type { ContextmenuItem } from '@open-data-v/designer'
-import { useCanvasState, useClipBoardState, useEmpty } from '@open-data-v/designer'
 import type { MenuOption } from '@open-data-v/ui'
 import { OMenu } from '@open-data-v/ui'
 import { cloneDeep } from 'lodash-es'
 import { computed, h, ref, watch } from 'vue'
 
-import { CategoryList } from '../enum'
+import { useEmpty } from '../../../modules'
+import { useCanvasState, useClipBoardState } from '../../../state'
+import type { ContextmenuItem } from '../../../type'
 import LayerItem from './layer-item.vue'
 import SimpleLayerItem from './simple-layer-item.vue'
 
@@ -30,11 +30,6 @@ const canvasState = useCanvasState()
 const clipBoardState = useClipBoardState()
 
 const LayerEmpty = useEmpty()
-
-const iconMap: Record<string, string> = {}
-CategoryList.map((ele) => {
-  iconMap[ele.key] = ele.icon
-})
 withDefaults(
   defineProps<{
     iscollapsed?: boolean
@@ -48,7 +43,7 @@ const componentData = computed(() => canvasState.componentData)
 
 const handleSelect = (key: string) => {
   const indexes: number[] = key.split('-').map((i) => Number(i))
-  const activedComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  const activedComponent: CustomComponent | undefined = canvasState.getComponentByIndex(indexes)
   if (activedComponent) {
     canvasState.activateComponent(activedComponent, key)
   }
@@ -77,7 +72,7 @@ const getMenuOptions = (
         key: currentIndex,
         icon: () =>
           h(SimpleLayerItem, {
-            name: 'container',
+            icon: 'container',
             component: item,
             index: currentIndex,
             contextmenus: () => contextmenus(currentIndex),
@@ -96,7 +91,7 @@ const getMenuOptions = (
         key: currentIndex,
         icon: () =>
           h(SimpleLayerItem, {
-            name: `${iconMap[item.icon!]}`,
+            icon: item.icon,
             component: item,
             index: currentIndex,
             contextmenus: () => contextmenus(currentIndex),
@@ -117,7 +112,7 @@ const calcIndex = (index: number, fatherIndex: string) => {
 
 const copy = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const component: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  const component: CustomComponent | undefined = canvasState.getComponentByIndex(indexes)
   if (component) {
     clipBoardState.copy(component.toJson(false))
   }
@@ -177,11 +172,11 @@ const display = (index: string) => {
 }
 const cut = (index: string) => {
   const indexes: number[] = index.split('-').map((i) => Number(i))
-  const curComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  const curComponent: CustomComponent | undefined = canvasState.getComponentByIndex(indexes)
   if (!curComponent) {
     return
   }
-  const component: Optional<CustomComponent> = canvasState.removeComponent(
+  const component: CustomComponent | undefined = canvasState.removeComponent(
     curComponent as CustomComponent
   )
   if (component) {
@@ -223,7 +218,7 @@ const contextmenus = (index: string): ContextmenuItem[] => {
       disable:
         canvasState.getComponentByIndex(index.split('-').map((i) => Number(i)))?.component !==
         'Group',
-      handler: decompose
+      handler: () => canvasState.decompose()
     },
     {
       text: '删除',
@@ -277,3 +272,6 @@ watch(
   }
 )
 </script>
+<style lang="less" scoped>
+@import '../../../css/index.less';
+</style>

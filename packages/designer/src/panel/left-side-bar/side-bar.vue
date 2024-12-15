@@ -23,7 +23,7 @@
             <span class="inline-block">组件</span>
           </div>
         </template>
-        <ComponentList class="components" />
+        <ComponentList class="components" :components="components" />
       </o-tab-pane>
       <o-tab-pane name="layer" display-directive="show:lazy">
         <template #label>
@@ -40,7 +40,11 @@
         <template #label>
           <x-icon name="components" @click="switchTab('layer')" />
         </template>
-        <ComponentList :iscollapsed="collapsedLeft" class="h-full components" />
+        <ComponentList
+          :iscollapsed="collapsedLeft"
+          :components="components"
+          class="h-full components"
+        />
       </o-tab-pane>
       <o-tab-pane v-else-if="activeKey === 'layer'" name="layer">
         <template #label>
@@ -53,12 +57,17 @@
 </template>
 
 <script lang="ts" setup>
-import { Toggle } from '@open-data-v/designer'
 import { OTabPane, OTabs } from '@open-data-v/ui'
 import { computed, ref } from 'vue'
 
+import Toggle from '../../components/toggle.vue'
 import ComponentList from './component-list/components.vue'
 import Layer from './layer/layer.vue'
+import type { IComponentItem } from './type'
+
+defineProps<{
+  components: Array<IComponentItem>
+}>()
 
 const activeKey = ref<string>('components')
 const emits = defineEmits<{
@@ -77,6 +86,7 @@ const leftWidth = computed<string>(() => (collapsedLeft.value ? '18rem' : '4rem'
 const leftDreiction = computed<'left' | 'right'>(() => (collapsedLeft.value ? 'left' : 'right'))
 </script>
 <style lang="less" scoped>
+@import '../../css/index.less';
 .components {
   height: calc(90vh - 28px);
 }

@@ -3,7 +3,7 @@
     v-contextmenu="contextmenus"
     draggable="true"
     :size="18"
-    :name="name"
+    :name="icon"
     @dragstart="handleDragStart($event, index)"
     @drop="handleDrop($event, index)"
     @dragover="handleDragOver($event, index, true)"
@@ -13,8 +13,9 @@
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
 import { eventBus, StaticKey } from '@open-data-v/base'
-import type { ContextmenuItem } from '@open-data-v/designer'
-import { useCanvasState } from '@open-data-v/designer'
+
+import { useCanvasState } from '../../../state'
+import type { ContextmenuItem } from '../../../type'
 
 const props = withDefaults(
   defineProps<{
@@ -22,7 +23,7 @@ const props = withDefaults(
     index: string
     activeKey?: string
     mode?: string
-    name: string
+    icon?: string
     contextmenus: () => ContextmenuItem[]
   }>(),
   {
@@ -53,11 +54,11 @@ const handleDrop = (event: DragEvent, index: string) => {
   const componentIndex: string = event.dataTransfer?.getData('componentIndex') as string
   const toIndex: string = calcDragIndex(componentIndex, index)
   const indexes: number[] = componentIndex.split('-').map((i) => Number(i))
-  const curComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
+  const curComponent: CustomComponent | undefined = canvasState.getComponentByIndex(indexes)
   if (!curComponent) {
     return
   }
-  const component: Optional<CustomComponent> = canvasState.removeComponent(
+  const component: CustomComponent | undefined = canvasState.removeComponent(
     curComponent as CustomComponent
   )
   if (component && toIndex) {

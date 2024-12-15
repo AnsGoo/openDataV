@@ -13,6 +13,7 @@ import Designer from './pages/designer/designer.vue'
 import Previewer from './pages/perviewer/viewer.vue'
 import DrapComponent from './panel/components/drap-component.vue'
 import createAttrComponent from './panel/factory.tsx'
+import LeftSideBar from './panel/left-side-bar'
 import RightSideBar from './panel/right-side-bar'
 import ToolsBar from './panel/tools-bar'
 import Directive from './plugins/directive'
@@ -75,6 +76,7 @@ export {
   HOOKS,
   iconMap,
   importCanvas,
+  LeftSideBar,
   paste,
   PixelEnum,
   Previewer,
