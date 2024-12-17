@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  performance: true,
+  // performance: true,
   darkMode: 'class',
   mode: 'jit',
   content: [

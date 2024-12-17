@@ -1,6 +1,6 @@
 import { cloneDeep, set } from 'lodash-es'
 
-import { ContainerType, DataMode } from './enums'
+import { DataMode } from './enums'
 import type {
   BaseScript,
   DataInstance,
@@ -21,7 +21,6 @@ export class CustomComponent {
   id: string
   component: string
   name: string
-  icon?: string
   locked = false
   selected = false
   display = true
@@ -29,15 +28,11 @@ export class CustomComponent {
   active = false
   dataMode: DataMode = DataMode.SELF
   isContainer = false
-  /**
-   * @deprecated dataIntegrationMode 即将弃用，建议使用 dataMode
-   */
-  dataIntegrationMode: DataMode = DataMode.SELF
+  private extendedMetaData: Record<string, any> = {}
+
   callbackProp?: (propKeys: Array<string>, value: any, modelValue: any) => void
   callbackData?: (result: any, type?: string) => void
   protected dataCallback?: (result: any, type?: string) => void
-
-  defaultViewType: ContainerType = ContainerType.CARD
 
   // form表单中使用
   relativePosition?: RelativePosition
@@ -50,12 +45,21 @@ export class CustomComponent {
   dataConfig?: DataConfig
   scriptConfig?: BaseScript
 
-  constructor(metaData: IComponentInfo) {
-    const { id, component, name, propValue, position, isContainer, dataMode, icon } = metaData
+  constructor(data: IComponentInfo) {
+    const {
+      id,
+      component,
+      name,
+      propValue,
+      position,
+      isContainer,
+      dataMode,
+      extendedMetaData = {}
+    } = data
     this.id = id || uuid()
     this.component = component
     this.name = name
-    this.icon = icon
+    this.extendedMetaData = extendedMetaData
 
     this.isContainer = isContainer || false
     this.subComponents = isContainer ? [] : undefined
@@ -68,10 +72,6 @@ export class CustomComponent {
     return this._propValue
   }
 
-  setViewType(viewType: ContainerType) {
-    this.defaultViewType = viewType
-  }
-
   get exampleData(): any {
     return undefined
   }
@@ -79,6 +79,10 @@ export class CustomComponent {
 
   public setExampleData(loader: () => any) {
     this.loadExampleData = loader
+  }
+
+  public getExtendedMetaData() {
+    return this.extendedMetaData
   }
 
   public getExampleData() {
@@ -251,4 +255,6 @@ export class CustomComponent {
   }
 }
 
-export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }
+export type BaseComponent = {
+  new (id?: string, name?: string, extendedMetaData?: Record<string, any>): CustomComponent
+}

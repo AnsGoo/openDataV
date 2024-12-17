@@ -5,5 +5,8 @@
   "size": {
     "width": 150,
     "height": 20
+  },
+  "extendedMetaData": {
+    "icon": "text"
   }
 }

@@ -20,7 +20,6 @@ import {
   useDataState,
   useScriptState
 } from '@open-data-v/designer'
-import { ResourcePanel } from '@open-data-v/extensions'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
 import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -34,6 +33,7 @@ import { message } from '@/utils/message'
 
 import type { Category } from './enum'
 import { CategoryList } from './enum'
+import ResourcePanel from './resource-panel/panel.vue'
 
 const scriptState = useScriptState()
 scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])

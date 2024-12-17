@@ -89,14 +89,16 @@ const getMenuOptions = (
             contextmenus: () => contextmenus(currentIndex)
           }),
         key: currentIndex,
-        icon: () =>
-          h(SimpleLayerItem, {
-            icon: item.icon,
+        icon: () => {
+          const { icon } = item.getExtendedMetaData() || {}
+          return h(SimpleLayerItem, {
+            icon: icon,
             component: item,
             index: currentIndex,
             contextmenus: () => contextmenus(currentIndex),
             onclick: () => handleSelect(currentIndex)
           })
+        }
       })
     }
   }

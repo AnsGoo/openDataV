@@ -118,10 +118,10 @@ export interface IComponentMetaData {
   position: DOMRectStyle
   dataMode: DataMode
   isContainer: boolean
+  extendedMetaData?: Record<string, any>
 }
 
-export interface IComponentData
-  extends Omit<IComponentMetaData, 'icon' | 'dataMode' | 'isContainer'> {
+export interface IComponentData extends Omit<IComponentMetaData, 'dataMode' | 'isContainer'> {
   id?: string
   position: DOMRectStyle
   propValue?: Record<string, any>
@@ -133,7 +133,6 @@ export interface IComponentData
 export interface IComponentInfo extends IComponentData {
   dataMode: DataMode
   isContainer: boolean
-  icon?: string
 }
 interface CustomContainerProps {
   componentType: string | ConcreteComponent

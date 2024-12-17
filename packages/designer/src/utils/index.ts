@@ -5,7 +5,7 @@ import type {
   ScriptOption,
   Vector
 } from '@open-data-v/base'
-import { ContainerType, CustomComponent, DataMode, Logger } from '@open-data-v/base'
+import { CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
 import type { Location } from 'type'
 
@@ -59,13 +59,14 @@ export function createComponent(component: IComponentData): any {
     return
   }
 
-  const { isContainer, icon, dataMode = DataMode.SELF } = componentInfo
+  const { isContainer, icon, dataMode = DataMode.SELF, extendedMetaData } = componentInfo
 
   const obj = new CustomComponent({
     ...component,
     isContainer,
     icon,
-    dataMode
+    dataMode,
+    extendedMetaData
   })
   if (!obj) {
     return
@@ -84,9 +85,6 @@ export function createComponent(component: IComponentData): any {
     })
     createRelativePosition(obj)
   }
-
-  const viewType = canvasState.canvasStyleConfig.mode || ContainerType.CARD
-  obj.setViewType(viewType)
   return obj
 }
 
@@ -108,7 +106,8 @@ export function getComponentInstance({ component }: { component: string }) {
     dataMode: componentInfo.dataMode || DataMode.SELF,
     name: componentInfo.title,
     component: componentInfo.name,
-    isContainer: !!componentInfo.isContainer
+    isContainer: !!componentInfo.isContainer,
+    extendedMetaData: componentInfo.extendedMetaData
   })
   // obj.setExampleData(componentInfo.demoLoader)
   return obj

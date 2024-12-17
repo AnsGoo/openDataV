@@ -3,9 +3,11 @@
 </template>
 
 <script setup lang="ts">
-import type { ContainerType, CustomComponent } from '@open-data-v/base'
-import { computed } from 'vue'
+import type { CustomComponent } from '@open-data-v/base'
+import { ContainerType } from '@open-data-v/base'
+import { computed, inject } from 'vue'
 
+import { PANEL_MODEL } from '../../../const'
 import { useEmpty } from '../../../modules'
 import { useCanvasState } from '../../../state'
 
@@ -14,7 +16,7 @@ const props = defineProps<{
 }>()
 const canvasState = useCanvasState()
 
-const mode = computed<ContainerType>(() => props.curComponent.defaultViewType)
+const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
 const AttrComponent = computed(() => {
   const panel = canvasState.getComponentPanel(props.curComponent.component)
   if (panel) {

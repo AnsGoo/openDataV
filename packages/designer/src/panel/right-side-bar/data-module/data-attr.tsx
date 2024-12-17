@@ -10,8 +10,9 @@ import {
   OSelect
 } from '@open-data-v/ui'
 import type { PropType } from 'vue'
-import { defineComponent, onMounted, ref, watch } from 'vue'
+import { defineComponent, inject, onMounted, ref, watch } from 'vue'
 
+import { PANEL_MODEL } from '../../../const'
 import { DataMode } from '../../../enum'
 import { useEmpty } from '../../../modules'
 import { useDataState, useScriptState } from '../../../state'
@@ -29,6 +30,7 @@ export default defineComponent({
     const scriptState = useScriptState()
     const dataType = ref<string>('DEMO')
     const scriptType = ref<string | null>(null)
+    const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
     watch(
       () => props.curComponent,
       async (value: CustomComponent) => {
@@ -120,7 +122,6 @@ export default defineComponent({
       )
     }
     const renderContainer = () => {
-      const mode = props.curComponent.defaultViewType as ContainerType
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (

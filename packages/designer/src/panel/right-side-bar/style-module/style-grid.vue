@@ -3,16 +3,18 @@
 </template>
 
 <script setup lang="ts">
-import type { ContainerType, CustomComponent } from '@open-data-v/base'
-import { computed } from 'vue'
+import type { CustomComponent } from '@open-data-v/base'
+import { ContainerType } from '@open-data-v/base'
+import { inject } from 'vue'
 
+import { PANEL_MODEL } from '../../../const'
 import createStyleComponent from './style'
 
-const props = defineProps<{
+defineProps<{
   curComponent: CustomComponent
 }>()
 
-const mode = computed<ContainerType>(() => props.curComponent.defaultViewType)
+const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
 
 const StylePanel = createStyleComponent([])
 </script>

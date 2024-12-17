@@ -1,5 +1,6 @@
 import type { ToolBarItemType } from './components'
 import { CodeEditor, Group, iconMap, Toggle, ToolBar, ToolBarItem, XIcon } from './components'
+import { useIcon } from './components/xicon'
 import { HOOKS } from './const'
 import DemoDataPlugin from './data/demo-data'
 import type { StoreComponentData } from './db'
@@ -96,6 +97,7 @@ export {
   useComponentPlugin,
   useDataState,
   useEmpty,
+  useIcon,
   useScriptState,
   useSnapshotState,
   XIcon
