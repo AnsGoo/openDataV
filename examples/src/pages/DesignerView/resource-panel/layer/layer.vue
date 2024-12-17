@@ -1,12 +1,13 @@
 <template>
-  <ul>
+  <div class="tree">
     <LayerItem
       v-for="component in componentData"
       :key="component.id"
       class="item"
       :model="component"
+      :level="0"
     />
-  </ul>
+  </div>
 </template>
 <script setup>
 import { useCanvasState } from '@open-data-v/designer'
@@ -25,7 +26,7 @@ function getLayer(data, layers = []) {
       id: el.id,
       name: el.name,
       children: el.subComponents,
-      component: el.component,
+      component: el,
       ...el.getExtendedMetaData()
     }
     layers.push(item)
@@ -41,11 +42,10 @@ function getLayer(data, layers = []) {
 </script>
 
 <style scoped>
-.item {
-  cursor: pointer;
-  line-height: 1.5;
-}
-.bold {
-  font-weight: bold;
+.tree {
+  flex: 1;
+  overflow: auto;
+  padding: 4px 0;
+  position: relative;
 }
 </style>
