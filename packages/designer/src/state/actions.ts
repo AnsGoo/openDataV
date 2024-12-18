@@ -154,7 +154,7 @@ class ActionState {
     canvasState.appendComponent(groupComponent)
 
     const index = canvasState.componentData.length - 1
-    canvasState.activateComponent(canvasState.componentData[index], index.toString())
+    canvasState.activateComponent(canvasState.componentData[index])
     this.components = []
   }
   /**

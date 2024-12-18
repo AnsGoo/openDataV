@@ -1,11 +1,11 @@
 <template>
   <div class="tree">
     <LayerItem
-      v-for="component in componentData"
+      v-for="(component, index) in componentData"
       :key="component.id"
       class="item"
       :model="component"
-      :level="0"
+      :level="index.toString()"
     />
   </div>
 </template>
@@ -36,7 +36,6 @@ function getLayer(data, layers = []) {
       return getLayer(el.subComponents, item.children)
     }
   })
-  console.log(layers)
   return layers
 }
 </script>

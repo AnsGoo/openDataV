@@ -114,7 +114,6 @@ class CanvasState {
     editMode: EditMode.PREVIEW,
     canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
     componentData: [],
-    activeIndex: undefined,
     activeComponent: undefined,
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
@@ -252,14 +251,6 @@ class CanvasState {
   set componentData(components: CustomComponent[]) {
     this.state.componentData = components
   }
-
-  get activeIndex(): string | undefined {
-    return this.state.activeIndex
-  }
-  set activeIndex(activeIndex: string | undefined) {
-    this.state.activeIndex = activeIndex
-  }
-
   get canvasStyleData(): CanvasStyleData {
     return this.state.canvasStyleData
   }
@@ -380,27 +371,15 @@ class CanvasState {
   }
 
   /**
-   * @deprecated 请使用 activateComponent方法
-   * 设置当前组件
-   * @param component 当前组件
-   * @param index
-   */
-  setCurComponent(component: Optional<CustomComponent>, index?: string): void {
-    this.activateComponent(component, index)
-  }
-
-  /**
    * 激活当前组件
    * @param component 当前组件
-   * @param index
    */
-  activateComponent(component: Optional<CustomComponent>, index?: string): void {
+  activateComponent(component: Optional<CustomComponent>): void {
     // 设置前清理当前
     if (this.activeComponent) {
       this.activeComponent.active = false
     }
     this.activeComponent = component
-    this.activeIndex = index
     if (this.activeComponent) {
       this.activeComponent.active = true
       this.benchmarkComponent = this.activeComponent.parent
@@ -409,8 +388,6 @@ class CanvasState {
 
   /**
    * 取消组件的激活状态
-   * @param component 当前组件
-   * @param index
    */
   deactivateComponent(): void {
     // 设置前清理当前
@@ -418,7 +395,6 @@ class CanvasState {
       this.activeComponent.active = false
     }
     this.activeComponent = undefined
-    this.activeIndex = undefined
   }
 
   /**

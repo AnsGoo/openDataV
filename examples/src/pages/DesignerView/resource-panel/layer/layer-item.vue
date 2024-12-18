@@ -1,6 +1,6 @@
 <template>
   <details>
-    <summary :class="{ bold: isFolder }" @click="toggle" @dblclick="changeType">
+    <summary @click="toggle" @dblclick="changeType">
       <div class="flex justify-between w-full">
         <div class="flex items-center flex-1">
           <x-icon :name="model.icon" />
@@ -12,18 +12,20 @@
       </div>
     </summary>
     <LayerItem
-      v-for="item in model.children"
+      v-for="(item, index) in model.children"
       v-show="isOpen"
       :key="item.id"
       :model="item"
-      :level="level + 1"
+      :level="`${level}-${index}`"
     />
   </details>
 </template>
 
 <script setup lang="ts">
+import { useCanvasState } from '@open-data-v/designer'
 import { computed, ref } from 'vue'
 
+const canvasState = useCanvasState()
 const props = defineProps<{
   model: {
     children?: any[]
@@ -32,7 +34,7 @@ const props = defineProps<{
     component: any
     icon: string
   }
-  level: number
+  level: string
 }>()
 
 const isOpen = ref(false)
@@ -40,12 +42,9 @@ const isFolder = computed(() => {
   return props.model.children && props.model.children.length > 0
 })
 
-const splitSpace = computed<Array<number>>(() => {
-  return Array.from({ length: props.level }, (_value, index) => index)
-})
-
 function toggle() {
   isOpen.value = !isOpen.value
+  canvasState.activateComponent(props.model.component)
 }
 const toggleIcon = (isDisplay: boolean) => (isDisplay ? 'previewOpen' : 'previewClose')
 

@@ -45,7 +45,7 @@ const handleSelect = (key: string) => {
   const indexes: number[] = key.split('-').map((i) => Number(i))
   const activedComponent: CustomComponent | undefined = canvasState.getComponentByIndex(indexes)
   if (activedComponent) {
-    canvasState.activateComponent(activedComponent, key)
+    canvasState.activateComponent(activedComponent)
   }
 }
 
@@ -127,7 +127,7 @@ const remove = async (index: string) => {
 
 const up = async (index: string) => {
   handleSelect(index)
-  if (!canvasState.activateComponent) {
+  if (!canvasState.activeComponent) {
     return
   }
   const indexes: number[] = index.split('-').map((i) => Number(i))
@@ -139,7 +139,7 @@ const up = async (index: string) => {
 
 const down = async (index: string) => {
   handleSelect(index)
-  if (!canvasState.activateComponent) {
+  if (!canvasState.activeComponent) {
     return
   }
   const indexes: number[] = index.split('-').map((i) => Number(i))

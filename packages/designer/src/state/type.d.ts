@@ -33,7 +33,6 @@ export interface CanvasData {
   editMode: EditMode
   canvasStyleData: CanvasStyleData
   componentData: []
-  activeIndex?: string
   activeComponent: Optional<CustomComponent>
   isShowEm: boolean
   ids: Set<string>
