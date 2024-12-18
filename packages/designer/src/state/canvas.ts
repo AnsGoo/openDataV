@@ -245,7 +245,6 @@ class CanvasState {
   }
 
   get componentData(): CustomComponent[] {
-    window['compoentData'] = this.state.componentData
     return this.state.componentData
   }
   set componentData(components: CustomComponent[]) {
@@ -713,6 +712,9 @@ class CanvasState {
    * @returns 移除结果
    */
   removeComponent(component: CustomComponent) {
+    if (this.activeComponent && this.activeComponent.id === component.id) {
+      this.deactivateComponent()
+    }
     const removedComponent = this._removeComponent(component.id)
     if (removedComponent) {
       this.saveComponentData()

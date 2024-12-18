@@ -1,10 +1,9 @@
 <template>
   <div
-    v-contextmenu="contextmenus"
     draggable="true"
-    @dragstart="handleDragStart($event, index)"
-    @drop="handleDrop($event, index)"
-    @dragover="handleDragOver($event, index, true)"
+    @dragstart="handleDragStart($event, level)"
+    @drop="handleDrop($event, level)"
+    @dragover="handleDragOver($event, level, true)"
   >
     <div
       v-if="component.component === 'Group'"
@@ -25,16 +24,14 @@ import type { CustomComponent } from '@open-data-v/base'
 import { eventBus, StaticKey } from '@open-data-v/base'
 
 import useCanvasState from '../../../state/canvas'
-import type { ContextmenuItem } from '../../../type'
 import { diffIndex } from '../utils'
 
 const props = withDefaults(
   defineProps<{
     component: CustomComponent
-    index: string
+    level: string
     activeKey?: string
     mode?: string
-    contextmenus: () => ContextmenuItem[]
   }>(),
   {
     mode: 'expand'

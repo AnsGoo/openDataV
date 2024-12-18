@@ -33,7 +33,7 @@ const menuOptions = computed<MenuOption>(() => {
   const menuOptions: Array<MenuOption> = []
   props.components.forEach((item: IComponentItem) => {
     menuOptions.push({
-      label: () => item.name,
+      label: () => item.name as unknown as string,
       key: item.key,
       icon: () =>
         h(XIcon, {

@@ -5,7 +5,7 @@
         <div class="tool-bar-title">{{ canvasState.name }}</div>
       </ToolBar>
     </template>
-    <template #left><ResourcePanel :components="components" /></template>
+    <!-- <template #left><ResourcePanel :components="components" /></template> -->
   </Designer>
 </template>
 

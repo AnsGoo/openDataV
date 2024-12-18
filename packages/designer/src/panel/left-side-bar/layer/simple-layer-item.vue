@@ -1,12 +1,11 @@
 <template>
   <x-icon
-    v-contextmenu="contextmenus"
     draggable="true"
     :size="18"
     :name="icon"
-    @dragstart="handleDragStart($event, index)"
-    @drop="handleDrop($event, index)"
-    @dragover="handleDragOver($event, index, true)"
+    @dragstart="handleDragStart($event, level)"
+    @drop="handleDrop($event, level)"
+    @dragover="handleDragOver($event, level, true)"
   />
 </template>
 
@@ -15,16 +14,14 @@ import type { CustomComponent } from '@open-data-v/base'
 import { eventBus, StaticKey } from '@open-data-v/base'
 
 import { useCanvasState } from '../../../state'
-import type { ContextmenuItem } from '../../../type'
 
 const props = withDefaults(
   defineProps<{
     component: CustomComponent
-    index: string
+    level: string
     activeKey?: string
     mode?: string
     icon?: string
-    contextmenus: () => ContextmenuItem[]
   }>(),
   {
     mode: 'expand'
