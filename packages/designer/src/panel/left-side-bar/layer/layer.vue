@@ -38,13 +38,13 @@ const componentData = computed(() => canvasState.componentData)
 const menuOptions = ref<MenuOption[]>([])
 
 const getMenuOptions = (
-  fatherIndex: string,
+  fatherLevel: string,
   components: CustomComponent[],
   options: MenuOption[]
 ): MenuOption[] => {
   for (let i = 0; i < components.length; i++) {
     const item = components[i]
-    const currentIndex = calcIndex(i, fatherIndex)
+    const currentLevel = calcLevel(i, fatherLevel)
     if (item.subComponents) {
       const childrenOptions: MenuOption[] = []
       options.push({
@@ -53,30 +53,30 @@ const getMenuOptions = (
             ComponentLayer,
             {
               component: item,
-              level: currentIndex
+              level: currentLevel
             },
             () =>
               h(LayerItem, {
                 component: item,
-                level: currentIndex
+                level: currentLevel
               })
           ),
-        key: currentIndex,
+        key: currentLevel,
         icon: () =>
           h(
             ComponentLayer,
             {
               component: item,
-              level: currentIndex
+              level: currentLevel
             },
             () =>
               h(SimpleLayerItem, {
                 icon: 'container',
                 component: item,
-                level: currentIndex
+                level: currentLevel
               })
           ),
-        children: getMenuOptions(currentIndex, item.subComponents || [], childrenOptions)
+        children: getMenuOptions(currentLevel, item.subComponents || [], childrenOptions)
       })
     } else {
       options.push({
@@ -85,28 +85,28 @@ const getMenuOptions = (
             ComponentLayer,
             {
               component: item,
-              level: currentIndex
+              level: currentLevel
             },
             () =>
               h(LayerItem, {
                 component: item,
-                level: currentIndex
+                level: currentLevel
               })
           ),
-        key: currentIndex,
+        key: currentLevel,
         icon: () => {
           const { icon } = item.getExtendedMetaData() || {}
           return h(
             ComponentLayer,
             {
               component: item,
-              level: currentIndex
+              level: currentLevel
             },
             () =>
               h(SimpleLayerItem, {
                 icon: icon,
                 component: item,
-                level: currentIndex
+                level: currentLevel
               })
           )
         }
@@ -115,11 +115,11 @@ const getMenuOptions = (
   }
   return options
 }
-const calcIndex = (index: number, fatherIndex: string) => {
-  if (fatherIndex) {
-    return `${fatherIndex}-${index}`
+const calcLevel = (level: number, fatherLevel: string) => {
+  if (fatherLevel) {
+    return `${fatherLevel}-${level}`
   } else {
-    return index.toString()
+    return level.toString()
   }
 }
 

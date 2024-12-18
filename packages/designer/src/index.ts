@@ -12,7 +12,12 @@ import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/canvas.vue'
 import Designer from './pages/designer/designer.vue'
 import Previewer from './pages/perviewer/viewer.vue'
-import DrapComponent from './panel/components/drap-component.vue'
+import {
+  ComponentLayer,
+  DrapComponent,
+  useComponentActions,
+  useComponentContextMenu
+} from './panel/components'
 import createAttrComponent from './panel/factory.tsx'
 import LeftSideBar from './panel/left-side-bar'
 import RightSideBar from './panel/right-side-bar'
@@ -54,6 +59,7 @@ export {
   Canvas,
   clearCanvas,
   CodeEditor,
+  ComponentLayer,
   Container,
   copy,
   createAttrComponent,
@@ -94,6 +100,8 @@ export {
   useActionState,
   useCanvasState,
   useClipBoardState,
+  useComponentActions,
+  useComponentContextMenu,
   useComponentPlugin,
   useDataState,
   useEmpty,

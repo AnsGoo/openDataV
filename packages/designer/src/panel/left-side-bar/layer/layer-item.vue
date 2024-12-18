@@ -21,10 +21,8 @@
 
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
-import { eventBus, StaticKey } from '@open-data-v/base'
 
-import useCanvasState from '../../../state/canvas'
-import { diffIndex } from '../utils'
+import { useLayerDrag } from './use'
 
 const props = withDefaults(
   defineProps<{
@@ -38,37 +36,7 @@ const props = withDefaults(
   }
 )
 
-const emits = defineEmits<{ (e: 'select', index: string): void }>()
-const canvasState = useCanvasState()
-
 const toggleIcon = (isDisplay: boolean) => (isDisplay ? 'previewOpen' : 'previewClose')
 
-const handleDragStart = (event: DragEvent, index: string) => {
-  // event.preventDefault()
-  event.dataTransfer?.setData('componentIndex', index)
-  event.stopPropagation()
-}
-
-const handleDragOver = (event: DragEvent, index: string, isEmit = true) => {
-  event.preventDefault()
-  event.stopPropagation()
-  if (isEmit && index !== props.activeKey) {
-    eventBus.emit(StaticKey.ACTIVE_MENU, index)
-  }
-}
-
-const handleDrop = (event: DragEvent, toIndex: string) => {
-  event.preventDefault()
-  event.stopPropagation()
-  const fromIndex: string = event.dataTransfer?.getData('componentIndex') as string
-  const isDragAble = diffIndex(fromIndex, toIndex)
-  if (!isDragAble) return
-  const indexes: number[] = fromIndex.split('-').map((i) => Number(i))
-  const curComponent: Optional<CustomComponent> = canvasState.getComponentByIndex(indexes)
-  const toIndexes: number[] = toIndex.split('-').map((i) => Number(i))
-  if (curComponent && toIndex) {
-    canvasState.moveComponent(curComponent.id, toIndexes)
-    emits('select', toIndex)
-  }
-}
+const { handleDragStart, handleDragOver, handleDrop } = useLayerDrag(props.activeKey)
 </script>

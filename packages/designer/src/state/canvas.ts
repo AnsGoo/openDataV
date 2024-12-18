@@ -919,8 +919,8 @@ class CanvasState {
     if (!(this.activeComponent && this.activeComponent.component === 'Group')) return
     const components: CustomComponent[] = cloneDeep(this.activeComponent.subComponents)
     if (components.length > 0) {
-      this.removeComponent(this.activeComponent)
       const parentComponent = this.activeComponent.parent
+      this.removeComponent(this.activeComponent)
       if (parentComponent) {
         const parentPosition: DOMRectStyle = parentComponent.position
         components.forEach((item: CustomComponent) => {

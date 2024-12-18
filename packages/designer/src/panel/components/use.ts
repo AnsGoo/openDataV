@@ -101,7 +101,7 @@ const useComponentContextMenu = () => {
       {
         text: '拆分',
         subText: '',
-        disable: component.isContainer,
+        disable: !component.isContainer,
         handler: () => decompose(component, level)
       },
       {

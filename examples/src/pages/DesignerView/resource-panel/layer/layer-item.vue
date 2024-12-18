@@ -2,12 +2,24 @@
   <details>
     <summary @click="toggle" @dblclick="changeType">
       <div class="flex justify-between w-full">
-        <div class="flex items-center flex-1">
+        <ComponentLayer
+          :component="model.component"
+          :level="props.level"
+          class="flex items-center flex-1"
+        >
           <x-icon :name="model.icon" />
           <div class="text-md">{{ model.name }}</div>
-        </div>
+        </ComponentLayer>
         <div class="flex items-center">
-          <x-icon :name="toggleIcon(model.component.display!)" :size="18" />
+          <x-icon
+            :name="toggleIcon(model.component.display!)"
+            :size="18"
+            @click="
+              model.component.display
+                ? hidden(model.component, level)
+                : display(model.component, level)
+            "
+          />
         </div>
       </div>
     </summary>
@@ -22,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { useCanvasState } from '@open-data-v/designer'
+import { ComponentLayer, useCanvasState, useComponentActions } from '@open-data-v/designer'
 import { computed, ref } from 'vue'
 
 const canvasState = useCanvasState()
@@ -53,6 +65,8 @@ function changeType() {
     isOpen.value = true
   }
 }
+
+const { hidden, display } = useComponentActions()
 </script>
 <style scoped>
 .tree summary {

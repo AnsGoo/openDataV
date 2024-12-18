@@ -1,5 +1,9 @@
 <template>
-  <div v-contextmenu="() => contextmenus(props.component, props.level)" @click="handleSelect">
+  <div
+    v-contextmenu="() => contextmenus(props.component, props.level)"
+    class="select-none"
+    @click="handleSelect"
+  >
     <slot></slot>
   </div>
 </template>
