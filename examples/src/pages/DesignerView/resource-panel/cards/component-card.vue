@@ -33,9 +33,9 @@ import { ref } from 'vue'
 
 import Logo from '@/assets/logo.png'
 
-import ExpandLess from './icon/expand-less'
-import ExpandMore from './icon/expand-more'
-import type { IComponentItem } from './type'
+import ExpandLess from '../icon/expand-less'
+import ExpandMore from '../icon/expand-more'
+import type { IComponentItem } from '../type'
 
 const XIcon = useIcon({
   expandLess: ExpandLess,

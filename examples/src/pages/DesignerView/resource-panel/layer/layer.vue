@@ -45,6 +45,7 @@ function getLayer(data, layers = []) {
   flex: 1;
   overflow: auto;
   padding: 4px 0;
+  left: -20px;
   position: relative;
 }
 </style>

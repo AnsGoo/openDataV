@@ -69,7 +69,7 @@ function changeType() {
 const { hidden, display } = useComponentActions()
 </script>
 <style scoped>
-.tree summary {
+summary {
   outline: 0;
   padding-left: 30px;
   display: flex;

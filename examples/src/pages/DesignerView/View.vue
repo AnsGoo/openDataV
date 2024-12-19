@@ -109,7 +109,8 @@ const loadMenuOption = () => {
       children: item.components.map((el) => {
         return {
           name: el.title,
-          key: el.component
+          key: el.component,
+          thumbnail: el.thumbnail
         }
       })
     })

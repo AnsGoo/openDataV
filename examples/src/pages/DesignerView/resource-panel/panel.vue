@@ -23,19 +23,15 @@
           <XIcon name="closeOne" />
         </span>
       </div>
-      <div class="px-4">
-        <OInput />
-      </div>
       <ComponentList v-show="activePanel === 'components'" :components="props.components" />
       <Layer v-show="activePanel === 'layer'" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { OInput } from '@open-data-v/ui'
 import { getCurrentInstance, h, ref } from 'vue'
 
-import ComponentList from './component-list.vue'
+import ComponentList from './cards/component-list.vue'
 import Layer from './layer/layer.vue'
 
 const instance = getCurrentInstance()

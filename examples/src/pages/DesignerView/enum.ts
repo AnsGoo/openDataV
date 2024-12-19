@@ -1,5 +1,7 @@
 import { BorderBox1, StaticText, SubText } from '@resources/components'
 
+import { useThumbnail } from '@/assets/thumbnail'
+
 export enum CategoryEnum {
   // 基础组件
   BASIC = 'BASIC',
@@ -41,21 +43,21 @@ export class Category {
   public components: Array<{
     component: string
     title: string
+    [x: string]: any
   }>
 
   constructor(
     name: string,
     key: string,
     icon: string,
-    components: Array<{ component: string; title: string }> = []
+    components: Array<{ component: string; title: string; [x: string]: any }> = []
   ) {
     this.name = name
     this.icon = icon
     this.key = key
     this.components = components.map((el) => {
       return {
-        component: el.component,
-        title: el.title
+        ...el
       }
     })
   }
@@ -67,11 +69,12 @@ export class Category {
     }
   }
 }
+const { text, number, border1 } = useThumbnail()
 
 export const CategoryList: Category[] = [
   new Category('基础', CategoryEnum.BASIC, 'cube'),
   new Category('边框', CategoryEnum.BORDER, 'border', [
-    { component: BorderBox1.manifest.name, title: BorderBox1.manifest.title }
+    { component: BorderBox1.manifest.name, title: BorderBox1.manifest.title, thumbnail: border1 }
   ]),
   new Category('装饰', CategoryEnum.DECORATION, 'icon'),
   new Category('线状图', CategoryEnum.LINE, 'chartLine'),
@@ -83,9 +86,10 @@ export const CategoryList: Category[] = [
   new Category('文本', CategoryEnum.TEXT, 'text', [
     {
       component: StaticText.manifest.name,
-      title: StaticText.manifest.title
+      title: StaticText.manifest.title,
+      thumbnail: text
     },
-    { component: SubText.manifest.name, title: SubText.manifest.title }
+    { component: SubText.manifest.name, title: SubText.manifest.title, thumbnail: number }
   ]),
   new Category('表格', CategoryEnum.TABLE, 'table'),
   new Category('温度计', CategoryEnum.THERMOMETER, 'thermometer'),
