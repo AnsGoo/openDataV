@@ -9,8 +9,9 @@ import {
   OFormItem,
   OSelect
 } from '@open-data-v/ui'
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, inject, onMounted, ref } from 'vue'
 
+import { PANEL_MODEL } from '../../../const'
 import { useEmpty } from '../../../modules'
 import { useCanvasState, useDataState } from '../../../state'
 
@@ -22,6 +23,7 @@ export default defineComponent({
     const dataState = useDataState()
     const curDataType = ref<string>('')
     const globalDataTypes = ref<Array<{ label: string; value: string }>>([])
+    const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
 
     onMounted(() => {
       const keys = Object.keys(dataState.globalPlugins)
@@ -56,8 +58,6 @@ export default defineComponent({
       })
     })
     const renderContainer = (dataType: string, id: string, index: number) => {
-      const mode = canvasState.canvasStyleConfig.mode as ContainerType
-      // let mode = ContainerType.TIMELINE
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
@@ -108,7 +108,6 @@ export default defineComponent({
     }
 
     const renderDataAppend = () => {
-      const mode = canvasState.canvasStyleConfig.mode as ContainerType
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (

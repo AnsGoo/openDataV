@@ -4,21 +4,14 @@ import type {
   DataMode,
   DOMRectStyle,
   IComponentData,
-  IContainerItem,
   Vector
 } from '@open-data-v/base'
-import {
-  buildModeValue,
-  ContainerType,
-  eventBus,
-  FormType,
-  updateModeValue
-} from '@open-data-v/base'
+import { ContainerType, eventBus } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import type { Component } from 'vue'
 import { reactive } from 'vue'
 
-import { EditMode, PixelEnum } from '../enum'
+import { EditMode } from '../enum'
 import { DataSlotter } from '../state'
 import type { RelativePosition } from '../type'
 import {
@@ -33,7 +26,7 @@ import {
 } from '../utils'
 import useDataState from './data'
 import useSnapShotState from './snapshot'
-import type { CanvasData, CanvasStyleConfig, CanvasStyleData, LayoutData } from './type'
+import type { CanvasData, CanvasStyleData, LayoutData } from './type'
 import { singleton } from './utils'
 
 const dataState = useDataState()
@@ -46,52 +39,6 @@ const baseCanvasStyleData: CanvasStyleData = {
   background: { backgroundColor: '#272e3b' },
   extraAttrs: {}
 }
-
-const pixels = [
-  { label: '本设备', value: `${window.screen.width}X${window.screen.height}` },
-  ...PixelEnum
-]
-const baseCanvasStyleConfig: Array<IContainerItem> = [
-  {
-    label: '基本配置',
-    prop: 'basic',
-    children: [
-      {
-        prop: 'pixel',
-        label: '分辨率',
-        type: FormType.SELECT,
-        props: {
-          options: pixels,
-          defaultValue: `${window.screen.width}X${window.screen.height}`
-        }
-      },
-      {
-        prop: 'width',
-        label: '宽度',
-        type: FormType.NUMBER,
-        props: {
-          defaultValue: window.screen.width
-        }
-      },
-      {
-        prop: 'height',
-        label: '高度',
-        type: FormType.NUMBER,
-        props: {
-          defaultValue: window.screen.height
-        }
-      },
-      {
-        prop: 'background',
-        label: '背景',
-        type: FormType.BACKGROUND,
-        props: {
-          defaultValue: { backgroundColor: '#272e3b' }
-        }
-      }
-    ]
-  }
-]
 
 window.localStorage.setItem('canvasData', JSON.stringify([]))
 window.localStorage.setItem('canvasStyle', JSON.stringify(baseCanvasStyleData))
@@ -121,11 +68,7 @@ class CanvasState {
     components: {},
     globalSlotters: {},
     darkTheme: true,
-    scale: 1,
-    canvasStyleConfig: {
-      formItems: baseCanvasStyleConfig,
-      mode: ContainerType.CARD
-    }
+    scale: 1
   })
 
   public componentMetaMap: Map<
@@ -147,25 +90,7 @@ class CanvasState {
   > = new Map()
 
   private componentMap: Map<string, CustomComponent> = new Map()
-  constructor(config?: CanvasStyleConfig) {
-    const extraStyles = config
-      ? config
-      : {
-          formItems: [],
-          mode: ContainerType.CARD
-        }
-
-    this.state.canvasStyleConfig.formItems = [
-      ...baseCanvasStyleConfig,
-      ...(extraStyles.formItems || [])
-    ]
-    this.state.canvasStyleConfig.mode = extraStyles.mode
-    this.rebuildCanvasExtraStyle(extraStyles.formItems || [])
-  }
-
-  get canvasStyleConfig(): CanvasStyleConfig {
-    return this.state.canvasStyleConfig
-  }
+  constructor() {}
 
   get darkTheme(): boolean {
     return this.state.darkTheme
@@ -193,8 +118,7 @@ class CanvasState {
         width: this.canvasStyleData.width,
         height: this.canvasStyleData.height,
         background: this.canvasStyleData.background
-      },
-      ...this.canvasStyleData.extraAttrs
+      }
     }
   }
 
@@ -335,25 +259,8 @@ class CanvasState {
       } else {
         this.canvasData[keys[1]] = val
       }
-    } else {
-      const extraAttrs = this.canvasData.extraAttrs
-      updateModeValue(extraAttrs, keys, val)
     }
     this.saveComponentData()
-  }
-  rebuildCanvasExtraStyle(formItems: IContainerItem[]) {
-    const basicAttrs: {
-      width?: number
-      height?: number
-      background?: any
-    } = {}
-    buildModeValue(baseCanvasStyleConfig, basicAttrs)
-    this.canvasStyleData.width = basicAttrs.width || window.screen.width
-    this.canvasStyleData.height = basicAttrs.height || window.screen.height
-    this.canvasStyleData.background = basicAttrs.background || { backgroundColor: '#272e3b' }
-    const extraAttrs = {}
-    buildModeValue(formItems, extraAttrs)
-    this.canvasStyleData.extraAttrs = extraAttrs
   }
 
   setEditMode(mode: EditMode): void {
