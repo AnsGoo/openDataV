@@ -124,7 +124,7 @@ const emits = defineEmits<{
   (e: 'update:iscollapsed', iscollapsed: boolean): void
 }>()
 const collapsedRight = ref(true)
-const rightWidth = computed<string>(() => (collapsedRight.value ? '18rem' : '4rem'))
+const rightWidth = computed<string>(() => (collapsedRight.value ? '18rem' : '3rem'))
 const rightDreiction = computed<'left' | 'right'>(() => (collapsedRight.value ? 'right' : 'left'))
 const curComponent = computed(() => canvasState.activeComponent)
 

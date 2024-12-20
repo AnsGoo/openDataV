@@ -56,11 +56,22 @@ export default defineComponent({
         }
       })
     })
+    const contextmenus = (event: MouseEvent, id: string) => {
+      event.stopPropagation()
+      return [
+        {
+          text: '删除',
+          handler: () => {
+            canvasState.remveDataSlotter(id)
+          }
+        }
+      ]
+    }
     const renderContainer = (dataType: string, id: string, index: number) => {
       switch (mode) {
         case ContainerType.COLLAPSE:
           return (
-            <OCollapse accordion={true}>
+            <OCollapse accordion={true} v-contextmenu={(_, event) => contextmenus(event, id)}>
               <OCollapseItem
                 title={`全局数据${index + 1}`}
                 name="dataType"
@@ -73,14 +84,21 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard title={`全局数据${index + 1}`} class="my-1">
+              <OCard
+                title={`全局数据${index + 1}`}
+                class="my-1"
+                v-contextmenu={(_, event) => contextmenus(event, id)}
+              >
                 {renderDataComponent(dataType, id)}
               </OCard>
             </>
           )
         case ContainerType.FORM:
           return (
-            <div class="rounded my-1 p-4 border dark:border-zinc-500 border-zinc-200">
+            <div
+              v-contextmenu={(_, event) => contextmenus(event, id)}
+              class="rounded my-1 p-4 border dark:border-zinc-500 border-zinc-200"
+            >
               <ODivider title-placement="left" class="my-2">
                 {`全局数据${index + 1}`}
               </ODivider>
