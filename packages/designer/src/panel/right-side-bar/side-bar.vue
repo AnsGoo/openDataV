@@ -25,7 +25,7 @@
             </div>
           </template>
           <div class="attr-list o-scroll">
-            <StyleList :curComponent="curComponent" />
+            <StyleOption :curComponent="curComponent" />
           </div>
         </o-tab-pane>
         <o-tab-pane name="attr">
@@ -36,7 +36,7 @@
             </div>
           </template>
           <div class="attr-list o-scroll">
-            <AttrList :curComponent="curComponent" />
+            <AttrOption :curComponent="curComponent" />
           </div>
         </o-tab-pane>
         <o-tab-pane name="data">
@@ -47,7 +47,7 @@
             </div>
           </template>
           <div class="attr-list o-scroll">
-            <DataList :curComponent="curComponent" />
+            <DataOption :curComponent="curComponent" />
           </div>
         </o-tab-pane>
       </o-tabs>
@@ -68,7 +68,7 @@
             </div>
           </template>
           <div class="attr-list">
-            <Canvas />
+            <CanvasOption />
           </div>
         </o-tab-pane>
         <o-tab-pane name="data">
@@ -79,7 +79,7 @@
             </div>
           </template>
           <div class="attr-list">
-            <GlobalData />
+            <GlobalDataOption />
           </div>
         </o-tab-pane>
       </o-tabs>
@@ -105,11 +105,13 @@ import { computed, getCurrentInstance, h, ref } from 'vue'
 
 import { Toggle } from '../../components'
 import { useCanvasState } from '../../state'
-import AttrList from './attr-module'
-import Canvas from './canvas-modules/canvas.vue'
-import GlobalData from './canvas-modules/global-data.tsx'
-import DataList from './data-module'
-import StyleList from './style-module'
+import AttrOption from './attr-option.vue'
+import CanvasOption from './canvas-option.vue'
+import DataOption from './data-option.tsx'
+import GlobalDataOption from './global-data-option.tsx'
+import useCreateStylePanel from './style-option.tsx'
+
+const StyleOption = useCreateStylePanel()
 // 右侧属性列表
 const instance = getCurrentInstance()
 const XIcon = instance!.appContext.components['XIcon']

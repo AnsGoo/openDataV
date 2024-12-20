@@ -6,9 +6,9 @@ import type { IContainerItem } from '@open-data-v/base'
 import { ContainerType, FormType } from '@open-data-v/base'
 import { computed, inject } from 'vue'
 
-import { PANEL_MODEL } from '../../../const'
-import { Container } from '../../../modules'
-import { useCanvasState } from '../../../state'
+import { PANEL_MODEL } from '../../const'
+import { Container } from '../../modules'
+import { useCanvasState } from '../../state'
 
 const canvasState = useCanvasState()
 

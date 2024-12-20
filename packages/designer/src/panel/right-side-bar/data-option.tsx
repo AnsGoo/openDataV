@@ -12,10 +12,10 @@ import {
 import type { PropType } from 'vue'
 import { defineComponent, inject, onMounted, ref, watch } from 'vue'
 
-import { PANEL_MODEL } from '../../../const'
-import { DataMode } from '../../../enum'
-import { useEmpty } from '../../../modules'
-import { useDataState, useScriptState } from '../../../state'
+import { PANEL_MODEL } from '../../const'
+import { DataMode } from '../../enum'
+import { useEmpty } from '../../modules'
+import { useDataState, useScriptState } from '../../state'
 
 export default defineComponent({
   props: {

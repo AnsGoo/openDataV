@@ -1,13 +1,14 @@
-import type { IContainerItem } from '@open-data-v/base'
-import { buildModeValue, FormType } from '@open-data-v/base'
+import type { CustomComponent, IContainerItem } from '@open-data-v/base'
+import { buildModeValue, ContainerType, FormType } from '@open-data-v/base'
 import { cloneDeep, debounce } from 'lodash-es'
 import type { PropType } from 'vue'
-import { defineComponent, h, reactive, watch } from 'vue'
+import { defineComponent, h, inject, reactive, watch } from 'vue'
 
-import { Container } from '../../../modules'
-import { useCanvasState } from '../../../state'
+import { PANEL_MODEL } from '../../const'
+import { Container } from '../../modules'
+import { useCanvasState } from '../../state'
 
-export function createStyleComponent(structOption: IContainerItem[]) {
+function createStyleComponent() {
   const commonOption: IContainerItem[] = [
     {
       label: '组件信息',
@@ -94,14 +95,14 @@ export function createStyleComponent(structOption: IContainerItem[]) {
     }
   ]
 
-  const attrKeys = [...commonOption, ...structOption]
+  const attrKeys = commonOption
   const propValue = {}
   buildModeValue(attrKeys, propValue)
 
   return defineComponent({
     props: {
-      componentId: {
-        type: String as PropType<string>,
+      curComponent: {
+        type: Object as PropType<CustomComponent>,
         required: false
       },
       value: {
@@ -110,10 +111,11 @@ export function createStyleComponent(structOption: IContainerItem[]) {
     },
     emits: ['change', 'update:value'],
     setup(props) {
+      const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
       const canvasState = useCanvasState()
       const modelValue = reactive(cloneDeep(propValue))
       const changed = debounce((keys: Array<string>, value: any) => {
-        const component = canvasState.getComponentById(props.componentId!)
+        const component = props.curComponent
         if (!component) {
           return
         }
@@ -133,16 +135,15 @@ export function createStyleComponent(structOption: IContainerItem[]) {
       }, 300)
 
       watch(
-        () => props.componentId,
-        () => {
-          const component = canvasState.getComponentById(props.componentId!)
+        () => props.curComponent,
+        (component) => {
           if (!component) {
             return
           }
 
           Object.assign(modelValue, {
             info: {
-              id: props.componentId,
+              id: component.id,
               component: component.component,
               name: component.name
             },
@@ -154,7 +155,7 @@ export function createStyleComponent(structOption: IContainerItem[]) {
         }
       )
 
-      return () => <Container config={attrKeys} onChange={changed} data={modelValue} />
+      return () => <Container config={attrKeys} onChange={changed} data={modelValue} mode={mode} />
     }
   })
 }

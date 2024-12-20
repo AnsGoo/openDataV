@@ -11,11 +11,9 @@ import {
 } from '@open-data-v/ui'
 import { computed, defineComponent, inject, onMounted, ref } from 'vue'
 
-import { PANEL_MODEL } from '../../../const'
-import { useEmpty } from '../../../modules'
-import { useCanvasState, useDataState } from '../../../state'
-
-const canvasState = useCanvasState()
+import { PANEL_MODEL } from '../../const'
+import { useEmpty } from '../../modules'
+import { useCanvasState, useDataState } from '../../state'
 
 export default defineComponent({
   emits: ['change'],
@@ -23,7 +21,8 @@ export default defineComponent({
     const dataState = useDataState()
     const curDataType = ref<string>('')
     const globalDataTypes = ref<Array<{ label: string; value: string }>>([])
-    const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
+    const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.COLLAPSE)
+    const canvasState = useCanvasState()
 
     onMounted(() => {
       const keys = Object.keys(dataState.globalPlugins)
@@ -39,7 +38,7 @@ export default defineComponent({
       const plugin = dataState.getPlugin(dataType)
       const DataComponent = plugin ? plugin.component : useEmpty('未发现相应的数据插件')
       const slotter = canvasState.getDataSlotter(id)
-      return <DataComponent slotter={slotter} />
+      return <DataComponent slotter={slotter} handler={plugin.handler} />
     }
 
     const appendGlobalData = () => {
@@ -127,7 +126,7 @@ export default defineComponent({
           )
         case ContainerType.FORM:
           return (
-            <div style={{ padding: '0 1rem' }}>
+            <div style={{ padding: '0 1rem' }} class="my-4">
               <ODivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
                 {'添加数据'}
               </ODivider>
