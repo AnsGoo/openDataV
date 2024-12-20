@@ -61,7 +61,11 @@ export default defineComponent({
         case ContainerType.COLLAPSE:
           return (
             <OCollapse accordion={true}>
-              <OCollapseItem title={`全局数据${index + 1}`} name="dataType">
+              <OCollapseItem
+                title={`全局数据${index + 1}`}
+                name="dataType"
+                class="rounded m-1 border dark:border-zinc-500 border-zinc-200"
+              >
                 {renderDataComponent(dataType, id)}
               </OCollapseItem>
             </OCollapse>
@@ -69,15 +73,15 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard title={`全局数据${index + 1}`} style={{ marginBottom: '0.25rem' }}>
+              <OCard title={`全局数据${index + 1}`} class="my-1">
                 {renderDataComponent(dataType, id)}
               </OCard>
             </>
           )
         case ContainerType.FORM:
           return (
-            <div style={{ padding: '0 1rem' }}>
-              <ODivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
+            <div class="rounded my-1 p-4 border dark:border-zinc-500 border-zinc-200">
+              <ODivider title-placement="left" class="my-2">
                 {`全局数据${index + 1}`}
               </ODivider>
               {renderDataComponent(dataType, id)}
@@ -111,7 +115,11 @@ export default defineComponent({
         case ContainerType.COLLAPSE:
           return (
             <OCollapse accordion={true}>
-              <OCollapseItem title="添加数据" name="dataType">
+              <OCollapseItem
+                title="添加数据"
+                name="dataType"
+                class="rounded m-1 border dark:border-zinc-500 border-zinc-200"
+              >
                 {renderDataSelect()}
               </OCollapseItem>
             </OCollapse>
@@ -119,15 +127,15 @@ export default defineComponent({
         case ContainerType.CARD:
           return (
             <>
-              <OCard title="添加数据" style={{ marginBottom: '0.25rem' }}>
+              <OCard title="添加数据" class="my-1">
                 {renderDataSelect()}
               </OCard>
             </>
           )
         case ContainerType.FORM:
           return (
-            <div style={{ padding: '0 1rem' }} class="my-4">
-              <ODivider title-placement="left" style={{ marginTop: '0px', marginBottom: '0px' }}>
+            <div class="rounded my-1 p-4 border dark:border-zinc-500 border-zinc-200">
+              <ODivider title-placement="left" class="my-2">
                 {'添加数据'}
               </ODivider>
               {renderDataSelect()}

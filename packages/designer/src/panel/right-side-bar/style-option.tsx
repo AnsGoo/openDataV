@@ -111,7 +111,7 @@ function createStyleComponent() {
     },
     emits: ['change', 'update:value'],
     setup(props) {
-      const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
+      const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.FORM)
       const canvasState = useCanvasState()
       const modelValue = reactive(cloneDeep(propValue))
       const changed = debounce((keys: Array<string>, value: any) => {

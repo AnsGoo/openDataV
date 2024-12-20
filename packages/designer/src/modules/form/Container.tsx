@@ -73,7 +73,12 @@ export default defineComponent({
             <OCollapse accordion={true}>
               {containerItems.map((el) => {
                 return (
-                  <OCollapseItem key={el.prop} title={el.label} name={el.prop}>
+                  <OCollapseItem
+                    class="rounded m-1 border dark:border-zinc-500 border-zinc-200"
+                    key={el.prop}
+                    title={el.label}
+                    name={el.prop}
+                  >
                     {renderForm(el)}
                   </OCollapseItem>
                 )
@@ -94,18 +99,15 @@ export default defineComponent({
           )
         case ContainerType.FORM:
           return (
-            <div class="p-2">
+            <div>
               {containerItems.map((el) => {
                 return (
-                  <>
-                    <ODivider
-                      title-placement="left"
-                      style={{ marginTop: '0px', marginBottom: '0px' }}
-                    >
+                  <div class="rounded my-1 border dark:border-zinc-500 border-zinc-200 p-4">
+                    <ODivider title-placement="left" class="my-2">
                       {el.label}
                     </ODivider>
                     {renderForm(el)}
-                  </>
+                  </div>
                 )
               })}
             </div>
