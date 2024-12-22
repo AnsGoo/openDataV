@@ -36,7 +36,7 @@
     >
       <RestView
         v-model:options="formData"
-        :dataInstance="dataInstance"
+        :dataInstance="props.dataInstance"
         @update:options="changeHandler"
         @change="changeHandler"
       />
@@ -45,21 +45,19 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataHandler, Slotter } from '@open-data-v/base'
+import type { Slotter } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
 import { computed, onMounted, ref, useSlots, watch } from 'vue'
 
 import { uuid } from '../utils'
 import Rest from './data-view.vue'
 import { RequestMethod } from './enums'
-import type RestRequestData from './handler'
 import type { RestOption, StoreRestOption } from './type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
 
 const props = defineProps<{
-  slotter: Slotter
+  dataInstance: dataInstance
   index?: number
-  handler: DataHandler
 }>()
 const slots = useSlots()
 const isShow = ref<boolean>(false)
@@ -70,8 +68,6 @@ const RestView = computed(() => {
     return Rest
   }
 })
-
-const dataInstance = computed(() => props.slotter.dataConfig.dataInstance)
 
 const formData = ref<RestOption>({
   method: RequestMethod.GET,
@@ -85,17 +81,7 @@ const formData = ref<RestOption>({
   }
 })
 const changeHandler = () => {
-  setDataConfig()
-}
-
-const setDataConfig = () => {
-  const dataConfig = {
-    type: 'REST',
-    dataInstance: new props.handler(requestOptionsToStore(formData.value))
-  }
-  if (props.slotter) {
-    props.slotter.changeDataConfig(dataConfig)
-  }
+  props.dataInstance.updateOption(requestOptionsToStore(formData.value))
 }
 
 onMounted(async () => {
@@ -105,28 +91,8 @@ onMounted(async () => {
 })
 
 const initComponentData = () => {
-  const dataConfig = props.slotter!.dataConfig
-  if (dataConfig && dataConfig.type === 'REST') {
-    const restRequest = props.slotter!.dataConfig?.dataInstance as RestRequestData
-    if (!restRequest) {
-      return
-    }
-    const { options } = restRequest.toJSON()
-    Object.assign(formData.value, storeOptionToRequestOptions(options as StoreRestOption))
-  } else {
-    Object.assign(formData.value, {
-      method: RequestMethod.GET,
-      url: '',
-      headers: [{ key: '', value: '', disable: false, id: uuid() }],
-      params: [{ key: '', value: '', disable: false, id: uuid() }],
-      data: [{ key: '', value: '', disable: false, id: uuid() }],
-      otherConfig: {
-        isRepeat: false,
-        interval: 1000
-      }
-    })
-    setDataConfig()
-  }
+  const dataConfig = props.dataInstance.toJSON()
+  Object.assign(formData.value, ...storeOptionToRequestOptions(dataConfig as StoreRestOption))
 }
 
 watch(

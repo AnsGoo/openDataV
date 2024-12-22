@@ -1,16 +1,21 @@
 import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
+import { uuid } from '@open-data-v/base'
 
 class DemoRequestData implements DataInstance {
   public data: any
-
-  constructor({ data }: { data: any }) {
+  public id: string
+  private acceptor: DataAcceptor | undefined
+  constructor({ data, id }: { data: any; id?: string }) {
     this.data = data
+    this.id = id || uuid()
   }
+
   public toJSON() {
     return undefined
   }
 
   public async connect(acceptor: DataAcceptor, options?: Record<string, any>) {
+    this.acceptor = acceptor
     const resp = await this.getRespData(options)
     acceptor(resp)
   }
@@ -25,6 +30,7 @@ class DemoRequestData implements DataInstance {
   public async debug(acceptor: DataAcceptor) {
     const resp = await this.getRespData()
     acceptor(resp)
+    this.acceptor?.(resp)
   }
 
   close(): void {}

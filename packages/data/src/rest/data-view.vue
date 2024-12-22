@@ -119,12 +119,7 @@ const send = async () => {
     response.value.status = resp.status
     response.value.data = JSON.stringify(resp.data, null, '\t')
   }
-  if (!props.dataInstance) {
-    const dataHandler = new DataHandler(requestOptionsToStore(formData))
-    dataHandler.debug(acceptor)
-  } else {
-    props.dataInstance?.debug(acceptor)
-  }
+  props.dataInstance?.debug(acceptor)
 }
 const formChange = () => {
   emits('change', formData)

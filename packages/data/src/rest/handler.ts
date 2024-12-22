@@ -1,4 +1,5 @@
 import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
+import { uuid } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 
 import type { RequestInstance } from '../hooks'
@@ -9,16 +10,35 @@ class RestRequestData implements DataInstance {
   public options?: StoreRestOption
   public requestInstance: RequestInstance
   public timer: any = 0
+  public type = 'REST'
+  public accessor: DataAcceptor | undefined
 
-  constructor(options?: StoreRestOption, connector?: RequestInstance) {
+  constructor({
+    options,
+    connector,
+    id
+  }: {
+    options?: StoreRestOption
+    connector?: RequestInstance
+    id?: string
+  }) {
     this.options = options
     this.requestInstance = connector || useRequest()
+    this.id = id || uuid()
   }
+  id: string
   public close() {
     clearInterval(this.timer)
   }
+  public async updateOption(options?: StoreRestOption) {
+    this.options = options
+  }
 
   public async connect(acceptor: DataAcceptor) {
+    this.accessor = acceptor
+    this._connect(acceptor)
+  }
+  private async _connect(acceptor: DataAcceptor) {
     const { otherConfig = { isRepeat: false, interval: 3000 } } = this.options || {}
     if (otherConfig.isRepeat) {
       const handler = async () => {
@@ -62,13 +82,15 @@ class RestRequestData implements DataInstance {
   }
 
   public async debug(acceptor: DataAcceptor) {
-    this.connect(acceptor)
+    this._connect(acceptor)
+    this.accessor && this._connect(this.accessor)
   }
 
   public toJSON() {
     return {
       options: cloneDeep(this.options),
-      type: 'REST'
+      type: this.type,
+      id: this.id
     }
   }
 }

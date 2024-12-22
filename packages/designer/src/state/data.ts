@@ -1,3 +1,4 @@
+import { DataSlotter } from '@open-data-v/base'
 import { reactive } from 'vue'
 
 import { DemoDataPlugin } from '../data'
@@ -56,6 +57,7 @@ class DataState {
   public loadPlugins(plugins: Array<DataPlugin>) {
     plugins.forEach((el) => {
       this.plugins[el.type] = el
+      DataSlotter.handlerClazzs[el.type] = el.handler
     })
   }
 }

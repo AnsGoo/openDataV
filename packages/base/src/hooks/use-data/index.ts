@@ -13,8 +13,6 @@ export const useData = (
     component.setDataChangeCallback(callback)
   }
   onUnmounted(() => {
-    if (component.dataConfig?.dataInstance.close) {
-      component.dataConfig?.dataInstance.close()
-    }
+    component.dataSlotter?.close?.()
   })
 }

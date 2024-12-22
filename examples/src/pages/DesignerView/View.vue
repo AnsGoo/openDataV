@@ -11,9 +11,11 @@
 
 <script setup lang="ts">
 import { StaticKey, useEventBus } from '@open-data-v/base'
-import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
+import { RestDataPlugin } from '@open-data-v/data'
+// import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import {
+  DemoDataPlugin,
   Designer,
   ToolBar,
   useCanvasState,
@@ -25,8 +27,8 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { getPageApi } from '@/api/pages'
-import QuickDataPlugin from '@/data/Quick'
-import RestDataPlugin from '@/data/Rest'
+// import QuickDataPlugin from '@/data/Quick'
+// import RestDataPlugin from '@/data/Rest'
 import useToolBars from '@/pages/DesignerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
@@ -62,11 +64,12 @@ useEventBus(StaticKey.STDOUT, (event) => {
 const canvasState = useCanvasState()
 const dataState = useDataState()
 dataState.loadPlugins([
-  QuickDataPlugin,
-  RestDataPlugin,
-  StaticDataPlugin,
-  SubDataPlugin,
-  WebsocketDataPlugin
+  // QuickDataPlugin,
+  RestDataPlugin
+  // DemoDataPlugin
+  // StaticDataPlugin,
+  // SubDataPlugin,
+  // WebsocketDataPlugin
 ])
 const route = useRoute()
 const router = useRouter()

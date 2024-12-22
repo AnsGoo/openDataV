@@ -1,21 +1,16 @@
 import { cloneDeep, set } from 'lodash-es'
 
+import { DataSlotter } from './data-slotter'
 import { DataMode } from './enums'
 import type {
   BaseScript,
-  DataInstance,
   DOMRectStyle,
   IComponentData,
   IComponentInfo,
   RelativePosition,
-  Response
+  Slotter
 } from './type'
 import { uuid } from './utils'
-
-export interface DataConfig {
-  type: string
-  dataInstance: DataInstance
-}
 
 export class CustomComponent {
   id: string
@@ -42,10 +37,10 @@ export class CustomComponent {
   subComponents?: CustomComponent[] = undefined
 
   private _propValue: Record<string, any> = {}
-  dataConfig?: DataConfig
+  dataSlotter?: Slotter
   scriptConfig?: BaseScript
 
-  constructor(data: IComponentInfo) {
+  constructor(metaData: IComponentInfo) {
     const {
       id,
       component,
@@ -54,12 +49,14 @@ export class CustomComponent {
       position,
       isContainer,
       dataMode,
-      extendedMetaData = {}
-    } = data
+      extendedMetaData = {},
+      data
+    } = metaData
     this.id = id || uuid()
     this.component = component
     this.name = name
     this.extendedMetaData = extendedMetaData
+    this.dataSlotter = new DataSlotter(data || {})
 
     this.isContainer = isContainer || false
     this.subComponents = isContainer ? [] : undefined
@@ -93,11 +90,6 @@ export class CustomComponent {
     }
   }
 
-  // 自定义样式编辑框数据处理
-  styleToCss(_: Record<string, any>[]): Nullable<Record<string, any>> {
-    return null
-  }
-
   // 生成后端存储需要的Json
   toJson(isDeep = true): IComponentData {
     const subComponents = (this.subComponents || []).map((item) => item.toJson(isDeep))
@@ -109,12 +101,7 @@ export class CustomComponent {
       position: this.position,
       subComponents: this.isContainer && subComponents.length > 0 ? subComponents : undefined,
       script: this.scriptConfig?.toJSON(),
-      data: this.dataConfig
-        ? {
-            type: this.dataConfig?.type,
-            requestOptions: this.dataConfig?.dataInstance.toJSON()
-          }
-        : undefined
+      data: this.dataSlotter ? this.dataSlotter.toJSON() : undefined
     }
     return component
   }
@@ -134,17 +121,6 @@ export class CustomComponent {
 
   setPropChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
     this.callbackProp = callback
-  }
-  afterCallbackChange(scriptHandler: BaseScript) {
-    this.scriptConfig = scriptHandler
-    if (this.dataConfig?.dataInstance && this.dataCallback) {
-      this.callbackData = this.buildDataCallback()
-      const { dataInstance } = this.dataConfig || {}
-      if (dataInstance && dataInstance.close) {
-        dataInstance.close()
-        dataInstance.connect!(this.callbackData)
-      }
-    }
   }
   changePosition(key: 'top' | 'left' | 'height' | 'width' | 'rotate', value: number) {
     const positionKey = ['top', 'left', 'height', 'width', 'rotate']
@@ -189,57 +165,13 @@ export class CustomComponent {
   setVisible(visible: boolean) {
     this.display = visible
   }
-  async changeDataConfig(dataConfig: DataConfig) {
-    const { dataInstance } = this.dataConfig || {}
-    if (dataInstance && dataInstance.close) {
-      dataInstance.close()
-    }
-    this.dataConfig = dataConfig
-    if (this.callbackData) {
-      await this.dataConfig?.dataInstance.connect!(this.callbackData)
-    }
-  }
   setDataChangeCallback(callback: (result: any, type?: string) => void) {
-    this.dataCallback = callback
-    this.callbackData = this.buildDataCallback()
-    const { dataInstance } = this.dataConfig || {}
-    if (!dataInstance) {
-      return
-    }
-    if (dataInstance.close) {
-      dataInstance.close()
-    }
-    dataInstance.connect!(this.callbackData)
+    this.callbackData = callback
+    this.dataSlotter?.connect?.(callback)
   }
-
-  buildDataCallback() {
-    return (resp: Response) => {
-      if (this.scriptConfig && this.scriptConfig.afterCallback) {
-        const afterCallback = this.scriptConfig.afterCallback
-        const { status, data } = resp
-        if (status === 'SUCCESS') {
-          try {
-            resp['afterData'] = afterCallback(data, this.propValue)
-          } catch (err) {
-            resp['afterData'] = undefined
-            resp.status = 'FAILED'
-          }
-        }
-      } else {
-        resp['afterData'] = resp.data
-      }
-      if (this.dataCallback) {
-        this.dataCallback(resp)
-      }
-    }
-  }
-  async loadDemoData() {
-    const exampleData = await this.getExampleData()
-    setTimeout(() => {
-      if (this.callbackData) {
-        this.callbackData({ status: 'SUCCESS', data: exampleData, afterData: exampleData }, 'DEMO')
-      }
-    }, 200)
+  setDataSlotter(slotter: Slotter) {
+    this.dataSlotter = slotter
+    this.callbackData && this.dataSlotter?.connect(this.callbackData)
   }
   appendChild(child: CustomComponent) {
     if (!this.subComponents) {

@@ -26,14 +26,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataHandler, Slotter } from '@open-data-v/base'
+import type { Slotter } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
-import { cloneDeep } from 'lodash-es'
 import { onMounted, reactive, ref, watch } from 'vue'
 
 const props = defineProps<{
   slotter: Slotter
-  handler: DataHandler
 }>()
 const isShow = ref<boolean>(false)
 
@@ -47,24 +45,13 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const dataConfig = props.slotter.dataConfig
-  const exampleData = (await props.slotter.getExampleData()) || { key: 123 }
-  if (dataConfig && dataConfig.type === 'DEMO') {
-    const acceptor = (resp) => {
-      formData.data = JSON.stringify(resp.data, null, '\t')
-    }
-    const instance = dataConfig.dataInstance
-    instance.debug(acceptor)
-  } else {
-    formData.data = JSON.stringify(exampleData, null, '\t')
-    const dataConfig = {
-      type: 'DEMO',
-      dataInstance: new props.handler({
-        data: cloneDeep(exampleData)
-      })
-    }
-    await props.slotter.changeDataConfig(dataConfig)
+  const exampleData = { key: 123 }
+  formData.data = JSON.stringify(exampleData, null, '\t')
+  const acceptor = (resp) => {
+    formData.data = JSON.stringify(resp.data, null, '\t')
   }
+  const instance = dataConfig.dataInstance
+  instance.debug(acceptor)
 }
 
 watch(

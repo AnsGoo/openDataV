@@ -47,7 +47,7 @@
             </div>
           </template>
           <div class="attr-list o-scroll">
-            <DataOption :curComponent="curComponent" />
+            <DataOption :slotter="curComponent.dataSlotter" />
           </div>
         </o-tab-pane>
       </o-tabs>
@@ -71,7 +71,7 @@
             <CanvasOption />
           </div>
         </o-tab-pane>
-        <o-tab-pane name="data">
+        <!-- <o-tab-pane name="data">
           <template #label>
             <div class="flex-nowrap flex flex-row items-center">
               <x-icon name="data" />
@@ -81,7 +81,7 @@
           <div class="attr-list">
             <GlobalDataOption />
           </div>
-        </o-tab-pane>
+        </o-tab-pane> -->
       </o-tabs>
     </div>
     <div v-else>
@@ -107,7 +107,7 @@ import { Toggle } from '../../components'
 import { useCanvasState } from '../../state'
 import AttrOption from './attr-option.vue'
 import CanvasOption from './canvas-option.vue'
-import DataOption from './data-option.tsx'
+import DataOption from './data.tsx'
 import GlobalDataOption from './global-data-option.tsx'
 import useCreateStylePanel from './style-option.tsx'
 

@@ -59,13 +59,12 @@ import Area from '../editor/area.vue'
 import Grid from '../editor/grid.vue'
 import MarkLine from '../editor/mark-line.vue'
 import Ruler from '../editor/ruler.vue'
-import { DataMode, EditMode } from '../enum'
+import { EditMode } from '../enum'
 import { useActionState, useCanvasState, useClipBoardState } from '../state'
 import { clearCanvas, paste } from '../toolbars'
 import type { ContextmenuItem, Location, Vector } from '../type'
 import {
   backgroundToCss,
-  buildDataHandler,
   createComponent,
   filterStyle,
   getComponentInstance,
@@ -231,10 +230,6 @@ const handleDrop = async (e) => {
   const component: CustomComponent | undefined = getComponentInstance({ component: componentName })
   if (!component) {
     return
-  }
-
-  if (component.dataMode === DataMode.UNIVERSAL) {
-    buildDataHandler(component)
   }
 
   const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()

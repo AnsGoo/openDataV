@@ -1,6 +1,7 @@
 import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './bus'
 import { CustomComponent } from './component'
 import { RenderSlot } from './components'
+import { DataSlotter } from './data-slotter'
 import directive, { ClickOutsideDirective, ResizeDomDirective } from './directive'
 import { ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
 import type { Hooks } from './hooks'
@@ -41,10 +42,10 @@ export {
   buildModeValue,
   channels,
   ClickOutsideDirective,
-  ComponentGroup,
   ContainerType,
   CustomComponent,
   DataMode,
+  DataSlotter,
   directive,
   eventBus,
   FormType,
@@ -66,7 +67,6 @@ export type {
   BaseComponent,
   BaseFormProps,
   BaseScript,
-  ComponentStyle,
   CustomProps,
   DataAcceptor,
   DataConfig,

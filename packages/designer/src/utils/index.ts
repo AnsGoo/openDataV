@@ -1,56 +1,56 @@
 import type {
-  DataOption,
+  // DataOption,
   DOMRectStyle,
   IComponentData,
-  ScriptOption,
+  // ScriptOption,
   Vector
 } from '@open-data-v/base'
 import { CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
 import type { Location } from 'type'
 
-import { useCanvasState, useDataState, useScriptState } from '../state'
+import { useCanvasState } from '../state'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
 }
 
-export const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
-  const dataState = useDataState()
-  if (!(data && data.requestOptions)) {
-    componentObj.loadDemoData()
-    return
-  }
-  const plugin = dataState.getPlugin(data.type)
-  if (!plugin) {
-    return
-  }
-  const dataHandler = plugin.handler
-  const { options } = data.requestOptions!
-  const otherConfig = data.otherConfig
-  if (otherConfig) {
-    options.otherConfig = otherConfig
-  }
-  const dataConfig = {
-    type: data.type,
-    dataInstance: new dataHandler(options)
-  }
-  componentObj.changeDataConfig(dataConfig)
-}
+// export const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
+//   const dataState = useDataState()
+// if (!(data && data.d)) {
+//   componentObj.loadDemoData.?()
+//   return
+// }
+// const plugin = dataState.getPlugin(data.type)
+// if (!plugin) {
+//   return
+// }
+// const dataHandler = plugin.handler
+// const { options } = data.requestOptions!
+// const otherConfig = data.otherConfig
+// if (otherConfig) {
+//   options.otherConfig = otherConfig
+// }
+// const dataConfig = {
+//   type: data.type,
+//   dataInstance: new dataHandler(options)
+// }
+// componentObj.changeDataConfig(dataConfig)
+// }
 
-const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption) => {
-  if (!script) {
-    return
-  }
-  const scriptState = useScriptState()
-  const plugin = scriptState.getPlugin(script.type)
-  if (!plugin) {
-    return
-  }
-  const scriptHandlerClasss = plugin.handler
-  const scriptHandler = new scriptHandlerClasss(script.key)
-  componentObj.afterCallbackChange(scriptHandler)
-}
+// const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption) => {
+//   if (!script) {
+//     return
+//   }
+//   const scriptState = useScriptState()
+//   const plugin = scriptState.getPlugin(script.type)
+//   if (!plugin) {
+//     return
+//   }
+//   const scriptHandlerClasss = plugin.handler
+//   const scriptHandler = new scriptHandlerClasss(script.key)
+//   // componentObj.afterCallbackChange(scriptHandler)
+// }
 export function createComponent(component: IComponentData): any {
   const canvasState = useCanvasState()
   const componentInfo = canvasState.componentMetaMap.get(component.component)
@@ -71,12 +71,6 @@ export function createComponent(component: IComponentData): any {
   if (!obj) {
     return
   }
-
-  const data = component.data
-  if (componentInfo.dataMode === DataMode.UNIVERSAL) {
-    buildDataHandler(obj, data)
-  }
-  buildAfterCallback(obj, component.script)
   if (componentInfo.isContainer && component.subComponents) {
     component.subComponents.forEach((item) => {
       const subObj = createComponent(item)
@@ -95,7 +89,7 @@ export function getComponentInstance({ component }: { component: string }) {
   if (!componentInfo) {
     return
   }
-  const obj = new CustomComponent({
+  const metaData = {
     position: {
       width: componentInfo.size.width,
       height: componentInfo.size.height,
@@ -108,9 +102,9 @@ export function getComponentInstance({ component }: { component: string }) {
     component: componentInfo.name,
     isContainer: !!componentInfo.isContainer,
     extendedMetaData: componentInfo.extendedMetaData
-  })
-  // obj.setExampleData(componentInfo.demoLoader)
-  return obj
+  }
+
+  return createComponent(metaData)
 }
 
 export function getComponentIndexById(id: string, parent: CustomComponent) {

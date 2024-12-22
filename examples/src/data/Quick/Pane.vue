@@ -42,7 +42,6 @@ import { QUICK_TYPE } from './handler'
 
 const props = defineProps<{
   slotter: Slotter
-  handler?: DataHandler
 }>()
 const isShow = ref<boolean>(false)
 
@@ -60,22 +59,8 @@ onMounted(async () => {
   await initData()
 })
 const initData = async () => {
-  const dataConfig = props.slotter.dataConfig
-  if (dataConfig && dataConfig.type === QUICK_TYPE) {
-    const dataInstance = props.slotter.dataConfig?.dataInstance as QuickRequestData
-    const { options } = dataInstance.toJSON()
-
-    formData.id = options.id
-    formData.title = options.title!
-    const acceptor = (resp) => {
-      formData.id = resp.id
-      formData.title = resp.title!
-      formData.data = resp.data
-    }
-    dataInstance.debug(acceptor)
-  } else {
-    changeHandler()
-  }
+  const dataConfig = props.slotter.toJSON()
+  console.log(dataConfig)
 }
 const changeHandler = () => {
   if (!props.handler) {

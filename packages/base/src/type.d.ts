@@ -106,6 +106,7 @@ export interface RequestOptions<T = any> {
 }
 
 export interface DataOption {
+  id: string
   type: string
   otherConfig?: Record<string, any>
   requestOptions: RequestOptions
@@ -126,7 +127,7 @@ export interface IComponentData extends Omit<IComponentMetaData, 'dataMode' | 'i
   position: DOMRectStyle
   propValue?: Record<string, any>
   subComponents?: IComponentData[]
-  data?: DataOption
+  data?: Record<string, DataOption>
   script?: ScriptOption
 }
 
@@ -179,19 +180,16 @@ export interface IContainerItem {
   children: MetaForm[]
 }
 
-/**
- * @deprecated PropsType 类型即将废弃，建议使用 IContainerItem
- */
-export type PropsType = IContainerItem
 export type BaseComponent = { new (id?: string, name?: string, icon?: string): CustomComponent }
 
-export interface DataConfig {
-  type: string
-  dataInstance: DataInstance
-}
 export interface Slotter {
-  dataConfig: DataConfig
-  changeDataConfig: (config: DataConfig) => void
+  configs: Record<string, DataInstance>
+  addHandler: (config: DataInstance) => void
+  removeHandler: (key: string) => void
+  connect: (callback: (result: any, type?: string) => void) => void
+  close: () => void
+  toJSON: () => Record<string, DataOption>
+  getHandler: (key: string) => DataInstance
 }
 
 export interface Response {
@@ -209,6 +207,8 @@ export interface RequestOptions<T = RequestOption> {
 
 export type DataAcceptor = (result: any, id?: string) => void
 export interface DataInstance {
+  id: string
+  type: string
   toJSON: () => any | undefined
   connect: (dataAcceptor: DataAcceptor) => void
   close: () => void
