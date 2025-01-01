@@ -7,9 +7,21 @@ class SubRequestData implements DataInstance {
   public id: string
   public type = 'SUB'
   private debugCallback: DataAcceptor | undefined
+
+  private callback: DataAcceptor | undefined
   constructor({ channel, id }: { channel?: string; id: string }) {
     this.channel = channel
     this.id = id || uuid()
+    this.callback = (event: any) => {
+      const response: Response = {
+        status: 'SUCCESS',
+        data: event
+      }
+      if (this.debugCallback) {
+        this.debugCallback(event)
+      }
+      this.callback && this.callback(response, 'SUB')
+    }
   }
 
   public toJSON() {
@@ -34,26 +46,25 @@ class SubRequestData implements DataInstance {
 
   public async connect(acceptor: DataAcceptor) {
     this.accessor = acceptor
-    this._connect(acceptor)
+    this._connect()
   }
 
-  private _connect(acceptor: DataAcceptor) {
+  private _connect() {
     if (!this.channel) {
       return
     }
-    useEventBus(this.channel, (event) => {
-      const response: Response = {
-        status: 'SUCCESS',
-        data: event
-      }
-      if (this.debugCallback) {
-        this.debugCallback(event)
-      }
-      acceptor && acceptor(response, 'SUB')
-    })
+    eventBus.on(this.channel, this.callback)
+  }
+  private reConent() {
+    if (!this.channel) {
+      return
+    }
+    eventBus.off(this.channel, this.accessor)
+    this._connect()
   }
   public async debug(acceptor: DataAcceptor) {
     this.debugCallback = acceptor
+    this.reConent()
   }
 }
 export default SubRequestData

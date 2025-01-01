@@ -45,7 +45,7 @@
       <WsView
         ref="wsRef"
         v-model:options="formData"
-        :hanlder="handler"
+        :dataInstance="dataInstance"
         @change="changeHandler"
         @update:options="changeHandler"
       />
@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataInstance, Slotter } from '@open-data-v/base'
+import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
 import { computed, onMounted, ref, useSlots } from 'vue'
 
@@ -62,9 +62,7 @@ import type { WebsocketOption } from './type'
 import WebsocketView from './ws-view.vue'
 
 const props = defineProps<{
-  slotter: Slotter
-  index?: number
-  handler: DataInstance
+  dataInstance: DataInstance
 }>()
 const slots = useSlots()
 

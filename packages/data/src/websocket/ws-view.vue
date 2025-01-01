@@ -24,7 +24,6 @@
 import { OButton, OButtonGroup, OCard, OInput } from '@open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
-import type WebsocketData from './handler'
 import type { WebsocketOption } from './type'
 
 const props = withDefaults(

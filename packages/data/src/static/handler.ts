@@ -18,7 +18,8 @@ class StaticRequestData implements DataInstance {
       options: {
         data: this.data
       },
-      type: 'STATIC'
+      type: 'STATIC',
+      id: this.id
     }
   }
 

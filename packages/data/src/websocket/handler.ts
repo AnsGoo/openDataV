@@ -1,4 +1,5 @@
 import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
+import { uuid } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 
 import type { WebSocketInstance } from '../hooks'
@@ -15,6 +16,7 @@ class WebsocketData implements DataInstance {
   private connector: WebSocketInstance
   private debugAcceptor?: DataAcceptor
   public id: string
+  type = 'WS'
 
   constructor(options?: WebsocketOption, connector?: WebSocketInstance, id?: string) {
     this.options = options
@@ -29,7 +31,7 @@ class WebsocketData implements DataInstance {
   private ping() {
     const timeout = this.options?.timeout || 3000
     const handler = () => {
-      this.wsInstance?.send('ping')
+      this.wsInstance?.send?.('ping')
     }
     this.timer = setInterval(handler, timeout)
   }
@@ -111,7 +113,7 @@ class WebsocketData implements DataInstance {
   public toJSON() {
     return {
       options: cloneDeep(this.options),
-      type: 'WS',
+      type: this.type,
       id: this.id
     }
   }
