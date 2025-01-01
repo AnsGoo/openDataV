@@ -39,9 +39,9 @@ export default defineComponent({
     const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.FORM)
 
     onMounted(() => {
-      const keys = Object.keys(dataState.globalPlugins)
+      const keys = Object.keys(dataState.componentPlugins)
       keys.forEach((el) => {
-        const plugin = dataState.globalPlugins[el]
+        const plugin = dataState.componentPlugins[el]
         globalDataTypes.value.push({
           label: plugin.name,
           value: plugin.type

@@ -52,7 +52,6 @@ const props = defineProps<{
   components: Array<any>
 }>()
 
-console.log(props.components)
 const menuOptions = [
   {
     icon: () =>

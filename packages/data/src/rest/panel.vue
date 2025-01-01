@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Slotter } from '@open-data-v/base'
+import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
 import { computed, onMounted, ref, useSlots, watch } from 'vue'
 
@@ -56,7 +56,7 @@ import type { RestOption, StoreRestOption } from './type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
 
 const props = defineProps<{
-  dataInstance: dataInstance
+  dataInstance: DataInstance
   index?: number
 }>()
 const slots = useSlots()
@@ -81,13 +81,11 @@ const formData = ref<RestOption>({
   }
 })
 const changeHandler = () => {
-  props.dataInstance.updateOption(requestOptionsToStore(formData.value))
+  props.dataInstance.updateOption({ options: requestOptionsToStore(formData.value) })
 }
 
 onMounted(async () => {
-  if (props.slotter) {
-    initComponentData()
-  }
+  initComponentData()
 })
 
 const initComponentData = () => {
@@ -97,7 +95,7 @@ const initComponentData = () => {
 
 watch(
   () => props.slotter,
-  async (value: Slotter | undefined) => {
+  async (value: dataInstance | undefined) => {
     if (value) {
       initComponentData()
     }

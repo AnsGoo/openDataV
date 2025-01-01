@@ -30,8 +30,10 @@ class RestRequestData implements DataInstance {
   public close() {
     clearInterval(this.timer)
   }
-  public async updateOption(options?: StoreRestOption) {
+  public async updateOption({ options }: { options?: StoreRestOption }) {
     this.options = options
+    this.close()
+    this.accessor && this._connect(this.accessor)
   }
 
   public async connect(acceptor: DataAcceptor) {
@@ -82,8 +84,9 @@ class RestRequestData implements DataInstance {
   }
 
   public async debug(acceptor: DataAcceptor) {
-    this._connect(acceptor)
-    this.accessor && this._connect(this.accessor)
+    const resp = await this.getRespData()
+    acceptor(resp)
+    this.accessor && this.accessor(resp)
   }
 
   public toJSON() {

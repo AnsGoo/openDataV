@@ -31,12 +31,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { DataHandler, Slotter } from '@open-data-v/base'
+import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
 import { computed, onMounted, ref, useSlots, watch } from 'vue'
 
+import SubDataView from './data-view.vue'
 import type SubRequestData from './handler'
-import SubDataView from './SubDataView.vue'
 
 const slots = useSlots()
 
@@ -49,8 +49,7 @@ const StaticView = computed(() => {
 })
 
 const props = defineProps<{
-  slotter: Slotter
-  handler: DataHandler
+  dataInstance: DataInstance
 }>()
 const isShow = ref<boolean>(false)
 
@@ -65,42 +64,19 @@ onMounted(async () => {
 })
 
 const initData = async () => {
-  const dataConfig = props.slotter.dataConfig
-  if (dataConfig && dataConfig.type === 'SUB') {
-    const staticRequest = props.slotter.dataConfig?.dataInstance as SubRequestData
-    const { options } = staticRequest.toJSON()
-    formDataConfig.value.channel = options.channel
-  } else {
-    changeHandler()
+  const acceptor = (data) => {
+    console.console.log(data)
   }
+  props.dataInstance.debug(acceptor)
 }
 const changeHandler = () => {
-  if (!props.handler) {
-    return
-  }
-  const dataConfig = {
-    type: 'SUB',
-    dataInstance: new props.handler({
-      channel: formDataConfig.value.channel
-    })
-  }
-  props.slotter.changeDataConfig(dataConfig)
+  props.dataInstance.updateOption({ channel: formDataConfig.value.channel })
 }
 
 const dataChangeHandler = (data) => {
   formDataConfig.value.channel = data
   changeHandler()
 }
-
-watch(
-  () => props.slotter,
-  async () => {
-    if (props.slotter) {
-      await initData()
-    }
-  },
-  { immediate: true }
-)
 </script>
 
 <style lang="less" scoped></style>

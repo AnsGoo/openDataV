@@ -20,20 +20,15 @@
       closable
       @close="isShow = false"
     >
-      <StaticView
-        v-model:options="formData"
-        mode="use"
-        :hanlder="handler"
-        @data-change="dataChangeHandler"
-      />
+      <StaticView v-model:options="formData" mode="use" @submit="dataChangeHandler" />
     </o-card>
   </o-modal>
 </template>
 
 <script lang="ts" setup>
-import type { DataHandler, DataInstance, Slotter } from '@open-data-v/base'
+import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
-import { computed, onMounted, onUnmounted, ref, useSlots, watch } from 'vue'
+import { computed, onMounted, onUnmounted, ref, useSlots } from 'vue'
 
 import StaticContent from './data-view.vue'
 
@@ -48,8 +43,7 @@ const StaticView = computed(() => {
 })
 
 const props = defineProps<{
-  slotter: Slotter
-  handler: DataHandler
+  dataInstance: DataInstance
 }>()
 const isShow = ref<boolean>(false)
 
@@ -71,54 +65,20 @@ onMounted(async () => {
   await initData()
 })
 
-let dataInstance: DataInstance
-
 const initData = async () => {
-  const dataConfig = props.slotter.dataConfig
-  if (dataConfig && dataConfig.type === 'STATIC') {
-    const acceptor = (resp: any) => {
-      formData.value.data = JSON.stringify(resp.data, null, '\t')
-    }
-    if (dataInstance) {
-      dataInstance.close()
-    }
-    dataInstance = props.slotter.dataConfig.dataInstance
-    if (!dataInstance) {
-      return
-    }
-    dataInstance.debug(acceptor)
-  } else {
-    changeHandler()
+  const dataInstance = props.dataInstance
+  const acceptor = ({ data }) => {
+    formData.value.data = JSON.stringify(data)
   }
+  dataInstance.debug(acceptor)
 }
-const changeHandler = () => {
-  const dataConfig = {
-    type: 'STATIC',
-    dataInstance: new props.handler({
-      data: formData.value.data
-    })
-  }
-  props.slotter.changeDataConfig(dataConfig)
+const dataChangeHandler = () => {
+  props.dataInstance.updateOption({ data: formData.value.data })
 }
 
-const dataChangeHandler = (data) => {
-  formData.value.data = data
-  changeHandler()
-}
 onUnmounted(() => {
-  if (dataInstance) {
-    dataInstance.close()
+  if (props.dataInstance) {
+    props.dataInstance.close()
   }
 })
-watch(
-  () => props.slotter,
-  async () => {
-    if (props.slotter) {
-      await initData()
-    }
-  },
-  { immediate: true }
-)
 </script>
-
-<style lang="less" scoped></style>

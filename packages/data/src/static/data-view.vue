@@ -8,6 +8,7 @@
       :title="title"
       :mode="mode"
       @update:data="originDataChange"
+      @submit="handleSubmit"
     />
   </o-card>
 </template>
@@ -40,6 +41,7 @@ const props = withDefaults(
 const emits = defineEmits<{
   (e: 'update:options', value: { data: string }): void
   (e: 'dataChange', value: string): void
+  (e: 'submit'): void
 }>()
 
 const errMessage = ref<string | undefined>(undefined)
@@ -49,13 +51,18 @@ const originData = computed<string>(() => {
 })
 
 const originDataChange = (value: string) => {
-  emits('dataChange', value)
   errMessage.value = undefined
   try {
     JSON.parse(value)
+    emits('dataChange', { data: value })
+    emits('update:options', { data: value })
   } catch (err) {
     errMessage.value = '语法错误'
     return
   }
+}
+
+function handleSubmit() {
+  emits('submit')
 }
 </script>

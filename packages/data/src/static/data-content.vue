@@ -36,7 +36,7 @@ import { ref } from 'vue'
 
 const savedStatus = ref<boolean>(true)
 
-const props = withDefaults(
+withDefaults(
   defineProps<{
     data?: string
     title?: string
@@ -58,6 +58,7 @@ const cm = ref<HTMLElement | null>(null)
 const emits = defineEmits<{
   (e: 'update:data', value?: any): void
   (e: 'change', value?: any): void
+  (e: 'submit'): void
 }>()
 const codeChange = (_: string) => {
   savedStatus.value = false
@@ -68,8 +69,7 @@ const dataChange = (value: string) => {
 }
 
 const handleSave = () => {
-  emits('update:data', props.data)
-  emits('change', props.data)
+  emits('submit')
   savedStatus.value = true
 }
 </script>

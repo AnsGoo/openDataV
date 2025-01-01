@@ -1,11 +1,16 @@
 import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
+import { uuid } from '@open-data-v/base'
 
 class StaticRequestData implements DataInstance {
   public data?: any
+  id: string
+  type = 'STATIC'
 
-  constructor(options?: { data?: string }) {
+  accessor: DataAcceptor | undefined
+  constructor(options?: { data?: string; id?: string }) {
     const { data } = options || {}
     this.data = data || ''
+    this.id = options?.id || uuid()
   }
 
   public toJSON() {
@@ -17,8 +22,14 @@ class StaticRequestData implements DataInstance {
     }
   }
 
+  public updateOption(options: { data?: string }) {
+    this.data = options?.data || ''
+    this.close()
+    this.accessor && this.connect(this.accessor)
+  }
   public async connect(acceptor: DataAcceptor) {
     const resp = await this.getRespData()
+    this.accessor = acceptor
     acceptor(resp)
   }
 
@@ -41,6 +52,7 @@ class StaticRequestData implements DataInstance {
   public async debug(acceptor: DataAcceptor) {
     const resp = await this.getRespData()
     acceptor(resp)
+    this.accessor && this.accessor(resp)
   }
 
   public close() {}

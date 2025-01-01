@@ -11,7 +11,7 @@
 
 <script setup lang="ts">
 import { StaticKey, useEventBus } from '@open-data-v/base'
-import { RestDataPlugin } from '@open-data-v/data'
+import { RestDataPlugin, StaticDataPlugin } from '@open-data-v/data'
 // import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import {
@@ -65,9 +65,9 @@ const canvasState = useCanvasState()
 const dataState = useDataState()
 dataState.loadPlugins([
   // QuickDataPlugin,
-  RestDataPlugin
-  // DemoDataPlugin
-  // StaticDataPlugin,
+  RestDataPlugin,
+  DemoDataPlugin,
+  StaticDataPlugin
   // SubDataPlugin,
   // WebsocketDataPlugin
 ])

@@ -1,9 +1,9 @@
 import { defineAsyncComponent, shallowRef } from 'vue'
 
+import Subontent from './data-view.vue'
 import handler from './handler'
-import Subontent from './SubDataView.vue'
 
-const SubPane = defineAsyncComponent(() => import('./Pane.vue'))
+const SubPane = defineAsyncComponent(() => import('./panel.vue'))
 
 export default {
   type: 'SUB',
