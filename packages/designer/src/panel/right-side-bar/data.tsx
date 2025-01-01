@@ -57,9 +57,7 @@ export default defineComponent({
 
     const appendGlobalData = () => {
       if (curDataType.value) {
-        console.log(curDataType.value)
         const plugin = dataState.getPlugin(curDataType.value)
-        console.log(plugin)
         const dataInstance = new plugin.handler({})
         props.slotter.addHandler(dataInstance)
       }

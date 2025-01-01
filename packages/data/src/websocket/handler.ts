@@ -14,10 +14,12 @@ class WebsocketData implements DataInstance {
   private retryCount = 0
   private connector: WebSocketInstance
   private debugAcceptor?: DataAcceptor
+  public id: string
 
-  constructor(options?: WebsocketOption, connector?: WebSocketInstance) {
+  constructor(options?: WebsocketOption, connector?: WebSocketInstance, id?: string) {
     this.options = options
     this.connector = connector || useWebsocket()
+    this.id = id || uuid()
   }
   public close() {
     this.wsInstance?.close()
@@ -37,7 +39,17 @@ class WebsocketData implements DataInstance {
   }
   public async connect(acceptor: DataAcceptor) {
     this.acceptor = acceptor
+    await this._connect()
+  }
+
+  private async _connect() {
     await this.wsconnect()
+  }
+
+  public async updateOption({ options }: { options?: StoreRestOption }) {
+    this.options = options
+    this.close()
+    this.accessor && this._connect(this.accessor)
   }
 
   private async wsconnect() {
@@ -89,6 +101,7 @@ class WebsocketData implements DataInstance {
 
   public async debug(acceptor: DataAcceptor) {
     this.debugAcceptor = acceptor
+    this.reConnect()
   }
 
   public cancelDebug() {
@@ -98,7 +111,8 @@ class WebsocketData implements DataInstance {
   public toJSON() {
     return {
       options: cloneDeep(this.options),
-      type: 'WS'
+      type: 'WS',
+      id: this.id
     }
   }
 }

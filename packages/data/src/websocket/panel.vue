@@ -56,12 +56,10 @@
 <script lang="ts" setup>
 import type { DataInstance, Slotter } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
-import { computed, onMounted, ref, useSlots, watch } from 'vue'
+import { computed, onMounted, ref, useSlots } from 'vue'
 
-import type RestRequestData from './handler'
-import DataHandler from './handler'
 import type { WebsocketOption } from './type'
-import WebsocketView from './WebsocketView.vue'
+import WebsocketView from './ws-view.vue'
 
 const props = defineProps<{
   slotter: Slotter
@@ -95,53 +93,18 @@ const formData = ref<WebsocketOption>({
   maxRetryCount: 0
 })
 const changeHandler = () => {
-  setDataConfig()
-}
-
-const setDataConfig = () => {
-  if (formData.value.url) {
-    const dataConfig = {
-      type: 'WS',
-      dataInstance: new DataHandler(formData.value)
-    }
-    if (props.slotter) {
-      props.slotter.changeDataConfig(dataConfig)
-    }
-  }
+  props.dataInstance.updateOption({ options: formData.value })
 }
 
 onMounted(async () => {
-  if (props.slotter) {
-    initComponentData()
-  }
+  initComponentData()
 })
 
 const initComponentData = () => {
-  const dataConfig = props.slotter!.dataConfig
-  if (dataConfig && dataConfig.type === 'WS') {
-    const restRequest = props.slotter!.dataConfig?.dataInstance as RestRequestData
-    if (!restRequest) {
-      return
-    }
-    const { options } = restRequest.toJSON()
-    Object.assign(formData, options)
-  } else {
-    Object.assign(formData, {
-      url: '',
-      message: '',
-      isRetry: false,
-      retryCount: 0
-    })
-    setDataConfig()
+  const dataConfig = props.dataInstance.toJSON()
+  if (!dataConfig.options) {
+    return
   }
+  Object.assign(formData.value, dataConfig.options)
 }
-watch(
-  () => props.slotter,
-  async (value: Slotter | undefined) => {
-    if (value) {
-      initComponentData()
-    }
-  },
-  { immediate: true }
-)
 </script>

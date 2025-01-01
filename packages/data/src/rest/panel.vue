@@ -47,12 +47,12 @@
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
-import { computed, onMounted, ref, useSlots, watch } from 'vue'
+import { computed, onMounted, ref, useSlots } from 'vue'
 
 import { uuid } from '../utils'
 import Rest from './data-view.vue'
 import { RequestMethod } from './enums'
-import type { RestOption, StoreRestOption } from './type'
+import type { RestOption } from './type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
 
 const props = defineProps<{
@@ -90,16 +90,9 @@ onMounted(async () => {
 
 const initComponentData = () => {
   const dataConfig = props.dataInstance.toJSON()
-  Object.assign(formData.value, ...storeOptionToRequestOptions(dataConfig as StoreRestOption))
+  if (!dataConfig.options) {
+    return
+  }
+  Object.assign(formData.value, storeOptionToRequestOptions(dataConfig.options))
 }
-
-watch(
-  () => props.slotter,
-  async (value: dataInstance | undefined) => {
-    if (value) {
-      initComponentData()
-    }
-  },
-  { immediate: true }
-)
 </script>

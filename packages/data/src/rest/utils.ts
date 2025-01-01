@@ -27,9 +27,9 @@ export const recordabletoKV = (data: Record<string, any>): Array<KV> => {
 export const requestOptionsToStore = (options: RestOption): StoreRestOption => {
   const data = cloneDeep(options)
   const result: StoreRestOption = {
-    headers: KVToRecordable(options.headers),
-    params: KVToRecordable(options.params),
-    data: KVToRecordable(options.data),
+    headers: KVToRecordable(options.headers || []),
+    params: KVToRecordable(options.params || []),
+    data: KVToRecordable(options.data || []),
     method: data.method,
     url: data.url,
     otherConfig: data.otherConfig
@@ -39,9 +39,9 @@ export const requestOptionsToStore = (options: RestOption): StoreRestOption => {
 export const storeOptionToRequestOptions = (data: StoreRestOption): RestOption => {
   const options = cloneDeep(data)
   const result: RestOption = {
-    headers: recordabletoKV(options.headers),
-    params: recordabletoKV(options.params),
-    data: recordabletoKV(options.data),
+    headers: recordabletoKV(options.headers || {}),
+    params: recordabletoKV(options.params || {}),
+    data: recordabletoKV(options.data || {}),
     method: options.method,
     url: options.url,
     otherConfig: options.otherConfig

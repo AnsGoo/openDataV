@@ -24,16 +24,13 @@
 import { OButton, OButtonGroup, OCard, OInput } from '@open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
-import { useWebsocket } from '../hooks/ws'
 import type WebsocketData from './handler'
 import type { WebsocketOption } from './type'
 
 const props = withDefaults(
   defineProps<{
+    dataInstance: dataInstance
     options?: WebsocketOption
-    mode?: 'debug' | 'use'
-    index?: number
-    dataInstance?: WebsocketData
   }>(),
   {
     options: () => {
@@ -44,11 +41,7 @@ const props = withDefaults(
         isRetry: false,
         maxRetryCount: 0
       }
-    },
-    handler: () => {
-      return useWebsocket()
-    },
-    mode: 'use'
+    }
   }
 )
 
@@ -60,11 +53,10 @@ const formData = reactive<WebsocketOption>(props.options)
 const response = ref({
   data: ''
 })
-let wsInstance: WebsocketData
 
 const close = () => {
-  if (wsInstance) {
-    wsInstance.close()
+  if (props.dataInstance) {
+    props.dataInstance.close()
   }
 }
 
@@ -72,14 +64,12 @@ const connect = () => {
   if (!props.dataInstance) {
     return
   }
-  wsInstance = props.dataInstance
-  const acceptor = (message) => {
-    response.value.data = message.data
-  }
-  wsInstance.debug(acceptor)
+  props.dataInstance.debug((data) => {
+    response.value.data = JSON.stringify(data)
+  })
 }
 const send = () => {
-  wsInstance.send(formData.message)
+  props.dataInstance.send(formData.message)
 }
 const formChange = () => {
   emits('change', formData)
@@ -89,9 +79,9 @@ const formChange = () => {
 defineExpose({ close })
 
 onUnmounted(() => {
-  if (!wsInstance) {
+  if (!props.dataInstance) {
     return
   }
-  wsInstance.cancelDebug()
+  props.dataInstance.cancelDebug()
 })
 </script>
