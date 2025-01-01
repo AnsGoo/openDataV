@@ -25,9 +25,6 @@ export default defineComponent({
     }
   },
   emits: {
-    'update:dataOptions': (payload: Array<any>) => {
-      return payload
-    },
     change: (payload: Array<any>) => {
       return payload
     }
