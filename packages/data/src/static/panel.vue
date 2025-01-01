@@ -20,7 +20,12 @@
       closable
       @close="isShow = false"
     >
-      <StaticView v-model:options="formData" mode="use" @submit="dataChangeHandler" />
+      <StaticView
+        v-model:options="formData"
+        :data-instance="dataInstance"
+        mode="use"
+        @submit="dataChangeHandler"
+      />
     </o-card>
   </o-modal>
 </template>

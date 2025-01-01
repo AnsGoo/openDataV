@@ -66,9 +66,7 @@ import { reactive, ref } from 'vue'
 import { uuid } from '../utils'
 import DynamicKVForm from './dynamic-kv-form.vue'
 import { RequestHeaderEnum, RequestMethod } from './enums'
-import DataHandler from './handler'
 import type { RestOption, RestResponse } from './type'
-import { requestOptionsToStore } from './utils'
 
 const props = withDefaults(
   defineProps<{

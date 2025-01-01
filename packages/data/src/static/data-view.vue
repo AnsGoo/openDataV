@@ -26,6 +26,7 @@ const props = withDefaults(
     }
     title?: string
     mode?: 'debug' | 'use'
+    dataInstance?: DataInstance
   }>(),
   {
     title: '',

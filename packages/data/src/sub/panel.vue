@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
-import { computed, onMounted, ref, useSlots } from 'vue'
+import { computed, ref, useSlots } from 'vue'
 
 import SubDataView from './data-view.vue'
 
@@ -53,16 +53,6 @@ const formDataConfig = ref<{
   channel: ''
 })
 
-onMounted(async () => {
-  await initData()
-})
-
-const initData = async () => {
-  const acceptor = (data) => {
-    console.info(data)
-  }
-  props.dataInstance.debug(acceptor)
-}
 const changeHandler = () => {
   props.dataInstance.updateOption({ channel: formDataConfig.value.channel })
 }

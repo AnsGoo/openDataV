@@ -5,14 +5,20 @@
     </div>
     <o-form>
       <o-form-item key="channel" label="数据通道">
-        <o-input v-model:value="channel" @update:value="channelChange" />
+        <div class="justify-center flex-row flex-nowrap flex items-center w-full">
+          <o-input v-model:value="channel" class="flex-1" @update:value="channelChange" />
+          <o-button type="primary" @click="lister">监听</o-button>
+        </div>
       </o-form-item>
     </o-form>
+    <o-card name="origin" title="原始数据结果">
+      <OCodeEditor :value="response.data" :readonly="true" />
+    </o-card>
   </o-card>
 </template>
 
 <script lang="ts" setup>
-import { OCard, OForm, OFormItem, OInput } from '@open-data-v/ui'
+import { OButton, OCard, OForm, OFormItem, OInput } from '@open-data-v/ui'
 import { ref } from 'vue'
 
 const props = withDefaults(
@@ -33,6 +39,9 @@ const props = withDefaults(
     mode: 'debug'
   }
 )
+const response = ref({
+  data: ''
+})
 const channel = ref<string>(props.options.channel)
 const emits = defineEmits<{
   (e: 'update:options', value: { data: string }): void
@@ -41,5 +50,14 @@ const emits = defineEmits<{
 const channelChange = (value: string) => {
   channel.value = value
   emits('channelChange', value)
+}
+
+const lister = () => {
+  if (!props.dataInstance) {
+    return
+  }
+  props.dataInstance.debug((data) => {
+    response.value.data = JSON.stringify(data)
+  })
 }
 </script>
