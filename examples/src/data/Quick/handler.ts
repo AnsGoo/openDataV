@@ -1,8 +1,8 @@
 import type { Response } from '@open-data-v/base'
 import { uuid } from '@open-data-v/base'
+import { StaticDataPlugin } from '@open-data-v/data'
 
 import { getStaticDataApi } from '@/api/data'
-import { handler as StaticDataHandler } from '@/open-data-v/data'
 
 const QUICK_TYPE = 'QUICK'
 
@@ -10,7 +10,7 @@ export interface QuickDataResponse extends Response {
   id: string
   title: string
 }
-class QuickDataHanlder extends StaticDataHandler {
+class QuickDataHanlder extends StaticDataPlugin.handler {
   public type = QUICK_TYPE
   public options: {
     dataId: string | undefined
@@ -25,8 +25,8 @@ class QuickDataHanlder extends StaticDataHandler {
     options: { dataId?: string; title?: string; data?: any }
     id?: string
   }) {
+    super({ options, id })
     this.options = options || { dataId: '', title: '', data: {} }
-    this.id = id || uuid()
   }
 
   public toJSON() {
