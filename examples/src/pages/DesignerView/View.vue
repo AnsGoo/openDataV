@@ -32,7 +32,7 @@ import { onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import { getPageApi } from '@/api/pages'
-// import QuickDataPlugin from '@/data/Quick'
+import QuickDataPlugin from '@/data/Quick'
 // import RestDataPlugin from '@/data/Rest'
 import useToolBars from '@/pages/DesignerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
@@ -69,7 +69,7 @@ useEventBus(StaticKey.STDOUT, (event) => {
 const canvasState = useCanvasState()
 const dataState = useDataState()
 dataState.loadPlugins([
-  // QuickDataPlugin,
+  QuickDataPlugin,
   RestDataPlugin,
   DemoDataPlugin,
   StaticDataPlugin,

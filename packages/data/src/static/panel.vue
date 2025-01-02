@@ -20,12 +20,16 @@
       closable
       @close="isShow = false"
     >
-      <StaticView
+      <static-view
         v-model:options="formData"
         :data-instance="dataInstance"
         mode="use"
         @submit="dataChangeHandler"
-      />
+      >
+        <template #data-select>
+          <slot name="data-select"> </slot>
+        </template>
+      </static-view>
     </o-card>
   </o-modal>
 </template>
@@ -33,19 +37,9 @@
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
-import { computed, onMounted, onUnmounted, ref, useSlots } from 'vue'
+import { computed, ref } from 'vue'
 
-import StaticContent from './data-view.vue'
-
-const slots = useSlots()
-
-const StaticView = computed(() => {
-  if (slots.default) {
-    return slots.default()[0].type
-  } else {
-    return StaticContent
-  }
-})
+import StaticView from './data-view.vue'
 
 const props = defineProps<{
   dataInstance: DataInstance
@@ -66,24 +60,7 @@ const previewData = computed<string>(() => {
   }
 })
 
-onMounted(async () => {
-  await initData()
-})
-
-const initData = async () => {
-  const dataInstance = props.dataInstance
-  const acceptor = ({ data }) => {
-    formData.value.data = JSON.stringify(data)
-  }
-  dataInstance.debug(acceptor)
-}
 const dataChangeHandler = () => {
-  props.dataInstance.updateOption({ data: formData.value.data })
+  props.dataInstance.updateOption({ data: JSON.parse(formData.value.data) })
 }
-
-onUnmounted(() => {
-  if (props.dataInstance) {
-    props.dataInstance.close()
-  }
-})
 </script>

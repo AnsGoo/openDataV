@@ -5,33 +5,44 @@ class StaticRequestData implements DataInstance {
   public data?: any
   id: string
   type = 'STATIC'
+  options = {
+    data: ''
+  }
 
   accessor: DataAcceptor | undefined
-  constructor(options?: { data?: string; id?: string }) {
-    const { data } = options || {}
-    this.data = data || ''
-    this.id = options?.id || uuid()
+  debugAcceptor: DataAcceptor | undefined
+  constructor({ options, id }?: { options: { data?: string }; id?: string }) {
+    this.options.data = options || { data: '' }
+    this.id = id || uuid()
   }
 
   public toJSON() {
     return {
       options: {
-        data: this.data
+        data: this.options.data
       },
-      type: 'STATIC',
+      type: this.type,
       id: this.id
     }
   }
 
-  public updateOption(options: { data?: string }) {
-    this.data = options?.data || ''
+  public updateOption(options: { data?: any }) {
+    this.options = {
+      ...this.options,
+      ...options
+    }
     this.close()
-    this.accessor && this.connect(this.accessor)
+    this._connect()
   }
   public async connect(acceptor: DataAcceptor) {
-    const resp = await this.getRespData()
     this.accessor = acceptor
-    acceptor(resp)
+    this._connect()
+  }
+
+  private async _connect() {
+    const resp = await this.getRespData()
+    this.accessor?.(resp)
+    this.debugAcceptor?.(resp.data)
   }
 
   public async getRespData(): Promise<Response> {
@@ -40,7 +51,7 @@ class StaticRequestData implements DataInstance {
       data: ''
     }
     try {
-      response.data = JSON.parse(this.data)
+      response.data = this.options.data
       response.status = 'SUCCESS'
     } catch (err: any) {
       response.status = 'FAILED'
@@ -51,9 +62,8 @@ class StaticRequestData implements DataInstance {
   }
 
   public async debug(acceptor: DataAcceptor) {
-    const resp = await this.getRespData()
-    acceptor(resp)
-    this.accessor && this.accessor(resp)
+    this.debugAcceptor = acceptor
+    this._connect()
   }
 
   public close() {}
