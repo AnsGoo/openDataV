@@ -18,7 +18,15 @@ class WebsocketData implements DataInstance {
   public id: string
   type = 'WS'
 
-  constructor(options?: WebsocketOption, connector?: WebSocketInstance, id?: string) {
+  constructor({
+    options,
+    id,
+    connector
+  }: {
+    options?: WebsocketOption
+    connector?: WebSocketInstance
+    id?: string
+  }) {
     this.options = options
     this.connector = connector || useWebsocket()
     this.id = id || uuid()
@@ -48,10 +56,13 @@ class WebsocketData implements DataInstance {
     await this.wsconnect()
   }
 
-  public async updateOption({ options }: { options?: StoreRestOption }) {
-    this.options = options
+  public async updateOption(options: StoreRestOption) {
+    this.options = {
+      ...this.options,
+      ...options
+    }
     this.close()
-    this.accessor && this._connect(this.accessor)
+    this._connect()
   }
 
   private async wsconnect() {

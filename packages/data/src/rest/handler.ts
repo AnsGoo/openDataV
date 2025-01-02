@@ -12,6 +12,7 @@ class RestRequestData implements DataInstance {
   public timer: any = 0
   public type = 'REST'
   public accessor: DataAcceptor | undefined
+  private debugAcceptor: DataAcceptor | undefined
 
   constructor({
     options,
@@ -30,28 +31,26 @@ class RestRequestData implements DataInstance {
   public close() {
     clearInterval(this.timer)
   }
-  public async updateOption({ options }: { options?: StoreRestOption }) {
-    this.options = options
-    this.close()
-    this.accessor && this._connect(this.accessor)
-  }
 
   public async connect(acceptor: DataAcceptor) {
     this.accessor = acceptor
-    this._connect(acceptor)
+    this._connect()
   }
-  private async _connect(acceptor: DataAcceptor) {
+  private async _connect() {
+    this.close()
     const { otherConfig = { isRepeat: false, interval: 3000 } } = this.options || {}
     if (otherConfig.isRepeat) {
       const handler = async () => {
         const resp = await this.getRespData()
-        acceptor(resp)
+        this.acceptor?.(resp)
+        this.debugAcceptor?.(resp.data)
       }
       const interval = otherConfig.interval | 3000
       this.timer = setInterval(handler, interval) as unknown as IntervalHandle
     } else {
       const resp = await this.getRespData()
-      acceptor(resp)
+      this.acceptor?.(resp)
+      this.debugAcceptor?.(resp.data)
     }
   }
 
@@ -84,9 +83,15 @@ class RestRequestData implements DataInstance {
   }
 
   public async debug(acceptor: DataAcceptor) {
-    const resp = await this.getRespData()
-    acceptor(resp)
-    this.accessor && this.accessor(resp)
+    this.debugAcceptor = acceptor
+    this._connect()
+  }
+  public updateOption(options: { options?: StoreRestOption }) {
+    this.options = {
+      ...this.options,
+      ...options
+    }
+    this._connect()
   }
 
   public toJSON() {

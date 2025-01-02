@@ -39,7 +39,11 @@
         :dataInstance="props.dataInstance"
         @update:options="changeHandler"
         @change="changeHandler"
-      />
+      >
+        <template #data-select>
+          <slot name="data-select"> </slot>
+        </template>
+      </RestView>
     </o-card>
   </o-modal>
 </template>
@@ -47,10 +51,10 @@
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
-import { computed, onMounted, ref, useSlots } from 'vue'
+import { onMounted, ref } from 'vue'
 
 import { uuid } from '../utils'
-import Rest from './data-view.vue'
+import RestView from './data-view.vue'
 import { RequestMethod } from './enums'
 import type { RestOption } from './type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
@@ -59,15 +63,7 @@ const props = defineProps<{
   dataInstance: DataInstance
   index?: number
 }>()
-const slots = useSlots()
 const isShow = ref<boolean>(false)
-const RestView = computed(() => {
-  if (slots.default) {
-    return slots.default()[0].type
-  } else {
-    return Rest
-  }
-})
 
 const formData = ref<RestOption>({
   method: RequestMethod.GET,
@@ -81,7 +77,7 @@ const formData = ref<RestOption>({
   }
 })
 const changeHandler = () => {
-  props.dataInstance.updateOption({ options: requestOptionsToStore(formData.value) })
+  props.dataInstance.updateOption(requestOptionsToStore(formData.value))
 }
 
 onMounted(async () => {

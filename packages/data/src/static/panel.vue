@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 import StaticView from './data-view.vue'
 
@@ -62,5 +62,17 @@ const previewData = computed<string>(() => {
 
 const dataChangeHandler = () => {
   props.dataInstance.updateOption({ data: JSON.parse(formData.value.data) })
+}
+
+onMounted(async () => {
+  initComponentData()
+})
+
+const initComponentData = () => {
+  const dataConfig = props.dataInstance.toJSON()
+  if (!dataConfig.options) {
+    return
+  }
+  Object.assign(formData.value, dataConfig.options)
 }
 </script>
