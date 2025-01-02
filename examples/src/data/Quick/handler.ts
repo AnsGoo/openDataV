@@ -32,8 +32,8 @@ class QuickDataHanlder extends StaticDataPlugin.handler {
   public toJSON() {
     return {
       options: {
-        id: this.id || '',
-        title: this.title
+        dataId: this.options.dataId || '',
+        title: this.options.title || ''
       },
       type: this.type,
       id: this.id
