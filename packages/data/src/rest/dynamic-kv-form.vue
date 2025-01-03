@@ -47,10 +47,10 @@
   </div>
 </template>
 <script lang="ts" setup>
+import { uuid } from '@open-data-v/base'
 import { OButton, ODivider, OInput } from '@open-data-v/ui'
 import { ref, watch } from 'vue'
 
-import { uuid } from '../utils'
 import type { KV } from './type'
 
 const props = withDefaults(defineProps<{ value: Array<KV>; title: string; options?: string[] }>(), {

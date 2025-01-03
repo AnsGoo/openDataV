@@ -1,5 +1,4 @@
 import type { Response } from '@open-data-v/base'
-import { uuid } from '@open-data-v/base'
 import { StaticDataPlugin } from '@open-data-v/data'
 
 import { getStaticDataApi } from '@/api/data'
@@ -11,12 +10,11 @@ export interface QuickDataResponse extends Response {
   title: string
 }
 class QuickDataHanlder extends StaticDataPlugin.handler {
-  public type = QUICK_TYPE
   public options: {
     dataId: string | undefined
     title: string
     data?: any
-  }
+  } = { dataId: '', title: '', data: {} }
 
   constructor({
     options,
@@ -26,26 +24,23 @@ class QuickDataHanlder extends StaticDataPlugin.handler {
     id?: string
   }) {
     super({ options, id })
-    this.options = options || { dataId: '', title: '', data: {} }
   }
 
+  public get type() {
+    return QUICK_TYPE
+  }
   public toJSON() {
-    return {
-      options: {
-        dataId: this.options.dataId || '',
-        title: this.options.title || ''
-      },
-      type: this.type,
-      id: this.id
-    }
+    const option = super.toJSON()
+    delete option.options.data
+    return option
   }
 
   public async getRespData(): Promise<Response> {
     const response: QuickDataResponse = {
       status: 'SUCCESS',
       data: '',
-      id: '',
-      title: ''
+      id: this.id,
+      title: this.options.title || ''
     }
     if (!this.options.dataId) {
       return response
@@ -61,8 +56,6 @@ class QuickDataHanlder extends StaticDataPlugin.handler {
       response.status = 'FAILED'
       response.data = err.stack || err.message
     }
-    response.id = this.id
-    response.title = this.title || ''
     return response
   }
 }

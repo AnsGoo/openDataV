@@ -1,6 +1,6 @@
+import { uuid } from '@open-data-v/base'
 import { defineAsyncComponent, shallowRef } from 'vue'
 
-import { uuid } from '../utils'
 import { RequestMethod } from './enums'
 import RestHandler from './handler'
 import type { RestOption, RestResponse } from './type'

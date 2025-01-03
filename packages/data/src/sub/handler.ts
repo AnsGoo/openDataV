@@ -1,6 +1,7 @@
 import type { DataAcceptor, Response } from '@open-data-v/base'
 import { eventBus } from '@open-data-v/base'
-import { BaseDataHandler } from 'base/handler'
+
+import { BaseDataHandler } from '../base/handler'
 
 export interface SubOption {
   channel: string

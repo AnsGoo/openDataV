@@ -60,10 +60,10 @@
 </template>
 <script setup lang="ts">
 import type { DataInstance } from '@open-data-v/base'
+import { uuid } from '@open-data-v/base'
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from '@open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
-import { uuid } from '../utils'
 import DynamicKVForm from './dynamic-kv-form.vue'
 import { RequestHeaderEnum, RequestMethod } from './enums'
 import type { RestOption, RestResponse } from './type'

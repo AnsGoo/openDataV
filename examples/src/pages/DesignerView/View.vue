@@ -33,7 +33,7 @@ import { useRoute, useRouter } from 'vue-router'
 
 import { getPageApi } from '@/api/pages'
 import QuickDataPlugin from '@/data/Quick'
-// import RestDataPlugin from '@/data/Rest'
+import RestDemoDataPlugin from '@/data/Rest'
 import useToolBars from '@/pages/DesignerView/toolbars'
 import { useProjectSettingStoreWithOut } from '@/store/modules/projectSetting'
 import { message } from '@/utils/message'
@@ -74,7 +74,8 @@ dataState.loadPlugins([
   DemoDataPlugin,
   StaticDataPlugin,
   SubDataPlugin,
-  WebsocketDataPlugin
+  WebsocketDataPlugin,
+  RestDemoDataPlugin
 ])
 const route = useRoute()
 const router = useRouter()

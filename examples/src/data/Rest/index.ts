@@ -1,20 +1,23 @@
+import { uuid } from '@open-data-v/base'
 import { RequestMethod, RestHandler } from '@open-data-v/data'
 import { defineAsyncComponent, shallowRef } from 'vue'
 
 import { apiHttp as http } from '@/utils/http'
-import { uuid } from '@/utils/utils'
 
 class RestRequestHandler extends RestHandler {
-  constructor(options) {
-    const connector = http
-    super(options, connector)
+  constructor({ options, id }: { options: any; id?: string }) {
+    super({ options, id, connector: http })
+  }
+
+  get type() {
+    return 'REST-DEMOE'
   }
 }
 
 export default {
-  type: 'REST',
+  type: 'REST-DEMOE',
   name: '动态数据',
-  component: shallowRef(defineAsyncComponent(() => import('./Pane.vue'))),
+  component: shallowRef(defineAsyncComponent(() => import('./panel.vue'))),
   handler: RestRequestHandler,
   useTo: ['COMPONENT', 'GLOBAL'],
   getdefaultOption: () => {

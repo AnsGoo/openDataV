@@ -25,7 +25,7 @@ class StaticDataHandler extends BaseDataHandler<StaticOption> {
     this.debugAcceptor?.(resp)
   }
 
-  private async getRespData(): Promise<Response> {
+  protected async getRespData(): Promise<Response> {
     const response: Response = {
       status: 'SUCCESS',
       data: ''
