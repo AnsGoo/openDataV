@@ -1,51 +1,31 @@
-import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
-import { uuid } from '@open-data-v/base'
+import type { Response } from '@open-data-v/base'
 
-class StaticRequestData implements DataInstance {
+import { BaseDataHandler } from '../base/handler'
+
+export interface StaticOption {
+  data?: any
+}
+
+class StaticDataHandler extends BaseDataHandler<StaticOption> {
   public data?: any
-  id: string
-  type = 'STATIC'
-  options = {
+  public options: StaticOption = {
     data: ''
   }
-
-  accessor: DataAcceptor | undefined
-  debugAcceptor: DataAcceptor | undefined
-  constructor({ options, id }?: { options: { data?: string }; id?: string }) {
-    this.options.data = options || { data: '' }
-    this.id = id || uuid()
+  constructor({ options, id }: { options: StaticOption; id?: string }) {
+    super({ options, id })
   }
 
-  public toJSON() {
-    return {
-      options: {
-        data: this.options.data
-      },
-      type: this.type,
-      id: this.id
-    }
+  public get type(): string {
+    return 'STATIC'
   }
 
-  public updateOption(options: { data?: any }) {
-    this.options = {
-      ...this.options,
-      ...options
-    }
-    this.close()
-    this._connect()
-  }
-  public async connect(acceptor: DataAcceptor) {
-    this.accessor = acceptor
-    this._connect()
-  }
-
-  private async _connect() {
+  public async reconnect() {
     const resp = await this.getRespData()
-    this.accessor?.(resp)
-    this.debugAcceptor?.(resp.data)
+    this.acceptor?.(resp)
+    this.debugAcceptor?.(resp)
   }
 
-  public async getRespData(): Promise<Response> {
+  private async getRespData(): Promise<Response> {
     const response: Response = {
       status: 'SUCCESS',
       data: ''
@@ -57,15 +37,7 @@ class StaticRequestData implements DataInstance {
       response.status = 'FAILED'
       return response
     }
-
     return response
   }
-
-  public async debug(acceptor: DataAcceptor) {
-    this.debugAcceptor = acceptor
-    this._connect()
-  }
-
-  public close() {}
 }
-export default StaticRequestData
+export default StaticDataHandler

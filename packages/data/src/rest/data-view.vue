@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, ODivider, OInput, OSelect, OTabPane, OTabs } from '@open-data-v/ui'
-import { reactive, ref } from 'vue'
+import { onUnmounted, reactive, ref } from 'vue'
 
 import { uuid } from '../utils'
 import DynamicKVForm from './dynamic-kv-form.vue'
@@ -119,6 +119,9 @@ const send = async () => {
   }
   props.dataInstance?.debug(acceptor)
 }
+onUnmounted(() => {
+  props.dataInstance?.disposeDebug()
+})
 const formChange = () => {
   emits('change', formData)
   emits('update:options', formData)

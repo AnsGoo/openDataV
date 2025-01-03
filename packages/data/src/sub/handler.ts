@@ -1,17 +1,19 @@
-import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
-import { eventBus, useEventBus, uuid } from '@open-data-v/base'
+import type { DataAcceptor, Response } from '@open-data-v/base'
+import { eventBus } from '@open-data-v/base'
+import { BaseDataHandler } from 'base/handler'
 
-class SubRequestData implements DataInstance {
+export interface SubOption {
+  channel: string
+}
+
+class SubDataHanlder extends BaseDataHandler<SubOption> {
   public channel?: string
   public accessor: DataAcceptor | undefined
-  public id: string
-  public type = 'SUB'
   private debugCallback: DataAcceptor | undefined
 
   private callback: DataAcceptor | undefined
-  constructor({ channel, id }: { channel?: string; id: string }) {
-    this.channel = channel
-    this.id = id || uuid()
+  constructor({ options, id }: { options?: SubOption; id: string }) {
+    super({ options, id })
     this.callback = (event: any) => {
       const response: Response = {
         status: 'SUCCESS',
@@ -24,47 +26,28 @@ class SubRequestData implements DataInstance {
     }
   }
 
-  public toJSON() {
-    return {
-      channel: this.channel || '',
-      type: this.type,
-      id: this.id
-    }
+  public get type(): string {
+    return 'SUB'
   }
 
   public close() {
-    if (!this.channel) {
+    const { channel } = this.options || {}
+    if (!channel) {
       return
     }
-    eventBus.off(this.channel, this.accessor)
+    eventBus.off(channel, this.acceptor)
   }
-  public updateOption(options: { channel?: string }) {
-    this.channel = options?.channel || ''
+
+  public async reconnect() {
+    const { channel } = this.options || {}
     this.close()
-    this.connect(this.accessor || (() => {}))
-  }
-
-  public async connect(acceptor: DataAcceptor) {
-    this.accessor = acceptor
-    this._connect()
-  }
-
-  private _connect() {
-    if (!this.channel) {
+    if (!channel) {
       return
     }
-    eventBus.on(this.channel, this.callback)
-  }
-  private reConent() {
-    if (!this.channel) {
-      return
-    }
-    eventBus.off(this.channel, this.accessor)
-    this._connect()
+    eventBus.on(channel, this.callback!)
   }
   public async debug(acceptor: DataAcceptor) {
     this.debugCallback = acceptor
-    this.reConent()
   }
 }
-export default SubRequestData
+export default SubDataHanlder

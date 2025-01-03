@@ -12,19 +12,19 @@
     </div>
   </o-form-item>
   <o-form-item label="是否重复" label-placement="top">
-    <o-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeHandler" />
+    <o-switch v-model:value="formData.otherConfig.isRepeat" @update:value="changeOptions" />
   </o-form-item>
   <o-form-item v-if="formData.otherConfig.isRepeat" label="请求间隔" label-placement="top">
     <o-input-number
       v-model:value="formData.otherConfig.interval"
       :min="300"
       :step="100"
-      @update:value="changeHandler"
+      @update:value="changeOptions"
     >
       <template #suffix> ms </template>
     </o-input-number>
   </o-form-item>
-  <o-modal v-model:show="isShow" :beforeClose="changeHandler">
+  <o-modal v-model:show="isShow" :beforeClose="changeOptions">
     <o-card
       title="动态数据"
       :bordered="false"
@@ -37,8 +37,8 @@
       <RestView
         v-model:options="formData"
         :dataInstance="props.dataInstance"
-        @update:options="changeHandler"
-        @change="changeHandler"
+        @update:options="changeOptions"
+        @change="changeOptions"
       >
         <template #data-select>
           <slot name="data-select"> </slot>
@@ -50,13 +50,14 @@
 
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
+import { uuid } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
-import { onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 
-import { uuid } from '../utils'
+import { useDataFill } from '../base/use'
 import RestView from './data-view.vue'
 import { RequestMethod } from './enums'
-import type { RestOption } from './type'
+import type { RestOption, StoreRestOption } from './type'
 import { requestOptionsToStore, storeOptionToRequestOptions } from './utils'
 
 const props = defineProps<{
@@ -67,7 +68,7 @@ const isShow = ref<boolean>(false)
 
 const formData = ref<RestOption>({
   method: RequestMethod.GET,
-  url: '/getRiskArea',
+  url: '/demo',
   headers: [{ key: '', value: '', disable: false, id: uuid() }],
   params: [{ key: '', value: '', disable: false, id: uuid() }],
   data: [{ key: '', value: '', disable: false, id: uuid() }],
@@ -76,19 +77,14 @@ const formData = ref<RestOption>({
     interval: 1000
   }
 })
-const changeHandler = () => {
-  props.dataInstance.updateOption(requestOptionsToStore(formData.value))
-}
 
-onMounted(async () => {
-  initComponentData()
-})
-
-const initComponentData = () => {
-  const dataConfig = props.dataInstance.toJSON()
-  if (!dataConfig.options) {
-    return
+const optionData = computed({
+  get: () => {
+    return requestOptionsToStore(formData.value)
+  },
+  set: (val) => {
+    formData.value = storeOptionToRequestOptions(val)
   }
-  Object.assign(formData.value, storeOptionToRequestOptions(dataConfig.options))
-}
+})
+const { changeOptions } = useDataFill<StoreRestOption>(props.dataInstance, optionData)
 </script>

@@ -71,7 +71,7 @@
             <CanvasOption />
           </div>
         </o-tab-pane>
-        <!-- <o-tab-pane name="data">
+        <o-tab-pane name="data">
           <template #label>
             <div class="flex-nowrap flex flex-row items-center">
               <x-icon name="data" />
@@ -81,7 +81,7 @@
           <div class="attr-list">
             <GlobalDataOption />
           </div>
-        </o-tab-pane> -->
+        </o-tab-pane>
       </o-tabs>
     </div>
     <div v-else>

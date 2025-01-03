@@ -18,8 +18,9 @@
 </template>
 
 <script lang="ts" setup>
+import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OForm, OFormItem, OInput } from '@open-data-v/ui'
-import { ref } from 'vue'
+import { onUnmounted, ref } from 'vue'
 
 const props = withDefaults(
   defineProps<{
@@ -28,6 +29,7 @@ const props = withDefaults(
     }
     title?: string
     mode?: 'debug' | 'use'
+    dataInstance?: DataInstance
   }>(),
   {
     title: '',
@@ -44,12 +46,12 @@ const response = ref({
 })
 const channel = ref<string>(props.options.channel)
 const emits = defineEmits<{
-  (e: 'update:options', value: { data: string }): void
-  (e: 'channelChange', value: string): void
+  (e: 'update:options', value: { channel: string }): void
+  (e: 'channelChange', value: { channel: string }): void
 }>()
 const channelChange = (value: string) => {
   channel.value = value
-  emits('channelChange', value)
+  emits('channelChange', { channel: value })
 }
 
 const lister = () => {
@@ -60,4 +62,10 @@ const lister = () => {
     response.value.data = JSON.stringify(data)
   })
 }
+
+onUnmounted(() => {
+  if (props.dataInstance) {
+    props.dataInstance.disposeDebug()
+  }
+})
 </script>

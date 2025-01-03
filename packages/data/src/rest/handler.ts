@@ -1,18 +1,13 @@
-import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
-import { uuid } from '@open-data-v/base'
-import { cloneDeep } from 'lodash-es'
+import type { Response } from '@open-data-v/base'
 
+import { BaseDataHandler } from '../base/handler'
 import type { RequestInstance } from '../hooks'
 import { useRequest } from '../hooks'
 import type { StoreRestOption } from './type'
 
-class RestRequestData implements DataInstance {
-  public options?: StoreRestOption
+class RestRequestData extends BaseDataHandler<StoreRestOption> {
   public requestInstance: RequestInstance
   public timer: any = 0
-  public type = 'REST'
-  public accessor: DataAcceptor | undefined
-  private debugAcceptor: DataAcceptor | undefined
 
   constructor({
     options,
@@ -23,20 +18,18 @@ class RestRequestData implements DataInstance {
     connector?: RequestInstance
     id?: string
   }) {
-    this.options = options
+    super({ options, id })
     this.requestInstance = connector || useRequest()
-    this.id = id || uuid()
   }
-  id: string
   public close() {
     clearInterval(this.timer)
   }
 
-  public async connect(acceptor: DataAcceptor) {
-    this.accessor = acceptor
-    this._connect()
+  public get type(): string {
+    return 'REST'
   }
-  private async _connect() {
+
+  public async reconnect() {
     this.close()
     const { otherConfig = { isRepeat: false, interval: 3000 } } = this.options || {}
     if (otherConfig.isRepeat) {
@@ -54,7 +47,7 @@ class RestRequestData implements DataInstance {
     }
   }
 
-  public async getRespData(): Promise<Response> {
+  private async getRespData(): Promise<Response> {
     const response: Response = {
       status: 'FAILED',
       data: ''
@@ -80,26 +73,6 @@ class RestRequestData implements DataInstance {
       response.data = err.stack || err.message
     }
     return response
-  }
-
-  public async debug(acceptor: DataAcceptor) {
-    this.debugAcceptor = acceptor
-    this._connect()
-  }
-  public updateOption(options: { options?: StoreRestOption }) {
-    this.options = {
-      ...this.options,
-      ...options
-    }
-    this._connect()
-  }
-
-  public toJSON() {
-    return {
-      options: cloneDeep(this.options),
-      type: this.type,
-      id: this.id
-    }
   }
 }
 

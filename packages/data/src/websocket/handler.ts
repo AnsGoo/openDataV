@@ -1,22 +1,23 @@
-import type { DataAcceptor, DataInstance, Response } from '@open-data-v/base'
-import { uuid } from '@open-data-v/base'
-import { cloneDeep } from 'lodash-es'
+import type { Response } from '@open-data-v/base'
 
+import { BaseDataHandler } from '../base/handler'
 import type { WebSocketInstance } from '../hooks'
 import { useWebsocket } from '../hooks'
 import { dataLogger } from '../utils'
 import type { WebsocketOption } from './type'
 
-class WebsocketData implements DataInstance {
-  public options?: WebsocketOption
+class WebsocketDataHander extends BaseDataHandler<WebsocketOption> {
+  public options: WebsocketOption = {
+    url: '',
+    message: '',
+    timeout: 0,
+    isRetry: false,
+    maxRetryCount: 0
+  }
   public wsInstance?: WebSocket
   public timer: IntervalHandle = 0
-  public acceptor?: DataAcceptor
   private retryCount = 0
   private connector: WebSocketInstance
-  private debugAcceptor?: DataAcceptor
-  public id: string
-  type = 'WS'
 
   constructor({
     options,
@@ -27,13 +28,16 @@ class WebsocketData implements DataInstance {
     connector?: WebSocketInstance
     id?: string
   }) {
-    this.options = options
+    super({ options, id })
     this.connector = connector || useWebsocket()
-    this.id = id || uuid()
   }
   public close() {
     this.wsInstance?.close()
     clearInterval(this.timer)
+  }
+
+  public get type(): string {
+    return 'WS'
   }
 
   private ping() {
@@ -47,22 +51,10 @@ class WebsocketData implements DataInstance {
   public send(message: string) {
     this.wsInstance?.send(message)
   }
-  public async connect(acceptor: DataAcceptor) {
-    this.acceptor = acceptor
-    await this._connect()
-  }
 
-  private async _connect() {
-    await this.wsconnect()
-  }
-
-  public async updateOption(options: StoreRestOption) {
-    this.options = {
-      ...this.options,
-      ...options
-    }
+  public async reconnect() {
     this.close()
-    this._connect()
+    this.wsconnect()
   }
 
   private async wsconnect() {
@@ -86,12 +78,8 @@ class WebsocketData implements DataInstance {
         response.data = err.message ? err.message : err
       }
 
-      if (this.acceptor) {
-        this.acceptor(response)
-      }
-      if (this.debugAcceptor) {
-        this.debugAcceptor(response)
-      }
+      this.acceptor?.(response)
+      this.debugAcceptor?.(response)
     }
     this.wsInstance.addEventListener('message', handlerData)
     this.wsInstance.addEventListener('error', (_err) => {
@@ -106,28 +94,11 @@ class WebsocketData implements DataInstance {
     this.ping()
   }
 
-  public reConnect() {
+  private reConnect() {
     this.close()
     this.wsconnect()
     this.retryCount++
   }
-
-  public async debug(acceptor: DataAcceptor) {
-    this.debugAcceptor = acceptor
-    this.reConnect()
-  }
-
-  public cancelDebug() {
-    this.debugAcceptor = undefined
-  }
-
-  public toJSON() {
-    return {
-      options: cloneDeep(this.options),
-      type: this.type,
-      id: this.id
-    }
-  }
 }
 
-export default WebsocketData
+export default WebsocketDataHander

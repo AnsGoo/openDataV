@@ -209,10 +209,13 @@ export type DataAcceptor = (result: any, id?: string) => void
 export interface DataInstance {
   id: string
   type: string
-  toJSON: () => any | undefined
+  toJSON: () => any
   connect: (dataAcceptor: DataAcceptor) => void
   close: () => void
   debug: (dataAcceptor: DataAcceptor) => void
+  disposeDebug: () => void
+  reconnect: () => void
+  updateOption: (options: T) => void
 }
 
 export type DataHandler = new (options?: Record<string, any>, connector?: any) => DataInstance

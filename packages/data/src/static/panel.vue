@@ -24,7 +24,7 @@
         v-model:options="formData"
         :data-instance="dataInstance"
         mode="use"
-        @submit="dataChangeHandler"
+        @submit="changeOptions"
       >
         <template #data-select>
           <slot name="data-select"> </slot>
@@ -37,18 +37,18 @@
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref } from 'vue'
 
+import { useDataFill } from '../base/use'
 import StaticView from './data-view.vue'
+import type { StaticOption } from './handler'
 
 const props = defineProps<{
   dataInstance: DataInstance
 }>()
 const isShow = ref<boolean>(false)
 
-const formData = ref<{
-  data: string
-}>({
+const formData = ref<{ data: string }>({
   data: '[]'
 })
 
@@ -60,19 +60,14 @@ const previewData = computed<string>(() => {
   }
 })
 
-const dataChangeHandler = () => {
-  props.dataInstance.updateOption({ data: JSON.parse(formData.value.data) })
-}
-
-onMounted(async () => {
-  initComponentData()
+const optionData = computed({
+  get() {
+    return { data: JSON.parse(formData.value.data) }
+  },
+  set(value: StaticOption) {
+    formData.value.data = JSON.stringify(value.data || '[]')
+  }
 })
 
-const initComponentData = () => {
-  const dataConfig = props.dataInstance.toJSON()
-  if (!dataConfig.options) {
-    return
-  }
-  Object.assign(formData.value, dataConfig.options)
-}
+const { changeOptions } = useDataFill<StaticOption>(props.dataInstance, optionData)
 </script>

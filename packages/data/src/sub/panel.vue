@@ -20,7 +20,12 @@
       closable
       @close="isShow = false"
     >
-      <StaticView v-model:options="formDataConfig" mode="use" @channel-change="dataChangeHandler" />
+      <SubDataView
+        v-model:options="formDataConfig"
+        mode="use"
+        :data-instance="props.dataInstance"
+        @channel-change="changeOptions"
+      />
     </o-card>
   </o-modal>
 </template>
@@ -28,39 +33,21 @@
 <script lang="ts" setup>
 import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OModal } from '@open-data-v/ui'
-import { computed, ref, useSlots } from 'vue'
+import { ref } from 'vue'
 
+import { useDataFill } from '../base/use'
 import SubDataView from './data-view.vue'
-
-const slots = useSlots()
-
-const StaticView = computed(() => {
-  if (slots.default) {
-    return slots.default()[0].type
-  } else {
-    return SubDataView
-  }
-})
+import type { SubOption } from './handler'
 
 const props = defineProps<{
   dataInstance: DataInstance
 }>()
 const isShow = ref<boolean>(false)
-
-const formDataConfig = ref<{
-  channel: string
-}>({
+const formDataConfig = ref<SubOption>({
   channel: ''
 })
 
-const changeHandler = () => {
-  props.dataInstance.updateOption({ channel: formDataConfig.value.channel })
-}
-
-const dataChangeHandler = (data) => {
-  formDataConfig.value.channel = data
-  changeHandler()
-}
+const { changeOptions } = useDataFill<SubOption>(props.dataInstance, formDataConfig)
 </script>
 
 <style lang="less" scoped></style>

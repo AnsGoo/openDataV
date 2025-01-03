@@ -41,7 +41,7 @@ const props = withDefaults(
 
 const emits = defineEmits<{
   (e: 'update:options', value: { data: string }): void
-  (e: 'dataChange', value: string): void
+  (e: 'dataChange', value: { data: string }): void
   (e: 'submit'): void
 }>()
 

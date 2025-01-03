@@ -16,20 +16,20 @@
       v-model:value="formData.timeout"
       :min="300"
       :step="100"
-      @update:value="changeHandler"
+      @update:value="changeOptions"
     >
       <template #suffix> ms</template>
     </o-input-number>
   </o-form-item>
   <o-form-item label="是否重试" label-placement="top">
-    <o-switch v-model:value="formData.isRetry" @update:value="changeHandler" />
+    <o-switch v-model:value="formData.isRetry" @update:value="changeOptions" />
   </o-form-item>
   <o-form-item v-if="formData.isRetry" label="最大重试次数" label-placement="top">
     <o-input-number
       v-model:value="formData.maxRetryCount"
       :step="1"
       placeholder="小于等于0表示不限制重试次数"
-      @update:value="changeHandler"
+      @update:value="changeOptions"
     />
   </o-form-item>
   <o-modal v-model:show="isShow" :beforeClose="close">
@@ -42,43 +42,36 @@
       aria-modal="true"
       @close="isShow = false"
     >
-      <WsView
+      <WebsocketView
         ref="wsRef"
         v-model:options="formData"
         :dataInstance="dataInstance"
-        @change="changeHandler"
-        @update:options="changeHandler"
+        @change="changeOptions"
+        @update:options="changeOptions"
       />
     </o-card>
   </o-modal>
 </template>
 
 <script lang="ts" setup>
-import type { DataInstance } from '@open-data-v/base'
 import { OButton, OCard, OFormItem, OInput, OInputNumber, OModal, OSwitch } from '@open-data-v/ui'
-import { computed, onMounted, ref, useSlots } from 'vue'
+import { ref } from 'vue'
 
+import { useDataFill } from '../base/use'
+import type WebsocketDataHander from './handler'
 import type { WebsocketOption } from './type'
 import WebsocketView from './ws-view.vue'
 
 const props = defineProps<{
-  dataInstance: DataInstance
+  dataInstance: WebsocketDataHander
 }>()
-const slots = useSlots()
 
 const isShow = ref<boolean>(false)
-const WsView = computed(() => {
-  if (slots.default) {
-    return slots.default()[0].type
-  } else {
-    return WebsocketView
-  }
-})
 
 // @ts-ignore
 const wsRef = ref<InstanceType<typeof WsView> | null>(null)
 const close = () => {
-  changeHandler()
+  changeOptions()
   if (wsRef.value && wsRef.value.close) {
     wsRef.value.close()
   }
@@ -90,19 +83,6 @@ const formData = ref<WebsocketOption>({
   isRetry: false,
   maxRetryCount: 0
 })
-const changeHandler = () => {
-  props.dataInstance.updateOption({ options: formData.value })
-}
 
-onMounted(async () => {
-  initComponentData()
-})
-
-const initComponentData = () => {
-  const dataConfig = props.dataInstance.toJSON()
-  if (!dataConfig.options) {
-    return
-  }
-  Object.assign(formData.value, dataConfig.options)
-}
+const { changeOptions } = useDataFill<WebsocketOption>(props.dataInstance, formData)
 </script>

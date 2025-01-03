@@ -24,11 +24,12 @@
 import { OButton, OButtonGroup, OCard, OInput } from '@open-data-v/ui'
 import { onUnmounted, reactive, ref } from 'vue'
 
+import type WebsocketDataHander from './handler'
 import type { WebsocketOption } from './type'
 
 const props = withDefaults(
   defineProps<{
-    dataInstance: dataInstance
+    dataInstance: WebsocketDataHander
     options?: WebsocketOption
   }>(),
   {
@@ -81,6 +82,6 @@ onUnmounted(() => {
   if (!props.dataInstance) {
     return
   }
-  props.dataInstance.cancelDebug()
+  props.dataInstance.disposeDebug()
 })
 </script>
