@@ -1,10 +1,9 @@
-import { DataSlotter } from '@open-data-v/base'
-import { reactive } from 'vue'
+import { BasePlugin } from '@open-data-v/base'
 
-import { DemoDataPlugin } from '../data'
 import { singleton } from './utils'
 
 export interface DataPlugin {
+  title: string
   type: string
   name: string
   component: any
@@ -13,17 +12,7 @@ export interface DataPlugin {
   getDefaultOption?: () => any
 }
 
-class DataState {
-  private state = reactive<{ plugins: Record<string, DataPlugin> }>({
-    plugins: {
-      [DemoDataPlugin.type]: DemoDataPlugin
-    }
-  })
-
-  get plugins() {
-    return this.state.plugins
-  }
-
+class DataState extends BasePlugin<DataPlugin> {
   get componentPlugins() {
     const plugins: Record<string, DataPlugin> = {}
     const keys = Object.keys(this.plugins)
@@ -48,17 +37,6 @@ class DataState {
       }
     })
     return plugins
-  }
-
-  public getPlugin(type: string) {
-    return this.plugins[type]
-  }
-
-  public loadPlugins(plugins: Array<DataPlugin>) {
-    plugins.forEach((el) => {
-      this.plugins[el.type] = el
-      DataSlotter.handlerClazzs[el.type] = el.handler
-    })
   }
 }
 

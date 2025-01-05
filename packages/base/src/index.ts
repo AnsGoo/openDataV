@@ -1,11 +1,13 @@
 import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './bus'
 import { CustomComponent } from './component'
 import { RenderSlot } from './components'
+import { CONTEXT } from './constant'
 import { DataSlotter } from './data-slotter'
 import directive, { ClickOutsideDirective, ResizeDomDirective } from './directive'
 import { ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
 import type { Hooks } from './hooks'
 import { useData, useProp } from './hooks'
+import { BasePlugin } from './plugin'
 import type {
   ArrayProps,
   BaseComponent,
@@ -13,7 +15,6 @@ import type {
   BaseScript,
   CustomProps,
   DataAcceptor,
-  DataConfig,
   DataHandler,
   DataInstance,
   DataOption,
@@ -39,10 +40,12 @@ import type {
 import { buildModeValue, isClass, updateModeValue, uuid } from './utils'
 
 export {
+  BasePlugin,
   buildModeValue,
   channels,
   ClickOutsideDirective,
   ContainerType,
+  CONTEXT,
   CustomComponent,
   DataMode,
   DataSlotter,
@@ -69,7 +72,6 @@ export type {
   BaseScript,
   CustomProps,
   DataAcceptor,
-  DataConfig,
   DataHandler,
   DataInstance,
   DataOption,

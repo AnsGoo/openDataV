@@ -1,10 +1,8 @@
-import { useCanvasState } from '@open-data-v/designer'
 import components from '@resources/components'
 import type { App } from 'vue'
 import { defineAsyncComponent } from 'vue'
 
-const canvasState = useCanvasState()
-const useAsyncLoadComponent = () => {
+const useAsyncLoadComponent = (graphState) => {
   return {
     install: (app: App) => {
       const keys = Object.keys(components)
@@ -16,7 +14,7 @@ const useAsyncLoadComponent = () => {
           delay: 200,
           timeout: 3000
         })
-        canvasState.loadComponent(manifest.name, manifest, panel)
+        graphState.loadComponent({ ...manifest, panel })
         app.component(manifest.name, asyncComp)
       })
     }

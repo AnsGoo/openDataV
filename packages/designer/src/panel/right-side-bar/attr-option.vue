@@ -9,16 +9,16 @@ import { computed, inject } from 'vue'
 
 import { PANEL_MODEL } from '../../const'
 import { useEmpty } from '../../modules'
-import { useCanvasState } from '../../state'
+import { useGraphState } from '../../state'
 
 const props = defineProps<{
   curComponent: CustomComponent
 }>()
-const canvasState = useCanvasState()
+const graphState = useGraphState()
 
 const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.CARD)
 const AttrComponent = computed(() => {
-  const panel = canvasState.getComponentPanel(props.curComponent.component)
+  const panel = graphState.getComponentPanel(props.curComponent.component)
   if (panel) {
     return panel
   }

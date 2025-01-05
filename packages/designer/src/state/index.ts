@@ -2,6 +2,7 @@ import useActionState from './actions'
 import useCanvasState from './canvas'
 import useClipBoardState from './clipBoard'
 import useDataState from './data'
+import useGraphState from './graph'
 import useScriptState from './scripts'
 import { DataSlotter } from './slotter'
 import useSnapshotState from './snapshot'
@@ -13,6 +14,7 @@ export {
   useCanvasState,
   useClipBoardState,
   useDataState,
+  useGraphState,
   useScriptState,
   useSnapshotState
 }

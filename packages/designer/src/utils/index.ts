@@ -9,7 +9,7 @@ import { CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
 import type { Location } from 'type'
 
-import { useCanvasState } from '../state'
+import { useGraphState } from '../state'
 
 export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
@@ -52,8 +52,8 @@ export function toPercent(val: number) {
 //   // componentObj.afterCallbackChange(scriptHandler)
 // }
 export function createComponent(component: IComponentData): any {
-  const canvasState = useCanvasState()
-  const componentInfo = canvasState.componentMetaMap.get(component.component)
+  const graphState = useGraphState()
+  const componentInfo = graphState.getComponent(component.component)
   if (!componentInfo) {
     handleLogger.warn(`${component.component}未注册`)
     return
@@ -83,9 +83,8 @@ export function createComponent(component: IComponentData): any {
 }
 
 export function getComponentInstance({ component }: { component: string }) {
-  const canvasState = useCanvasState()
-  const componentName = component
-  const componentInfo = canvasState.componentMetaMap.get(componentName)
+  const graphState = useGraphState()
+  const componentInfo = graphState.getComponent(component)
   if (!componentInfo) {
     return
   }

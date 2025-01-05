@@ -1,5 +1,5 @@
 import { uuid } from '@open-data-v/base'
-import { defineAsyncComponent, shallowRef } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 import { RequestMethod } from './enums'
 import RestHandler from './handler'
@@ -11,9 +11,9 @@ const RestPanel = defineAsyncComponent(() => import('./panel.vue'))
 const RestContent = defineAsyncComponent(() => import('./data-view.vue'))
 
 export default {
-  type: 'REST',
-  name: '动态数据',
-  component: shallowRef(RestPanel),
+  name: 'REST',
+  title: '动态数据',
+  component: RestPanel,
   handler: RestHandler,
   useTo: ['COMPONENT', 'GLOBAL'],
   getDefaultOption: () => {

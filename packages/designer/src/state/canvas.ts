@@ -71,24 +71,6 @@ class CanvasState {
     scale: 1
   })
 
-  public componentMetaMap: Map<
-    string,
-    {
-      [x: string]: any
-      isContainer: boolean
-      name: string
-      title: string
-      category: string
-      icon?: string
-      size: {
-        width: number
-        height: number
-      }
-      dataMode?: DataMode
-      panel: Component
-    }
-  > = new Map()
-
   private componentMap: Map<string, CustomComponent> = new Map()
   constructor() {}
 
@@ -101,12 +83,6 @@ class CanvasState {
 
   get components() {
     return this.state.components
-  }
-  public loadComponent(name: string, componentInfo: any, panel?: Component): void {
-    this.componentMetaMap.set(name, {
-      ...componentInfo,
-      panel: panel
-    })
   }
 
   get globalSlotters() {
@@ -888,12 +864,6 @@ class CanvasState {
       })
     })
     return dataSlotters
-  }
-
-  getComponentPanel(componentName: string) {
-    if (this.componentMetaMap.has(componentName)) {
-      return this.componentMetaMap.get(componentName)!.panel
-    }
   }
 }
 

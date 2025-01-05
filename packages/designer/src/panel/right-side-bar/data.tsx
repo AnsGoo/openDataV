@@ -40,8 +40,8 @@ export default defineComponent({
       keys.forEach((el) => {
         const plugin = dataState.componentPlugins[el]
         globalDataTypes.value.push({
-          label: plugin.name,
-          value: plugin.type
+          label: plugin.title,
+          value: plugin.name
         })
       })
     })
@@ -55,6 +55,7 @@ export default defineComponent({
     const appendGlobalData = () => {
       if (curDataType.value) {
         const plugin = dataState.getPlugin(curDataType.value)
+        if (!plugin) return console.warn('未发现相应的数据插件')
         const dataInstance = new plugin.handler({})
         props.slotter.addHandler(dataInstance)
       }

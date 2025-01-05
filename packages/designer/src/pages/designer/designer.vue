@@ -1,37 +1,40 @@
 <template>
-  <div class="h-full flex-col flex flex-nowrap overflow-hidden">
-    <template v-if="slots?.top">
-      <RenderSlot :slots="slots?.top()" />
-    </template>
-    <template v-else>
-      <ToolBar :toolbars="toolbars" />
-    </template>
-    <div class="content flex flex-1 flex-nowrap flex-row overflow-auto">
-      <template v-if="slots?.left">
-        <RenderSlot :slots="slots?.left()" />
+  <ui-base>
+    <div class="h-full flex-col flex flex-nowrap overflow-hidden">
+      <template v-if="slots?.top">
+        <RenderSlot :slots="slots?.top()" />
       </template>
-      <template v-else><LeftSideBar :components="components" /> </template>
-      <div class="canvas flex flex-col flex-nowrap h-full">
-        <Canvas class="border border-gray-500 flex-1" />
-        <template v-if="slots?.bottom">
-          <RenderSlot :slots="slots?.bottom()" />
+      <template v-else>
+        <ToolBar :toolbars="toolbars" />
+      </template>
+      <div class="content flex flex-1 flex-nowrap flex-row overflow-auto">
+        <template v-if="slots?.left">
+          <RenderSlot :slots="slots?.left()" />
         </template>
-        <template v-else>
-          <BottomTip />
+        <template v-else><LeftSideBar :components="components" /> </template>
+        <div class="canvas flex flex-col flex-nowrap h-full">
+          <Canvas class="border border-gray-500 flex-1" />
+          <template v-if="slots?.bottom">
+            <RenderSlot :slots="slots?.bottom()" />
+          </template>
+          <template v-else>
+            <BottomTip />
+          </template>
+        </div>
+        <template v-if="slots?.right">
+          <RenderSlot :slots="slots?.right()" />
         </template>
+        <template v-else><RightSideBar /> </template>
       </div>
-      <template v-if="slots?.right">
-        <RenderSlot :slots="slots?.right()" />
-      </template>
-      <template v-else><RightSideBar /> </template>
     </div>
-  </div>
+  </ui-base>
 </template>
 <script setup lang="ts">
 import { RenderSlot, useData, useProp } from '@open-data-v/base'
 import type { IComponentItem } from 'panel/left-side-bar/type'
 import { defineAsyncComponent, onUnmounted, provide, readonly, useSlots } from 'vue'
 
+import uiBase from '../../base/ui-base.vue'
 import type { ToolBarItemType } from '../../components'
 import { HOOKS } from '../../const'
 import { useCanvasState } from '../../state'

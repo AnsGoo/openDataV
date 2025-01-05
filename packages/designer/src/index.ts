@@ -1,3 +1,4 @@
+import bootstrap from './bootstrap'
 import type { ToolBarItemType } from './components'
 import { CodeEditor, Group, iconMap, Toggle, ToolBar, ToolBarItem, XIcon } from './components'
 import { useIcon } from './components/xicon'
@@ -7,7 +8,6 @@ import type { StoreComponentData } from './db'
 import Editor from './editor'
 import Shape from './editor/shape'
 import { DataMode, EditMode, PixelEnum } from './enum'
-import useComponentPlugin from './load-plugin'
 import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/canvas.vue'
 import Designer from './pages/designer/designer.vue'
@@ -30,6 +30,7 @@ import {
   useCanvasState,
   useClipBoardState,
   useDataState,
+  useGraphState,
   useScriptState,
   useSnapshotState
 } from './state'
@@ -102,9 +103,9 @@ export {
   useClipBoardState,
   useComponentActions,
   useComponentContextMenu,
-  useComponentPlugin,
   useDataState,
   useEmpty,
+  useGraphState,
   useIcon,
   useScriptState,
   useSnapshotState,
@@ -119,41 +120,4 @@ export type {
   ToolBarItemType
 }
 
-export default {
-  Canvas,
-  CodeEditor,
-  Container,
-  createComponent,
-  DataMode,
-  DataSlotter,
-  DemoDataPlugin,
-  Designer,
-  Directive,
-  EditMode,
-  Editor,
-  exportCanvas,
-  Group,
-  handleLogger,
-  importCanvas,
-  PixelEnum,
-  Previewer,
-  recoveryDraft,
-  RightSideBar,
-  setShowEm,
-  Shape,
-  ToolBar,
-  ToolBarItem,
-  ToolsBar,
-  undo,
-  useActionState,
-  useCanvasState,
-  useClipBoardState,
-  useComponentPlugin,
-  useDataState,
-  useEmpty,
-  useScriptState,
-  useSnapshotState,
-  XIcon,
-  iconMap,
-  createAttrComponent
-}
+export default bootstrap

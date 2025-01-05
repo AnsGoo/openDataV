@@ -3,10 +3,11 @@ import { defineAsyncComponent } from 'vue'
 
 import Group from './components/group-container'
 import { useIcon } from './components/xicon'
-import useCanvasState from './state/canvas'
+import type { IDragComponentMeta } from './state/graph'
+import useGraphState from './state/graph'
 
-const canvasState = useCanvasState()
-const useComponentPlugin = ({
+const graphState = useGraphState()
+const bootstrap = ({
   codeEditorComponent,
   icons
 }: {
@@ -17,8 +18,9 @@ const useComponentPlugin = ({
     ? codeEditorComponent
     : defineAsyncComponent(() => import('./components/code-editor.vue'))
 
-  const groupMeta = Group.manifest
-  canvasState.loadComponent('Group', { ...groupMeta, subComponents: [] }, Group.attrs)
+  const manifest = Group.manifest
+  const meta = { ...manifest, panel: Group.panel, isContainer: true } as IDragComponentMeta
+  graphState.loadComponent(meta)
 
   const OIcon = useIcon(icons)
   return {
@@ -31,4 +33,4 @@ const useComponentPlugin = ({
   }
 }
 
-export default useComponentPlugin
+export default bootstrap
