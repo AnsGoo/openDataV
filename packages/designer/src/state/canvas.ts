@@ -22,12 +22,9 @@ import {
   toPercent,
   uuid
 } from '../utils'
-import useDataState from './data'
 import useSnapShotState from './snapshot'
 import type { CanvasData, CanvasStyleData, LayoutData } from './type'
 import { singleton } from './utils'
-
-const dataState = useDataState()
 
 const snapShotState = useSnapShotState()
 
@@ -52,7 +49,7 @@ const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
   }
 }
 
-class CanvasState {
+export class CanvasState {
   public state = reactive<CanvasData>({
     editMode: EditMode.PREVIEW,
     canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
@@ -169,30 +166,12 @@ class CanvasState {
   }
   async setLayoutData(data: LayoutData) {
     this.resolveCanvasData(data.canvasData)
-    this.name = data.name || ''
-    this.thumbnail = data.thumbnail || ''
     if (data.canvasData) {
       this.setComponentData(data.canvasData)
     }
 
     if (data.canvasStyle) {
       this.canvasStyleData = data.canvasStyle
-    }
-    if (data.dataSlotters) {
-      const keys = Object.keys(this.globalSlotters)
-      keys.forEach((el) => {
-        this.remveDataSlotter(el)
-      })
-      data.dataSlotters.forEach((el) => {
-        const plugin = dataState.getPlugin(el.type)
-        if (plugin) {
-          const { options } = el.config!
-          const dataInstance = new plugin.handler(options)
-          this.appendDataSlotter(el.type, dataInstance)
-        } else {
-          handleLogger.warn(`${el.type}插件不存在`)
-        }
-      })
     }
   }
 
@@ -835,9 +814,4 @@ class CanvasState {
     })
     return dataSlotters
   }
-}
-
-const State = singleton(CanvasState)
-export default function useCanvasState() {
-  return new State({ mode: ContainerType.CARD }) as CanvasState
 }

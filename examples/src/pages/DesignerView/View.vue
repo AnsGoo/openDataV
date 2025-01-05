@@ -21,6 +21,7 @@ import {
   DemoDataPlugin,
   Designer,
   ToolBar,
+  useCanvasState,
   useDataState,
   useGraphState,
   useScriptState
@@ -77,7 +78,8 @@ dataState.loadPlugins([
 ])
 const route = useRoute()
 const router = useRouter()
-const toolBars = useToolBars(router, route)
+const canvasState = useCanvasState()
+const toolBars = useToolBars(router, route, canvasState)
 
 const designer = ref<InstanceType<typeof Designer> | null>(null)
 

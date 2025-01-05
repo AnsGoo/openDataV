@@ -34,18 +34,7 @@ import {
   useScriptState,
   useSnapshotState
 } from './state'
-import {
-  clearCanvas,
-  copy,
-  decompose,
-  exportCanvas,
-  fullScreen,
-  importCanvas,
-  paste,
-  recoveryDraft,
-  setShowEm,
-  undo
-} from './toolbars'
+import { useToolbarActions } from './toolbars'
 import type { ContextmenuItem, RelativePosition } from './type'
 import {
   createComponent,
@@ -59,25 +48,20 @@ import {
 
 export {
   Canvas,
-  clearCanvas,
   CodeEditor,
   ComponentLayer,
   Container,
-  copy,
   createAttrComponent,
   createComponent,
   DataMode,
   DataSlotter,
-  decompose,
   DemoDataPlugin,
   Designer,
   Directive,
   DrapComponent,
   EditMode,
   Editor,
-  exportCanvas,
   filterStyle,
-  fullScreen,
   getComponentInstance,
   getComponentStyle,
   getInnerComponentShapeStyle,
@@ -85,21 +69,16 @@ export {
   handleLogger,
   HOOKS,
   iconMap,
-  importCanvas,
   LeftSideBar,
-  paste,
   PixelEnum,
   Previewer,
-  recoveryDraft,
   RightSideBar,
-  setShowEm,
   Shape,
   Toggle,
   ToolBar,
   ToolBarItem,
   ToolsBar,
   toPercent,
-  undo,
   useActionState,
   useCanvasState,
   useClipBoardState,
@@ -111,6 +90,7 @@ export {
   useIcon,
   useScriptState,
   useSnapshotState,
+  useToolbarActions,
   XIcon
 }
 export type {

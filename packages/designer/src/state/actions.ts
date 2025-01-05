@@ -9,13 +9,10 @@ import {
   getComponentRealRect,
   getSelectComponents
 } from '../utils'
-import useCanvasState from './canvas'
+import type { CanvasState } from './canvas'
 import type { SelectedAreaData } from './type'
-import { singleton } from './utils'
 
-const canvasState = useCanvasState()
-
-class ActionState {
+export class ActionState {
   public state = reactive<SelectedAreaData>({
     style: {
       top: 0,
@@ -26,6 +23,12 @@ class ActionState {
     components: [],
     ids: new Set()
   })
+
+  private canvasState: CanvasState
+
+  constructor(canvasState: CanvasState) {
+    this.canvasState = canvasState
+  }
 
   get style(): Position {
     return this.state.style
@@ -66,7 +69,7 @@ class ActionState {
    * @param position
    */
   setSelectComponents(position: Location) {
-    const { components, rect } = getSelectComponents(position, canvasState.componentData) || {}
+    const { components, rect } = getSelectComponents(position, this.canvasState.componentData) || {}
     if (components && rect) {
       this.style.left = rect.left
       this.style.top = rect.top
@@ -151,10 +154,10 @@ class ActionState {
     groupComponent.addComponent(this.components, true)
     createRelativePosition(groupComponent)
     this.batchDeleteComponent(this.components)
-    canvasState.appendComponent(groupComponent)
+    this.canvasState.appendComponent(groupComponent)
 
-    const index = canvasState.componentData.length - 1
-    canvasState.activateComponent(canvasState.componentData[index])
+    const index = this.canvasState.componentData.length - 1
+    this.canvasState.activateComponent(this.canvasState.componentData[index])
     this.components = []
   }
   /**
@@ -163,9 +166,9 @@ class ActionState {
    */
   batchDeleteComponent(components: CustomComponent[]) {
     components.forEach((component) => {
-      for (let i = 0, len = canvasState.componentData.length; i < len; i++) {
-        if (component.id === canvasState.componentData[i].id) {
-          canvasState.componentData.splice(i, 1)
+      for (let i = 0, len = this.canvasState.componentData.length; i < len; i++) {
+        if (component.id === this.canvasState.componentData[i].id) {
+          this.canvasState.componentData.splice(i, 1)
           break
         }
       }
@@ -181,7 +184,7 @@ class ActionState {
       const distance = right - el.right
       el.component.changePosition('left', el.component.position.left + distance)
     })
-    canvasState.saveComponentData()
+    this.canvasState.saveComponentData()
   }
   /**
    * 左对齐
@@ -192,7 +195,7 @@ class ActionState {
       const distance = el.left - left
       el.component.changePosition('left', el.component.position.left - distance)
     })
-    canvasState.saveComponentData()
+    this.canvasState.saveComponentData()
   }
   /**
    * 顶端对齐
@@ -203,7 +206,7 @@ class ActionState {
       const distance = el.top - top
       el.component.changePosition('top', el.component.position.top - distance)
     })
-    canvasState.saveComponentData()
+    this.canvasState.saveComponentData()
   }
   /**
    * 底部对齐
@@ -214,7 +217,7 @@ class ActionState {
       const distance = bottom - el.bottom
       el.component.changePosition('top', el.component.position.top + distance)
     })
-    canvasState.saveComponentData()
+    this.canvasState.saveComponentData()
   }
   /**
    * 行对齐
@@ -225,7 +228,7 @@ class ActionState {
       const distanceY = (bottom + top) / 2 - el.center.y
       el.component.changePosition('top', el.component.position.top + distanceY)
     })
-    canvasState.saveComponentData()
+    this.canvasState.saveComponentData()
   }
   /**
    * 列对齐
@@ -236,11 +239,6 @@ class ActionState {
       const distanceX = (left + right) / 2 - el.center.x
       el.component.changePosition('left', el.component.position.left + distanceX)
     })
-    canvasState.saveComponentData()
+    this.canvasState.saveComponentData()
   }
-}
-const State = singleton(ActionState)
-
-export default function useActionState() {
-  return new State() as ActionState
 }

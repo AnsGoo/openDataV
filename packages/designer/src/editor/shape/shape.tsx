@@ -5,7 +5,7 @@ import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } fro
 
 import { stretchedComponents } from '../../component'
 import { useActionState, useCanvasState } from '../../state'
-import { copy, decompose } from '../../toolbars'
+import { useToolbarActions } from '../../toolbars'
 import type { ContextmenuItem, Vector } from '../../type'
 import { copyText, mod360, systemLogger, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
@@ -27,6 +27,8 @@ export default defineComponent({
   setup(props, { slots }) {
     const canvasState = useCanvasState()
     const actionState = useActionState()
+
+    const { copy, decompose } = useToolbarActions(canvasState)
 
     const deleteComponent = () => {
       canvasState.removeComponent(props.info!)

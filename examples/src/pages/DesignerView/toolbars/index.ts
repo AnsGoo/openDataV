@@ -1,11 +1,4 @@
-import {
-  exportCanvas,
-  fullScreen,
-  importCanvas,
-  recoveryDraft,
-  setShowEm,
-  undo
-} from '@open-data-v/designer'
+import { useToolbarActions } from '@open-data-v/designer'
 import { h } from 'vue'
 import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 
@@ -30,8 +23,11 @@ const toggleTheme = () => {
 }
 export default function useToolBars(
   router: Router,
-  route: RouteLocationNormalizedLoaded
+  route: RouteLocationNormalizedLoaded,
+  canvasState: CanvasState
 ): Array<ToolBarItemType> {
+  const { exportCanvas, fullScreen, importCanvas, recoveryDraft, setShowEm, undo } =
+    useToolbarActions(canvasState)
   return [
     {
       label: '首页',

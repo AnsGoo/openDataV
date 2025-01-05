@@ -30,9 +30,9 @@
   </ui-base>
 </template>
 <script setup lang="ts">
-import { RenderSlot, useData, useProp } from '@open-data-v/base'
+import { CONTEXT, RenderSlot, useData, useProp } from '@open-data-v/base'
 import type { IComponentItem } from 'panel/left-side-bar/type'
-import { defineAsyncComponent, onUnmounted, provide, readonly, useSlots } from 'vue'
+import { defineAsyncComponent, inject, onUnmounted, provide, readonly, useSlots } from 'vue'
 
 import uiBase from '../../base/ui-base.vue'
 import type { ToolBarItemType } from '../../components'

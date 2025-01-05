@@ -3,7 +3,6 @@ import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import { copyText, createComponent } from '../utils'
-import useCanvasState from './canvas'
 import type { CopyItem } from './type'
 import { singleton } from './utils'
 
@@ -36,7 +35,6 @@ class ClipBoardState {
       return
     }
 
-    const canvasState = useCanvasState()
     const componentCopy = createComponent(this.copyData)
     if (isMouse) {
       componentCopy.changePositions({
@@ -49,7 +47,6 @@ class ClipBoardState {
         left: (this.copyData.position.left as number) + 10
       })
     }
-    canvasState.appendComponent(componentCopy)
   }
 }
 

@@ -1,12 +1,9 @@
 import type { CustomComponent } from '@open-data-v/base'
 import { eventBus, StaticKey } from '@open-data-v/base'
 
-import useCanvasState from '../../../state/canvas'
 import { diffIndex } from '../utils'
 
-const useLayerDrag = (activeKey) => {
-  const canvasState = useCanvasState()
-
+const useLayerDrag = (activeKey, canvasState) => {
   const handleDragStart = (event: DragEvent, level: string) => {
     // event.preventDefault()
     event.dataTransfer?.setData('componentLevel', level)

@@ -6,5 +6,10 @@
 import { CONTEXT } from '@open-data-v/base'
 import { provide } from 'vue'
 
-provide(CONTEXT, {})
+import { ActionState } from '../state/actions'
+import { CanvasState } from '../state/canvas'
+
+const canvasState = new CanvasState()
+const actionState = new ActionState(canvasState)
+provide(CONTEXT, { canvasState, actionState })
 </script>

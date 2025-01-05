@@ -61,7 +61,7 @@ import MarkLine from '../editor/mark-line.vue'
 import Ruler from '../editor/ruler.vue'
 import { EditMode } from '../enum'
 import { useActionState, useCanvasState, useClipBoardState } from '../state'
-import { clearCanvas, paste } from '../toolbars'
+import { useToolbarActions } from '../toolbars'
 import type { ContextmenuItem, Location, Vector } from '../type'
 import {
   backgroundToCss,
@@ -76,6 +76,8 @@ import Shape from './shape'
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
 const canvasState = useCanvasState()
+
+const { paste, clearCanvas } = useToolbarActions(canvasState)
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])

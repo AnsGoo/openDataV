@@ -22,6 +22,7 @@
 <script lang="ts" setup>
 import type { CustomComponent } from '@open-data-v/base'
 
+import { useCanvasState } from '../../../state'
 import { useLayerDrag } from './use'
 
 const props = withDefaults(
@@ -36,7 +37,9 @@ const props = withDefaults(
   }
 )
 
+const canvasState = useCanvasState()
+
 const toggleIcon = (isDisplay: boolean) => (isDisplay ? 'previewOpen' : 'previewClose')
 
-const { handleDragStart, handleDragOver, handleDrop } = useLayerDrag(props.activeKey)
+const { handleDragStart, handleDragOver, handleDrop } = useLayerDrag(props.activeKey, canvasState)
 </script>

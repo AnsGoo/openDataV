@@ -1,4 +1,3 @@
-import { useCanvasState } from '@open-data-v/designer'
 import type { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
 import Axios from 'axios'
 
@@ -28,10 +27,10 @@ class AxiosHttp {
         if (token && config.headers) {
           config.headers['authorization'] = token
         }
-        const canvasState = useCanvasState()
-        if (this.isBlock && canvasState.isEditMode) {
-          return Promise.reject('http is disable where the mode is edit')
-        }
+        // const canvasState = useCanvasState()
+        // if (this.isBlock && canvasState.isEditMode) {
+        //   return Promise.reject('http is disable where the mode is edit')
+        // }
         return config
       },
       (error) => {
