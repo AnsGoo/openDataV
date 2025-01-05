@@ -21,7 +21,6 @@ import {
   DemoDataPlugin,
   Designer,
   ToolBar,
-  useCanvasState,
   useDataState,
   useGraphState,
   useScriptState
@@ -66,7 +65,6 @@ useEventBus(StaticKey.STDOUT, (event) => {
   }
 })
 
-const canvasState = useCanvasState()
 const dataState = useDataState()
 dataState.loadPlugins([
   QuickDataPlugin,

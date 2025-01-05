@@ -26,5 +26,5 @@ const handleSelect = () => {
   }
   emits('select', props.component, props.level)
 }
-const contextmenus = useComponentContextMenu()
+const contextmenus = useComponentContextMenu(canvasState)
 </script>

@@ -66,7 +66,7 @@ function changeType() {
   }
 }
 
-const { hidden, display } = useComponentActions()
+const { hidden, display } = useComponentActions(canvasState)
 </script>
 <style scoped>
 summary {

@@ -1,10 +1,9 @@
 import type { CustomComponent } from '@open-data-v/base'
 import type { ContextmenuItem } from 'type'
 
-import { useCanvasState, useClipBoardState } from '../../state'
+import { useClipBoardState } from '../../state'
 
-const useComponentActions = () => {
-  const canvasState = useCanvasState()
+const useComponentActions = (canvasState) => {
   const clipBoardState = useClipBoardState()
 
   const copy = (component: CustomComponent, _level: string) => {
@@ -83,9 +82,9 @@ const useComponentActions = () => {
   }
 }
 
-const useComponentContextMenu = () => {
+const useComponentContextMenu = (canvasState) => {
   const { copy, remove, up, down, top, bottom, hidden, display, decompose, cut } =
-    useComponentActions()
+    useComponentActions(canvasState)
   const contextmenus = (component: CustomComponent, level: string): ContextmenuItem[] => {
     return [
       {
