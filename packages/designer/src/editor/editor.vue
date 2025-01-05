@@ -75,7 +75,7 @@ import Shape from './shape'
 
 const actionState = useActionState()
 const clipBoardState = useClipBoardState()
-const canvasState = useCanvasState()
+const canvasState = useCanvasState()!
 
 const { paste, clearCanvas } = useToolbarActions(canvasState)
 
