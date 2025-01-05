@@ -1,9 +1,7 @@
 <template>
   <Designer ref="designer" :components="components">
     <template #top>
-      <ToolBar :bars="toolBars" class="w-full h-14 align-middle">
-        <div class="tool-bar-title">{{ canvasState.name }}</div>
-      </ToolBar>
+      <ToolBar :bars="toolBars" class="w-full h-14 align-middle" />
     </template>
     <template #left><ResourcePanel :components="components" /></template>
   </Designer>
@@ -25,6 +23,7 @@ import {
   ToolBar,
   useCanvasState,
   useDataState,
+  useGraphState,
   useScriptState
 } from '@open-data-v/designer'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
@@ -44,6 +43,7 @@ import ResourcePanel from './resource-panel/panel.vue'
 
 const scriptState = useScriptState()
 scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])
+const graphState = useGraphState()
 
 useEventBus(StaticKey.STDOUT, (event) => {
   const stdout = event as { type: string; name: string; message: any }
@@ -103,7 +103,7 @@ const restore = async (index: string) => {
 watch(
   () => settingStore.darkTheme,
   () => {
-    canvasState.darkTheme = settingStore.darkTheme
+    graphState.darkTheme = settingStore.darkTheme
   }
 )
 

@@ -8,7 +8,7 @@ import '@/assets/directionFonts/iconfont.css'
 // import '@open-data-v/data/style'
 // import '@open-data-v/scripts/style'
 import { Directive, useGraphState } from '@open-data-v/designer'
-import bootstrap from '@open-data-v/designer'
+import datav from '@open-data-v/designer'
 import { createApp } from 'vue'
 
 import router from '@/router'
@@ -20,7 +20,7 @@ import { useAsyncLoadComponent } from './load'
 
 const app = createApp(App)
 const graphState = useGraphState()
-const dataV = bootstrap({ codeEditorComponent: CodeEditor })
+const dataV = datav.bootstrap({ codeEditorComponent: CodeEditor })
 const remoteComponents = useAsyncLoadComponent(graphState)
 app.use(router)
 app.use(Directive)

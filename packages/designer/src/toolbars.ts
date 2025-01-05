@@ -39,8 +39,7 @@ const setShowEm = () => {
   canvasState.toggleShowEm()
 }
 
-const exportCanvas = (id: string) => {
-  const name: string = `${canvasState.name}` || 'OpenDataV'
+const exportCanvas = (id: string, name = 'OpenDataV') => {
   exportRaw(
     `${name}.json`,
     JSON.stringify({

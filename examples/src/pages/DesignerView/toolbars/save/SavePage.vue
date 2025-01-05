@@ -48,8 +48,8 @@ const form = reactive<{
   name: string
   thumbnail: string
 }>({
-  name: canvasState.name,
-  thumbnail: canvasState.thumbnail
+  name: '',
+  thumbnail: ''
 })
 const rules = reactive<{
   name: FormItemRule[]
@@ -77,9 +77,6 @@ const handleSubmit = async (type: string) => {
       const resp = await updatePageApi(props.index!, layoutData)
       if (resp.status === 200) {
         message.success('修改成功')
-        if (canvasState.name !== name) {
-          canvasState.setName(name)
-        }
       }
     } catch (e) {
       message.error('保存失败，请导出到本地，并重新进入此页面')

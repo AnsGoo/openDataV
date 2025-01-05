@@ -1,5 +1,6 @@
 import type { DataMode } from '@open-data-v/base'
 import type { Component } from 'vue'
+import { reactive } from 'vue'
 
 import { singleton } from './utils'
 
@@ -22,11 +23,13 @@ export interface IDragComponentMeta extends IManinfest {
 class GraphState {
   private components = new Map<string, IDragComponentMeta>()
   constructor() {}
+  public state = reactive({})
 
   public loadComponent(componentInfo: IDragComponentMeta): void {
     const { name } = componentInfo
     this.components.set(name, componentInfo)
   }
+
   getComponent(name: string): IDragComponentMeta | undefined {
     return this.components.get(name)
   }

@@ -28,8 +28,6 @@ export interface ComponentTreeData {
   subComponents: CustomComponent[]
 }
 export interface CanvasData {
-  name: string
-  thumbnail: string
   editMode: EditMode
   canvasStyleData: CanvasStyleData
   componentData: []
@@ -38,9 +36,7 @@ export interface CanvasData {
   ids: Set<string>
   benchmarkComponent: Optional<CustomComponent>
   scale: number
-  darkTheme: boolean
   globalSlotters: Record<string, DataSlotter>
-  components: Record<string, BaseComponent>
 }
 
 export interface SnapData {

@@ -44,9 +44,10 @@
 </template>
 <script setup lang="ts">
 import type { CustomComponent } from '@open-data-v/base'
-import { DataMode, useProp, uuid } from '@open-data-v/base'
+import { useProp } from '@open-data-v/base'
 import {
   filterStyle,
+  getComponentInstance,
   getComponentStyle,
   getInnerComponentShapeStyle,
   Group,
@@ -54,13 +55,12 @@ import {
   toPercent,
   useCanvasState
 } from '@open-data-v/designer'
-import { computed, defineAsyncComponent, ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import type TabsComponent from './config'
 import type { Tabs } from './type'
 
-const GroupComponent = Group.config
-const GroupView = defineAsyncComponent(Group.component)
+const GroupView = Group.component
 
 const props = defineProps<{
   component: TabsComponent
@@ -79,36 +79,38 @@ watch(
     const len = (propValue.label.items || []).length
     const mode = propValue.label.mode || 'horizontal'
     const labelHeight = propValue.style.height
-    const { top, left, width, height } = props.component.style
+    const { top, left, width, height } = props.component.position
     for (let i = 0; i < len; i++) {
-      if (!props.component.subComponents[i]) {
-        const groupConfig = new GroupComponent(uuid())
+      if (!props.component.subComponents![i]) {
+        const groupConfig = getComponentInstance({ component: 'Group' })
         if (mode === 'horizontal') {
           groupConfig.changePositions({
             top: top + labelHeight,
             left: left,
             width: width,
-            height: height - labelHeight
+            height: height - labelHeight,
+            rotate: 0
           })
         } else {
           groupConfig.changePositions({
             top: top,
             left: left + labelHeight,
             width: width - labelHeight,
-            height: height
+            height: height,
+            rotate: 0
           })
         }
         groupConfig.parent = props.component
         groupConfig.relativePosition = {
           gleft: 0,
-          gtop: toPercent((groupConfig.positionStyle.top - top) / height),
+          gtop: toPercent((groupConfig.position.top - top) / height),
           gwidth: 100,
-          gheight: toPercent(groupConfig.positionStyle.height / height),
-          grotate: props.component.positionStyle.rotate || 0
+          gheight: toPercent(groupConfig.position.height / height),
+          grotate: props.component.position.rotate || 0
         }
         props.component.updateChild(i, groupConfig)
       } else {
-        const groupConfig = props.component.subComponents[i]
+        const groupConfig = props.component.subComponents![i]
         if (mode === 'horizontal') {
           groupConfig.changePosition('top', top + labelHeight)
           groupConfig.changePosition('left', left)
@@ -117,10 +119,10 @@ watch(
           groupConfig.changePosition('left', left + labelHeight)
         }
         groupConfig.relativePosition = {
-          gleft: toPercent((groupConfig.positionStyle.left - left) / width),
-          gtop: toPercent((groupConfig.positionStyle.top - top) / height),
-          gwidth: toPercent(groupConfig.positionStyle.width / width),
-          gheight: toPercent(groupConfig.positionStyle.height / height),
+          gleft: toPercent((groupConfig.position.left - left) / width),
+          gtop: toPercent((groupConfig.position.top - top) / height),
+          gwidth: toPercent(groupConfig.position.width / width),
+          gheight: toPercent(groupConfig.position.height / height),
           grotate: groupConfig.relativePosition!.grotate || 0
         }
       }
@@ -135,11 +137,11 @@ const getShapeStyle = (item: CustomComponent) => {
   if (item.relativePosition?.gheight) {
     return filterStyle(item.relativePosition, ['gtop', 'gleft', 'gwidth', 'gheight', 'grotate'])
   } else {
-    return filterStyle(item.style, ['top', 'left', 'width', 'height', 'rotate'])
+    return filterStyle(item.position, ['top', 'left', 'width', 'height', 'rotate'])
   }
 }
 
-const curComponent = computed(() => canvasState.curComponent)
+const curComponent = computed(() => canvasState.activateComponent)
 const activeKey = ref<number>(0)
 
 const isShow = (display: boolean): boolean => {
@@ -157,8 +159,8 @@ const modeStyle = computed<string>(() => {
   return propValue.label.mode ? propValue.label.mode : 'horizontal'
 })
 const contentRef = ref<HTMLElement | null>(null)
-const content = computed<InstanceType<typeof GroupComponent>>(() => {
-  return props.component.subComponents[activeKey.value]
+const content = computed<InstanceType<typeof CustomComponent>>(() => {
+  return props.component.subComponents![activeKey.value]
 })
 
 // const content = ref<InstanceType<typeof GroupComponent>>()
@@ -182,25 +184,22 @@ const handleDrop = async (e) => {
   e.stopPropagation()
   const componentName = e.dataTransfer.getData('componentName')
   if (componentName) {
-    const component: CustomComponent = new canvasState.components[componentName]()
-    if (component.dataMode === DataMode.UNIVERSAL) {
-      component.loadDemoData()
-    }
+    const component: CustomComponent = getComponentInstance({ component: componentName })
     const { top, left } = document.querySelector('#editor')!.getBoundingClientRect()
     const y = (e.pageY - top) / canvasState.scale
     const x = (e.pageX - left) / canvasState.scale
-    const parentStyle = props.component.subComponents[activeKey.value].style
+    const parentStyle = props.component.subComponents![activeKey.value].position
     component.changePosition('top', y)
     component.changePosition('left', x)
     component.relativePosition = {
-      gleft: toPercent((component.positionStyle.left - parentStyle.left) / parentStyle.width),
-      gtop: toPercent((component.positionStyle.top - parentStyle.top) / parentStyle.height),
-      gwidth: toPercent(component.positionStyle.width / parentStyle.width),
-      gheight: toPercent(component.positionStyle.height / parentStyle.height),
-      grotate: component.positionStyle.rotate || 0
+      gleft: toPercent((component.position.left - parentStyle.left) / parentStyle.width),
+      gtop: toPercent((component.position.top - parentStyle.top) / parentStyle.height),
+      gwidth: toPercent(component.position.width / parentStyle.width),
+      gheight: toPercent(component.position.height / parentStyle.height),
+      grotate: component.position.rotate || 0
     }
     component.parent = props.component
-    props.component.subComponents[activeKey.value].appendChild(component)
+    props.component.subComponents![activeKey.value].appendChild(component)
   }
 }
 </script>

@@ -50,6 +50,7 @@ import type { ContextmenuItem, RelativePosition } from './type'
 import {
   createComponent,
   filterStyle,
+  getComponentInstance,
   getComponentStyle,
   getInnerComponentShapeStyle,
   handleLogger,
@@ -77,6 +78,7 @@ export {
   exportCanvas,
   filterStyle,
   fullScreen,
+  getComponentInstance,
   getComponentStyle,
   getInnerComponentShapeStyle,
   Group,
@@ -120,4 +122,4 @@ export type {
   ToolBarItemType
 }
 
-export default bootstrap
+export default { bootstrap }

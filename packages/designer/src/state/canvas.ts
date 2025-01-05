@@ -1,14 +1,12 @@
 import type {
   CustomComponent,
   DataInstance,
-  DataMode,
   DOMRectStyle,
   IComponentData,
   Vector
 } from '@open-data-v/base'
 import { ContainerType, eventBus } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
-import type { Component } from 'vue'
 import { reactive } from 'vue'
 
 import { EditMode } from '../enum'
@@ -56,8 +54,6 @@ const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
 
 class CanvasState {
   public state = reactive<CanvasData>({
-    name: '',
-    thumbnail: '',
     editMode: EditMode.PREVIEW,
     canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
     componentData: [],
@@ -65,25 +61,12 @@ class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
-    components: {},
     globalSlotters: {},
-    darkTheme: true,
     scale: 1
   })
 
   private componentMap: Map<string, CustomComponent> = new Map()
   constructor() {}
-
-  get darkTheme(): boolean {
-    return this.state.darkTheme
-  }
-  set darkTheme(isDark: boolean) {
-    this.state.darkTheme = isDark
-  }
-
-  get components() {
-    return this.state.components
-  }
 
   get globalSlotters() {
     return this.state.globalSlotters
@@ -156,24 +139,11 @@ class CanvasState {
   set canvasStyleData(canvasStyleData: CanvasStyleData) {
     this.state.canvasStyleData = canvasStyleData
   }
-  get thumbnail(): string {
-    return this.state.thumbnail
-  }
-  set thumbnail(thumbnail: string) {
-    this.state.thumbnail = thumbnail
-  }
   get editMode(): EditMode {
     return this.state.editMode
   }
   set editMode(editMode: EditMode) {
     this.state.editMode = editMode
-  }
-
-  get name(): string {
-    return this.state.name
-  }
-  set name(name: string) {
-    this.state.name = name
   }
   get layoutData(): IComponentData[] {
     const result: IComponentData[] = []
