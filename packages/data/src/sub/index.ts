@@ -1,4 +1,4 @@
-import { defineAsyncComponent, shallowRef } from 'vue'
+import { defineAsyncComponent } from 'vue'
 
 import Subontent from './data-view.vue'
 import handler from './handler'
