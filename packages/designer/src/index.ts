@@ -25,7 +25,6 @@ import ToolsBar from './panel/tools-bar'
 import Directive from './plugins/directive'
 import type { CanvasData, CanvasStyleData } from './state'
 import {
-  DataSlotter,
   useActionState,
   useCanvasState,
   useClipBoardState,
@@ -54,7 +53,6 @@ export {
   createAttrComponent,
   createComponent,
   DataMode,
-  DataSlotter,
   DemoDataPlugin,
   Designer,
   Directive,

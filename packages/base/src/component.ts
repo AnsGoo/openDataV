@@ -37,7 +37,7 @@ export class CustomComponent {
   subComponents?: CustomComponent[] = undefined
 
   private _propValue: Record<string, any> = {}
-  dataSlotter?: Slotter
+  dataSlotter: Slotter
   scriptConfig?: BaseScript
 
   constructor(metaData: IComponentInfo) {

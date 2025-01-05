@@ -1,16 +1,8 @@
-import type {
-  CustomComponent,
-  DataInstance,
-  DOMRectStyle,
-  IComponentData,
-  Vector
-} from '@open-data-v/base'
-import { ContainerType, eventBus } from '@open-data-v/base'
+import type { CustomComponent, DOMRectStyle, IComponentData, Vector } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import { EditMode } from '../enum'
-import { DataSlotter } from '../state'
 import type { RelativePosition } from '../type'
 import {
   calcComponentsRect,
@@ -24,7 +16,6 @@ import {
 } from '../utils'
 import useSnapShotState from './snapshot'
 import type { CanvasData, CanvasStyleData, LayoutData } from './type'
-import { singleton } from './utils'
 
 const snapShotState = useSnapShotState()
 
@@ -774,44 +765,5 @@ export class CanvasState {
       }
     }
     this.saveComponentData()
-  }
-
-  appendDataSlotter(dataType: string, dataInstance?: DataInstance) {
-    const acceptor = (result: any) => {
-      eventBus.emit('globalData', result)
-    }
-    const slotter = new DataSlotter({ type: dataType, acceptor, dataInstance })
-    this.globalSlotters[uuid()] = slotter
-  }
-
-  remveDataSlotter(id: string) {
-    const slotter = this.globalSlotters[id]
-    if (!slotter) {
-      return
-    }
-    if (slotter.dataInstance && slotter.dataInstance.close) {
-      slotter.dataInstance.close
-    }
-    delete this.state.globalSlotters[id]
-  }
-  getDataSlotter(id: string) {
-    return this.globalSlotters[id]
-  }
-
-  get dataSlotterData() {
-    const keys = Object.keys(this.globalSlotters)
-
-    const dataSlotters: Array<{ type: string; config: any }> = []
-    keys.forEach((el) => {
-      const slotter = this.getDataSlotter(el)
-      if (!slotter) {
-        return
-      }
-      dataSlotters.push({
-        type: slotter.type,
-        config: slotter.dataInstance ? slotter.dataInstance.toJSON() : undefined
-      })
-    })
-    return dataSlotters
   }
 }

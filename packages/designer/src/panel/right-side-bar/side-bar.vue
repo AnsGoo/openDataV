@@ -108,7 +108,6 @@ import { useCanvasState } from '../../state'
 import AttrOption from './attr-option.vue'
 import CanvasOption from './canvas-option.vue'
 import DataOption from './data.tsx'
-import GlobalDataOption from './global-data-option.tsx'
 import useCreateStylePanel from './style-option.tsx'
 
 const StyleOption = useCreateStylePanel()
@@ -118,7 +117,7 @@ const XIcon = instance!.appContext.components['XIcon']
 
 const activeKey = ref<string>('attr')
 
-const canvasState = useCanvasState()
+const canvasState = useCanvasState()!
 
 const emits = defineEmits<{
   (e: 'update:iscollapsed', iscollapsed: boolean): void

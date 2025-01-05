@@ -1,8 +1,7 @@
-import type { BaseComponent, CustomComponent } from '@open-data-v/base'
+import type { CustomComponent } from '@open-data-v/base'
 
 import type {
   ContainerType,
-  DataSlotter,
   EditMode,
   IComponentData,
   IContainerItem,
@@ -36,7 +35,6 @@ export interface CanvasData {
   ids: Set<string>
   benchmarkComponent: Optional<CustomComponent>
   scale: number
-  globalSlotters: Record<string, DataSlotter>
 }
 
 export interface SnapData {
