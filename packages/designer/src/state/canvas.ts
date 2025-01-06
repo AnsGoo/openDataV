@@ -49,25 +49,11 @@ export class CanvasState {
     isShowEm: false, // 是否显示控件坐标
     ids: new Set(),
     benchmarkComponent: undefined,
-    globalSlotters: {},
     scale: 1
   })
 
   private componentMap: Map<string, CustomComponent> = new Map()
   constructor() {}
-
-  get globalSlotters() {
-    return this.state.globalSlotters
-  }
-  get globalOption() {
-    return {
-      basic: {
-        width: this.canvasStyleData.width,
-        height: this.canvasStyleData.height,
-        background: this.canvasStyleData.background
-      }
-    }
-  }
 
   get isShowEm(): boolean {
     return this.state.isShowEm
@@ -95,17 +81,6 @@ export class CanvasState {
   }
   private set ids(ids: Set<string>) {
     this.state.ids = ids
-  }
-
-  /**
-   * @deprecated
-   * 请使用 activeComponent 属性
-   */
-  get curComponent(): Optional<CustomComponent> {
-    return this.state.activeComponent
-  }
-  private set curComponent(component: Optional<CustomComponent>) {
-    this.state.activeComponent = component
   }
 
   get activeComponent(): Optional<CustomComponent> {
@@ -187,9 +162,6 @@ export class CanvasState {
   }
   toggleShowEm(): void {
     this.isShowEm = !this.isShowEm
-  }
-  setName(name: string): void {
-    this.name = name
   }
 
   /**
