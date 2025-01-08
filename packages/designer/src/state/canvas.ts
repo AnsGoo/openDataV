@@ -43,7 +43,6 @@ const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
 export class CanvasState {
   public state = reactive<CanvasData>({
     editMode: EditMode.PREVIEW,
-    canvasStyleData: new Proxy(baseCanvasStyleData, storeCanvasHandler),
     componentData: [],
     activeComponent: undefined,
     isShowEm: false, // 是否显示控件坐标
@@ -51,6 +50,7 @@ export class CanvasState {
     benchmarkComponent: undefined,
     scale: 1
   })
+  public canvasOptions = reactive(baseCanvasStyleData)
 
   private componentMap: Map<string, CustomComponent> = new Map()
   constructor() {}
@@ -96,12 +96,6 @@ export class CanvasState {
   set componentData(components: CustomComponent[]) {
     this.state.componentData = components
   }
-  get canvasStyleData(): CanvasStyleData {
-    return this.state.canvasStyleData
-  }
-  set canvasStyleData(canvasStyleData: CanvasStyleData) {
-    this.state.canvasStyleData = canvasStyleData
-  }
   get editMode(): EditMode {
     return this.state.editMode
   }
@@ -120,7 +114,7 @@ export class CanvasState {
     return this.editMode === EditMode.EDIT
   }
   get canvasData(): CanvasStyleData {
-    return new Proxy(this.canvasStyleData, storeCanvasHandler)
+    return new Proxy(this.canvasOptions, storeCanvasHandler)
   }
 
   private resolveCanvasData(canvasData) {
@@ -137,20 +131,14 @@ export class CanvasState {
     }
 
     if (data.canvasStyle) {
-      this.canvasStyleData = data.canvasStyle
+      this.canvasOptions = data.canvasStyle
     }
   }
 
-  setCanvasStyle(keys: Array<string>, val: any) {
-    if (keys.length === 2 && keys[0] === 'basic') {
-      if (keys[1] === 'pixel') {
-        const pixels = val.split('X')
-        this.canvasData.height = parseInt(pixels[1])
-        this.canvasData.width = parseInt(pixels[0])
-      } else {
-        this.canvasData[keys[1]] = val
-      }
-    }
+  updateCanvasOptions(options: Record<string, any>) {
+    Object.keys(options).forEach((key) => {
+      this.canvasOptions[key] = options[key]
+    })
     this.saveComponentData()
   }
 
@@ -370,12 +358,6 @@ export class CanvasState {
     component.changeProp(keys, value, modelValue)
     this.saveComponentData()
   }
-  getComponentIndexById(id: string, parent: Optional<CustomComponent>): number {
-    if (parent) {
-      return (parent.subComponents || []).findIndex((item) => item.id === id)
-    }
-    return this.componentData.findIndex((item) => item.id === id)
-  }
 
   public getComponentById(id: string): CustomComponent | undefined {
     return this.findComponentById(id, this.componentData)
@@ -416,10 +398,7 @@ export class CanvasState {
     this.componentData = []
     this.activeComponent = undefined
     this.isShowEm = false
-    this.name = ''
-    this.thumbnail = ''
-    // this.rebuildCanvasExtraStyle()
-    this.canvasStyleData = baseCanvasStyleData
+    this.canvasOptions = baseCanvasStyleData
   }
   /**
    * 组件图层下移
@@ -557,9 +536,7 @@ export class CanvasState {
   saveComponentData() {
     window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
     new Promise((resolve) => {
-      resolve(
-        snapShotState.saveSnapshot(this.layoutData, this.canvasStyleData, this.dataSlotterData)
-      )
+      resolve(snapShotState.saveSnapshot(this.layoutData, this.canvasOptions, this.dataSlotterData))
     })
   }
 

@@ -1,4 +1,4 @@
-import type { IComponentData } from '@open-data-v/base'
+import type { CustomComponent, IComponentData } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
@@ -30,12 +30,12 @@ class ClipBoardState {
     copyText(JSON.stringify(this.copyData))
   }
 
-  paste(isMouse: boolean, x?: number, y?: number): void {
+  paste(isMouse: boolean, x?: number, y?: number): CustomComponent | undefined {
     if (!this.copyData) {
       return
     }
 
-    const componentCopy = createComponent(this.copyData)
+    const componentCopy = createComponent(this.copyData) as CustomComponent
     if (isMouse) {
       componentCopy.changePositions({
         top: y!,
@@ -47,6 +47,7 @@ class ClipBoardState {
         left: (this.copyData.position.left as number) + 10
       })
     }
+    return componentCopy
   }
 }
 

@@ -6,7 +6,7 @@
 import type { IComponentData } from '@open-data-v/base'
 import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Previewer, useDataState, useScriptState, useSnapshotState } from '@open-data-v/designer'
+import { Previewer, useGraphState, useScriptState, useSnapshotState } from '@open-data-v/designer'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
 import { onMounted, ref } from 'vue'
 
@@ -16,8 +16,8 @@ import RestDataPlugin from '@/data/Rest'
 const viewer = ref<InstanceType<typeof Previewer> | null>(null)
 const snapShotState = useSnapshotState()
 
-const dataState = useDataState()
-dataState.loadPlugins([
+const graphState = useGraphState()
+graphState.loadDataPlugins([
   QuickDataPlugin,
   RestDataPlugin,
   StaticDataPlugin,

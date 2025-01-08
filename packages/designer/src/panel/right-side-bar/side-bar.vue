@@ -78,9 +78,9 @@
               <span v-show="collapsedRight">数据</span>
             </div>
           </template>
-          <div class="attr-list">
+          <!-- <div class="attr-list">
             <GlobalDataOption />
-          </div>
+          </div> -->
         </o-tab-pane>
       </o-tabs>
     </div>

@@ -106,10 +106,6 @@ export function getComponentInstance({ component }: { component: string }) {
   return createComponent(metaData)
 }
 
-export function getComponentIndexById(id: string, parent: CustomComponent) {
-  return (parent.subComponents || []).findIndex((item) => item.id === id)
-}
-
 /**
  * 给定区域获取该区域范围内的所有组件和包含该这些组件的最小区域
  * @param rect 区域范围

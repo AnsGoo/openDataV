@@ -8,7 +8,7 @@ import { exportRaw, handleLogger, importRaw } from './utils'
 
 const snapShotState = useSnapshotState()
 const clipBoardState = useClipBoardState()
-export function useToolbarActions(canvasState: CanvasState) {
+export function useCanvasActions(canvasState: CanvasState) {
   const decompose = () => {
     canvasState.decompose()
   }
@@ -27,7 +27,9 @@ export function useToolbarActions(canvasState: CanvasState) {
     const editorRectInfo = document.querySelector('#editor')!.getBoundingClientRect()
     const y = event.pageY - editorRectInfo.top
     const x = event.pageX - editorRectInfo.left
-    clipBoardState.paste(true, x, y)
+    const component = clipBoardState.paste(true, x, y)
+    if (!component) return
+    canvasState.appendComponent(component)
   }
 
   const clearCanvas = () => {
@@ -69,9 +71,7 @@ export function useToolbarActions(canvasState: CanvasState) {
       JSON.stringify({
         id: id,
         name: name,
-        canvasData: canvasState.layoutData,
-        canvasStyle: canvasState.canvasStyleData,
-        dataSlotters: canvasState.dataSlotterData
+        canvasData: canvasState.layoutData
       })
     )
   }

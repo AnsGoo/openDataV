@@ -7,7 +7,7 @@ import DemoDataPlugin from './data/demo-data'
 import type { StoreComponentData } from './db'
 import Editor from './editor'
 import Shape from './editor/shape'
-import { DataMode, EditMode, PixelEnum } from './enum'
+import { DataMode, EditMode } from './enum'
 import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/canvas.vue'
 import Designer from './pages/designer/designer.vue'
@@ -28,12 +28,11 @@ import {
   useActionState,
   useCanvasState,
   useClipBoardState,
-  useDataState,
   useGraphState,
   useScriptState,
   useSnapshotState
 } from './state'
-import { useToolbarActions } from './toolbars'
+import { useCanvasActions } from './toolbars'
 import type { ContextmenuItem, RelativePosition } from './type'
 import {
   createComponent,
@@ -68,7 +67,6 @@ export {
   HOOKS,
   iconMap,
   LeftSideBar,
-  PixelEnum,
   Previewer,
   RightSideBar,
   Shape,
@@ -82,13 +80,12 @@ export {
   useClipBoardState,
   useComponentActions,
   useComponentContextMenu,
-  useDataState,
   useEmpty,
   useGraphState,
   useIcon,
   useScriptState,
   useSnapshotState,
-  useToolbarActions,
+  useCanvasActions,
   XIcon
 }
 export type {

@@ -1,4 +1,4 @@
-import { useToolbarActions } from '@open-data-v/designer'
+import { useCanvasActions } from '@open-data-v/designer'
 import { h } from 'vue'
 import type { RouteLocationNormalizedLoaded, Router } from 'vue-router'
 
@@ -27,7 +27,7 @@ export default function useToolBars(
   canvasState: CanvasState
 ): Array<ToolBarItemType> {
   const { exportCanvas, fullScreen, importCanvas, recoveryDraft, setShowEm, undo } =
-    useToolbarActions(canvasState)
+    useCanvasActions(canvasState)
   return [
     {
       label: '首页',

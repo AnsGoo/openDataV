@@ -129,10 +129,15 @@ export class CustomComponent {
     }
     set(this.position, key, key === 'rotate' ? value : Math.round(value))
   }
-  changePositions(positions: Record<'top' | 'left' | 'height' | 'width' | 'rotate', number>) {
-    const keys = Object.keys(positions) as Array<'top' | 'left' | 'height' | 'width' | 'rotate'>
+  changePositions(
+    positions: Partial<Record<'top' | 'left' | 'height' | 'width' | 'rotate', number>>
+  ) {
+    const keys = Object.keys(positions)
     keys.forEach((el) => {
-      this.changePosition(el, positions[el])
+      return this.changePosition(
+        el as 'top' | 'left' | 'height' | 'width' | 'rotate',
+        positions[el]
+      )
     })
   }
 

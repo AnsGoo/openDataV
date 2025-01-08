@@ -16,8 +16,8 @@
 
       <!-- 标尺 -->
       <Ruler
-        :width="canvasStyleData.width"
-        :height="canvasStyleData.height"
+        :width="canvasOptions.width"
+        :height="canvasOptions.height"
         :isShowReferLine="isShowReferLine"
       />
 
@@ -61,7 +61,7 @@ import MarkLine from '../editor/mark-line.vue'
 import Ruler from '../editor/ruler.vue'
 import { EditMode } from '../enum'
 import { useActionState, useCanvasState, useClipBoardState } from '../state'
-import { useToolbarActions } from '../toolbars'
+import { useCanvasActions } from '../toolbars'
 import type { ContextmenuItem, Location, Vector } from '../type'
 import {
   backgroundToCss,
@@ -73,11 +73,11 @@ import {
 } from '../utils'
 import Shape from './shape'
 
-const actionState = useActionState()
+const actionState = useActionState()!
 const clipBoardState = useClipBoardState()
 const canvasState = useCanvasState()!
 
-const { paste, clearCanvas } = useToolbarActions(canvasState)
+const { paste, clearCanvas } = useCanvasActions(canvasState)
 
 const getShapeStyle = (style) => {
   return filterStyle(style, ['top', 'left', 'width', 'height', 'rotate'])
@@ -117,13 +117,13 @@ const componentData = computed(() => {
   return canvasState.componentData
 })
 
-const canvasStyleData = computed(() => canvasState.canvasStyleData)
+const canvasOptions = computed(() => canvasState.canvasOptions)
 const curComponent = computed(() => canvasState.activeComponent)
 
 const bgStyle = computed<Record<string, string>>(() => {
-  const backgroundStyle = backgroundToCss(canvasStyleData.value.background)
+  const backgroundStyle = backgroundToCss(canvasOptions.value.background)
   const style = {
-    ...canvasStyleData.value,
+    ...canvasOptions.value,
     ...backgroundStyle
   }
   return filterStyle(style, [

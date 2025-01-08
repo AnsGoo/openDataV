@@ -28,7 +28,6 @@ export interface ComponentTreeData {
 }
 export interface CanvasData {
   editMode: EditMode
-  canvasStyleData: CanvasStyleData
   componentData: Array<CustomComponent>
   activeComponent: Optional<CustomComponent>
   isShowEm: boolean

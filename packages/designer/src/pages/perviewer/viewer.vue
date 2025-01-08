@@ -18,8 +18,8 @@ import { backgroundToCss, filterStyle, pageScale } from '../../utils'
 
 provide(HOOKS, readonly({ useData, useProp }))
 
-const canvasState = useCanvasState()
-const canvasStyle = computed(() => canvasState.canvasStyleData)
+const canvasState = useCanvasState()!
+const canvasStyle = computed(() => canvasState.canvasOptions)
 const componentData = computed(() => canvasState.componentData)
 const bgStyle = computed<Record<string, string>>(() => {
   return backgroundToCss(canvasStyle.value.background)

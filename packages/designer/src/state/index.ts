@@ -1,5 +1,4 @@
 import useClipBoardState from './clipBoard'
-import useDataState from './data'
 import useGraphState from './graph'
 import useScriptState from './scripts'
 import useSnapshotState from './snapshot'
@@ -10,7 +9,6 @@ export {
   useActionState,
   useCanvasState,
   useClipBoardState,
-  useDataState,
   useGraphState,
   useScriptState,
   useSnapshotState

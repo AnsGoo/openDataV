@@ -1,9 +1,7 @@
-import type { BaseComponent } from './component'
-
 export abstract class BasePlugin<T extends { name: string }> {
   private pluginMap = new Map<string, T>()
 
-  constructor(_component: BaseComponent) {}
+  constructor() {}
 
   get plugins() {
     const plugins: Record<string, T> = {}

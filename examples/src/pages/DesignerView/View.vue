@@ -22,7 +22,6 @@ import {
   Designer,
   ToolBar,
   useCanvasState,
-  useDataState,
   useGraphState,
   useScriptState
 } from '@open-data-v/designer'
@@ -65,9 +64,7 @@ useEventBus(StaticKey.STDOUT, (event) => {
     callback(stdout.message)
   }
 })
-
-const dataState = useDataState()
-dataState.loadPlugins([
+graphState.loadDataPlugins([
   QuickDataPlugin,
   RestDataPlugin,
   DemoDataPlugin,

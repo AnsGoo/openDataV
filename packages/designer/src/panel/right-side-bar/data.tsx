@@ -15,7 +15,7 @@ import { defineComponent, inject, onMounted, ref } from 'vue'
 
 import { PANEL_MODEL } from '../../const'
 import { useEmpty } from '../../modules'
-import { useDataState } from '../../state'
+import { useGraphState } from '../../state'
 
 export default defineComponent({
   props: {
@@ -30,7 +30,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const dataState = useDataState()
+    const graphState = useGraphState()
+    const dataState = graphState.dataPluginState
     const curDataType = ref<string>('')
     const globalDataTypes = ref<Array<{ label: string; value: string }>>([])
     const mode = inject<ContainerType>(PANEL_MODEL, ContainerType.FORM)

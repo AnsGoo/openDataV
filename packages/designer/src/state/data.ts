@@ -1,7 +1,5 @@
 import { BasePlugin } from '@open-data-v/base'
 
-import { singleton } from './utils'
-
 export interface DataPlugin {
   title: string
   type: string
@@ -12,7 +10,7 @@ export interface DataPlugin {
   getDefaultOption?: () => any
 }
 
-class DataState extends BasePlugin<DataPlugin> {
+export class DataState extends BasePlugin<DataPlugin> {
   get componentPlugins() {
     const plugins: Record<string, DataPlugin> = {}
     const keys = Object.keys(this.plugins)
@@ -38,9 +36,4 @@ class DataState extends BasePlugin<DataPlugin> {
     })
     return plugins
   }
-}
-
-const State = singleton(DataState)
-export default function useDataState() {
-  return new State() as DataState
 }
