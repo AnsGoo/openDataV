@@ -2,13 +2,7 @@ import type { CustomComponent, Position } from '@open-data-v/base'
 import { reactive } from 'vue'
 
 import type { Location } from '../type'
-import {
-  calcComponentsRect,
-  createRelativePosition,
-  getComponentInstance,
-  getComponentRealRect,
-  getSelectComponents
-} from '../utils'
+import { getComponentRealRect, getSelectComponents, progressiveCalcRect } from '../utils'
 import type { CanvasState } from './canvas'
 import type { SelectedAreaData } from './type'
 
@@ -79,7 +73,7 @@ export class ActionState {
       this.ids.clear()
       this.components.forEach((item) => this.ids.add(item.id))
     } else {
-      this.setHidden()
+      this.clearSelected()
     }
   }
 
@@ -87,23 +81,21 @@ export class ActionState {
    * 向store 中增加组件
    * @param component 组件
    */
-  appendComponent(component: Optional<CustomComponent>): void {
+  appendSelectedComponent(component: Optional<CustomComponent>): void {
     if (!component) {
       return
     }
     if (!this.ids.has(component.id)) {
       this.components.push(component)
       this.ids.add(component.id)
-      if (this.components.length > 1) {
-        this.style = { ...this.style, ...calcComponentsRect(this.components) }
-      }
+      progressiveCalcRect(component, this.style)
     }
   }
 
   /**
    * 隐藏选定区域
    */
-  setHidden() {
+  clearSelected() {
     this.style = {
       left: 0,
       top: 0,
@@ -118,7 +110,7 @@ export class ActionState {
    * 设置已选择的矩形位置
    * @param position 位置
    */
-  setPostion(position: Partial<Position>) {
+  setSelectedArea(position: Partial<Position>) {
     if (position.left) {
       this.style.left = Math.round(position.left)
     }
@@ -139,42 +131,11 @@ export class ActionState {
    * 组件间组合
    * @returns
    */
-  compose() {
-    if (this.style.width === 0) {
-      this.style = { ...this.style, ...calcComponentsRect(this.components) }
-    }
-    const groupComponent = getComponentInstance({ component: 'Group' })!
-
-    for (const prop in this.style) {
-      groupComponent.changePosition(
-        prop as 'top' | 'left' | 'height' | 'width' | 'rotate',
-        this.style[prop]
-      )
-    }
-    groupComponent.addComponent(this.components, true)
-    createRelativePosition(groupComponent)
-    this.batchDeleteComponent(this.components)
-    this.canvasState.appendComponent(groupComponent)
-
-    const index = this.canvasState.componentData.length - 1
-    this.canvasState.activateComponent(this.canvasState.componentData[index])
-    this.components = []
+  composeSelectedComponent() {
+    this.canvasState.compose(this.components)
+    this.clearSelected()
   }
-  /**
-   * 将已经放到 Group 组件数据删除，也就是在 componentData 中删除，因为它们已经放到 Group 组件中了
-   * @param components
-   */
-  batchDeleteComponent(components: CustomComponent[]) {
-    components.forEach((component) => {
-      for (let i = 0, len = this.canvasState.componentData.length; i < len; i++) {
-        if (component.id === this.canvasState.componentData[i].id) {
-          this.canvasState.componentData.splice(i, 1)
-          break
-        }
-      }
-    })
-    this.ids.clear()
-  }
+
   /**
    * 右对齐
    */
@@ -185,6 +146,7 @@ export class ActionState {
       el.component.changePosition('left', el.component.position.left + distance)
     })
     this.canvasState.saveComponentData()
+    this.clearSelected()
   }
   /**
    * 左对齐
@@ -196,6 +158,7 @@ export class ActionState {
       el.component.changePosition('left', el.component.position.left - distance)
     })
     this.canvasState.saveComponentData()
+    this.clearSelected()
   }
   /**
    * 顶端对齐
@@ -207,6 +170,7 @@ export class ActionState {
       el.component.changePosition('top', el.component.position.top - distance)
     })
     this.canvasState.saveComponentData()
+    this.clearSelected()
   }
   /**
    * 底部对齐
@@ -218,6 +182,7 @@ export class ActionState {
       el.component.changePosition('top', el.component.position.top + distance)
     })
     this.canvasState.saveComponentData()
+    this.clearSelected()
   }
   /**
    * 行对齐
@@ -229,6 +194,7 @@ export class ActionState {
       el.component.changePosition('top', el.component.position.top + distanceY)
     })
     this.canvasState.saveComponentData()
+    this.clearSelected()
   }
   /**
    * 列对齐
@@ -240,5 +206,6 @@ export class ActionState {
       el.component.changePosition('left', el.component.position.left + distanceX)
     })
     this.canvasState.saveComponentData()
+    this.clearSelected()
   }
 }

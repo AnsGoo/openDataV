@@ -176,7 +176,7 @@ const handleMouseDown = (e: MouseEvent) => {
   canvasState.deactivateComponent()
   e.preventDefault()
   e.stopPropagation()
-  actionState.setHidden()
+  actionState.clearSelected()
   // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
   const rectInfo = editor.value?.getBoundingClientRect()
   editorX.value = rectInfo!.x
@@ -199,13 +199,13 @@ const handleMouseDown = (e: MouseEvent) => {
     const width = Math.abs(moveEvent.clientX - startX) / canvasState.scale
     const height = Math.abs(moveEvent.clientY - startY) / canvasState.scale
 
-    actionState.setPostion({ left: start.x, top: start.y, width, height })
+    actionState.setSelectedArea({ left: start.x, top: start.y, width, height })
   }
   const up = (UpMoveEvent: MouseEvent) => {
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
     if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
-      actionState.setHidden()
+      actionState.clearSelected()
       return
     }
 

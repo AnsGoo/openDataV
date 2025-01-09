@@ -25,8 +25,8 @@ export default defineComponent({
     index: Number
   },
   setup(props, { slots }) {
-    const canvasState = useCanvasState()
-    const actionState = useActionState()
+    const canvasState = useCanvasState()!
+    const actionState = useActionState()!
 
     const { copy, decompose } = useCanvasActions(canvasState)
 
@@ -151,8 +151,8 @@ export default defineComponent({
     })
 
     const appendComponent = () => {
-      actionState.appendComponent(canvasState.activeComponent)
-      actionState.appendComponent(props.info!)
+      actionState.appendSelectedComponent(canvasState.activeComponent)
+      actionState.appendSelectedComponent(props.info!)
     }
 
     /**

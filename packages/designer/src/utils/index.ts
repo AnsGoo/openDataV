@@ -263,6 +263,31 @@ export function calcComponentsRect(components: CustomComponent[]) {
   return { left, top, width: right - left, height: bottom - top }
 }
 
+export function progressiveCalcRect(
+  component,
+  baseRect: { left: number; top: number; width: number; height: number }
+) {
+  const componentRect: Location = calcComponentAxis(component.position)
+  const { width, height, left, top } = baseRect
+  const baseRight = left + width
+  const baseBottom = top + height
+  const afterLeft = Math.min(baseRect.left, componentRect.left)
+  const afterRight = Math.max(baseRight, componentRect.right)
+  const afterTop = Math.min(top, componentRect.top)
+  const afterBottom = Math.max(baseBottom, componentRect.bottom)
+  const afterRect = {
+    left: afterLeft,
+    width: afterRight - afterLeft,
+    top: afterTop,
+    height: afterBottom - afterTop
+  }
+  baseRect.height = afterRect.height
+  baseRect.left = afterRect.left
+  baseRect.top = afterRect.top
+  baseRect.width = afterRect.width
+  return afterRect
+}
+
 /**
  * 计算组件笛卡尔坐标系坐标
  * @param position 组件在画布中的位置

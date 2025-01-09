@@ -7,6 +7,8 @@ import type { RelativePosition } from '../type'
 import {
   calcComponentsRect,
   createComponent,
+  createRelativePosition,
+  getComponentInstance,
   handleLogger,
   mod360,
   rotatePoint,
@@ -714,5 +716,26 @@ export class CanvasState {
       }
     }
     this.saveComponentData()
+  }
+
+  compose(components: Array<CustomComponent>) {
+    const position = calcComponentsRect(components)
+    const groupComponent = getComponentInstance({ component: 'Group' })
+    groupComponent.changePositions(position)
+    groupComponent.addComponent(components, true)
+    createRelativePosition(groupComponent)
+    this.batchRemoveComponent(components)
+    this.appendComponent(groupComponent)
+    this.activateComponent(groupComponent)
+  }
+
+  /**
+   * 批量移除组件
+   * @param components 要移除的组件数组
+   */
+  batchRemoveComponent(components: CustomComponent[]) {
+    components.forEach((component) => {
+      this.removeComponent(component)
+    })
   }
 }

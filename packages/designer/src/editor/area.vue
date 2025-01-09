@@ -19,8 +19,8 @@ import { computed, onUnmounted, watch } from 'vue'
 import { useActionState, useCanvasState } from '../state'
 import type { ContextmenuItem } from '../type'
 
-const actionState = useActionState()
-const canvasState = useCanvasState()
+const actionState = useActionState()!
+const canvasState = useCanvasState()!
 const hidden = computed<boolean>(() => actionState.hidden)
 const left = computed<number>(() => actionState.style.left)
 const top = computed<number>(() => actionState.style.top)
@@ -31,48 +31,40 @@ const stopWatch: WatchStopHandle = watch(
   () => canvasState.activeComponent,
   () => {
     if (actionState.components.length > 0) {
-      actionState.setHidden()
+      actionState.clearSelected()
     }
   }
 )
 
 const compose = () => {
-  actionState.compose()
-  actionState.setHidden()
+  actionState.composeSelectedComponent()
 }
 
 const handleFlushLeft = () => {
   actionState.flushLeft()
-  actionState.setHidden()
 }
 
 const handleFlushRight = () => {
   actionState.flushRight()
-  actionState.setHidden()
 }
 
 const handleFlushTop = () => {
   actionState.flushTop()
-  actionState.setHidden()
 }
 const handleFlushBottom = () => {
   actionState.flushBottom()
-  actionState.setHidden()
 }
 
 const handleFlushRow = () => {
   actionState.flushRow()
-  actionState.setHidden()
 }
 
 const handleFlushColumn = () => {
   actionState.flushColumn()
-  actionState.setHidden()
 }
 
 const batchDelete = () => {
-  actionState.batchDeleteComponent(actionState.components)
-  actionState.setHidden()
+  canvasState.batchRemoveComponent(actionState.components)
 }
 
 const contextMenus = (): ContextmenuItem[] => {

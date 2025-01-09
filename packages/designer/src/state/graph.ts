@@ -1,4 +1,4 @@
-import type { CustomComponent, DataMode } from '@open-data-v/base'
+import type { DataMode } from '@open-data-v/base'
 import type { Component } from 'vue'
 import { reactive } from 'vue'
 
