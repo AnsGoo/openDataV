@@ -25,7 +25,6 @@ import ToolsBar from './panel/tools-bar'
 import Directive from './plugins/directive'
 import type { CanvasData, CanvasStyleData } from './state'
 import {
-  useSelectionState,
   useCanvasState,
   useClipBoardState,
   useGraphState,
@@ -75,7 +74,7 @@ export {
   ToolBarItem,
   ToolsBar,
   toPercent,
-  useSelectionState,
+  useCanvasActions,
   useCanvasState,
   useClipBoardState,
   useComponentActions,
@@ -85,7 +84,6 @@ export {
   useIcon,
   useScriptState,
   useSnapshotState,
-  useCanvasActions,
   XIcon
 }
 export type {
