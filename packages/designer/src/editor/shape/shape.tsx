@@ -4,9 +4,9 @@ import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 
 import { stretchedComponents } from '../../component'
-import { useActionState, useCanvasState } from '../../state'
+import { useCanvasState, useSelectionState } from '../../state'
 import { useCanvasActions } from '../../toolbars'
-import type { ContextmenuItem, Vector } from '../../type'
+import type { ContextmenuItem } from '../../type'
 import { copyText, mod360, systemLogger, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
 
@@ -26,7 +26,7 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const canvasState = useCanvasState()!
-    const actionState = useActionState()!
+    const selectionState = useSelectionState()!
 
     const { copy, decompose } = useCanvasActions(canvasState)
 
@@ -147,12 +147,12 @@ export default defineComponent({
     })
 
     const isActive = computed<boolean>(() => {
-      return (props.active && !props.info!.locked) || actionState.isActived(props.info!)
+      return (props.active && !props.info!.locked) || selectionState.isActived(props.info!)
     })
 
     const appendComponent = () => {
-      actionState.appendSelectedComponent(canvasState.activeComponent)
-      actionState.appendSelectedComponent(props.info!)
+      selectionState.appendSelectedComponent(canvasState.activeComponent)
+      selectionState.appendSelectedComponent(props.info!)
     }
 
     /**
@@ -267,7 +267,7 @@ export default defineComponent({
       const move = throttleFrame((moveEvent: MouseEvent) => {
         // 第一次点击时也会触发 move，所以会有“刚点击组件但未移动，组件的大小却改变了”的情况发生
         // 因此第一次点击时不触发 move 事件
-        const curPositon: Vector = {
+        const curPositon = {
           x: (moveEvent.clientX - editorRectInfo.left) / canvasState.scale,
           y: (moveEvent.clientY - editorRectInfo.top) / canvasState.scale
         }

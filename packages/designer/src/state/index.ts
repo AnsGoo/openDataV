@@ -3,10 +3,10 @@ import useGraphState from './graph'
 import useScriptState from './scripts'
 import useSnapshotState from './snapshot'
 import type { CanvasData, CanvasStyleData } from './type'
-import { useActionState, useCanvasState } from './use'
+import { useSelectionState, useCanvasState } from './use'
 
 export {
-  useActionState,
+  useSelectionState,
   useCanvasState,
   useClipBoardState,
   useGraphState,

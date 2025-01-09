@@ -6,10 +6,10 @@
 import { CONTEXT } from '@open-data-v/base'
 import { provide } from 'vue'
 
-import { ActionState } from '../state/actions'
 import { CanvasState } from '../state/canvas'
+import { SelectionState } from '../state/selection'
 
 const canvasState = new CanvasState()
-const actionState = new ActionState(canvasState)
-provide(CONTEXT, { canvasState, actionState })
+const selectionState = new SelectionState(canvasState)
+provide(CONTEXT, { canvasState, selectionState })
 </script>

@@ -60,9 +60,9 @@ import Grid from '../editor/grid.vue'
 import MarkLine from '../editor/mark-line.vue'
 import Ruler from '../editor/ruler.vue'
 import { EditMode } from '../enum'
-import { useActionState, useCanvasState, useClipBoardState } from '../state'
+import { useCanvasState, useClipBoardState, useSelectionState } from '../state'
 import { useCanvasActions } from '../toolbars'
-import type { ContextmenuItem, Location, Vector } from '../type'
+import type { ContextmenuItem, Location } from '../type'
 import {
   backgroundToCss,
   createComponent,
@@ -73,7 +73,7 @@ import {
 } from '../utils'
 import Shape from './shape'
 
-const actionState = useActionState()!
+const selectionState = useSelectionState()!
 const clipBoardState = useClipBoardState()
 const canvasState = useCanvasState()!
 
@@ -164,7 +164,7 @@ const pasteComponent = (event: ClipboardEvent) => {
 
 const editorX = ref<number>(0)
 const editorY = ref<number>(0)
-const start = reactive<Vector>({
+const start = reactive<{ x: number; y: number }>({
   x: 0,
   y: 0
 })
@@ -176,7 +176,7 @@ const handleMouseDown = (e: MouseEvent) => {
   canvasState.deactivateComponent()
   e.preventDefault()
   e.stopPropagation()
-  actionState.clearSelected()
+  selectionState.clearSelected()
   // 获取编辑器的位移信息，每次点击时都需要获取一次。主要是为了方便开发时调试用。
   const rectInfo = editor.value?.getBoundingClientRect()
   editorX.value = rectInfo!.x
@@ -199,24 +199,24 @@ const handleMouseDown = (e: MouseEvent) => {
     const width = Math.abs(moveEvent.clientX - startX) / canvasState.scale
     const height = Math.abs(moveEvent.clientY - startY) / canvasState.scale
 
-    actionState.setSelectedArea({ left: start.x, top: start.y, width, height })
+    selectionState.setSelectedArea({ left: start.x, top: start.y, width, height })
   }
   const up = (UpMoveEvent: MouseEvent) => {
     document.removeEventListener('mousemove', move)
     document.removeEventListener('mouseup', up)
     if (UpMoveEvent.clientX == startX && UpMoveEvent.clientY == startY) {
-      actionState.clearSelected()
+      selectionState.clearSelected()
       return
     }
 
     const selectedRect: Location = {
-      left: Math.round(actionState.rect.left),
-      top: Math.round(actionState.rect.top),
-      right: actionState.rect.left + actionState.rect.width,
-      bottom: actionState.rect.top + actionState.rect.height
+      left: Math.round(selectionState.rect.left),
+      top: Math.round(selectionState.rect.top),
+      right: selectionState.rect.left + selectionState.rect.width,
+      bottom: selectionState.rect.top + selectionState.rect.height
     }
 
-    actionState.setSelectedComponents(selectedRect)
+    selectionState.setSelectedComponents(selectedRect)
   }
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)

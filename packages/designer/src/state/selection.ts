@@ -6,7 +6,7 @@ import { getComponentRealRect, getSelectComponents, progressiveCalcRect } from '
 import type { CanvasState } from './canvas'
 import type { SelectedRectData } from './type'
 
-export class ActionState {
+export class SelectionState {
   public state = reactive<SelectedRectData>({
     rect: {
       top: 0,

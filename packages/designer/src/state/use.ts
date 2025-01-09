@@ -2,8 +2,8 @@ import { CONTEXT } from '@open-data-v/base'
 import { inject } from 'vue'
 
 import { systemLogger } from '../utils'
-import type { ActionState } from './actions'
 import type { CanvasState } from './canvas'
+import type { SelectionState } from './selection'
 
 export function useCanvasState(): CanvasState | undefined {
   const context = inject(CONTEXT, null)
@@ -16,12 +16,12 @@ export function useCanvasState(): CanvasState | undefined {
   return canvasState
 }
 
-export function useActionState(): ActionState | undefined {
+export function useSelectionState(): SelectionState | undefined {
   const context = inject(CONTEXT, null)
   if (!context) {
-    systemLogger.error('useActionState must be called in setup')
+    systemLogger.error('useSelectionState must be called in setup')
     return
   }
-  const { actionState } = context
-  return actionState
+  const { selectionState } = context
+  return selectionState
 }

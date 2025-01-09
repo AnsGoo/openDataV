@@ -16,55 +16,55 @@
 import type { WatchStopHandle } from 'vue'
 import { computed, onUnmounted, watch } from 'vue'
 
-import { useActionState, useCanvasState } from '../state'
+import { useCanvasState, useSelectionState } from '../state'
 import type { ContextmenuItem } from '../type'
 
-const actionState = useActionState()!
+const selectionState = useSelectionState()!
 const canvasState = useCanvasState()!
-const hidden = computed<boolean>(() => actionState.hidden)
-const left = computed<number>(() => actionState.rect.left)
-const top = computed<number>(() => actionState.rect.top)
-const width = computed<number>(() => actionState.rect.width)
-const height = computed<number>(() => actionState.rect.height)
+const hidden = computed<boolean>(() => selectionState.hidden)
+const left = computed<number>(() => selectionState.rect.left)
+const top = computed<number>(() => selectionState.rect.top)
+const width = computed<number>(() => selectionState.rect.width)
+const height = computed<number>(() => selectionState.rect.height)
 
 const stopWatch: WatchStopHandle = watch(
   () => canvasState.activeComponent,
   () => {
-    if (actionState.components.length > 0) {
-      actionState.clearSelected()
+    if (selectionState.components.length > 0) {
+      selectionState.clearSelected()
     }
   }
 )
 
 const compose = () => {
-  actionState.composeSelectedComponent()
+  selectionState.composeSelectedComponent()
 }
 
 const handleFlushLeft = () => {
-  actionState.flushLeft()
+  selectionState.flushLeft()
 }
 
 const handleFlushRight = () => {
-  actionState.flushRight()
+  selectionState.flushRight()
 }
 
 const handleFlushTop = () => {
-  actionState.flushTop()
+  selectionState.flushTop()
 }
 const handleFlushBottom = () => {
-  actionState.flushBottom()
+  selectionState.flushBottom()
 }
 
 const handleFlushRow = () => {
-  actionState.flushRow()
+  selectionState.flushRow()
 }
 
 const handleFlushColumn = () => {
-  actionState.flushColumn()
+  selectionState.flushColumn()
 }
 
 const batchDelete = () => {
-  canvasState.batchRemoveComponent(actionState.components)
+  canvasState.batchRemoveComponent(selectionState.components)
 }
 
 const contextMenus = (): ContextmenuItem[] => {
@@ -72,14 +72,14 @@ const contextMenus = (): ContextmenuItem[] => {
     {
       text: '组合',
       subText: '',
-      disable: !actionState.canCompose,
+      disable: !selectionState.canCompose,
       handler: compose
     },
     { divider: true },
     {
       text: '删除',
       subText: 'Ctrl + Delete',
-      disable: actionState.components.length <= 0,
+      disable: selectionState.components.length <= 0,
       handler: batchDelete
     },
     { divider: true },
