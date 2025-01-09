@@ -22,10 +22,10 @@ import type { ContextmenuItem } from '../type'
 const actionState = useActionState()!
 const canvasState = useCanvasState()!
 const hidden = computed<boolean>(() => actionState.hidden)
-const left = computed<number>(() => actionState.style.left)
-const top = computed<number>(() => actionState.style.top)
-const width = computed<number>(() => actionState.style.width)
-const height = computed<number>(() => actionState.style.height)
+const left = computed<number>(() => actionState.rect.left)
+const top = computed<number>(() => actionState.rect.top)
+const width = computed<number>(() => actionState.rect.width)
+const height = computed<number>(() => actionState.rect.height)
 
 const stopWatch: WatchStopHandle = watch(
   () => canvasState.activeComponent,

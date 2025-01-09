@@ -4,11 +4,11 @@ import { reactive } from 'vue'
 import type { Location } from '../type'
 import { getComponentRealRect, getSelectComponents, progressiveCalcRect } from '../utils'
 import type { CanvasState } from './canvas'
-import type { SelectedAreaData } from './type'
+import type { SelectedRectData } from './type'
 
 export class ActionState {
-  public state = reactive<SelectedAreaData>({
-    style: {
+  public state = reactive<SelectedRectData>({
+    rect: {
       top: 0,
       left: 0,
       width: 0,
@@ -24,11 +24,11 @@ export class ActionState {
     this.canvasState = canvasState
   }
 
-  get style(): Position {
-    return this.state.style
+  get rect(): Position {
+    return this.state.rect
   }
-  set style(style: Position) {
-    this.state.style = style
+  set rect(rect: Position) {
+    this.state.rect = rect
   }
 
   get ids(): Set<string> {
@@ -48,7 +48,7 @@ export class ActionState {
     return this.components.length > 1
   }
   get hidden(): boolean {
-    return this.style.width > 0
+    return this.rect.width > 0
   }
   /**
    * 判断组件是否在选取的组件内
@@ -65,10 +65,10 @@ export class ActionState {
   setSelectComponents(position: Location) {
     const { components, rect } = getSelectComponents(position, this.canvasState.componentData) || {}
     if (components && rect) {
-      this.style.left = rect.left
-      this.style.top = rect.top
-      this.style.width = rect.right - rect.left
-      this.style.height = rect.bottom - rect.top
+      this.rect.left = rect.left
+      this.rect.top = rect.top
+      this.rect.width = rect.right - rect.left
+      this.rect.height = rect.bottom - rect.top
       this.components = components || []
       this.ids.clear()
       this.components.forEach((item) => this.ids.add(item.id))
@@ -88,7 +88,7 @@ export class ActionState {
     if (!this.ids.has(component.id)) {
       this.components.push(component)
       this.ids.add(component.id)
-      progressiveCalcRect(component, this.style)
+      progressiveCalcRect(component, this.rect)
     }
   }
 
@@ -96,7 +96,7 @@ export class ActionState {
    * 隐藏选定区域
    */
   clearSelected() {
-    this.style = {
+    this.rect = {
       left: 0,
       top: 0,
       width: 0,
@@ -112,19 +112,19 @@ export class ActionState {
    */
   setSelectedArea(position: Partial<Position>) {
     if (position.left) {
-      this.style.left = Math.round(position.left)
+      this.rect.left = Math.round(position.left)
     }
 
     if (position.top) {
-      this.style.top = Math.round(position.top)
+      this.rect.top = Math.round(position.top)
     }
 
     if (position.width) {
-      this.style.width = Math.round(position.width)
+      this.rect.width = Math.round(position.width)
     }
 
     if (position.height) {
-      this.style.height = Math.round(position.height)
+      this.rect.height = Math.round(position.height)
     }
   }
   /**

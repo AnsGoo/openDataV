@@ -210,10 +210,10 @@ const handleMouseDown = (e: MouseEvent) => {
     }
 
     const selectedRect: Location = {
-      left: Math.round(actionState.style.left),
-      top: Math.round(actionState.style.top),
-      right: actionState.style.left + actionState.style.width,
-      bottom: actionState.style.top + actionState.style.height
+      left: Math.round(actionState.rect.left),
+      top: Math.round(actionState.rect.top),
+      right: actionState.rect.left + actionState.rect.width,
+      bottom: actionState.rect.top + actionState.rect.height
     }
 
     actionState.setSelectComponents(selectedRect)

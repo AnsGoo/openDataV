@@ -59,8 +59,8 @@ export interface CopyItem {
   copyData: Optional<IComponentData>
   isCut: boolean
 }
-export interface SelectedAreaData {
-  style: Position
+export interface SelectedRectData {
+  rect: Position
   components: CustomComponent[]
   ids: Set
 }
