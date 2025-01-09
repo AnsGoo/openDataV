@@ -216,7 +216,7 @@ const handleMouseDown = (e: MouseEvent) => {
       bottom: actionState.rect.top + actionState.rect.height
     }
 
-    actionState.setSelectComponents(selectedRect)
+    actionState.setSelectedComponents(selectedRect)
   }
   document.addEventListener('mousemove', move)
   document.addEventListener('mouseup', up)

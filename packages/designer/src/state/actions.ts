@@ -62,7 +62,7 @@ export class ActionState {
    * 给定区域获取该区域的组件
    * @param position
    */
-  setSelectComponents(position: Location) {
+  setSelectedComponents(position: Location) {
     const { components, rect } = getSelectComponents(position, this.canvasState.componentData) || {}
     if (components && rect) {
       this.rect.left = rect.left
@@ -78,7 +78,7 @@ export class ActionState {
   }
 
   /**
-   * 向store 中增加组件
+   * 向选中区中增加组件
    * @param component 组件
    */
   appendSelectedComponent(component: Optional<CustomComponent>): void {
@@ -93,7 +93,7 @@ export class ActionState {
   }
 
   /**
-   * 隐藏选定区域
+   * 清空选定区域
    */
   clearSelected() {
     this.rect = {
@@ -128,7 +128,7 @@ export class ActionState {
     }
   }
   /**
-   * 组件间组合
+   * 组合选中组件
    * @returns
    */
   composeSelectedComponent() {
