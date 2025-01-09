@@ -24,14 +24,14 @@ function createAttrComponent(structOption: IContainerItem[]) {
     },
     emits: ['change'],
     setup(props, { emit }) {
-      const canvasState = useCanvasState()
+      const canvasState = useCanvasState()!
       const modelValue = reactive(cloneDeep(propValue))
-      const changed = (keys: Array<string>, val: any) => {
+      const changed = () => {
         const component = canvasState.getComponentById(props.componentId!)
         if (!component) {
           return
         }
-        component.changeProp(keys, val, modelValue)
+        component.changeProp(modelValue)
         emit('change', modelValue)
       }
 

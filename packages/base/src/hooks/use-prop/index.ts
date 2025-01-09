@@ -1,19 +1,17 @@
-import { set } from 'lodash-es'
-
 import type { CustomComponent } from '../../component'
 
 export const useProp = <T>(
   component: CustomComponent,
   options?: {
-    callback?: (propKeys: Array<string>, value: any) => any
+    callback?: (propValue: T) => any
     defaultPropValue?: T
   }
 ): { component: CustomComponent; propValue: T } => {
   const { callback, defaultPropValue } = options || {}
   if (callback || defaultPropValue) {
-    const innerCallback = (propKeys: Array<string>, value: any) => {
-      set(defaultPropValue, propKeys.join('.'), value)
-      callback && callback(propKeys, value)
+    const innerCallback = (propValue: T) => {
+      defaultPropValue && Object.assign(defaultPropValue, propValue)
+      callback && callback(propValue)
     }
     component.setPropChangeCallback(defaultPropValue ? innerCallback : callback!)
   }

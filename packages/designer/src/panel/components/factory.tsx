@@ -24,12 +24,12 @@ function createAttrComponent(structOption: IContainerItem[]) {
     emits: ['change', 'update:value'],
     setup(props, { emit }) {
       const modelValue = reactive(cloneDeep(propValue))
-      const changed = (keys: Array<string>, val: any) => {
+      const changed = () => {
         const component = props.component
         if (!component) {
           return
         }
-        component.changeProp(keys, val, modelValue)
+        component.changeProp(modelValue)
         emit('change', modelValue)
         emit('update:value', modelValue)
       }

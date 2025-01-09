@@ -25,7 +25,7 @@ export class CustomComponent {
   isContainer = false
   private extendedMetaData: Record<string, any> = {}
 
-  callbackProp?: (propKeys: Array<string>, value: any, modelValue: any) => void
+  callbackProp?: (modelValue: any) => void
   callbackData?: (result: any, type?: string) => void
   protected dataCallback?: (result: any, type?: string) => void
 
@@ -112,14 +112,14 @@ export class CustomComponent {
   }
 
   // 修改属性
-  changeProp(propKeys: Array<string>, value: string | number | boolean | any, modelValue) {
+  changeProp(modelValue) {
     this.setPropValue(modelValue)
     if (this.callbackProp) {
-      this.callbackProp(propKeys, value, modelValue)
+      this.callbackProp(modelValue)
     }
   }
 
-  setPropChangeCallback(callback: (propKeys: Array<string>, value: any) => void) {
+  setPropChangeCallback(callback: (value: any) => void) {
     this.callbackProp = callback
   }
   changePosition(key: 'top' | 'left' | 'height' | 'width' | 'rotate', value: number) {

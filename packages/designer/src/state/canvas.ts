@@ -351,15 +351,6 @@ export class CanvasState {
    * @param modelValue PropValue 值
    * @returns
    */
-  setComponentPropValue(
-    component: CustomComponent,
-    keys: Array<string>,
-    value: any,
-    modelValue: Record<string, any>
-  ): void {
-    component.changeProp(keys, value, modelValue)
-    this.saveComponentData()
-  }
 
   public getComponentById(id: string): CustomComponent | undefined {
     return this.findComponentById(id, this.componentData)
@@ -571,7 +562,7 @@ export class CanvasState {
    * @param toIndexs Array<number> 索引
    * @returns void
    */
-  moveComponent(componentId: string, toIndexs: Array<number>) {
+  public moveComponent(componentId: string, toIndexs: Array<number>) {
     if (toIndexs.length === 0 || !componentId) {
       return
     }
@@ -637,7 +628,7 @@ export class CanvasState {
    * @param index
    * @param component
    */
-  insertComponent(component: CustomComponent, indexes: Array<number>): void {
+  public insertComponent(component: CustomComponent, indexes: Array<number>): void {
     const result = this._insertComponent(component, indexes)
     if (result) {
       this.saveComponentData()
@@ -718,6 +709,10 @@ export class CanvasState {
     this.saveComponentData()
   }
 
+  /**
+   * 将多个组件组合成一个新的组件
+   * @param components - 要组合的组件数组
+   */
   compose(components: Array<CustomComponent>) {
     const position = calcComponentsRect(components)
     const groupComponent = getComponentInstance({ component: 'Group' })
