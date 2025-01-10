@@ -121,8 +121,8 @@ class SnapshotState {
       clearTimeout(this.timeHandler)
     }
 
-    const data = JSON.parse(JSON.stringify({ canvasData, canvasId }))
-    this.timeHandler = setTimeout(this.recordSnapshot, 300, data)
+    const data = JSON.parse(JSON.stringify({ canvasData }))
+    this.timeHandler = setTimeout(this.recordSnapshot, 300, data, canvasId)
   }
 }
 
