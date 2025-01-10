@@ -190,6 +190,7 @@ export interface Slotter {
   close: () => void
   toJSON: () => Record<string, DataOption>
   getHandler: (key: string) => DataInstance
+  load: (metaData: Record<string, DataOption>) => void
 }
 
 export interface Response {

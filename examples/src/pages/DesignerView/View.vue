@@ -94,7 +94,7 @@ const restore = async (index: string) => {
   if (!resp.data) {
     return
   }
-  designer.value!.setLayoutData(resp.data)
+  designer.value!.loadCanvasData(resp.data)
 }
 
 watch(

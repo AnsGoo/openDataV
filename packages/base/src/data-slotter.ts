@@ -6,16 +6,7 @@ export class DataSlotter implements Slotter {
   private callback?: (result: any, type?: string) => void
 
   constructor(dataOptions: Record<string, DataOption>) {
-    const keys = Object.keys(dataOptions)
-
-    keys.forEach((key) => {
-      const option = dataOptions[key]
-      const HandlerClazz = DataSlotter.handlerClazzs[option.type]
-      if (!HandlerClazz) {
-        return
-      }
-      this.configs[option.id] = new HandlerClazz(option)
-    })
+    this.load(dataOptions)
   }
 
   getHandler(key: string) {
@@ -52,5 +43,20 @@ export class DataSlotter implements Slotter {
       metaData[key] = dataInstance?.toJSON?.()
     })
     return metaData
+  }
+  load(metaData: Record<string, DataOption>) {
+    this.close()
+    const keys = Object.keys(metaData)
+
+    keys.forEach((key) => {
+      const option = metaData[key]
+      const HandlerClazz = DataSlotter.handlerClazzs[option.type]
+      if (!HandlerClazz) {
+        return
+      }
+      const hanlder = new HandlerClazz(option)
+      this.configs[option.id] = hanlder
+      this.callback && hanlder.connect?.(this.callback)
+    })
   }
 }

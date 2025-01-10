@@ -1,10 +1,9 @@
-import type { CustomComponent, IComponentData } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
 import type { StoreComponentData } from '../db'
 import { snapshotDb } from '../db'
-import type { CanvasStyleData, SnapData } from './type'
+import type { CanvasMetaData, SnapData } from './type'
 import { singleton } from './utils'
 
 class SnapshotState {
@@ -83,24 +82,19 @@ class SnapshotState {
    * @param canvasData 组件数据
    * @param canvasStyle 画布样式
    */
-  recordSnapshot(
-    canvasData: Array<CustomComponent>,
-    canvasStyle: CanvasStyleData,
-    dataSlotters: Array<{ type: string; config: any }>
-  ) {
+  recordSnapshot(canvasData: CanvasMetaData, canvasId: string) {
     // 改变值
     this.latestSnapshot = {
       canvasData: cloneDeep(canvasData),
-      canvasStyle: cloneDeep(canvasStyle),
-      dataSlotters: cloneDeep(dataSlotters)
+      canvasId: canvasId
     }
     snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot)).then(async (_) => {
       const count: number = await snapshotDb.snapshot.count()
       if (count > this.snapshotMax) {
-        const snapshot: StoreComponentData = (await snapshotDb.snapshot
-          .orderBy('id')
-          .first()) as StoreComponentData
-        await snapshotDb.snapshot.delete(snapshot!.id!)
+        const snapshots = await snapshotDb.snapshot.where('canvasId').equals(canvasId).sortBy('id')
+        if (snapshots.length > 0) {
+          await snapshotDb.snapshot.delete(snapshots[0].id!)
+        }
       }
       const snapshot = await snapshotDb.snapshot.orderBy('id').last()
       if (snapshot) {
@@ -122,17 +116,13 @@ class SnapshotState {
    * @param canvasStyle 组件样式
    * @param dataSlotters  数据插槽
    */
-  saveSnapshot(
-    canvasData: IComponentData[],
-    canvasStyle: CanvasStyleData,
-    dataSlotters: Array<{ type: string; config: any }>
-  ) {
+  saveSnapshot(canvasData: CanvasMetaData, canvasId: string) {
     if (this.timeHandler) {
       clearTimeout(this.timeHandler)
     }
 
-    const data = JSON.parse(JSON.stringify(canvasData))
-    this.timeHandler = setTimeout(this.recordSnapshot, 300, data, canvasStyle, dataSlotters)
+    const data = JSON.parse(JSON.stringify({ canvasData, canvasId }))
+    this.timeHandler = setTimeout(this.recordSnapshot, 300, data)
   }
 }
 

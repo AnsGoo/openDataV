@@ -13,7 +13,6 @@ import { computed, onMounted, onUnmounted, provide, readonly } from 'vue'
 import { HOOKS } from '../../const'
 import Wrapper from '../../editor/wrapper.vue'
 import { useCanvasState } from '../../state'
-import type { LayoutData } from '../../state/type'
 import { backgroundToCss, filterStyle, pageScale } from '../../utils'
 
 provide(HOOKS, readonly({ useData, useProp }))
@@ -31,11 +30,11 @@ const screenStyle = computed<Record<string, string>>(() => {
   }
   return filterStyle(style, ['width', 'height'])
 })
-const setLayoutData = async (data: LayoutData): Promise<void> => {
-  await canvasState.setLayoutData(data)
+const loadCanvasData = async (data: CanvasMetaData): Promise<void> => {
+  await canvasState.load(data)
   setScale()
 }
-defineExpose({ setLayoutData })
+defineExpose({ loadCanvasData })
 
 onMounted(async () => {
   // 如果是首页

@@ -1,10 +1,12 @@
 import type { Table } from 'dexie'
 import Dexie from 'dexie'
 
-import type { ComponentData } from './type'
+import type { CanvasMetaData } from './state/type'
 
-export interface StoreComponentData extends ComponentData {
+export interface StoreComponentData {
   id?: number
+  canvasData?: CanvasMetaData
+  canvasId: string
 }
 
 export class SnapShotDexie extends Dexie {
@@ -13,7 +15,7 @@ export class SnapShotDexie extends Dexie {
   constructor() {
     super('snapshot')
     this.version(1).stores({
-      snapshot: '++id, canvasData, canvasStyle, dataSlotters' // Primary key and indexed props
+      snapshot: '++id, canvasData, canvasId' // Primary key and indexed props
     })
   }
 }

@@ -21,7 +21,7 @@ const initComponents = async (index: string): Promise<void> => {
   try {
     const resp = await getPageApi(index)
     if (resp.data) {
-      viewer.value!.setLayoutData(resp.data)
+      viewer.value!.loadCanvasData(resp.data)
     }
   } catch (e: any) {
     await router.push({

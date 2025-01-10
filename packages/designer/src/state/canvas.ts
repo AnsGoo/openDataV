@@ -1,4 +1,11 @@
-import type { CustomComponent, DOMRectStyle, IComponentData, Vector } from '@open-data-v/base'
+import type {
+  CustomComponent,
+  DOMRectStyle,
+  IComponentData,
+  Slotter,
+  Vector
+} from '@open-data-v/base'
+import { DataSlotter } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
@@ -17,29 +24,21 @@ import {
   uuid
 } from '../utils'
 import useSnapShotState from './snapshot'
-import type { CanvasData, CanvasStyleData, LayoutData } from './type'
+import type { CanvasData, CanvasMetaData } from './type'
 
 const snapShotState = useSnapShotState()
+interface CanvasOptions {
+  width: number
+  height: number
+  background: any
+  extraAttrs: Record<string, any>
+}
 
-const baseCanvasStyleData: CanvasStyleData = {
+const baseCanvasOptions: CanvasOptions = {
   width: window.screen.width,
   height: window.screen.height,
   background: { backgroundColor: '#272e3b' },
   extraAttrs: {}
-}
-
-window.localStorage.setItem('canvasData', JSON.stringify([]))
-window.localStorage.setItem('canvasStyle', JSON.stringify(baseCanvasStyleData))
-
-const storeCanvasHandler: ProxyHandler<CanvasStyleData> = {
-  get(target: CanvasStyleData, key) {
-    return target[key]
-  },
-  set(target: CanvasStyleData, key, value) {
-    Reflect.set(target, key, value)
-    window.localStorage.setItem('canvasStyle', JSON.stringify(target))
-    return true
-  }
 }
 
 export class CanvasState {
@@ -52,16 +51,32 @@ export class CanvasState {
     benchmarkComponent: undefined,
     scale: 1
   })
-  public canvasOptions = reactive(baseCanvasStyleData)
+
+  private _canvasId: string
+
+  dataSlotter: Slotter = new DataSlotter({})
+  public canvasOptions = reactive(baseCanvasOptions)
 
   private componentMap: Map<string, CustomComponent> = new Map()
-  constructor() {}
+
+  constructor() {
+    this.dataSlotter?.connect?.(this.dataCallback)
+    this._canvasId = uuid().replaceAll('-', '')
+  }
+
+  private dataCallback = (data: any) => {
+    console.log('dataCallback', data)
+  }
 
   get isShowEm(): boolean {
     return this.state.isShowEm
   }
+
   set isShowEm(isShowEm: boolean) {
-    this.state.isShowEm = isShowEm
+    this.state.isShowEm = !!isShowEm
+  }
+  get canvasId(): string {
+    return this._canvasId
   }
 
   get scale(): number {
@@ -85,7 +100,7 @@ export class CanvasState {
     this.state.ids = ids
   }
 
-  get activeComponent(): Optional<CustomComponent> {
+  get activeComponent(): CustomComponent | undefined {
     return this.state.activeComponent
   }
   private set activeComponent(component: Optional<CustomComponent>) {
@@ -104,37 +119,16 @@ export class CanvasState {
   set editMode(editMode: EditMode) {
     this.state.editMode = editMode
   }
-  get layoutData(): IComponentData[] {
-    const result: IComponentData[] = []
-    this.componentData.forEach((item) => {
-      result.push(item.toJson())
-    })
-    // eslint-disable-next-line prettier/prettier
-    return result
-  }
   get isEditMode(): boolean {
     return this.editMode === EditMode.EDIT
   }
-  get canvasData(): CanvasStyleData {
-    return new Proxy(this.canvasOptions, storeCanvasHandler)
-  }
 
-  private resolveCanvasData(canvasData) {
-    canvasData.forEach((el) => {
+  private resolveCanvasData(components) {
+    components.forEach((el) => {
       if (el.subComponents) {
         this.resolveCanvasData(el.subComponents)
       }
     })
-  }
-  async setLayoutData(data: LayoutData) {
-    this.resolveCanvasData(data.canvasData)
-    if (data.canvasData) {
-      this.setComponentData(data.canvasData)
-    }
-
-    if (data.canvasStyle) {
-      this.canvasOptions = data.canvasStyle
-    }
   }
 
   updateCanvasOptions(options: Record<string, any>) {
@@ -391,7 +385,7 @@ export class CanvasState {
     this.componentData = []
     this.activeComponent = undefined
     this.isShowEm = false
-    this.canvasOptions = baseCanvasStyleData
+    this.canvasOptions = baseCanvasOptions
   }
   /**
    * 组件图层下移
@@ -527,9 +521,9 @@ export class CanvasState {
     return rootComponent
   }
   saveComponentData() {
-    window.localStorage.setItem('canvasData', JSON.stringify(this.layoutData))
+    window.localStorage.setItem('canvasData', JSON.stringify(this.export()))
     new Promise((resolve) => {
-      resolve(snapShotState.saveSnapshot(this.layoutData, this.canvasOptions, this.dataSlotterData))
+      resolve(snapShotState.saveSnapshot(this.export(), this.canvasId))
     })
   }
 
@@ -732,5 +726,24 @@ export class CanvasState {
     components.forEach((component) => {
       this.removeComponent(component)
     })
+  }
+
+  export(): CanvasMetaData {
+    return {
+      ...this.canvasOptions,
+      dataOptions: this.dataSlotter ? this.dataSlotter.toJSON() : undefined,
+      components: this.componentData.map((item) => {
+        return item.toJson()
+      })
+    }
+  }
+  load(metaData: CanvasMetaData) {
+    const { components, dataOptions, ...canvasOptions } = metaData
+    this.canvasOptions = {
+      ...this.canvasOptions,
+      ...canvasOptions
+    }
+    dataOptions && this.dataSlotter.load(dataOptions)
+    this.setComponentData(components)
   }
 }

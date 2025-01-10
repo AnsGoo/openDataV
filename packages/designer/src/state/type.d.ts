@@ -29,10 +29,10 @@ export interface ComponentTreeData {
 export interface CanvasData {
   editMode: EditMode
   componentData: Array<CustomComponent>
-  activeComponent: Optional<CustomComponent>
+  activeComponent?: CustomComponent
   isShowEm: boolean
   ids: Set<string>
-  benchmarkComponent: Optional<CustomComponent>
+  benchmarkComponent?: CustomComponent
   scale: number
 }
 
@@ -72,4 +72,13 @@ export interface LayoutData {
   canvasStyle: CanvasStyleData
   isPublish?: boolean
   dataSlotters: Array<{ type: string; config: any }>
+}
+
+export interface CanvasMetaData {
+  width: number
+  height: number
+  background: any
+  extraAttrs?: any
+  components: Array<IComponentData>
+  dataOptions?: Record<string, DataOption>
 }

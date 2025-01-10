@@ -30,15 +30,15 @@
   </ui-base>
 </template>
 <script setup lang="ts">
-import { CONTEXT, RenderSlot, useData, useProp } from '@open-data-v/base'
+import { RenderSlot, useData, useProp } from '@open-data-v/base'
 import type { IComponentItem } from 'panel/left-side-bar/type'
-import { defineAsyncComponent, inject, onUnmounted, provide, readonly, useSlots } from 'vue'
+import { defineAsyncComponent, onUnmounted, provide, readonly, useSlots } from 'vue'
 
 import uiBase from '../../base/ui-base.vue'
 import type { ToolBarItemType } from '../../components'
 import { HOOKS } from '../../const'
 import { useCanvasState } from '../../state'
-import type { LayoutData } from '../../state/type'
+import type { CanvasMetaData, LayoutData } from '../../state/type'
 import Canvas from './canvas.vue'
 
 const ToolBar = defineAsyncComponent(() => import('../../panel/tools-bar'))
@@ -57,13 +57,13 @@ withDefaults(
     components: () => []
   }
 )
-const canvasState = useCanvasState()
+const canvasState = useCanvasState()!
 
 provide(HOOKS, readonly({ useProp, useData }))
-const setLayoutData = (data: LayoutData) => {
-  canvasState.setLayoutData(data)
+const loadCanvasData = (data: CanvasMetaData) => {
+  canvasState.load(data)
 }
-defineExpose({ setLayoutData })
+defineExpose({ loadCanvasData })
 onUnmounted(() => {
   canvasState.clearCanvas()
 })

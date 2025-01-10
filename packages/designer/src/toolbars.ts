@@ -3,7 +3,7 @@ import type { IComponentData } from '@open-data-v/base'
 import type { StoreComponentData } from './db'
 import { useClipBoardState, useSnapshotState } from './state'
 import type { CanvasState } from './state/canvas'
-import type { CanvasStyleData } from './state/type'
+import type { CanvasMetaData, CanvasStyleData } from './state/type'
 import { exportRaw, handleLogger, importRaw } from './utils'
 
 const snapShotState = useSnapshotState()
@@ -39,11 +39,7 @@ export function useCanvasActions(canvasState: CanvasState) {
   const undo = async () => {
     const snapshot: StoreComponentData | undefined = await snapShotState.lastRecord()
     if (snapshot) {
-      canvasState.setLayoutData({
-        canvasData: snapshot.canvasData as IComponentData[],
-        canvasStyle: snapshot.canvasStyle,
-        dataSlotters: snapshot.dataSlotters
-      })
+      canvasState.load(snapshot.canvasData as unknown as CanvasMetaData)
     } else {
       handleLogger.warn('没有快照了')
     }
@@ -52,11 +48,7 @@ export function useCanvasActions(canvasState: CanvasState) {
   const recoveryDraft = async () => {
     const snapshot: StoreComponentData | undefined = await snapShotState.nextRecord()
     if (snapshot) {
-      canvasState.setLayoutData({
-        canvasData: snapshot.canvasData as IComponentData[],
-        canvasStyle: snapshot.canvasStyle,
-        dataSlotters: snapshot.dataSlotters
-      })
+      canvasState.load(snapshot.canvasData as unknown as CanvasMetaData)
     } else {
       handleLogger.warn('没有快照了')
     }
@@ -71,7 +63,7 @@ export function useCanvasActions(canvasState: CanvasState) {
       JSON.stringify({
         id: id,
         name: name,
-        canvasData: canvasState.layoutData
+        canvasData: canvasState.export()
       })
     )
   }
@@ -82,15 +74,8 @@ export function useCanvasActions(canvasState: CanvasState) {
 
   const fileHandler = (loadEvent: ProgressEvent<FileReader>) => {
     if (loadEvent.target && loadEvent.target.result) {
-      const layoutComponents: {
-        canvasData: IComponentData[]
-        canvasStyle: CanvasStyleData
-        dataSlotters: Array<{ type: string; config: any }>
-      } = JSON.parse(loadEvent.target.result as string)
-      if (layoutComponents) {
-        canvasState.setComponentData(layoutComponents.canvasData)
-      }
-      canvasState.setLayoutData(layoutComponents)
+      const metaData: CanvasMetaData = JSON.parse(loadEvent.target.result as string)
+      canvasState.load(metaData)
     }
   }
 

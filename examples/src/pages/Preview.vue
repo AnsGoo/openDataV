@@ -7,6 +7,7 @@ import type { IComponentData } from '@open-data-v/base'
 import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
 import { Previewer, useGraphState, useScriptState, useSnapshotState } from '@open-data-v/designer'
+import type { CanvasMetaData } from '@open-data-v/designer/src/state/type'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
 import { onMounted, ref } from 'vue'
 
@@ -30,11 +31,7 @@ scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])
 onMounted(async () => {
   const snapshot = await snapShotState.latestRecord()
   if (snapshot) {
-    viewer.value!.setLayoutData({
-      canvasData: snapshot.canvasData as IComponentData[],
-      canvasStyle: snapshot.canvasStyle,
-      dataSlotters: snapshot.dataSlotters
-    })
+    viewer.value!.loadCanvasData(snapshot.canvasData as unknown as CanvasMetaData)
   }
 })
 </script>
