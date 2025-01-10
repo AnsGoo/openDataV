@@ -148,7 +148,7 @@ const pasteComponent = (event: ClipboardEvent) => {
       const componentData = JSON.parse(textData)
       const component: CustomComponent = createComponent(componentData)
       if (component) {
-        component.changePositions({
+        component.changePosition({
           top: component.position.top + 10,
           left: component.position.left + 10
         })

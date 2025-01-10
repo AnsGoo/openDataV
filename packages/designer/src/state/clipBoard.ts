@@ -37,12 +37,12 @@ class ClipBoardState {
 
     const componentCopy = createComponent(this.copyData) as CustomComponent
     if (isMouse) {
-      componentCopy.changePositions({
+      componentCopy.changePosition({
         top: y!,
         left: x!
       })
     } else {
-      componentCopy.changePositions({
+      componentCopy.changePosition({
         top: (this.copyData.position.top as number) + 10,
         left: (this.copyData.position.left as number) + 10
       })

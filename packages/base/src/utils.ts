@@ -1,5 +1,6 @@
 import { isFunction, isUndefined } from 'lodash-es'
 
+import Logger from './bus/logger'
 import type { IContainerItem, MetaForm } from './type'
 
 export const uuid = (hasHyphen?: string) => {
@@ -12,6 +13,7 @@ export const uuid = (hasHyphen?: string) => {
   })
 }
 
+export const baseLoger = new Logger('base')
 export const getObjProp = (
   obj: Array<IContainerItem> | Array<MetaForm>,
   propKeys: Array<string>,
@@ -83,4 +85,10 @@ export const updateFormItemsValue = (
 
 export const isClass = (varValue: any) => {
   return isFunction(varValue) && !isUndefined(varValue.prototype)
+}
+
+export function isValidPath(path: string): boolean {
+  // 根据实际情况实现路径验证逻辑
+  // 例如：不允许空字符串、不允许包含特殊字符等
+  return /^[a-zA-Z0-9_.]+$/.test(path) // 示例验证规则
 }

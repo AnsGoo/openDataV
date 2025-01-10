@@ -66,7 +66,7 @@ const props = defineProps<{
   component: TabsComponent
 }>()
 
-const canvasState = useCanvasState()
+const canvasState = useCanvasState()!
 const editMode = computed<boolean>(() => canvasState.isEditMode)
 const { propValue } = useProp<Tabs>(props.component)
 const labels = computed<Array<string>>(() => {
@@ -84,7 +84,7 @@ watch(
       if (!props.component.subComponents![i]) {
         const groupConfig = getComponentInstance({ component: 'Group' })
         if (mode === 'horizontal') {
-          groupConfig.changePositions({
+          groupConfig.changePosition({
             top: top + labelHeight,
             left: left,
             width: width,
@@ -92,7 +92,7 @@ watch(
             rotate: 0
           })
         } else {
-          groupConfig.changePositions({
+          groupConfig.changePosition({
             top: top,
             left: left + labelHeight,
             width: width - labelHeight,
@@ -108,7 +108,9 @@ watch(
           gheight: toPercent(groupConfig.position.height / height),
           grotate: props.component.position.rotate || 0
         }
-        props.component.updateChild(i, groupConfig)
+        if (props.component.subComponents?.[i]) {
+          props.component.subComponents![i] = groupConfig
+        }
       } else {
         const groupConfig = props.component.subComponents![i]
         if (mode === 'horizontal') {
@@ -199,7 +201,7 @@ const handleDrop = async (e) => {
       grotate: component.position.rotate || 0
     }
     component.parent = props.component
-    props.component.subComponents![activeKey.value].appendChild(component)
+    props.component.subComponents![activeKey.value]?.subComponents?.push(component)
   }
 }
 </script>

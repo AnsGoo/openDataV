@@ -10,7 +10,7 @@ import type {
   RelativePosition,
   Slotter
 } from './type'
-import { uuid } from './utils'
+import { baseLoger, isValidPath, uuid } from './utils'
 
 export class CustomComponent {
   id: string
@@ -60,7 +60,7 @@ export class CustomComponent {
 
     this.isContainer = isContainer || false
     this.subComponents = isContainer ? [] : undefined
-    this.changePositions(position)
+    this.changePosition(position)
     this.dataMode = dataMode || DataMode.SELF
     this._propValue = propValue || {}
   }
@@ -69,25 +69,8 @@ export class CustomComponent {
     return this._propValue
   }
 
-  get exampleData(): any {
-    return undefined
-  }
-  private loadExampleData?: () => any
-
-  public setExampleData(loader: () => any) {
-    this.loadExampleData = loader
-  }
-
   public getExtendedMetaData() {
     return this.extendedMetaData
-  }
-
-  public getExampleData() {
-    if (this.exampleData) {
-      return this.exampleData
-    } else {
-      return this.loadExampleData ? this.loadExampleData() : undefined
-    }
   }
 
   // 生成后端存储需要的Json
@@ -112,33 +95,70 @@ export class CustomComponent {
   }
 
   // 修改属性
-  changeProp(modelValue) {
-    this.setPropValue(modelValue)
-    if (this.callbackProp) {
-      this.callbackProp(modelValue)
+  changeProp(modelValue: Record<string, any>): void
+  changeProp(path: string, value: any): void
+
+  changeProp(...args: any[]): void {
+    if (args.length === 1 && typeof args[0] === 'object') {
+      const modelValue = args[0]
+      this.setPropValue(modelValue)
+    } else if (args.length === 2 && typeof args[0] === 'string') {
+      const [path, value] = args
+
+      // 路径验证
+      if (!path || typeof path !== 'string' || !isValidPath(path)) {
+        baseLoger.error(`Invalid path: ${path}`)
+        return
+      }
+
+      try {
+        set(this._propValue, path, value)
+      } catch (error) {
+        baseLoger.error(`Error setting property , ${error}`)
+        return
+      }
+    } else {
+      baseLoger.warn('Invalid arguments for changeProp')
+      return
+    }
+
+    // 回调函数存在性检查
+    if (typeof this.callbackProp === 'function') {
+      try {
+        this.callbackProp(this.propValue)
+      } catch (error) {
+        console.error('Error calling callbackProp:', error)
+      }
     }
   }
 
   setPropChangeCallback(callback: (value: any) => void) {
     this.callbackProp = callback
   }
-  changePosition(key: 'top' | 'left' | 'height' | 'width' | 'rotate', value: number) {
+  changePosition(
+    position: Partial<Record<'top' | 'left' | 'height' | 'width' | 'rotate', number>>
+  ): void
+  changePosition(key: 'top' | 'left' | 'height' | 'width' | 'rotate', value: number): void
+  changePosition(...args): void {
     const positionKey = ['top', 'left', 'height', 'width', 'rotate']
-    if (!positionKey.includes(key)) {
+    if (args.length === 1 && typeof args[0] === 'object') {
+      const position = args[0]
+      const keys = Object.keys(position)
+      keys.forEach((el) => {
+        if (positionKey.includes(el)) {
+          this.changePosition(el as 'top' | 'left' | 'height' | 'width' | 'rotate', position[el])
+        }
+      })
+    } else if (args.length === 2 && typeof args[0] === 'string') {
+      const [key, value] = args
+      if (!positionKey.includes(key)) {
+        return
+      }
+      set(this.position, key, key === 'rotate' ? value : Math.round(value))
+    } else {
+      baseLoger.warn('Invalid arguments for changePosition')
       return
     }
-    set(this.position, key, key === 'rotate' ? value : Math.round(value))
-  }
-  changePositions(
-    positions: Partial<Record<'top' | 'left' | 'height' | 'width' | 'rotate', number>>
-  ) {
-    const keys = Object.keys(positions)
-    keys.forEach((el) => {
-      return this.changePosition(
-        el as 'top' | 'left' | 'height' | 'width' | 'rotate',
-        positions[el]
-      )
-    })
   }
 
   /**
@@ -147,7 +167,7 @@ export class CustomComponent {
    * @param deep
    * @param clear
    */
-  addComponent(components: CustomComponent[], deep = false, clear = false) {
+  appendChildComponent(components: CustomComponent[], deep = false, clear = false) {
     if (!this.subComponents) {
       return
     }
@@ -173,22 +193,6 @@ export class CustomComponent {
   setDataChangeCallback(callback: (result: any, type?: string) => void) {
     this.callbackData = callback
     this.dataSlotter?.connect?.(callback)
-  }
-  setDataSlotter(slotter: Slotter) {
-    this.dataSlotter = slotter
-    this.callbackData && this.dataSlotter?.connect(this.callbackData)
-  }
-  appendChild(child: CustomComponent) {
-    if (!this.subComponents) {
-      return
-    }
-    this.subComponents!.push(child)
-  }
-  updateChild(index: number, child: CustomComponent) {
-    if (!this.subComponents) {
-      return
-    }
-    this.subComponents![index] = child
   }
 }
 

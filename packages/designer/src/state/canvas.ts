@@ -292,7 +292,7 @@ export class CanvasState {
       }
 
       const afterPoint: Vector = rotatePoint(point, center, parentPosition.rotate)
-      el.changePositions({
+      el.changePosition({
         top: Math.round(afterPoint.y - height / 2),
         left: Math.round(afterPoint.x - width / 2),
         height: Math.round(height),
@@ -696,7 +696,7 @@ export class CanvasState {
             gheight: toPercent(item.position.height / parentPosition.height),
             grotate: item.position.rotate
           }
-          parentComponent?.addComponent([item])
+          parentComponent?.appendChildComponent([item])
         })
       } else {
         components.forEach((item) => {
@@ -716,8 +716,8 @@ export class CanvasState {
   compose(components: Array<CustomComponent>) {
     const position = calcComponentsRect(components)
     const groupComponent = getComponentInstance({ component: 'Group' })
-    groupComponent.changePositions(position)
-    groupComponent.addComponent(components, true)
+    groupComponent.changePosition(position)
+    groupComponent.appendChildComponent(components, true)
     createRelativePosition(groupComponent)
     this.batchRemoveComponent(components)
     this.appendComponent(groupComponent)
