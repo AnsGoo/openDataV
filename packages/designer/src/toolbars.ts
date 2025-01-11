@@ -1,12 +1,10 @@
-import type { IComponentData } from '@open-data-v/base'
+import type { SnapshotData } from 'db'
 
-import type { StoreComponentData } from './db'
-import { useClipBoardState, useSnapshotState } from './state'
+import { useClipBoardState } from './state'
 import type { CanvasState } from './state/canvas'
-import type { CanvasMetaData, CanvasStyleData } from './state/type'
+import type { CanvasMetaData } from './state/type'
 import { exportRaw, handleLogger, importRaw } from './utils'
 
-const snapShotState = useSnapshotState()
 const clipBoardState = useClipBoardState()
 export function useCanvasActions(canvasState: CanvasState) {
   const decompose = () => {
@@ -37,7 +35,7 @@ export function useCanvasActions(canvasState: CanvasState) {
   }
 
   const undo = async () => {
-    const snapshot: StoreComponentData | undefined = await snapShotState.lastRecord()
+    const snapshot: SnapshotData | undefined = await canvasState.snapshot.lastRecord()
     if (snapshot) {
       canvasState.load(snapshot.canvasData as unknown as CanvasMetaData)
     } else {
@@ -46,7 +44,7 @@ export function useCanvasActions(canvasState: CanvasState) {
   }
 
   const recoveryDraft = async () => {
-    const snapshot: StoreComponentData | undefined = await snapShotState.nextRecord()
+    const snapshot: SnapshotData | undefined = await canvasState.snapshot.nextRecord()
     if (snapshot) {
       canvasState.load(snapshot.canvasData as unknown as CanvasMetaData)
     } else {

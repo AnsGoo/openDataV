@@ -23,10 +23,9 @@ import {
   toPercent,
   uuid
 } from '../utils'
-import useSnapShotState from './snapshot'
+import { SnapshotState } from './snapshot'
 import type { CanvasData, CanvasMetaData } from './type'
 
-const snapShotState = useSnapShotState()
 interface CanvasOptions {
   width: number
   height: number
@@ -54,6 +53,7 @@ export class CanvasState {
 
   private _canvasId: string
 
+  public snapshot: SnapshotState
   dataSlotter: Slotter = new DataSlotter({})
   public canvasOptions = reactive(baseCanvasOptions)
 
@@ -62,6 +62,7 @@ export class CanvasState {
   constructor() {
     this.dataSlotter?.connect?.(this.dataCallback)
     this._canvasId = uuid().replaceAll('-', '')
+    this.snapshot = new SnapshotState(this.canvasId)
   }
 
   private dataCallback = (data: any) => {

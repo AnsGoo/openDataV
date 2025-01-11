@@ -38,7 +38,7 @@ import uiBase from '../../base/ui-base.vue'
 import type { ToolBarItemType } from '../../components'
 import { HOOKS } from '../../const'
 import { useCanvasState } from '../../state'
-import type { CanvasMetaData, LayoutData } from '../../state/type'
+import type { CanvasMetaData } from '../../state/type'
 import Canvas from './canvas.vue'
 
 const ToolBar = defineAsyncComponent(() => import('../../panel/tools-bar'))

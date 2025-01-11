@@ -1,23 +1,26 @@
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
-import type { StoreComponentData } from '../db'
+import type { SnapshotData } from '../db'
 import { snapshotDb } from '../db'
 import type { CanvasMetaData, SnapData } from './type'
-import { singleton } from './utils'
 
-class SnapshotState {
+export class SnapshotState {
   public state = reactive<SnapData>({
     latestSnapshot: undefined,
     snapshotMax: 10,
     timeHandler: undefined,
     cursor: 0
   })
+  private canvasId = ''
+  constructor(canvasId: string) {
+    this.canvasId = canvasId
+  }
 
-  get latestSnapshot(): StoreComponentData | undefined {
+  get latestSnapshot(): SnapshotData | undefined {
     return this.state.latestSnapshot
   }
-  set latestSnapshot(snapshot: StoreComponentData | undefined) {
+  set latestSnapshot(snapshot: SnapshotData | undefined) {
     this.state.latestSnapshot = snapshot
   }
 
@@ -41,19 +44,31 @@ class SnapshotState {
     this.state.cursor = cursor
   }
   async latestRecord() {
-    return snapshotDb.snapshot.orderBy('id').last()
+    const query = snapshotDb.snapshot.where('canvasId').equals(this.canvasId)
+    const snapshots = await query.sortBy('id')
+    return snapshots.at(-1)
   }
   /**
    * 上一次记录
    * @returns 快照
    */
   async lastRecord() {
-    let snapshot: StoreComponentData | undefined
-    if (this.cursor) {
-      snapshot = await snapshotDb.snapshot.get(this.cursor - 1)
-    } else {
-      snapshot = await snapshotDb.snapshot.orderBy('id').last()
+    let snapshot: SnapshotData | undefined
+    const query = snapshotDb.snapshot.where('canvasId').equals(this.canvasId)
+    const snapshots = await query.sortBy('id')
+    const index = snapshots.findIndex((snapshot) => {
+      snapshot.id === this.cursor
+    })
+    if (index === -1) {
+      return
     }
+
+    if (index === 0) {
+      snapshot = snapshots.at(0)
+    } else if (index === snapshots.length) {
+      snapshot = snapshots.at(index - 1)
+    }
+
     if (snapshot) {
       this.cursor = snapshot.id!
       this.latestSnapshot = cloneDeep(snapshot)
@@ -65,11 +80,20 @@ class SnapshotState {
    * @returns 快照
    */
   async nextRecord() {
-    let snapshot: StoreComponentData | undefined
-    if (this.cursor) {
-      snapshot = await snapshotDb.snapshot.get(this.cursor + 1)
-    } else {
-      snapshot = await snapshotDb.snapshot.orderBy('id').last()
+    let snapshot: SnapshotData | undefined
+    const query = snapshotDb.snapshot.where('canvasId').equals(this.canvasId)
+    const snapshots = await query.sortBy('id')
+    const index = snapshots.findIndex((snapshot) => {
+      snapshot.id === this.cursor
+    })
+    if (index === -1) {
+      return
+    }
+
+    if (index === snapshots.length - 1) {
+      snapshot = snapshots.at(-1)
+    } else if (index === snapshots.length) {
+      snapshot = snapshots.at(index + 1)
     }
     if (snapshot) {
       this.cursor = snapshot.id!
@@ -82,23 +106,20 @@ class SnapshotState {
    * @param canvasData 组件数据
    * @param canvasStyle 画布样式
    */
-  recordSnapshot(canvasData: CanvasMetaData, canvasId: string) {
+  recordSnapshot(canvasData: CanvasMetaData) {
     // 改变值
     this.latestSnapshot = {
       canvasData: cloneDeep(canvasData),
-      canvasId: canvasId
+      canvasId: this.canvasId
     }
     snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot)).then(async (_) => {
-      const count: number = await snapshotDb.snapshot.count()
-      if (count > this.snapshotMax) {
-        const snapshots = await snapshotDb.snapshot.where('canvasId').equals(canvasId).sortBy('id')
-        if (snapshots.length > 0) {
-          await snapshotDb.snapshot.delete(snapshots[0].id!)
-        }
+      const query = snapshotDb.snapshot.where('canvasId').equals(this.canvasId)
+      const snapshots = await query.sortBy('id')
+      if (snapshots.length > this.snapshotMax) {
+        await snapshotDb.snapshot.delete(snapshots[0].id!)
       }
-      const snapshot = await snapshotDb.snapshot.orderBy('id').last()
-      if (snapshot) {
-        this.cursor = snapshot.id!
+      if (snapshots && snapshots.length > 0) {
+        this.cursor = snapshots[snapshots.length - 1].id!
       }
       this.timeHandler = undefined
     })
@@ -124,9 +145,4 @@ class SnapshotState {
     const data = JSON.parse(JSON.stringify({ canvasData }))
     this.timeHandler = setTimeout(this.recordSnapshot, 300, data, canvasId)
   }
-}
-
-const State = singleton(SnapshotState)
-export default function useSnapshotState() {
-  return new State() as SnapshotState
 }

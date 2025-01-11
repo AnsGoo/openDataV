@@ -3,14 +3,14 @@ import Dexie from 'dexie'
 
 import type { CanvasMetaData } from './state/type'
 
-export interface StoreComponentData {
+export interface SnapshotData {
   id?: number
   canvasData?: CanvasMetaData
   canvasId: string
 }
 
 export class SnapShotDexie extends Dexie {
-  snapshot!: Table<StoreComponentData>
+  snapshot!: Table<SnapshotData>
 
   constructor() {
     super('snapshot')

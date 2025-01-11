@@ -34,7 +34,7 @@ import type { FormItemRule } from 'naive-ui'
 import { NButton, NForm, NFormItem, NInput, NModal, NSpace } from 'naive-ui'
 import { reactive, ref } from 'vue'
 
-import type { LayoutData } from '@/api/pages'
+import type { CanvasMetaData } from '@/api/pages'
 import { savePageApi, updatePageApi } from '@/api/pages'
 import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
@@ -64,7 +64,7 @@ const handleSubmit = async (type: string) => {
     return
   }
 
-  const layoutData: LayoutData = {
+  const layoutData: CanvasMetaData = {
     name: name,
     thumbnail: thumbnail!
   }

@@ -3,10 +3,9 @@
 </template>
 
 <script setup lang="ts">
-import type { IComponentData } from '@open-data-v/base'
 import { StaticDataPlugin, SubDataPlugin, WebsocketDataPlugin } from '@open-data-v/data'
 /* eslint-disable-next-line @typescript-eslint/consistent-type-imports */
-import { Previewer, useGraphState, useScriptState, useSnapshotState } from '@open-data-v/designer'
+import { Previewer, useCanvasState, useGraphState, useScriptState } from '@open-data-v/designer'
 import type { CanvasMetaData } from '@open-data-v/designer/src/state/type'
 import { CustomScriptPlugin, SystemScriptPlugin } from '@open-data-v/scripts'
 import { onMounted, ref } from 'vue'
@@ -15,7 +14,7 @@ import QuickDataPlugin from '@/data/Quick'
 import RestDataPlugin from '@/data/Rest'
 
 const viewer = ref<InstanceType<typeof Previewer> | null>(null)
-const snapShotState = useSnapshotState()
+const canvasState = useCanvasState()!
 
 const graphState = useGraphState()
 graphState.loadDataPlugins([
@@ -29,7 +28,7 @@ const scriptState = useScriptState()
 scriptState.loadPlugins([CustomScriptPlugin, SystemScriptPlugin])
 
 onMounted(async () => {
-  const snapshot = await snapShotState.latestRecord()
+  const snapshot = await canvasState.snapshot.latestRecord()
   if (snapshot) {
     viewer.value!.loadCanvasData(snapshot.canvasData as unknown as CanvasMetaData)
   }

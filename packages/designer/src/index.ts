@@ -4,7 +4,6 @@ import { CodeEditor, Group, iconMap, Toggle, ToolBar, ToolBarItem, XIcon } from 
 import { useIcon } from './components/xicon'
 import { HOOKS } from './const'
 import DemoDataPlugin from './data/demo-data'
-import type { StoreComponentData } from './db'
 import Editor from './editor'
 import Shape from './editor/shape'
 import { DataMode, EditMode } from './enum'
@@ -24,13 +23,7 @@ import RightSideBar from './panel/right-side-bar'
 import ToolsBar from './panel/tools-bar'
 import Directive from './plugins/directive'
 import type { CanvasData, CanvasStyleData } from './state'
-import {
-  useCanvasState,
-  useClipBoardState,
-  useGraphState,
-  useScriptState,
-  useSnapshotState
-} from './state'
+import { useCanvasState, useClipBoardState, useGraphState, useScriptState } from './state'
 import { useCanvasActions } from './toolbars'
 import type { ContextmenuItem, RelativePosition } from './type'
 import {
@@ -83,16 +76,8 @@ export {
   useGraphState,
   useIcon,
   useScriptState,
-  useSnapshotState,
   XIcon
 }
-export type {
-  CanvasData,
-  CanvasStyleData,
-  ContextmenuItem,
-  RelativePosition,
-  StoreComponentData,
-  ToolBarItemType
-}
+export type { CanvasData, CanvasStyleData, ContextmenuItem, RelativePosition, ToolBarItemType }
 
 export default { bootstrap }

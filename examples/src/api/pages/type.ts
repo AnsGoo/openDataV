@@ -1,7 +1,7 @@
 import type { IComponentData } from '@open-data-v/base'
 import type { CanvasStyleData } from '@open-data-v/designer'
 
-export interface LayoutData {
+export interface CanvasMetaData {
   id?: string
   name?: string
   thumbnail?: string
@@ -15,4 +15,4 @@ export interface LayoutData {
   components?: Array<string>
 }
 
-export type SimpleLayoutData = Omit<LayoutData, 'canvasStyle' | 'canvasData'>
+export type SimpleCanvasMetaData = Omit<CanvasMetaData, 'canvasStyle' | 'canvasData'>

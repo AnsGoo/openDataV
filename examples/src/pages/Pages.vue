@@ -57,7 +57,7 @@ import { NButton, NCard, NDropdown, NEllipsis, NTooltip } from 'naive-ui'
 import { h, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 
-import type { SimpleLayoutData } from '@/api/pages'
+import type { SimpleCanvasMetaData } from '@/api/pages'
 import { deletePageApi, getPageListApi } from '@/api/pages'
 import defaultImg from '@/assets/default.png'
 import { message } from '@/utils/message'
@@ -65,7 +65,7 @@ import { Logger } from '@/utils/utils'
 
 const router = useRouter()
 const loading = ref<boolean>(false)
-const layoutList = ref<SimpleLayoutData[]>([])
+const layoutList = ref<SimpleCanvasMetaData[]>([])
 const options: DropdownOption[] = [
   {
     key: 'preview',
@@ -101,7 +101,7 @@ const initUI = async (): Promise<void> => {
   }
 }
 
-const handleSelect = async (key: string | number, item: SimpleLayoutData) => {
+const handleSelect = async (key: string | number, item: SimpleCanvasMetaData) => {
   if (key === 'preview') {
     await router.push({
       name: 'PageView',
@@ -131,7 +131,7 @@ const handleCreate = async () => {
   })
 }
 
-const handleEdit = async (item: SimpleLayoutData) => {
+const handleEdit = async (item: SimpleCanvasMetaData) => {
   if (loading.value) {
     return false
   }
@@ -145,7 +145,7 @@ const handleEdit = async (item: SimpleLayoutData) => {
   })
 }
 
-const handleView = async (item: SimpleLayoutData) => {
+const handleView = async (item: SimpleCanvasMetaData) => {
   await router.push({
     name: 'PageView',
     params: {

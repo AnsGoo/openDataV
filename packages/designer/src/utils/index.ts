@@ -15,42 +15,6 @@ export function toPercent(val: number) {
   return parseFloat((val * 100).toFixed(4))
 }
 
-// export const buildDataHandler = (componentObj: CustomComponent, data?: DataOption) => {
-//   const dataState = useDataState()
-// if (!(data && data.d)) {
-//   componentObj.loadDemoData.?()
-//   return
-// }
-// const plugin = dataState.getPlugin(data.type)
-// if (!plugin) {
-//   return
-// }
-// const dataHandler = plugin.handler
-// const { options } = data.requestOptions!
-// const otherConfig = data.otherConfig
-// if (otherConfig) {
-//   options.otherConfig = otherConfig
-// }
-// const dataConfig = {
-//   type: data.type,
-//   dataInstance: new dataHandler(options)
-// }
-// componentObj.changeDataConfig(dataConfig)
-// }
-
-// const buildAfterCallback = (componentObj: CustomComponent, script?: ScriptOption) => {
-//   if (!script) {
-//     return
-//   }
-//   const scriptState = useScriptState()
-//   const plugin = scriptState.getPlugin(script.type)
-//   if (!plugin) {
-//     return
-//   }
-//   const scriptHandlerClasss = plugin.handler
-//   const scriptHandler = new scriptHandlerClasss(script.key)
-//   // componentObj.afterCallbackChange(scriptHandler)
-// }
 export function createComponent(component: IComponentData): any {
   const graphState = useGraphState()
   const componentInfo = graphState.getComponent(component.component)
