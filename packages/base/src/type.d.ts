@@ -127,7 +127,7 @@ export interface IComponentData extends Omit<IComponentMetaData, 'dataMode' | 'i
   position: DOMRectStyle
   propValue?: Record<string, any>
   subComponents?: IComponentData[]
-  data?: Record<string, DataOption>
+  dataOptions?: Record<string, DataOption>
   script?: ScriptOption
 }
 

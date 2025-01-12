@@ -50,13 +50,13 @@ export class CustomComponent {
       isContainer,
       dataMode,
       extendedMetaData = {},
-      data
+      dataOptions
     } = metaData
     this.id = id || uuid()
     this.component = component
     this.name = name
     this.extendedMetaData = extendedMetaData
-    this.dataSlotter = new DataSlotter(data || {})
+    this.dataSlotter = new DataSlotter(dataOptions || {})
 
     this.isContainer = isContainer || false
     this.subComponents = isContainer ? [] : undefined
@@ -84,7 +84,7 @@ export class CustomComponent {
       position: this.position,
       subComponents: this.isContainer && subComponents.length > 0 ? subComponents : undefined,
       script: this.scriptConfig?.toJSON(),
-      data: this.dataSlotter ? this.dataSlotter.toJSON() : undefined
+      dataOptions: this.dataSlotter ? this.dataSlotter.toJSON() : undefined
     }
     return component
   }
