@@ -1,7 +1,8 @@
 import type { DataHandler, DataInstance, DataOption, Slotter } from 'type'
+import { reactive } from 'vue'
 
 export class DataSlotter implements Slotter {
-  configs: Record<string, DataInstance> = {}
+  configs: Record<string, DataInstance> = reactive({})
   static handlerClazzs: Record<string, DataHandler> = {}
   private callback?: (result: any, type?: string) => void
 

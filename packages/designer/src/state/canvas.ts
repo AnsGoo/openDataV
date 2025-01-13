@@ -62,7 +62,7 @@ export class CanvasState {
   constructor() {
     this.dataSlotter?.connect?.(this.dataCallback)
     this._canvasId = uuid().replaceAll('-', '')
-    this.snapshot = new SnapshotState(this.canvasId)
+    this.snapshot = new SnapshotState(this._canvasId)
   }
 
   private dataCallback = (data: any) => {
@@ -524,7 +524,7 @@ export class CanvasState {
   saveComponentData() {
     window.localStorage.setItem('canvasData', JSON.stringify(this.export()))
     new Promise((resolve) => {
-      resolve(snapShotState.saveSnapshot(this.export(), this.canvasId))
+      resolve(this.snapshot.saveSnapshot(this.export()))
     })
   }
 

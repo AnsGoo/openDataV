@@ -8,13 +8,14 @@ import type { CanvasMetaData, SnapData } from './type'
 export class SnapshotState {
   public state = reactive<SnapData>({
     latestSnapshot: undefined,
-    snapshotMax: 10,
+    stackNumber: 10,
     timeHandler: undefined,
     cursor: 0
   })
   private canvasId = ''
-  constructor(canvasId: string) {
+  constructor(canvasId: string, stackNumber = 10) {
     this.canvasId = canvasId
+    this.state.stackNumber = stackNumber
   }
 
   get latestSnapshot(): SnapshotData | undefined {
@@ -31,11 +32,8 @@ export class SnapshotState {
     this.state.timeHandler = timeHandler
   }
 
-  get snapshotMax(): number {
-    return this.state.snapshotMax
-  }
-  set snapshotMax(snapshotMax: number) {
-    this.state.snapshotMax = snapshotMax
+  get stackMaxNumber(): number {
+    return this.state.stackNumber
   }
   get cursor(): number {
     return this.state.cursor
@@ -115,7 +113,7 @@ export class SnapshotState {
     snapshotDb.snapshot.add(cloneDeep(this.latestSnapshot)).then(async (_) => {
       const query = snapshotDb.snapshot.where('canvasId').equals(this.canvasId)
       const snapshots = await query.sortBy('id')
-      if (snapshots.length > this.snapshotMax) {
+      if (snapshots.length > this.stackMaxNumber) {
         await snapshotDb.snapshot.delete(snapshots[0].id!)
       }
       if (snapshots && snapshots.length > 0) {
@@ -137,12 +135,12 @@ export class SnapshotState {
    * @param canvasStyle 组件样式
    * @param dataSlotters  数据插槽
    */
-  saveSnapshot(canvasData: CanvasMetaData, canvasId: string) {
+  saveSnapshot(canvasData: CanvasMetaData) {
     if (this.timeHandler) {
       clearTimeout(this.timeHandler)
     }
 
     const data = JSON.parse(JSON.stringify({ canvasData }))
-    this.timeHandler = setTimeout(this.recordSnapshot, 300, data, canvasId)
+    this.timeHandler = setTimeout(() => this.recordSnapshot(data), 300)
   }
 }

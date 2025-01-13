@@ -18,7 +18,7 @@ export interface CanvasData {
 }
 
 export interface SnapData {
-  snapshotMax: number
+  stackNumber: number
   latestSnapshot?: StoreComponentData
   timeHandler?: TimeoutHandle
   cursor: number

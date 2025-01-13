@@ -29,6 +29,7 @@ function resolveBody(data: Record<string, any> | string, headers: Headers) {
 function useDefaultRequest(): RequestInstance {
   const request = async (config: RequestConfig) => {
     const { headers, method, url, params, data } = config
+    console.log(config)
     let realUrl = url
     if (method.toUpperCase() === 'GET') {
       const parmasKeys = Object.keys(JSON.parse(JSON.stringify(params)))
