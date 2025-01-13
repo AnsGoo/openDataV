@@ -53,13 +53,13 @@
 
 <script setup lang="ts">
 import type { CustomComponent } from '@open-data-v/base'
+import { EditMode } from '@open-data-v/base'
 import { computed, onMounted, onUnmounted, reactive, ref } from 'vue'
 
 import Area from '../editor/area.vue'
 import Grid from '../editor/grid.vue'
 import MarkLine from '../editor/mark-line.vue'
 import Ruler from '../editor/ruler.vue'
-import { EditMode } from '../enum'
 import { useCanvasState, useClipBoardState, useSelectionState } from '../state'
 import { useCanvasActions } from '../toolbars'
 import type { ContextmenuItem, Location } from '../type'

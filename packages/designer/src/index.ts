@@ -1,3 +1,5 @@
+import { DataMode, EditMode } from '@open-data-v/base'
+
 import bootstrap from './bootstrap'
 import type { ToolBarItemType } from './components'
 import { CodeEditor, Group, iconMap, Toggle, ToolBar, ToolBarItem, XIcon } from './components'
@@ -6,7 +8,6 @@ import { HOOKS } from './const'
 import DemoDataPlugin from './data/demo-data'
 import Editor from './editor'
 import Shape from './editor/shape'
-import { DataMode, EditMode } from './enum'
 import { Container, useEmpty } from './modules'
 import Canvas from './pages/designer/canvas.vue'
 import Designer from './pages/designer/designer.vue'

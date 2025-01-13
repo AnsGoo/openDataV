@@ -5,10 +5,14 @@ class DemoRequestData implements DataInstance {
   public data: any
   public id: string
   private acceptor: DataAcceptor | undefined
+  public type: 'DEMO' = 'DEMO' // 直接赋值
   constructor({ data, id }: { data: any; id?: string }) {
     this.data = data
     this.id = id || uuid()
   }
+  disposeDebug() {}
+  reconnect() {}
+  updateOption(_options: any) {}
 
   public toJSON() {
     return undefined

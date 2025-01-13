@@ -5,11 +5,10 @@ import type {
   Slotter,
   Vector
 } from '@open-data-v/base'
-import { DataSlotter } from '@open-data-v/base'
+import { DataSlotter, EditMode, uuid } from '@open-data-v/base'
 import { cloneDeep } from 'lodash-es'
 import { reactive } from 'vue'
 
-import { EditMode } from '../enum'
 import type { RelativePosition } from '../type'
 import {
   calcComponentsRect,
@@ -20,9 +19,9 @@ import {
   mod360,
   rotatePoint,
   swap,
-  toPercent,
-  uuid
+  toPercent
 } from '../utils'
+import type { GraphState } from './graph'
 import { SnapshotState } from './snapshot'
 import type { CanvasData, CanvasMetaData } from './type'
 
@@ -59,10 +58,10 @@ export class CanvasState {
 
   private componentMap: Map<string, CustomComponent> = new Map()
 
-  constructor() {
+  constructor(graphState: GraphState) {
     this.dataSlotter?.connect?.(this.dataCallback)
     this._canvasId = uuid().replaceAll('-', '')
-    this.snapshot = new SnapshotState(this._canvasId)
+    this.snapshot = new SnapshotState(this._canvasId, graphState.snapshotMaxStack)
   }
 
   private dataCallback = (data: any) => {

@@ -1,7 +1,7 @@
 import { channels, eventBus, Logger, LogLevel, StaticKey, useEventBus } from './bus'
 import { CustomComponent } from './component'
 import { RenderSlot } from './components'
-import { CONTEXT } from './constant'
+import { CONTEXT, EditMode } from './constant'
 import { DataSlotter } from './data-slotter'
 import directive, { ClickOutsideDirective, ResizeDomDirective } from './directive'
 import { ContainerType, DataMode, FormType, GlobalColorSwatches } from './enums'
@@ -50,6 +50,7 @@ export {
   DataMode,
   DataSlotter,
   directive,
+  EditMode,
   eventBus,
   FormType,
   GlobalColorSwatches,

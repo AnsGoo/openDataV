@@ -21,69 +21,73 @@ export interface IDragComponentMeta extends IManinfest {
   dataMode?: DataMode
   panel: Component
 }
+interface IResolution {
+  width: number
+  height: number
+}
 
-class GraphState {
+export class GraphState {
   private components = new Map<string, IDragComponentMeta>()
-  constructor() {}
-  public state = reactive({})
-  public resolutionOptions: Array<{
-    value: {
-      width: number
-      height: number
+  public state = reactive({
+    snapshotMaxStack: 10
+  })
+
+  constructor(options: {
+    snapshotMaxStack: number
+    resolutionOptions?: Record<string, IResolution>
+  }) {
+    const { snapshotMaxStack = 10, resolutionOptions = {} } = options
+    this.state.snapshotMaxStack = snapshotMaxStack
+    const resolutionsKeys = Object.keys(resolutionOptions)
+    resolutionsKeys.forEach((key) => {
+      const { width, height } = resolutionOptions[key]
+      this._resolutionOptions[key] = { width, height }
+    })
+  }
+  private _resolutionOptions: Record<string, IResolution> = {
+    '2k': {
+      width: 1920,
+      height: 1080
+    },
+    '4k': {
+      width: 3840,
+      height: 2160
+    },
+    '1080P': {
+      width: 1920,
+      height: 1080
     }
+  }
+  get resolutionOptions(): Array<{
+    value: IResolution
     label: string
-  }> = [
-    {
-      value: {
-        width: window.screen.width,
-        height: window.screen.height
-      },
-      label: '当前设备'
-    },
-    {
-      value: {
-        width: 3840,
-        height: 2160
-      },
-      label: '4k'
-    },
-    {
-      value: {
-        width: 2560,
-        height: 1440
-      },
-      label: '2k'
-    },
-    {
-      value: {
-        width: 1920,
-        height: 1080
-      },
-      label: '1080P'
-    },
-    {
-      value: {
-        width: 1280,
-        height: 720
-      },
-      label: '720P'
-    },
-    {
-      value: {
-        width: 640,
-        height: 360
-      },
-      label: '360P'
-    },
-    {
-      value: {
-        width: 320,
-        height: 180
-      },
-      label: '180P'
-    }
-  ]
+  }> {
+    const resolutions: Array<{
+      label: string
+      value: IResolution
+    }> = [
+      {
+        label: '当前设备',
+        value: {
+          width: window.innerWidth,
+          height: window.innerHeight
+        }
+      }
+    ]
+    Object.keys(this._resolutionOptions).forEach((key) => {
+      const { width, height } = this._resolutionOptions[key]
+      resolutions.push({
+        value: { width, height },
+        label: key
+      })
+    })
+    return resolutions
+  }
   public dataPluginState = new DataState()
+
+  public get snapshotMaxStack() {
+    return this.state.snapshotMaxStack
+  }
 
   public loadComponent(componentInfo: IDragComponentMeta): void {
     const { name } = componentInfo

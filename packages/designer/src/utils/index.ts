@@ -361,16 +361,6 @@ export function swap<T>(arr: Array<T>, i: number, j: number) {
   arr.splice(j, 1, ...arr.splice(i, 1, arr[j]))
 }
 
-export const uuid = (hasHyphen?: string) => {
-  return (
-    hasHyphen ? 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx' : 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx'
-  ).replace(/[xy]/g, function (c) {
-    const r = (Math.random() * 16) | 0
-    const v = c == 'x' ? r : (r & 0x3) | 0x8
-    return v.toString(16)
-  })
-}
-
 /**
  * 剔除指定样式，并转化为css
  * @param style  原始样式
