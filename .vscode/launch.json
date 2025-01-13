@@ -5,12 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     
+  
     {
-      "type": "pwa-chrome",
+      "type": "node",
       "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}"
+      "name": "启动程序",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "program": "${file}"
     }
   ]
 }

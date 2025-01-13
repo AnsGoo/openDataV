@@ -40,7 +40,7 @@ import ConfigProvider from '@/components/provider/ConfigProvider.vue'
 import router from '@/router'
 import { message } from '@/utils/message'
 
-const canvasState = useCanvasState()
+const canvasState = useCanvasState()!
 const props = defineProps<{ index?: string }>()
 
 const saveDialogVisible = ref<boolean>(true)

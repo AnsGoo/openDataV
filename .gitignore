@@ -1,5 +1,4 @@
 node_modules
-package-lock.json
 components.d.ts
 .DS_Store
 dist
@@ -12,3 +11,4 @@ dist
 /packages/**/**.js
 **/**.jsx
 **/**.mjs
+test.html

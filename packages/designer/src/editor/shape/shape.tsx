@@ -3,12 +3,12 @@ import { eventBus, StaticKey } from '@open-data-v/base'
 import type { ComponentPublicInstance, PropType } from 'vue'
 import { computed, defineComponent, onErrorCaptured, onMounted, ref, watch } from 'vue'
 
-import { stretchedComponents } from '../../component'
 import { useCanvasState, useSelectionState } from '../../state'
 import { useCanvasActions } from '../../toolbars'
 import type { ContextmenuItem } from '../../type'
 import { copyText, mod360, systemLogger, throttleFrame } from '../../utils'
 import styles from './shape.module.less'
+import { stretchedComponents } from './stretch'
 
 export default defineComponent({
   props: {

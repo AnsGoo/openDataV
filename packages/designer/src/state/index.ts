@@ -1,9 +1,9 @@
 import useClipBoardState from './clipBoard'
 import useGraphState from './graph'
 import useScriptState from './scripts'
-import type { CanvasData, CanvasStyleData } from './type'
+import type { CanvasData } from './type'
 import { useCanvasState, useSelectionState } from './use'
 
 export { useCanvasState, useClipBoardState, useGraphState, useScriptState, useSelectionState }
 
-export type { CanvasData, CanvasStyleData }
+export type { CanvasData }

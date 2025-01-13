@@ -22,7 +22,7 @@ import LeftSideBar from './panel/left-side-bar'
 import RightSideBar from './panel/right-side-bar'
 import ToolsBar from './panel/tools-bar'
 import Directive from './plugins/directive'
-import type { CanvasData, CanvasStyleData } from './state'
+import type { CanvasData } from './state'
 import { useCanvasState, useClipBoardState, useGraphState, useScriptState } from './state'
 import { useCanvasActions } from './toolbars'
 import type { ContextmenuItem, RelativePosition } from './type'
@@ -78,6 +78,6 @@ export {
   useScriptState,
   XIcon
 }
-export type { CanvasData, CanvasStyleData, ContextmenuItem, RelativePosition, ToolBarItemType }
+export type { CanvasData, ContextmenuItem, RelativePosition, ToolBarItemType }
 
 export default { bootstrap }

@@ -1,6 +1,6 @@
 import type { DOMRectStyle, Position, Vector } from '@open-data-v/base'
 
-import { rotatePoint } from './utils'
+import { rotatePoint } from '../../utils'
 
 const funcs = {
   lt: calculateLeftTop,
@@ -29,7 +29,7 @@ function getComponentCenter(position: DOMRectStyle): Vector {
  * @param x x坐标
  * @returns y坐标
  */
-export function lineEquationY(k, p1: Vector, x: number): number {
+function lineEquationY(k, p1: Vector, x: number): number {
   return k * (x - p1.x) + p1.y
 }
 
@@ -41,7 +41,7 @@ export function lineEquationY(k, p1: Vector, x: number): number {
  * @param y y坐标
  * @returns x坐标
  */
-export function lineEquationX(k, p1: Vector, y: number): number {
+function lineEquationX(k, p1: Vector, y: number): number {
   return p1.x - (p1.y - y) / k
 }
 
@@ -251,12 +251,27 @@ function calculateRight(position: DOMRectStyle, toPoint: Vector): Position {
   return { top: newfreezePoint.y - height / 2, left: newfreezePoint.x, width: realWidth, height }
 }
 
+/**
+ * 根据指定的点和向量计算拉伸后的组件位置和尺寸
+ *
+ * 此函数用于根据一个指定的点（代表组件的一个角或边缘），组件当前的位置，
+ * 以及一个指向目标点的向量，来计算组件拉伸后的位置和尺寸该函数首先根据
+ * 指定的点和向量，利用预定义的函数计算出拉伸后组件的top、left、width和height值
+ * 然后，它将这些值四舍五入，以确保组件的尺寸和位置为整数，从而避免潜在的渲染问题
+ *
+ * @param point 组件上被拉伸的点的位置，如 'topLeft'、'bottomRight'等
+ * @param position 组件当前的位置，包含top、left、width和height属性
+ * @param toPoint 从组件的指定点指向目标点的向量，表示拉伸的方向和距离
+ * @returns 返回一个包含拉伸后组件的top、left、width和height的新位置对象
+ */
 export function stretchedComponents(
   point: string,
   position: DOMRectStyle,
   toPoint: Vector
 ): Position {
+  // 从预定义的函数中根据point参数选择合适的函数来计算新的边界矩形
   const { top, left, width, height } = funcs[point](position, toPoint)
+  // 返回经过四舍五入处理的边界矩形，确保尺寸和位置为整数
   return {
     top: Math.round(top),
     left: Math.round(left),

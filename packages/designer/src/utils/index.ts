@@ -1,10 +1,4 @@
-import type {
-  // DataOption,
-  DOMRectStyle,
-  IComponentData,
-  // ScriptOption,
-  Vector
-} from '@open-data-v/base'
+import type { DOMRectStyle, IComponentData, Vector } from '@open-data-v/base'
 import { CustomComponent, DataMode, Logger } from '@open-data-v/base'
 import { cloneDeep, isNumber } from 'lodash-es'
 import type { Location } from 'type'
