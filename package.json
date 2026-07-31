@@ -37,7 +37,7 @@
     "eslint-plugin-vue": "^9.33.0",
     "husky": "^7.0.4",
     "less": "^4.6.4",
-    "postcss": "^8.5.14",
+    "postcss": "^8.5.18",
     "postcss-html": "^1.8.1",
     "postcss-less": "^6.0.0",
     "prettier": "^2.8.8",
