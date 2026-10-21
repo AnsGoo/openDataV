@@ -3473,8 +3473,8 @@ packages:
   flv.js@1.6.2:
     resolution: {integrity: sha512-xre4gUbX1MPtgQRKj2pxJENp/RnaHaxYvy3YToVVCrSmAWUu85b9mug6pTXF6zakUjNP2lFWZ1rkSX7gxhB/2A==}
 
-  follow-redirects@1.16.0:
-    resolution: {integrity: sha512-y5rN/uOsadFT/JfYwhxRS5R7Qce+g3zG97+JrtFZlC9klX/W5hD7iiLzScI4nZqUS7DNUdhPgw4xI8W2LuXlUw==}
+  follow-redirects@1.16.1:
+    resolution: {integrity: sha512-FNvFGzoMLWmE6Yj9spb/zjd7yiNCHiAW9/Tg9CXrQ8wuu32HtlJOwWO11OJafl5FfY3DxTdQ0vj42zU1kvv5jg==}
     engines: {node: '>=4.0'}
     peerDependencies:
       debug: '*'
@@ -7055,7 +7055,7 @@ snapshots:
 
   axios@0.34.0(debug@4.4.3(supports-color@8.1.1)):
     dependencies:
-      follow-redirects: 1.16.0(debug@4.4.3(supports-color@8.1.1))
+      follow-redirects: 1.16.1(debug@4.4.3(supports-color@8.1.1))
       form-data: 4.0.6
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -8171,7 +8171,7 @@ snapshots:
       es6-promise: 4.2.8
       webworkify-webpack: 2.1.5
 
-  follow-redirects@1.16.0(debug@4.4.3(supports-color@8.1.1)):
+  follow-redirects@1.16.1(debug@4.4.3(supports-color@8.1.1)):
     optionalDependencies:
       debug: 4.4.3(supports-color@8.1.1)
 
