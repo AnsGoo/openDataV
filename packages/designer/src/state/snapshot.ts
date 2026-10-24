@@ -208,7 +208,13 @@ class SnapshotState {
     if (this.timeHandler) {
       clearTimeout(this.timeHandler)
     }
-    this.timeHandler = setTimeout(this.recordSnapshot, 300, canvasData, canvasStyle, dataSlotters)
+    this.timeHandler = setTimeout(
+      this.recordSnapshot.bind(this),
+      300,
+      canvasData,
+      canvasStyle,
+      dataSlotters
+    )
   }
 }
 
