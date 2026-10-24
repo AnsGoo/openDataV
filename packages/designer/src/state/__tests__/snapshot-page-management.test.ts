@@ -1,6 +1,7 @@
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
-import useSnapshotState from '../snapshot'
+import { afterEach, beforeEach, describe, expect, it } from 'vitest'
+
 import { snapshotDb } from '../../db'
+import useSnapshotState from '../snapshot'
 
 describe('按页面快照管理', () => {
   let snapshotState: ReturnType<typeof useSnapshotState>
@@ -14,6 +15,21 @@ describe('按页面快照管理', () => {
   afterEach(async () => {
     // 清空数据库
     await snapshotDb.snapshot.clear()
+  })
+
+  it('saveSnapshot 应该保存到当前页面的快照库', async () => {
+    snapshotState.setCurrentPageId('synthetic-page')
+    snapshotState.saveSnapshot(
+      [],
+      { width: 800, height: 600, background: { backgroundColor: '#fff' } },
+      []
+    )
+
+    await new Promise((resolve) => setTimeout(resolve, 350))
+
+    const snapshot = await snapshotState.latestRecord()
+    expect(snapshot?.pageId).toBe('synthetic-page')
+    expect(snapshot?.canvasStyle.width).toBe(800)
   })
 
   it('应该能够为不同页面创建独立的快照', async () => {
